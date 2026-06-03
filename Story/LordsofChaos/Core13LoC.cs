@@ -34,22 +34,20 @@ public class Core13LoC
 
     public void Complete13LOC(bool withExtras = false)
     {
-        if (Core.IsMember)
-        {
-            Prologue();
-            Escherion();
-            Vath();
-            Kitsune();
-            Wolfwing();
-            Kimberly();
-            Ledgermayne();
-            Tibicenas();
-            KhasaandaHorc();
-            Iadoa();
-            Lionfang();
-            Xiang();
-            Alteon();
-        }
+
+        Prologue();
+        Escherion();
+        Vath();
+        Kitsune();
+        Wolfwing();
+        Kimberly();
+        Ledgermayne();
+        Tibicenas();
+        KhasaandaHorc();
+        Iadoa();
+        Lionfang();
+        Xiang();
+        Alteon();
         Hero();
         if (withExtras)
         {
@@ -2295,23 +2293,6 @@ public class Core13LoC
 
         Story.PreLoad(this);
 
-        if (!Core.IsMember)
-        {
-            Prologue();
-            Escherion();
-            Vath();
-            Kitsune();
-            Wolfwing();
-            Kimberly();
-            Ledgermayne();
-            Tibicenas();
-            KhasaandaHorc();
-            Iadoa();
-            Lionfang();
-            Xiang();
-            Alteon();
-        }
-
         //12 Lords of Chaos
         Story.ChainQuest(3578);
 
@@ -2574,8 +2555,6 @@ public class Core13LoC
     {
         if (Core.isCompletedBefore(3824))
             return;
-
-        Hero();
 
         Story.PreLoad(this);
 
