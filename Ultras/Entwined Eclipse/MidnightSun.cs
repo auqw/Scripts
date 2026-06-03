@@ -12,6 +12,7 @@ tags: greatblade, entwined, eclipse, midnight, sun, farm, test, army
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+using Skua.Core.Models.Quests;
 using System;
 using System.IO;
 using System.Linq;
@@ -64,11 +65,11 @@ public class MidnightSunTest
             true
         ),
         new Option<bool>(
-            "autoGetEnrage",
-            "Auto-Craft Scroll of Enrage",
-            "ON: all accounts auto-farm Mystic Parchment, buy Zealous Ink, and craft Scroll of Enrage. Requires SpellCrafting rank 5.\n" +
-            "OFF: skipped — make sure Scroll of Enrage is already equipped.",
-            true
+            "usePotions",
+            "Use Potions",
+            "ON: equips and uses configured class potion sets before starting the dungeon loop. (TONICS and ELIXIRS ONLY)\n" +
+            "OFF: skips potion usage.",
+            false
         ),
     };
 
@@ -87,6 +88,7 @@ public class MidnightSunTest
 
     bool autoEnhance;
     bool autoGetEnrage;
+    bool usePotions;
     int runCount;
     bool syncFilesClearedOnStartup;
 
@@ -133,12 +135,21 @@ public class MidnightSunTest
 
         Core.Logger($"Army mode enabled: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
+        autoEnhance = Bot.Config!.Get<bool>("autoEnhance");
+        autoGetEnrage = true;
+        usePotions = Bot.Config.Get<bool>("usePotions");
+
         EquipArmyClasses();
 
         if (autoEnhance)
             ApplyEnhancements();
 
+        if (usePotions)
+            UseClassPotions();
+
         PrepareTauntRole();
+
+        TryAcceptDailyQuest(9304, "Dawn Breaks");
 
         Core.AddDrop(SliverSunlight);
 
@@ -184,6 +195,8 @@ public class MidnightSunTest
 
         // Shrine boss: Hollow Solstice — player1+2 alternate on "The Sun Converges"
         ArmyKillShrineBoss("midnightsun", "r3", "Left", "Hollow Solstice", $"{runCheckpoint}_06");
+
+        TryCompleteDailyQuest(9304, "Sliver of Sunlight");
     }
 
     // ── Army helpers ──────────────────────────────────────────────────────────
@@ -275,6 +288,12 @@ public class MidnightSunTest
 
     void ResetReusableSyncFiles()
     {
+
+        Core.Logger("[Sync] Moving to /whitemap before clearing reusable sync files.");
+        Core.Join("whitemap", "Enter", "Spawn");
+        WaitForMapName("whitemap", 8000);
+        Bot.Sleep(1000);
+
         bool isPlayer1 = IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? "");
 
         if (!isPlayer1)
@@ -1131,6 +1150,41 @@ public class MidnightSunTest
         }
     }
 
+    void TryAcceptDailyQuest(int questId, string questName)
+    {
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questId));
+
+        if (quest == null)
+        {
+            Core.Logger($"[Daily] Failed to load {questName} [{questId}]. Skipping.");
+            return;
+        }
+
+        if (Bot.Quests.IsDailyComplete(questId))
+        {
+            Core.Logger($"[Daily] {quest.Name} [{quest.ID}] is not available right now.");
+            return;
+        }
+
+        Core.Logger($"[Daily] Accepting {quest.Name} [{quest.ID}].");
+        Core.EnsureAccept(questId);
+        Core.AddDrop(quest.Rewards.Select(x => x.Name).ToArray());
+        Core.AddDrop(quest.Requirements.Select(x => x.Name).ToArray());
+    }
+
+    void TryCompleteDailyQuest(int questId, string rewardName)
+    {
+        if (!Bot.Quests.IsInProgress(questId))
+            return;
+
+        Core.Logger($"[Daily] Attempting to complete daily quest {questId}.");
+
+        Core.EnsureComplete(questId);
+        Bot.Wait.ForPickup(rewardName);
+
+        Core.Logger($"[Daily] Completed daily quest {questId}.");
+    }
+
     void ResetDungeonInstance(string nextMap, string checkpoint)
     {
         SyncArmy($"{checkpoint}_reset_ready.sync");
@@ -1285,6 +1339,61 @@ public class MidnightSunTest
         !string.IsNullOrWhiteSpace(className)
         && string.Equals(Bot.Player.CurrentClass?.Name, className, StringComparison.OrdinalIgnoreCase);
 
+    void UseClassPotions()
+    {
+        string className = Bot.Player.CurrentClass?.Name ?? "";
+
+        Core.Logger($"{Core.Username()} using potions for {className}...");
+
+        switch (className.ToLower())
+        {
+            case "legion revenant":
+                UsePotionSet("Fate Tonic", "Battle Elixir");
+                break;
+
+            case "stonecrusher":
+            case "infinity titan":
+                UsePotionSet("Might Tonic", "Divine Elixir");
+                break;
+
+            case "archpaladin":
+                UsePotionSet("Fate Tonic", "Battle Elixir");
+                break;
+
+            case "lord of order":
+                UsePotionSet("Fate Tonic", "Divine Elixir");
+                break;
+
+            default:
+                Core.Logger($"[Potions] No potion profile for '{className}' — skipping.");
+                break;
+        }
+    }
+
+    void UsePotionSet(string tonic, string elixir)
+    {
+        UsePotionItem(tonic);
+        UsePotionItem(elixir);
+    }
+
+    void UsePotionItem(string itemName)
+    {
+        if (!Core.CheckInventory(itemName))
+        {
+            Core.Logger($"[Potions] Missing {itemName}; skipping.");
+            return;
+        }
+
+        if (!Bot.Inventory.IsEquipped(itemName))
+        {
+            Bot.Inventory.EquipUsableItem(itemName);
+            Bot.Sleep(500);
+        }
+
+        Core.UsePotion();
+        Bot.Sleep(1000);
+    }
+
     void ApplyEnhancements()
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
@@ -1296,7 +1405,7 @@ public class MidnightSunTest
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.None,
-                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Awe_Blast,
+                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;

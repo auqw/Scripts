@@ -12,6 +12,7 @@ tags: solstice, moon, hollow midnight, lunar haze, army, taunt, test
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+using Skua.Core.Models.Quests;
 using System;
 using System.IO;
 using System.Linq;
@@ -65,18 +66,11 @@ public class SolsticeMoonTest
             true
         ),
         new Option<bool>(
-            "autoGetEnrage",
-            "Auto-Craft Scroll of Enrage",
-            "ON: all accounts auto-farm Mystic Parchment, buy Zealous Ink, and craft Scroll of Enrage before farming. Requires SpellCrafting rank 5.\n" +
-            "OFF: scroll requirement is skipped.",
-            true
-        ),
-        new Option<bool>(
-            "checkUsableSlotBeforeBossRooms",
-            "Check Usable Slot Before Boss Rooms",
-            "ON: before each taunt boss room, re-checks that Scroll of Enrage is equipped and waits briefly for the usable slot to be ready. " +
-            "This helps recover from AQW/Skua usable-slot desync before dangerous taunt checks.",
-            true
+            "usePotions",
+            "Use Potions",
+            "ON: equips and uses configured class potion sets before starting the dungeon loop. (TONICS and ELIXIRS ONLY)\n" +
+            "OFF: skips potion usage.",
+            false
         ),
     };
 
@@ -125,6 +119,7 @@ public class SolsticeMoonTest
     bool autoEnhance;
     bool autoGetEnrage;
     bool checkUsableSlotBeforeBossRooms;
+    bool usePotions;
 
     // Fixed 4-class lineup matching the working reference script
     const string player1Class = "Legion Revenant";  // Lunar Haze taunter
@@ -180,15 +175,21 @@ public class SolsticeMoonTest
 
 
         autoEnhance = Bot.Config.Get<bool>("autoEnhance");
-        autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
-        checkUsableSlotBeforeBossRooms = Bot.Config.Get<bool>("checkUsableSlotBeforeBossRooms");
+        autoGetEnrage = true;
+        checkUsableSlotBeforeBossRooms = true;
+        usePotions = Bot.Config.Get<bool>("usePotions");
 
         EquipArmyClasses();
 
         if (autoEnhance)
             ApplyEnhancements();
 
+        if (usePotions)
+            UseClassPotions();
+
         PrepareTauntRole();
+
+        TryAcceptDailyQuest(9303, "Night Falls");
 
         Core.AddDrop(SliverMoonlight);
 
@@ -336,6 +337,12 @@ public class SolsticeMoonTest
 
     void ResetReusableSyncFiles()
     {
+
+        Core.Logger("[Sync] Moving to /whitemap before clearing reusable sync files.");
+        Core.Join("whitemap", "Enter", "Spawn");
+        WaitForMapName("whitemap", 8000);
+        Bot.Sleep(1000);
+
         bool isPlayer1 = IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? "");
 
         if (!isPlayer1)
@@ -697,6 +704,41 @@ public class SolsticeMoonTest
         return Bot.Inventory.Items
             .FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase))
             ?.Quantity ?? 0;
+    }
+
+    void TryAcceptDailyQuest(int questId, string questName)
+    {
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questId));
+
+        if (quest == null)
+        {
+            Core.Logger($"[Daily] Failed to load {questName} [{questId}]. Skipping.");
+            return;
+        }
+
+        if (Bot.Quests.IsDailyComplete(questId))
+        {
+            Core.Logger($"[Daily] {quest.Name} [{quest.ID}] is not available right now.");
+            return;
+        }
+
+        Core.Logger($"[Daily] Accepting {quest.Name} [{quest.ID}].");
+        Core.EnsureAccept(questId);
+        Core.AddDrop(quest.Rewards.Select(x => x.Name).ToArray());
+        Core.AddDrop(quest.Requirements.Select(x => x.Name).ToArray());
+    }
+
+    void TryCompleteDailyQuest(int questId, string rewardName)
+    {
+        if (!Bot.Quests.IsInProgress(questId))
+            return;
+
+        Core.Logger($"[Daily] Attempting to complete daily quest {questId}.");
+
+        Core.EnsureComplete(questId);
+        Bot.Wait.ForPickup(rewardName);
+
+        Core.Logger($"[Daily] Completed daily quest {questId}.");
     }
 
     void RestockEnrageIfLow(string context, int minimumCount = 80)
@@ -1197,7 +1239,7 @@ public class SolsticeMoonTest
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.None,
-                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Awe_Blast,
+                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
@@ -1416,8 +1458,10 @@ public class SolsticeMoonTest
 
     void RunSolsticeMoon()
     {
-        ResetReusableSyncFiles();
         int run = ++solsticeRunCount;
+        string runCheckpoint = $"GreatbladeSolstice_{run}";
+
+        ResetReusableSyncFiles();
 
         ResetDungeonInstance("solsticemoon", $"GreatbladeSolstice_{run}");
 
@@ -1452,6 +1496,8 @@ public class SolsticeMoonTest
             $"GreatbladeSolstice_{run}_04",
             moonBoss: true
         );
+
+        TryCompleteDailyQuest(9303, "Sliver of Moonlight");
     }
 
     void MoveSolstice(string checkpoint)
@@ -1475,6 +1521,61 @@ public class SolsticeMoonTest
                 RestartSolstice(checkpoint);
                 break;
         }
+    }
+
+    void UseClassPotions()
+    {
+        string className = Bot.Player.CurrentClass?.Name ?? "";
+
+        Core.Logger($"{Core.Username()} using tonic/elixir for {className}...");
+
+        switch (className.ToLower())
+        {
+            case "legion revenant":
+                UsePotionSet("Fate Tonic", "Battle Elixir");
+                break;
+
+            case "stonecrusher":
+            case "infinity titan":
+                UsePotionSet("Might Tonic", "Divine Elixir");
+                break;
+
+            case "archpaladin":
+                UsePotionSet("Fate Tonic", "Battle Elixir");
+                break;
+
+            case "lord of order":
+                UsePotionSet("Fate Tonic", "Divine Elixir");
+                break;
+
+            default:
+                Core.Logger($"[Potions] No tonic/elixir profile for '{className}' — skipping.");
+                break;
+        }
+    }
+
+    void UsePotionSet(string tonic, string elixir)
+    {
+        UsePotionItem(tonic);
+        UsePotionItem(elixir);
+    }
+
+    void UsePotionItem(string itemName)
+    {
+        if (!Core.CheckInventory(itemName))
+        {
+            Core.Logger($"[Potions] Missing {itemName}; skipping.");
+            return;
+        }
+
+        if (!Bot.Inventory.IsEquipped(itemName))
+        {
+            Bot.Inventory.EquipUsableItem(itemName);
+            Bot.Sleep(500);
+        }
+
+        Core.UsePotion();
+        Bot.Sleep(1000);
     }
 
     void RestartSolstice(string checkpoint)

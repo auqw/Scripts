@@ -12,6 +12,7 @@ tags: greatblade, entwined, eclipse, ascend, ascendeclipse, army, taunt, test
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+using Skua.Core.Models.Quests;
 using System;
 using System.IO;
 using System.Linq;
@@ -64,19 +65,19 @@ public class AscendEclipseTest
             true
         ),
         new Option<bool>(
-            "autoGetEnrage",
-            "Auto-Craft Scroll of Enrage",
-            "ON: all accounts auto-farm Mystic Parchment, buy Zealous Ink, and craft Scroll of Enrage. Requires SpellCrafting rank 5.\n" +
-            "OFF: scroll requirement is skipped.",
-            true
-        ),
-        new Option<bool>(
             "oracleClassTauntReset",
             "Oracle Class Taunt Reset",
-            "ON: swaps to Oracle then back before taunt fights to clear the class taunt bug.\n" +
+            "ON: swaps to Oracle then back before taunt fights to clear the class taunt bug. (DOESNT USE POTIONS WHEN ON) \n" +
             "OFF: skips the Oracle swap and only ensures Scroll of Enrage is equipped.",
             true
         ),
+        new Option<bool>(
+            "usePotions",
+            "Use Potions",
+            "DOESNT WORK WHEN Oracle Class Taunt Reset IS ON. (this is by design) \n" +
+            "ON: equips and uses configured class potion sets before starting the dungeon loop. (TONICS and ELIXIRS ONLY) \n" +
+            "OFF: skips tonic/elixir usage.",
+            false)
     };
 
     // Fixed 4-class lineup
@@ -99,6 +100,7 @@ public class AscendEclipseTest
 
     bool autoEnhance;
     bool autoGetEnrage;
+    bool usePotions;
     bool oracleClassTauntReset;
     int runCount;
     int syncCount;
@@ -145,9 +147,10 @@ public class AscendEclipseTest
 
         Core.Logger($"Army mode enabled: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
-        autoEnhance   = Bot.Config!.Get<bool>("autoEnhance");
-        autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
+        autoEnhance = Bot.Config!.Get<bool>("autoEnhance");
+        autoGetEnrage = true;
         oracleClassTauntReset = Bot.Config.Get<bool>("oracleClassTauntReset");
+        usePotions = Bot.Config.Get<bool>("usePotions");
 
         SetupPartyFromPlayer1();
 
@@ -156,9 +159,14 @@ public class AscendEclipseTest
         if (autoEnhance)
             ApplyEnhancements();
 
-        //UseClassPotions();
+        if (usePotions && !oracleClassTauntReset)
+            UseClassPotions();
+        else if (usePotions && oracleClassTauntReset)
+            Core.Logger("[Potions] Skipping tonic/elixir usage because Oracle Class Taunt Reset is ON.");
 
         PrepareTauntRole();
+
+        TryAcceptDailyQuest(9305, "Frozen Cycle");
 
         try
         {
@@ -206,6 +214,9 @@ public class AscendEclipseTest
 
         // r3 — dual final boss fight (Ascended Solstice + Ascended Midnight simultaneously)
         ArmyKillDualBoss("ascendeclipse", "r3", "Left", $"{runCheckpoint}_07");
+
+        // Daily quest completion
+        TryCompleteDailyQuest(9305, "Ecliptic Offering");
     }
 
     string GetConfiguredClassForCurrentAccount()
@@ -1324,6 +1335,11 @@ public class AscendEclipseTest
 
     void ResetReusableSyncFiles()
     {
+        Core.Logger("[Sync] Moving to /whitemap before clearing reusable sync files.");
+        Core.Join("whitemap", "Enter", "Spawn");
+        WaitForMapName("whitemap", 8000);
+        Bot.Sleep(1000);
+
         bool isPlayer1 = IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? "");
 
         if (!isPlayer1)
@@ -1947,6 +1963,41 @@ public class AscendEclipseTest
 
     // ── Setup ─────────────────────────────────────────────────────────────────
 
+    void TryAcceptDailyQuest(int questId, string questName)
+    {
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questId));
+
+        if (quest == null)
+        {
+            Core.Logger($"[Daily] Failed to load {questName} [{questId}]. Skipping.");
+            return;
+        }
+
+        if (Bot.Quests.IsDailyComplete(questId))
+        {
+            Core.Logger($"[Daily] {quest.Name} [{quest.ID}] is not available right now.");
+            return;
+        }
+
+        Core.Logger($"[Daily] Accepting {quest.Name} [{quest.ID}].");
+        Core.EnsureAccept(questId);
+        Core.AddDrop(quest.Rewards.Select(x => x.Name).ToArray());
+        Core.AddDrop(quest.Requirements.Select(x => x.Name).ToArray());
+    }
+
+    void TryCompleteDailyQuest(int questId, string rewardName)
+    {
+        if (!Bot.Quests.IsInProgress(questId))
+            return;
+
+        Core.Logger($"[Daily] Attempting to complete daily quest {questId}.");
+
+        Core.EnsureComplete(questId);
+        Bot.Wait.ForPickup(rewardName);
+
+        Core.Logger($"[Daily] Completed daily quest {questId}.");
+    }
+
     void EquipArmyClasses()
     {
         string username = Core.Username();
@@ -2009,7 +2060,7 @@ public class AscendEclipseTest
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.None,
-                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Awe_Blast,
+                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
@@ -2057,20 +2108,20 @@ public class AscendEclipseTest
         switch (className.ToLower())
         {
             case "legion revenant":
-                UsePotionSet("Sage Tonic", "Potent Revitalize Elixir");
+                UsePotionSet("Fate Tonic", "Battle Elixir");
                 break;
 
             case "stonecrusher":
             case "infinity titan":
-                UsePotionSet("Might Tonic", "Potent Revitalize Elixir");
+                UsePotionSet("Might Tonic", "Divine Elixir");
                 break;
 
             case "archpaladin":
-                UsePotionSet("Fate Tonic", "Potent Revitalize Elixir");
+                UsePotionSet("Fate Tonic", "Battle Elixir");
                 break;
 
             case "lord of order":
-                UsePotionSet("Fate Tonic", "Potent Revitalize Elixir");
+                UsePotionSet("Fate Tonic", "Divine Elixir");
                 break;
 
             default:
@@ -2079,13 +2130,10 @@ public class AscendEclipseTest
         }
     }
 
-    void UsePotionSet(string tonic, string elixir, string? potion = null)
+    void UsePotionSet(string tonic, string elixir)
     {
         UsePotionItem(tonic);
         UsePotionItem(elixir);
-
-        if (!string.IsNullOrWhiteSpace(potion))
-            UsePotionItem(potion);
     }
 
     void UsePotionItem(string itemName)
