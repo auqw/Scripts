@@ -1463,7 +1463,7 @@ public class SolsticeMoonTest
 
         ResetReusableSyncFiles();
 
-        ResetDungeonInstance("solsticemoon", $"GreatbladeSolstice_{run}");
+        ResetDungeonInstance("solsticemoon", runCheckpoint);
 
         ArmyKillMonster("solsticemoon", "Enter", "Left", "*", $"GreatbladeSolstice_{run}_01");
 
