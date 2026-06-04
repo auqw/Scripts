@@ -1184,12 +1184,12 @@ public class SolsticeMoonTest
             if (className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase) &&
                 Core.CheckInventory("Infinity Titan"))
             {
-                Core.Logger($"{Core.Username()} is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
+                Core.Logger("This account is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
                 classToEquip = "Infinity Titan";
             }
             else
             {
-                Core.Logger($"{Core.Username()} is assigned to use {className}, but that class is not in inventory.", stopBot: true);
+                Core.Logger($"This account is assigned to use {className}, but that class is not in inventory.", stopBot: true);
                 return;
             }
         }
@@ -1201,7 +1201,7 @@ public class SolsticeMoonTest
             Bot.Sleep(1000);
         }
 
-        Core.Logger($"{Core.Username()} equipped {classToEquip}; using custom skill rotation.");
+        Core.Logger($"Equipped {classToEquip}; using custom skill rotation.");
     }
 
     bool IsClassEquipped(string className) =>
@@ -1225,13 +1225,13 @@ public class SolsticeMoonTest
         else if (username.Equals(p4, StringComparison.OrdinalIgnoreCase))
             EquipClassByName(player4Class);
         else
-            Core.Logger($"{username} was not matched to a player slot — keeping current class.");
+            Core.Logger("This account was not matched to a player slot — keeping current class.");
     }
 
     void ApplyEnhancements()
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
-        Core.Logger($"{Core.Username()} applying enhancements for {className}...");
+        Core.Logger($"Applying enhancements for {className}...");
 
         switch (className.ToLower())
         {
@@ -1423,17 +1423,17 @@ public class SolsticeMoonTest
         // player1+2 alternate on sun fights, player3+4 alternate on moon fights.
         if (autoGetEnrage)
         {
-            Core.Logger($"{Core.Username()} auto-crafting Scroll of Enrage...");
+            Core.Logger("Auto-crafting Scroll of Enrage...");
             Ultra.GetScrollOfEnrage();
         }
 
         if (!EnsureEnrageEquipped("setup"))
         {
-            Core.Logger($"{Core.Username()} has no Scroll of Enrage — boss charges will NOT be redirected.");
+            Core.Logger("No Scroll of Enrage found — boss charges will NOT be redirected.");
             return;
         }
 
-        Core.Logger($"{Core.Username()} has Scroll of Enrage equipped.");
+        Core.Logger("Scroll of Enrage is equipped.");
     }
 
 
@@ -1527,7 +1527,7 @@ public class SolsticeMoonTest
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
 
-        Core.Logger($"{Core.Username()} using tonic/elixir for {className}...");
+        Core.Logger($"Using tonic/elixir for {className}...");
 
         switch (className.ToLower())
         {
