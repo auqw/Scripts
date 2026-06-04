@@ -1268,7 +1268,7 @@ public class AscendEclipseTest
         if (name.Equals(Core.Username(), StringComparison.OrdinalIgnoreCase))
             return;
 
-        Core.Logger($"[Party] Inviting {name}.");
+        Core.Logger("[Party] Sending invite to configured account.");
         Bot.Send.Packet($"%xt%zm%gp%1%pi%{name}%");
     }
 
@@ -2010,7 +2010,7 @@ public class AscendEclipseTest
         else if (username.Equals(p2, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player2Class);
         else if (username.Equals(p3, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player3Class);
         else if (username.Equals(p4, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player4Class);
-        else Core.Logger($"{username} was not matched to a player slot — keeping current class.");
+        else Core.Logger("This account was not matched to a player slot — keeping current class.");
     }
 
     void EquipClassByName(string className)
@@ -2025,12 +2025,12 @@ public class AscendEclipseTest
             if (className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase) &&
                 Core.CheckInventory("Infinity Titan"))
             {
-                Core.Logger($"{Core.Username()} is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
+                Core.Logger("This account is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
                 classToEquip = "Infinity Titan";
             }
             else
             {
-                Core.Logger($"{Core.Username()} missing {className}.", stopBot: true);
+                Core.Logger($"Missing required class: {className}.", stopBot: true);
                 return;
             }
         }
@@ -2042,7 +2042,7 @@ public class AscendEclipseTest
             Bot.Sleep(1000);
         }
 
-        Core.Logger($"{Core.Username()} equipped {classToEquip}; using custom skill rotation.");
+        Core.Logger($"Equipped {classToEquip}; using custom skill rotation.");
     }
 
     bool IsClassEquipped(string className) =>
@@ -2052,7 +2052,7 @@ public class AscendEclipseTest
     void ApplyEnhancements()
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
-        Core.Logger($"{Core.Username()} applying enhancements for {className}...");
+        Core.Logger($"Applying enhancements for {className}...");
 
         switch (className.ToLower())
         {
@@ -2103,7 +2103,7 @@ public class AscendEclipseTest
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
 
-        Core.Logger($"{Core.Username()} using potions for {className}...");
+        Core.Logger($"Using potions for {className}...");
 
         switch (className.ToLower())
         {
@@ -2158,20 +2158,20 @@ public class AscendEclipseTest
     {
         if (autoGetEnrage)
         {
-            Core.Logger($"{Core.Username()} auto-crafting {TauntItem}...");
+            Core.Logger($"Auto-crafting {TauntItem}...");
             Ultra.GetScrollOfEnrage();
         }
 
         if (!Core.CheckInventory(TauntItem))
         {
-            Core.Logger($"{Core.Username()} has no {TauntItem} — boss charges will NOT be redirected.");
+            Core.Logger($"No {TauntItem} found — boss charges will NOT be redirected.");
             return;
         }
 
         if (!Bot.Inventory.IsEquipped(TauntItem))
             Bot.Inventory.EquipUsableItem(TauntItem);
 
-        Core.Logger($"{Core.Username()} has {TauntItem} equipped.");
+        Core.Logger($"{TauntItem} is equipped.");
     }
 }
 

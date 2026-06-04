@@ -1300,7 +1300,7 @@ public class MidnightSunTest
         else if (username.Equals(p2, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player2Class);
         else if (username.Equals(p3, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player3Class);
         else if (username.Equals(p4, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player4Class);
-        else Core.Logger($"{username} was not matched to a player slot — keeping current class.");
+        else Core.Logger("This account was not matched to a player slot — keeping current class.");
     }
 
     void EquipClassByName(string className)
@@ -1315,12 +1315,12 @@ public class MidnightSunTest
             if (className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase) &&
                 Core.CheckInventory("Infinity Titan"))
             {
-                Core.Logger($"{Core.Username()} is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
+                Core.Logger("This account is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
                 classToEquip = "Infinity Titan";
             }
             else
             {
-                Core.Logger($"{Core.Username()} missing {className}.", stopBot: true);
+                Core.Logger($"Missing required class: {className}.", stopBot: true);
                 return;
             }
         }
@@ -1332,7 +1332,7 @@ public class MidnightSunTest
             Bot.Sleep(1000);
         }
 
-        Core.Logger($"{Core.Username()} equipped {classToEquip}; using custom skill rotation.");
+        Core.Logger($"Equipped {classToEquip}; using custom skill rotation.");
     }
 
     bool IsClassEquipped(string className) =>
@@ -1343,7 +1343,7 @@ public class MidnightSunTest
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
 
-        Core.Logger($"{Core.Username()} using potions for {className}...");
+        Core.Logger($"Using potions for {className}...");
 
         switch (className.ToLower())
         {
@@ -1397,7 +1397,7 @@ public class MidnightSunTest
     void ApplyEnhancements()
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
-        Core.Logger($"{Core.Username()} applying enhancements for {className}...");
+        Core.Logger($"Applying enhancements for {className}...");
 
         switch (className.ToLower())
         {
@@ -1447,17 +1447,17 @@ public class MidnightSunTest
     {
         if (autoGetEnrage)
         {
-            Core.Logger($"{Core.Username()} auto-crafting Scroll of Enrage...");
+            Core.Logger("Auto-crafting Scroll of Enrage...");
             Ultra.GetScrollOfEnrage();
         }
 
         if (!EnsureEnrageEquipped("setup"))
         {
-            Core.Logger($"{Core.Username()} has no Scroll of Enrage — boss charges will NOT be redirected.");
+            Core.Logger("No Scroll of Enrage found — boss charges will NOT be redirected.");
             return;
         }
 
-        Core.Logger($"{Core.Username()} has Scroll of Enrage equipped.");
+        Core.Logger("Scroll of Enrage is equipped.");
     }
 }
 
