@@ -817,17 +817,7 @@ public class CoreAdvanced
     /// <param name="Group">Optional. Specifies group selection method.</param>
     /// <param name="ShopItemID">Optional. Specifies ShopItem ID.</param>
     /// <param name="Log">Optional. Enables logging.</param>
-    public void StartBuyAllMerge(
-        string map,
-        int shopID,
-        Action findIngredients,
-        string? buyOnlyThis = null,
-        string[]? itemBlackList = null,
-        mergeOptionsEnum? buyMode = null,
-        string Group = "First",
-        int ShopItemID = 0,
-        bool Log = true
-    )
+    public void StartBuyAllMerge(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
     {
         #region Setup and Initialization
         if (
@@ -939,6 +929,9 @@ public class CoreAdvanced
         }
         #endregion
 
+
+
+        Dictionary<int, int> acquiredItems = new();
         int t = 0;
 
         foreach (ShopItem item in items)
@@ -961,8 +954,8 @@ public class CoreAdvanced
             }
 
             // Process all requirements for this item
-            ProcessItemWithDependencies(item, 1, map, shopID, findIngredients);
-
+            ProcessItemWithDependencies(item, 1, map, shopID, findIngredients, acquiredItems: acquiredItems);
+            
             // After dependencies are handled, check if we can buy the main item
             EnsureShopLoaded(map, shopID);
             if (item.Requirements.All(x => x != null && Core.CheckInventory(x.ID, x.Quantity)))
@@ -1009,15 +1002,9 @@ public class CoreAdvanced
             return true;
         }
 
-        void ProcessItemWithDependencies(
-            ItemBase item,
-            int quantity,
-            string map,
-            int shopID,
-            Action findIngredients,
-            int depth = 0
-        )
+        void ProcessItemWithDependencies(ItemBase item, int quantity, string map, int shopID, Action findIngredients, int depth = 0, Dictionary<int, int>? acquiredItems = null)
         {
+            acquiredItems ??= []; // Initialize if null
             const int MAX_DEPTH = 15;
 
             if (depth > MAX_DEPTH)
@@ -1083,6 +1070,7 @@ public class CoreAdvanced
                     Core.AddDrop(externalItem.ID);
                     findIngredients();
                     Bot.Wait.ForPickup(req.ID);
+                    acquiredItems[req.ID] = Bot.Inventory.GetQuantity(req.ID);
                     continue;
                 }
 
@@ -1140,7 +1128,8 @@ public class CoreAdvanced
                             map,
                             shopID,
                             findIngredients,
-                            depth + 1
+                            depth + 1,
+                            acquiredItems
                         );
                         Bot.Wait.ForPickup(req!.ID);
                     }
