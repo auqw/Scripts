@@ -25,6 +25,12 @@ public class DoAllUltrasStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
     private static ExaltiaTower Exaltia => _Exaltia ??= new ExaltiaTower();
     private static ExaltiaTower _Exaltia;
     private static CoreSoW SoW => _SoW ??= new CoreSoW();
@@ -48,6 +54,11 @@ public class DoAllUltrasStory
 
     public void DoAllUltrasPrereqs()
     {
+        // Ultra Nulgath  → Level 80 only, no story required
+        // Ultra Gramiel  → Level 80 only, no story required
+        Core.Logger("Leveling to 80 for Ultra Nulgath / Gramiel");
+        Farm.Experience(80);
+
         // Unlocks: Ultra Ezrajal, Ultra Warden, Ultra Engineer
         Core.Logger("Exaltia Tower story → Ultra Ezrajal / Warden / Engineer");
         Exaltia.StoryLine();
@@ -67,8 +78,5 @@ public class DoAllUltrasStory
         // Unlocks: Ultra Drago (AstraviaJudgement / Mahapadma) + Ultra Darkon (TheWorld)
         Core.Logger("Elegy of Madness / Astravia story → Ultra Drago + Ultra Darkon");
         Astravia.CompleteCoreAstravia();
-
-        // Ultra Nulgath  → Level 80 only, no story required
-        // Ultra Gramiel  → Level 80 only, no story required
     }
 }
