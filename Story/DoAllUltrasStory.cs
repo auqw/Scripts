@@ -10,10 +10,14 @@ description: Completes all story prerequisites needed to unlock every Ultra boss
 tags: story, quest, ultra, ezrajal, warden, engineer, tyndarius, speaker, dage, drakath, darkon, drago, all, complete
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/ExaltiaTower.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/IsleOfFotia/CoreIsleOfFotia.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 using Skua.Core.Interfaces;
 
