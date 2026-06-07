@@ -144,14 +144,8 @@ public class PortalsMerge
                     Core.FarmingLogger("Banana", quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(52924);
-                    Core.HuntMonster(
-                        "arcangrove",
-                        "Gorillaphant",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.RegisterQuests(7324);
+                    Core.HuntMonster("arcangrove", "Gorillaphant", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Ingredients?":
