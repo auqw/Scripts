@@ -1,12 +1,6 @@
 /*
 name: Do All Ultras Story Prerequisites
-description: Completes all story prerequisites needed to unlock every Ultra boss.
-             Covers: Ultra Ezrajal, Ultra Warden, Ultra Engineer (ExaltiaTower),
-                     Ultra Avatar Tyndarius + Ultra Speaker (Shadows of War),
-                     Ultra Dage (Isle of Fotia),
-                     Champion Drakath (13 Lords of Chaos),
-                     Ultra Drago + Ultra Darkon (Elegy of Madness / Astravia).
-             Skipped: Ultra Nulgath and Ultra Gramiel (Level 80 only, no story required).
+description: Completes all story prerequisites needed to unlock every Ultra boss. Covers: Ultra Ezrajal, Ultra Warden, Ultra Engineer (ExaltiaTower), Ultra Avatar Tyndarius + Ultra Speaker (Shadows of War), Ultra Dage (Isle of Fotia), Champion Drakath (13 Lords of Chaos), Ultra Drago + Ultra Darkon (Elegy of Madness / Astravia). Skipped: Ultra Nulgath and Ultra Gramiel (Level 80 only, no story required).
 tags: story, quest, ultra, ezrajal, warden, engineer, tyndarius, speaker, dage, drakath, darkon, drago, all, complete
 */
 //cs_include Scripts/CoreBots.cs
