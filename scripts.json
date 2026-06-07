@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 168572,
-    "sha256": "e2fd9e11bae25b41806068b332574d1a14abe30d5faf886a090df0fcad3439c2",
+    "size": 168730,
+    "sha256": "1c3fd86843a4df49efda6e2dbc087f84aa23d37da47c499566933a4d8cde356d",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -3555,6 +3555,31 @@
     "sha256": "b403c7cc014c507525086cd9323cc54b0b2225ddcc1d21dd19717b86f0f0321e",
     "fileName": "Xyfrag.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Xyfrag.cs"
+  },
+  {
+    "name": "Do All Ultras Story Prerequisites",
+    "description": "Completes all story prerequisites needed to unlock every Ultra boss. Covers",
+    "tags": [
+      "story",
+      "quest",
+      "ultra",
+      "ezrajal",
+      "warden",
+      "engineer",
+      "tyndarius",
+      "speaker",
+      "dage",
+      "drakath",
+      "darkon",
+      "drago",
+      "all",
+      "complete"
+    ],
+    "path": "Ultras/DoAllUltrasStory.cs",
+    "size": 3193,
+    "sha256": "25c5537209b39b0ab758bd0e74d8f5dc0eb1959a204c63b137840fbcfb779686",
+    "fileName": "DoAllUltrasStory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DoAllUltrasStory.cs"
   },
   {
     "name": "null",
