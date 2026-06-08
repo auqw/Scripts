@@ -6429,7 +6429,7 @@ public class CoreBots
     };
 
         // Find first owned DoT class in inventory
-        InventoryItem? ownedDotClass = Bot.Inventory.Items
+        InventoryItem? ownedDotClass = Bot.Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(i =>
                 i.Category == ItemCategory.Class &&
                 dotClasses.Contains(i.Name, StringComparer.OrdinalIgnoreCase));
