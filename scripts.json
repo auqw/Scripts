@@ -2923,25 +2923,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/CheckArmyRoles.cs"
   },
   {
-    "name": "Auto Attack Substitute",
-    "description": "as per the name, this is a substitute for the currently ~wack~ auto-atk/hunt button in teh menu-bar.",
-    "tags": [
-      "auto-attack",
-      "auto",
-      "attack",
-      "auto attack",
-      "why are you attacking manualy?",
-      "wack",
-      "i hate tags",
-      "no wonder this didn't push"
-    ],
-    "path": "Tools/AutoAttackSubstitute.cs",
-    "size": 8928,
-    "sha256": "40ab5b3963cc7ac8568217f9264f64b0f50844103b8e435e2da7da0dc704bd8a",
-    "fileName": "AutoAttackSubstitute.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/AutoAttackSubstitute.cs"
-  },
-  {
     "name": "Choose Best Gear",
     "description": "Select a boost type you want to optimize for, and the bot will find and equip the best combination of gear for that boost.",
     "tags": [
@@ -13509,8 +13490,8 @@
       "data"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 3593,
-    "sha256": "af5d7813ef0b31f9c026a336ad109bcf70d91e1baf4a40eb3ee05704e754f687",
+    "size": 4894,
+    "sha256": "cbbaafb92d802657c2eec6acfa8382d433531a2dfde76f7e65b8e537b874fcee",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
