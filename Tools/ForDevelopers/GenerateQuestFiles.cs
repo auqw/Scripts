@@ -70,11 +70,33 @@ public class GetQuests
         token.ThrowIfCancellationRequested();
 
         // Build pipe-delimited data if needed (optional)
-        List<string> d = new() { "ID|Name|Once|Slot|Value|Upgrade|Gold|XP" };
+        List<string> d = ["ID|Name|Once|Slot|Value|Upgrade|Gold|XP"];
+        int skippedCount = 0;
         foreach (dynamic q in quests)
         {
             token.ThrowIfCancellationRequested();
-            d.Add($"{q.ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
+            
+            // Skip undefined/incomplete quests
+            if (q?.ID == null || q?.Name == null)
+            {
+                skippedCount++;
+                continue;
+            }
+            
+            try
+            {
+                d.Add($"{q.ID}|{q.Name}|{q.Once ?? false}|{q.Slot}|{q.Value ?? 0}|{q.Upgrade ?? false}|{q.Gold ?? 0}|{q.XP ?? 0}");
+            }
+            catch (Exception ex)
+            {
+                Core.Logger($"Warning: Failed to process quest ID {q.ID}: {ex.Message}");
+                skippedCount++;
+            }
+        }
+        
+        if (skippedCount > 0)
+        {
+            Core.Logger($"Skipped {skippedCount} undefined/incomplete quests.");
         }
 
         // Write the fully updated JSON to scripts folder (overwrite)
@@ -89,22 +111,42 @@ public class GetQuests
     {
         _loaderCTS = CancellationTokenSource.CreateLinkedTokenSource(token);
 
-        IQuestDataLoaderService loader =
-            service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>();
+        try
+        {
+            IQuestDataLoaderService loader =
+                service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>();
 
-        // Block until async update finishes, but still cancelable
-        loader.UpdateAsync("QuestData.json", false, null, token)
-       .GetAwaiter().GetResult();
+            // Block until async update finishes, but still cancelable
+            loader.UpdateAsync("QuestData.json", false, null, token)
+                .GetAwaiter().GetResult();
 
-        File.Copy(
-            Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json"),
-            Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"),
-            true
-        );
+            string sourcePath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json");
+            string destPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json");
+            
+            if (!File.Exists(sourcePath))
+            {
+                Core.Logger($"Error: Source file not found at {sourcePath}");
+                return;
+            }
 
-
-        _loaderCTS.Dispose();
-        _loaderCTS = null;
+            File.Copy(sourcePath, destPath, true);
+            Core.Logger($"Quest data updated successfully.");
+        }
+        catch (OperationCanceledException)
+        {
+            Core.Logger("Quest update cancelled by user.");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"Error updating quests: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            _loaderCTS?.Dispose();
+            _loaderCTS = null;
+        }
     }
 
     private CancellationTokenSource? _loaderCTS;
