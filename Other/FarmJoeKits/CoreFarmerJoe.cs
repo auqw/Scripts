@@ -756,7 +756,6 @@ public class CoreFarmerJoe
 
     private void HandleLevel60()
     {
-        string[] dss = new[] { "ArchPaladin", "DragonSoul Shinobi" };
         if (
             !Core.CheckInventory("DragonSoul Shinobi", toInv: false)
             || !AnyRank10(new[] { "DragonSoul Shinobi" })
