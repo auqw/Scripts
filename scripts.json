@@ -4482,21 +4482,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Template.cs"
   },
   {
-    "name": "VADaily",
-    "description": "`wrong turn at voidbuquerque` quest with an army.",
-    "tags": [
-      "wrong turn at voidbuquerque",
-      "void",
-      "aura",
-      "voidaura"
-    ],
-    "path": "Army/WrongTurnatVoidbuquerque.cs",
-    "size": 8293,
-    "sha256": "8ce4cddb990a0c739975a1bd3b2e1e2dc198bb03e8c1756956d69b219a8f8e9f",
-    "fileName": "WrongTurnatVoidbuquerque.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/WrongTurnatVoidbuquerque.cs"
-  },
-  {
     "name": "null",
     "description": "null",
     "tags": [
@@ -27954,6 +27939,38 @@
     "sha256": "aed27e9a446cebd9c96aa4849af098577dff4fd16daf0aa53cc657f74a46206c",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
+  },
+  {
+    "name": "VADaily",
+    "description": "`wrong turn at voidbuquerque` quest with an army.",
+    "tags": [
+      "wrong turn at voidbuquerque",
+      "void",
+      "aura",
+      "voidaura"
+    ],
+    "path": "Army/Dailies/WrongTurnatVoidbuquerque.cs",
+    "size": 8305,
+    "sha256": "49d193f8f3b5ccfcc03c471fa7b5faf7946aab04bf02c3aaeda9f57f6c52777b",
+    "fileName": "WrongTurnatVoidbuquerque.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
+  },
+  {
+    "name": "VADaily",
+    "description": "`wrong turn at voidbuquerque` quest with an army.",
+    "tags": [
+      "the encroaching shadows",
+      "theencroachingshadows",
+      "encroaching",
+      "shadows",
+      "army",
+      "void aura"
+    ],
+    "path": "Army/Dailies/TheEncroachingShadows.cs",
+    "size": 7703,
+    "sha256": "529b7c046ed8a4f3eb84af4d2878f0bc565f533e9c2b00603693aceb0755ad13",
+    "fileName": "TheEncroachingShadows.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/TheEncroachingShadows.cs"
   },
   {
     "name": "Army All Dailies",
