@@ -1,7 +1,7 @@
 /*
 name: VADaily
 description: `wrong turn at voidbuquerque` quest with an army.
-tags: wrong turn at voidbuquerque, void, aura, voidaura 
+tags: The Encroaching Shadows, TheEncroachingShadows, Encroaching, Shadows, army, void aura
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
@@ -14,7 +14,7 @@ tags: wrong turn at voidbuquerque, void, aura, voidaura
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class VADaily
+public class TheEncroachingShadows
 {
     private static CoreAdvanced Adv
     {
@@ -99,15 +99,15 @@ public class VADaily
         taunter = (Bot.Config!.Get<string>("taunter") ?? "").Trim();
         Core.Boot();
 
-        DoVoidbuquerque();
+        DoEnchroach();
 
         C.SetOptions(false);
     }
 
-    void DoVoidbuquerque()
+    void DoEnchroach()
     {
-
-        C.EnsureAccept(9091);
+        C.EnsureAcceptmultiple(8653, 9091);
+        C.Logger("Also accepting [9091] to get flib's ess whilst we do this incase ya wanna do the other army daily");
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (IsTaunter())
@@ -115,18 +115,18 @@ public class VADaily
             Bot.Events.ExtensionPacketReceived += Ultra.GenericChargeListener;
             Ultra.GetScrollOfEnrage();
         }
-        Bot.Drops.Add($"Xyfrag's ??? Essence", $"Flibbitiestgibbet's ??? Essence",
-                        $"Nightbane's ??? Essence", $"Xyfrag's Slimy Tooth", "Void Energy");
-        C.AddDrop(73861, 73862, 73863);
-        Xyfrag();
+        Bot.Drops.Add($"Flibbitiestgibbet's ??? Essence", "Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets", "Void Essentia", "Void Energy", "Chest Plate");
+        C.AddDrop(70052, 70053, 70054, 73862);
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Flib();
-
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        NightBane();
+        IceWing();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Hydra90();
 
-        C.EnsureComplete(9091);
+        C.AbandonQuest(9091);
+        C.EnsureComplete(8653);
         C.Logger("All players finished farm.");
 
     }
@@ -137,7 +137,7 @@ public class VADaily
         string Boss = "Flibbitiestgibbet";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
         Ultra.ClearSyncFile(syncPath);
-        Bot.Sleep(25000);
+        Bot.Sleep(2500);
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
         Core.Join(map);
         if (sArmy.Players().Length > 1)
@@ -148,10 +148,14 @@ public class VADaily
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(73861 /* Flibbitiestgibbet's ??? Essence */), syncPath))
+            Bot.Drops.Add("Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets", "Void Energy");
+            C.AddDrop(70052, 70053, 70054);
+
+
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(70054), syncPath))
             {
                 C.JumpWait();
-                C.Logger("All players finished farming \"Flibbitiestgibbet's ??? Essence\".");
+                C.Logger("All players finished farming \"Flibbitigiblets\".");
                 break;
             }
 
@@ -162,32 +166,33 @@ public class VADaily
                 continue;
             }
 
-            Bot.Combat.Attack(Boss);
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(Boss);
             Bot.Sleep(500);
         }
     }
 
-    void NightBane()
+    void IceWing()
     {
-        string map = "voidnightbane";
-        string Boss = "Nightbane";
+        string map = "icewing";
+        string Boss = "Warlord Icewing";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
         Ultra.ClearSyncFile(syncPath);
-        Bot.Sleep(25000);
+        Bot.Sleep(2500);
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
         Core.Join(map);
         Core.ChooseBestCell(Boss);
         if (sArmy.Players().Length > 1)
-            Ultra.WaitForArmy(sArmy.Players().Length - 1, "Nightbane.sync");
+            Ultra.WaitForArmy(sArmy.Players().Length - 1, "WarlordIcewing.sync");
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(73862 /* Nightbane's ??? Essence */), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(70052), syncPath))
             {
                 C.JumpWait();
-                C.Logger("All players finished farming \"Nightbane's ??? Essence\".");
+                C.Logger("All players finished farming \"Glacial Pinion\".");
                 break;
             }
 
@@ -198,36 +203,33 @@ public class VADaily
                 continue;
             }
 
-            Bot.Combat.Attack(Boss);
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(Boss);
             Bot.Sleep(500);
         }
     }
 
-    void Xyfrag()
+    void Hydra90()
     {
-        const string map = "voidxyfrag";
-        const string boss = "Xyfrag";
-
+        const string map = "hydrachallenge";
+        const string boss = $"Hydra Head 90";
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
 
-        // 'Wrong Turn at Voidbuquerque' && 'Doom Spikes'
-        C.EnsureAcceptmultiple(9091, 9418, 8547);
-
         Core.Join(map);
         if (sArmy.Players().Length > 1)
-            Ultra.WaitForArmy(sArmy.Players().Length - 1, "Xyfrag.sync");
+            Ultra.WaitForArmy(sArmy.Players().Length - 1, "HydraHead90.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
+
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(73863 /* Xyfrag's ??? Essence */), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(70053, 3), syncPath))
             {
-                Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
                 C.JumpWait();
-                C.Logger("All players finished farming \"Xyfrag's ??? Essence\".");
+                C.Logger("All players finished farming \"Hydra Eyeball\".");
                 break;
             }
             // Dead → wait for respawn
@@ -237,32 +239,10 @@ public class VADaily
                 continue;
             }
 
-            if (Core.HasClassEquipped(taunter)) // After 2M → always taunt
-            {
-                Core.DisableSkills();
-                if (Bot.Player.HasTarget && Bot.Skills.CanUseSkill(5))
-                {
-                    while (!Bot.ShouldExit)
-                    {
-                        if (Bot.Skills.CanUseSkill(5))
-                            Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-
-                        if (Bot.Player.HasTarget && Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
-                        {
-                            Core.EnableSkills();
-                            break;
-                        }
-                    }
-
-                    Bot.Sleep(300);
-                }
-            }
-
-            Bot.Combat.Attack(boss);
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(boss);
             Bot.Sleep(500);
         }
-        Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
     }
 
 
