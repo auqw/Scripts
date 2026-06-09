@@ -51,7 +51,7 @@ public class PinpointthePieces_Any
         Core.EquipClass(ClassType.Farm);
         PinpointIDs questID = Bot.Config?.Get<PinpointIDs>("questID") ?? PinpointIDs.Dagger;
 
-        ItemBase[] QuestRewards = Core.EnsureLoad((int)questID).Rewards.ToArray();
+        ItemBase[] QuestRewards = [.. Core.EnsureLoad((int)questID).Rewards];
 
         foreach (ItemBase reward in QuestRewards)
         {
