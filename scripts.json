@@ -27739,8 +27739,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 45204,
-    "sha256": "4aeb9c33e59ee325fef487ee6c230f828b2b16ad6a19e962fdd4cecc3f97285e",
+    "size": 38702,
+    "sha256": "225569b7bf7bd0131ff2985a0f9563cdfd271285e19050dfc0e2e39be1274ca0",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -27832,8 +27832,8 @@
       "bow"
     ],
     "path": "Evil/SDKA/PinpointthePieces.cs",
-    "size": 2088,
-    "sha256": "89ef1a304f549d388ef0899321431168acffaf4bad2184d16d2f19c5b63317b3",
+    "size": 2083,
+    "sha256": "d7c519e2c2e3a131923266ce71405dec47e1dc7ee63b9b0ea58fd4d559a4f0e7",
     "fileName": "PinpointthePieces.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/PinpointthePieces.cs"
   },
