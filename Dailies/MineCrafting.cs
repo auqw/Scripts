@@ -58,7 +58,7 @@ public class MineCrafting
                 Core.Logger("BLoD & NSoD owned, getting extra metals.");
                 Daily.MineCrafting(
                     new[] { "Aluminum", "Barium", "Gold", "Iron", "Copper", "Silver", "Platinum" },
-                    10,
+                    1,
                     ToBank: true
                 );
             }
@@ -104,7 +104,7 @@ public class MineCrafting
                     "Thorium",
                     "Mercury",
                 },
-                10,
+                1,
                 ToBank: true
             );
     }
