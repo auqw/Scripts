@@ -94,6 +94,7 @@ public class CoreEngine
         Bot.Options.InfiniteRange = true;
         Bot.Options.SkipCutscenes = true;
         Bot.Lite.HidePlayers = true;
+        Bot.Drops.Start();
         C.Join("whitemap-100000");
     }
 
