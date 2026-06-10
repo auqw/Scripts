@@ -71,7 +71,6 @@ public class TheEncroachingShadows
         sArmy.player4,
         sArmy.player5,
         sArmy.player6,
-        sArmy.player7,
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
     };
@@ -91,7 +90,7 @@ public class TheEncroachingShadows
         if (sArmy.Players().Length < 4)
         {
             C.Logger(
-                "Players empty or less then 4 (7 reccomended), please add players to the options ( scripts botton > edit scripts option > insert account names exactly as is)"
+                "Players empty or less then 4 (6 reccomended), please add players to the options ( scripts botton > edit scripts option > insert account names exactly as is)"
             );
             return;
         }
