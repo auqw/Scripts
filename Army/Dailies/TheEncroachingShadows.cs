@@ -1,6 +1,6 @@
 /*
-name: VADaily
-description: `wrong turn at voidbuquerque` quest with an army.
+name: TheEncroachingShadows
+description: `The Encroaching Shadows` quest with an army.
 tags: The Encroaching Shadows, TheEncroachingShadows, Encroaching, Shadows, army, void aura
 */
 

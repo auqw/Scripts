@@ -1,7 +1,7 @@
 /*
-name: VADaily
+name: WrongTurnatVoidbuquerque
 description: `wrong turn at voidbuquerque` quest with an army.
-tags: wrong turn at voidbuquerque, void, aura, voidaura 
+tags: nation, wrong turn at voidbuquerque, WrongTurnatVoidbuquerque
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
@@ -14,7 +14,7 @@ tags: wrong turn at voidbuquerque, void, aura, voidaura
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class NulgathMaterialsDaily
+public class WrongTurnatVoidbuquerque
 {
     private static CoreAdvanced Adv
     {
