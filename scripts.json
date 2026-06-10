@@ -27941,23 +27941,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
   {
-    "name": "VADaily",
+    "name": "WrongTurnatVoidbuquerque",
     "description": "`wrong turn at voidbuquerque` quest with an army.",
     "tags": [
+      "nation",
       "wrong turn at voidbuquerque",
-      "void",
-      "aura",
-      "voidaura"
+      "wrongturnatvoidbuquerque"
     ],
     "path": "Army/Dailies/WrongTurnatVoidbuquerque.cs",
-    "size": 8708,
-    "sha256": "23188020ad8dcc51fb842ea632449b7109b72ac9ae919bc90b364945e9e45476",
+    "size": 8739,
+    "sha256": "481898fa62ee6d6c51cce77a4166b35ed8aca2a567f1b25788dadde98c2a01a9",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
   },
   {
-    "name": "VADaily",
-    "description": "`wrong turn at voidbuquerque` quest with an army.",
+    "name": "TheEncroachingShadows",
+    "description": "`The Encroaching Shadows` quest with an army.",
     "tags": [
       "the encroaching shadows",
       "theencroachingshadows",
@@ -27967,8 +27966,8 @@
       "void aura"
     ],
     "path": "Army/Dailies/TheEncroachingShadows.cs",
-    "size": 7680,
-    "sha256": "d8a6f7f0e0da8ec9a3bc76eb5fcc312b91b246ad8de622e24090bbfdce154e99",
+    "size": 7690,
+    "sha256": "0b774f0b216a9c83193ee293eab953afc00366f12772445e69bfbec2b970dcba",
     "fileName": "TheEncroachingShadows.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/TheEncroachingShadows.cs"
   },
