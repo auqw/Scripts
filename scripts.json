@@ -3569,8 +3569,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 106623,
-    "sha256": "692ff80315e2755ef0a4b8f86e323779c128998c0c59fb99462b457259d656c9",
+    "size": 106650,
+    "sha256": "786d4cdbf740dff1febcf9fd8e338716ac292c3bb1830ba43e03d8946c2b8355",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -27950,8 +27950,8 @@
       "voidaura"
     ],
     "path": "Army/Dailies/WrongTurnatVoidbuquerque.cs",
-    "size": 8305,
-    "sha256": "49d193f8f3b5ccfcc03c471fa7b5faf7946aab04bf02c3aaeda9f57f6c52777b",
+    "size": 8708,
+    "sha256": "23188020ad8dcc51fb842ea632449b7109b72ac9ae919bc90b364945e9e45476",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
   },
@@ -27967,8 +27967,8 @@
       "void aura"
     ],
     "path": "Army/Dailies/TheEncroachingShadows.cs",
-    "size": 7703,
-    "sha256": "529b7c046ed8a4f3eb84af4d2878f0bc565f533e9c2b00603693aceb0755ad13",
+    "size": 7680,
+    "sha256": "d8a6f7f0e0da8ec9a3bc76eb5fcc312b91b246ad8de622e24090bbfdce154e99",
     "fileName": "TheEncroachingShadows.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/TheEncroachingShadows.cs"
   },
