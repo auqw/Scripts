@@ -54,17 +54,14 @@ public class NulgathMaterialsDaily
     }
     private static CoreStory _Story;
 
+    Rewards Reward;
     string taunter;
     public string OptionsStorage = "voidbuquerque";
     public bool DontPreconfigure = true;
-    public List<IOption> Options = new()
-    {
-        new Option<string>(
-            "taunter",
-            "Taunter Class",
-            "Insert the name of the class that will taunt",
-            "ArchPaladin"
-        ),
+    public List<IOption> Options =
+    [
+        new Option<string>( "taunter", "Taunter Class", "Insert the name of the class that will taunt", "ArchPaladin"),
+        new Option<Rewards>("reward", "Reward Item", "Select the reward item to grant", Rewards.Tainted_Gem),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -74,7 +71,7 @@ public class NulgathMaterialsDaily
         sArmy.player7,
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
-    };
+    ];
 
     bool IsTaunter() => Core.HasClassEquipped(taunter);
     public void ScriptMain(IScriptInterface Bot)
@@ -97,6 +94,7 @@ public class NulgathMaterialsDaily
         }
 
         taunter = (Bot.Config!.Get<string>("taunter") ?? "").Trim();
+        Reward = (Rewards)Bot.Config!.Get<int>("reward");
         Core.Boot();
 
         DoVoidbuquerque();
@@ -106,7 +104,9 @@ public class NulgathMaterialsDaily
 
     void DoVoidbuquerque()
     {
-
+        C.AddDrop($"Xyfrag's ??? Essence", $"Flibbitiestgibbet's ??? Essence", $"Nightbane's ??? Essence", $"Xyfrag's Slimy Tooth", "Void Energy");
+        C.AddDrop(73861, 73862, 73863, (int)Reward);
+        C.Logger($"Reward Selected; {Reward}");
         C.EnsureAccept(9091);
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -115,9 +115,6 @@ public class NulgathMaterialsDaily
             Bot.Events.ExtensionPacketReceived += Ultra.GenericChargeListener;
             Ultra.GetScrollOfEnrage();
         }
-        Bot.Drops.Add($"Xyfrag's ??? Essence", $"Flibbitiestgibbet's ??? Essence",
-                        $"Nightbane's ??? Essence", $"Xyfrag's Slimy Tooth", "Void Energy");
-        C.AddDrop(73861, 73862, 73863);
         Xyfrag();
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -126,7 +123,7 @@ public class NulgathMaterialsDaily
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         NightBane();
 
-        C.EnsureComplete(9091);
+        C.EnsureComplete(9091, (int)Reward);
         C.Logger("All players finished farm.");
 
     }
@@ -265,5 +262,13 @@ public class NulgathMaterialsDaily
         Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
     }
 
-
+    enum Rewards
+    {
+        Tainted_Gem = 4769,
+        Dark_Crystal_Shard = 4770,
+        Diamond_of_Nulgath = 4771,
+        Totem_of_Nulgath = 5357,
+        Gem_of_Nulgath = 6136,
+        Blood_Gem_of_the_Archfiend = 22332
+    }
 }
