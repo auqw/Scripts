@@ -211,7 +211,7 @@ public class WrongTurnatVoidbuquerque
         Bot.Sleep(2500);
 
         // 'Wrong Turn at Voidbuquerque' && 'Doom Spikes'
-        C.EnsureAcceptmultiple(9091, 9418, 8547);
+        C.EnsureAcceptmultiple(9091, 9418);
 
         Core.Join(map);
         if (sArmy.Players().Length > 1)
