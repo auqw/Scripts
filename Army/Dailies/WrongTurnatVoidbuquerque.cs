@@ -94,7 +94,8 @@ public class WrongTurnatVoidbuquerque
         }
 
         taunter = (Bot.Config!.Get<string>("taunter") ?? "").Trim();
-        Reward = (Rewards)Bot.Config!.Get<int>("reward");
+        string rewardStr = Bot.Config!.Get<string>("reward") ?? "Tainted_Gem";
+        Reward = (Rewards)Enum.Parse(typeof(Rewards), rewardStr.Replace(" ", "_"));
         Core.Boot();
 
         DoVoidbuquerque();
