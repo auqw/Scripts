@@ -132,17 +132,15 @@ public class NecroticBladeoftheUnderworld
         Legion.FarmLegionToken(25000);
 
         //Beast Souls
-        Core.EquipClass(ClassType.Dodge);
-        Adv.BoostKillMonster(
-            "SevenCirclesWar",
-            "r17",
-            "Left",
-            "The Beast",
-            "Beast Soul",
-            25,
-            isTemp: false,
-            publicRoom: false
-        );
+        Adv.GearStore(false);
+        if (Core.CheckInventory("ArchPaladin"))
+        {
+            Core.Equip("ArchPaladin");
+        }
+        else
+            Core.EquipClass(ClassType.Solo);
+        Adv.BoostKillMonster("SevenCirclesWar", "r17", "Left", "The Beast", "Beast Soul", 25, isTemp: false, publicRoom: false);
+        Adv.GearStore(true, true);
 
         //Soul Sand
         SoulSand.SoulSand(7);

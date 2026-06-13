@@ -142,16 +142,16 @@ public class SinoftheSinoftheUndyingNoInsignia
         // 20 Beast's Soul
         if (!Core.CheckInventory("Beast Soul", 20))
         {
-            Core.EquipClass(ClassType.Dodge);
+            Adv.GearStore(false);
+            if (Core.CheckInventory("ArchPaladin"))
+            {
+                Core.Equip("ArchPaladin");
+            }
+            else
+                Core.EquipClass(ClassType.Solo);
             Core.FarmingLogger("Beast Soul", 20);
-            Core.HuntMonster(
-                "sevencircleswar",
-                "The Beast",
-                "Beast Soul",
-                20,
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("sevencircleswar", "The Beast", "Beast Soul", 20, isTemp: false, publicRoom: true);
+            Adv.GearStore(true, true);
         }
 
         // Broke Chain x 20

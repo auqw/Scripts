@@ -112,8 +112,15 @@ public class HeadoftheLegionBeast
         Indulgence(30);
         Legion.FarmLegionToken(15000);
 
-        Core.EquipClass(ClassType.Dodge);
+        Adv.GearStore(false, true);
+        if (Core.CheckInventory("ArchPaladin"))
+        {
+            Core.Equip("ArchPaladin");
+        }
+        else
+            Core.EquipClass(ClassType.Solo);
         Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
+        Adv.GearStore(true, true);
 
         Adv.BuyItem("sevencircleswar", 1984, HeadName);
 
@@ -128,8 +135,15 @@ public class HeadoftheLegionBeast
         // Head of the Legion Beast (8082)
         Core.Unbank("Head of the Legion Beast");
         Core.EnsureAccept(8082);
-        Core.EquipClass(ClassType.Solo);
+        Adv.GearStore(false);
+        if (Core.CheckInventory("ArchPaladin"))
+        {
+            Core.Equip("ArchPaladin");
+        }
+        else
+            Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("sevencircleswar", "The Beast", "Beast Slain");
+        Adv.GearStore(true);
         Core.EnsureComplete(8082);
     }
 

@@ -146,8 +146,10 @@ public class SevenCircles
         //The Beast
         if (!Story.QuestProgression(7990))
         {
-            Core.EquipClass(ClassType.Dodge);
-            Core.EnsureAccept(7990);
+            if (Core.CheckInventory("ArchPaladin"))
+                Core.Equip("ArchPaladin");
+            else
+                Core.EnsureAccept(7990);
             Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "The Beast Defeated");
             Core.EnsureComplete(7990);
         }

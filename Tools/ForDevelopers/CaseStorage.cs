@@ -2807,10 +2807,17 @@ case ""Beast Soul"":
                         break;
 
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Dodge);
-                    Adv.SmartEnhance(Core.DodgeClass);
+                    Adv.GearStore(false);
+                    if (Core.CheckInventory(""ArchPaladin""))
+                    {
+                        Core.Equip(""ArchPaladin"");
+                    }
+                    else
+                        Core.EquipClass(ClassType.Solo);
+                    Adv.GearStore(EnhAfter: true);
+                    Adv.SmartEnhance(Core.SoloClass);
                     Core.HuntMonster(""sevencircleswar"", ""The Beast"", req.Name, quant, isTemp: false, publicRoom: true);
-                    break;
+                    Adv.GearStore(true, true);
     "
         },
         {

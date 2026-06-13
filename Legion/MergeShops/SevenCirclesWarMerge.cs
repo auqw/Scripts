@@ -168,16 +168,15 @@ public class SevenCirclesWarMerge
                         break;
 
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Dodge);
-                    Adv.SmartEnhance(Core.DodgeClass);
-                    Core.HuntMonster(
-                        "sevencircleswar",
-                        "The Beast",
-                        req.Name,
-                        quant,
-                        isTemp: false,
-                        publicRoom: true
-                    );
+                    Adv.GearStore(false);
+                    if (Core.CheckInventory("ArchPaladin"))
+                    {
+                        Core.Equip("ArchPaladin");
+                    }
+                    else
+                        Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("sevencircleswar", "The Beast", req.Name, quant, isTemp: false, publicRoom: true);
+                    Adv.GearStore(true, true);
                     break;
 
                 case "Souls of Heresy":
