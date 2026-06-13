@@ -811,15 +811,20 @@ public class UnlockForgeEnhancements
             Darkon.SukisPrestiege(22);
             Darkon.AncientRemnant(22);
             Darkon.WheelofFortune(22, 0);
-            if (!Core.CheckInventory("Darkon Insignia", 20))
+            if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
             {
-                Core.Logger(
-                    " x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot"
-                );
-                return;
+                if (!Core.CheckInventory("Darkon Insignia", 20))
+                {
+                    Core.Logger(
+                        " x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot"
+                    );
+                    return;
+                }
+                else
+                    Adv.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
             }
-            else if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
-                Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
+            else
+                Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false, please buy the \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, and complete the quest yourself (QuestID: 8742).");
         }
 
         if (!Core.CheckInventory("King Drago Insignia", 5))
@@ -831,18 +836,16 @@ public class UnlockForgeEnhancements
         }
         if (!Core.CheckInventory("Darkon Insignia", 5))
         {
-            Core.Logger(
-                " x5 \"Darkon Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot"
-            );
+            Core.Logger(" x5 \"Darkon Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
             return;
         }
         if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
+        {
             Core.ChainComplete(8742);
+            Core.Logger("Enhancement Unlocked: Arcana's Concerto");
+        }
         else
-            Core.Logger(
-                "\"UseInsignOnArcanasConcerto\" is set to false, please buy the \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, and complete the quest yourself (QuestID: 8742)."
-            );
-        Core.Logger("Enhancement Unlocked: Arcana's Concerto");
+            Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false, please buy the \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, and complete the quest yourself (QuestID: 8742).");
     }
 
     public void Acheron()
