@@ -35,11 +35,11 @@ public class Butler3
             "Fill in the Maps that the bot will check (in order), if the player is not in the current map, split with a , (comma) ( example: Locked,maps,seperated,by,a,comma).",
             ""
         ),
-        new Option<string>(
+        new Option<int>(
             "RoomNumber",
             "RoomNumberForLockedMaps",
             "Room number to use when LockedMaps is triggered, if empty itll use your CoreBots PrivateRoom#",
-            ""
+            "100000"
         ),
         new Option<ClassType>(
             "classType",
@@ -53,7 +53,7 @@ public class Butler3
     bool GotoIsOff;
     string? playerName;
     ClassType classType;
-    string? RN;
+    int? RN;
     List<string?> lockedMapList;
     bool HasLoggedMissing;
     bool HasLoggedFound;
@@ -87,9 +87,9 @@ public class Butler3
         playerName = Bot.Config!.Get<string>("playerName");
         classType = Bot.Config!.Get<ClassType>("classType");
 
-        RN = !string.IsNullOrEmpty(Bot.Config!.Get<string>("RoomNumber"))
-        ? Bot.Config!.Get<string>("RoomNumber")
-        : Core.PrivateRoomNumber.ToString();
+        RN = Bot.Config?.Get<int>("RoomNumber") is > 1
+            ? Bot.Config.Get<int>("RoomNumber")
+            : Core.PrivateRoomNumber;
 
         if (string.IsNullOrEmpty(playerName))
         {
@@ -145,7 +145,7 @@ public class Butler3
                         if (Bot.ShouldExit || map == null)
                             return;
 
-                        Core.Join($"{map}-{RN}");
+                        Core.Join(RN > 1 ? map + "-" + RN : map);
                         Bot.Wait.ForMapLoad(map);
 
                         if (!Bot.Map.PlayerExists(playerName))
