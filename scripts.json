@@ -3994,8 +3994,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 18647,
-    "sha256": "14482fbf7846acf7343dbbd8e94a4acbda41967be8602a9cfc33ffd25faf8da5",
+    "size": 19024,
+    "sha256": "b8f9c0e5389a5c816ca5204e03baf4434f6465c262b6c7013fbf6512e7c6b056",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -4567,8 +4567,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1154446,
-    "sha256": "f0d1180ceb384fb0e35a3c4512616028d33f0d02efa3ce0d7977c130784ae329",
+    "size": 1154745,
+    "sha256": "f613d12d6044ba8d109deaccff4514c1781cddefbd90953bd4550503c677bd9b",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -18725,8 +18725,8 @@
       "grotto"
     ],
     "path": "Other/MergeShops/PortalsMerge.cs",
-    "size": 14640,
-    "sha256": "88829518befc0e1da85f342698dcd5091796c6acd74151e3ce4552e78b2b359f",
+    "size": 14691,
+    "sha256": "de3ae625baaf592f9dd2ebe6bb436714ce84ed8b29b6245d66599433b68879cd",
     "fileName": "PortalsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/PortalsMerge.cs"
   },
@@ -20457,8 +20457,8 @@
       "fifty one"
     ],
     "path": "Other/Various/SinoftheUndying(NoInsignia).cs",
-    "size": 7230,
-    "sha256": "1ae2d47d3242a8ac661d63a3411db31e33ed887750b19ab7266a75ecd33be5c3",
+    "size": 7336,
+    "sha256": "034d64908e62be6467610a6d09517f4a7b05cfa2f4b60605058e134f5899f65b",
     "fileName": "SinoftheUndying(NoInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/SinoftheUndying(NoInsignia).cs"
   },
@@ -23960,8 +23960,8 @@
       "war"
     ],
     "path": "Story/Legion/SevenCircles(War).cs",
-    "size": 4685,
-    "sha256": "7fe2f8269ecc148c97f090ad91d4db9a90a8ebf3a6116864833aa87579e74a2b",
+    "size": 4755,
+    "sha256": "82b4b66ca7b3b3e0a7e8227504f3c7cb13b88979f71f1258e0588e3a535ab7b1",
     "fileName": "SevenCircles(War).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/SevenCircles(War).cs"
   },
@@ -25159,8 +25159,8 @@
       "null"
     ],
     "path": "Legion/MergeShops/SevenCirclesWarMerge.cs",
-    "size": 8967,
-    "sha256": "1f9c219a8671440fd8bb327c116726d96e70ad49820ab5c1122b4e3876947e23",
+    "size": 9018,
+    "sha256": "8ee1848742429cbf9130344571f2b9e3899d6c0c3830e3093fe2a775a405346a",
     "fileName": "SevenCirclesWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/SevenCirclesWarMerge.cs"
   },
@@ -26134,8 +26134,8 @@
       "nsod"
     ],
     "path": "Legion/Various/NecroticBladeoftheUnderworld.cs",
-    "size": 6302,
-    "sha256": "bc42d5211a5dbd2424926838cb0e66cbb1ef52be5316957af3aa0723ac041f57",
+    "size": 6384,
+    "sha256": "3c646291c61f1ccacf9890d89a3488dad8fecdb922d334aef527105fb460bfdf",
     "fileName": "NecroticBladeoftheUnderworld.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/NecroticBladeoftheUnderworld.cs"
   },
