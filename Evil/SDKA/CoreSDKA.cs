@@ -298,24 +298,29 @@ public class CoreSDKA
             UnlockHardCoreMetals();
 
         Core.AddDrop("DoomCoin", "Dark Spirit Orb", "Shadow Creeper Enchant");
+        if (Core.CheckInventory("DoomCoin"))
+        {
+            Core.Logger("Selling DoomCoin to ensure we have a fresh start to the quest ( its buggy appearntly)");
+            Core.SellItem("DoomCoin", all: true);
+        }
         Core.EquipClass(ClassType.Farm);
         if (oneTime)
         {
             Core.EnsureAccept(2089);
-            while (!Bot.ShouldExit && !Bot.Quests.CanCompleteFullCheck(2089))
-                Core.KillMonster("maul", "r7", "left", "Shelleton", log: false);
+            Core.KillMonster("maul", "r7", "left", "Shelleton", "DoomCoin", 20, isTemp: false, log: false);
             Core.EnsureComplete(2089);
-            Bot.Wait.ForQuestComplete(2089);
             Bot.Wait.ForPickup("Dark Spirit Orb");
             return;
         }
         else
         {
-            Core.RegisterQuests(2089);
             while (!Bot.ShouldExit && !Core.CheckInventory("Dark Spirit Orb", quant))
-                Core.KillMonster("maul", "r7", "left", "Shelleton", log: false);
-            Bot.Wait.ForQuestComplete(2089);
-            Bot.Wait.ForPickup("Dark Spirit Orb");
+            {
+                Core.EnsureAccept(2089);
+                Core.KillMonster("maul", "r7", "left", "Shelleton", "DoomCoin", 20, isTemp: false, log: false);
+                Core.EnsureComplete(2089);
+                Bot.Wait.ForPickup("Dark Spirit Orb");
+            }
             Core.CancelRegisteredQuests();
             Core.AbandonQuest(2089);
             return;
