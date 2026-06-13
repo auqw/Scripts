@@ -39,7 +39,7 @@ public class Butler3
             "RoomNumber",
             "RoomNumberForLockedMaps",
             "Room number to use when LockedMaps is triggered, if empty itll use your CoreBots PrivateRoom#",
-            "100000"
+            100000
         ),
         new Option<ClassType>(
             "classType",
