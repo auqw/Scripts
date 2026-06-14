@@ -99,7 +99,7 @@ public class CoreVHL
         }
     }
 
-    public void VHLChallenge(int quant)
+    public void VHLChallenge(int quant, bool farmextra = false)
     {
         if (Core.CheckInventory("Roentgenium of Nulgath", quant))
             return;
@@ -172,7 +172,8 @@ public class CoreVHL
                 Core.Logger(
                     $"Not enough \"Elders' Blood\", please do the daily {2 - Core.dynamicQuant("Elders' Blood", false)}"
                 );
-                FarmExtra();
+                if (farmextra)
+                    FarmExtra();
                 return;
             }
         }
