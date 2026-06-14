@@ -4,8 +4,11 @@ description: This bot will farm the items belonging to the selected mode for the
 tags: nova, genesis, hangar, merge, carcossacabins, wolfblade, suit, runehawk, mystraven, swainson, mk, iii, wings, amplified, hawk, ci, orion, visor, awakened, ii, cc, imparatus
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/Oasis/CoreOasis.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -20,6 +23,8 @@ public class NovaGenesisHangarMerge
     private static CoreAdvanced _Adv;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
+    private static CoreOasis COasis { get => _COasis ??= new CoreOasis(); set => _COasis = value; }
+    private static CoreOasis _COasis;
 
 
     public bool DontPreconfigure = true;
@@ -41,6 +46,7 @@ public class NovaGenesisHangarMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        COasis.CarcossaCabins();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("carcossacabins", 2732, findIngredients, buyOnlyThis, buyMode: buyMode);
 
