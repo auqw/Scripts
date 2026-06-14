@@ -19016,8 +19016,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 53721,
-    "sha256": "bb95b1f3f41025fcb2aa0b8d7fc628766283647a719edef0955af7609b6f8190",
+    "size": 54311,
+    "sha256": "5cb2573c9718fc15c8956a00bc3ab6929e6988286f9c2731208973e117e847a2",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -26943,8 +26943,8 @@
       "null"
     ],
     "path": "Nation/VHL/CoreVHL.cs",
-    "size": 9650,
-    "sha256": "faa47445274f64611274369b832889299742a2d05c12165fe3cbba699a6e907b",
+    "size": 9709,
+    "sha256": "dc2d26fbd55f110c1f634934848e59a7d24a23bc044767eff7bcf11d928a6828",
     "fileName": "CoreVHL.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/VHL/CoreVHL.cs"
   },
