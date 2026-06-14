@@ -45,6 +45,7 @@ public class CoreOasis
         CrocRiver();
         CrulonWed();
         MeresankhChambers();
+        CarcossaCabins();
     }
 
     public void DuatPalace()
@@ -239,4 +240,97 @@ public class CoreOasis
         }
 
     }
+
+    public void CarcossaCabins()
+    {
+        if (Core.isCompletedBefore(10759))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Citrinitas Elemental", // UseableMonsters[0],
+            "Citrinitas Match", // UseableMonsters[1],
+            "Evolved Lifeform", // UseableMonsters[2],
+            "Doom Leech", // UseableMonsters[3],
+            "Clementine", // UseableMonsters[4]
+        };
+        #endregion Useable Monsters
+
+        // 10750 | Flickering Hyades
+        if (!Story.QuestProgression(10750))
+        {
+            Story.MapItemQuest(10750, "carcossacabins", 15859);
+            Core.HuntMonsterQuest(10750,
+                ("carcossacabins", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10751 | Red Dawn, Blue Starlight
+        if (!Story.QuestProgression(10751))
+        {
+            Story.MapItemQuest(10751, "carcossacabins", new[] { 15860, 15861 });
+            Core.HuntMonsterQuest(10751,
+                ("carcossacabins", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10752 | Shadow of Paradise
+        if (!Story.QuestProgression(10752))
+        {
+            Story.MapItemQuest(10752, "carcossacabins", new[] { 15862, 15863 });
+        }
+
+        // 10753 | Bed of the Rhine
+        if (!Story.QuestProgression(10753))
+        {
+            Core.HuntMonsterQuest(10753,
+                ("carcossacabins", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10754 | Liederkreis Lorelei
+        if (!Story.QuestProgression(10754))
+        {
+            Story.MapItemQuest(10754, "carcossacabins", new[] { 15864, 15865 });
+        }
+
+        // 10755 | Lacking in Blessings
+        if (!Story.QuestProgression(10755))
+        {
+            Core.HuntMonsterQuest(10755,
+                ("carcossacabins", UseableMonsters[2], ClassType.Solo));
+        }
+
+        // 10756 | Hate and Yearning
+        if (!Story.QuestProgression(10756))
+        {
+            Story.MapItemQuest(10756, "carcossacabins", new[] { 15866, 15867 });
+        }
+
+        // 10757 | Dark Matter Radiation
+        if (!Story.QuestProgression(10757))
+        {
+            Core.HuntMonsterQuest(10757,
+                ("carcossacabins", UseableMonsters[3], ClassType.Solo));
+        }
+
+
+        // 10758 | Amnion Alchemy
+        if (!Story.QuestProgression(10758))
+        {
+            Core.HuntMonsterQuest(10758,
+                ("carcossacabins", UseableMonsters[2], ClassType.Solo),
+                ("carcossacabins", UseableMonsters[3], ClassType.Solo));
+        }
+
+
+        // 10759 | Self-Infested
+        if (!Story.QuestProgression(10759))
+        {
+            Core.HuntMonsterQuest(10759,
+                ("carcossacabins", UseableMonsters[4], ClassType.Solo));
+        }
+    }
+
+
 }
