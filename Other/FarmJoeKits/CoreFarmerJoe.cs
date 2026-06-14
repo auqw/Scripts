@@ -489,6 +489,7 @@ public class CoreFarmerJoe
         "King's Echo",
         "Chaos Avenger",
         "Void Highlord",
+        "Void Highlord (IoDA)",
         "Legion Revenant",
         "Dragon of Time",
         "ArchPaladin",
@@ -616,9 +617,10 @@ public class CoreFarmerJoe
             { 65, HandleLevel65 },
             { 70, HandleLevel70 },
             { 75, HandleLevel75 },
+            { 80, Handlelevel80 },
         };
 
-        foreach (int level in new[] { 30, 50, 55, 60, 65, 70, 75 })
+        foreach (int level in new[] { 30, 50, 55, 60, 65, 70, 75, 80 })
         {
             if (Bot.Player.Level > 75)
                 HasEnhancedThisBracket = true;
@@ -837,6 +839,18 @@ public class CoreFarmerJoe
             SetClass();
             AF.GetArchfiend();
         }
+    }
+
+    private void Handlelevel80()
+    {
+        if (Core.CheckInventory(new[] { "Void Highlord", "Void Highlord (IoDA)" }, any: true))
+        {
+            Core.Logger("Dragon of Time found but not rank 10 - ranking up");
+            SetClass();
+            return;
+        }
+        Core.Logger("Bracket level [80]; Attemping to aquire VHL (Elders' bloods are a daily, this will take a total of 17 days ( minus your current roents/elders' quantity))");
+        VHL.GetVHL();
     }
 
     #endregion Leve 30-75
@@ -1392,6 +1406,7 @@ public class CoreFarmerJoe
             "ShadowWalker of Time",
             "Infinity Knight",
             "Interstellar Knight",
+            "Void Highlord (IoDA)",
             "Void Highlord",
             "Dragon of Time",
             "Timeless Dark Caster",
