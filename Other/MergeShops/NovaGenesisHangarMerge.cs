@@ -82,7 +82,7 @@ public class NovaGenesisHangarMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop("Wolfblade Nova Genesis Helm", "Mystraven Nova Genesis Visor", "Runehawk Nova Genesis Visor");
                     Core.AddDrop(req.ID);
-                    Core.RegisterQuests(10760);
+                    Core.RegisterQuests(Core.IsMember ? 10761 : 10760);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
