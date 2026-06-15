@@ -88,7 +88,7 @@ public class NovaGenesisHangarMerge
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("carcossacabins", "Clementine", "Clementine's Blood Sample");
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("carcossacabins", "Evolved Lifeform", "Lifeform's Fingers Ganglion", 9);
+                        Core.HuntMonster("carcossacabins", "Evolved Lifeform", "Lifeform's Fingers", 9);
                         Core.HuntMonster("carcossacabins", "Doom Leech", "Leech's Ganglion", 9);
                         Bot.Wait.ForPickup(req.Name);
                     }
