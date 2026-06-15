@@ -567,8 +567,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 52563,
-    "sha256": "376b4b2b00e38536985a9be87252f48b53a873f09b7f56af5dbe8906c32b0265",
+    "size": 52451,
+    "sha256": "29e2702d5442980b234177a22ef6804cb8d809a6c450836a64e5792a94c285b7",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -6055,8 +6055,8 @@
       "prince"
     ],
     "path": "Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs",
-    "size": 2445,
-    "sha256": "a96a5625dfbdc77af47afccd677216c07c77365f57c1e2075f481560da03f2e7",
+    "size": 2530,
+    "sha256": "c49943084b3a08ef45eb9123cfc3b9e167dbdebb7c4e8d664229b16002a49a8a",
     "fileName": "PrinceDarkonsPoleaxePreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs"
   },
