@@ -793,9 +793,7 @@ public class UnlockForgeEnhancements
 
         if (!Core.isCompletedBefore(8746))
         {
-            Core.Logger(
-                "You must have faced Darkon the Conductor and done the weekly quest in order to unlock \"Arcana's Concerto\""
-            );
+            Core.Logger("You must have faced Darkon the Conductor and done the weekly quest in order to unlock \"Arcana's Concerto\"");
             return;
         }
         PDPPR.FarmPreReqs();
@@ -815,9 +813,7 @@ public class UnlockForgeEnhancements
             {
                 if (!Core.CheckInventory("Darkon Insignia", 20))
                 {
-                    Core.Logger(
-                        " x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot"
-                    );
+                    Core.Logger(" x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
                     return;
                 }
                 else
@@ -829,9 +825,7 @@ public class UnlockForgeEnhancements
 
         if (!Core.CheckInventory("King Drago Insignia", 5))
         {
-            Core.Logger(
-                " x5 \"King Drago Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot"
-            );
+            Core.Logger(" x5 \"King Drago Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
             return;
         }
         if (!Core.CheckInventory("Darkon Insignia", 5))

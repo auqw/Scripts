@@ -49,9 +49,11 @@ public class PrinceDarkonsPoleaxePreReqs
         Darkon.LasGratitude(22);
         Darkon.AstravianMedal(22);
 
-        Farm.Gold(48888884);
-        Core.BuyItem("garden", 1831, "Darkon's Instant Noodle", 22);
-        //BuyPoleaxe();
+        if (!Core.CheckInventory("Darkon's Instant Noodle", 22))
+        {
+            Farm.Gold(48888884);
+            Core.BuyItem("garden", 1831, "Darkon's Instant Noodle", 22);
+        } //BuyPoleaxe();
     }
 
     private void BuyPoleaxe()
