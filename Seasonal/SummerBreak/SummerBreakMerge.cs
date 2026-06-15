@@ -136,6 +136,13 @@ public class SummerBreakMerge
                     Core.CancelRegisteredQuests();
                     break;
 
+                case "Model Hero's Cut":
+                case "Model Hero's Locks":
+                case "Model Hero's Morph":
+                case "Model Hero's Visage":
+                    Core.BuyItem(Bot.Map.Name, 299, "Barber");
+                    break;
+
                 case "Summer Sizzle Lotion":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -148,6 +155,8 @@ public class SummerBreakMerge
                     break;
 
                 case "Volcanic Fragment":
+                case "Dark Angelica Wetsuit":
+                case "Dark Covenant Wetsuit":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.KillMonster("lavarockbay", "r2", "Left", "*", req.Name, quant, false, false);
@@ -167,7 +176,12 @@ public class SummerBreakMerge
                     Legion.FarmLegionToken(quant);
                     break;
 
-
+                #region fill these
+                case "Charcoal Beach Ball":
+                case "Blue Beach Ball":
+                    Core.HuntMonster("summerbreak", "Cyborg Shark", req.Name, quant, req.Temp);
+                    break;
+                    #endregion
 
             }
         }
