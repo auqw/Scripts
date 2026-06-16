@@ -13,6 +13,8 @@ tags: story, quest, ultra, ezrajal, warden, engineer, tyndarius, speaker, dage, 
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
+//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
+//cs_include Scripts/Story/Legion/DageChallengeStory.cs
 using Skua.Core.Interfaces;
 
 public class DoAllUltrasStory
@@ -35,6 +37,10 @@ public class DoAllUltrasStory
     private static Core13LoC _LoC;
     private static CoreAstravia Astravia => _Astravia ??= new CoreAstravia();
     private static CoreAstravia _Astravia;
+    private static CoreHollowbornStory Hollowborn => _Hollowborn ??= new CoreHollowbornStory();
+    private static CoreHollowbornStory _Hollowborn;
+    private static DageChallengeStory DageChallenge => _DageChallenge ??= new DageChallengeStory();
+    private static DageChallengeStory _DageChallenge;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -72,5 +78,13 @@ public class DoAllUltrasStory
         // Unlocks: Ultra Drago (AstraviaJudgement / Mahapadma) + Ultra Darkon (TheWorld)
         Core.Logger("Elegy of Madness / Astravia story → Ultra Drago + Ultra Darkon");
         Astravia.CompleteCoreAstravia();
+
+        // Unlocks: Ultra Gramiel
+        Core.Logger("Hollowborn story → Ultra Gramiel");
+        Hollowborn.DoAll();
+
+        // Unlocks: Ultra Dage
+        Core.Logger("Dage Challenge story → Ultra Dage");
+        DageChallenge.DageChallengeQuests();
     }
 }
