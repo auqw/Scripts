@@ -97,7 +97,7 @@ public class NaoiseGraveLootMerge
                 case "Dragonling Bone":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("naoisegrave", "Dragonling", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("naoisegrave", "Bone Dragonling", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Volgritian's Dragon Bone":
