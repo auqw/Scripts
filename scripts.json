@@ -19093,13 +19093,18 @@
   },
   {
     "name": "FarmerJoeKit0DoAll",
-    "description": "null",
+    "description": "a start to mid-game autoprogression to setup for near endgame content",
     "tags": [
-      "null"
+      "0farmerjoedoall",
+      "farmerjoe",
+      "joedoall",
+      "doall",
+      "joe",
+      "joe mama"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 8944,
-    "sha256": "dfebbaeb6b96e15d589c09b6ca7d08af02606703f6d3dd25770797beb499e7a6",
+    "size": 9063,
+    "sha256": "ff2d115030a4c2c426961876c331c094c3ef9d0ccdced6c413460c9aa98276f3",
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
