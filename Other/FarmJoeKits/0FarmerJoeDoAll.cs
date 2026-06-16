@@ -1,7 +1,7 @@
 /*
 name: FarmerJoeKit0DoAll
-description: null
-tags: null
+description: a start to mid-game autoprogression to setup for near endgame content
+tags: 0farmerjoedoall, farmerjoe, joedoall, doall, Joe, joe mama
 */
 #region includes
 //cs_include Scripts/CoreAdvanced.cs
