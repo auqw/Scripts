@@ -689,7 +689,8 @@ public class SolsticeMoonTest
         Bot.Sleep(1000);
 
         SyncArmy($"{checkpoint}_all_in_whitemap.sync");
-
+        
+        SellHallowedRemainsIfMax();
         RefreshPotionsIfAurasMissing();
         RestockEnrageIfLow($"Before {checkpoint}", minimumCount: 80);
         EnsureEnrageEquipped("Restock");
@@ -707,6 +708,23 @@ public class SolsticeMoonTest
         return Bot.Inventory.Items
             .FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase))
             ?.Quantity ?? 0;
+    }
+
+    void SellHallowedRemainsIfMax()
+    {
+        const string itemName = "Hallowed Remains";
+        const int maxStack = 500;
+
+        int quantity = Bot.Inventory.GetQuantity(itemName);
+
+        if (quantity < maxStack)
+            return;
+
+        Core.Logger($"[Inventory] {itemName} is at max stack ({quantity}/{maxStack}). Selling all.");
+
+        Core.SellItem(itemName, all: true);
+
+        Bot.Sleep(1000);
     }
 
     void TryAcceptDailyQuest(int questId, string questName)
