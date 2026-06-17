@@ -1193,7 +1193,9 @@ public class MidnightSunTest
         WaitForMapName("whitemap", 8000);
         Bot.Sleep(1000);
         SyncArmy($"{checkpoint}_all_in_whitemap.sync");
+        RefreshPotionsIfAurasMissing();
         RestockEnrageIfLow($"Before {checkpoint}", minimumCount: 80);
+        EnsureEnrageEquipped("Restock");
         SyncArmy($"{checkpoint}_restock_done.sync");
         JoinShrineDungeon(nextMap, "Enter", "Left", force: true);
         Bot.Sleep(1000);
@@ -1205,6 +1207,31 @@ public class MidnightSunTest
         return Bot.Inventory.Items
             .FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase))
             ?.Quantity ?? 0;
+    }
+
+    void RefreshPotionsIfAurasMissing()
+    {
+        if (!usePotions)
+            return;
+
+        bool hasTonic =
+            Bot.Self.HasActiveAura("Sage") ||
+            Bot.Self.HasActiveAura("Might") ||
+            Bot.Self.HasActiveAura("Fate");
+
+        bool hasElixir =
+            Bot.Self.HasActiveAura("Potent Malevolence Elixir") ||
+            Bot.Self.HasActiveAura("Potent Battle Elixir") ||
+            Bot.Self.HasActiveAura("Potent Destruction Elixir");
+
+        if (hasTonic && hasElixir)
+        {
+            Core.Logger("[Potions] Potion auras still active. Skipping potion refresh.");
+            return;
+        }
+
+        Core.Logger("[Potions] Missing potion aura. Refreshing class potions.");
+        UseClassPotions();
     }
 
     void RestockEnrageIfLow(string context, int minimumCount = 80)
@@ -1348,20 +1375,20 @@ public class MidnightSunTest
         switch (className.ToLower())
         {
             case "legion revenant":
-                UsePotionSet("Fate Tonic", "Battle Elixir");
+                UsePotionSet("Sage Tonic", "Potent Malevolence Elixir");
                 break;
 
             case "stonecrusher":
             case "infinity titan":
-                UsePotionSet("Might Tonic", "Divine Elixir");
+                UsePotionSet("Might Tonic", "Potent Battle Elixir");
                 break;
 
             case "archpaladin":
-                UsePotionSet("Fate Tonic", "Battle Elixir");
+                UsePotionSet("Fate Tonic", "Potent Battle Elixir");
                 break;
 
             case "lord of order":
-                UsePotionSet("Fate Tonic", "Divine Elixir");
+                UsePotionSet("Fate Tonic", "Potent Destruction Elixir");
                 break;
 
             default:
@@ -1379,8 +1406,11 @@ public class MidnightSunTest
     void UsePotionItem(string itemName)
     {
         if (!Core.CheckInventory(itemName))
+            BuyAlchemyPotion(itemName);
+
+        if (!Core.CheckInventory(itemName))
         {
-            Core.Logger($"[Potions] Missing {itemName}; skipping.");
+            Core.Logger($"[Potions] Failed to get {itemName}; skipping.");
             return;
         }
 
@@ -1392,6 +1422,66 @@ public class MidnightSunTest
 
         Core.UsePotion();
         Bot.Sleep(1000);
+    }
+
+    void BuyAlchemyPotion(string itemName)
+    {
+        if (string.IsNullOrWhiteSpace(itemName) || Core.CheckInventory(itemName))
+        {
+            if (!string.IsNullOrWhiteSpace(itemName))
+                Core.Logger($"[Potions] Have: {itemName}");
+            return;
+        }
+
+        const int shopId = 2036;
+        const string map = "alchemyacademy";
+        const string voucher = "Gold Voucher 500k";
+
+        void NeedVoucher(int wanted)
+        {
+            int missing = Math.Max(0, wanted - Bot.Inventory.GetQuantity(voucher));
+
+            if (missing > 0)
+            {
+                Core.Logger($"[Potions] Buying {missing}x {voucher}.");
+                Engine.BuyItem(voucher, shopId, map, missing);
+                Bot.Sleep(500);
+            }
+        }
+
+        void BuyPotion(int count)
+        {
+            Core.Logger($"[Potions] Buying {count}x {itemName}.");
+            Engine.BuyItem(itemName, shopId, map, count, calculateRemaining: false);
+            Bot.Sleep(500);
+        }
+
+        switch (itemName)
+        {
+            case "Might Tonic":
+            case "Sage Tonic":
+            case "Fate Tonic":
+                if (!Engine.Faction("Alchemy", 8))
+                {
+                    Core.Logger("[Potions] Alchemy rank 8 required for tonic.");
+                    return;
+                }
+
+                NeedVoucher(2);
+                BuyPotion(10);
+                break;
+
+            case "Potent Malevolence Elixir":
+            case "Potent Battle Elixir":
+            case "Potent Destruction Elixir":
+                NeedVoucher(4);
+                BuyPotion(8);
+                break;
+
+            default:
+                Core.Logger($"[Potions] Unknown potion: {itemName}");
+                return;
+        }
     }
 
     void ApplyEnhancements()
