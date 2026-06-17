@@ -19988,6 +19988,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/6thBirthdaySavior.cs"
   },
   {
+    "name": "WorldCup",
+    "description": "aquires the `world cup` badge from /goal",
+    "tags": [
+      "worldcup",
+      "badge"
+    ],
+    "path": "Other/Badges/WorldCup.cs",
+    "size": 1152,
+    "sha256": "d633edc8e567ee09882f9cb4db6d7fec877b041507c82f88cafb212d5c8ba0b2",
+    "fileName": "WorldCup.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/WorldCup.cs"
+  },
+  {
     "name": "ThiefofChaos",
     "description": "null",
     "tags": [
