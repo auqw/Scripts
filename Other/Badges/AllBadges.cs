@@ -24,6 +24,7 @@ tags: badge, complete, all
 //cs_include Scripts/Story/QueenofMonsters/Extra/GoldenArena.cs
 //cs_include Scripts/Story/Cornelis[mem].cs
 //cs_include Scripts/Other/Badges/6thBirthdaySavior.cs
+//cs_include Scripts/Other/Badges/WorldCup.cs
 //cs_include Scripts/Other/Badges/BattleBabysitter.cs
 //cs_include Scripts/Other/Badges/BattleConVIP.cs
 //cs_include Scripts/Other/Badges/CelestialChampion.cs
@@ -265,6 +266,12 @@ public class AllBadges
         set => _YA = value;
     }
     private static YokaiAscension _YA;
+    private static WorldCup WC
+    {
+        get => _WC ??= new WorldCup();
+        set => _WC = value;
+    }
+    private static WorldCup _WC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -280,6 +287,7 @@ public class AllBadges
         CRB.Badge();
         SPB.Badge();
         MPB.Badge();
+        WC.Badge();
         ZPB.Badge();
         CAD.Badge();
         BS.Badge();
