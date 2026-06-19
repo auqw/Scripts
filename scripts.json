@@ -20679,6 +20679,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/TwillySupportsYou.cs"
   },
   {
+    "name": "Keraunomedicine",
+    "description": "One clean sweep quest completion for Keraunomedicine rewards",
+    "tags": [
+      "keraunomedicine",
+      ""
+    ],
+    "path": "Other/Various/Keraunomedicine.cs",
+    "size": 3044,
+    "sha256": "dc2d1252700c311885725bbd3f2f0c7d179b1e4490f99b90b7c5d2d97ccb777b",
+    "fileName": "Keraunomedicine.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Keraunomedicine.cs"
+  },
+  {
     "name": "BringTheCheer",
     "description": "null",
     "tags": [
