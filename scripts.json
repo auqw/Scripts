@@ -4605,20 +4605,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGenerator.cs"
   },
   {
-    "name": "Generate Quest Files",
-    "description": "This will generate the the files needed for the QuestData sheet and the #quest-ids channel in our discord",
+    "name": "Quest Data Sync Generator",
+    "description": "Automatically synchronizes QuestData.json by performing incremental delta updates or full rebuilds when required. Supports configurable target quest ID limits, safe bootstrap for empty datasets, and dual-file mirroring between SkuaDIR and ScriptsDIR. Includes optional full rebuild mode with automatic backups and change tracking for reliable recovery and data integrity.",
     "tags": [
-      "quests",
-      "developer",
-      "lists",
-      "files",
-      "spreadsheet",
-      "excel",
-      "data"
+      "quest sync",
+      "data generation",
+      "json sync",
+      "incremental update",
+      "full rebuild",
+      "backup system",
+      "skua automation",
+      "game data management"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 3593,
-    "sha256": "af5d7813ef0b31f9c026a336ad109bcf70d91e1baf4a40eb3ee05704e754f687",
+    "size": 12118,
+    "sha256": "d0bbb4f45e61f553c328f897ce75404988f0fc76bb18591671ca19eb1309e1ed",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
