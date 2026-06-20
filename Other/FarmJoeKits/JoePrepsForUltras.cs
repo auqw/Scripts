@@ -264,7 +264,9 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Story/VasalkarLairWar.cs
 //cs_include Scripts/Story/UnderGroundLab.cs
 //cs_include Scripts/Story/WatchTower.cs
-//cs_include Scripts/Story/WhiteTigerPoint.cs
+
+//cs_include Scripts/Story/Oasis/CoreOasis.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 //cs_include Scripts/Story/WillowCreek.cs
 //cs_include Scripts/Story/BaseCamp.cs
 //cs_include Scripts/Other/MergeShops/TerminaTempleMerge.cs

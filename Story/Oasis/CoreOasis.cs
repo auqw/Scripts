@@ -46,6 +46,97 @@ public class CoreOasis
         CrulonWed();
         MeresankhChambers();
         CarcossaCabins();
+        Whitetigerpoint();
+        VermillionCliffs();
+    }
+
+    public void Whitetigerpoint()
+    {
+        if (Core.isCompletedBefore(10329))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Astral Spirit", // UseableMonsters[0],
+            "Byakko Cub", // UseableMonsters[1],
+            "Rigel Stray", // UseableMonsters[2],
+            "Lunar Haze", // UseableMonsters[3],
+            "Byakko", // UseableMonsters[4]
+        };
+        #endregion Useable Monsters
+
+        // 10320 | Stellar Dynamics
+        if (!Story.QuestProgression(10320))
+        {
+            Core.HuntMonsterQuest(10320, ("whitetigerpoint", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10321 | Hokey Horoscope
+        if (!Story.QuestProgression(10321))
+        {
+            Story.MapItemQuest(10321, "whitetigerpoint", 14656);
+            Story.MapItemQuest(10321, "whitetigerpoint", 14657, 2);
+        }
+
+        // 10322 | Tokaki
+        if (!Story.QuestProgression(10322))
+        {
+            Core.HuntMonsterQuest(10322, ("whitetigerpoint", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10323 | Ekie
+        if (!Story.QuestProgression(10323))
+        {
+            Story.MapItemQuest(10323, "whitetigerpoint", 14658);
+            Story.MapItemQuest(10323, "whitetigerpoint", 14659, 2);
+        }
+
+        // 10324 | Subaru
+        if (!Story.QuestProgression(10324))
+        {
+            Core.HuntMonsterQuest(
+                10324,
+                ("whitetigerpoint", UseableMonsters[1], ClassType.Farm),
+                ("whitetigerpoint", UseableMonsters[0], ClassType.Farm)
+            );
+        }
+
+        // 10325 | Kagasuki
+        if (!Story.QuestProgression(10325))
+        {
+            Core.HuntMonsterQuest(10325, ("whitetigerpoint", UseableMonsters[2], ClassType.Farm));
+        }
+
+        // 10326 | Amefuri
+        if (!Story.QuestProgression(10326))
+        {
+            Core.HuntMonsterQuest(10326, ("whitetigerpoint", UseableMonsters[3], ClassType.Farm));
+        }
+
+        // 10327 | Tatara
+        if (!Story.QuestProgression(10327))
+        {
+            Story.MapItemQuest(10327, "whitetigerpoint", 14660);
+        }
+
+        // 10328 | Toroki
+        if (!Story.QuestProgression(10328))
+        {
+            Core.HuntMonsterQuest(
+                10328,
+                ("whitetigerpoint", UseableMonsters[3], ClassType.Farm),
+                ("whitetigerpoint", UseableMonsters[2], ClassType.Farm)
+            );
+        }
+
+        // 10329 | Komokuten
+        if (!Story.QuestProgression(10329))
+        {
+            Core.HuntMonsterQuest(10329, ("whitetigerpoint", UseableMonsters[4], ClassType.Solo));
+        }
     }
 
     public void DuatPalace()
@@ -332,5 +423,85 @@ public class CoreOasis
         }
     }
 
+    public void VermillionCliffs()
+    {
+        if (Core.isCompletedBefore(10772))
+            return;
 
+        Whitetigerpoint();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Star Sweet", // UseableMonsters[0],
+            "Tejat Muse Moth", // UseableMonsters[1],
+            "Dawn Knight", // UseableMonsters[2],
+            "Vermillion Phoenix", // UseableMonsters[3],
+            "Suzaku", // UseableMonsters[4]
+        };
+        #endregion Useable Monsters
+
+        // 10765 | Tamahome
+        if (!Story.QuestProgression(10765))
+        {
+            Story.MapItemQuest(10765, "vermillioncliffs", 15885, 6);
+            Core.HuntMonsterQuest(10765,
+                ("vermillioncliffs", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10766 | Tasuki
+        if (!Story.QuestProgression(10766))
+        {
+            Story.MapItemQuest(10766, "vermillioncliffs", 15886, 6);
+            Core.HuntMonsterQuest(10766,
+                ("vermillioncliffs", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10767 | Mitsutake
+        if (!Story.QuestProgression(10767))
+        {
+            Core.HuntMonsterQuest(10767,
+                ("vermillioncliffs", UseableMonsters[0], ClassType.Farm),
+                ("vermillioncliffs", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10768 | Nuriko
+        if (!Story.QuestProgression(10768))
+        {
+            Story.MapItemQuest(10768, "vermillioncliffs", new[] { 15887, 15888 });
+        }
+
+        // 10769 | Chiriko
+        if (!Story.QuestProgression(10769))
+        {
+            Core.HuntMonsterQuest(10769,
+                ("vermillioncliffs", UseableMonsters[2], ClassType.Farm));
+        }
+
+        // 10770 | Chichiri
+        if (!Story.QuestProgression(10770))
+        {
+            Core.HuntMonsterQuest(10770,
+                ("vermillioncliffs", UseableMonsters[3], ClassType.Farm));
+        }
+
+        // 10771 | Hotohori
+        if (!Story.QuestProgression(10771))
+        {
+            Core.HuntMonsterQuest(10771,
+                ("vermillioncliffs", UseableMonsters[2], ClassType.Solo),
+                ("vermillioncliffs", UseableMonsters[3], ClassType.Solo));
+        }
+
+        // 10772 | Zochoten
+        if (!Story.QuestProgression(10772))
+        {
+            Core.HuntMonsterQuest(10772,
+                ("vermillioncliffs", UseableMonsters[4], ClassType.Solo));
+        }
+
+
+    }
 }

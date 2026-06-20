@@ -203,7 +203,9 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/VasalkarLairWar.cs
 
 //cs_include Scripts/Story/WatchTower.cs
-//cs_include Scripts/Story/WhiteTigerPoint.cs
+
+//cs_include Scripts/Story/Oasis/CoreOasis.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 //cs_include Scripts/Story/WillowCreek.cs
 
 //cs_include Scripts/Story/XansLair.cs
@@ -1196,12 +1198,12 @@ public class AllStories
         set => _WatchTower = value;
     }
     private static WatchTower _WatchTower;
-    private static Whitetigerpoint WhiteTigerPoint
+    private static CoreOasis COA
     {
-        get => _WhiteTigerPoint ??= new Whitetigerpoint();
-        set => _WhiteTigerPoint = value;
+        get => _COA ??= new CoreOasis();
+        set => _COA = value;
     }
-    private static Whitetigerpoint _WhiteTigerPoint;
+    private static CoreOasis _COA;
     private static WillowCreek WillowCreek
     {
         get => _WillowCreek ??= new WillowCreek();
@@ -1782,7 +1784,7 @@ public class AllStories
         WatchTower.StoryLine();
         Core.Logger($"Story: WatchTower - Complete");
 
-        WhiteTigerPoint.DoStory();
+        COA.Whitetigerpoint();
         Core.Logger($"Story: White Tiger Point - Complete");
 
         WillowCreek.StoryLine();

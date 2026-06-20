@@ -5,7 +5,9 @@ tags: whitetigerpoint, merge, whitetigerpoint, aureate, white, tiger, starbound,
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/Story/WhiteTigerPoint.cs
+
+//cs_include Scripts/Story/Oasis/CoreOasis.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
@@ -22,12 +24,12 @@ public class WhiteTigerPointMerge
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
-    private static Whitetigerpoint whitetigerpoint
+    private static CoreOasis COA
     {
-        get => _whitetigerpoint ??= new Whitetigerpoint();
-        set => _whitetigerpoint = value;
+        get => _COA ??= new CoreOasis();
+        set => _COA = value;
     }
-    private static Whitetigerpoint _whitetigerpoint;
+    private static CoreOasis _COA;
     private static CoreAdvanced Adv
     {
         get => _Adv ??= new CoreAdvanced();
@@ -71,7 +73,7 @@ public class WhiteTigerPointMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        whitetigerpoint.DoStory();
+        COA.Whitetigerpoint();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge(
             "whitetigerpoint",
