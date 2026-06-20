@@ -77,7 +77,7 @@ public class NovaOmiyageMerge
 
                 #region Items not setup
 
-                case "v":
+                case "Suzaku's Stardust":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(!string.IsNullOrEmpty(Core.BossClass) && System.Enum.TryParse(Core.BossClass, true, out ClassType bossClass) ? bossClass : ClassType.Solo);
                     Core.AddDrop(req.ID);
