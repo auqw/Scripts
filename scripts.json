@@ -14921,6 +14921,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/OriginulMerge.cs"
   },
   {
+    "name": "Nova Omiyage Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Nova Omiyage Merge [2735] in /vermillioncliffs",
+    "tags": [
+      "nova",
+      "omiyage",
+      "merge",
+      "vermillioncliffs",
+      "stardiviner",
+      "suzaku",
+      "constellation",
+      "mystique",
+      "house",
+      "guard",
+      "winged"
+    ],
+    "path": "Other/MergeShops/NovaOmiyageMerge.cs",
+    "size": 5350,
+    "sha256": "93ee36aced2970fc38c4c69029170f3fe4c4b2dd037e9da903d76927fb33aa39",
+    "fileName": "NovaOmiyageMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NovaOmiyageMerge.cs"
+  },
+  {
     "name": "Thirdspell Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Thirdspell Merge [892] in /thirdspell",
     "tags": [
@@ -24849,6 +24871,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/Tercessuinotlim.cs"
   },
   {
+    "name": "VermillioncCiffs Story",
+    "description": "This will finish the VermillioncCiffs Story.",
+    "tags": [
+      "story",
+      "quest",
+      "crulon wed",
+      "vermillioncciffs"
+    ],
+    "path": "Story/Oasis/07VermillioncCiffs.cs",
+    "size": 1171,
+    "sha256": "4144d00cedffb61395ad7a39e3ded1a7f0c89e56c563cc311d4c8660ef97fd54",
+    "fileName": "07VermillioncCiffs.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/07VermillioncCiffs.cs"
+  },
+  {
     "name": "CrocRiver Story",
     "description": "This will finish the Duat Palace Story.",
     "tags": [
@@ -24877,6 +24914,21 @@
     "sha256": "1bcb8c4d4f30b8abe3334d92eecf72dce7f38f77a353f6244fd71bd591848489",
     "fileName": "01DuatPalace.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/01DuatPalace.cs"
+  },
+  {
+    "name": "WhiteTigerpoint Story",
+    "description": "This will finish the WhiteTigerpoint Story.",
+    "tags": [
+      "story",
+      "quest",
+      "crulon wed",
+      "whitetigerpoint"
+    ],
+    "path": "Story/Oasis/06WhiteTigerpoint.cs",
+    "size": 1166,
+    "sha256": "b841e599ce998ed8b31b20d33e71ae2d62e6afa864259197bf42e23305db3a97",
+    "fileName": "06WhiteTigerpoint.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/06WhiteTigerpoint.cs"
   },
   {
     "name": "CarcossaCabins Story",
