@@ -2347,22 +2347,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Yokai.cs"
   },
   {
-    "name": "WhiteTigerPoint",
-    "description": "Does the quests in /whitetigerpoint.",
-    "tags": [
-      "whitetigerpoint",
-      "storyline",
-      "story",
-      "white tiger point",
-      "white tiger point storyline"
-    ],
-    "path": "Story/WhiteTigerPoint.cs",
-    "size": 3410,
-    "sha256": "1a974aeb63ad6127592232c3ed0299e6c54d09bc0c022a59a1570647b8d40128",
-    "fileName": "WhiteTigerPoint.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/WhiteTigerPoint.cs"
-  },
-  {
     "name": "River Story",
     "description": "This will finish the River Story.",
     "tags": [
@@ -2876,8 +2860,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 53487,
-    "sha256": "cad67098ce7d68e71357e80b63b5da3ed9dafa357453a38ff8f05b2f310eb7ed",
+    "size": 53471,
+    "sha256": "ae430f9db1455c25b3c05159e719784c044833542c17491b2e97350c9cd1befd",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -4618,8 +4602,8 @@
       "game data management"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 12118,
-    "sha256": "d0bbb4f45e61f553c328f897ce75404988f0fc76bb18591671ca19eb1309e1ed",
+    "size": 12234,
+    "sha256": "c6d0735f14aaf1946f5fe8b4f10a03294507feaee9b0432e40f4a3b3c7ab50c5",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
@@ -13930,8 +13914,8 @@
       "house"
     ],
     "path": "Other/MergeShops/WhiteTigerPointMerge.cs",
-    "size": 6813,
-    "sha256": "936a3b51a87cab78adeca2b3165f4e6207a75c5079298091f5f59b6fd697f704",
+    "size": 6797,
+    "sha256": "aa80c23f4830b45e6f5deec057da8e7ff79937671b1721b79392aa3838e5d046",
     "fileName": "WhiteTigerPointMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WhiteTigerPointMerge.cs"
   },
@@ -19075,8 +19059,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 28084,
-    "sha256": "c908cb2878fa56363d24896f4727e6b59f1d901324838ca5ae94a5dbda7a3c8f",
+    "size": 28138,
+    "sha256": "a115efe9bae05c8aeb30f781ee1888f627fd3c915a5c3b6092f0ca4415415080",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
@@ -24931,8 +24915,8 @@
       "null"
     ],
     "path": "Story/Oasis/CoreOasis.cs",
-    "size": 9214,
-    "sha256": "7aa01bc4e0000de882e70c76b3a74082d3d613780e4fc56ac63d740405de4637",
+    "size": 14456,
+    "sha256": "dbb747d02b3918f755768f18d59471922d527be3a0c809d546d6bb19d95e2383",
     "fileName": "CoreOasis.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/CoreOasis.cs"
   },
