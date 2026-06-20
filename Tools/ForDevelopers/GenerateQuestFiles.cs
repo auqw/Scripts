@@ -272,8 +272,8 @@ public class QuestFileUpdater
 
         SaveAndMirror(existingData, clientPath, scriptsPath);
 
-        Core.Logger($"Done | Total: {existingData.Count} | Added: {added} | Updated: {updated}");
-
+        int lastQuestID = existingData.Count > 0 ? existingData.Max(x => x.ID) : 0;
+        Core.Logger($"Done | Total: {existingData.Count} | Added: {added} | Updated: {updated} | EndFile QuestID: {lastQuestID}");
         Cleanup();
     }
 
