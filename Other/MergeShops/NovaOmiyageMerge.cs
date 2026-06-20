@@ -78,15 +78,10 @@ public class NovaOmiyageMerge
                 #region Items not setup
 
                 case "Suzaku's Stardust":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(!string.IsNullOrEmpty(Core.BossClass) && System.Enum.TryParse(Core.BossClass, true, out ClassType bossClass) ? bossClass : ClassType.Solo);
                     Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10775 : 10773);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
                         Core.HuntMonster("whitetigerpoint", "Byakko", req.Name, req.Quantity, req.Temp);
