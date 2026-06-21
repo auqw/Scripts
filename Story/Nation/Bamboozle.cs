@@ -76,13 +76,13 @@ public class Bamboozle
             Core.EnsureComplete(7278);
         }
 
-        //Dark Bloodstone
+        //Trade for the Dark Bloodstone
         if (!Story.QuestProgression(7280))
         {
             if (!Core.CheckInventory("Dark Bloodstone"))
             {
                 Core.EnsureAcceptmultiple(new[] { 7280, 7281 });
-                Core.HuntMonster("safiria", "Blood Maggot", "Blood Gem", 10);
+                Core.HuntMonster("castletunnels", "Blood Maggot", "Blood Gem", 10);
                 Core.EnsureComplete(7281);
                 Bot.Wait.ForPickup("Dark Bloodstone");
             }
