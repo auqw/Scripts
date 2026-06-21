@@ -51,7 +51,7 @@ public class BlazingBeachStory
         Story.KillQuest(
             8703,
             "blazingbeach",
-            new[] { "Magma Pirate", "Magma Pirate", "Scalding Shooter" }
+            new[] { "Magma Pirate", "Burning Bombadier", "Red-Hot Raider" }
         );
 
         // Canned Heat
