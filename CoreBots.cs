@@ -227,7 +227,7 @@ public class CoreBots
             {
                 retries++;
 
-                if (!Bot.Servers.CachedServers.Any())
+                if (Bot.Servers.CachedServers == null || !Bot.Servers.CachedServers.Any())
                 {
                     Logger("Server list not ready, waiting...");
                     Sleep(3000);
@@ -277,7 +277,7 @@ public class CoreBots
         {
             if (Bot.Player.ServerIP == "sockpuppet.aq.com")
             {
-                Logger("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manually\n" + "*or* set your manager to a non-Test server", stopBot: true );
+                Logger("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manually\n" + "*or* set your manager to a non-Test server", stopBot: true);
             }
         }
 
@@ -2642,8 +2642,8 @@ public class CoreBots
         // Wait for the popup label to confirm the shop UI is fully ready
         Bot.Wait.ForTrue(() =>
         {
-            string label = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
-            string flashID = Bot.Flash.GetGameObject("world.shopinfo.ShopID");
+            string? label = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
+            string? flashID = Bot.Flash.GetGameObject("world.shopinfo.ShopID");
             return (label == "Shop" || label == "MergeShop" || label == "HouseShop")
                 && flashID == shopID.ToString();
         }, 20);
@@ -2709,7 +2709,7 @@ public class CoreBots
 
     public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, int itemID, int shopItemID = 0)
     {
-        if (shopItems?.Count == 0)
+        if (shopItems == null || shopItems.Count == 0)
         {
             Logger($"Shop {shopID} has no items loaded.");
             return null;
