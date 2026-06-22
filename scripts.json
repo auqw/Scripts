@@ -4602,8 +4602,8 @@
       "game data management"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 12234,
-    "sha256": "c6d0735f14aaf1946f5fe8b4f10a03294507feaee9b0432e40f4a3b3c7ab50c5",
+    "size": 12236,
+    "sha256": "aa86576e3baf00b0d24b8787164b675dd5f5f51bcf5ad4afda9af45ab5ce4e13",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
