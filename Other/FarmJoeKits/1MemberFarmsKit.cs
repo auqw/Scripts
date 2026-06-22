@@ -349,8 +349,8 @@ public class MemberFarm
         Core.ToBank("Legendary Elemental Warrior");
 
         // Dark / Legendary Hero
-        Adv.BuyItem(Bot.Map?.Name, 679, "Legendary Hero", shopItemID: 11597);
-        Adv.BuyItem(Bot.Map?.Name, 679, "Dark Legendary Hero", shopItemID: 11668);
+        Adv.BuyItem(Bot.Map?.Name ?? "battleon", 679, "Legendary Hero", shopItemID: 11597);
+        Adv.BuyItem(Bot.Map?.Name ?? "battleon", 679, "Dark Legendary Hero", shopItemID: 11668);
         Adv.RankUpClass(17178); // Legendary Hero
         Adv.RankUpClass(18706); // Dark Legendary Hero
 
