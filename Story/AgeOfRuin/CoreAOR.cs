@@ -474,13 +474,18 @@ public class CoreAOR
         // 2) SoloClass
         // 3) First owned meta solo class
         // 4) Currently equipped class
-        string selectedClass =
+        string? selectedClass =
       !string.IsNullOrWhiteSpace(Core.BossClass) ? Core.BossClass :
       !string.IsNullOrWhiteSpace(Core.SoloClass) ? Core.SoloClass :
       possibleSoloClasses.FirstOrDefault(ownedClasses.Contains) ??
       Bot.Player?.CurrentClass?.Name ??
       Bot.Player?.CurrentClass?.Name;
 
+        if (selectedClass == null)
+        {
+            Core.Logger("No suitable class found for soloing \"Voice of the Sea\". Pleaseensure you own one of the recommended classes.");
+            return;
+        }
         Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
         Adv.GearStore(EnhAfter: true);
