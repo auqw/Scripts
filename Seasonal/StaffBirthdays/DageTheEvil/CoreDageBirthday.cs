@@ -586,14 +586,14 @@ public class CoreDageBirthday
             if (Bot.Player?.Cell != "Arena3")
                 Core.Jump("Arena3");
         Retry:
-            Monster CultLeader = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 30);
+            Monster? CultLeader = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 30);
 
-            while (!Bot.ShouldExit && CultLeader.State == 2 /* invulnerable */)
+            while (!Bot.ShouldExit && CultLeader != null && CultLeader.State == 2 /* invulnerable */)
             {
                 Core.KillMonster("reapfinals", "arena3", "Bottom", "Legion Ritualist");
                 // Re-snapshop leader for state
                 CultLeader = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 30);
-                if (CultLeader.State != 2)
+                if (CultLeader != null && CultLeader.State != 2)
                 {
                     Core.KillMonster("reapfinals", "arena3", "Bottom", "Ritualist Leader");
                     if (Bot.TempInv.Contains("Ritualist's Candle"))
@@ -625,9 +625,9 @@ public class CoreDageBirthday
             if (Bot.Player?.Cell != "Arena5")
                 Core.Jump("Arena5");
 
-            Monster Rhadamanthys = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 35);
-            Monster Minos = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 37);
-            Monster Aeacus = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 36);
+            Monster? Rhadamanthys = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 35);
+            Monster? Minos = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 37);
+            Monster? Aeacus = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 36);
 
             while (!Bot.ShouldExit)
             {
@@ -640,9 +640,9 @@ public class CoreDageBirthday
                 Minos = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 37);
                 Aeacus = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 36);
 
-                if (Rhadamanthys.Alive)
+                if (Rhadamanthys != null && Rhadamanthys.Alive)
                     Bot.Combat.Attack("Rhadamanthys");
-                else if (Minos.Alive)
+                else if (Minos != null && Minos.Alive)
                     Bot.Combat.Attack("Minos");
                 else
                     Bot.Combat.Attack("Aeacus");
@@ -704,8 +704,8 @@ public class CoreDageBirthday
             if (Bot.Player?.Cell != "Arena8")
                 Core.Jump("Arena8", "Bottom");
 
-            Monster TheBlackRider = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 41);
-            Monster GeneralVaughn = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 42);
+            Monster? TheBlackRider = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 41);
+            Monster? GeneralVaughn = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 42);
 
             while (!Bot.ShouldExit)
             {
@@ -717,7 +717,7 @@ public class CoreDageBirthday
                 TheBlackRider = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 41);
                 GeneralVaughn = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 42);
 
-                if (GeneralVaughn.Alive)
+                if (GeneralVaughn != null && GeneralVaughn.Alive)
                     Bot.Combat.Attack(42);
                 else
                     Bot.Combat.Attack(41);
