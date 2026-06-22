@@ -41,7 +41,7 @@ public class MidnightSunTest
     public List<IOption> Options = new()
     {
         new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
-        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
+        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""),
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
         new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
 
@@ -51,7 +51,7 @@ public class MidnightSunTest
             "Private room number used by all 4 accounts. Set the same number on every account!",
             69420
         ),
-        
+
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -699,7 +699,7 @@ public class MidnightSunTest
             }
 
             bool isStoneCrusher = string.Equals(Bot.Player.CurrentClass?.Name, "StoneCrusher", StringComparison.OrdinalIgnoreCase) || string.Equals(Bot.Player.CurrentClass?.Name, "Infinity Titan", StringComparison.OrdinalIgnoreCase);
-            
+
             bool isLegionRevenant = string.Equals(Bot.Player.CurrentClass?.Name, "Legion Revenant", StringComparison.OrdinalIgnoreCase);
             bool isArchPaladin = string.Equals(Bot.Player.CurrentClass?.Name, "ArchPaladin", StringComparison.OrdinalIgnoreCase);
 
@@ -811,8 +811,8 @@ public class MidnightSunTest
 
     void BossFight(string monster, string cell, string enrageMessage, bool isTaunter, int tauntOffsetSeconds = 0, string startingTaunterConfig = "player2")
     {
-        bool needsEnrage    = false;
-        bool usedEnrage     = false;
+        bool needsEnrage = false;
+        bool usedEnrage = false;
         bool usedLastEnrage = isTaunter &&
             Bot.Player.Username.Equals(Bot.Config!.Get<string>(startingTaunterConfig) ?? "", StringComparison.OrdinalIgnoreCase);
         DateTimeOffset tauntTime = DateTimeOffset.MinValue;
@@ -947,21 +947,21 @@ public class MidnightSunTest
                     data = packet?["b"]?["o"];
                 }
 
-                if (data == null || data["cmd"]?.ToString() != "ct") return;
+                if (data == null || data?["cmd"]?.ToString() != "ct") return;
 
                 bool triggered = false;
-                if (data["anims"] != null)
+                if (data?["anims"] != null)
                     foreach (var a in data.anims)
-                        if (a?.msg != null && ((string)a.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (a?.msg != null && ((string)a!.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
                         { triggered = true; break; }
 
-                if (!triggered && data["a"] != null)
-                    foreach (var a in data.a)
-                        if (a != null && a["cmd"]?.ToString() == "aura+" && a["auras"] != null)
-                            foreach (var aura in a["auras"])
+                if (!triggered && data?["a"] != null)
+                    foreach (var a in data!.a)
+                        if (a != null && a!["cmd"]?.ToString() == "aura+" && a?["auras"] != null)
+                            foreach (var aura in a!["auras"])
                                 if (aura?.msgOn != null &&
-                                    ((string)aura.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
-                                    (bool)aura.isNew)
+                                    ((string)aura!.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
+                                    (bool)aura!.isNew)
                                 { triggered = true; break; }
 
                 if (!triggered) return;
@@ -1283,7 +1283,7 @@ public class MidnightSunTest
     {
         JoinShrineDungeon(map, cell, pad);
 
-        if (Bot.Map.PlayerNames.Count() < sArmy.Players().Length)
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count() < sArmy.Players().Length)
         {
             Core.Logger($"Only {Bot.Map.PlayerNames.Count()}/{sArmy.Players().Length} players in /{map}-{Core.PrivateRoomNumber}; retrying.");
             JoinShrineDungeon(map, cell, pad, force: true);
@@ -1341,7 +1341,7 @@ public class MidnightSunTest
         string? p3 = Bot.Config!.Get<string>("player3");
         string? p4 = Bot.Config!.Get<string>("player4");
 
-        if      (username.Equals(p1, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player1Class);
+        if (username.Equals(p1, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player1Class);
         else if (username.Equals(p2, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player2Class);
         else if (username.Equals(p3, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player3Class);
         else if (username.Equals(p4, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player4Class);
