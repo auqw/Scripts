@@ -955,7 +955,7 @@ public class CoreAdvanced
 
             // Process all requirements for this item
             ProcessItemWithDependencies(item, 1, map, shopID, findIngredients, acquiredItems: acquiredItems);
-            
+
             // After dependencies are handled, check if we can buy the main item
             EnsureShopLoaded(map, shopID);
             if (item.Requirements.All(x => x != null && Core.CheckInventory(x.ID, x.Quantity)))
@@ -1419,7 +1419,7 @@ public class CoreAdvanced
         if (log)
             Core.Logger($"Killing Ultra-Boss {monster} for {item} ({quant}) [Temp = {isTemp}]");
 
-        Bot.Hunt.ForItem(monster, item, quant, isTemp);
+        Bot.Hunt.ForItem(monster, item!, quant, isTemp);
 
         if (!forAuto)
             GearStore(true);
