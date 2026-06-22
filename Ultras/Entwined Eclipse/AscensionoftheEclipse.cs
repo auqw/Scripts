@@ -769,15 +769,15 @@ public class AscendEclipseTest
                     data = packet?["b"]?["o"];
                 }
 
-                if (data == null || data["cmd"]?.ToString() != "ct")
+                if (data == null || data!["cmd"]?.ToString() != "ct")
                     return;
 
                 bool sunTriggered = false;
                 bool moonTriggered = false;
 
-                if (data["anims"] != null)
+                if (data!["anims"] != null)
                 {
-                    foreach (var a in data.anims)
+                    foreach (var a in data!.anims)
                     {
                         if (a?.msg == null)
                             continue;
@@ -796,15 +796,15 @@ public class AscendEclipseTest
                 {
                     foreach (var a in data.a)
                     {
-                        if (a == null || a["cmd"]?.ToString() != "aura+" || a["auras"] == null)
+                        if (a == null || a!["cmd"]?.ToString() != "aura+" || a!["auras"] == null)
                             continue;
 
-                        foreach (var aura in a["auras"])
+                        foreach (var aura in a!["auras"])
                         {
-                            if (aura?.msgOn == null || !(bool)aura.isNew)
+                            if (aura?.msgOn == null || !(bool)aura!.isNew)
                                 continue;
 
-                            string msg = (string)aura.msgOn;
+                            string msg = (string)aura!.msgOn;
 
                             if (msg.IndexOf("The Sun Converges", StringComparison.OrdinalIgnoreCase) >= 0)
                                 sunTriggered = true;
@@ -1169,21 +1169,21 @@ public class AscendEclipseTest
                     data = packet?["b"]?["o"];
                 }
 
-                if (data == null || data["cmd"]?.ToString() != "ct") return;
+                if (data == null || data!["cmd"]?.ToString() != "ct") return;
 
                 bool triggered = false;
-                if (data["anims"] != null)
-                    foreach (var a in data.anims)
-                        if (a?.msg != null && ((string)a.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (data!["anims"] != null)
+                    foreach (var a in data!.anims)
+                        if (a?.msg != null && ((string)a!.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
                         { triggered = true; break; }
 
-                if (!triggered && data["a"] != null)
-                    foreach (var a in data.a)
-                        if (a != null && a["cmd"]?.ToString() == "aura+" && a["auras"] != null)
-                            foreach (var aura in a["auras"])
+                if (!triggered && data!["a"] != null)
+                    foreach (var a in data!.a)
+                        if (a != null && a!["cmd"]?.ToString() == "aura+" && a!["auras"] != null)
+                            foreach (var aura in a!["auras"])
                                 if (aura?.msgOn != null &&
-                                    ((string)aura.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
-                                    (bool)aura.isNew)
+                                    ((string)aura!.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
+                                    (bool)aura!.isNew)
                                 { triggered = true; break; }
 
                 if (!triggered) return;
