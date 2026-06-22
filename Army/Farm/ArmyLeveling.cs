@@ -82,7 +82,7 @@ public class ArmyLeveling
 
     void Leveling()
     {
-        if (!Bot.Config.Get<bool>("Solo"))
+        if (!Bot.Config!.Get<bool>("Solo"))
         {
             if (sArmy.Players().Length <= 0)
             {
