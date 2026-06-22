@@ -41,7 +41,7 @@ public class SolsticeMoonTest
     public List<IOption> Options = new()
     {
         new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
-        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
+        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""),
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
         new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
 
@@ -51,7 +51,7 @@ public class SolsticeMoonTest
             "Private room number used by all 4 accounts. Set the same number on every account!",
             69420
         ),
-        
+
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
 
@@ -75,13 +75,13 @@ public class SolsticeMoonTest
     };
 
     // ── Item names ────────────────────────────────────────────────────────────
-    const string SliverSunlight    = "Sliver of Sunlight";
-    const string SliverMoonlight   = "Sliver of Moonlight";
-    const string Solarbrand        = "Solarbrand";
-    const string Lunarbrand        = "Lunarbrand";
-    const string BladeBurningSun   = "Blade of the Burning Sun";
-    const string BladeGlowingMoon  = "Blade of the Glowing Moon";
-    const string GreatMidnightSun  = "Greatblade of the Midnight Sun";
+    const string SliverSunlight = "Sliver of Sunlight";
+    const string SliverMoonlight = "Sliver of Moonlight";
+    const string Solarbrand = "Solarbrand";
+    const string Lunarbrand = "Lunarbrand";
+    const string BladeBurningSun = "Blade of the Burning Sun";
+    const string BladeGlowingMoon = "Blade of the Glowing Moon";
+    const string GreatMidnightSun = "Greatblade of the Midnight Sun";
     const string GreatSolsticeMoon = "Greatblade of the Solstice Moon";
     // EO phase items — uncomment when ascendeclipse is ready
     // const string EclipticOffering  = "Ecliptic Offering"; // confirm: "Hallowed Remains"?
@@ -90,15 +90,15 @@ public class SolsticeMoonTest
     // const string GreatEntwinedEcl  = "Greatblade of the Entwined Eclipse";
 
     // ── Shop ─────────────────────────────────────────────────────────────────
-    const string MergeMap  = "templeshrine";
-    const int    MergeShop = 2303;
+    const string MergeMap = "templeshrine";
+    const int MergeShop = 2303;
 
     // Shop item IDs (prevents name-lookup ambiguity)
-    const int ID_Solarbrand        = 78465;
-    const int ID_Lunarbrand        = 78460;
-    const int ID_BladeBurningSun   = 78466;
-    const int ID_BladeGlowingMoon  = 78461;
-    const int ID_GreatMidnightSun  = 78467;
+    const int ID_Solarbrand = 78465;
+    const int ID_Lunarbrand = 78460;
+    const int ID_BladeBurningSun = 78466;
+    const int ID_BladeGlowingMoon = 78461;
+    const int ID_GreatMidnightSun = 78467;
     const int ID_GreatSolsticeMoon = 78462;
     // const int ID_Umbrabrand        = 78455;
     // const int ID_BladeBoundEclipse = 78456;
@@ -113,7 +113,7 @@ public class SolsticeMoonTest
     // Lunarbrand ×3  (5  Moon ea) →  15 Moon
     // BGM        ×2  (50 Moon ea) → 100 Moon
     // GreatSolMoon   (100 Moon)   → 100 Moon ─── 215 Moon total
-    const int SunlightNeeded  = 215;
+    const int SunlightNeeded = 215;
     const int MoonlightNeeded = 215;
 
     bool autoEnhance;
@@ -229,23 +229,23 @@ public class SolsticeMoonTest
         Core.Logger("Mode: Merge As Available");
 
         // Iteration 1 — first Solarbrand, Lunarbrand, BBS, BGM
-        FarmSunlightTo(5);   MergeToHave(Solarbrand,       ID_Solarbrand,       1);
-        FarmMoonlightTo(5);  MergeToHave(Lunarbrand,       ID_Lunarbrand,       1);
-        FarmSunlightTo(50);  MergeToHave(BladeBurningSun,  ID_BladeBurningSun,  1);
+        FarmSunlightTo(5); MergeToHave(Solarbrand, ID_Solarbrand, 1);
+        FarmMoonlightTo(5); MergeToHave(Lunarbrand, ID_Lunarbrand, 1);
+        FarmSunlightTo(50); MergeToHave(BladeBurningSun, ID_BladeBurningSun, 1);
         FarmMoonlightTo(50); MergeToHave(BladeGlowingMoon, ID_BladeGlowingMoon, 1);
 
         // Iteration 2 — second set
-        FarmSunlightTo(5);   MergeToHave(Solarbrand,       ID_Solarbrand,       2);
-        FarmMoonlightTo(5);  MergeToHave(Lunarbrand,       ID_Lunarbrand,       2);
-        FarmSunlightTo(50);  MergeToHave(BladeBurningSun,  ID_BladeBurningSun,  2);
+        FarmSunlightTo(5); MergeToHave(Solarbrand, ID_Solarbrand, 2);
+        FarmMoonlightTo(5); MergeToHave(Lunarbrand, ID_Lunarbrand, 2);
+        FarmSunlightTo(50); MergeToHave(BladeBurningSun, ID_BladeBurningSun, 2);
         FarmMoonlightTo(50); MergeToHave(BladeGlowingMoon, ID_BladeGlowingMoon, 2);
 
         // Third Solar + Lunar (held for Umbrabrand in the EO phase)
-        FarmSunlightTo(5);  MergeToHave(Solarbrand,  ID_Solarbrand,  3);
-        FarmMoonlightTo(5); MergeToHave(Lunarbrand,   ID_Lunarbrand,  3);
+        FarmSunlightTo(5); MergeToHave(Solarbrand, ID_Solarbrand, 3);
+        FarmMoonlightTo(5); MergeToHave(Lunarbrand, ID_Lunarbrand, 3);
 
         // Greatblades — one per side
-        FarmSunlightTo(100);  MergeToHave(GreatMidnightSun,  ID_GreatMidnightSun,  1);
+        FarmSunlightTo(100); MergeToHave(GreatMidnightSun, ID_GreatMidnightSun, 1);
         FarmMoonlightTo(100); MergeToHave(GreatSolsticeMoon, ID_GreatSolsticeMoon, 1);
 
         Core.Logger("Basic blade chain complete! Remaining: 1× Solarbrand, 1× Lunarbrand, 1× BBS, 1× BGM — held for the Ecliptic Offering phase.");
@@ -257,14 +257,14 @@ public class SolsticeMoonTest
     {
         Core.Logger("Starting basic blade merge chain...");
         // 3× Solarbrand — 2 consumed by BBS, 1 held for Umbrabrand
-        MergeToHave(Solarbrand,       ID_Solarbrand,       3);
+        MergeToHave(Solarbrand, ID_Solarbrand, 3);
         // 3× Lunarbrand — 2 consumed by BGM, 1 held for Umbrabrand
-        MergeToHave(Lunarbrand,       ID_Lunarbrand,       3);
+        MergeToHave(Lunarbrand, ID_Lunarbrand, 3);
         // 2× BBS — 1 consumed by GreatMidnightSun, 1 held for BoBE
-        MergeToHave(BladeBurningSun,  ID_BladeBurningSun,  2);
+        MergeToHave(BladeBurningSun, ID_BladeBurningSun, 2);
         // 2× BGM — 1 consumed by GreatSolsticeMoon, 1 held for BoBE
         MergeToHave(BladeGlowingMoon, ID_BladeGlowingMoon, 2);
-        MergeToHave(GreatMidnightSun,  ID_GreatMidnightSun,  1);
+        MergeToHave(GreatMidnightSun, ID_GreatMidnightSun, 1);
         MergeToHave(GreatSolsticeMoon, ID_GreatSolsticeMoon, 1);
         Core.Logger("Basic blade chain complete! Remaining: 1× Solarbrand, 1× Lunarbrand, 1× BBS, 1× BGM — held for the Ecliptic Offering phase.");
     }
@@ -275,7 +275,7 @@ public class SolsticeMoonTest
     /// </summary>
     void MergeToHave(string itemName, int shopItemID, int targetTotal)
     {
-        int have  = Bot.Inventory.GetQuantity(itemName);
+        int have = Bot.Inventory.GetQuantity(itemName);
         int toBuy = targetTotal - have;
         if (toBuy <= 0) return;
 
@@ -689,7 +689,7 @@ public class SolsticeMoonTest
         Bot.Sleep(1000);
 
         SyncArmy($"{checkpoint}_all_in_whitemap.sync");
-        
+
         SellHallowedRemainsIfMax();
         RefreshPotionsIfAurasMissing();
         RestockEnrageIfLow($"Before {checkpoint}", minimumCount: 80);
@@ -802,7 +802,7 @@ public class SolsticeMoonTest
         else
             Core.Join(map, cell, pad);
 
-        if ((map == "midnightsun" || map == "solsticemoon") && Bot.Map.PlayerNames.Count() < sArmy.Players().Length)
+        if ((map == "midnightsun" || map == "solsticemoon") && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count() < sArmy.Players().Length)
         {
             Core.Logger($"Only {Bot.Map.PlayerNames.Count()}/{sArmy.Players().Length} players visible in /{map}-{Core.PrivateRoomNumber}; retrying dungeon join.");
             JoinShrineDungeon(map, cell, pad, force: true);
@@ -929,8 +929,8 @@ public class SolsticeMoonTest
     /// </summary>
     void BossFight(string monster, string cell, string enrageMessage, bool isTaunter, int tauntOffsetSeconds = 0, string startingTaunterConfig = "player2")
     {
-        bool needsEnrage    = false;
-        bool usedEnrage     = false;
+        bool needsEnrage = false;
+        bool usedEnrage = false;
         // The "starting" player defers first — so the other taunter fires on convergence 1,
         // then they swap each time, matching the PR's alternating pattern.
         bool usedLastEnrage = isTaunter &&
@@ -1066,28 +1066,28 @@ public class SolsticeMoonTest
                     data = packet?["b"]?["o"];
                 }
 
-                if (data == null || data["cmd"]?.ToString() != "ct") return;
+                if (data == null || data!["cmd"]?.ToString() != "ct") return;
 
                 bool triggered = false;
 
-                if (data["anims"] != null)
-                    foreach (var a in data.anims)
-                        if (a?.msg != null && ((string)a.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (data!["anims"] != null)
+                    foreach (var a in data!.anims)
+                        if (a?.msg != null && ((string)a!.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
                         { triggered = true; break; }
 
-                if (!triggered && data["a"] != null)
+                if (!triggered && data!["a"] != null)
                     foreach (var a in data.a)
-                        if (a != null && a["cmd"]?.ToString() == "aura+" && a["auras"] != null)
-                            foreach (var aura in a["auras"])
+                        if (a != null && a!["cmd"]?.ToString() == "aura+" && a!["auras"] != null)
+                            foreach (var aura in a!["auras"])
                                 if (aura?.msgOn != null &&
-                                    ((string)aura.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
-                                    (bool)aura.isNew)
+                                    ((string)aura!.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
+                                    (bool)aura!.isNew)
                                 { triggered = true; break; }
 
                 if (!triggered) return;
 
                 needsEnrage = true;
-                usedEnrage  = false;
+                usedEnrage = false;
                 if (tauntOffsetSeconds > 0)
                     tauntTime = DateTimeOffset.Now.AddSeconds(tauntOffsetSeconds);
 
@@ -1465,16 +1465,16 @@ public class SolsticeMoonTest
         ResetReusableSyncFiles();
         int run = ++midnightRunCount;
         ResetDungeonInstance("midnightsun", $"GreatbladeMidnight_{run}");
-        ArmyKillMonster("midnightsun", "Enter", "Left", "Shining Star",  $"GreatbladeMidnight_{run}_01");
-        ArmyKillMonster("midnightsun", "Enter", "Left", "Dying Light",   $"GreatbladeMidnight_{run}_02");
-        ArmyKillMonster("midnightsun", "r1",    "Left", "Shining Star",  $"GreatbladeMidnight_{run}_03");
+        ArmyKillMonster("midnightsun", "Enter", "Left", "Shining Star", $"GreatbladeMidnight_{run}_01");
+        ArmyKillMonster("midnightsun", "Enter", "Left", "Dying Light", $"GreatbladeMidnight_{run}_02");
+        ArmyKillMonster("midnightsun", "r1", "Left", "Shining Star", $"GreatbladeMidnight_{run}_03");
         // Dawn Knight at r1: player1+2 alternate on "The Light Gathers" (6 s offset)
         ArmyKillWithDelayedTaunt("midnightsun", "r1", "Left", "Dawn Knight", $"GreatbladeMidnight_{run}_04", sunSide: true, enrageMessage: "The Light Gathers");
-        ArmyKillMonster("midnightsun", "r2",    "Left", "Dying Light",   $"GreatbladeMidnight_{run}_05");
+        ArmyKillMonster("midnightsun", "r2", "Left", "Dying Light", $"GreatbladeMidnight_{run}_05");
         // Dawn Knight at r2: player1+2 alternate on "The Light Gathers" (6 s offset)
         ArmyKillWithDelayedTaunt("midnightsun", "r2", "Left", "Dawn Knight", $"GreatbladeMidnight_{run}_06", sunSide: true, enrageMessage: "The Light Gathers");
         // Shrine boss: Hollow Solstice — LR taunts on "The Sun Converges" (no offset)
-        ArmyKillShrineBoss("midnightsun", "r3", "Left", "Hollow Solstice",  $"GreatbladeMidnight_{run}_07", moonBoss: false);
+        ArmyKillShrineBoss("midnightsun", "r3", "Left", "Hollow Solstice", $"GreatbladeMidnight_{run}_07", moonBoss: false);
     }
 
     void RunSolsticeMoon()
