@@ -94,7 +94,7 @@ public class QuestFileUpdater
     // =========================
     private void UpdateQuests(CancellationToken token)
     {
-        bool forceRebuild = Bot.Config.Get<bool>("ForceFullRebuild");
+        bool forceRebuild = Bot.Config!.Get<bool>("ForceFullRebuild");
 
         string clientPath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json");
         string scriptsPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json");
@@ -306,7 +306,7 @@ public class QuestFileUpdater
             // Pass null for path to avoid file dependency during fresh fetch
             List<QuestData> batch =
                 loader.UpdateRangeAsync(
-                        null,
+                        null!,
                         start,
                         end,
                         null,
