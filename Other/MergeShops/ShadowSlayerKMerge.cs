@@ -88,7 +88,6 @@ public class ShadowSlayerKMerge
         if (result != true)
             return;
 
-        SSK.Storyline();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("safiria", 2044, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -229,8 +228,8 @@ public class ShadowSlayerKMerge
         }
     }
 
-    public List<IOption> Select = new()
-    {
+    public List<IOption> Select =
+    [
         new Option<bool>(
             "62993",
             "Imperial Infantry",
@@ -393,5 +392,5 @@ public class ShadowSlayerKMerge
             "Mode: [select] only\nShould the bot buy \"Antiquated Shadow Pistolsword\" ?",
             false
         ),
-    };
+    ];
 }
