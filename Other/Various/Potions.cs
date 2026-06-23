@@ -110,7 +110,7 @@ public class PotionBuyer
             ? [.. Enumerable.Repeat(true, potions!.Length)]
             : null;
 
-        string raw = Bot.Config!.Get<string>("PotionQuant");
+        string? raw = Bot.Config!.Get<string>("PotionQuant");
 
         int potionQuant;
 

@@ -41,7 +41,7 @@ public class AscendEclipseTest
     public List<IOption> Options = new()
     {
         new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
-        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
+        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""),
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
         new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
 
@@ -51,7 +51,7 @@ public class AscendEclipseTest
             "Private room number used by all 4 accounts. Set the same number on every account!",
             69420
         ),
-        
+
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -103,7 +103,6 @@ public class AscendEclipseTest
     bool usePotions;
     bool oracleClassTauntReset;
     int runCount;
-    int syncCount;
     bool syncFilesClearedOnStartup;
 
     /// <summary>
@@ -132,7 +131,7 @@ public class AscendEclipseTest
 
             return;
         }
-        
+
         Core.PrivateRooms = true;
         int configuredRoom = Bot.Config!.Get<int>("privateRoomNumber");
         if (configuredRoom >= 1000 && configuredRoom <= 99999)
@@ -306,7 +305,7 @@ public class AscendEclipseTest
     }
 
     // ── Army helpers ──────────────────────────────────────────────────────────
-    
+
     void LogR3Debug(string cell, ref long lastStatusLogAt, ref long lastAuraLogAt, ref string lastTarget)
     {
         long now = Environment.TickCount64;
@@ -770,15 +769,15 @@ public class AscendEclipseTest
                     data = packet?["b"]?["o"];
                 }
 
-                if (data == null || data["cmd"]?.ToString() != "ct")
+                if (data == null || data!["cmd"]?.ToString() != "ct")
                     return;
 
                 bool sunTriggered = false;
                 bool moonTriggered = false;
 
-                if (data["anims"] != null)
+                if (data!["anims"] != null)
                 {
-                    foreach (var a in data.anims)
+                    foreach (var a in data!.anims)
                     {
                         if (a?.msg == null)
                             continue;
@@ -797,15 +796,15 @@ public class AscendEclipseTest
                 {
                     foreach (var a in data.a)
                     {
-                        if (a == null || a["cmd"]?.ToString() != "aura+" || a["auras"] == null)
+                        if (a == null || a!["cmd"]?.ToString() != "aura+" || a!["auras"] == null)
                             continue;
 
-                        foreach (var aura in a["auras"])
+                        foreach (var aura in a!["auras"])
                         {
-                            if (aura?.msgOn == null || !(bool)aura.isNew)
+                            if (aura?.msgOn == null || !(bool)aura!.isNew)
                                 continue;
 
-                            string msg = (string)aura.msgOn;
+                            string msg = (string)aura!.msgOn;
 
                             if (msg.IndexOf("The Sun Converges", StringComparison.OrdinalIgnoreCase) >= 0)
                                 sunTriggered = true;
@@ -1072,11 +1071,11 @@ public class AscendEclipseTest
 
     void BossFight(string monster, string cell, string enrageMessage, bool isTaunter, int tauntOffsetSeconds = 0, string startingTaunterConfig = "player2")
     {
-        bool needsEnrage    = false;
-        bool usedEnrage     = false;
+        bool needsEnrage = false;
+        bool usedEnrage = false;
         bool usedLastEnrage = isTaunter &&
             Bot.Player.Username.Equals(Bot.Config!.Get<string>(startingTaunterConfig) ?? "", StringComparison.OrdinalIgnoreCase);
-        DateTimeOffset tauntTime   = DateTimeOffset.MinValue;
+        DateTimeOffset tauntTime = DateTimeOffset.MinValue;
         long noTargetSince = 0;
         bool fightSpawnSet = false;
 
@@ -1102,7 +1101,7 @@ public class AscendEclipseTest
                             Core.UsePotion();
                             Bot.Sleep(200);
                             if (Bot.Player.HasTarget &&
-                                (Bot.Target.Auras.Any(x => x.Name.Equals("Focus",    StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4) ||
+                                (Bot.Target.Auras.Any(x => x.Name.Equals("Focus", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4) ||
                                  Bot.Target.Auras.Any(x => x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4)))
                             {
                                 usedEnrage = true; needsEnrage = false; usedLastEnrage = true;
@@ -1120,10 +1119,10 @@ public class AscendEclipseTest
                 }
 
                 if (!needsEnrage || usedEnrage || !Bot.Player.HasTarget)
-                    {
-                        Bot.Combat.Attack(monster);
-                        UseClassSkills();
-                    }
+                {
+                    Bot.Combat.Attack(monster);
+                    UseClassSkills();
+                }
 
                 Bot.Sleep(300);
 
@@ -1170,21 +1169,21 @@ public class AscendEclipseTest
                     data = packet?["b"]?["o"];
                 }
 
-                if (data == null || data["cmd"]?.ToString() != "ct") return;
+                if (data == null || data!["cmd"]?.ToString() != "ct") return;
 
                 bool triggered = false;
-                if (data["anims"] != null)
-                    foreach (var a in data.anims)
-                        if (a?.msg != null && ((string)a.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (data!["anims"] != null)
+                    foreach (var a in data!.anims)
+                        if (a?.msg != null && ((string)a!.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
                         { triggered = true; break; }
 
-                if (!triggered && data["a"] != null)
-                    foreach (var a in data.a)
-                        if (a != null && a["cmd"]?.ToString() == "aura+" && a["auras"] != null)
-                            foreach (var aura in a["auras"])
+                if (!triggered && data!["a"] != null)
+                    foreach (var a in data!.a)
+                        if (a != null && a!["cmd"]?.ToString() == "aura+" && a!["auras"] != null)
+                            foreach (var aura in a!["auras"])
                                 if (aura?.msgOn != null &&
-                                    ((string)aura.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
-                                    (bool)aura.isNew)
+                                    ((string)aura!.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
+                                    (bool)aura!.isNew)
                                 { triggered = true; break; }
 
                 if (!triggered) return;
@@ -1836,7 +1835,7 @@ public class AscendEclipseTest
                 auraWasActive = false;
         }
     }
-    
+
     int GetMyPlayerSlot()
     {
         string username = Core.Username();
@@ -2026,7 +2025,7 @@ public class AscendEclipseTest
         string? p3 = Bot.Config!.Get<string>("player3");
         string? p4 = Bot.Config!.Get<string>("player4");
 
-        if      (username.Equals(p1, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player1Class);
+        if (username.Equals(p1, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player1Class);
         else if (username.Equals(p2, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player2Class);
         else if (username.Equals(p3, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player3Class);
         else if (username.Equals(p4, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player4Class);
@@ -2246,7 +2245,7 @@ public class AscendEclipseTest
         {
             Core.Logger("[Potions] Skipping potion refresh because Oracle Class Taunt Reset is ON.");
             return;
-        }            
+        }
 
         bool hasTonic =
             Bot.Self.HasActiveAura("Sage") ||

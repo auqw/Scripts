@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 438404,
-    "sha256": "d89943f05994d500d4815e40a8b6a1c934f56af93871e312f4bba9fa70c618df",
+    "size": 438462,
+    "sha256": "c9d0a90b665852cedb67dc67e4f8f8a4a1b08484cc6816750c6cddeaaa6cb2ec",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 168730,
-    "sha256": "1c3fd86843a4df49efda6e2dbc087f84aa23d37da47c499566933a4d8cde356d",
+    "size": 168719,
+    "sha256": "209b9f496f1b78225fb4d43f223d68ca5d7898c255b830fd19a566cc9108d463",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 56092,
-    "sha256": "4deb8f7021b73c0b32abcb646cfcf59396b401bc121e5d7045f1a4ed92fc5e99",
+    "size": 55942,
+    "sha256": "a60651c5564ebc3b66fa264dcfe4477c82ca997523ed1d5932a2f66fab48e098",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -4602,8 +4602,8 @@
       "game data management"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 12234,
-    "sha256": "c6d0735f14aaf1946f5fe8b4f10a03294507feaee9b0432e40f4a3b3c7ab50c5",
+    "size": 12236,
+    "sha256": "aa86576e3baf00b0d24b8787164b675dd5f5f51bcf5ad4afda9af45ab5ce4e13",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
@@ -6620,8 +6620,8 @@
       "null"
     ],
     "path": "Army/Farm/ArmyLeveling.cs",
-    "size": 4469,
-    "sha256": "aed27e9a446cebd9c96aa4849af098577dff4fd16daf0aa53cc657f74a46206c",
+    "size": 4470,
+    "sha256": "ed1b35df4edb87a99d18bbaabc76980e8b6f18066e30823a385bc17d795be51a",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
@@ -19065,8 +19065,8 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 34194,
-    "sha256": "3e889a2232541b57cc48197acc6f60dcb9b191216010d090f2f06e7a3f5d0844",
+    "size": 34222,
+    "sha256": "23b592cc1a806f510dcf9142e46aec27e5ee2986614a639be1fffdca6246a039",
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -20479,8 +20479,8 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 21032,
-    "sha256": "c39fe93c0bba0542620af769e6d9318593e1027e5cb211e013563a1465702907",
+    "size": 21033,
+    "sha256": "20001921ed8b41164226a4b5f621754cdeb4774244cd0c21a720036cdb19218d",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
@@ -24496,8 +24496,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 59809,
-    "sha256": "44a51310083a578ec8c660822366fff835677a1ecaafcf558ebd8476e2137251",
+    "size": 60024,
+    "sha256": "9117e8f9e8f29ee0598e032b08de75c150cc1a1566918b73bcec5a62a40cde41",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -26476,8 +26476,8 @@
       "test"
     ],
     "path": "Ultras/Entwined Eclipse/SolsticeMoon.cs",
-    "size": 60691,
-    "sha256": "368cd081aa8671003e4c4b242e437582dbfa8437630d58ec6b195814014e3d00",
+    "size": 60550,
+    "sha256": "bd08f4bae1fd89b2249f2f9a74d219121071e387a81dabeed73000066f055df5",
     "fileName": "SolsticeMoon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/SolsticeMoon.cs"
   },
@@ -26495,8 +26495,8 @@
       "army"
     ],
     "path": "Ultras/Entwined Eclipse/MidnightSun.cs",
-    "size": 55277,
-    "sha256": "29637df5d9ee7d47f76fa52b1b6ea4a7dde4fc44ceb39e4fcb0725477f815d4b",
+    "size": 55285,
+    "sha256": "72dc2735949720bf2aa0a837254177190a813250904e3199cad1909077a2541f",
     "fileName": "MidnightSun.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/MidnightSun.cs"
   },
@@ -26514,8 +26514,8 @@
       "test"
     ],
     "path": "Ultras/Entwined Eclipse/AscensionoftheEclipse.cs",
-    "size": 81790,
-    "sha256": "550510b9ed2fff03e13913ad3c84b562a8b6c749a2e2bdc9d85e903ab649f3e3",
+    "size": 81720,
+    "sha256": "653eb6e3433f6aea096b50d422eba95c64418bdbfc99af054609348d1374d1f9",
     "fileName": "AscensionoftheEclipse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/AscensionoftheEclipse.cs"
   },
@@ -31096,8 +31096,8 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs",
-    "size": 23331,
-    "sha256": "70b57e123b37a396a0b248becdae2a7622bd451c2d845ed1ac38d5593d4f877c",
+    "size": 23447,
+    "sha256": "6c707c32d0123e6479f565a1a1502bef8ec948aa5272818df5411b9b453bc9f1",
     "fileName": "CoreDageBirthday.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs"
   },

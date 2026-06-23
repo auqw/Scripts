@@ -976,12 +976,8 @@ public class CoreStory
         PreviousQuestState = false;
         return false;
     }
-    
+
     private bool CBO_Checked = false;
-    private int lastFailedQuestID = 0;
-    private string? prevQuestExplain;
-    private string? prevQuestReq;
-    private string? prevQuestAReq;
 
     public void LegacyQuestManager(Action questLogic, params int[] questIDs)
     {
