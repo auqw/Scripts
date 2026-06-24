@@ -31,7 +31,7 @@ public class Keraunomedicine
 
     public void GetItems()
     {
-        COasis.CrulonWed();
+        COasis.CarcossaCabins();
         int questID = 10763;
 
         Core.AddDrop(
