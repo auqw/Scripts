@@ -446,9 +446,11 @@ public class CoreOasis
         // 10765 | Tamahome
         if (!Story.QuestProgression(10765))
         {
-            Story.MapItemQuest(10765, "vermillioncliffs", 15885, 6);
-            Core.HuntMonsterQuest(10765,
-                ("vermillioncliffs", UseableMonsters[0], ClassType.Farm));
+            Core.EnsureAccept(10765);
+            Core.GetMapItem(15885, 6, "vermillioncliffs");
+            Core.KillMonster("vermillioncliffs", "r4", "Left", "*", "Sweet Konpeito", 8);
+            Core.EnsureComplete(10765);
+
         }
 
         // 10766 | Tasuki
