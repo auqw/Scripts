@@ -392,7 +392,7 @@ public class CoreOasis
         // 10754 | Liederkreis Lorelei
         if (!Story.QuestProgression(10754))
         {
-            Story.MapItemQuest(10754, "carcossacabins", new[] { 15864, 15865 });
+            Story.MapItemQuest(10754, new[] { (15864, 1, "carcossacabins"), (15865, 3, "carcossacabins") });
         }
 
         // 10755 | Lacking in Blessings
