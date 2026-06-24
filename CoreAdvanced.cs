@@ -4469,12 +4469,15 @@ public enum RacialGearBoost
 
 public enum EnhancementType // Enhancement Pattern ID
 {
+    None = 0,
+    Adventurer = 1,
     Fighter = 2,
     Thief = 3,
+    Armsman = 4,
     Hybrid = 5,
     Wizard = 6,
     Healer = 7,
-    SpellBreaker = 8,
+    Spellbreaker = 8,
     Lucky = 9,
 }
 
@@ -4497,27 +4500,27 @@ public enum WeaponSpecial // Proc ID
     Health_Vamp = 4,
     Mana_Vamp = 5,
     Powerword_Die = 6,
-    Ravenous = 7,
-
-    Forge = 99, // Not really 99, but cant have 0 3 times
-    Lacerate = 8,
-    Smite = 9,
-    Valiance = 10,
-    Arcanas_Concerto = 11,
+    Lacerate = 7,
+    Smite = 8,
+    Valiance = 9,
+    Arcanas_Concerto = 10,
+    Acheron = 11,
     Elysium = 12,
-    Acheron = 13,
-    Praxis = 14,
-    Dauntless = 15,
+    Praxis = 13,
+    Dauntless = 14,
+    Ravenous = 15,
 }
 
-public enum HelmSpecial //Enhancement Pattern ID
+public enum HelmSpecial // Enhancement Pattern ID
 {
     None = 0,
-    Forge = 99, // Not really 99, but cant have 0 3 times
+    Forge = 10,
     Vim = 25,
     Examen = 26,
-    Anima = 28,
     Pneuma = 27,
+    Anima = 28,
+    Penitence = 29,
+    Lament = 30,
     Hearty = 32,
 }
 
