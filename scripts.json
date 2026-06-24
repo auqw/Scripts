@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 168707,
-    "sha256": "4550aada7b3160ebc65ea21dcdb960684cdcc4b99f646c040c3afcbc642881f5",
+    "size": 168719,
+    "sha256": "209b9f496f1b78225fb4d43f223d68ca5d7898c255b830fd19a566cc9108d463",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -4174,8 +4174,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 106650,
-    "sha256": "786d4cdbf740dff1febcf9fd8e338716ac292c3bb1830ba43e03d8946c2b8355",
+    "size": 106681,
+    "sha256": "43a03938f2cf1308dd30d2018c3c9da1da1e1b3e54eddb5653b159b8ef9090e6",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
