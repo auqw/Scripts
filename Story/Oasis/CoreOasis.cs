@@ -175,7 +175,7 @@ public class CoreOasis
         if (!Story.QuestProgression(10743))
         {
             Core.HuntMonsterQuest(10743,
-                ("duatpalace", UseableMonsters[3], ClassType.Farm));
+                ("duatpalace", UseableMonsters[2], ClassType.Farm));
         }
 
         // 10744 | Lord of Faiyum
