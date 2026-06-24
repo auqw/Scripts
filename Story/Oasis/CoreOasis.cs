@@ -8,6 +8,8 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
+//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
 using Skua.Core.Interfaces;
 
 public class CoreOasis
@@ -33,6 +35,13 @@ public class CoreOasis
         set => _LOC = value;
     }
     private static Core13LoC _LOC;
+
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
+    private static CoreAOR _AOR;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -337,6 +346,7 @@ public class CoreOasis
         if (Core.isCompletedBefore(10759))
             return;
 
+        AOR.ForgeCitrinitas();
         Story.PreLoad(this);
 
         #region Useable Monsters
