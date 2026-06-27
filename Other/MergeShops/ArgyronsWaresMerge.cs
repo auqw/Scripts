@@ -77,7 +77,7 @@ public class ArgyronsWaresMerge
             "Arachnosapien Locks",
             "Spineback Abaddon Carapace"
         );
-
+        PreFarm();
         Adv.StartBuyAllMerge("abaddoncave", 2626, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         #region findIngredients
@@ -96,12 +96,7 @@ public class ArgyronsWaresMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "abaddoncave",
-                            "Cursed Dreadspider",
-                            "Dreadspider Carapace",
-                            9
-                        );
+                        Core.HuntMonster("abaddoncave", "Cursed Dreadspider", "Dreadspider Carapace", 9);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -125,14 +120,7 @@ public class ArgyronsWaresMerge
                 case "Arachnosapien Locks":
                 case "Arachnosapien Visage":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "abaddoncave",
-                        "Spineback Abaddon",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
-                    Bot.Wait.ForPickup(req.Name);
+                    Core.HuntMonster("abaddoncave", "Spineback Abaddon", req.Name, quant, isTemp: false); Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Gold Voucher 100k":
@@ -162,8 +150,8 @@ public class ArgyronsWaresMerge
         Story.KillQuest(10427, "abaddoncave", "Spineback Abaddon");
     }
 
-    public List<IOption> Select = new()
-    {
+    public List<IOption> Select =
+    [
         new Option<bool>(
             "91172",
             "Arachnosapien",
@@ -254,5 +242,5 @@ public class ArgyronsWaresMerge
             "Mode: [select] only\nShould the bot buy \"XL Spineback Abaddon Guard\" ?",
             false
         ),
-    };
+    ];
 }
