@@ -55,8 +55,77 @@ public class CoreOasis
         CrulonWed();
         MeresankhChambers();
         CarcossaCabins();
+        CarcossaCourt();
         Whitetigerpoint();
         VermillionCliffs();
+    }
+
+    public void CarcossaCourt()
+    {
+        if (Core.isCompletedBefore(10784))
+            return;
+
+        CarcossaCabins();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Elite Lightguard", // UseableMonsters[0],
+            "Luma Lifeform", // UseableMonsters[1],
+            "Reawakened Priestess", // UseableMonsters[2],
+            "Discordant Light", // UseableMonsters[3],
+            "Rigaud the Forsaken", // UseableMonsters[4],
+            "Eos Soulsworn", // UseableMonsters[5],
+            "Doomknight Dryden", // UseableMonsters[6],
+            "The Sunsetter", // UseableMonsters[7]
+        };
+        #endregion Useable Monsters
+
+        // 10778 | Carcossa Medal
+        if (!Story.QuestProgression(10778))
+        {
+            Core.HuntMonsterQuest(10778, ("carcossacourt", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10779 | Mega Carcossa Medal
+        if (!Story.QuestProgression(10779))
+        {
+            Core.HuntMonsterQuest(10779, ("carcossacourt", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10780 | Pillar Maidens
+        if (!Story.QuestProgression(10780))
+        {
+            Core.HuntMonsterQuest(10780, ("carcossacourt", UseableMonsters[2], ClassType.Solo));
+        }
+
+
+        // 10781 | Appetite for Chaos
+        if (!Story.QuestProgression(10781))
+        {
+            Core.HuntMonsterQuest(10781, ("carcossacourt", UseableMonsters[3], ClassType.Solo));
+        }
+
+        // 10782 | Center Pawn
+        if (!Story.QuestProgression(10782))
+        {
+            Core.HuntMonsterQuest(10782, ("carcossacourt", UseableMonsters[4], ClassType.Solo));
+        }
+
+        // 10783 | Adore and Adored
+        if (!Story.QuestProgression(10783))
+        {
+            Core.HuntMonsterQuest(10783, ("carcossacourt", UseableMonsters[5], ClassType.Solo));
+        }
+
+        // 10784 | Heir of Light, Son of Dark
+        if (!Story.QuestProgression(10784))
+        {
+            Core.HuntMonsterQuest(10784, ("carcossacourt", UseableMonsters[6], ClassType.Solo));
+        }
+
     }
 
     public void Whitetigerpoint()
