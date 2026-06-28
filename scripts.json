@@ -4551,8 +4551,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1154745,
-    "sha256": "f613d12d6044ba8d109deaccff4514c1781cddefbd90953bd4550503c677bd9b",
+    "size": 1175412,
+    "sha256": "4aa06e1b4b4bb41f18de93be0e4bb0155ed0d23914e66578453c9a8a1f29361e",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -15831,8 +15831,8 @@
       "imparatus"
     ],
     "path": "Other/MergeShops/NovaGenesisHangarMerge.cs",
-    "size": 7909,
-    "sha256": "7e5876bdba3d1b36005af696bdacd52cd5f4cf322c28de72797b6cb8fb5187d7",
+    "size": 7961,
+    "sha256": "e014977daae01b54fe06b4c9c8ffdb822b394c023a99062e240bd7c5fa6be634",
     "fileName": "NovaGenesisHangarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NovaGenesisHangarMerge.cs"
   },
@@ -24879,11 +24879,11 @@
       "crulon wed",
       "vermillioncciffs"
     ],
-    "path": "Story/Oasis/07VermillioncCiffs.cs",
+    "path": "Story/Oasis/100VermillioncCiffs.cs",
     "size": 1171,
     "sha256": "4144d00cedffb61395ad7a39e3ded1a7f0c89e56c563cc311d4c8660ef97fd54",
-    "fileName": "07VermillioncCiffs.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/07VermillioncCiffs.cs"
+    "fileName": "100VermillioncCiffs.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/100VermillioncCiffs.cs"
   },
   {
     "name": "CrocRiver Story",
@@ -24924,11 +24924,26 @@
       "crulon wed",
       "whitetigerpoint"
     ],
-    "path": "Story/Oasis/06WhiteTigerpoint.cs",
+    "path": "Story/Oasis/99WhiteTigerpoint.cs",
     "size": 1166,
     "sha256": "b841e599ce998ed8b31b20d33e71ae2d62e6afa864259197bf42e23305db3a97",
-    "fileName": "06WhiteTigerpoint.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/06WhiteTigerpoint.cs"
+    "fileName": "99WhiteTigerpoint.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/99WhiteTigerpoint.cs"
+  },
+  {
+    "name": "CarcossaCourt Story",
+    "description": "This will finish the CarcossaCourt Story.",
+    "tags": [
+      "story",
+      "quest",
+      "crulon wed",
+      "carcossacourt"
+    ],
+    "path": "Story/Oasis/06CarcossaCourt.cs",
+    "size": 1156,
+    "sha256": "6cbf78215e37d885fa29caecd1e16faad8b364452dca3dddacf3408f317f2618",
+    "fileName": "06CarcossaCourt.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/06CarcossaCourt.cs"
   },
   {
     "name": "CarcossaCabins Story",
@@ -24967,8 +24982,8 @@
       "null"
     ],
     "path": "Story/Oasis/CoreOasis.cs",
-    "size": 14802,
-    "sha256": "a3f25d25c9fe65c1f4a7dc023e0031ea73e6bf7a162cd64311d59b64f1a198d7",
+    "size": 16956,
+    "sha256": "6e92435143806c7146b939c78c24cb8fcbf2ffc25a8d4746c42b33a658821f2e",
     "fileName": "CoreOasis.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/CoreOasis.cs"
   },
