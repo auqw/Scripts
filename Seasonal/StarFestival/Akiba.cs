@@ -71,7 +71,7 @@ public class Akiba
         if (!Story.QuestProgression(6438))
         {
             Core.EnsureAccept(6438);
-            Core.KillMonster("wanders", "r5", "Left", "Kalestri Worshiper", "The Third Wish");
+            Core.KillMonster("wanders", "r2", "Left", "Kalestri Worshiper", "The Third Wish");
             Core.EnsureComplete(6438);
         }
 
