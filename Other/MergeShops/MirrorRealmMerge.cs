@@ -1,7 +1,7 @@
 /*
-name: MirrorRealmMerge
-description: null
-tags: null
+name: Mirror Realm Merge
+description: This bot will farm the items belonging to the selected mode for the Mirror Realm Merge [618] in /mirrorportal
+tags: mirror, realm, merge, mirrorportal, undead, paladin, duality, mage, , good, evil, really, boneafied, life, taker, cleric, nulgath, shadowreaper, doom, lunar, sand, salvage, runecape, archangels, protection, assault, pack, twin, sunlight, lifetaking, paladins, curse, beard, morph, bearded, female, archangel, enticing, intimidating, destiny, kitten, holy, blessing, spear, evilnator, skullstaff, cloud, shifter, force, dishonored, mind, expulsion, ashes, underfriend
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -59,15 +59,7 @@ public class MirrorRealmMerge
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(
-            new[]
-            {
-                "Mirror Realm Token",
-                "Undead Paladin Token",
-                "Chaos Shifter",
-                "Purification Orb ",
-            }
-        );
+        Core.BankingBlackList.AddRange(new[] { "Mirror Realm Token", "Undead Paladin Token", "Chaos Shifter", "Purification Orb" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -135,263 +127,50 @@ public class MirrorRealmMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "17412",
-            "Life Taker",
-            "Mode: [select] only\nShould the bot buy \"Life Taker\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17413",
-            "Assault Pack",
-            "Mode: [select] only\nShould the bot buy \"Assault Pack\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17414",
-            "Life Taker Hair",
-            "Mode: [select] only\nShould the bot buy \"Life Taker Hair\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17415",
-            "Life Taker Locks",
-            "Mode: [select] only\nShould the bot buy \"Life Taker Locks\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17418",
-            "Blades of Life-Taking",
-            "Mode: [select] only\nShould the bot buy \"Blades of Life-Taking\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17434",
-            "Blade of Life-Taking",
-            "Mode: [select] only\nShould the bot buy \"Blade of Life-Taking\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17488",
-            "ShadowReaper Of Doom",
-            "Mode: [select] only\nShould the bot buy \"ShadowReaper Of Doom\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17489",
-            "Undead Paladin",
-            "Mode: [select] only\nShould the bot buy \"Undead Paladin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17490",
-            "Paladin's Curse",
-            "Mode: [select] only\nShould the bot buy \"Paladin's Curse\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17504",
-            "Mind Expulsion Blade",
-            "Mode: [select] only\nShould the bot buy \"Mind Expulsion Blade\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17427",
-            "Underfriend Blade of Nulgath",
-            "Mode: [select] only\nShould the bot buy \"Underfriend Blade of Nulgath\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17429",
-            "Blade of Ashes",
-            "Mode: [select] only\nShould the bot buy \"Blade of Ashes\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17505",
-            "Cleric Of Nulgath",
-            "Mode: [select] only\nShould the bot buy \"Cleric Of Nulgath\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17506",
-            "ArchAngel's Protection",
-            "Mode: [select] only\nShould the bot buy \"ArchAngel's Protection\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17507",
-            "Hood of the ArchAngel",
-            "Mode: [select] only\nShould the bot buy \"Hood of the ArchAngel\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17508",
-            "Enticing Hood of the ArchAngel",
-            "Mode: [select] only\nShould the bot buy \"Enticing Hood of the ArchAngel\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17509",
-            "Intimidating Hood of the ArchAngel",
-            "Mode: [select] only\nShould the bot buy \"Intimidating Hood of the ArchAngel\" ?",
-            false
-        ),
-        new Option<bool>(
-            "17510",
-            "Destiny Kitten",
-            "Mode: [select] only\nShould the bot buy \"Destiny Kitten\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20760",
-            "Salvage",
-            "Mode: [select] only\nShould the bot buy \"Salvage\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20761",
-            "Force Of Evil",
-            "Mode: [select] only\nShould the bot buy \"Force Of Evil\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20762",
-            "Evilnator",
-            "Mode: [select] only\nShould the bot buy \"Evilnator\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20763",
-            "Dual Sunlight Daggers",
-            "Mode: [select] only\nShould the bot buy \"Dual Sunlight Daggers\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20810",
-            "Dishonored Sword",
-            "Mode: [select] only\nShould the bot buy \"Dishonored Sword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20811",
-            "Holy Blessing Spear",
-            "Mode: [select] only\nShould the bot buy \"Holy Blessing Spear\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20764",
-            "Duality Mage",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20765",
-            "Duality Mage Runecape",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Runecape\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20766",
-            "Bearded Duality Mage Morph",
-            "Mode: [select] only\nShould the bot buy \"Bearded Duality Mage Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20769",
-            "Female Duality Mage Morph",
-            "Mode: [select] only\nShould the bot buy \"Female Duality Mage Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20770",
-            "Duality Mage Staff",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Staff\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20843",
-            "Duality Mage - Good",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage - Good\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20844",
-            "Duality Mage - Evil",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage - Evil\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20853",
-            "Duality Mage Good Runecape",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Good Runecape\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20852",
-            "Duality Mage Evil Runecape",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Runecape\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20851",
-            "Duality Mage Evil Beard",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Beard\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20849",
-            "Duality Mage Good Morph",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Good Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20848",
-            "Duality Mage Evil Morph",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20847",
-            "Duality Mage Evil Staff",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Staff\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20846",
-            "Duality Mage Good Staff",
-            "Mode: [select] only\nShould the bot buy \"Duality Mage Good Staff\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20797",
-            "REALLY Undead Paladin",
-            "Mode: [select] only\nShould the bot buy \"REALLY Undead Paladin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20798",
-            "BONE-afied Paladin",
-            "Mode: [select] only\nShould the bot buy \"BONE-afied Paladin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20918",
-            "Lunar Sand Axe",
-            "Mode: [select] only\nShould the bot buy \"Lunar Sand Axe\" ?",
-            false
-        ),
-        new Option<bool>(
-            "20919",
-            "Lunar Sand Daggers",
-            "Mode: [select] only\nShould the bot buy \"Lunar Sand Daggers\" ?",
-            false
-        ),
-        new Option<bool>(
-            "21166",
-            "Cloud Shifter",
-            "Mode: [select] only\nShould the bot buy \"Cloud Shifter\" ?",
-            false
-        ),
-    };
+        new Option<bool>("17489", "Undead Paladin", "Mode: [select] only\nShould the bot buy \"Undead Paladin\" ?", false),
+        new Option<bool>("20843", "Duality Mage - Good", "Mode: [select] only\nShould the bot buy \"Duality Mage - Good\" ?", false),
+        new Option<bool>("20844", "Duality Mage - Evil", "Mode: [select] only\nShould the bot buy \"Duality Mage - Evil\" ?", false),
+        new Option<bool>("20764", "Duality Mage", "Mode: [select] only\nShould the bot buy \"Duality Mage\" ?", false),
+        new Option<bool>("20797", "REALLY Undead Paladin", "Mode: [select] only\nShould the bot buy \"REALLY Undead Paladin\" ?", false),
+        new Option<bool>("20798", "BONE-afied Paladin", "Mode: [select] only\nShould the bot buy \"BONE-afied Paladin\" ?", false),
+        new Option<bool>("17412", "Life Taker", "Mode: [select] only\nShould the bot buy \"Life Taker\" ?", false),
+        new Option<bool>("17505", "Cleric Of Nulgath", "Mode: [select] only\nShould the bot buy \"Cleric Of Nulgath\" ?", false),
+        new Option<bool>("17488", "ShadowReaper Of Doom", "Mode: [select] only\nShould the bot buy \"ShadowReaper Of Doom\" ?", false),
+        new Option<bool>("20918", "Lunar Sand Axe", "Mode: [select] only\nShould the bot buy \"Lunar Sand Axe\" ?", false),
+        new Option<bool>("20760", "Salvage", "Mode: [select] only\nShould the bot buy \"Salvage\" ?", false),
+        new Option<bool>("20853", "Duality Mage Good Runecape", "Mode: [select] only\nShould the bot buy \"Duality Mage Good Runecape\" ?", false),
+        new Option<bool>("20852", "Duality Mage Evil Runecape", "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Runecape\" ?", false),
+        new Option<bool>("17506", "ArchAngel's Protection", "Mode: [select] only\nShould the bot buy \"ArchAngel's Protection\" ?", false),
+        new Option<bool>("20765", "Duality Mage Runecape", "Mode: [select] only\nShould the bot buy \"Duality Mage Runecape\" ?", false),
+        new Option<bool>("17413", "Assault Pack", "Mode: [select] only\nShould the bot buy \"Assault Pack\" ?", false),
+        new Option<bool>("20919", "Lunar Sand Daggers", "Mode: [select] only\nShould the bot buy \"Lunar Sand Daggers\" ?", false),
+        new Option<bool>("101773", "Twin Blades of Doom", "Mode: [select] only\nShould the bot buy \"Twin Blades of Doom\" ?", false),
+        new Option<bool>("20763", "Dual Sunlight Daggers", "Mode: [select] only\nShould the bot buy \"Dual Sunlight Daggers\" ?", false),
+        new Option<bool>("17418", "Blades of Life-Taking", "Mode: [select] only\nShould the bot buy \"Blades of Life-Taking\" ?", false),
+        new Option<bool>("17490", "Paladin's Curse", "Mode: [select] only\nShould the bot buy \"Paladin's Curse\" ?", false),
+        new Option<bool>("20851", "Duality Mage Evil Beard", "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Beard\" ?", false),
+        new Option<bool>("20849", "Duality Mage Good Morph", "Mode: [select] only\nShould the bot buy \"Duality Mage Good Morph\" ?", false),
+        new Option<bool>("20848", "Duality Mage Evil Morph", "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Morph\" ?", false),
+        new Option<bool>("20766", "Bearded Duality Mage Morph", "Mode: [select] only\nShould the bot buy \"Bearded Duality Mage Morph\" ?", false),
+        new Option<bool>("20769", "Female Duality Mage Morph", "Mode: [select] only\nShould the bot buy \"Female Duality Mage Morph\" ?", false),
+        new Option<bool>("17414", "Life Taker Hair", "Mode: [select] only\nShould the bot buy \"Life Taker Hair\" ?", false),
+        new Option<bool>("17415", "Life Taker Locks", "Mode: [select] only\nShould the bot buy \"Life Taker Locks\" ?", false),
+        new Option<bool>("17507", "Hood of the ArchAngel", "Mode: [select] only\nShould the bot buy \"Hood of the ArchAngel\" ?", false),
+        new Option<bool>("17508", "Enticing Hood of the ArchAngel", "Mode: [select] only\nShould the bot buy \"Enticing Hood of the ArchAngel\" ?", false),
+        new Option<bool>("17509", "Intimidating Hood of the ArchAngel", "Mode: [select] only\nShould the bot buy \"Intimidating Hood of the ArchAngel\" ?", false),
+        new Option<bool>("17510", "Destiny Kitten", "Mode: [select] only\nShould the bot buy \"Destiny Kitten\" ?", false),
+        new Option<bool>("20811", "Holy Blessing Spear", "Mode: [select] only\nShould the bot buy \"Holy Blessing Spear\" ?", false),
+        new Option<bool>("20762", "Evilnator", "Mode: [select] only\nShould the bot buy \"Evilnator\" ?", false),
+        new Option<bool>("101774", "SkullStaff of Doom", "Mode: [select] only\nShould the bot buy \"SkullStaff of Doom\" ?", false),
+        new Option<bool>("20847", "Duality Mage Evil Staff", "Mode: [select] only\nShould the bot buy \"Duality Mage Evil Staff\" ?", false),
+        new Option<bool>("20846", "Duality Mage Good Staff", "Mode: [select] only\nShould the bot buy \"Duality Mage Good Staff\" ?", false),
+        new Option<bool>("20770", "Duality Mage Staff", "Mode: [select] only\nShould the bot buy \"Duality Mage Staff\" ?", false),
+        new Option<bool>("21166", "Cloud Shifter", "Mode: [select] only\nShould the bot buy \"Cloud Shifter\" ?", false),
+        new Option<bool>("20761", "Force Of Evil", "Mode: [select] only\nShould the bot buy \"Force Of Evil\" ?", false),
+        new Option<bool>("20810", "Dishonored Sword", "Mode: [select] only\nShould the bot buy \"Dishonored Sword\" ?", false),
+        new Option<bool>("17434", "Blade of Life-Taking", "Mode: [select] only\nShould the bot buy \"Blade of Life-Taking\" ?", false),
+        new Option<bool>("17504", "Mind Expulsion Blade", "Mode: [select] only\nShould the bot buy \"Mind Expulsion Blade\" ?", false),
+        new Option<bool>("17429", "Blade of Ashes", "Mode: [select] only\nShould the bot buy \"Blade of Ashes\" ?", false),
+        new Option<bool>("17427", "Underfriend Blade of Nulgath", "Mode: [select] only\nShould the bot buy \"Underfriend Blade of Nulgath\" ?", false),
+   };
 }

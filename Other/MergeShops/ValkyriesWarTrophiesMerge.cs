@@ -55,6 +55,12 @@ public class ValkyriesWarTrophiesMerge
         set => _ShadowMerge = value;
     }
     private static ShadowMerge _ShadowMerge;
+    private static CoreOasis Oasis
+    {
+        get => _Oasis ??= new CoreOasis();
+        set => _Oasis = value;
+    }
+    private static CoreOasis _Oasis;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;

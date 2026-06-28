@@ -100,7 +100,12 @@ public class ArmyWarMap
                 return;
             }
         }
-        Quest quest = C.InitializeWithRetries(() => Bot.Quests.EnsureLoad(10778));
+        Quest? quest = C.InitializeWithRetries(() => Bot.Quests.EnsureLoad(10778));
+        if (quest == null)
+        {
+            C.Logger("Failed to load quest 10778. Please check your connection or the server status.");
+            return;
+        }
         bool QuestNerfed = quest.Gold < 2500 || quest.XP < 6000;
         if (QuestNerfed)
             if (Bot.ShowMessageBox("\"CarcossaCourt's war quests have been nerfed, continue?", "War Nerfed", true) == false)
@@ -141,8 +146,8 @@ public class ArmyWarMap
         while (!Bot.ShouldExit)
         {
 
-            if ((solo && Bot.Player.Level >= 100)
-                || Ultra.CheckArmyProgressBool(() => Bot.Player.Level >= 100, syncPath))
+            if ((solo && Bot.Player != null && Bot.Player.Level >= 100)
+                || Ultra.CheckArmyProgressBool(() => Bot.Player != null && Bot.Player.Level >= 100, syncPath))
             {
                 Bot.Options.AggroMonsters = false;
                 C.JumpWait();
@@ -150,7 +155,7 @@ public class ArmyWarMap
                 break;
             }
 
-            if (!Bot.Player.Alive)
+            if (Bot.Player != null && !Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
