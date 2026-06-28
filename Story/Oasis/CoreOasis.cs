@@ -62,7 +62,7 @@ public class CoreOasis
 
     public void CarcossaCourt()
     {
-        if (Core.isCompletedBefore(10784))
+        if (Core.isCompletedBefore(10785))
             return;
 
         CarcossaCabins();
@@ -124,6 +124,12 @@ public class CoreOasis
         if (!Story.QuestProgression(10784))
         {
             Core.HuntMonsterQuest(10784, ("carcossacourt", UseableMonsters[6], ClassType.Solo));
+        }
+
+        // 10785 | Three of a Kind
+        if (!Story.QuestProgression(10785))
+        {
+            Core.HuntMonsterQuest(10785, ("carcossacourt", UseableMonsters[7], ClassType.Solo));
         }
 
     }
