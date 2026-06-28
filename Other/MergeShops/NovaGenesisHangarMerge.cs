@@ -99,6 +99,7 @@ public class NovaGenesisHangarMerge
                 case "Wolfblade Nova Genesis Helm":
                 case "Mystraven Nova Genesis Visor":
                 case "Runehawk Nova Genesis Visor":
+                case "Mystraven Nova Genesis Hood":
                     if (req.Upgrade && !Core.IsMember)
                     {
                         Core.Logger($"{req.Name} requires membership to farm, skipping.");
