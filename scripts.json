@@ -15662,6 +15662,43 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LothianTreasuryMerge.cs"
   },
   {
+    "name": "Valkyries War Trophies Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Valkyries War Trophies Merge [2737] in /carcossacourt",
+    "tags": [
+      "valkyries",
+      "war",
+      "trophies",
+      "merge",
+      "carcossacourt",
+      "corrupt",
+      "shadowreaper",
+      "doom",
+      "unreal",
+      "dark",
+      "carcossa",
+      "doomed",
+      "dulcinea",
+      "twin",
+      "locked",
+      "chest",
+      "ii",
+      "i",
+      "iii",
+      "iv",
+      "winged",
+      "weapon",
+      "shop",
+      "note",
+      "scythe",
+      "skullstaff"
+    ],
+    "path": "Other/MergeShops/ValkyriesWarTrophiesMerge.cs",
+    "size": 10069,
+    "sha256": "84668b1c0c19e472a0c1157096fdc96da4ef4fd8354363722ccd0fb07fa7e744",
+    "fileName": "ValkyriesWarTrophiesMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ValkyriesWarTrophiesMerge.cs"
+  },
+  {
     "name": "Deimos Den Rewards Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Deimos Den Rewards Merge [2418] in /legionarena",
     "tags": [
