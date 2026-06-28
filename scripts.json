@@ -6598,6 +6598,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/Materials/GarishRemnant.cs"
   },
   {
+    "name": "Armywarmap",
+    "description": "Levels the players acc using an arnmy on /CarcossaCourt with 3 selectable areas",
+    "tags": [
+      "war",
+      "army",
+      "leveling",
+      "carcossacourt"
+    ],
+    "path": "Army/Farm/ArmyWarMap.cs",
+    "size": 5267,
+    "sha256": "de3aa1f6b28389f7b55f778bf0788474bb750e02b6005e1d79ead1569c50c803",
+    "fileName": "ArmyWarMap.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyWarMap.cs"
+  },
+  {
     "name": "LichwarGoldXP",
     "description": "Levels/farms gold using aggroing on cell",
     "tags": [
