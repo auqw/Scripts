@@ -75,6 +75,21 @@ public class ValkyriesWarTrophiesMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+
+        // ValkyriesWarTrophiesMerge
+        Adv.MergeItemisinShopExceptions =
+        [
+            "Locked Armor Chest of Doom",
+            "Locked Helm Chest of Doom II",
+            "Locked Helm Chest of Doom I",
+            "Locked Helm Chest of Doom III",
+            "Locked Helm Chest of Doom IV",
+            "Locked Winged Chest of Doom III",
+            "Locked Winged Chest of Doom II",
+            "Locked Winged Chest of Doom I",
+            "Locked Weapon Chest of Doom"
+        ];
+
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("carcossacourt", 2737, findIngredients, buyOnlyThis, buyMode: buyMode);
 
