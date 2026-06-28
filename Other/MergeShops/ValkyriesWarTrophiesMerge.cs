@@ -119,10 +119,10 @@ public class ValkyriesWarTrophiesMerge
                 case "Doom Aura":
                     Dictionary<string, int> ptp = new()
                         {
+                            { "Necrotic Scythe of Scourge", 2184 },
                             { "Necrotic Daggers of Destruction", 2181 },
                             { "Necrotic Shade Blade", 2182 },
                             { "Necrotic Broadsword of Bane", 2183 },
-                            { "Necrotic Scythe of Scourge", 2184 },
                             { "Necrotic Mace of Misery", 2185 },
                             { "Necrotic Bow of the Shadow", 2186 }
                         };
