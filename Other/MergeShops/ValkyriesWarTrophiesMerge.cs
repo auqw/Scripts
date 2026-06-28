@@ -109,12 +109,9 @@ public class ValkyriesWarTrophiesMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.RegisterQuests(0000); // TODO: Replace with actual quest ID
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-                    {
-                        Core.HuntMonster("map", "MonsterName", "item", 1, isTemp: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.RegisterQuests(10778, 10779);
+                    Core.KillMonster("carcossacourt", "r5", "Left", "*", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
