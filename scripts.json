@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 168719,
-    "sha256": "209b9f496f1b78225fb4d43f223d68ca5d7898c255b830fd19a566cc9108d463",
+    "size": 161352,
+    "sha256": "6fe94c458e178f953041c8c0253d9cce4e25022e04b97f607b2054379ad40b27",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -15708,8 +15708,8 @@
       "skullstaff"
     ],
     "path": "Other/MergeShops/ValkyriesWarTrophiesMerge.cs",
-    "size": 10116,
-    "sha256": "ea36d7ad2a7e4591f557cf224c47b8b905086a2ff49bbf732284b8e76d9a8704",
+    "size": 10584,
+    "sha256": "afabdfe981e47269ae4a13281b4054178e4f385d5a7ede661ce44b0e99b87ad5",
     "fileName": "ValkyriesWarTrophiesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ValkyriesWarTrophiesMerge.cs"
   },
