@@ -83,18 +83,12 @@ public class ValkyriesWarTrophiesMerge
     {
 
         // ValkyriesWarTrophiesMerge
-        Adv.MergeItemisinShopExceptions =
-        [
-            "Locked Armor Chest of Doom",
-            "Locked Helm Chest of Doom II",
-            "Locked Helm Chest of Doom I",
-            "Locked Helm Chest of Doom III",
-            "Locked Helm Chest of Doom IV",
-            "Locked Winged Chest of Doom III",
-            "Locked Winged Chest of Doom II",
-            "Locked Winged Chest of Doom I",
-            "Locked Weapon Chest of Doom"
-        ];
+        // Adv.MergeItemisinShopExceptions =
+        // [
+        //     "item",
+        //     "item2",
+        //     "item3"
+        // ];
 
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("carcossacourt", 2737, findIngredients, buyOnlyThis, buyMode: buyMode);
@@ -197,23 +191,22 @@ public class ValkyriesWarTrophiesMerge
     }
 
     public List<IOption> Select =
-    [
+  [
+      new Option<bool>("101521", "Valkyrie of Doom", "Mode: [select] only\nShould the bot buy \"Valkyrie of Doom\" ?", false),
         new Option<bool>("101755", "Corrupt ShadowReaper of Doom", "Mode: [select] only\nShould the bot buy \"Corrupt ShadowReaper of Doom\" ?", false),
         new Option<bool>("101756", "Unreal ShadowReaper of Doom", "Mode: [select] only\nShould the bot buy \"Unreal ShadowReaper of Doom\" ?", false),
+        new Option<bool>("101526", "Valkyrie's Concordia Wings", "Mode: [select] only\nShould the bot buy \"Valkyrie's Concordia Wings\" ?", false),
+        new Option<bool>("101527", "Valkyrie's Doom Wings", "Mode: [select] only\nShould the bot buy \"Valkyrie's Doom Wings\" ?", false),
+        new Option<bool>("101528", "Valkyrie's Harmonia Wings", "Mode: [select] only\nShould the bot buy \"Valkyrie's Harmonia Wings\" ?", false),
         new Option<bool>("101770", "Dark Carcossa Daggers", "Mode: [select] only\nShould the bot buy \"Dark Carcossa Daggers\" ?", false),
         new Option<bool>("101766", "Dual Doomed Dulcinea", "Mode: [select] only\nShould the bot buy \"Dual Doomed Dulcinea\" ?", false),
-        new Option<bool>("101760", "Unreal Twin Blades of Doom", "Mode: [select] only\nShould the bot buy \"Unreal Twin Blades of Doom\" ?", false),
         new Option<bool>("101759", "Corrupt Twin Blades of Doom", "Mode: [select] only\nShould the bot buy \"Corrupt Twin Blades of Doom\" ?", false),
-        new Option<bool>("101521", "Locked Armor Chest of Doom", "Mode: [select] only\nShould the bot buy \"Locked Armor Chest of Doom\" ?", false),
-        new Option<bool>("101522", "Locked Helm Chest of Doom II", "Mode: [select] only\nShould the bot buy \"Locked Helm Chest of Doom II\" ?", false),
-        new Option<bool>("101523", "Locked Helm Chest of Doom I", "Mode: [select] only\nShould the bot buy \"Locked Helm Chest of Doom I\" ?", false),
-        new Option<bool>("101524", "Locked Helm Chest of Doom III", "Mode: [select] only\nShould the bot buy \"Locked Helm Chest of Doom III\" ?", false),
-        new Option<bool>("101525", "Locked Helm Chest of Doom IV", "Mode: [select] only\nShould the bot buy \"Locked Helm Chest of Doom IV\" ?", false),
-        new Option<bool>("101526", "Locked Winged Chest of Doom III", "Mode: [select] only\nShould the bot buy \"Locked Winged Chest of Doom III\" ?", false),
-        new Option<bool>("101527", "Locked Winged Chest of Doom II", "Mode: [select] only\nShould the bot buy \"Locked Winged Chest of Doom II\" ?", false),
-        new Option<bool>("101528", "Locked Winged Chest of Doom I", "Mode: [select] only\nShould the bot buy \"Locked Winged Chest of Doom I\" ?", false),
-        new Option<bool>("101529", "Locked Weapon Chest of Doom", "Mode: [select] only\nShould the bot buy \"Locked Weapon Chest of Doom\" ?", false),
-        new Option<bool>("101717", "Carcossa Merge Shop Note", "Mode: [select] only\nShould the bot buy \"Carcossa Merge Shop Note\" ?", false),
+        new Option<bool>("101760", "Unreal Twin Blades of Doom", "Mode: [select] only\nShould the bot buy \"Unreal Twin Blades of Doom\" ?", false),
+        new Option<bool>("101522", "Valkyrie Bryn Mask Morph", "Mode: [select] only\nShould the bot buy \"Valkyrie Bryn Mask Morph\" ?", false),
+        new Option<bool>("101523", "Valkyrie Bryn Mask", "Mode: [select] only\nShould the bot buy \"Valkyrie Bryn Mask\" ?", false),
+        new Option<bool>("101524", "Valkyrie Bryn Locks", "Mode: [select] only\nShould the bot buy \"Valkyrie Bryn Locks\" ?", false),
+        new Option<bool>("101525", "Sealed Valkyrie Mask", "Mode: [select] only\nShould the bot buy \"Sealed Valkyrie Mask\" ?", false),
+        new Option<bool>("101529", "Grand Spear Lorelei", "Mode: [select] only\nShould the bot buy \"Grand Spear Lorelei\" ?", false),
         new Option<bool>("101771", "Dark Carcossa Scythe", "Mode: [select] only\nShould the bot buy \"Dark Carcossa Scythe\" ?", false),
         new Option<bool>("101757", "Corrupt Skullstaff of Doom", "Mode: [select] only\nShould the bot buy \"Corrupt Skullstaff of Doom\" ?", false),
         new Option<bool>("101758", "Unreal Skullstaff of Doom", "Mode: [select] only\nShould the bot buy \"Unreal Skullstaff of Doom\" ?", false),
