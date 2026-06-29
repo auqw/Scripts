@@ -840,7 +840,7 @@ public class CoreAdvanced
             .Where(x => !uniqueItemIds.Contains(x.ID))
             .ToList();
 
-        List<ShopItem> items = new();
+        List<ShopItem> items = [];
         bool memSkipped = false;
 
         foreach (ShopItem item in shopItems)
@@ -1088,24 +1088,24 @@ public class CoreAdvanced
 
     public HashSet<string> MergeItemisinShopExceptions = new(StringComparer.OrdinalIgnoreCase);
 
-    public List<ItemCategory> miscCatagories = new()
-    {
+    public List<ItemCategory> miscCatagories =
+    [
         ItemCategory.Note,
         ItemCategory.Item,
         ItemCategory.QuestItem,
         ItemCategory.ServerUse,
-    };
+    ];
     public ItemBase externalItem = new();
     public int externalQuant = 0;
     public bool matsOnly = false;
-    public List<string> MaxStackOneItems = new();
-    public List<string> AltFarmItems = new();
+    public List<string> MaxStackOneItems = [];
+    public List<string> AltFarmItems = [];
 
     /// <summary>
     /// The list of ScriptOptions for any merge script.
     /// </summary>
-    public List<IOption> MergeOptions = new()
-    {
+    public List<IOption> MergeOptions =
+    [
         CoreBots.Instance.SkipOptions,
         new Option<mergeOptionsEnum>(
             "mode",
@@ -1138,7 +1138,7 @@ public class CoreAdvanced
             "Mode [select]: \tYou are able to select what items you get and which ones you dont in the Select Category below.",
             "click here"
         ),
-    };
+    ];
 
     /// <summary>
     /// The name of ScriptOptions for any merge script.
@@ -1845,7 +1845,7 @@ public class CoreAdvanced
     }
 
 
-    private readonly List<string> ReEquippedItems = new();
+    private readonly List<string> ReEquippedItems = [];
     private EnhancementType ReEnhanceAfter = EnhancementType.Lucky;
     private CapeSpecial ReCEnhanceAfter = CapeSpecial.None;
     private HelmSpecial ReHEnhanceAfter = HelmSpecial.None;
@@ -2029,7 +2029,7 @@ public class CoreAdvanced
 
         try
         {
-            AutoEnhance(new() { SelectedItem }, type, cSpecial, hSpecial, wSpecial);
+            AutoEnhance([SelectedItem], type, cSpecial, hSpecial, wSpecial);
         }
         catch (Exception e)
         {
@@ -2063,7 +2063,7 @@ public class CoreAdvanced
             return;
 
         // If any of the items in the items array cant be found, return
-        List<string>? notFound = new();
+        List<string>? notFound = [];
         foreach (string item in items)
             if (!Core.CheckInventory(item))
                 notFound.Add(item);
@@ -2088,7 +2088,7 @@ public class CoreAdvanced
         // If any of the items in the items array cant be enhanced, return
         if (SelectedItems.Count != items.Length)
         {
-            List<string> unEnhanceable = new();
+            List<string> unEnhanceable = [];
 
             foreach (string item in items)
                 if (
@@ -2743,7 +2743,7 @@ public class CoreAdvanced
                     Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
             }
 
-            List<ShopItem> availableEnh = new();
+            List<ShopItem> availableEnh = [];
 
             // Filters
             foreach (ShopItem enh in shopItems)
