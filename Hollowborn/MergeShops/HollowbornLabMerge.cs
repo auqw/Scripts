@@ -96,7 +96,8 @@ public class HollowbornLabMerge
                             "Left",
                             "Chaoroot Compound",
                             "Inert Charoot",
-                            8
+                            8,
+                            isTemp: false
                         );
                         Bot.Wait.ForPickup(req.Name);
                     }
