@@ -1021,7 +1021,7 @@ public class CoreAdvanced
 
                 ShopItem? reqInShop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
 
-                string reqName = req.Name?.Trim();
+                string? reqName = req.Name?.Trim();
 
                 if (!string.IsNullOrEmpty(reqName) &&
                     MergeItemisinShopExceptions.Contains(reqName))
