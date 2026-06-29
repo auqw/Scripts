@@ -181,7 +181,10 @@ public class NovaShrineGiftsMerge
     {
         CoreDOY.NovaShrine();
         //Only edit the map and shopID here
-        Adv.MergeItemisinShopExceptions.AddRange(new[] { "Green Dragon Slayer's Halberd" });
+        Adv.MergeItemisinShopExceptions =
+       [
+            "Green Dragon Slayer's Halberd"
+       ];
         Adv.StartBuyAllMerge("novashrine", 2458, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         #region Dont edit this part
