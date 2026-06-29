@@ -93,27 +93,14 @@ public class HallofClassesMerge
                 case "Sword and Scroll Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(7495);
+                    Core.RegisterQuests(7505);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        //Studying the Bard 7495
+                        //Studying the Rogue 7505
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "palooza",
-                            "Act6",
-                            "Left",
-                            "Music Pirate",
-                            "Lo-Fi Recording",
-                            4
-                        );
+                        Core.HuntMonster("wardwarf", "Drow Assassin", "Poisoned Dagger", 4);
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "Stairway",
-                            "r8",
-                            "Right",
-                            "*",
-                            "Scroll: O'Carolan's Reel"
-                        );
+                        Core.HuntMonster("wardwarf", "D'wain Jonsen", $"Scroll: Opportunity's Strike");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -122,8 +109,8 @@ public class HallofClassesMerge
         }
     }
 
-    public List<IOption> Select = new()
-    {
+    public List<IOption> Select =
+    [
         new Option<bool>(
             "54598",
             "Shinobi Armor",
@@ -292,5 +279,5 @@ public class HallofClassesMerge
             "Mode: [select] only\nShould the bot buy \"Silver Stream Swords\" ?",
             false
         ),
-    };
+    ];
 }
