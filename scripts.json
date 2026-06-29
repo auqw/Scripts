@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 161311,
-    "sha256": "29e938d842f13789cb0623e25f20fa8ba7ee2df1970a0ecc3eaf91dc1859500c",
+    "size": 162165,
+    "sha256": "0c21047b7bf48bec8a561f2b1a9c3a23036e33994144139b1fd816168cc93ee7",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -15708,8 +15708,8 @@
       "skullstaff"
     ],
     "path": "Other/MergeShops/ValkyriesWarTrophiesMerge.cs",
-    "size": 10584,
-    "sha256": "afabdfe981e47269ae4a13281b4054178e4f385d5a7ede661ce44b0e99b87ad5",
+    "size": 9982,
+    "sha256": "3d24603168559366c06dab04da7c83db57515dc55a78b58da6ab80e8bff671b9",
     "fileName": "ValkyriesWarTrophiesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ValkyriesWarTrophiesMerge.cs"
   },
@@ -17034,8 +17034,8 @@
       "stream"
     ],
     "path": "Other/MergeShops/HallofClassesMerge.cs",
-    "size": 9977,
-    "sha256": "0b03a7a4316121b5d52bfd7b40a9f7bc2379c9a178780975058471ffa101cfff",
+    "size": 9600,
+    "sha256": "44b5b124ccf01468a5cae75dcb50f52a5a200b8f3795004dce28091c338551a3",
     "fileName": "HallofClassesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/HallofClassesMerge.cs"
   },
