@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 161352,
-    "sha256": "6fe94c458e178f953041c8c0253d9cce4e25022e04b97f607b2054379ad40b27",
+    "size": 161311,
+    "sha256": "29e938d842f13789cb0623e25f20fa8ba7ee2df1970a0ecc3eaf91dc1859500c",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -10570,8 +10570,8 @@
       "achievement"
     ],
     "path": "Seasonal/BlackFriday/EbilMegaMallMerge.cs",
-    "size": 18529,
-    "sha256": "b6b245ecf21a33f1c9b55c5c93e04443f5721681e06897e38491986fd242f9cc",
+    "size": 18485,
+    "sha256": "6b02d1df22a2129bde0c612376bd6a73799fb97f0e267e8142683eee5b8fc299",
     "fileName": "EbilMegaMallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallMerge.cs"
   },
@@ -18349,8 +18349,8 @@
       "reavers"
     ],
     "path": "Other/MergeShops/NovaShrineGiftsMerge.cs",
-    "size": 14485,
-    "sha256": "ead50649aa697bf75a13d9970769df85fd449a6efd4df458d94ad2f44e2e074a",
+    "size": 14497,
+    "sha256": "4c2a51a1a1ab028b125d33c5c51068aaf01cc98721557c88362a97752ddd1e8b",
     "fileName": "NovaShrineGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NovaShrineGiftsMerge.cs"
   },
