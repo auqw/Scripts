@@ -73,16 +73,7 @@ public class DarkLord
         //Cyber Crystal x66
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(8065);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Cyber Crystal", 66))
-            Core.KillMonster(
-                "murdermoon",
-                "r2",
-                "Left",
-                "Tempest Soldier",
-                "Tempest Soldier Badge",
-                5,
-                log: false
-            );
+        Core.KillMonster("murdermoon", "r2", "Left", "*", "Cyber Crystal", 66, isTemp: false);
         Core.CancelRegisteredQuests();
 
         //S Ring x15
