@@ -1086,6 +1086,23 @@ public class CoreAdvanced
         #endregion
     }
 
+    /// <summary>
+    /// Items listed in MergeItemisinShopExceptions are treated as exceptions when using startbuyallmerge:
+    /// - startbuyallmerge will normally merge items that exist in a shop into a single buy action.
+    /// - If an item name (case-insensitive) is placed in MergeItemisinShopExceptions, that item will NOT be
+    ///   merged with shop items and will be handled individually instead. Use this to prevent merging for
+    ///   specific items that require separate purchase logic or different quantities.
+    ///
+    /// Example usage:
+    /// Adv.MergeItemisinShopExceptions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    /// {
+    ///     "item",
+    ///     "item2",
+    ///     "item3",
+    /// };
+    /// 
+    /// place this example into the top of the merge script above the startbuyall line.
+    /// </summary>
     public HashSet<string> MergeItemisinShopExceptions = new(StringComparer.OrdinalIgnoreCase);
 
     public List<ItemCategory> miscCatagories =
