@@ -24,13 +24,17 @@ public class GenQueueScript
 
     public void GenerateQueuedScript()
     {
+        if (Bot.Version == "1.8.2")
+        {
+            Core.Logger("You're currently on VibeSkua, please use the Build in script queer `Scripts buttonm > Scheduler`, as its much better.", stopBot: true);
+        }
         IFileDialogService fileDialog = Ioc.Default.GetRequiredService<IFileDialogService>();
 
-        List<string[]> scripts = new();
-        List<string> scriptNames = new();
-        HashSet<string> csIncludes = new();
-        Dictionary<string, List<string>> sharedHelpers = new();
-        List<(string ClassName, bool UsesBotParam)> scriptCalls = new();
+        List<string[]> scripts = [];
+        List<string> scriptNames = [];
+        HashSet<string> csIncludes = [];
+        Dictionary<string, List<string>> sharedHelpers = [];
+        List<(string ClassName, bool UsesBotParam)> scriptCalls = [];
 
         // Collect scripts
         while (!Bot.ShouldExit)
@@ -94,15 +98,17 @@ public class GenQueueScript
 
         string botName = GetBotName();
 
-        List<string> output = new();
-        output.AddRange(csIncludes.OrderBy(s => s));
-        output.Add("using Skua.Core.Interfaces;");
-        output.Add("using System.Threading.Tasks;");
-        output.Add("");
-        output.Add($"public class Generated_{botName}");
-        output.Add("{");
-        output.Add("    private IScriptInterface Bot => IScriptInterface.Instance;");
-        output.Add("    public CoreBots Core => CoreBots.Instance;");
+        List<string> output =
+        [
+            .. csIncludes.OrderBy(s => s),
+            "using Skua.Core.Interfaces;",
+            "using System.Threading.Tasks;",
+            "",
+            $"public class Generated_{botName}",
+            "{",
+            "    private IScriptInterface Bot => IScriptInterface.Instance;",
+            "    public CoreBots Core => CoreBots.Instance;",
+        ];
 
         // emit shared helpers
         foreach (List<string> helper in sharedHelpers.Values)
@@ -161,7 +167,7 @@ public class GenQueueScript
             if (!line.StartsWith("private static") || !line.EndsWith("{")) continue;
             if (line.Contains(" _")) continue; // skip backing fields
 
-            List<string> helper = new() { "    " + line };
+            List<string> helper = ["    " + line];
 
             int braceDepth = 0;
             bool entered = false;
