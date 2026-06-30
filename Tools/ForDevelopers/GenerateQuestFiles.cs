@@ -66,13 +66,12 @@ public class QuestFileUpdater
     {
         try
         {
-            Core.Logger("Starting quest generation...");
-
 
             Core.SetOptions();
 
             _loaderCTS = new();
 
+            Core.Logger("Starting quest generation...");
             UpdateQuests(_loaderCTS.Token);
         }
         catch (Exception ex)
@@ -290,9 +289,12 @@ public class QuestFileUpdater
 
         List<QuestData> all = new();
 
+        // Use a temporary path for the loader (file won't be created, just used internally)
+        string tempPath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData_temp.json");
+
         Core.Logger($"BootstrapFresh: fetching quests 1 → {targetMaxId}");
 
-        while (!Bot.ShouldExit || token.IsCancellationRequested || start <= targetMaxId)
+        while (start <= targetMaxId && !Bot.ShouldExit)
         {
             token.ThrowIfCancellationRequested();
 
@@ -303,10 +305,10 @@ public class QuestFileUpdater
 
             Core.Logger($"  Fetching: {start} → {end}");
 
-            // Pass null for path to avoid file dependency during fresh fetch
+            // Pass tempPath instead of null - the service needs a valid path parameter
             List<QuestData> batch =
                 loader.UpdateRangeAsync(
-                        null!,
+                        tempPath,
                         start,
                         end,
                         null,
@@ -322,14 +324,24 @@ public class QuestFileUpdater
             }
 
             all.AddRange(batch);
-            Core.Logger($"  Fetched {batch.Count} quests (total: {all.Count})");
+            int highestID = all.Max(q => q.ID);
+            Core.Logger($"  Fetched {batch.Count} quests (total: {all.Count} quests, highest ID: {highestID})");
 
             start += window;
         }
 
-        Core.Logger($"BootstrapFresh complete: {all.Count} total quests");
+        // =========================
+        // DEDUPLICATE BY QUEST ID
+        // =========================
+        var deduplicated = all
+            .GroupBy(q => q.ID)
+            .Select(g => g.Last()) // Keep the last (most recent) version of each quest ID
+            .OrderBy(q => q.ID)
+            .ToList();
 
-        return all;
+        Core.Logger($"BootstrapFresh complete: {deduplicated.Count} unique quests (removed {all.Count - deduplicated.Count} duplicates)");
+
+        return deduplicated;
     }
 
     // =========================
