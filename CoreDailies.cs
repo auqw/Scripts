@@ -1249,7 +1249,7 @@ public class CoreDailies
                     Core.ToBank("Happy Penguin");
                 }
                 else
-                    Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
+                    Core.Logger($"🥺 we don't have the cute little penguin so no badge for you...");
             }
 
         }
@@ -1328,50 +1328,17 @@ public class CoreDailies
 
                         case frGift.Chaos_Diemond:
                             Core.EquipClass(ClassType.Farm);
-                            Core.KillMonster(
-                                "battleodium",
-                                "r6",
-                                "Left",
-                                "Vileture",
-                                "Grapes",
-                                1,
-                                false,
-                                false
-                            );
-                            Core.KillMonster(
-                                "battleodium",
-                                "r6",
-                                "Left",
-                                "Diemond",
-                                "Diamonds",
-                                1,
-                                false,
-                                false
-                            );
+                            Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Grapes", isTemp: false);
+                            Core.KillMonster("battleodium", "r6", "Left", "Diemond", "Diamonds", isTemp: false);
                             Core.BuyItem("battleodium", 2236, "Chaos Diemond");
                             break;
 
                         case frGift.Cracked_Opal:
                             Core.EquipClass(ClassType.Farm);
-                            Core.KillMonster(
-                                "battleodium",
-                                "r6",
-                                "Left",
-                                "Vileture",
-                                "Melons",
-                                1,
-                                false,
-                                false
-                            );
+                            Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Melons", isTemp: false);
                             while (!Bot.ShouldExit && !Core.CheckInventory(76288))
                             {
-                                Core.KillMonster(
-                                    "battleodium",
-                                    "r6",
-                                    "Left",
-                                    "Diemond",
-                                    log: false
-                                );
+                                Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
                                 Bot.Drops.Pickup(76288);
                                 Bot.Wait.ForPickup(76288);
                             }
@@ -1380,17 +1347,8 @@ public class CoreDailies
 
                         case frGift.Blood_Roseberry:
                             Core.EquipClass(ClassType.Farm);
-                            Core.HuntMonster("battleodium", "Widowing", "Roses", 1, false, false);
-                            Core.KillMonster(
-                                "battleodium",
-                                "r6",
-                                "Left",
-                                "Vileture",
-                                "Strawberries",
-                                1,
-                                false,
-                                false
-                            );
+                            Core.HuntMonster("battleodium", "Widowing", "Roses", isTemp: false);
+                            Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Strawberries", isTemp: false);
                             Core.BuyItem("battleodium", 2236, "Blood Roseberry");
                             break;
 
@@ -1398,38 +1356,16 @@ public class CoreDailies
                             if (!Bot.Quests.IsUnlocked(9107))
                             {
                                 Core.EquipClass(ClassType.Solo);
-                                Core.HuntMonster("greyguard", "Odium", "A Fish", 1, false, false);
+                                Core.HuntMonster("greyguard", "Odium", "A Fish", isTemp: false);
                             }
                             else
                             {
                                 Core.EquipClass(ClassType.Farm);
-                                Core.HuntMonster(
-                                    "battleodium",
-                                    "Widowing",
-                                    "Roses",
-                                    1,
-                                    false,
-                                    false
-                                );
-                                Core.KillMonster(
-                                    "battleodium",
-                                    "r6",
-                                    "Left",
-                                    "Vileture",
-                                    "Strawberries",
-                                    1,
-                                    false,
-                                    false
-                                );
+                                Core.HuntMonster("battleodium", "Widowing", "Roses", isTemp: false);
+                                Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Strawberries", isTemp: false);
                                 //multiple items with name "Rubies"
                                 while (!Bot.ShouldExit && !Core.CheckInventory(76286))
-                                    Core.KillMonster(
-                                        "battleodium",
-                                        "r6",
-                                        "Left",
-                                        "Diemond",
-                                        log: false
-                                    );
+                                    Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
                                 Core.ChainComplete(9107);
                                 Bot.Wait.ForPickup((int)gifts[0]);
                             }
@@ -1443,25 +1379,13 @@ public class CoreDailies
                         case frGift.Strawberries:
                             Core.EquipClass(ClassType.Farm);
                             while (!Bot.ShouldExit && !Core.CheckInventory(_gifts, any: true))
-                                Core.KillMonster(
-                                    "battleodium",
-                                    "r6",
-                                    "Left",
-                                    "Vileture",
-                                    log: false
-                                );
+                                Core.KillMonster("battleodium", "r6", "Left", "Vileture", log: false);
                             break;
 
                         default:
                             Core.EquipClass(ClassType.Farm);
                             while (!Bot.ShouldExit && !Core.CheckInventory(_gifts, any: true))
-                                Core.KillMonster(
-                                    "battleodium",
-                                    "r6",
-                                    "Left",
-                                    "Diemond",
-                                    log: false
-                                );
+                                Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
                             break;
                     }
                 }
@@ -1540,7 +1464,7 @@ public class CoreDailies
             }
 
             Core.Logger("Something went wrong, friendshipInfo is null");
-            friends = new();
+            friends = [];
             return false;
         }
 
