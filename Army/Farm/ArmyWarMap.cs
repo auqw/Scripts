@@ -56,6 +56,7 @@ public class ArmyWarMap
     public List<IOption> Options =
     [
         new Option<bool>("Solo", "Solo Farm", "Use just 1 account"),
+        new Option<bool>("Endless", "Endless Farm", "Disregard the Level check, and run till *YOU* stop it."),
 
         new Option<LevelType>(
             "LevelingArea",
@@ -90,6 +91,7 @@ public class ArmyWarMap
     public void Leveling()
     {
         var solo = Bot.Config!.Get<bool>("Solo");
+        var Endless = Bot.Config!.Get<bool>("Endless");
         var levelType = Bot.Config.Get<LevelType>("LevelingArea");
 
         if (!solo)
@@ -145,9 +147,8 @@ public class ArmyWarMap
 
         while (!Bot.ShouldExit)
         {
-
-            if ((solo && Bot.Player != null && Bot.Player.Level >= 100)
-                || Ultra.CheckArmyProgressBool(() => Bot.Player != null && Bot.Player.Level >= 100, syncPath))
+            if (!Endless && ((solo && Bot.Player != null && Bot.Player.Level >= 100)
+             || Ultra.CheckArmyProgressBool(() => Bot.Player != null && Bot.Player.Level >= 100, syncPath)))
             {
                 Bot.Options.AggroMonsters = false;
                 C.JumpWait();
