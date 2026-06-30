@@ -1178,9 +1178,9 @@ public class CoreBots
                     Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}. Attempting to make room by banking Misc Ac items");
 
                     // Try *All* banking metods to try and make space.
-                    BankACMisc(items.Length);
-                    BankACUnenhancedGear(items.Length);
-                    BankACHouseItems(items.Length);
+                    BankACMisc();
+                    BankACUnenhancedGear();
+                    BankACHouseItems();
                 }
 
                 //Retry after banking misc stuff
