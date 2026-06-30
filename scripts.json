@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 438462,
-    "sha256": "c9d0a90b665852cedb67dc67e4f8f8a4a1b08484cc6816750c6cddeaaa6cb2ec",
+    "size": 438853,
+    "sha256": "66cb0332131a4af34b5c4622b7f8c96b7063239012dbea53958e511b7c615da4",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 61034,
-    "sha256": "66f92781e065ca3cf870028a573c2c09251c064a0c69562abcc78161cb1caeba",
+    "size": 58420,
+    "sha256": "a2aea63f6059670524504323e166a0d3a711fce0d6c48dae4e1f8e0116a21375",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -228,8 +228,8 @@
       "choose"
     ],
     "path": "Tools/GenerateQueuedScript.cs",
-    "size": 7783,
-    "sha256": "841109baf9c7ae00ace608dc874936e448de5796ca9519175d54bad0de2c8e51",
+    "size": 7925,
+    "sha256": "2e9af8bd3a7d79b415c35d896d051388b4ffc07b1e5fa5cb4ecc39799798b4b5",
     "fileName": "GenerateQueuedScript.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/GenerateQueuedScript.cs"
   },
@@ -6607,8 +6607,8 @@
       "carcossacourt"
     ],
     "path": "Army/Farm/ArmyWarMap.cs",
-    "size": 5505,
-    "sha256": "fb3c26348218eab0c25f6469b6537a59189dd3f2059ac446fab859feeb5e0645",
+    "size": 6174,
+    "sha256": "7b5f22f81b1d1445a3e92de920f08a1695a3f9ce67fb5ee0be79d5c147a7281a",
     "fileName": "ArmyWarMap.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyWarMap.cs"
   },
