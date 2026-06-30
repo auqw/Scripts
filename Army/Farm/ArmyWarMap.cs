@@ -51,7 +51,7 @@ public class ArmyWarMap
     }
     private static CoreArmyLite _Army;
 
-    public string OptionsStorage = "ArmyLeveling2";
+    public string OptionsStorage = "ArmyWar";
     public bool DontPreconfigure = true;
     public List<IOption> Options =
     [
