@@ -62,8 +62,8 @@ public class ArmyWarMap
             "LevelingArea",
             "Leveling Area",
             "Area to do the leveling in:\n" +
-            "LowtoMid = 'Enter' cell with 3 mobs (~10k HP each)\n" +
-            "High = 'r5' cell with 3 mobs (~25k HP each)\n" +
+            "LowtoMidLevel = 'Enter' cell with 3 mobs (~10k HP each)\n" +
+            "HighLevel = 'r5' cell with 3 mobs (~25k HP each)\n" +
             "Boss = Dryden (smaller boss for now)"
         ),
 
@@ -90,11 +90,11 @@ public class ArmyWarMap
 
     public void Leveling()
     {
-        var solo = Bot.Config!.Get<bool>("Solo");
-        var Endless = Bot.Config!.Get<bool>("Endless");
-        var levelType = Bot.Config.Get<LevelType>("LevelingArea");
+        bool Solo = Bot.Config!.Get<bool>("Solo");
+        bool Endless = Bot.Config!.Get<bool>("Endless");
+        LevelType levelType = Bot.Config.Get<LevelType>("LevelingArea");
 
-        if (!solo)
+        if (!Solo)
         {
             if (sArmy.Players().Length <= 0)
             {
@@ -121,20 +121,22 @@ public class ArmyWarMap
 
         Bot.Sleep(2500);
 
-        C.Logger("Players in Current Army: " + (solo ? "Yourself" : $"{sArmy.Players().Length}"));
+        C.Logger("Players in Current Army: " + (Solo ? "Yourself" : $"{sArmy.Players().Length}"));
 
         Dictionary<LevelType, int[]> questMap = new()
         {
-            { LevelType.LowToMid, new[] { 10778, 10779 } },
-            { LevelType.High,     new[] { 10778, 10779, 10780, 10781 } },
-            { LevelType.Boss,     new[] { 10778, 10779, 10784 } }
+            { LevelType.LowtoMidLevel, new[] { 10778, 10779 } },
+            { LevelType.HighLevel,     new[] { 10778, 10779, 10780, 10781 } },
+            { LevelType.SmallBoss,     new[] { 10778, 10779, 10784 } },
+            { LevelType.BigBoss,     new[] { 10778, 10779, 10785 } }
         };
 
+        C.AddDrop("A Revelation");
         C.RegisterQuests(questMap[levelType]);
         Core.Join(map);
         C.Jump(cell, pad);
 
-        if (!solo)
+        if (!Solo)
         {
             if (sArmy.Players().Length > 1)
                 Ultra.WaitForArmy(sArmy.Players().Length - 1, "ArmyWarMap.sync");
@@ -147,7 +149,7 @@ public class ArmyWarMap
 
         while (!Bot.ShouldExit)
         {
-            if (!Endless && ((solo && Bot.Player != null && Bot.Player.Level >= 100)
+            if (!Endless && ((Solo && Bot.Player != null && Bot.Player.Level >= 100)
              || Ultra.CheckArmyProgressBool(() => Bot.Player != null && Bot.Player.Level >= 100, syncPath)))
             {
                 Bot.Options.AggroMonsters = false;
@@ -176,16 +178,18 @@ public class ArmyWarMap
     public static (string cell, string pad) GetCellPad(LevelType type) =>
         type switch
         {
-            LevelType.LowToMid => ("Enter", "Spawn"),
-            LevelType.High => ("r5", "Left"),
-            LevelType.Boss => ("r8", "Left"),
+            LevelType.LowtoMidLevel => ("Enter", "Spawn"),
+            LevelType.HighLevel => ("r5", "Left"),
+            LevelType.SmallBoss => ("r8", "Left"),
+            LevelType.BigBoss => ("r9", "Center"),
             _ => ("Enter", "Spawn")
         };
 
     public enum LevelType
     {
-        LowToMid,
-        High,
-        Boss
+        LowtoMidLevel,
+        HighLevel,
+        SmallBoss,
+        BigBoss
     }
 }
