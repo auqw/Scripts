@@ -1099,7 +1099,8 @@ public class CoreBots
             Sleep(delay);
         }
 
-        Logger($"Initialization failed after {retries} attempts at: {initializer.Method.Name}.");
+        Relogin($"Initialization failed after {retries} attempts at: {initializer.Method.Name}. attemtping to relog.");
+
         return default;
     }
 
@@ -1176,9 +1177,9 @@ public class CoreBots
                     Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}. Attempting to make room by banking Misc Ac items");
 
                     // Try *All* banking metods to try and make space.
-                    BankACMisc();
-                    BankACUnenhancedGear();
-                    BankACHouseItems();
+                    BankACMisc(items.Length);
+                    BankACUnenhancedGear(items.Length);
+                    BankACHouseItems(items.Length);
                 }
 
                 //Retry after banking misc stuff
@@ -8309,19 +8310,27 @@ public class CoreBots
 
     /// <summary>
     /// Banks miscellaneous AC-tagged non-equipped House items.
+    /// Uses requiredSpaces to only bank enough items to free up space.
     /// </summary>
-    public void BankACHouseItems()
+    public void BankACHouseItems(int requiredSpaces = 0)
     {
-        var toHouseBank = Bot
-            .House.Items.Where(item => item != null && item.Coins && !item.Equipped)
-            .Select(item => item.ID)
+        InventoryItem[] houseItems = Bot.House.Items
+            .Where(item => item is not null && item.Coins && !item.Equipped)
             .ToArray();
 
-        if (toHouseBank.Length > 0)
+        if (houseItems.Length == 0)
         {
-            Logger("Banking non-equipped house items", toHouseBank.Length + " items");
-            ToHouseBank(toHouseBank);
+            Logger("✅ House inventory clean — no bankable AC house items found.");
+            return;
         }
+
+        InventoryItem[] itemsToBank = requiredSpaces > 0
+            ? [.. houseItems.Take(requiredSpaces)]
+            : houseItems;
+
+        Logger("Banking non-equipped house items", $"{itemsToBank.Length} items");
+
+        ToHouseBank([.. itemsToBank.Select(item => item.ID)]);
     }
 
     /// <summary>
@@ -8345,7 +8354,7 @@ public class CoreBots
         }
 
         var itemsToBanked = requiredSpaces > 0
-            ? bankableItems.Take(requiredSpaces).ToArray()
+            ? [.. bankableItems.Take(requiredSpaces)]
             : bankableItems;
 
         LogBankingIntent(itemsToBanked);
