@@ -57,7 +57,7 @@ public class ArmyWarMap
     [
         new Option<bool>("Solo", "Solo Farm", "Use just 1 account"),
         new Option<bool>("Endless", "Endless Farm", "Disregard the Level check, and run till *YOU* stop it."),
-
+        new Option<ClassType>("ClassType", "ClassType to use", "What Classtype to use (high hp classes work well, as you'll get hit around 1k~ without buffs)"),
         new Option<LevelType>(
             "LevelingArea",
             "Leveling Area",
@@ -93,7 +93,7 @@ public class ArmyWarMap
         bool Solo = Bot.Config!.Get<bool>("Solo");
         bool Endless = Bot.Config!.Get<bool>("Endless");
         LevelType levelType = Bot.Config.Get<LevelType>("LevelingArea");
-
+        ClassType classType = Bot.Config!.Get<ClassType>("ClassType");
         if (!Solo)
         {
             if (sArmy.Players().Length <= 0)
@@ -130,7 +130,7 @@ public class ArmyWarMap
             { LevelType.SmallBoss,     new[] { 10778, 10779, 10784 } },
             { LevelType.BigBoss,     new[] { 10778, 10779, 10785 } }
         };
-
+        C.EquipClass(classType);
         C.AddDrop("A Revelation");
         C.RegisterQuests(questMap[levelType]);
         Core.Join(map);
