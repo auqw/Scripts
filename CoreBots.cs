@@ -145,7 +145,7 @@ public class CoreBots
     public static CoreBots Instance => _instance ??= new CoreBots();
     private IScriptInterface Bot => IScriptInterface.Instance;
 
-    private const string DiscordLink = "https://discord.gg/CKKbk2zr3p";
+    private const string DiscordLink = "https://discord.gg/mScWZYYSKS";
 
     private Stopwatch? _scriptStopwatch;
 
@@ -495,7 +495,8 @@ public class CoreBots
                         if (
                             OneTimeMessage(
                                 "discordV11",
-                                "Our discord server was recently deleted again (March 29th 2023), click yes if you wish to (re-)join the server",
+                                "Our discord server was recently deleted again (March 29th 2023), click yes if you wish to (re-)join the server." +
+                                "You'll be dropped to the `Welcome` channel, just hit the green check, and you'll have acess to the rest of the server. (#skua-help is the channel you'll want for skua stuff)",
                                 true,
                                 true,
                                 true
