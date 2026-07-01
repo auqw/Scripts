@@ -24,7 +24,7 @@ public class GenQueueScript
 
     public void GenerateQueuedScript()
     {
-        if (Bot.Version == "1.8.2")
+        if (Bot.Version.ToString() == "1.8.2")
         {
             Core.Logger("You're currently on VibeSkua, please use the Build in script queer `Scripts buttonm > Scheduler`, as its much better.", stopBot: true);
         }
