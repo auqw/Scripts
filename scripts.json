@@ -228,8 +228,8 @@
       "choose"
     ],
     "path": "Tools/GenerateQueuedScript.cs",
-    "size": 7925,
-    "sha256": "2e9af8bd3a7d79b415c35d896d051388b4ffc07b1e5fa5cb4ecc39799798b4b5",
+    "size": 7936,
+    "sha256": "49993ffb31a064b8dac96bfca751e0007c72d62050c9d7ca9e8400fbee0aebbf",
     "fileName": "GenerateQueuedScript.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/GenerateQueuedScript.cs"
   },
