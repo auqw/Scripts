@@ -1,7 +1,7 @@
 /*
 name: Valkyries War Trophies Merge
 description: This bot will farm the items belonging to the selected mode for the Valkyries War Trophies Merge [2737] in /carcossacourt
-tags: valkyries, war, trophies, merge, carcossacourt, corrupt, shadowreaper, doom, unreal, dark, carcossa, doomed, dulcinea, twin, locked, chest, ii, i, iii, iv, winged, weapon, shop, note, scythe, skullstaff
+tags: valkyries, war, trophies, merge, carcossacourt, valkyrie, doom, corrupt, shadowreaper, unreal, concordia, wings, harmonia, dark, carcossa, doomed, dulcinea, twin, bryn, morph, sealed, grand, spear, lorelei, scythe, skullstaff
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -190,9 +190,9 @@ public class ValkyriesWarTrophiesMerge
         }
     }
 
-    public List<IOption> Select =
-  [
-      new Option<bool>("101521", "Valkyrie of Doom", "Mode: [select] only\nShould the bot buy \"Valkyrie of Doom\" ?", false),
+    public List<IOption> Select = new()
+    {
+        new Option<bool>("101521", "Valkyrie of Doom", "Mode: [select] only\nShould the bot buy \"Valkyrie of Doom\" ?", false),
         new Option<bool>("101755", "Corrupt ShadowReaper of Doom", "Mode: [select] only\nShould the bot buy \"Corrupt ShadowReaper of Doom\" ?", false),
         new Option<bool>("101756", "Unreal ShadowReaper of Doom", "Mode: [select] only\nShould the bot buy \"Unreal ShadowReaper of Doom\" ?", false),
         new Option<bool>("101526", "Valkyrie's Concordia Wings", "Mode: [select] only\nShould the bot buy \"Valkyrie's Concordia Wings\" ?", false),
@@ -212,5 +212,5 @@ public class ValkyriesWarTrophiesMerge
         new Option<bool>("101758", "Unreal Skullstaff of Doom", "Mode: [select] only\nShould the bot buy \"Unreal Skullstaff of Doom\" ?", false),
         new Option<bool>("101765", "Doomed Dulcinea", "Mode: [select] only\nShould the bot buy \"Doomed Dulcinea\" ?", false),
         new Option<bool>("101769", "Dark Carcossa Dagger", "Mode: [select] only\nShould the bot buy \"Dark Carcossa Dagger\" ?", false),
-   ];
+   };
 }
