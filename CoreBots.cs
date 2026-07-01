@@ -1100,8 +1100,7 @@ public class CoreBots
             Sleep(delay);
         }
 
-        Relogin($"Initialization failed after {retries} attempts at: {initializer.Method.Name}. attemtping to relog.");
-
+        Logger($"Initialization failed after {retries} attempts at: {initializer.Method.Name}.");
         return default;
     }
 
@@ -8311,27 +8310,19 @@ public class CoreBots
 
     /// <summary>
     /// Banks miscellaneous AC-tagged non-equipped House items.
-    /// Uses requiredSpaces to only bank enough items to free up space.
     /// </summary>
-    public void BankACHouseItems(int requiredSpaces = 0)
+    public void BankACHouseItems()
     {
-        InventoryItem[] houseItems = Bot.House.Items
-            .Where(item => item is not null && item.Coins && !item.Equipped)
+        var toHouseBank = Bot
+            .House.Items.Where(item => item != null && item.Coins && !item.Equipped)
+            .Select(item => item.ID)
             .ToArray();
 
-        if (houseItems.Length == 0)
+        if (toHouseBank.Length > 0)
         {
-            Logger("✅ House inventory clean — no bankable AC house items found.");
-            return;
+            Logger("Banking non-equipped house items", toHouseBank.Length + " items");
+            ToHouseBank(toHouseBank);
         }
-
-        InventoryItem[] itemsToBank = requiredSpaces > 0
-            ? [.. houseItems.Take(requiredSpaces)]
-            : houseItems;
-
-        Logger("Banking non-equipped house items", $"{itemsToBank.Length} items");
-
-        ToHouseBank([.. itemsToBank.Select(item => item.ID)]);
     }
 
     /// <summary>
@@ -8355,7 +8346,7 @@ public class CoreBots
         }
 
         var itemsToBanked = requiredSpaces > 0
-            ? [.. bankableItems.Take(requiredSpaces)]
+            ? bankableItems.Take(requiredSpaces).ToArray()
             : bankableItems;
 
         LogBankingIntent(itemsToBanked);
