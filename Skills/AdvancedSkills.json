@@ -6675,20 +6675,44 @@
   },
   "NOT A MOD": {
     "Base": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
         },
         {
-          "skillId": 2
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4
         },
         {
           "skillId": 3
         },
         {
-          "skillId": 4
+          "skillId": 2
         }
       ]
     }
