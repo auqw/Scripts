@@ -190,8 +190,8 @@ public class ValkyriesWarTrophiesMerge
         }
     }
 
-    public List<IOption> Select = new()
-    {
+    public List<IOption> Select =
+    [
         new Option<bool>("101521", "Valkyrie of Doom", "Mode: [select] only\nShould the bot buy \"Valkyrie of Doom\" ?", false),
         new Option<bool>("101755", "Corrupt ShadowReaper of Doom", "Mode: [select] only\nShould the bot buy \"Corrupt ShadowReaper of Doom\" ?", false),
         new Option<bool>("101756", "Unreal ShadowReaper of Doom", "Mode: [select] only\nShould the bot buy \"Unreal ShadowReaper of Doom\" ?", false),
@@ -212,5 +212,5 @@ public class ValkyriesWarTrophiesMerge
         new Option<bool>("101758", "Unreal Skullstaff of Doom", "Mode: [select] only\nShould the bot buy \"Unreal Skullstaff of Doom\" ?", false),
         new Option<bool>("101765", "Doomed Dulcinea", "Mode: [select] only\nShould the bot buy \"Doomed Dulcinea\" ?", false),
         new Option<bool>("101769", "Dark Carcossa Dagger", "Mode: [select] only\nShould the bot buy \"Dark Carcossa Dagger\" ?", false),
-   };
+   ];
 }
