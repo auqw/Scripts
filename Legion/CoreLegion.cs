@@ -469,7 +469,7 @@ public class CoreLegion
 
         Bot.Log($"✔️ Quest Pet Owned\nPetID: [{PetID}]\nQuestID(s): [{string.Join(", ", questList.Select(q => q.ID))}]");
 
-        Dictionary<int, (ItemBase Item, int Quantity)> requirements = new Dictionary<int, (ItemBase Item, int Quantity)>();
+        Dictionary<int, (ItemBase Item, int Quantity)> requirements = [];
         foreach (Quest quest in questList)
             foreach (ItemBase req in quest.Requirements)
                 if (req != null && req.ID != 0 && !requirements.ContainsKey(req.ID))
@@ -546,19 +546,18 @@ public class CoreLegion
             Core.Join("legionarena", ignoreCheck: true, publicRoom: true);
             if (ReturnIfNoPeople && Bot.Map.PlayerCount < partySize)
                 return;
-            while (!Bot.ShouldExit && Bot.Map.PlayerCount < partySize) { }
+            while (!Bot.ShouldExit && Bot.Map.PlayerCount < partySize) { Bot.Sleep(500); }
             Core.Logger($"Party gathered [{Bot.Map.PlayerNames!.Count}/{partySize}]");
         }
 
         Core.EquipClass(ClassType.Solo);
 
         Core.FarmingLogger("Legion Token", quant);
-        Core.RegisterQuests(6742, 6743);
-        Core.AddDrop("Legion Token", "Bone Sigil");
-        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider");
+        Core.RegisterQuests(6743);
+        Core.AddDrop("Legion Token");
+        Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider", "Legion Token", quant, isTemp: false);
         Core.CancelRegisteredQuests();
-        Core.ToBank("Bone Sigil");
+
     }
 
     public void LTDreadrock(int quant = 50000)
