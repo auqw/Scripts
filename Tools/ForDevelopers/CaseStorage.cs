@@ -32506,6 +32506,96 @@ case ""Blue Beach Ball"":
                     break;
     "
 },
+{
+    "A Revelation",
+    @"
+case ""A Revelation"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(10778, 10779);
+                    Core.KillMonster(""carcossacourt"", ""r5"", ""Left"", ""*"", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Doom Aura",
+    @"
+case ""Doom Aura"":
+                    Dictionary<string, int> ptp = new()
+                        {
+                            { ""Necrotic Scythe of Scourge"", 2184 },
+                            { ""Necrotic Daggers of Destruction"", 2181 },
+                            { ""Necrotic Shade Blade"", 2182 },
+                            { ""Necrotic Broadsword of Bane"", 2183 },
+                            { ""Necrotic Mace of Misery"", 2185 },
+                            { ""Necrotic Bow of the Shadow"", 2186 }
+                        };
+                    string? weapon = null;
+
+                    foreach (string item in ptp.Keys)
+                    {
+                        if (!Core.CheckInventory(item))
+                            continue;
+
+                        weapon = item;
+                        break;
+                    }
+                    if (weapon == null)
+                    {
+                        Core.Logger($""Missing any valid Necrotic weapon to acquire {req.Name}"");
+                        return;
+                    }
+
+                    // Uses the first owned weapon found.
+                    SDKA.PinpointthePieces(
+                        ptp[weapon],
+                        new[] { ""Doom Aura"" },
+                        new[] { req.Quantity }
+                    );
+                    break;
+    "
+},
+{
+    "Fabled Doom Blade",
+    @"
+case ""Fabled Doom Blade"":
+                    ShadowMerge.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "True Doomknight Helm",
+    @"
+case ""True Doomknight Helm"":
+                    Adv.BuyItem(""terminatemple"", 2343, req.Name);
+                    break;
+    "
+},
+{
+    "Twin Blades of Doom",
+    @"
+case ""Twin Blades of Doom"":
+                    MRM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "SkullStaff of Doom",
+    @"
+case ""SkullStaff of Doom"":
+                    MRM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
