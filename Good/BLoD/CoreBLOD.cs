@@ -372,10 +372,15 @@ public class CoreBLOD
             _ => 0,
         };
 
-        Core.AddDrop(Core.QuestRewards(quest).Append("Blinding Light Fragments").ToArray());
+        if (Core.CheckInventory("Blinding Light Fragments", 10))
+            Core.ChainComplete(quest);
+        Core.Logger("Selling \"Blinding Light Fragments\" before starting this as it can bug out and just stay at 1/1 forever.. ( blame ae).");
+        Core.SellItem("Blinding Light Fragments", all: true);
+        
+        Core.AddDrop("Blinding Light Fragments");
+        Core.AddDrop(Core.QuestRewards(quest));
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger(item, quant);
-
         Core.RegisterQuests(quest);
         Core.KillMonster("battleunderb", "Enter", "Spawn", "Skeleton Warrior", item, quant, log: false, isTemp: false);
         Core.CancelRegisteredQuests();
