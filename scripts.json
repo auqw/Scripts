@@ -1719,6 +1719,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/GrimDarkSet.cs"
   },
   {
+    "name": "Tyronius Weddin gGift",
+    "description": "Farms \"All Drops\" From Quest",
+    "tags": [
+      "flames of love",
+      "drops"
+    ],
+    "path": "Other/TyroniusWeddingGift.cs",
+    "size": 1347,
+    "sha256": "5be7f4fe8b94389010a1c4d1e412e831ad7870a83fa9f7eb07b50127e8517cf7",
+    "fileName": "TyroniusWeddingGift.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/TyroniusWeddingGift.cs"
+  },
+  {
     "name": "Mind Breaking It In",
     "description": "Farms \"All Drops\" From Quest",
     "tags": [
