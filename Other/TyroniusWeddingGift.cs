@@ -44,7 +44,7 @@ public class TyroniusWeddingGift
         Core.RegisterQuests(10787);
         while (!Bot.ShouldExit && (!Core.CheckInventory(Loot)))
         {
-            Core.HuntMonster("fireplanewar", "Mutated Void Dragon", "Flame of Passion", 8);
+            Core.HuntMonster("fireplanewar", "Shadefire Onslaught", "Flame of Passion", 8);
             Core.HuntMonster("skytower", "Sunstone", "Sunlit Warmth", 8);
             Bot.Wait.ForQuestComplete(10787);
         }
