@@ -4564,8 +4564,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1178158,
-    "sha256": "b12988f1c6de97ceebcf77b0a94e51a1d3623c198026c8efa7ea5d7f2321edfa",
+    "size": 1178900,
+    "sha256": "58ca7e0e388f313fe484d9bed0e3606b91316f1bec26a14b3780f379c4d792c3",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -14665,7 +14665,7 @@
     ],
     "path": "Other/MergeShops/GoldenMerge.cs",
     "size": 6158,
-    "sha256": "8ad60ef94f3a830fd3127dcb746137f15e812972c4478eb1328bb0fd634fb758",
+    "sha256": "71aaa98c4e44d43e72523e44bb9ad21dad03db1ce52a1b1ca5ce977778570a11",
     "fileName": "GoldenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/GoldenMerge.cs"
   },
