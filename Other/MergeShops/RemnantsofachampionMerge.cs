@@ -1,7 +1,7 @@
 /*
-name: Remnants of a champion Merge
-description: This bot will farm the items belonging to the selected mode for the Remnants of a champion Merge [2711] in /flameusurper
-tags: remnants, of, a, champion, merge, flameusurper, flame, maleno, albedo, citrinitas, rubedo, magnum, opus, wings, divine, quintessence, eye, extinction, scion, destruction, horns, morph, liberta, aeterna
+name: Remnants of a Champion Merge
+description: This bot will farm the items belonging to the selected mode for the Remnants of a Champion Merge [2711] in /flameusurper
+tags: remnants, of, a, champion, merge, flameusurper, flame, maleno, albedo, citrinitas, rubedo, usurper, manifestations, magnum, opus, wings, divine, quintessence, eye, extinction, house, intro, scion, destruction, horns, morph, companion, liberta, aeterna
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -103,14 +103,18 @@ public class RemnantsofachampionMerge
         new Option<bool>("100877", "Flame of Albedo", "Mode: [select] only\nShould the bot buy \"Flame of Albedo\" ?", false),
         new Option<bool>("100881", "Flame of Citrinitas", "Mode: [select] only\nShould the bot buy \"Flame of Citrinitas\" ?", false),
         new Option<bool>("100887", "Flame of Rubedo", "Mode: [select] only\nShould the bot buy \"Flame of Rubedo\" ?", false),
+        new Option<bool>("100945", "Flame Usurper Manifestations", "Mode: [select] only\nShould the bot buy \"Flame Usurper Manifestations\" ?", false),
         new Option<bool>("100867", "Magnum Opus Wings", "Mode: [select] only\nShould the bot buy \"Magnum Opus Wings\" ?", false),
         new Option<bool>("100868", "Divine Quintessence Wings", "Mode: [select] only\nShould the bot buy \"Divine Quintessence Wings\" ?", false),
         new Option<bool>("100869", "Eye of Extinction", "Mode: [select] only\nShould the bot buy \"Eye of Extinction\" ?", false),
+        new Option<bool>("100948", "Flame of Maleno House Intro", "Mode: [select] only\nShould the bot buy \"Flame of Maleno House Intro\" ?", false),
         new Option<bool>("100872", "Flame Scion Gauntlets", "Mode: [select] only\nShould the bot buy \"Flame Scion Gauntlets\" ?", false),
         new Option<bool>("100863", "Scion of Destruction Helm", "Mode: [select] only\nShould the bot buy \"Scion of Destruction Helm\" ?", false),
         new Option<bool>("100864", "Scion of Destruction Mask", "Mode: [select] only\nShould the bot buy \"Scion of Destruction Mask\" ?", false),
         new Option<bool>("100865", "Scion of Destruction Horns", "Mode: [select] only\nShould the bot buy \"Scion of Destruction Horns\" ?", false),
         new Option<bool>("100866", "Scion of Destruction Morph", "Mode: [select] only\nShould the bot buy \"Scion of Destruction Morph\" ?", false),
+        new Option<bool>("100947", "Flame Usurper Companion Blades", "Mode: [select] only\nShould the bot buy \"Flame Usurper Companion Blades\" ?", false),
+        new Option<bool>("100946", "Flame Usurper Blades", "Mode: [select] only\nShould the bot buy \"Flame Usurper Blades\" ?", false),
         new Option<bool>("100870", "Liberta Aeterna", "Mode: [select] only\nShould the bot buy \"Liberta Aeterna\" ?", false),
    };
 }
