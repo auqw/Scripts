@@ -32596,6 +32596,27 @@ case ""SkullStaff of Doom"":
                     break;
     "
 },
+{
+    "Stellar Wish",
+    @"
+case ""Stellar Wish"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10788, ""victormatsuri"", ""Doomknight Prince"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
