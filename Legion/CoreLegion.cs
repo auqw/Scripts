@@ -528,6 +528,34 @@ public class CoreLegion
         Core.ToBank(11189, 11190);
     }
 
+    public void LTParagonFiend(int quant = 50000, bool FromStandAlone = false) // Paragon Fiend Quest Pet
+    {
+        if (Core.CheckInventory("Legion Token", quant))
+            return;
+
+        if (!Core.CheckInventory("Paragon Fiend Quest Pet"))
+        {
+            if (FromStandAlone)
+                Core.Logger("Missing `Paragon Fiend Quest Pet`");
+            return;
+        }
+
+        JoinLegion();
+
+        Core.FarmingLogger("Legion Token", quant);
+        
+        Core.RegisterQuests(6750); 
+        Core.AddDrop("Legion Token");
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
+        {
+            Core.HuntMonster("fotia", "Fotia Elemental", "Nothing Heard", 10, isTemp: true);
+            Core.HuntMonster("fotia", "Fotia Elemental", "Nothing To See", 10, isTemp: true);
+            Core.HuntMonster("fotia", "Fotia Elemental", "Area Secured and Quiet", 10, isTemp: true);
+        }
+        Core.CancelRegisteredQuests();
+    }
+
     public void LTFirstClassEntertainment(
         int quant = 50000,
         bool onlyWithParty = false,
