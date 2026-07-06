@@ -41,7 +41,7 @@ public class QuestFileUpdater
             "TargetQuestID",
             "Target Quest ID",
             "Stop syncing when this quest ID is reached",
-            10775
+            10787
         ),
        new Option<bool>(
             "ForceFullRebuild",
