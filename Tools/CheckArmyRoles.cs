@@ -273,7 +273,7 @@ public class CheckArmyRoles
             && bishopClassesOwned >= 4
             && FiftyOneWeaponsOwned >= 4
             && hasEnhancements
-            && (Core.isCompletedBefore(8873) || Core.CheckInventory("ArchMage", toInv: false));
+            && (Core.isCompletedBefore(8918) || Core.CheckInventory("ArchMage", toInv: false));
     }
 
     #region Variables
