@@ -4594,11 +4594,11 @@ public class CoreFarms
 
     public int RemainingFactionXp(string faction)
     {
-        if (string.IsNullOrWhiteSpace(faction)) return 0;
-        if (Bot.Reputation?.FactionList == null) return 0;
+        if (string.IsNullOrWhiteSpace(faction)) return 302500;
+        if (Bot.Reputation?.FactionList == null) return 302500;
         return Bot.Reputation.FactionList
             .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase))
-            ?.RemainingRep ?? 0;
+            ?.RemainingRep ?? 302500;
     }
 
     public int TotalFactionRep(string faction)
