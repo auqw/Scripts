@@ -60,7 +60,7 @@ public class RemnantsofachampionMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        AOR.DoAll();
+        AOR.RubedoPeak();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("flameusurper", 2711, findIngredients, buyOnlyThis, buyMode: buyMode);
 

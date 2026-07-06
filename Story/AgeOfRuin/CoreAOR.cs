@@ -1453,6 +1453,8 @@ public class CoreAOR
         MagnumOpus(seaVoice, coldThunder);
 
         Story.PreLoad(this);
+
+        // 10714 | Wave Goodbye
         Story.KillQuest(10714, "rubedopeak", "Rubedo Match");
     }
 
