@@ -188,6 +188,7 @@ public class AtlasWarTrophiesMerge
                 case "Underworld Ritualist Adorned Mask":
                 case "Underworld Ritualist Hood":
                 case "Underworld Ritualist":
+                case "Underworld Ritualist Aeterna Adornment Horns":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(
@@ -219,125 +220,25 @@ public class AtlasWarTrophiesMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "92306",
-            "Atlas Knight",
-            "Mode: [select] only\nShould the bot buy \"Atlas Knight\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92307",
-            "Atlas Knight Helm",
-            "Mode: [select] only\nShould the bot buy \"Atlas Knight Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92308",
-            "Atlas Knight Cloak",
-            "Mode: [select] only\nShould the bot buy \"Atlas Knight Cloak\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92311",
-            "Atlas Axis Blades",
-            "Mode: [select] only\nShould the bot buy \"Atlas Axis Blades\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84308",
-            "Enchanted Barrensoul Psalm",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Barrensoul Psalm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84307",
-            "Enchanted Ritualist Aeterna Adornment",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Adornment\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84306",
-            "Enchanted Ritualist Aeterna Cowl",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Cowl\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84305",
-            "Enchanted Ritualist Aeterna Horns",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Horns\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84304",
-            "Enchanted Ritualist Aeterna Adornment",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Adornment\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84303",
-            "Enchanted Underworld Ritualist Vestments",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Vestments\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84302",
-            "Enchanted Underworld Ritualist Mask + Horns",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Mask + Horns\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84301",
-            "Enchanted Underworld Ritualist Hood",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84300",
-            "Underworld Ritualist Horned Cowl",
-            "Mode: [select] only\nShould the bot buy \"Underworld Ritualist Horned Cowl\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84299",
-            "Enchanted Underworld Ritualist Adornment",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Adornment\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84298",
-            "Enchanted Underworld Ritualist Horns",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Horns\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84297",
-            "Enchanted Underworld Ritualist Mask",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Mask\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84296",
-            "Underworld Ritualist Cowl",
-            "Mode: [select] only\nShould the bot buy \"Underworld Ritualist Cowl\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84295",
-            "Enchanted Underworld Ritualist",
-            "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84648",
-            "Corpse Wax Candelabras",
-            "Mode: [select] only\nShould the bot buy \"Corpse Wax Candelabras\" ?",
-            false
-        ),
-        new Option<bool>(
-            "84647",
-            "Corpse Wax Candelabra",
-            "Mode: [select] only\nShould the bot buy \"Corpse Wax Candelabra\" ?",
-            false
-        ),
-    };
+        new Option<bool>("92306", "Atlas Knight", "Mode: [select] only\nShould the bot buy \"Atlas Knight\" ?", false),
+        new Option<bool>("84295", "Enchanted Underworld Ritualist", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist\" ?", false),
+        new Option<bool>("92308", "Atlas Knight Cloak", "Mode: [select] only\nShould the bot buy \"Atlas Knight Cloak\" ?", false),
+        new Option<bool>("84648", "Corpse Wax Candelabras", "Mode: [select] only\nShould the bot buy \"Corpse Wax Candelabras\" ?", false),
+        new Option<bool>("92311", "Atlas Axis Blades", "Mode: [select] only\nShould the bot buy \"Atlas Axis Blades\" ?", false),
+        new Option<bool>("92307", "Atlas Knight Helm", "Mode: [select] only\nShould the bot buy \"Atlas Knight Helm\" ?", false),
+        new Option<bool>("84307", "Enchanted Ritualist Aeterna Adornment Horns", "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Adornment Horns\" ?", false),
+        new Option<bool>("84306", "Enchanted Ritualist Aeterna Cowl", "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Cowl\" ?", false),
+        new Option<bool>("84305", "Enchanted Ritualist Aeterna Horns", "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Horns\" ?", false),
+        new Option<bool>("84304", "Enchanted Ritualist Aeterna Adornment", "Mode: [select] only\nShould the bot buy \"Enchanted Ritualist Aeterna Adornment\" ?", false),
+        new Option<bool>("84303", "Enchanted Underworld Ritualist Vestments", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Vestments\" ?", false),
+        new Option<bool>("84302", "Enchanted Underworld Ritualist Mask + Horns", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Mask + Horns\" ?", false),
+        new Option<bool>("84301", "Enchanted Underworld Ritualist Hood", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Hood\" ?", false),
+        new Option<bool>("84300", "Underworld Ritualist Horned Cowl", "Mode: [select] only\nShould the bot buy \"Underworld Ritualist Horned Cowl\" ?", false),
+        new Option<bool>("84299", "Enchanted Underworld Ritualist Adornment", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Adornment\" ?", false),
+        new Option<bool>("84298", "Enchanted Underworld Ritualist Horns", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Horns\" ?", false),
+        new Option<bool>("84297", "Enchanted Underworld Ritualist Mask", "Mode: [select] only\nShould the bot buy \"Enchanted Underworld Ritualist Mask\" ?", false),
+        new Option<bool>("84296", "Underworld Ritualist Cowl", "Mode: [select] only\nShould the bot buy \"Underworld Ritualist Cowl\" ?", false),
+        new Option<bool>("84647", "Corpse Wax Candelabra", "Mode: [select] only\nShould the bot buy \"Corpse Wax Candelabra\" ?", false),
+        new Option<bool>("84308", "Enchanted Barrensoul Psalm", "Mode: [select] only\nShould the bot buy \"Enchanted Barrensoul Psalm\" ?", false),
+   };
 }
