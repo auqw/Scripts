@@ -147,8 +147,14 @@ public class ArmyWarMap
 
         Bot.Options.AggroMonsters = true;
 
+        C.SavedState(true, map);
         while (!Bot.ShouldExit)
         {
+
+            if (C.CheckSaveState())
+                C.ExecuteSaveState();
+
+
             if (!Endless && ((Solo && Bot.Player != null && Bot.Player.Level >= 100)
              || Ultra.CheckArmyProgressBool(() => Bot.Player != null && Bot.Player.Level >= 100, syncPath)))
             {
