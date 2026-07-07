@@ -6620,8 +6620,8 @@
       "carcossacourt"
     ],
     "path": "Army/Farm/ArmyWarMap.cs",
-    "size": 6174,
-    "sha256": "7b5f22f81b1d1445a3e92de920f08a1695a3f9ce67fb5ee0be79d5c147a7281a",
+    "size": 6284,
+    "sha256": "6e2c91fe903e22e63f5a969fd389df7b01025f3d61d9ca537f38e36fefdcde73",
     "fileName": "ArmyWarMap.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyWarMap.cs"
   },
