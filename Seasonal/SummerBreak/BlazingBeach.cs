@@ -48,11 +48,7 @@ public class BlazingBeachStory
         Story.KillQuest(8702, "blazingbeach", "Burning Bombadier");
 
         // Piracy for Pyromancers
-        Story.KillQuest(
-            8703,
-            "blazingbeach",
-            new[] { "Magma Pirate", "Burning Bombadier", "Red-Hot Raider" }
-        );
+        Story.KillQuest(8703, "blazingbeach", new[] { "Magma Pirate", "Scalding Shooter", "Red-Hot Raider" });
 
         // Canned Heat
         Story.MapItemQuest(8704, "blazingbeach", 10252);
@@ -63,15 +59,7 @@ public class BlazingBeachStory
         {
             Core.EnsureAccept(8705);
             Core.HuntMonster("blazingbeach", "Dao Treeant", "Cavern Wood", 12, log: false);
-            Core.KillMonster(
-                "blazingbeach",
-                "r2",
-                "Right",
-                "Burning Bombadier",
-                "Redistributed Loot",
-                12,
-                log: false
-            );
+            Core.KillMonster("blazingbeach", "r2", "Right", "Burning Bombadier", "Redistributed Loot", 12, log: false);
             Core.HuntMonster("burningbeach", "Water Goblin", "Goblin Canteen", 5, log: false);
             Core.EnsureComplete(8705);
         }
