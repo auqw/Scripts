@@ -442,14 +442,7 @@ public class BeleensMerge
 
                 case "Reavers Of Good":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "BrightFortress",
-                            "Dark Assassin",
-                            "Mirror Token",
-                            35,
-                            isTemp: false
-                        );
+                    Core.KillMonster("BrightFortress", "Fortress2", "Bottom", "*", "Mirror Token", 35, isTemp: false);
                     Adv.BuyItem("BrightFortress", 795, req.Name);
                     break;
 
