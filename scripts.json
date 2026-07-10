@@ -5719,8 +5719,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 45599,
-    "sha256": "1f246747548b87ec9a43eee80c83f7f065de0787777a1fbfa85061d9dfa92b70",
+    "size": 45567,
+    "sha256": "7535211a62ac87e2774010197785e4907920665ff09375eca96a8a5b5c82142e",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -8084,8 +8084,8 @@
       "light"
     ],
     "path": "Seasonal/FrostvalInJuly/frostblademaster.cs",
-    "size": 2037,
-    "sha256": "f117112f4fedea423f7057275eab42868cb02dd194c579a1e0117f630c09fa5e",
+    "size": 2221,
+    "sha256": "817f7f6b599f32de34545358696f09bc04441a4435b0ed2ea0210ea547b0cf1b",
     "fileName": "frostblademaster.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/FrostvalInJuly/frostblademaster.cs"
   },
@@ -11478,8 +11478,8 @@
       "summer-break"
     ],
     "path": "Seasonal/SummerBreak/BlazingBeach.cs",
-    "size": 2789,
-    "sha256": "7e18eb1be403316b45b14a080ebf326dd3ab1a9ec2ebff3e1ae8b562f2440ab4",
+    "size": 2616,
+    "sha256": "e64e15fd94161e061f4d4262a58533facf6078d5be872d1adbdd6ca57c39e302",
     "fileName": "BlazingBeach.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/SummerBreak/BlazingBeach.cs"
   },
@@ -13786,8 +13786,8 @@
       "intenso"
     ],
     "path": "Other/MergeShops/BadmoonMerge.cs",
-    "size": 11018,
-    "sha256": "726fbb8d45a8676c1a381829f1981dd55cbcf3dbbae1e19647fec7cbb209d3e3",
+    "size": 11068,
+    "sha256": "1f8cdb7d02c92830bd2aefc6865fe13cb92c0a50db6a16a90588166008d6af58",
     "fileName": "BadmoonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BadmoonMerge.cs"
   },
@@ -14157,8 +14157,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ArtixWeddingMerge.cs",
-    "size": 6982,
-    "sha256": "6b586a0e0261f3e46101735aab4dadacef622d3bf1e51d7d10f786f09e92e0b7",
+    "size": 6865,
+    "sha256": "64571873448c65a359dedbac7c3b3143b12a341427dd6a11419de6108977ba04",
     "fileName": "ArtixWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ArtixWeddingMerge.cs"
   },
@@ -17393,8 +17393,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BeleensMerge.cs",
-    "size": 26748,
-    "sha256": "f8189348f47e10ce565f28204e0db06d9bc7afd28aac2cb8866e140175460f66",
+    "size": 26504,
+    "sha256": "a9e8f982991d82807da396601cabc5f3793f2dfaa4cf797e8dddf6801dcc03bc",
     "fileName": "BeleensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BeleensMerge.cs"
   },
@@ -24212,8 +24212,8 @@
       "war"
     ],
     "path": "Story/Legion/SevenCircles(War).cs",
-    "size": 4755,
-    "sha256": "82b4b66ca7b3b3e0a7e8227504f3c7cb13b88979f71f1258e0588e3a535ab7b1",
+    "size": 4801,
+    "sha256": "10a7f44d39d40964cfa1687c0bec541eea0eed28c3346f3f2f0bb3b4f1c42589",
     "fileName": "SevenCircles(War).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/SevenCircles(War).cs"
   },
