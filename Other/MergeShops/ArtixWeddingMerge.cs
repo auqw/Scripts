@@ -94,11 +94,8 @@ public class ArtixWeddingMerge
                 case "Love Token":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("battlewedding", "Platinum Mech Dragon", "Love Token");
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("battlewedding", "Platinum Mech Dragon", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
             }
         }

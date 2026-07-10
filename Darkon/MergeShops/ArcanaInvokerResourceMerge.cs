@@ -524,15 +524,11 @@ public class ArcanaInvokerResourceMerge
                     Core.HuntMonster("chaosweb", "ChaosWeaver Cleric", req.Name, quant, req.Temp);
                     break;
 
-                case "Love Token":
+            case "Love Token":
+                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "battlewedding",
-                        "Platinum Mech Dragon",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("battlewedding", "Platinum Mech Dragon", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Time Heart":
