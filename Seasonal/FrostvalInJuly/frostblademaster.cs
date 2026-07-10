@@ -37,8 +37,13 @@ public class FrostBladeMaster
         Story.PreLoad(this);
 
         //Decorations - Paper Lanterns 6982
-        Story.KillQuest(6982, "junkyard", "Tsukumo-Gami");
-
+        if (!Story.QuestProgression(6982))
+        {
+            Core.EnsureAccept(6982);
+            Core.KillMonster("junkyard", "r2", "Left", "Tsukumo-Gami", "Festival Lantern", 11);
+            Core.EnsureComplete(6982);
+        }
+        
         //Decorations - Light Them Up 6983
         Story.KillQuest(6983, "greenshell", "Tsurubebi");
 
