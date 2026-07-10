@@ -141,6 +141,7 @@ public class BadmoonMerge
                 case "Darkovian Hunter":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
+                    Bot.Quests.UpdateQuest(9844);
                     Core.HuntMonster("badmoon", "Twisted Hunter", req.Name, quant, req.Temp);
                     break;
 
