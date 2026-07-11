@@ -7,8 +7,7 @@ tags: hollowborn, hollowborn nation, fiends purgatory, void soul
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
-//cs_include Scripts/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs
-//cs_include Scripts/Hollowborn/HollowbornNation/2FiendsPurgatory.cs
+//cs_include Scripts/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs 
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -87,33 +86,39 @@ public class FiendsPurgatory
         Core.SetOptions(false);
     }
 
-    public void Purgatory(Rewards reward = Rewards.All)
+    public void Purgatory(Rewards reward = Rewards.All, bool QuestOnly = false)
     {
         if (!Core.isCompletedBefore(10789))
         {
             Core.Logger("Doing Require previous quest");
-            ITFS.FiendsShadow(InTheFiendsShadow.Rewards.Hollowborn_Soulreaper_of_Nulgath);
+            ITFS.FiendsShadow(InTheFiendsShadow.Rewards.None, true, false);
         }
-        
-        string[] chosenReward =
-            reward == Rewards.All
+
+        string[] chosenReward = new string[0];
+        if (!QuestOnly)
+            chosenReward = reward == Rewards.All
                 ? SelectableRewards
                 : new[] { reward.ToString().Replace('_', ' ') };
 
-        if (Core.CheckInventory(chosenReward))
+        if (!QuestOnly && Core.CheckInventory(chosenReward))
+            return;
+
+        if (QuestOnly && Core.isCompletedBefore(QuestID))
             return;
 
         EnsureRequirements();
 
-        Core.AddDrop(chosenReward);
+        if (!QuestOnly)
+            Core.AddDrop(chosenReward);
         Core.AddDrop(RandomRewards);
         Core.AddDrop("Void Soul");
 
-        Core.Logger(
-            $"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}"
-        );
+        if (!QuestOnly)
+            Core.Logger(
+                $"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}"
+            );
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(chosenReward))
+        while (!Bot.ShouldExit && !QuestOnly && !Core.CheckInventory(chosenReward) || QuestOnly && !Core.isCompletedBefore(10790))
         {
             Core.EnsureAccept(QuestID);
 
@@ -121,8 +126,9 @@ public class FiendsPurgatory
             Core.HuntMonster("voidsalek", "Salek Sprayer", "Spoil of Salek", isTemp: false);
             Core.HuntMonster("voidnerfkitten", "Sarah the Nerfkitten", "Sarah's Souvenir", isTemp: false);
 
-            Core.EnsureCompleteChoose(QuestID, chosenReward);
-            Bot.Wait.ForPickup(chosenReward);
+            if (!QuestOnly)
+                Core.EnsureCompleteChoose(QuestID, chosenReward);
+            else Core.EnsureComplete(QuestID);
         }
     }
 

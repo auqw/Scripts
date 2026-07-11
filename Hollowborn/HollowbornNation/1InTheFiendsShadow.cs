@@ -49,27 +49,33 @@ public class InTheFiendsShadow
         Core.SetOptions(false);
     }
 
-    public void FiendsShadow(Rewards reward = Rewards.All, bool VoidSoulOnly = false, int quant = 150)
+    string[] chosenReward;
+    public void FiendsShadow(Rewards reward = Rewards.All, bool QuestOnly = false, bool VoidSoulOnly = false, int quant = 150)
     {
-        string[] chosenReward =
-            reward == Rewards.All
-                ? Core.QuestRewards(QuestID)
+
+        string[] chosenReward = new string[0];
+        if (!QuestOnly)
+            chosenReward = reward == Rewards.All
+                ? SelectableRewards
                 : new[] { reward.ToString().Replace('_', ' ') };
 
-        if (Core.CheckInventory(chosenReward))
-            return;
+        if (!QuestOnly)
+            if (Core.CheckInventory(chosenReward))
+                return;
+            else if (QuestOnly && Core.isCompletedBefore(QuestID))
+                return;
 
-        Core.AddDrop(chosenReward);
+
+        if (!QuestOnly)
+            Core.AddDrop(chosenReward);
         Core.AddDrop("Void Soul");
 
-        Core.Logger(
-            $"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}"
-        );
+        if (!QuestOnly)
+            Core.Logger($"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}");
 
-        while (!Bot.ShouldExit && !VoidSoulOnly && !Core.CheckInventory(chosenReward) || VoidSoulOnly && !Core.CheckInventory("Void Soul", quant))
+        while (!Bot.ShouldExit && (!VoidSoulOnly || !QuestOnly) && !Core.CheckInventory(chosenReward) || QuestOnly && Core.isCompletedBefore(10790) || VoidSoulOnly && !Core.CheckInventory("Void Soul", quant))
         {
-            if (!VoidSoulOnly)
-                Core.EnsureAccept(QuestID);
+            Core.EnsureAccept(QuestID);
 
             Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
 
@@ -79,14 +85,22 @@ public class InTheFiendsShadow
             Nation.FarmTotemofNulgath(1);
             HSoul.GetYaSoulsHeeeere(50);
 
-            if (!VoidSoulOnly)
+            if (!VoidSoulOnly || !QuestOnly)
                 Core.EnsureCompleteChoose(QuestID, chosenReward);
-            Bot.Wait.ForPickup(chosenReward);
+            else
+                Core.EnsureComplete(QuestID);
         }
     }
 
     private const int QuestID = 10789;
-
+    private readonly string[] SelectableRewards =
+    {
+    "Hollowborn Void Sword",
+    "Hollowborn Soulreaper of Nulgath",
+    "Hollowborn Void of Nulgath",
+    "Hollowborn Void Horns",
+    "Hollowborn Void Helm",
+};
     public enum Rewards
     {
         All,
