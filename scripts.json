@@ -7673,6 +7673,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornLichKing/PayHomagetoCaladbolgAgain.cs"
   },
   {
+    "name": "Fiend's Purgatory",
+    "description": "Ensures the acceptance requirements are owned, then completes 'Fiend's Purgatory' quest [10790] for the selected reward(s).",
+    "tags": [
+      "hollowborn",
+      "hollowborn nation",
+      "fiends purgatory",
+      "void soul"
+    ],
+    "path": "Hollowborn/HollowbornNation/2FiendsPurgatory.cs",
+    "size": 5252,
+    "sha256": "888924436c8e9464247dcf02a9bcb2389ce98e1eb373bd4af7365887dc65c3e4",
+    "fileName": "2FiendsPurgatory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/2FiendsPurgatory.cs"
+  },
+  {
+    "name": "In The Fiend's Shadow",
+    "description": "Completes the 'In The Fiend's Shadow' quest [10789] for the selected reward(s), drops Void Soul.",
+    "tags": [
+      "hollowborn",
+      "hollowborn nation",
+      "in the fiends shadow",
+      "void soul"
+    ],
+    "path": "Hollowborn/HollowbornNation/1InTheFiendsShadow.cs",
+    "size": 2754,
+    "sha256": "e8ce28a1774b854918e58c0120a1bbd1329a6eebf56d66240942fe1f4d07aa87",
+    "fileName": "1InTheFiendsShadow.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs"
+  },
+  {
     "name": "Hollowborn Chaos Envoy - In The Beasts Shadow",
     "description": "does the 'beasts shadow' part of hollowborn chaos envoy",
     "tags": [
