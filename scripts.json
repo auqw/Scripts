@@ -7693,12 +7693,12 @@
     "tags": [
       "hollowborn",
       "hollowborn nation",
-      "in the fiends shadow",
+      "roles unreversed",
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/5RolesUnreversed.cs",
-    "size": 5764,
-    "sha256": "1588332a80320691a4d3c81a915cb0e015db0bc6291f28cce6906b9c9b0953a2",
+    "size": 5760,
+    "sha256": "65369a46830535532aaf2fe011060496dc08d82ff05616e8b1a5a3d4e80fd485",
     "fileName": "5RolesUnreversed.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/5RolesUnreversed.cs"
   },
@@ -7708,12 +7708,12 @@
     "tags": [
       "hollowborn",
       "hollowborn nation",
-      "in the fiends shadow",
+      "tug and pull",
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/4TugandPull.cs",
-    "size": 6238,
-    "sha256": "a2192a2986836d655b42b6d42ad953cb991b9d812c674b896907060985dac26c",
+    "size": 6230,
+    "sha256": "0710287bc6a808dfc9a88a640ae4a1acef5326678d33b613809d88618954aa22",
     "fileName": "4TugandPull.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/4TugandPull.cs"
   },
@@ -7738,12 +7738,12 @@
     "tags": [
       "hollowborn",
       "hollowborn nation",
-      "in the fiends shadow",
+      "muddled past",
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/3MuddledPast.cs",
-    "size": 3717,
-    "sha256": "f3ca414be46c599863fcddd61be0fad0c5918f0614fa919ca218405dd552c147",
+    "size": 3709,
+    "sha256": "e73c469f54290a37f00b946a0befb2c182b222798a412064ce53f0386cdc091a",
     "fileName": "3MuddledPast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/3MuddledPast.cs"
   },
