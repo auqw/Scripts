@@ -189,8 +189,8 @@ public class CoreBots
         if (changeTo)
         {
             // Prevent duplicate subscriptions if script restarts internally
-            Bot.Events.ScriptStopping -= AutoReport;
-            Bot.Events.ScriptStopping += AutoReport;
+            Bot.Events.ScriptStopping -= CrashDetector;
+            Bot.Events.ScriptStopping += CrashDetector;
 
             _scriptStopwatch = Stopwatch.StartNew();
 
@@ -840,60 +840,59 @@ public class CoreBots
         return StopBot(e != null);
     }
 
-    //no longer in use.
-    // public bool CrashDetector(Exception? e)
-    // {
-    //     if (e == null || e is OperationCanceledException)
-    //         return scriptFinished;
+    public bool CrashDetector(Exception? e)
+    {
+        if (e == null || e is OperationCanceledException)
+            return scriptFinished;
 
-    //     string eSlice = e.Message + "\n" + e.InnerException;
-    //     List<string> logs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
-    //     logs = [.. logs.Skip(logs.Count > 5 ? (logs.Count - 5) : logs.Count)];
-    //     if (
-    //         Bot.ShowMessageBox(
-    //             "A crash has been detected, please fill in the report form (prefilled):\n\n"
-    //                 + eSlice,
-    //             "Script Crashed",
-    //             "Open Form",
-    //             "Close Window"
-    //         ).Text == "Open Form"
-    //     )
-    //     {
-    //         string url =
-    //             "\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&"
-    //             + "entry.2118425091=Bug+Report&"
-    //             + $"entry.290078150={Bot.Manager.LoadedScript.Split("Scripts").Last().Replace('/', '\\')[1..].Replace(".cs", "")}&"
-    //             + "entry.1803231651=It+stopped+at+the+wrong+time+(crash)&"
-    //             + $"entry.1954840906={logs.Join("%0A")}&"
-    //             + $"entry.285894207={eSlice}&\"";
-    //         url = url.Replace("\r\n", "%0A").Replace("\n", "").Replace(" ", "%20");
+        string eSlice = e.Message + "\n" + e.InnerException;
+        List<string> logs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
+        logs = [.. logs.Skip(logs.Count > 5 ? (logs.Count - 5) : logs.Count)];
+        if (
+            Bot.ShowMessageBox(
+                "A crash has been detected, please fill in the report form (prefilled):\n\n"
+                    + eSlice,
+                "Script Crashed",
+                "Open Form",
+                "Close Window"
+            ).Text == "Open Form"
+        )
+        {
+            string url =
+                "\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&"
+                + "entry.2118425091=Bug+Report&"
+                + $"entry.290078150={Bot.Manager.LoadedScript.Split("Scripts").Last().Replace('/', '\\')[1..].Replace(".cs", "")}&"
+                + "entry.1803231651=It+stopped+at+the+wrong+time+(crash)&"
+                + $"entry.1954840906={logs.Join("%0A")}&"
+                + $"entry.285894207={eSlice}&\"";
+            url = url.Replace("\r\n", "%0A").Replace("\n", "").Replace(" ", "%20");
 
-    //         Process p = new();
-    //         p.StartInfo.FileName = "rundll32";
-    //         p.StartInfo.Arguments = "url,OpenURL " + url;
-    //         p.StartInfo.WorkingDirectory =
-    //             Environment.GetFolderPath(Environment.SpecialFolder.System).Split('\\').First()
-    //             + "\\";
-    //         p.Start();
+            Process p = new();
+            p.StartInfo.FileName = "rundll32";
+            p.StartInfo.Arguments = "url,OpenURL " + url;
+            p.StartInfo.WorkingDirectory =
+                Environment.GetFolderPath(Environment.SpecialFolder.System).Split('\\').First()
+                + "\\";
+            p.Start();
 
-    //         Logger(
-    //             "Thank you for reporting the crash. Below you will find the information you will need to report, in case it isn't being auto filled"
-    //         );
-    //     }
-    //     else
-    //         Logger("A crash has occurred. Please report it in the form with the details below");
+            Logger(
+                "Thank you for reporting the crash. Below you will find the information you will need to report, in case it isn't being auto filled"
+            );
+        }
+        else
+            Logger("A crash has occurred. Please report it in the form with the details below");
 
-    //     Bot.Log("--------------------------------------");
-    //     Logger("Last 5 Logs:");
-    //     Bot.Log(logs.Join('\n'));
-    //     Bot.Log("--------------------------------------");
-    //     Logger("Crash (Debug)");
-    //     Bot.Log(eSlice);
-    //     Bot.Log("--------------------------------------");
-    //     Bot.Events.ScriptStopping -= AutoReport;
+        Bot.Log("--------------------------------------");
+        Logger("Last 5 Logs:");
+        Bot.Log(logs.Join('\n'));
+        Bot.Log("--------------------------------------");
+        Logger("Crash (Debug)");
+        Bot.Log(eSlice);
+        Bot.Log("--------------------------------------");
+        Bot.Events.ScriptStopping -= CrashDetector;
 
-    //     return false;
-    // }
+        return false;
+    }
 
     public List<string> GetLogs(LogType type = LogType.Script) =>
         (_logService ??= Ioc.Default.GetRequiredService<ILogService>()).GetLogs(type);
