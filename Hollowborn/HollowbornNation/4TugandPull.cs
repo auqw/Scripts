@@ -119,7 +119,7 @@ public class TugandPull
             MP.DoMuddledPast(false, true);
         }
         // Accept requirements
-        Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.);
+        Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
         Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Battlefiend_Blade_of_Nulgath);
         GetNulgathHouseGuest();
 
