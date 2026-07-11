@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 438681,
-    "sha256": "7e09a701d022220ef9df88b3871298c006961dfce50e55eeac7710aa574b02e6",
+    "size": 436859,
+    "sha256": "daa1e523dda56ddcd7720120b10184553c568c9f91fef5ae0c7a6373020d3132",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -7682,8 +7682,8 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/2FiendsPurgatory.cs",
-    "size": 6089,
-    "sha256": "a179be968f3520cf1e503e902680f296f8cddd4aecfd0798fe4bcc77d01d7560",
+    "size": 6059,
+    "sha256": "22b088136eae10733ff94fe09d30233819e619809943a7067c752d51b5bb6b05",
     "fileName": "2FiendsPurgatory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/2FiendsPurgatory.cs"
   },
@@ -7712,8 +7712,8 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/4TugandPull.cs",
-    "size": 5760,
-    "sha256": "f01edae088c6804ff86eaf0d4112f4de760667c30c110ce750d2e66d1f88d59c",
+    "size": 6238,
+    "sha256": "a2192a2986836d655b42b6d42ad953cb991b9d812c674b896907060985dac26c",
     "fileName": "4TugandPull.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/4TugandPull.cs"
   },
@@ -7742,8 +7742,8 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/3MuddledPast.cs",
-    "size": 3552,
-    "sha256": "38ec4bf47a5d28827d2843570c022b27bd6a045ba039dd6266f6c6039b0a1a14",
+    "size": 3717,
+    "sha256": "f3ca414be46c599863fcddd61be0fad0c5918f0614fa919ca218405dd552c147",
     "fileName": "3MuddledPast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/3MuddledPast.cs"
   },
