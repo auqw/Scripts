@@ -7682,10 +7682,40 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/2FiendsPurgatory.cs",
-    "size": 5792,
-    "sha256": "10797f57787128edf1764fc8da06e737751db0eb95f311163ea10d0d1dad28fb",
+    "size": 6089,
+    "sha256": "a179be968f3520cf1e503e902680f296f8cddd4aecfd0798fe4bcc77d01d7560",
     "fileName": "2FiendsPurgatory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/2FiendsPurgatory.cs"
+  },
+  {
+    "name": "Roles Unreversed",
+    "description": "Completes the 'Roles Unreversed' quest [10793], drops Void Soul.",
+    "tags": [
+      "hollowborn",
+      "hollowborn nation",
+      "in the fiends shadow",
+      "void soul"
+    ],
+    "path": "Hollowborn/HollowbornNation/5RolesUnreversed.cs",
+    "size": 5764,
+    "sha256": "1588332a80320691a4d3c81a915cb0e015db0bc6291f28cce6906b9c9b0953a2",
+    "fileName": "5RolesUnreversed.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/5RolesUnreversed.cs"
+  },
+  {
+    "name": "Muddled Past",
+    "description": "Completes the 'Tug and Pull' quest [10791] for the selected reward(s), drops Void Soul.",
+    "tags": [
+      "hollowborn",
+      "hollowborn nation",
+      "in the fiends shadow",
+      "void soul"
+    ],
+    "path": "Hollowborn/HollowbornNation/4TugandPull.cs",
+    "size": 4575,
+    "sha256": "6ddfa230e1c85ba8b65785e863118e4f1a25c11ffaf1f76037d816d492dfdf69",
+    "fileName": "4TugandPull.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/4TugandPull.cs"
   },
   {
     "name": "In The Fiend's Shadow",
@@ -7697,10 +7727,25 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/1InTheFiendsShadow.cs",
-    "size": 2754,
-    "sha256": "e8ce28a1774b854918e58c0120a1bbd1329a6eebf56d66240942fe1f4d07aa87",
+    "size": 3638,
+    "sha256": "16b4ccf222bf412bb702341ce5af20c32fe53612cce05a1eebe86e719ee927e9",
     "fileName": "1InTheFiendsShadow.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs"
+  },
+  {
+    "name": "Muddled Past",
+    "description": "Completes the 'MuddledPast' quest [10789] for the selected reward(s), drops Void Soul.",
+    "tags": [
+      "hollowborn",
+      "hollowborn nation",
+      "in the fiends shadow",
+      "void soul"
+    ],
+    "path": "Hollowborn/HollowbornNation/3MuddledPast.cs",
+    "size": 3552,
+    "sha256": "38ec4bf47a5d28827d2843570c022b27bd6a045ba039dd6266f6c6039b0a1a14",
+    "fileName": "3MuddledPast.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/3MuddledPast.cs"
   },
   {
     "name": "Hollowborn Chaos Envoy - In The Beasts Shadow",
