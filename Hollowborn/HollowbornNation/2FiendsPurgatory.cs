@@ -122,6 +122,7 @@ public class FiendsPurgatory
             Core.HuntMonster("voidnerfkitten", "Sarah the Nerfkitten", "Sarah's Souvenir", isTemp: false);
 
             Core.EnsureCompleteChoose(QuestID, chosenReward);
+            Bot.Wait.ForPickup(chosenReward);
         }
     }
 
@@ -169,5 +170,6 @@ public class FiendsPurgatory
         Hollowborn_Phoenix_Blade_of_Nulgath,
         Hollowborn_Overfiend_Blade_of_Nulgath,
         Hollowborn_DragonBlade_of_Nulgath,
+        None
     }
 }
