@@ -49,7 +49,6 @@ public class InTheFiendsShadow
         Core.SetOptions(false);
     }
 
-    string[] chosenReward;
     public void FiendsShadow(Rewards reward = Rewards.All, bool QuestOnly = false, bool VoidSoulOnly = false, int quant = 150)
     {
 
