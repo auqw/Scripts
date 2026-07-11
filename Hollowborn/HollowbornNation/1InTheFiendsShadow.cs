@@ -49,7 +49,7 @@ public class InTheFiendsShadow
         Core.SetOptions(false);
     }
 
-    public void FiendsShadow(Rewards reward = Rewards.All)
+    public void FiendsShadow(Rewards reward = Rewards.All, bool VoidSoulOnly = false, int quant = 150)
     {
         string[] chosenReward =
             reward == Rewards.All
@@ -66,16 +66,22 @@ public class InTheFiendsShadow
             $"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}"
         );
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(chosenReward))
+        while (!Bot.ShouldExit && !VoidSoulOnly && !Core.CheckInventory(chosenReward) || VoidSoulOnly && !Core.CheckInventory("Void Soul", quant))
         {
-            Core.EnsureAccept(QuestID);
+            if (!VoidSoulOnly)
+                Core.EnsureAccept(QuestID);
 
             Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
-            Core.HuntMonster("stormtemple", "Chaos Lord Lionfang", "Chaotic Tentacles", isTemp: false);
+
+            // "Chaotic Tentacles" as there is 2 items with this name
+            while (!Bot.ShouldExit && !Core.CheckInventory(16877))
+                Core.KillMonster("stormtemple", "r16", "Left", "*");
             Nation.FarmTotemofNulgath(1);
             HSoul.GetYaSoulsHeeeere(50);
 
-            Core.EnsureCompleteChoose(QuestID, chosenReward);
+            if (!VoidSoulOnly)
+                Core.EnsureCompleteChoose(QuestID, chosenReward);
+            Bot.Wait.ForPickup(chosenReward);
         }
     }
 
@@ -89,5 +95,6 @@ public class InTheFiendsShadow
         Hollowborn_Void_of_Nulgath,
         Hollowborn_Void_Horns,
         Hollowborn_Void_Helm,
+        None
     }
 }
