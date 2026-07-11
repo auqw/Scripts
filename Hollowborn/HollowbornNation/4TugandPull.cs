@@ -1,7 +1,7 @@
 /*
 name: Muddled Past
 description: Completes the 'Tug and Pull' quest [10791] for the selected reward(s), drops Void Soul.
-tags: hollowborn, hollowborn nation, in the fiends shadow, void soul
+tags: hollowborn, hollowborn nation, Tug and Pull, void soul
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs

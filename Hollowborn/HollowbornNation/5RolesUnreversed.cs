@@ -1,7 +1,7 @@
 /*
 name: Roles Unreversed
 description: Completes the 'Roles Unreversed' quest [10793], drops Void Soul.
-tags: hollowborn, hollowborn nation, in the fiends shadow, void soul
+tags: hollowborn, hollowborn nation, Roles Unreversed, void soul
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs

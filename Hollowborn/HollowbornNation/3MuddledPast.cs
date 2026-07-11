@@ -1,7 +1,7 @@
 /*
 name: Muddled Past
 description: Completes the 'MuddledPast' quest [10789] for the selected reward(s), drops Void Soul.
-tags: hollowborn, hollowborn nation, in the fiends shadow, void soul
+tags: hollowborn, hollowborn nation, Muddled Past, void soul
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
