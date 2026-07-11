@@ -7,6 +7,8 @@ tags: hollowborn, hollowborn nation, fiends purgatory, void soul
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
+//cs_include Scripts/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs
+//cs_include Scripts/Hollowborn/HollowbornNation/2FiendsPurgatory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -26,6 +28,13 @@ public class FiendsPurgatory
         set => _Jug = value;
     }
     private static JuggernautItemsofNulgath _Jug;
+    private static InTheFiendsShadow ITFS
+    {
+        get => _ITFS ??= new InTheFiendsShadow();
+        set => _ITFS = value;
+    }
+    private static InTheFiendsShadow _ITFS;
+
 
     private const int QuestID = 10790;
 
@@ -80,6 +89,12 @@ public class FiendsPurgatory
 
     public void Purgatory(Rewards reward = Rewards.All)
     {
+        if (!Core.isCompletedBefore(10789))
+        {
+            Core.Logger("Doing Require previous quest");
+            ITFS.FiendsShadow(InTheFiendsShadow.Rewards.Hollowborn_Soulreaper_of_Nulgath);
+        }
+        
         string[] chosenReward =
             reward == Rewards.All
                 ? SelectableRewards
