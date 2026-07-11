@@ -89,6 +89,12 @@ public class TugandPull
         set => _CVHL = value;
     }
     private static CoreVHL _CVHL;
+    private static JuggernautItemsofNulgath Jug
+    {
+        get => _Jug ??= new JuggernautItemsofNulgath();
+        set => _Jug = value;
+    }
+    private static JuggernautItemsofNulgath _Jug;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -112,6 +118,10 @@ public class TugandPull
             Core.Logger("Completing previous quest *once*");
             MP.DoMuddledPast(false, true);
         }
+        // Accept requirements
+        Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.);
+        Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Battlefiend_Blade_of_Nulgath);
+        GetNulgathHouseGuest();
 
         Core.AddDrop(Rewards);
 
@@ -140,4 +150,32 @@ public class TugandPull
         "Hollowborn Oblivion Blade Battle Pet"
     };
 
+    public void GetNulgathHouseGuest()
+    {
+        if (Core.CheckInventory("Nulgath House Guest"))
+        {
+            Core.Logger($"All rewards already owned");
+            return;
+        }
+
+        // Track only relevant rewards from quest 5661
+        Core.AddDrop("Nulgath House Guest");
+
+        // Loop until all desired rewards are in inventory
+        while (!Bot.ShouldExit && !Core.CheckInventory("Nulgath House Guest"))
+        {
+            Core.EnsureAccept(5661);
+
+            Nation.Supplies("Unidentified 4");
+            Nation.FarmTaintedGem(1);
+            Nation.FarmDarkCrystalShard(1);
+            Nation.EssenceofNulgath(1);
+            Nation.FarmGemofNulgath(1);
+
+            Core.EnsureComplete(5661);
+
+        }
+
+
+    }
 }
