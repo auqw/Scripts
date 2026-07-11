@@ -68,8 +68,14 @@ public class MuddledPast
         Core.SetOptions(false);
     }
 
-    public void DoMuddledPast(bool GetAllRewards = false, bool QuestOnly = false)
+    public void DoMuddledPast(bool QuestOnly = false)
     {
+        if (QuestOnly && Core.isCompletedBefore(QuestID))
+        {
+            Core.Logger("\"Muddle Past\" Already complete");
+            return;
+        }
+
         if (!Core.isCompletedBefore(QuestID))
         {
             Core.Logger("Completing previous quest *once*");
@@ -97,8 +103,7 @@ public class MuddledPast
             return;
         }
 
-
-        while (!Bot.ShouldExit && !Core.CheckInventory(Core.QuestRewards(QuestID)))
+        while (!Bot.ShouldExit && !Core.CheckInventory(Core.InitializeWithRetries(() => Core.QuestRewards(QuestID))))
         {
             Core.EnsureAccept(QuestID);
 
