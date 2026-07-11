@@ -105,9 +105,9 @@ public class TugandPull
         Core.SetOptions(false);
     }
 
-    public void DoTugandPull(bool GetAllRewards = true, bool QuestOnly = false)
+    public void DoTugandPull(bool QuestOnly = false)
     {
-        if (!GetAllRewards && Core.isCompletedBefore(10792))
+        if (QuestOnly && Core.isCompletedBefore(10792))
         {
             Core.Logger("\"Tug and Pull\" Already complete");
             return;
@@ -116,8 +116,9 @@ public class TugandPull
         if (!Core.isCompletedBefore(10791))
         {
             Core.Logger("Completing previous quest *once*");
-            MP.DoMuddledPast(false, true);
+            MP.DoMuddledPast(true);
         }
+
         // Accept requirements
         Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
         Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Battlefiend_Blade_of_Nulgath);
@@ -125,7 +126,7 @@ public class TugandPull
 
         Core.AddDrop(Rewards);
 
-        while (!Bot.ShouldExit && ((GetAllRewards && !Core.CheckInventory(Rewards)) || (!GetAllRewards && Core.QuestRewards(QuestID).Any(x => x != "Void Soul" && !Core.CheckInventory(x)))))
+        if (QuestOnly)
         {
             Core.EnsureAccept(QuestID);
 
@@ -133,9 +134,21 @@ public class TugandPull
             NDW.NDWQuest(new[] { "Archfiend Essence Fragment" }, 4);
             CVHL.VHLChallenge(8, false);
             if (Core.CheckInventory(" The Mortal Coil"))
-                Core.Logger("Missing \" The Mortal Coil\" From Nulgath, you must farm this yourself via an army then return to this script", messageBox: true);
+                Core.Logger("Missing \" The Mortal Coil\" From Nulgath, you must farm this yourself via an army then return to this script", messageBox: true, stopBot: true);
+            else Core.EnsureComplete(QuestID);
+            return;
+        }
 
-            Core.EnsureCompleteChoose(QuestID);
+        while (!Bot.ShouldExit && !Core.CheckInventory(Core.InitializeWithRetries(() => Core.QuestRewards(QuestID))))
+        {
+            Core.EnsureAccept(QuestID);
+
+            ITFS.FiendsShadow(InTheFiendsShadow.Rewards.None, false, true, 100);
+            NDW.NDWQuest(new[] { "Archfiend Essence Fragment" }, 4);
+            CVHL.VHLChallenge(8, false);
+            if (Core.CheckInventory(" The Mortal Coil"))
+                Core.Logger("Missing \" The Mortal Coil\" From Nulgath, you must farm this yourself via an army then return to this script", messageBox: true, stopBot: true);
+            else Core.EnsureComplete(QuestID);
         }
     }
 
