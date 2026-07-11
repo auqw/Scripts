@@ -114,9 +114,7 @@ public class FiendsPurgatory
         Core.AddDrop("Void Soul");
 
         if (!QuestOnly)
-            Core.Logger(
-                $"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}"
-            );
+            Core.Logger($"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}");
 
         while (!Bot.ShouldExit && !QuestOnly && !Core.CheckInventory(chosenReward) || QuestOnly && !Core.isCompletedBefore(10790))
         {
