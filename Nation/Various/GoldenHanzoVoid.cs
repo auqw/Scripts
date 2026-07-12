@@ -47,11 +47,10 @@ public class GoldenHanzoVoid
         if (Core.CheckInventory("Golden Hanzo Void"))
             return;
 
-        Nation.ApprovalAndFavor(50, 200);
-        Farm.BattleGroundE(100000);
-        Nation.FarmTaintedGem(30);
-        Nation.TheAssistant("Dark Crystal Shard", 15);
-        Nation.FarmDiamondofNulgath(50);
+        Nation.ApprovalAndFavor(50, 0);
+        Nation.FarmTaintedGem(45);
+        Nation.TheAssistant("Dark Crystal Shard", 45);
+        Nation.FarmDiamondofNulgath(75);
         Nation.FarmVoucher(false);
 
         // Buy GHV
