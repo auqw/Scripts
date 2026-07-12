@@ -532,6 +532,8 @@ public class CoreNSOD
 
         Core.CheckInventory("Barium", quant);
         VoidAuras(quant * 50);
+        if (Core.CheckInventory("Barium"))
+            Daily.MineCrafting(new[] { "Barium" }, 1);            
         Core.BuyItem("shadowfall", 793, "Barium of Doom");
         Bot.Wait.ForPickup("Barium of Doom");
     }
