@@ -79,6 +79,7 @@ public class InTheFiendsShadow
             Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
 
             // "Chaotic Tentacles" as there is 2 items with this name
+            Core.FarmingLogger("Chaotic Tentacles");
             while (!Bot.ShouldExit && !Core.CheckInventory(16877))
                 Core.KillMonster("stormtemple", "r16", "Left", "*");
             Nation.FarmTotemofNulgath(1);
@@ -97,6 +98,7 @@ public class InTheFiendsShadow
                 Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
 
                 // "Chaotic Tentacles" as there is 2 items with this name
+                Core.FarmingLogger("Chaotic Tentacles");
                 while (!Bot.ShouldExit && !Core.CheckInventory(16877))
                     Core.KillMonster("stormtemple", "r16", "Left", "*");
                 Nation.FarmTotemofNulgath(1);
@@ -114,6 +116,7 @@ public class InTheFiendsShadow
             Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
 
             // "Chaotic Tentacles" as there is 2 items with this name
+            Core.FarmingLogger("Chaotic Tentacles");
             while (!Bot.ShouldExit && !Core.CheckInventory(16877))
                 Core.KillMonster("stormtemple", "r16", "Left", "*");
             Nation.FarmTotemofNulgath(1);
