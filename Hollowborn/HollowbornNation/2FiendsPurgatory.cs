@@ -94,13 +94,24 @@ public class FiendsPurgatory
             ITFS.FiendsShadow(InTheFiendsShadow.Rewards.None, true, false);
         }
 
-        string[] chosenReward = new string[0];
+        string[] chosenReward = [];
         if (!QuestOnly)
             chosenReward = reward == Rewards.All
-                ? SelectableRewards
-                : new[] { reward.ToString().Replace('_', ' ') };
+                ? [.. SelectableRewards.Except(["All", "None"]).Select(x => x.Replace('_', ' '))]
+                : [reward.ToString().Replace('_', ' ')];
 
-        if (!QuestOnly && Core.CheckInventory(chosenReward))
+        bool HasReward()
+        {
+            if (QuestOnly)
+                return true; // no chosenReward to check in this mode — don't block anything
+            if (chosenReward.Length == 0)
+                return true; // safeguard: nothing to check against, don't loop forever
+            return reward == Rewards.All
+                ? chosenReward.All(x => Core.CheckInventory(x))
+                : Core.CheckInventory(chosenReward);
+        }
+
+        if (!QuestOnly && HasReward())
             return;
 
         if (QuestOnly && Core.isCompletedBefore(QuestID))
@@ -108,25 +119,37 @@ public class FiendsPurgatory
 
         EnsureRequirements();
 
-        if (!QuestOnly)
-            Core.AddDrop(chosenReward);
-        Core.AddDrop(RandomRewards);
-        Core.AddDrop("Void Soul");
+        Core.AddDrop([.. (QuestOnly
+            ? SelectableRewards.Except(["All", "None"]).Select(x => x.Replace('_', ' '))
+            : chosenReward), .. RandomRewards, "Void Soul"]);
 
-        if (!QuestOnly)
-            Core.Logger($"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}");
-
-        while (!Bot.ShouldExit && !QuestOnly && !Core.CheckInventory(chosenReward) || QuestOnly && !Core.isCompletedBefore(10790))
+        if (QuestOnly)
         {
+            string[] rewards = [.. Core.InitializeWithRetries(() => Core.QuestRewards(QuestID).Where(x => x != "Void Soul"))];
+            if (rewards.Length == 0)
+            {
+                Core.Logger($"No rewards found for quest {QuestID} *or* Quest !Failed! to load, skipping.");
+                return;
+            }
+
             Core.EnsureAccept(QuestID);
 
             Core.HuntMonster("deleuzetundra", "Blighted Zubami", "Blighted Zubami Badge", isTemp: false);
             Core.HuntMonster("voidsalek", "Salek Sprayer", "Spoil of Salek", isTemp: false);
             Core.HuntMonster("voidnerfkitten", "Sarah the Nerfkitten", "Sarah's Souvenir", isTemp: false);
 
-            if (!QuestOnly)
-                Core.EnsureCompleteChoose(QuestID, chosenReward);
-            else Core.EnsureComplete(QuestID);
+            Core.EnsureCompleteChoose(QuestID, [rewards.FirstOrDefault(x => !Core.CheckInventory(x)) ?? rewards.First()]);
+            return;
+        }
+
+        while (!Bot.ShouldExit && !HasReward())
+        {
+            Core.EnsureAccept(QuestID);
+            Core.HuntMonster("deleuzetundra", "Blighted Zubami", "Blighted Zubami Badge", isTemp: false);
+            Core.HuntMonster("voidsalek", "Salek Sprayer", "Spoil of Salek", isTemp: false);
+            Core.HuntMonster("voidnerfkitten", "Sarah the Nerfkitten", "Sarah's Souvenir", isTemp: false);
+
+            Core.EnsureCompleteChoose(QuestID, chosenReward);
         }
     }
 
