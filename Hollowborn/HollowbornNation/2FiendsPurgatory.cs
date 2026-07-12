@@ -141,7 +141,10 @@ public class FiendsPurgatory
 
             Core.EnsureAccept(QuestID);
 
+            // Fake complete `Self-Destructive Spell` to see boss
+            Bot.Quests.UpdateQuest(10030);
             Core.HuntMonster("deleuzetundra", "Blighted Zubami", "Blighted Zubami Badge", isTemp: false);
+           
             Core.HuntMonster("voidsalek", "Salek Sprayer", "Spoil of Salek", isTemp: false);
             Core.HuntMonster("voidnerfkitten", "Sarah the Nerfkitten", "Sarah's Souvenir", isTemp: false);
 
