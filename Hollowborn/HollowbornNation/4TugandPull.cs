@@ -1,5 +1,5 @@
 /*
-name: Muddled Past
+name: Tug and Pull
 description: Completes the 'Tug and Pull' quest [10791] for the selected reward(s), drops Void Soul.
 tags: hollowborn, hollowborn nation, Tug and Pull, void soul
 */
