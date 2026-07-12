@@ -1,7 +1,7 @@
 /*
 name: Tug and Pull
 description: Completes the 'Tug and Pull' quest [10791] for the selected reward(s), drops Void Soul.
-tags: hollowborn, hollowborn nation, Tug and Pull, void soul, hollborn archfiend
+tags: hollowborn, hollowborn nation, Tug and Pull, void soul, hollowborn archfiend
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
