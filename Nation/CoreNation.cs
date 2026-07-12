@@ -2209,13 +2209,9 @@ public class CoreNation
         Core.AddDrop("Diamond of Nulgath");
 
         // This Quest is more of an additive Bonus whislt doing supplies
-        while (
-            !Bot.ShouldExit
-            && !Core.CheckInventory("Diamond of Nulgath", quant)
-            && Core.CheckInventory(CragName)
-            && Core.CheckInventory(Uni(10), 100)
-        )
+        while (!Bot.ShouldExit && !Core.CheckInventory("Diamond of Nulgath", quant) && Core.CheckInventory(CragName) && Core.CheckInventory(Uni(10), 100))
             CragsThirst(quant);
+
         if (Core.CheckInventory(CragName))
             Supplies("Diamond of Nulgath", quant, ReturnItem: "Diamond of Nulgath");
 
@@ -2545,11 +2541,7 @@ public class CoreNation
 
         Bot.Log("Doing crags thirst");
 
-        while (
-            !Bot.ShouldExit
-            && Core.CheckInventory(Uni(10), 100)
-            && !Core.CheckInventory("Diamond of Nulgath", quant)
-        )
+        while (!Bot.ShouldExit && Core.CheckInventory(Uni(10), 100) && !Core.CheckInventory("Diamond of Nulgath", quant))
         {
             Core.ResetQuest(600);
             Core.EnsureAccept(600);
