@@ -75,8 +75,8 @@ public class InTheFiendsShadow
         if (QuestOnly)
         {
             Core.EnsureAccept(QuestID);
-
-            Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
 
             // "Chaotic Tentacles" as there is 2 items with this name
             while (!Bot.ShouldExit && !Core.CheckInventory(16877))
@@ -93,8 +93,8 @@ public class InTheFiendsShadow
             while (!Bot.ShouldExit && !Core.CheckInventory("Void Soul", quant))
             {
                 Core.EnsureAccept(QuestID);
-
-                Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
 
                 // "Chaotic Tentacles" as there is 2 items with this name
                 while (!Bot.ShouldExit && !Core.CheckInventory(16877))
@@ -110,8 +110,8 @@ public class InTheFiendsShadow
         while (!Bot.ShouldExit && !Core.CheckInventory(chosenReward))
         {
             Core.EnsureAccept(QuestID);
-
-            Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("lair", "Onyx Lava Dragon", "Phoenix Blade", isTemp: false);
 
             // "Chaotic Tentacles" as there is 2 items with this name
             while (!Bot.ShouldExit && !Core.CheckInventory(16877))
