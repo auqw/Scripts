@@ -72,7 +72,7 @@ public class InTheFiendsShadow
         if (!QuestOnly)
             Core.Logger($"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}");
 
-        while (!Bot.ShouldExit && (!VoidSoulOnly || !QuestOnly) && !Core.CheckInventory(chosenReward) || QuestOnly && Core.isCompletedBefore(10790) || VoidSoulOnly && !Core.CheckInventory("Void Soul", quant))
+        if (QuestOnly)
         {
             Core.EnsureAccept(QuestID);
 
@@ -84,10 +84,42 @@ public class InTheFiendsShadow
             Nation.FarmTotemofNulgath(1);
             HSoul.GetYaSoulsHeeeere(50);
 
-            if (!VoidSoulOnly || !QuestOnly)
-                Core.EnsureCompleteChoose(QuestID, chosenReward);
-            else
+            Core.EnsureComplete(QuestID);
+            return;
+        }
+
+        if (VoidSoulOnly)
+        {
+            while (!Bot.ShouldExit && !Core.CheckInventory("Void Soul", quant))
+            {
+                Core.EnsureAccept(QuestID);
+
+                Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+
+                // "Chaotic Tentacles" as there is 2 items with this name
+                while (!Bot.ShouldExit && !Core.CheckInventory(16877))
+                    Core.KillMonster("stormtemple", "r16", "Left", "*");
+                Nation.FarmTotemofNulgath(1);
+                HSoul.GetYaSoulsHeeeere(50);
+
                 Core.EnsureComplete(QuestID);
+            }
+            return;
+        }
+
+        while (!Bot.ShouldExit && !Core.CheckInventory(chosenReward))
+        {
+            Core.EnsureAccept(QuestID);
+
+            Core.HuntMonster("lair", "Red Dragon", "Phoenix Blade", isTemp: false);
+
+            // "Chaotic Tentacles" as there is 2 items with this name
+            while (!Bot.ShouldExit && !Core.CheckInventory(16877))
+                Core.KillMonster("stormtemple", "r16", "Left", "*");
+            Nation.FarmTotemofNulgath(1);
+            HSoul.GetYaSoulsHeeeere(50);
+
+            Core.EnsureCompleteChoose(QuestID, chosenReward);
         }
     }
 
