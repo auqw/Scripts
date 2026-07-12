@@ -8,7 +8,7 @@ tags: hollowborn, hollowborn nation, fiends purgatory, void soul
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
 //cs_include Scripts/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs 
-//cs_include Scripts/Hollowborn/CoreHolowborn.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 

@@ -23,7 +23,7 @@ tags: hollowborn, hollowborn nation, Tug and Pull, void soul
 //cs_include Scripts/Good/BLOD/CoreBLOD.cs
 //cs_include Scripts/Story/BattleUnder.cs
 //cs_include Scripts/Nation/Various/EnchantedNulgathNationHouse.cs
-//cs_include Scripts/Hollowborn/CoreHolowborn.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
 
 using Skua.Core.Interfaces;
 using Skua.Core.Options;

@@ -7,7 +7,7 @@ tags: hollowborn, hollowborn nation, in the fiends shadow, void soul
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
-//cs_include Scripts/Hollowborn/CoreHolowborn.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 

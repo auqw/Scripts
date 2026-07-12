@@ -15,7 +15,7 @@ tags: hollowborn, hollowborn nation, Muddled Past, void soul
 //cs_include Scripts/Hollowborn/HollowbornNation/2FiendsPurgatory.cs
 //cs_include Scripts/Hollowborn/HollowbornOblivionBlade.cs
 //cs_include Scripts/Nation/Various/ShadowLegacyofNulgath.cs
-//cs_include Scripts/Hollowborn/CoreHolowborn.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 

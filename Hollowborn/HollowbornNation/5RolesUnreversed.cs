@@ -21,7 +21,7 @@ tags: hollowborn, hollowborn nation, Roles Unreversed, void soul
 //cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
 //cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
 //cs_include Scripts/Nation/VHL/CoreVHL.cs
-//cs_include Scripts/Hollowborn/CoreHolowborn.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
