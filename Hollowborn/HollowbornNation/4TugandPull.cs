@@ -20,6 +20,9 @@ tags: hollowborn, hollowborn nation, Tug and Pull, void soul
 //cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
 //cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
 //cs_include Scripts/Nation/VHL/CoreVHL.cs
+//cs_include Scripts/Good/BLOD/CoreBLOD.cs
+//cs_include Scripts/Story/BattleUnder.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -95,6 +98,12 @@ public class TugandPull
         set => _Jug = value;
     }
     private static JuggernautItemsofNulgath _Jug;
+    private static EnhancedNulgathNationHouse ennh
+    {
+        get => _ennh ??= new EnhancedNulgathNationHouse();
+        set => _ennh = value;
+    }
+    private static EnhancedNulgathNationHouse _ennh;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -170,6 +179,10 @@ public class TugandPull
             Core.Logger($"All rewards already owned");
             return;
         }
+
+        // Required to accept
+        ennh.GetENNH();
+
 
         // Track only relevant rewards from quest 5661
         Core.AddDrop("Nulgath House Guest");
