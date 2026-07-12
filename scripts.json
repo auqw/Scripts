@@ -7709,11 +7709,12 @@
       "hollowborn",
       "hollowborn nation",
       "tug and pull",
-      "void soul"
+      "void soul",
+      "hollborn archfiend"
     ],
     "path": "Hollowborn/HollowbornNation/4TugandPull.cs",
-    "size": 6886,
-    "sha256": "886530e75acfc5bf59f26af7a744fccb74b538e96d47fa80a73e387d42399c0e",
+    "size": 6906,
+    "sha256": "4b9450a6388a965282ef6aa2cbd242fa1958aa64a31be10af2979b2d4b4532f8",
     "fileName": "4TugandPull.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/4TugandPull.cs"
   },
