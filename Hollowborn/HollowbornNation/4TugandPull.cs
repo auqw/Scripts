@@ -22,6 +22,8 @@ tags: hollowborn, hollowborn nation, Tug and Pull, void soul
 //cs_include Scripts/Nation/VHL/CoreVHL.cs
 //cs_include Scripts/Good/BLOD/CoreBLOD.cs
 //cs_include Scripts/Story/BattleUnder.cs
+//cs_include Scripts/Nation/Various/EnchantedNulgathNationHouse.cs
+//cs_include Scripts/Hollowborn/CoreHolowborn.cs
 
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -104,6 +106,12 @@ public class TugandPull
         set => _ennh = value;
     }
     private static EnhancedNulgathNationHouse _ennh;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -132,6 +140,7 @@ public class TugandPull
         Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
         Jug.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Battlefiend_Blade_of_Nulgath);
         GetNulgathHouseGuest();
+        HB.HardcoreContract();
 
         Core.AddDrop(Rewards);
 

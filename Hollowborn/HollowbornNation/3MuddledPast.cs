@@ -15,6 +15,7 @@ tags: hollowborn, hollowborn nation, Muddled Past, void soul
 //cs_include Scripts/Hollowborn/HollowbornNation/2FiendsPurgatory.cs
 //cs_include Scripts/Hollowborn/HollowbornOblivionBlade.cs
 //cs_include Scripts/Nation/Various/ShadowLegacyofNulgath.cs
+//cs_include Scripts/Hollowborn/CoreHolowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -28,6 +29,12 @@ public class MuddledPast
         set => _Nation = value;
     }
     private static CoreNation _Nation;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
     private static HollowSoul HSoul
     {
         get => _HSoul ??= new HollowSoul();
@@ -84,6 +91,7 @@ public class MuddledPast
 
         //Get Quest Requirement
         HOB.GetBlade();
+        HB.HardcoreContract();
 
         Core.AddDrop(Core.QuestRewards(QuestID));
 

@@ -7,6 +7,7 @@ tags: hollowborn, hollowborn nation, in the fiends shadow, void soul
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
+//cs_include Scripts/Hollowborn/CoreHolowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -26,6 +27,12 @@ public class InTheFiendsShadow
         set => _HSoul = value;
     }
     private static HollowSoul _HSoul;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "InTheFiendsShadow";
@@ -64,6 +71,7 @@ public class InTheFiendsShadow
             else if (QuestOnly && Core.isCompletedBefore(QuestID))
                 return;
 
+        HB.HardcoreContract();
 
         if (!QuestOnly)
             Core.AddDrop(chosenReward);

@@ -8,6 +8,7 @@ tags: hollowborn, hollowborn nation, fiends purgatory, void soul
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
 //cs_include Scripts/Hollowborn/HollowbornNation/1InTheFiendsShadow.cs 
+//cs_include Scripts/Hollowborn/CoreHolowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -33,6 +34,12 @@ public class FiendsPurgatory
         set => _ITFS = value;
     }
     private static InTheFiendsShadow _ITFS;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
 
 
     private const int QuestID = 10790;
@@ -163,6 +170,7 @@ public class FiendsPurgatory
         TwistedItem("DragonFire of Nulgath", 1316);
         TwistedItem("Crimson Plate of Nulgath", 4695);
         TwistedItem("Crimson Face Plate of Nulgath", 4961);
+        HB.HardcoreContract();
     }
 
     private void JugItem(string itemName, JuggernautItemsofNulgath.RewardsSelection selection)

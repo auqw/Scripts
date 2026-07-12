@@ -21,6 +21,7 @@ tags: hollowborn, hollowborn nation, Roles Unreversed, void soul
 //cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
 //cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
 //cs_include Scripts/Nation/VHL/CoreVHL.cs
+//cs_include Scripts/Hollowborn/CoreHolowborn.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -107,7 +108,7 @@ public class RolesUnreversed
             TaP.DoTugandPull(QuestOnly: true);
         }
 
-        string[] chosenReward = new string[0];
+        string[] chosenReward = [];
         if (!QuestOnly)
             chosenReward = reward == Rewards.All
                 ? SelectableRewards
@@ -119,6 +120,7 @@ public class RolesUnreversed
         if (QuestOnly && Core.isCompletedBefore(QuestID))
             return;
 
+        HB.HardcoreContract();
         Core.AddDrop(Core.QuestRewards(QuestID));
 
         if (QuestOnly)
