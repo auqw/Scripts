@@ -4494,8 +4494,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 119195,
-    "sha256": "25505e7d843d4d267bf911acb05020ded3d4714031f14233585d36bd996b5a04",
+    "size": 119092,
+    "sha256": "44da1a5775d75adff3235fd1f864da6447ef6456abb7a654f29a5c6bb35975fe",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -7682,8 +7682,8 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/2FiendsPurgatory.cs",
-    "size": 7386,
-    "sha256": "da6e51e46d4276a0583cee681d55f018ea57eefdad53beeff7cdc33af56fa4cc",
+    "size": 7507,
+    "sha256": "629106f4ccdc60291986991bf2407ed58cbd99631c9631984070877e86a9f1da",
     "fileName": "2FiendsPurgatory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/2FiendsPurgatory.cs"
   },
@@ -28094,8 +28094,8 @@
       "null"
     ],
     "path": "Nation/Various/GoldenHanzoVoid.cs",
-    "size": 1496,
-    "sha256": "c8e355ada40d9ec267efc987c3418caea374a8b2c1e371c700d9f8e192012ef4",
+    "size": 1458,
+    "sha256": "84aa8e9af77bc668fda87e84260e0baa95ff5b64fda3f3afd69a093dfc1ada0a",
     "fileName": "GoldenHanzoVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/GoldenHanzoVoid.cs"
   },
