@@ -27382,8 +27382,8 @@
       "null"
     ],
     "path": "Nation/AFDL/EnoughDOOMforanArchfiend.cs",
-    "size": 4527,
-    "sha256": "cc28e06f06c93b02f4eaed32226415ae167ec61ce83ea70465285de56484eda6",
+    "size": 4557,
+    "sha256": "a85859d6f24434b87af7a33c2296a95de01bbdb28626d8064761fc05599223b1",
     "fileName": "EnoughDOOMforanArchfiend.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/EnoughDOOMforanArchfiend.cs"
   },
@@ -27394,8 +27394,8 @@
       "null"
     ],
     "path": "Nation/AFDL/WillpowerExtraction.cs",
-    "size": 5356,
-    "sha256": "2a49c8ef83f23e9f191b44908aa1f9e87163a3455df68442d71dd01cae4391eb",
+    "size": 4845,
+    "sha256": "e88303bab56931f5fda3442238481a7cfcb3d0266d8b081d3bcf0efb60f94591",
     "fileName": "WillpowerExtraction.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/WillpowerExtraction.cs"
   },
@@ -27431,8 +27431,8 @@
       "fragment"
     ],
     "path": "Nation/AFDL/NulgathDemandsWork.cs",
-    "size": 6802,
-    "sha256": "a8bd76b395a3180ef4c64e50337d2b87e1d5fe1ca285df669116a07a2392ec1b",
+    "size": 6746,
+    "sha256": "31f3765bc98ac18b61f8b41be15a8f36e9fbaa68088f0d2faffcb30d54896848",
     "fileName": "NulgathDemandsWork.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/NulgathDemandsWork.cs"
   },
