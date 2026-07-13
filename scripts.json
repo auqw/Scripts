@@ -7719,6 +7719,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/4TugandPull.cs"
   },
   {
+    "name": "HollowbornOrbQuests",
+    "description": "Completes the Quests from the Hollowborn Orb - with a choosable option",
+    "tags": [
+      "hollowborn",
+      "hollowborn nation",
+      "hollowborn orb",
+      "hexed void",
+      "blood for blood",
+      "frontline fiend",
+      "empty void"
+    ],
+    "path": "Hollowborn/HollowbornNation/HollowbornOrbQuests.cs",
+    "size": 5093,
+    "sha256": "4a2e37e5b5354ab4aa19851463e34cb45f178a05f057247b214bbebb308f4f6c",
+    "fileName": "HollowbornOrbQuests.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/HollowbornOrbQuests.cs"
+  },
+  {
     "name": "In The Fiend's Shadow",
     "description": "Completes the 'In The Fiend's Shadow' quest [10789] for the selected reward(s), drops Void Soul.",
     "tags": [
