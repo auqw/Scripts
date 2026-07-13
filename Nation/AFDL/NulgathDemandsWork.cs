@@ -103,16 +103,15 @@ public class NulgathDemandsWork
             while (!Bot.ShouldExit && !Core.CheckInventory(item.Name, quant))
             {
                 Core.EnsureAccept(5259);
+
                 WillpowerExtraction.Unidentified34(10);
+                // Ensure we *Always* have 1 for the accepting, and 1 for the quest
                 Nation.FarmUni13(2);
-                Nation.FarmBloodGem(2);
-                Nation.FarmDiamondofNulgath(60);
-                Nation.FarmDarkCrystalShard(45);
                 Uni27();
-                Nation.FarmGemofNulgath(15);
-                Nation.FarmTaintedGem(50);
-                GHV.GetGHV();
                 Nation.FarmVoucher(true);
+                Nation.FarmGemofNulgath(15);
+                Nation.FarmBloodGem(2);
+                GHV.GetGHV();
 
                 // Try to buy U35 with fragments BEFORE completing quest
                 if (item.Name == "Unidentified 35"

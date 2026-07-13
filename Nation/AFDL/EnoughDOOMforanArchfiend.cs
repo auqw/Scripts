@@ -99,6 +99,8 @@ public class EnoughDOOMforanArchfiend
             "Doomblade of Destruction"
         );
 
+        Farm.Experience(75);
+
         // Quest Accept Requirements: "DoomLord's War Mask", "ShadowFiend Cloak", "Locks of the DoomLord", "Doomblade of Destruction"
         Nation.FarmUni13(1);
         Nation.ApprovalAndFavor(0, 1);
