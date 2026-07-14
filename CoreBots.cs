@@ -2,7 +2,7 @@
 name: null
 description: null
 tags: null
-version: 1.4.0.5
+version: 1.4.3.0
 */
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
@@ -6941,6 +6941,8 @@ public class CoreBots
         if (LoggerInChat && Bot.Player.LoggedIn)
         {
             string chatMessage = SanitizeAQWChat(rawMessage);
+            if (string.IsNullOrWhiteSpace(chatMessage))
+                return; // nothing meaningful left to send — skip instead of spamming blank chat
 
             const int maxLen = 180;
             if (chatMessage.Length > maxLen)
@@ -6970,20 +6972,28 @@ public class CoreBots
         if (string.IsNullOrEmpty(input))
             return string.Empty;
 
-        // Strip non-ASCII first
+        // Strip non-ASCII (covers box-drawing, emoji, symbols like ✓ ✦ ├ └ ═)
         input = Regex.Replace(input, @"[^\x20-\x7E\t\n]", "");
 
-        // Remove specific Flash-breaking characters
+        // AQW's chat/packet layer is delimited by these — leaving them in
+        // can desync or truncate the packet even though they're plain ASCII
         input = input
-            .Replace("\x00", "")  // null
-            .Replace("\x1B", "")  // escape
-            .Replace("\x7F", "")  // DEL
-            .Replace("\r", "");   // carriage return
+            .Replace("%", "")
+            .Replace("<", "")
+            .Replace(">", "")
+            .Replace("&", "")
+            .Replace("\"", "")
+            .Replace("'", "");
 
-        // Normalize whitespace
-        input = Regex.Replace(input, @"\s+", " ");
+        input = input
+            .Replace("\x00", "")
+            .Replace("\x1B", "")
+            .Replace("\x7F", "")
+            .Replace("\r", "");
 
-        return input.Trim();
+        input = Regex.Replace(input, @"\s+", " ").Trim();
+
+        return input;
     }
 
 
