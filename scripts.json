@@ -4494,8 +4494,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 119092,
-    "sha256": "44da1a5775d75adff3235fd1f864da6447ef6456abb7a654f29a5c6bb35975fe",
+    "size": 118955,
+    "sha256": "b3a1fe565898edc5c9ac4bb461304c78d8e756fa78910f1b361423ccac15e1ad",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -7761,8 +7761,8 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/3MuddledPast.cs",
-    "size": 3951,
-    "sha256": "5e80d569e535f50fea815c1d9f267434f2ac8bdc9c763e51c32db6ee4993812d",
+    "size": 4290,
+    "sha256": "cbe8f0577e156688625154ea2d5ffaac4d9cc5954d1c864ce172eb202158a95a",
     "fileName": "3MuddledPast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/3MuddledPast.cs"
   },
