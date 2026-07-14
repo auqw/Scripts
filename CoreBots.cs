@@ -6932,7 +6932,7 @@ public class CoreBots
         // =========================
         // Console / file log (FULL)
         // =========================
-        string logMessage = $"[{DateTime.Now:HH:mm:ss}] ({caller}) {rawMessage}";
+        string logMessage = $"[{DateTime.Now:HH:mm:ss}] ({caller}) {StripFancyUnicode(rawMessage)}";
         Bot.Log(logMessage);
 
         // =========================
@@ -6942,11 +6942,14 @@ public class CoreBots
         {
             string chatMessage = SanitizeAQWChat(rawMessage);
 
-            const int maxLen = 180;
-            if (chatMessage.Length > maxLen)
-                chatMessage = chatMessage[..maxLen];
+            if (!string.IsNullOrWhiteSpace(chatMessage))
+            {
+                const int maxLen = 180;
+                if (chatMessage.Length > maxLen)
+                    chatMessage = chatMessage[..maxLen];
 
-            Bot.Send.ClientModerator(chatMessage, caller);
+                Bot.Send.ClientModerator(chatMessage, caller);
+            }
         }
 
         // =========================
@@ -6963,6 +6966,14 @@ public class CoreBots
             scriptFinished = false;
             Bot.StopSync(true);
         }
+    }
+
+    private static string StripFancyUnicode(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        return Regex.Replace(input, @"[─-◿]", "");
     }
 
     private static string SanitizeAQWChat(string input)
