@@ -65,6 +65,12 @@ public class MuddledPast
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
+    private static InTheFiendsShadow ITFS
+    {
+        get => _ITFS ??= new InTheFiendsShadow();
+        set => _ITFS = value;
+    }
+    private static InTheFiendsShadow _ITFS;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -93,12 +99,13 @@ public class MuddledPast
         HOB.GetBlade();
         HB.HardcoreContract();
 
-        Core.AddDrop(Core.QuestRewards(QuestID));
+        Bot.Drops.Add(Core.QuestRewards(QuestID));
 
         if (QuestOnly)
         {
             Core.EnsureAccept(QuestID);
 
+            ITFS.FiendsShadow(InTheFiendsShadow.Rewards.None, false, true, 50);
             Adv.BuyItem("tercessuinotlim", 68, "Fiend Cloak of Nulgath");
             SLoN.GetSLoN();
             HSoul.GetYaSoulsHeeeere(50);
@@ -115,6 +122,7 @@ public class MuddledPast
         {
             Core.EnsureAccept(QuestID);
 
+            ITFS.FiendsShadow(InTheFiendsShadow.Rewards.None, false, true, 50);
             Adv.BuyItem("tercessuinotlim", 68, "Fiend Cloak of Nulgath");
             SLoN.GetSLoN();
             HSoul.GetYaSoulsHeeeere(50);
