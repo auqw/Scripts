@@ -998,14 +998,7 @@ public class CoreNation
             {
                 Core.EnsureAccept(2566);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster(
-                    "elemental",
-                    "Mana Golem",
-                    "Mana Energy for Nulgath",
-                    10,
-                    isTemp: false,
-                    log: false
-                );
+                Core.HuntMonster("elemental", "Mana Golem", "Mana Energy for Nulgath", 10, isTemp: false, log: false); 
                 Core.EquipClass(ClassType.Farm);
 
                 while (
