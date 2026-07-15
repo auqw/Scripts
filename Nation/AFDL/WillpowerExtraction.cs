@@ -129,6 +129,7 @@ public class WillpowerExtraction
                 Core.AddDrop(18768);
                 // "Kindness" of Nulgath
                 Core.EnsureAccept(3046);
+                Nation.FarmUni13(1);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("citadel", "Grand Inquisitor", "Golden Shadow Breaker", 1, false);
                 Core.HuntMonster("battleundera", "Bone Terror", "Shadow Terror Axe", 1, false);
