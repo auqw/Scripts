@@ -67,8 +67,30 @@ public class CelestialPast
         //Forward Unto Azalith 7680
         Story.KillQuest(7680, "CelestialPast", "Infernal Soldier");
 
-        //Azalith Faced 7681    [Confront Quest]
-        Core.EquipClass(ClassType.Dodge);
-        Story.KillQuest(7681, "CelestialPast", "Azalith");
+        //Azalith Faced 7681    [Confront Quest] - You must die here to complete it
+        if (!Story.QuestProgression(7681))
+        {
+            Core.EnsureAccept(7681);
+
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains(56077 /* Azalith Faced */))
+            {
+                if (Bot.Map.Name != "CelestialPast")
+                    Core.Join("CelestialPast");
+                if (Bot.Player.Cell != "r11a")
+                    Core.Jump("r11a", "Left");
+
+                if (!Bot.Player.InCombat)
+                    Bot.Combat.Attack("*");
+
+                Bot.Sleep(500);
+                if (Bot.TempInv.Contains(Bot.TempInv.Contains(56077 /* Azalith Faced */)))
+                {
+                    Core.JumpWait();
+                    break;
+                }
+            }
+
+            Core.EnsureComplete(7681);
+        }
     }
 }
