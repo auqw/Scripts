@@ -282,7 +282,7 @@ public class CoreBots
         }
 
         //Ensure player avatar is logged in, & allive (this basicly tests that the palyer info isnt null i guess)
-        while(!Bot.ShouldExit && !Bot.Player.Playing)
+        while (!Bot.ShouldExit && !Bot.Player.Playing)
         {
             Bot.Sleep(1000);
         }
@@ -616,7 +616,9 @@ public class CoreBots
                         Bot.Lite.DisableSkillAnimation = changeTo;
                         Bot.Lite.DisableAuraAnimations = changeTo;
 
-                        Bot.Flash.SetGameObject("stage.frameRate", 10);
+                        // Disable this as appearntly its useless now adays and annoys people?
+                        // Bot.Flash.SetGameObject("stage.frameRate", 10);
+                        
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                             Bot.Flash.CallGameFunction("world.toggleMonsters");
                     }
