@@ -281,8 +281,11 @@ public class CoreBots
             }
         }
 
-        //Ensure player avatar is loaded ( not a flame) 
-        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
+        //Ensure player avatar is logged in, & allive (this basicly tests that the palyer info isnt null i guess)
+        while(!Bot.ShouldExit && !Bot.Player.Playing)
+        {
+            Bot.Sleep(1000);
+        }
 
         ReadCBO();
         #region Social Privacy Options
