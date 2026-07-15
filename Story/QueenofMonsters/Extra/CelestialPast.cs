@@ -83,7 +83,7 @@ public class CelestialPast
                     Bot.Combat.Attack("*");
 
                 Bot.Sleep(500);
-                if ( Bot.TempInv.Contains(56077 /* Azalith Faced */)))
+                if ( Bot.TempInv.Contains(56077 /* Azalith Faced */))
                 {
                     Core.JumpWait();
                     break;
