@@ -37,6 +37,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using System.Net.Http;
+using System.Data.Common;
 
 public class CoreBots
 {
@@ -1735,6 +1737,11 @@ public class CoreBots
 
     int retrys = 0;
 
+    private bool _warnedCorruptQuestsFile = false;
+    private static readonly HttpClient _questsHttpClient = new HttpClient();
+    private const string QuestsFallbackUrl =
+        "https://raw.githubusercontent.com/auqw/Scripts/refs/heads/Skua/QuestData.json";
+
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, int index = 0, bool Log = true)
     {
         #region IgnoreMe
@@ -1976,28 +1983,93 @@ public class CoreBots
                 ?.sQuest;
             if (!string.IsNullOrEmpty(questName))
             {
-                List<QuestData>? v = JsonConvert.DeserializeObject<List<QuestData>?>(
-                    File.ReadAllText(ClientFileSources.SkuaQuestsFile)
-                );
-                if (v != null)
+                List<QuestData>? v;
+                try
                 {
-                    List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
-                    List<int> incompleteIDs = [.. ids.Where(q => !isCompletedBefore(q))];
-                    if (incompleteIDs.Any())
+                    if (DL_Enabled)
+                        Logger($"Loading Required quests for {item.Name}", "CanBuy");
+                    v = JsonConvert.DeserializeObject<List<QuestData>?>(
+                        File.ReadAllText(ClientFileSources.SkuaQuestsFile)
+                    );
+                }
+
+                catch (Exception ex) when (ex is JsonException || ex is IOException || ex is UnauthorizedAccessException)
+                {
+                    Logger($"JSON parse failed: {ex.Message}", "CanBuy");
+
+                    Logger(
+                        $"Quests cache file is corrupted ({ex.Message}). Attempting to re-download from GitHub mirror...",
+                        "CanBuy"
+                    );
+
+                    try
                     {
-                        List<Quest>? quests = InitializeWithRetries(() =>
-                            EnsureLoad(incompleteIDs.ToArray())
-                        );
-                        if (quests != null && quests.Any())
+                        string freshJson = _questsHttpClient.GetStringAsync(QuestsFallbackUrl).GetAwaiter().GetResult();
+
+                        // Validate before overwriting local files — don't clobber them with garbage
+                        // if the download itself was somehow bad.
+                        v = JsonConvert.DeserializeObject<List<QuestData>?>(freshJson) ?? throw new JsonException("Downloaded quests file parsed to null.");
+                        Logger($"Downloaded QuestData validated successfully ({v.Count} quests).", "CanBuy");
+
+                        // There are two local copies that need to stay in sync: the one under
+                        // SkuaDIR (ClientFileSources.SkuaQuestsFile) and the matching one under
+                        // SkuaScriptsDIR. Overwrite both so neither is left stale/corrupted.
+                        string questsFileName = Path.GetFileName(ClientFileSources.SkuaQuestsFile);
+                        string scriptsDirCopy = Path.Combine(ClientFileSources.SkuaScriptsDIR, questsFileName);
+
+                        File.WriteAllText(ClientFileSources.SkuaQuestsFile, freshJson);
+
+                        try
                         {
-                            string questList = string.Join(" | ", quests.Select(q => $"[{q.ID}]"));
-                            bool one = quests.Count == 1;
+                            File.WriteAllText(scriptsDirCopy, freshJson);
+                        }
+                        catch (Exception scriptsDirEx)
+                        {
                             Logger(
-                                $"Cannot buy {item.Name} from {shopID} because you haven't completed {(one ? "" : "one of ")}the following quest{(one ? "" : "s")}: \"{questName}\" {questList}",
+                                $"Repaired SkuaDIR copy, but failed to update SkuaScriptsDIR copy: {scriptsDirEx.Message}",
                                 "CanBuy"
                             );
-                            return false;
                         }
+
+                        Logger(
+                            "Quests cache re-downloaded and repaired successfully (SkuaDIR + SkuaScriptsDIR).",
+                            "CanBuy"
+                        );
+                    }
+                    catch (Exception downloadEx)
+                    {
+                        if (!_warnedCorruptQuestsFile)
+                        {
+                            Logger(
+                                $"Failed to repair quests cache automatically ({downloadEx.Message}). "
+                                    + "Restart the Skua client to fix this — quest checks will be skipped until then.",
+                                "CanBuy"
+                            );
+                            _warnedCorruptQuestsFile = true;
+                        }
+                        return false;
+                    }
+                }
+
+                if (v == null)
+                    return false;
+
+                List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
+                List<int> incompleteIDs = [.. ids.Where(q => !isCompletedBefore(q))];
+                if (incompleteIDs.Any())
+                {
+                    List<Quest>? quests = InitializeWithRetries(() =>
+                        EnsureLoad(incompleteIDs.ToArray())
+                    );
+                    if (quests != null && quests.Any())
+                    {
+                        string questList = string.Join(" | ", quests.Select(q => $"[{q.ID}]"));
+                        bool one = quests.Count == 1;
+                        Logger(
+                            $"Cannot buy {item.Name} from {shopID} because you haven't completed {(one ? "" : "one of ")}the following quest{(one ? "" : "s")}: \"{questName}\" {questList}",
+                            "CanBuy"
+                        );
+                        return false;
                     }
                 }
             }
@@ -2549,82 +2621,64 @@ public class CoreBots
             }
         }
     }
+
+
     /// <summary>
     /// Retrieves a list of shop items from the specified shop.
     /// </summary>
     /// <param name="map">The map to join in order to access the shop.</param>
     /// <param name="shopID">The identifier of the shop to retrieve items from.</param>
     /// <returns>A list of <see cref="ShopItem"/> objects from the specified shop, or an empty list if the shop data could not be loaded.</returns>
-    // public List<ShopItem> GetShopItems(string map, int shopID)
-    // {
-    //     // Ensure player is in map
-    //     if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
-    //     {
-    //         Join(map);
-    //         Bot.Wait.ForMapLoad(map);
-    //     }
-
-    //     int retry = 0;
-    //     while (!Bot.ShouldExit && retry++ < 20)
-    //     {
-    //         if (Bot.Shops.IsLoaded && Bot.Shops.ID == shopID)
-    //             break;
-
-    //         Bot.Shops.Load(shopID);
-    //         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-    //         Bot.Wait.ForTrue(
-    //             () => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID,
-    //             20
-    //         );
-
-    //         Sleep(1000);
-    //     }
-
-    //     if (!Bot.Shops.IsLoaded || Bot.Shops.ID != shopID)
-    //     {
-    //         Logger($"Failed to load shop {shopID} in map {map}.");
-    //         return new();
-    //     }
-
-    //     return Bot.Shops.Items;
-    // }
     public List<ShopItem> GetShopItems(string map, int shopID)
     {
-        if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
         {
             Join(map);
             Bot.Wait.ForMapLoad(map);
         }
+
         int retry = 0;
+
+
         while (!Bot.ShouldExit && retry++ < 20)
         {
             if (Bot.Shops.IsLoaded && Bot.Shops.ID == shopID)
                 break;
+
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(
-                () => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID,
-                20
-            );
             Sleep(1000);
         }
+
+
         if (!Bot.Shops.IsLoaded || Bot.Shops.ID != shopID)
         {
             Logger($"Failed to load shop {shopID} in map {map}.");
             return [];
         }
 
-        // Wait for the popup label to confirm the shop UI is fully ready
-        Bot.Wait.ForTrue(() =>
+        retry = 0;
+        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
-            string? label = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
-            string? flashID = Bot.Flash.GetGameObject("world.shopinfo.ShopID");
-            return (label == "Shop" || label == "MergeShop" || label == "HouseShop")
-                && flashID == shopID.ToString();
-        }, 20);
+            Bot.Shops.Load(shopID);
+            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
+            Sleep(1000);
+            if (Bot.Shops.ID == shopID || retry == 20)
+                break;
+            else
+                retry++;
+        }
+        retry = 0;
 
-        Bot.Log($"Shop loaded: \"{Bot.Flash.GetGameObject("world.shopinfo.sName")}\" ({shopID})");
-        return Bot.Shops.Items;
+        string? shopName = Bot.Flash.GetGameObject("world.shopinfo.sName");
+        Bot.Log($"Shop loaded: \"{shopName}\" ({shopID})");
+        if (Bot.Shops.Items.Count == 0)
+        {
+            Logger($"Shop {shopID} loaded but contained no items.");
+            return [];
+        }
+        else return [.. Bot.Shops.Items];
     }
 
     /// <summary>
@@ -8137,7 +8191,7 @@ public class CoreBots
     {
         // Items to never bank (e.g., important consumables)
         int[] exemptIDs = { 18927, 38575 }; // Treasure Potion, Dark Potion
-        // Allowed inventory categories
+                                            // Allowed inventory categories
         List<ItemCategory> allowedCategories =
         [
             ItemCategory.Note,
