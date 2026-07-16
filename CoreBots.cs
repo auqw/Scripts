@@ -1741,7 +1741,7 @@ public class CoreBots
     private static readonly HttpClient _questsHttpClient = new HttpClient();
     private const string QuestsFallbackUrl =
         "https://raw.githubusercontent.com/auqw/Scripts/refs/heads/Skua/QuestData.json";
-
+    int retry = 0;
     public void _BuyItem(string map, int shopID, ShopItem? item, int quant, int index = 0, bool Log = true)
     {
         #region IgnoreMe
@@ -1774,14 +1774,20 @@ public class CoreBots
             Sleep();
         }
 
-        int retry = 0;
+        retry = 0;
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
             Sleep(1000);
-            if (Bot.Shops.ID == shopID || retry == 20)
+            if (Bot.Shops.ID == shopID)
+            {
+                string? shopName = Bot.Flash.GetGameObject("world.shopinfo.sName");
+                Logger($"Shop loaded: \"{shopName}\" ({shopID})", "Loading Shop");
+                break;
+            }
+            if (retry == 20)
                 break;
             else
                 retry++;
@@ -2664,15 +2670,19 @@ public class CoreBots
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
             Sleep(1000);
-            if (Bot.Shops.ID == shopID || retry == 20)
+            if (Bot.Shops.ID == shopID)
+            {
+                string? shopName = Bot.Flash.GetGameObject("world.shopinfo.sName");
+                Logger($"Shop loaded: \"{shopName}\" ({shopID})", "Loading Shop");
+                break;
+            }
+            if (retry == 20)
                 break;
             else
                 retry++;
         }
         retry = 0;
 
-        string? shopName = Bot.Flash.GetGameObject("world.shopinfo.sName");
-        Bot.Log($"Shop loaded: \"{shopName}\" ({shopID})");
         if (Bot.Shops.Items.Count == 0)
         {
             Logger($"Shop {shopID} loaded but contained no items.");
