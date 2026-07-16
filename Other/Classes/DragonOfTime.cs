@@ -282,7 +282,7 @@ public class DragonOfTime
             }
 
             Coll.Collector();
-            Adv.BuyItem("collection", 325, 56815, shopItemID: 7698);
+            Adv.BuyItem("collection", 325, 56815, shopItemID: 6448);
             Story.ChainQuest(7721);
 
             Bot.Wait.ForPickup("*");
