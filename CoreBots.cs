@@ -218,7 +218,7 @@ public class CoreBots
                 Bot.Options.ReloginServer ??
                 Bot.Servers.CachedServers?
                     .FirstOrDefault(s =>
-                        s.Name != "Class Test Realm" &&
+                        (s.Name.ToLower() != "class test realm" || s.Name.ToLower().Contains(test)) &&
                         s.Online &&
                         s.PlayerCount < s.MaxPlayers)?.Name
                 ?? "Twilly";
@@ -252,6 +252,22 @@ public class CoreBots
                 Sleep(5000);
             }
 
+            int loadAttempts = 0;
+            while (!Bot.Player.Loaded && !Bot.ShouldExit)
+            {
+                if (loadAttempts >= 30)
+                {
+                    Logger("Player stuck in spirit state after 30s, logging out to trigger auto-relogin.");
+                    Bot.Options.AutoRelogin = true;
+                    Bot.Servers.Logout();
+                    loadAttempts = 0;
+                    Bot.Sleep(1000);
+                    continue;
+                }
+                Bot.Sleep(1000);
+                loadAttempts++;
+            }
+
             // Only stop AFTER retries exhausted
             if (!Bot.Player.LoggedIn)
             {
@@ -279,12 +295,6 @@ public class CoreBots
             {
                 Logger("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manually\n" + "*or* set your manager to a non-Test server", stopBot: true);
             }
-        }
-
-        //Ensure player avatar is logged in, & allive (this basicly tests that the palyer info isnt null i guess)
-        while (!Bot.ShouldExit && !Bot.Player.Playing)
-        {
-            Bot.Sleep(1000);
         }
 
         ReadCBO();
@@ -618,7 +628,7 @@ public class CoreBots
 
                         // Disable this as appearntly its useless now adays and annoys people?
                         // Bot.Flash.SetGameObject("stage.frameRate", 10);
-                        
+
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                             Bot.Flash.CallGameFunction("world.toggleMonsters");
                     }
@@ -3033,6 +3043,7 @@ public class CoreBots
         Dictionary<Quest, int> chooseQuests = [];
         Dictionary<Quest, int> nonChooseQuests = [];
 
+        // PreChecks
         foreach (int questID in questIDs.Distinct())
         {
             Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
@@ -3118,9 +3129,7 @@ public class CoreBots
                 foreach (
                     Quest? quest in chooseQuests
                         .Keys.Concat(nonChooseQuests.Keys)
-                        .Where(x =>
-                            Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null
-                        )
+                        .Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null)
                         .Distinct()
                         .ToList()
                 )
@@ -3208,84 +3217,6 @@ public class CoreBots
         questCTS = new();
     }
 
-    // #region Will Require 1.3.1.1 and still requires work
-
-    // /// <summary>
-    // /// This will register quests to be completed while doing something else, i.e. while in combat.
-    // /// If it has quests already registered, it will cancel them first and then register the new quests.
-    // /// </summary>
-    // /// <param name="quests">Tuples of (questID, rewardID) to be completed.</param>
-    // public void RegisterQuests(params (int questId, int rewardId)[] quests)
-    // {
-    //     if (quests == null || quests.Length == 0)
-    //         return;
-
-    //     Dictionary<Quest, int> questRewards = new();
-
-    //     foreach ((int questID, int rewardID) in quests)
-    //     {
-    //         Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
-    //         if (q == null)
-    //         {
-    //             Logger($"Failed to initialize quest with ID {questID}.");
-    //             continue;
-    //         }
-
-    //         if (q.Upgrade && !Bot.Player.IsMember)
-    //         {
-    //             Logger($"Quest {questID} requires membership, but the player is not a member.");
-    //             continue;
-    //         }
-
-    //         List<ItemBase> missingRequirements = q
-    //             .AcceptRequirements.Where(x => x != null && !CheckInventory(x.ID))
-    //             .ToList();
-    //         if (missingRequirements.Any())
-    //         {
-    //             Logger(
-    //                 $"Player is missing the following accept requirements for quest {questID}: {string.Join(", ", missingRequirements.Select(x => x.Name))}"
-    //             );
-    //             continue;
-    //         }
-
-    //         if (!questRewards.ContainsKey(q))
-    //             questRewards.Add(q, rewardID == 0 ? -1 : rewardID);
-
-    //         // Collect unique item IDs and unbank them in one call
-    //         int[] itemsToUnbank = q
-    //             .AcceptRequirements.Concat(q.Requirements)
-    //             .Select(x => x.ID)
-    //             .Distinct()
-    //             .ToArray();
-
-    //         Unbank(itemsToUnbank);
-    //     }
-    //     GC.Collect();
-
-    //     var quesToRegister = questRewards
-    //         .Where(kvp => !Bot.Quests.Registered.Contains(kvp.Key.ID))
-    //         .ToList();
-
-    //     foreach ((Quest Q, int rewardID) in quesToRegister)
-    //     {
-    //         Bot.Quests.RegisterQuests((Q.ID, rewardID));
-    //     }
-    // }
-
-    // /// <summary>
-    // /// Overload for registering quests with default reward ID (-1).
-    // /// </summary>
-    // /// <param name="questIDs">IDs of the quests to be completed.</param>
-    // public void RegisterQuests(params int[] questIDs)
-    // {
-    //     if (questIDs == null || questIDs.Length == 0)
-    //         return;
-
-    //     var questTuples = questIDs.Select(id => (id, -1)).ToArray();
-    //     RegisterQuests(questTuples);
-    // }
-
-    // #endregion
 
     /// <summary>
     /// Cancels the current registered quests.
