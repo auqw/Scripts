@@ -218,7 +218,7 @@ public class CoreBots
                 Bot.Options.ReloginServer ??
                 Bot.Servers.CachedServers?
                     .FirstOrDefault(s =>
-                        (s.Name.ToLower() != "class test realm" || s.Name.ToLower().Contains(test)) &&
+                        (s.Name != "Class Test Realm") &&
                         s.Online &&
                         s.PlayerCount < s.MaxPlayers)?.Name
                 ?? "Twilly";
