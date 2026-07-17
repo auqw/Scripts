@@ -1982,7 +1982,7 @@ public class CoreBots
                 return false;
             }
 
-            // Quest Check
+            #region  Quest Check
             string? questName = Bot
                 .Flash.GetGameObject<List<dynamic>>("world.shopinfo.items")
                 ?.Find(d => d.ItemID == item.ID)
@@ -2001,58 +2001,14 @@ public class CoreBots
 
                 catch (Exception ex) when (ex is JsonException || ex is IOException || ex is UnauthorizedAccessException)
                 {
-                    Logger($"JSON parse failed: {ex.Message}", "CanBuy");
-
-                    Logger(
-                        $"Quests cache file is corrupted ({ex.Message}). Attempting to re-download from GitHub mirror...",
-                        "CanBuy"
-                    );
-
-                    try
+                    Logger($"Quests cache file is corrupted ({ex.Message}). Attempting repair...", "CanBuy");
+                    v = TryRepairQuestsFile("CanBuy");
+                    if (v == null)
                     {
-                        string freshJson = _questsHttpClient.GetStringAsync(QuestsFallbackUrl).GetAwaiter().GetResult();
-
-                        // Validate before overwriting local files — don't clobber them with garbage
-                        // if the download itself was somehow bad.
-                        v = JsonConvert.DeserializeObject<List<QuestData>?>(freshJson) ?? throw new JsonException("Downloaded quests file parsed to null.");
-                        Logger($"Downloaded QuestData validated successfully ({v.Count} quests).", "CanBuy");
-
-                        // There are two local copies that need to stay in sync: the one under
-                        // SkuaDIR (ClientFileSources.SkuaQuestsFile) and the matching one under
-                        // SkuaScriptsDIR. Overwrite both so neither is left stale/corrupted.
-                        string questsFileName = Path.GetFileName(ClientFileSources.SkuaQuestsFile);
-                        string scriptsDirCopy = Path.Combine(ClientFileSources.SkuaScriptsDIR, questsFileName);
-
-                        File.WriteAllText(ClientFileSources.SkuaQuestsFile, freshJson);
-
-                        try
-                        {
-                            File.WriteAllText(scriptsDirCopy, freshJson);
-                        }
-                        catch (Exception scriptsDirEx)
-                        {
-                            Logger(
-                                $"Repaired SkuaDIR copy, but failed to update SkuaScriptsDIR copy: {scriptsDirEx.Message}",
-                                "CanBuy"
-                            );
-                        }
-
                         Logger(
-                            "Quests cache re-downloaded and repaired successfully (SkuaDIR + SkuaScriptsDIR).",
+                            "Failed to repair quests cache. Quest checks will be skipped until this succeeds.",
                             "CanBuy"
                         );
-                    }
-                    catch (Exception downloadEx)
-                    {
-                        if (!_warnedCorruptQuestsFile)
-                        {
-                            Logger(
-                                $"Failed to repair quests cache automatically ({downloadEx.Message}). "
-                                    + "Restart the Skua client to fix this — quest checks will be skipped until then.",
-                                "CanBuy"
-                            );
-                            _warnedCorruptQuestsFile = true;
-                        }
                         return false;
                     }
                 }
@@ -2079,6 +2035,8 @@ public class CoreBots
                     }
                 }
             }
+            #endregion
+
 
             //Rep check
             if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None")
@@ -3889,31 +3847,18 @@ public class CoreBots
                 toReturn = result;
                 return true;
             }
-            catch (Exception ex)
+
+            catch (Exception ex) when (ex is JsonException || ex is IOException || ex is UnauthorizedAccessException)
             {
-                Logger($"Failed to load local quest file: {ex.Message}", "LoadLocal", messageBox: false);
-                return false;
-            }
-        }
+                Logger($"Local quest file unreadable/corrupt ({ex.Message}). Attempting repair...", "LoadLocal", messageBox: false);
 
-        // GitHub loader
-        async Task<List<Quest>?> LoadFromGithubWithTimeout()
-        {
-            using CancellationTokenSource cts = new(TimeSpan.FromSeconds(30));
-            HttpClient client = GitHubClient;
+                List<QuestData>? repaired = TryRepairQuestsFile("LoadLocal");
+                if (repaired == null)
+                    return false;
 
-            try
-            {
-                string response = await client.GetStringAsync(
-                    "https://raw.githubusercontent.com/auqw/Scripts/Skua/QuestData.json",
-                    cts.Token
-                );
+                LocalQuestsFile = repaired;
 
-                OnlineQuestsFile = JsonConvert.DeserializeObject<List<QuestData>?>(response);
-                if (OnlineQuestsFile == null || OnlineQuestsFile.Count == 0)
-                    return null;
-
-                Dictionary<int, QuestData> questMap = OnlineQuestsFile
+                Dictionary<int, QuestData> questMap = LocalQuestsFile
                     .GroupBy(q => q.ID)
                     .Select(g => g.First())
                     .ToDictionary(q => q.ID);
@@ -3922,23 +3867,46 @@ public class CoreBots
                 foreach (int questID in questIDs.Distinct())
                 {
                     if (!questMap.TryGetValue(questID, out QuestData? data))
-                        continue; // skip missing quests
-
+                        continue;
                     result.Add(ToQuest(data));
                 }
 
-                return result.Count > 0 ? result : null;
-            }
-            catch (TaskCanceledException)
-            {
-                Logger("GitHub request timed out after 30 seconds", "EnsureLoad", messageBox: false);
-                return null;
+                if (result.Count == 0)
+                    return false;
+
+                toReturn = result;
+                return true;
             }
             catch (Exception ex)
             {
-                Logger($"GitHub load failed: {ex.Message}", "EnsureLoad", messageBox: false);
-                return null;
+                Logger($"Failed to load local quest file: {ex.Message}", "LoadLocal", messageBox: false);
+                return false;
             }
+        }
+        // GitHub loader
+        Task<List<Quest>?> LoadFromGithubWithTimeout()
+        {
+            List<QuestData>? data = TryRepairQuestsFile("EnsureLoad");
+            if (data == null)
+                return Task.FromResult<List<Quest>?>(null);
+
+            OnlineQuestsFile = data;
+
+            Dictionary<int, QuestData> questMap = OnlineQuestsFile
+                .GroupBy(q => q.ID)
+                .Select(g => g.First())
+                .ToDictionary(q => q.ID);
+
+            List<Quest> result = [];
+            foreach (int questID in questIDs.Distinct())
+            {
+                if (!questMap.TryGetValue(questID, out QuestData? data2))
+                    continue; // skip missing quests
+
+                result.Add(ToQuest(data2));
+            }
+
+            return Task.FromResult<List<Quest>?>(result.Count > 0 ? result : null);
         }
 
         Quest ToQuest(QuestData data)
@@ -3971,6 +3939,24 @@ public class CoreBots
         async Task UpdateQuestFile()
         {
             using CancellationTokenSource cts = new(TimeSpan.FromMinutes(2));
+            using Mutex mutex = new(false, "Global\\SkuaQuestsFileRepair");
+
+            bool acquired;
+            try
+            {
+                acquired = mutex.WaitOne(TimeSpan.FromMinutes(2));
+            }
+            catch (AbandonedMutexException)
+            {
+                acquired = true; // previous holder died; we now own it
+            }
+
+            if (!acquired)
+            {
+                Logger("Another client is currently repairing the quests file; skipping manual update.", "EnsureLoad", messageBox: false);
+                return;
+            }
+
             try
             {
                 List<QuestData> questData = await (LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>())
@@ -3980,7 +3966,138 @@ public class CoreBots
             }
             finally
             {
+                mutex.ReleaseMutex();
                 cts.Dispose();
+            }
+        }
+    }
+
+    private static readonly SemaphoreSlim _questsFileLock = new(1, 1);
+    private static volatile bool _questsRepairFailedThisSession;
+    private static readonly TimeSpan _questsRepairTimeout = TimeSpan.FromSeconds(30);
+
+    private List<QuestData>? TryRepairQuestsFile(string callerTag)
+    {
+        if (_questsRepairFailedThisSession)
+        {
+            Logger("Skipping quests repair: already failed once this session.", callerTag, messageBox: false);
+            return null;
+        }
+
+        _questsFileLock.Wait();
+        try
+        {
+            using Mutex mutex = new(false, "Global\\SkuaQuestsFileRepair");
+            bool acquired;
+            try
+            {
+                acquired = mutex.WaitOne(_questsRepairTimeout);
+            }
+            catch (AbandonedMutexException)
+            {
+                // Another process died mid-repair; we now own it, file state is unknown.
+                acquired = true;
+            }
+
+            try
+            {
+                // Someone (this process or another) may have already fixed it while we waited.
+                if (TryReadExisting(out List<QuestData>? existing))
+                    return existing;
+
+                if (!acquired)
+                {
+                    Logger("Another client is repairing the quests file; giving up and using stale/local data.", callerTag, messageBox: false);
+                    return null;
+                }
+
+                using CancellationTokenSource cts = new(_questsRepairTimeout);
+                string freshJson;
+                try
+                {
+                    freshJson = _questsHttpClient
+                        .GetStringAsync(QuestsFallbackUrl, cts.Token)
+                        .GetAwaiter()
+                        .GetResult();
+                }
+                catch (Exception ex)
+                {
+                    Logger($"Quests repair download failed: {ex.Message}", callerTag, messageBox: false);
+                    _questsRepairFailedThisSession = true;
+                    return null;
+                }
+
+                List<QuestData>? repaired;
+                try
+                {
+                    repaired = JsonConvert.DeserializeObject<List<QuestData>?>(freshJson)
+                        ?? throw new JsonException("Downloaded quests file parsed to null.");
+                }
+                catch (JsonException ex)
+                {
+                    Logger($"Downloaded quests file was invalid: {ex.Message}", callerTag, messageBox: false);
+                    _questsRepairFailedThisSession = true;
+                    return null;
+                }
+
+                Logger($"Downloaded QuestData validated successfully ({repaired.Count} quests).", callerTag, messageBox: false);
+
+                if (!AtomicWrite(ClientFileSources.SkuaQuestsFile, freshJson, callerTag))
+                {
+                    // Download succeeded, on-disk write didn't. Don't poison the session
+                    // flag — a transient lock/disk issue is worth retrying next call.
+                    return repaired;
+                }
+
+                string questsFileName = Path.GetFileName(ClientFileSources.SkuaQuestsFile);
+                string scriptsDirCopy = Path.Combine(ClientFileSources.SkuaScriptsDIR, questsFileName);
+                AtomicWrite(scriptsDirCopy, freshJson, callerTag); // best-effort, non-fatal if it fails
+
+                Logger("Quests cache re-downloaded and repaired successfully (SkuaDIR + SkuaScriptsDIR).", callerTag, messageBox: false);
+                return repaired;
+            }
+            finally
+            {
+                if (acquired)
+                    mutex.ReleaseMutex();
+            }
+        }
+        finally
+        {
+            _questsFileLock.Release();
+        }
+
+        bool TryReadExisting(out List<QuestData>? existing)
+        {
+            existing = null;
+            if (!File.Exists(ClientFileSources.SkuaQuestsFile))
+                return false;
+            try
+            {
+                existing = JsonConvert.DeserializeObject<List<QuestData>?>(File.ReadAllText(ClientFileSources.SkuaQuestsFile));
+                return existing is { Count: > 0 };
+            }
+            catch
+            {
+                existing = null;
+                return false;
+            }
+        }
+
+        bool AtomicWrite(string targetPath, string content, string tag)
+        {
+            string tempFile = targetPath + $".tmp{Guid.NewGuid():N}";
+            try
+            {
+                File.WriteAllText(tempFile, content);
+                File.Move(tempFile, targetPath, overwrite: true); // atomic replace
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger($"Failed to atomically write {targetPath}: {ex.Message}", tag, messageBox: false);
+                try { File.Delete(tempFile); } catch { /* best effort cleanup */ }
+                return false;
             }
         }
     }
