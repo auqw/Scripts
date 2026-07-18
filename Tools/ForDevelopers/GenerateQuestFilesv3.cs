@@ -9,13 +9,17 @@ tags: debug, quest, data, generation, v3
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
 
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
-using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Options;
+using Skua.Core.Scripts;
 
 public class QuestFileUpdaterV3
 {
@@ -128,9 +132,7 @@ public class QuestFileUpdaterV3
                     {
                         int preEnd = skipStart - 1;
                         Core.Logger($"Fetching quests {s} to {preEnd} (before skip range)...");
-                        var preBatch = service.UpdateRangeAsync(clientPath, s, preEnd, null, CancellationToken.None).GetAwaiter().GetResult();
-                        if (preBatch != null && preBatch.Count > 0)
-                            ProcessBatch(preBatch, existingData, map, seenThisRun, ref added, ref updated);
+                        FetchProbe(service, clientPath, s, preEnd, existingData, map, seenThisRun, ref added, ref updated);
                     }
 
                     Core.Logger($"Skipping quests {skipStart} to {skipEnd} (in skip range).");
@@ -158,9 +160,8 @@ public class QuestFileUpdaterV3
                 }
 
                 Core.Logger($"Fetching quests {s} to {e}...");
-                var batch = service.UpdateRangeAsync(clientPath, s, e, null, CancellationToken.None).GetAwaiter().GetResult();
-
-                if (batch == null || batch.Count == 0)
+                int foundInBatch = FetchProbe(service, clientPath, s, e, existingData, map, seenThisRun, ref added, ref updated);
+                if (foundInBatch == 0)
                 {
                     emptyInARow++;
                     if (emptyInARow >= 50)
@@ -174,10 +175,8 @@ public class QuestFileUpdaterV3
 
                 emptyInARow = 0;
 
-                ProcessBatch(batch, existingData, map, seenThisRun, ref added, ref updated);
-
                 batchCount++;
-                Core.Logger($"Done with quests {s} to {e} ({batch.Count} returned, {added + updated} total new/changed so far)");
+                Core.Logger($"Done with quests {s} to {e} ({foundInBatch} returned, {added + updated} total new/changed so far)");
 
                 // Auto-save every 10 batches so progress isn't lost
                 if (batchCount % 10 == 0)
@@ -286,5 +285,44 @@ public class QuestFileUpdaterV3
                 updated++;
             }
         }
+    }
+
+    /// <summary>
+    /// Tries to fetch a range of quests. If the batch returns empty (possible undefined IDs poisoning the request),
+    /// falls back to probing each ID individually.
+    /// Returns the number of quests found.
+    /// </summary>
+    private int FetchProbe(
+        IQuestDataLoaderService loader,
+        string filePath,
+        int start, int end,
+        List<QuestData> existingData,
+        Dictionary<int, QuestData> map,
+        HashSet<int> seenThisRun,
+        ref int added,
+        ref int updated)
+    {
+        var batch = loader.UpdateRangeAsync(filePath, start, end, null, CancellationToken.None).GetAwaiter().GetResult();
+        if (batch != null && batch.Count > 0)
+        {
+            ProcessBatch(batch, existingData, map, seenThisRun, ref added, ref updated);
+            return batch.Count;
+        }
+
+        // Full batch returned empty — probe individual IDs
+        int found = 0;
+        for (int probe = start; probe <= end; probe++)
+        {
+            if (Bot.ShouldExit) break;
+            var single = loader.UpdateRangeAsync(filePath, probe, probe, null, CancellationToken.None).GetAwaiter().GetResult();
+            if (single != null && single.Count > 0)
+            {
+                ProcessBatch(single, existingData, map, seenThisRun, ref added, ref updated);
+                found += single.Count;
+            }
+        }
+        if (found > 0)
+            Core.Logger($"Found {found} quest(s) in range {start}-{end} via individual probe (some IDs undefined).");
+        return found;
     }
 }
