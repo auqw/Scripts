@@ -26396,6 +26396,31 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KillMasakado.cs"
   },
   {
+    "name": "KolrUsurper",
+    "description": "Two-player Kolr, Usurper of Flames script with selectable DPS and optional Great Flame of Yew farming.",
+    "tags": [
+      "ultra",
+      "army",
+      "two-player",
+      "usurper",
+      "kolr",
+      "usurper of flames",
+      "verus doomknight",
+      "legion revenant",
+      "kings echo",
+      "void highlord",
+      "hollowborn vindicator",
+      "chaos avenger",
+      "archpaladin",
+      "lonewolf12"
+    ],
+    "path": "Ultras/Various/KolrUsurper.cs",
+    "size": 85481,
+    "sha256": "4dfa9867f6bafe58b86763f4680229c84e1cd1707f678b9a81b288caf0ea29f5",
+    "fileName": "KolrUsurper.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KolrUsurper.cs"
+  },
+  {
     "name": "Midnight Sun (Sun Side Test)",
     "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
     "tags": [
@@ -26550,23 +26575,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
   {
-    "name": "Quest Data Sync Generator",
-    "description": "Automatically synchronizes QuestData.json by performing incremental delta updates or full rebuilds when required. Supports configurable target quest ID limits, safe bootstrap for empty datasets, and dual-file mirroring between SkuaDIR and ScriptsDIR. Includes optional full rebuild mode with automatic backups and change tracking for reliable recovery and data integrity.",
+    "name": "GenerateQuestFilesv3",
+    "description": "Lean quest data generator — no fluff, just fetch quests in batches and save.",
     "tags": [
-      "quest sync",
-      "data generation",
-      "json sync",
-      "incremental update",
-      "full rebuild",
-      "backup system",
-      "skua automation",
-      "game data management"
+      "debug",
+      "quest",
+      "data",
+      "generation",
+      "v3"
     ],
-    "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 12871,
-    "sha256": "68c70594ebf25e5db2315c5eaa1d388556a8858ba41bed8b235da668b6611a8d",
-    "fileName": "GenerateQuestFiles.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
+    "path": "Tools/ForDevelopers/GenerateQuestFilesv3.cs",
+    "size": 11458,
+    "sha256": "9ab593f8cb1368da5735cb459ecbf11afca49ce9d15932bd4e4662e0a725e137",
+    "fileName": "GenerateQuestFilesv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFilesv3.cs"
   },
   {
     "name": "Script Main Cleaner",
