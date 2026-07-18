@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 441478,
-    "sha256": "5dcdd33353b4de49e3967876c58bf8b18f74bfb89c3b0064599579b7742293a4",
+    "size": 441427,
+    "sha256": "e766269ed3de594f8579fdc7d26c2201afb9a1b489bd1c74f3867b5dc9745f8b",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -21906,8 +21906,8 @@
       "void soul"
     ],
     "path": "Hollowborn/HollowbornNation/2FiendsPurgatory.cs",
-    "size": 7507,
-    "sha256": "629106f4ccdc60291986991bf2407ed58cbd99631c9631984070877e86a9f1da",
+    "size": 7504,
+    "sha256": "7c78b451935dd0a856cf9cb2d3241197210807cca62f222418b957474abb2d1e",
     "fileName": "2FiendsPurgatory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornNation/2FiendsPurgatory.cs"
   },
