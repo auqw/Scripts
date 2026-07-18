@@ -26396,6 +26396,31 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KillMasakado.cs"
   },
   {
+    "name": "KolrUsurper",
+    "description": "Two-player Kolr, Usurper of Flames script with selectable DPS and optional Great Flame of Yew farming.",
+    "tags": [
+      "ultra",
+      "army",
+      "two-player",
+      "usurper",
+      "kolr",
+      "usurper of flames",
+      "verus doomknight",
+      "legion revenant",
+      "kings echo",
+      "void highlord",
+      "hollowborn vindicator",
+      "chaos avenger",
+      "archpaladin",
+      "lonewolf12"
+    ],
+    "path": "Ultras/Various/KolrUsurper.cs",
+    "size": 87302,
+    "sha256": "3c9e4f9b064fc86197d2d0eca2e5f3f42698057d872a6ea0b084de6d75219d2a",
+    "fileName": "KolrUsurper.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KolrUsurper.cs"
+  },
+  {
     "name": "Midnight Sun (Sun Side Test)",
     "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
     "tags": [
