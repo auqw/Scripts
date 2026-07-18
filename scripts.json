@@ -26591,25 +26591,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFilesv3.cs"
   },
   {
-    "name": "Quest Data Sync Generator",
-    "description": "Automatically synchronizes QuestData.json by performing incremental delta updates or full rebuilds when required. Supports configurable target quest ID limits, safe bootstrap for empty datasets, and dual-file mirroring between SkuaDIR and ScriptsDIR. Includes optional full rebuild mode with automatic backups and change tracking for reliable recovery and data integrity.",
-    "tags": [
-      "quest sync",
-      "data generation",
-      "json sync",
-      "incremental update",
-      "full rebuild",
-      "backup system",
-      "skua automation",
-      "game data management"
-    ],
-    "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 12871,
-    "sha256": "68c70594ebf25e5db2315c5eaa1d388556a8858ba41bed8b235da668b6611a8d",
-    "fileName": "GenerateQuestFiles.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
-  },
-  {
     "name": "Script Main Cleaner",
     "description": "Checks all scripts we have to see if there are any that break format",
     "tags": [
