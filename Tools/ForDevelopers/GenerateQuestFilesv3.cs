@@ -86,8 +86,8 @@ public class QuestFileUpdaterV3
             if (!string.IsNullOrWhiteSpace(range))
             {
                 var parts = range.Split(',');
-                fetchStart = parts.Length > 0 && int.TryParse(parts[0], out int s) ? s : 1;
-                fetchEnd = parts.Length > 1 && int.TryParse(parts[1], out int e) ? e : targetMaxId;
+                fetchStart = parts.Length > 0 && int.TryParse(parts[0], out int ps) ? ps : 1;
+                fetchEnd = parts.Length > 1 && int.TryParse(parts[1], out int pe) ? pe : targetMaxId;
                 Core.Logger($"Range mode: {fetchStart} to {fetchEnd}");
 
                 // Remove existing entries in range
@@ -111,19 +111,20 @@ public class QuestFileUpdaterV3
             // Fetch in batches
             int added = 0, updated = 0, emptyInARow = 0;
             var seenThisRun = new HashSet<int>();
+            int batchCount = 0;
 
-            for (int s = fetchStart; s <= fetchEnd && !Bot.ShouldExit; s += batchSize)
+            int s = fetchStart;
+            while (s <= fetchEnd && !Bot.ShouldExit)
             {
                 if (Bot.ShouldExit) break;
 
                 int e = Math.Min(s + batchSize - 1, fetchEnd);
 
-                // Check skip range
-                if (skipEnd > 0 && s >= skipStart && e <= skipEnd)
+                // Check skip range — if any ID in [s, e] falls within [skipStart, skipEnd], skip it
+                if (skipEnd > 0 && e >= skipStart && s <= skipEnd)
                 {
-                    Core.Logger($"Skipping quests {s} to {e} (in skip range).");
-                    s = skipEnd + 1 - batchSize; // loop will add batchSize, landing at skipEnd + 1
-                    if (s < skipStart) s = skipStart;
+                    Core.Logger($"Skipping quests {s} to {e} (overlaps skip range).");
+                    s = skipEnd + 1;
                     continue;
                 }
 
@@ -141,6 +142,7 @@ public class QuestFileUpdaterV3
                     }
                     if (allKnown)
                     {
+                        s += batchSize;
                         continue;
                     }
                 }
@@ -156,6 +158,7 @@ public class QuestFileUpdaterV3
                         Core.Logger($"50 consecutive empty batches, stopping at quest {s}.");
                         break;
                     }
+                    s += batchSize;
                     continue;
                 }
 
@@ -181,11 +184,14 @@ public class QuestFileUpdaterV3
                     }
                 }
 
+                batchCount++;
                 Core.Logger($"Done with quests {s} to {e} ({batch.Count} returned, {added + updated} total new/changed so far)");
 
-                // Save every 20 batches so progress isn't lost
-                if (added + updated > 0 && (added + updated) % 20 == 0)
+                // Auto-save every 10 batches so progress isn't lost
+                if (batchCount % 10 == 0)
                     SaveFiles(existingData, clientPath, scriptsPath);
+
+                s += batchSize;
             }
 
             SaveFiles(existingData, clientPath, scriptsPath);
