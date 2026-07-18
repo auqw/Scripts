@@ -26550,6 +26550,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
   {
+    "name": "GenerateQuestFilesv3",
+    "description": "Lean quest data generator — no fluff, just fetch quests in batches and save.",
+    "tags": [
+      "debug",
+      "quest",
+      "data",
+      "generation",
+      "v3"
+    ],
+    "path": "Tools/ForDevelopers/GenerateQuestFilesv3.cs",
+    "size": 11551,
+    "sha256": "a4b66865ab67c46c7658f5178344b3ff593e47090e918c5f2d0f5268f789b809",
+    "fileName": "GenerateQuestFilesv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFilesv3.cs"
+  },
+  {
     "name": "Quest Data Sync Generator",
     "description": "Automatically synchronizes QuestData.json by performing incremental delta updates or full rebuilds when required. Supports configurable target quest ID limits, safe bootstrap for empty datasets, and dual-file mirroring between SkuaDIR and ScriptsDIR. Includes optional full rebuild mode with automatic backups and change tracking for reliable recovery and data integrity.",
     "tags": [
