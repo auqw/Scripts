@@ -17,6 +17,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
+using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 using Skua.Core.Scripts;
