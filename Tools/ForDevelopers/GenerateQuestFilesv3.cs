@@ -9,17 +9,13 @@ tags: debug, quest, data, generation, v3
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
+using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Options;
-using Skua.Core.Scripts;
 
 public class QuestFileUpdaterV3
 {
