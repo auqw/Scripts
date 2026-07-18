@@ -306,26 +306,17 @@ public class LoneWolf_UltraUsurper
         bool selectedFarmMode =
             Bot.Config?.Get<bool>("farmGreatFlame") ?? false;
 
-        if (!UpdateSyncEntry(
-                $"{role}.AccessQuest",
-                $"{runId}|{(accessComplete ? 1 : 0)}"
-            ))
+        if (!UpdateSyncEntry($"{role}.AccessQuest", $"{runId}|{(accessComplete ? 1 : 0)}"))
         {
             return Fail($"{role} could not publish the access-quest result.");
         }
 
-        if (!UpdateSyncEntry(
-                $"{role}.FarmMode",
-                $"{runId}|{(selectedFarmMode ? 1 : 0)}"
-            ))
+        if (!UpdateSyncEntry($"{role}.FarmMode", $"{runId}|{(selectedFarmMode ? 1 : 0)}"))
         {
             return Fail($"{role} could not publish the farming option.");
         }
 
-        if (!UpdateSyncEntry(
-                $"{role}.DpsClass",
-                $"{runId}|{(int)selectedDpsClass}"
-            ))
+        if (!UpdateSyncEntry($"{role}.DpsClass", $"{runId}|{(int)selectedDpsClass}"))
         {
             return Fail($"{role} could not publish the DPS class selection.");
         }
@@ -341,7 +332,7 @@ public class LoneWolf_UltraUsurper
 
         foreach (string player in ExpectedPlayers)
         {
-            if (!entries.TryGetValue($"{player}.AccessQuest", out string accessValue)
+            if (!entries.TryGetValue($"{player}.AccessQuest", out string? accessValue)
                 || !accessValue.Equals(requiredAccess, StringComparison.Ordinal))
             {
                 return Fail(
@@ -349,15 +340,13 @@ public class LoneWolf_UltraUsurper
                 );
             }
 
-            if (!entries.TryGetValue($"{player}.FarmMode", out string modeValue)
+            if (!entries.TryGetValue($"{player}.FarmMode", out string? modeValue)
                 || !modeValue.Equals(expectedMode, StringComparison.Ordinal))
             {
-                return Fail(
-                    "Both players must use the same Farm Great Flame of Yew option."
-                );
+                return Fail("Both players must use the same Farm Great Flame of Yew option.");
             }
 
-            if (!entries.TryGetValue($"{player}.DpsClass", out string classValue)
+            if (!entries.TryGetValue($"{player}.DpsClass", out string? classValue)
                 || !classValue.Equals(expectedDpsClass, StringComparison.Ordinal))
             {
                 return Fail("Both players must select the same Player 1 DPS class.");
@@ -375,9 +364,7 @@ public class LoneWolf_UltraUsurper
                 ? $"{LogPrefix} Great Flame farming is enabled."
                 : $"{LogPrefix} Great Flame farming is disabled; running one kill."
         );
-        Core.Logger(
-            $"{LogPrefix} Player1 DPS class: {GetDpsClassName()}."
-        );
+        Core.Logger($"{LogPrefix} Player1 DPS class: {GetDpsClassName()}.");
 
         return true;
     }
@@ -416,9 +403,7 @@ public class LoneWolf_UltraUsurper
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(500);
 
-        Core.Logger(
-            $"{LogPrefix} Joined {BossMap} and prepared at {SafeCell}, {SafePad}."
-        );
+        Core.Logger($"{LogPrefix} Joined {BossMap} and prepared at {SafeCell}, {SafePad}.");
 
         if (!WaitForPhase("Setup"))
             return false;
@@ -471,9 +456,7 @@ public class LoneWolf_UltraUsurper
                 return;
             }
 
-            Warn(
-                $"{itemName} is still in the bank and needs to be unbanked manually."
-            );
+            Warn($"{itemName} is still in the bank and needs to be unbanked manually.");
         }
     }
 
@@ -499,8 +482,7 @@ public class LoneWolf_UltraUsurper
 
         bool accepted = Core.EnsureAccept(DailyQuestId);
 
-        if (accepted
-            && Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(DailyQuestId), 20))
+        if (accepted && Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(DailyQuestId), 20))
         {
             Core.Logger($"{LogPrefix} Quest {DailyQuestId} accepted.");
             return;
@@ -606,8 +588,7 @@ public class LoneWolf_UltraUsurper
             switch (selectedDpsClass)
             {
                 case DpsClass.VerusDoomKnight:
-                    if (!Adv.uForgeHelm()
-                        || (!Adv.uRavenous() && !Adv.uValiance()))
+                    if (!Adv.uForgeHelm() || (!Adv.uRavenous() && !Adv.uValiance()))
                     {
                         WarnMissing(VerusDoomKnightClass);
                     }
@@ -627,9 +608,7 @@ public class LoneWolf_UltraUsurper
                     break;
 
                 case DpsClass.LegionRevenant:
-                    if (!Adv.uForgeHelm()
-                        || !Adv.uPenitence()
-                        || !Adv.uRavenous())
+                    if (!Adv.uForgeHelm() || !Adv.uPenitence() || !Adv.uRavenous())
                     {
                         WarnMissing(LegionRevenantClass);
                     }
@@ -665,8 +644,7 @@ public class LoneWolf_UltraUsurper
                     break;
 
                 case DpsClass.VoidHighlord:
-                    if (!Adv.uForgeHelm()
-                        || (!Adv.uRavenous() && !Adv.uValiance()))
+                    if (!Adv.uForgeHelm() || (!Adv.uRavenous() && !Adv.uValiance()))
                     {
                         WarnMissing(VoidHighlordClass);
                     }
@@ -727,9 +705,7 @@ public class LoneWolf_UltraUsurper
                     break;
 
                 case DpsClass.ArchPaladin:
-                    if (!Adv.uForgeHelm()
-                        || !Adv.uValiance()
-                        || !Adv.uLament())
+                    if (!Adv.uForgeHelm() || !Adv.uValiance() || !Adv.uLament())
                     {
                         WarnMissing(ArchPaladinClass);
                     }
@@ -804,11 +780,7 @@ public class LoneWolf_UltraUsurper
             if (Bot.ShouldExit)
                 return;
 
-            if (!string.Equals(
-                    Bot.Map.Name,
-                    "underworld",
-                    StringComparison.OrdinalIgnoreCase
-                ))
+            if (!string.Equals(Bot.Map.Name, "underworld", StringComparison.OrdinalIgnoreCase))
             {
                 Warn(
                     $"Failed to join underworld while restocking {ScrollName}. Continuing with the current inventory.",
@@ -926,9 +898,7 @@ public class LoneWolf_UltraUsurper
                 return;
             }
 
-            Core.Logger(
-                $"{LogPrefix} Player2 restocked {ScrollName} to {restockQuantity}."
-            );
+            Core.Logger($"{LogPrefix} Player2 restocked {ScrollName} to {restockQuantity}.");
         }
         catch (Exception ex)
         {
@@ -966,9 +936,7 @@ public class LoneWolf_UltraUsurper
         if (potions.Length == 0)
             return;
 
-        Core.Logger(
-            $"{LogPrefix} {role} potion stock: {string.Join(" / ", potions)}."
-        );
+        Core.Logger($"{LogPrefix} {role} potion stock: {string.Join(" / ", potions)}.");
 
         List<string> failures = new();
 
@@ -994,10 +962,7 @@ public class LoneWolf_UltraUsurper
             if (Core.CheckInventory(itemName, 1))
                 return true;
 
-            bool isTonic = itemName.Equals(
-                "Fate Tonic",
-                StringComparison.OrdinalIgnoreCase
-            );
+            bool isTonic = itemName.Equals("Fate Tonic", StringComparison.OrdinalIgnoreCase);
 
             if (isTonic)
             {
@@ -1150,8 +1115,7 @@ public class LoneWolf_UltraUsurper
 
         bool required = role == PlayerRole.Player2;
 
-        if (role == PlayerRole.Player1
-            && !(Bot.Config?.Get<bool>("usePotions") ?? true))
+        if (role == PlayerRole.Player1 && !(Bot.Config?.Get<bool>("usePotions") ?? true))
         {
             return true;
         }
@@ -1218,10 +1182,7 @@ public class LoneWolf_UltraUsurper
             player1Quantity >= BossDropMaxStack
             && player2Quantity >= BossDropMaxStack;
 
-        if (farmGreatFlame
-            && bothAtMax
-            && player1DailyComplete
-            && player2DailyComplete)
+        if (farmGreatFlame && bothAtMax && player1DailyComplete && player2DailyComplete)
         {
             Core.Logger(
                 $"{LogPrefix} Both players already own the maximum {BossDropItem} and have completed the daily quest."
@@ -1272,9 +1233,7 @@ public class LoneWolf_UltraUsurper
                     out int player2NoProgress
                 ))
             {
-                return Fail(
-                    $"Could not read Great Flame progress after kill {killCycle}."
-                );
+                return Fail($"Could not read Great Flame progress after kill {killCycle}.");
             }
 
             Core.Logger(
@@ -1284,14 +1243,12 @@ public class LoneWolf_UltraUsurper
             if (!farmGreatFlame)
                 return Finish(successfulKills);
 
-            if (player1Quantity >= BossDropMaxStack
-                && player2Quantity >= BossDropMaxStack)
+            if (player1Quantity >= BossDropMaxStack && player2Quantity >= BossDropMaxStack)
             {
                 return Finish(successfulKills);
             }
 
-            if (player1NoProgress >= MaxNoProgressKills
-                || player2NoProgress >= MaxNoProgressKills)
+            if (player1NoProgress >= MaxNoProgressKills || player2NoProgress >= MaxNoProgressKills)
             {
                 return Fail(
                     $"Great Flame farming made no progress for {MaxNoProgressKills} consecutive kills on at least one player."
@@ -1332,9 +1289,7 @@ public class LoneWolf_UltraUsurper
         if (!WaitForPhase($"Kill{killCycle}NextReady"))
             return false;
 
-        Core.Logger(
-            $"{LogPrefix} Both players are ready for kill {killCycle + 1}."
-        );
+        Core.Logger($"{LogPrefix} Both players are ready for kill {killCycle + 1}.");
         return true;
     }
 
@@ -1384,21 +1339,13 @@ public class LoneWolf_UltraUsurper
 
         Dictionary<string, string> entries = ReadSyncEntries();
 
-        bool TryParse(
-            string player,
-            out int quantity,
-            out bool dailyComplete,
-            out int noProgress
-        )
+        bool TryParse(string player, out int quantity, out bool dailyComplete, out int noProgress)
         {
             quantity = 0;
             dailyComplete = false;
             noProgress = 0;
 
-            if (!entries.TryGetValue(
-                    $"{player}.FarmProgress",
-                    out string value
-                ))
+            if (!entries.TryGetValue($"{player}.FarmProgress", out string? value))
             {
                 return false;
             }
@@ -1475,10 +1422,7 @@ public class LoneWolf_UltraUsurper
             );
         }
 
-        if (!Bot.Wait.ForTrue(
-                () => GetBossHp() > 0,
-                BossRespawnTimeoutSeconds * 10
-            ))
+        if (!Bot.Wait.ForTrue(() => GetBossHp() > 0, BossRespawnTimeoutSeconds * 10))
         {
             return Fail(
                 $"Could not find {BossName} MapID {BossMapId} after waiting {BossRespawnTimeoutSeconds} seconds."
@@ -1491,9 +1435,7 @@ public class LoneWolf_UltraUsurper
         bossSeenAlive = GetBossHp() > 0;
         fightActive = true;
 
-        Core.Logger(
-            $"{LogPrefix} Fight attempt {encounterAttempt} started against {BossName}."
-        );
+        Core.Logger($"{LogPrefix} Fight attempt {encounterAttempt} started against {BossName}.");
 
         while (!Bot.ShouldExit)
         {
@@ -1542,11 +1484,7 @@ public class LoneWolf_UltraUsurper
             Bot.Wait.ForCellChange(cell);
         }
 
-        return string.Equals(
-            Bot.Player.Cell,
-            cell,
-            StringComparison.OrdinalIgnoreCase
-        );
+        return string.Equals(Bot.Player.Cell, cell, StringComparison.OrdinalIgnoreCase);
     }
 
     private bool CollectBossDrop(int quantityBeforeKill)
@@ -1555,9 +1493,7 @@ public class LoneWolf_UltraUsurper
 
         if (currentQuantity >= BossDropMaxStack)
         {
-            Core.Logger(
-                $"{LogPrefix} {role} already owns {BossDropMaxStack} {BossDropItem}."
-            );
+            Core.Logger($"{LogPrefix} {role} already owns {BossDropMaxStack} {BossDropItem}.");
             return true;
         }
 
@@ -1573,8 +1509,7 @@ public class LoneWolf_UltraUsurper
 
             currentQuantity = GetBossDropQuantity();
 
-            if (currentQuantity > quantityBeforeKill
-                || currentQuantity >= BossDropMaxStack)
+            if (currentQuantity > quantityBeforeKill || currentQuantity >= BossDropMaxStack)
             {
                 Core.Logger(
                     $"{LogPrefix} {role} now owns {currentQuantity}/{BossDropMaxStack} {BossDropItem}."
@@ -1598,16 +1533,13 @@ public class LoneWolf_UltraUsurper
 
         if (!MoveTo(SafeCell, SafePad))
         {
-            Warn(
-                $"{role} could not reach {SafeCell}, {SafePad} at the end of the run."
-            );
+            Warn($"{role} could not reach {SafeCell}, {SafePad} at the end of the run.");
         }
 
         if (!WaitForPhase("Finish"))
             return false;
 
-        if (role == PlayerRole.Player1
-            && !UpdateSyncEntry("Run.Completed", runId))
+        if (role == PlayerRole.Player1 && !UpdateSyncEntry("Run.Completed", runId))
         {
             Warn("The run-completed marker could not be saved.");
         }
@@ -1642,9 +1574,7 @@ public class LoneWolf_UltraUsurper
 
         DateTime itemTimeout = DateTime.UtcNow.AddSeconds(20);
 
-        while (!Bot.ShouldExit
-            && !HasDefeatItem()
-            && DateTime.UtcNow < itemTimeout)
+        while (!Bot.ShouldExit && !HasDefeatItem() && DateTime.UtcNow < itemTimeout)
         {
             if (Bot.Drops.Exists(DefeatItem))
             {
@@ -1657,9 +1587,7 @@ public class LoneWolf_UltraUsurper
 
         if (!HasDefeatItem())
         {
-            Warn(
-                $"{DefeatItem} was not received, so quest {DailyQuestId} could not be completed."
-            );
+            Warn($"{DefeatItem} was not received, so quest {DailyQuestId} could not be completed.");
             return;
         }
 
@@ -1702,8 +1630,7 @@ public class LoneWolf_UltraUsurper
     {
         resetCycle = 0;
 
-        if (TryGetResetCycle(out int sharedResetCycle)
-            && sharedResetCycle > lastHandledResetCycle)
+        if (TryGetResetCycle(out int sharedResetCycle) && sharedResetCycle > lastHandledResetCycle)
         {
             resetCycle = sharedResetCycle;
             return true;
@@ -1729,9 +1656,7 @@ public class LoneWolf_UltraUsurper
             return true;
         }
 
-        Core.Logger(
-            $"{LogPrefix} Both players are dead. Triggered reset cycle {resetCycle}."
-        );
+        Core.Logger($"{LogPrefix} Both players are dead. Triggered reset cycle {resetCycle}.");
         return true;
     }
 
@@ -1746,9 +1671,7 @@ public class LoneWolf_UltraUsurper
             return true;
         }
 
-        Core.Logger(
-            $"{LogPrefix} {role} died. Waiting to see if a second player dies."
-        );
+        Core.Logger($"{LogPrefix} {role} died. Waiting to see if a second player dies.");
 
         while (!Bot.ShouldExit && !Bot.Player.Alive)
         {
@@ -1898,7 +1821,7 @@ public class LoneWolf_UltraUsurper
         string deadValue = $"{runId}|{encounterAttempt}|1";
 
         return ExpectedPlayers.Count(player =>
-            entries.TryGetValue($"{player}.Dead", out string value)
+            entries.TryGetValue($"{player}.Dead", out string? value)
             && value.Equals(deadValue, StringComparison.Ordinal)
         );
     }
@@ -1907,7 +1830,7 @@ public class LoneWolf_UltraUsurper
     {
         resetCycle = 0;
 
-        return TryGetBossSignal("Reset", out string value)
+        return TryGetBossSignal("Reset", out string? value)
             && int.TryParse(value, out resetCycle)
             && resetCycle > 0;
     }
@@ -1919,14 +1842,14 @@ public class LoneWolf_UltraUsurper
             Dictionary<string, string> entries = ReadSyncEntriesUnlocked();
             int currentCycle = 0;
 
-            if (entries.TryGetValue("Boss.Reset", out string storedValue))
+            if (entries.TryGetValue("Boss.Reset", out string? storedValue))
             {
                 string prefix = runId + "|";
 
                 if (storedValue.StartsWith(prefix, StringComparison.Ordinal))
                 {
                     int.TryParse(
-                        storedValue.Substring(prefix.Length),
+                        storedValue[prefix.Length..],
                         out currentCycle
                     );
                 }
@@ -1940,7 +1863,7 @@ public class LoneWolf_UltraUsurper
 
             Dictionary<string, string> updatedEntries = ReadSyncEntriesUnlocked();
 
-            if (!updatedEntries.TryGetValue("Boss.Reset", out string savedValue)
+            if (!updatedEntries.TryGetValue("Boss.Reset", out string? savedValue)
                 || !savedValue.Equals(
                     $"{runId}|{nextCycle}",
                     StringComparison.Ordinal
@@ -1991,22 +1914,19 @@ public class LoneWolf_UltraUsurper
                             ? UsurperPhase.Phase1
                             : UsurperPhase.None;
 
-        if (detectedPhase == UsurperPhase.None
-            || detectedPhase <= currentPhase)
+        if (detectedPhase == UsurperPhase.None || detectedPhase <= currentPhase)
         {
             return;
         }
 
         currentPhase = detectedPhase;
 
-        if (role == PlayerRole.Player2
-            || selectedDpsClass == DpsClass.VoidHighlord)
+        if (role == PlayerRole.Player2 || selectedDpsClass == DpsClass.VoidHighlord)
         {
             skillIndex = 0;
         }
 
-        if (selectedDpsClass == DpsClass.KingsEcho
-            && detectedPhase >= UsurperPhase.Phase4)
+        if (selectedDpsClass == DpsClass.KingsEcho && detectedPhase >= UsurperPhase.Phase4)
         {
             kingsEchoSkill3Pending = false;
         }
@@ -2045,18 +1965,14 @@ public class LoneWolf_UltraUsurper
                     if (UseSkill(4))
                     {
                         phase1OpeningSkill4Used = true;
-                        Core.Logger(
-                            $"{LogPrefix} Player2 used Skill 4 first to begin Phase 1."
-                        );
+                        Core.Logger($"{LogPrefix} Player2 used Skill 4 first to begin Phase 1.");
                     }
                     return;
                 }
 
                 if (!SelfHasAura("Putrefaction") && UseSkill(2))
                 {
-                    Core.Logger(
-                        $"{LogPrefix} Player2 used Skill 2 while Putrefaction was absent."
-                    );
+                    Core.Logger($"{LogPrefix} Player2 used Skill 2 while Putrefaction was absent.");
                 }
                 break;
 
@@ -2068,9 +1984,7 @@ public class LoneWolf_UltraUsurper
                         phase2OpeningTauntDone = true;
                         phase2FocusSeen = TargetHasAura("Focus");
                         mechanicUsedSkillThisLoop = true;
-                        Core.Logger(
-                            $"{LogPrefix} Player2 completed the opening Phase 2 taunt."
-                        );
+                        Core.Logger($"{LogPrefix} Player2 completed the opening Phase 2 taunt.");
                         return;
                     }
 
@@ -2083,9 +1997,7 @@ public class LoneWolf_UltraUsurper
                     if (TargetHasAura("Focus"))
                     {
                         phase2FocusSeen = true;
-                        Core.Logger(
-                            $"{LogPrefix} Player2 observed the opening Focus aura."
-                        );
+                        Core.Logger($"{LogPrefix} Player2 observed the opening Focus aura.");
                     }
 
                     UseSkill(2);
@@ -2098,9 +2010,7 @@ public class LoneWolf_UltraUsurper
                     {
                         phase2PostFocusSkill4Done = true;
                         skillIndex = 0;
-                        Core.Logger(
-                            $"{LogPrefix} Player2 used Skill 4 after Focus faded."
-                        );
+                        Core.Logger($"{LogPrefix} Player2 used Skill 4 after Focus faded.");
                         return;
                     }
 
@@ -2134,9 +2044,7 @@ public class LoneWolf_UltraUsurper
                     && cachedLrNeedsHeal
                     && UseSkill(2))
                 {
-                    Core.Logger(
-                        $"{LogPrefix} Player2 used the Phase 5 heal for Player1."
-                    );
+                    Core.Logger($"{LogPrefix} Player2 used the Phase 5 heal for Player1.");
                 }
                 break;
         }
@@ -2150,7 +2058,7 @@ public class LoneWolf_UltraUsurper
         nextHealRequestPollAt = DateTime.UtcNow.AddMilliseconds(HealRequestPollMs);
         cachedLrNeedsHeal = false;
 
-        if (!TryGetBossSignal("LrNeedsHeal", out string value))
+        if (!TryGetBossSignal("LrNeedsHeal", out string? value))
             return;
 
         string[] parts = value.Split('|');
@@ -2217,9 +2125,7 @@ public class LoneWolf_UltraUsurper
 
         Bot.Skills.UseSkill(5);
         mechanicUsedSkillThisLoop = true;
-        Core.Logger(
-            $"{LogPrefix} Player1 used {itemName} to refresh {auraName}."
-        );
+        Core.Logger($"{LogPrefix} Player1 used {itemName} to refresh {auraName}.");
     }
 
     private void MaintainCombat()
@@ -2232,8 +2138,7 @@ public class LoneWolf_UltraUsurper
         if (mechanicUsedSkillThisLoop)
             return;
 
-        if (role == PlayerRole.Player1
-            && selectedDpsClass != DpsClass.LegionRevenant)
+        if (role == PlayerRole.Player1 && selectedDpsClass != DpsClass.LegionRevenant)
         {
             if (currentPhase == UsurperPhase.None)
                 return;
@@ -2242,7 +2147,7 @@ public class LoneWolf_UltraUsurper
             {
                 case DpsClass.KingsEcho:
                     MaintainKingsEchoCombat();
-                    break; 
+                    break;
 
                 case DpsClass.VoidHighlord:
                     MaintainVoidHighlordCombat();
@@ -2273,14 +2178,12 @@ public class LoneWolf_UltraUsurper
             if (currentPhase == UsurperPhase.None)
                 return;
 
-            if (currentPhase == UsurperPhase.Phase1
-                && !phase1OpeningSkill4Used)
+            if (currentPhase == UsurperPhase.Phase1 && !phase1OpeningSkill4Used)
             {
                 return;
             }
 
-            if (currentPhase == UsurperPhase.Phase2
-                && !phase2OpeningTauntDone)
+            if (currentPhase == UsurperPhase.Phase2 && !phase2OpeningTauntDone)
             {
                 return;
             }
@@ -2350,9 +2253,7 @@ public class LoneWolf_UltraUsurper
     {
         int skill = vdkSkills[vdkSkillIndex];
 
-        if (currentPhase == UsurperPhase.Phase1
-            && skill == 2
-            && SelfHasAura(UnleashedDoomAura))
+        if (currentPhase == UsurperPhase.Phase1 && skill == 2 && SelfHasAura(UnleashedDoomAura))
         {
             vdkSkillIndex = (vdkSkillIndex + 1) % vdkSkills.Length;
             return;
@@ -2363,8 +2264,7 @@ public class LoneWolf_UltraUsurper
 
     private void MaintainHollowbornVindicatorCombat()
     {
-        if (hbvSkills[skillIndex] == 4
-            && SelfHasAura(HollowAura))
+        if (hbvSkills[skillIndex] == 4 && SelfHasAura(HollowAura))
         {
             skillIndex = (skillIndex + 1) % hbvSkills.Length;
             return;
@@ -2473,9 +2373,7 @@ public class LoneWolf_UltraUsurper
 
     private void CustomSkillEngine()
     {
-        if (!Bot.Player.Alive
-            || !Bot.Player.HasTarget
-            || Bot.Player.Target?.HP <= 0)
+        if (!Bot.Player.Alive || !Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0)
         {
             return;
         }
@@ -2522,8 +2420,7 @@ public class LoneWolf_UltraUsurper
         if (currentPhase == UsurperPhase.Phase1)
             return looCombatSkills;
 
-        if (currentPhase == UsurperPhase.Phase2
-            && !phase2PostFocusSkill4Done)
+        if (currentPhase == UsurperPhase.Phase2 && !phase2PostFocusSkill4Done)
         {
             return looHeldSkills;
         }
@@ -2533,9 +2430,7 @@ public class LoneWolf_UltraUsurper
 
     private bool TauntMonster()
     {
-        if (!Bot.Player.Alive
-            || role != PlayerRole.Player2
-            || GetBossHp() <= 0)
+        if (!Bot.Player.Alive || role != PlayerRole.Player2 || GetBossHp() <= 0)
         {
             return false;
         }
@@ -2607,9 +2502,7 @@ public class LoneWolf_UltraUsurper
             if (!UpdateSyncEntry("Run.Id", $"{runId}|{DateTime.UtcNow.Ticks}"))
                 return Fail("Player1 could not create the synchronized run ID.");
 
-            Core.Logger(
-                $"{LogPrefix} Player1 reset the sync file and created the run ID."
-            );
+            Core.Logger($"{LogPrefix} Player1 reset the sync file and created the run ID.");
         }
         else if (!WaitForCurrentRun())
         {
@@ -2625,18 +2518,18 @@ public class LoneWolf_UltraUsurper
 
         while (!Bot.ShouldExit && DateTime.UtcNow < timeout)
         {
-            if (TryReadRun(out string currentRunId))
+            if (TryReadRun(out string? currentRunId))
             {
                 Dictionary<string, string> entries = ReadSyncEntries();
 
-                if (entries.TryGetValue($"{role}.Startup", out string joinedRun)
-                    && joinedRun.Equals(currentRunId, StringComparison.Ordinal))
+                if (entries.TryGetValue($"{role}.Startup", out string? joinedRun)
+                    && string.Equals(joinedRun, currentRunId, StringComparison.Ordinal))
                 {
                     Bot.Sleep(SyncPollMs);
                     continue;
                 }
 
-                runId = currentRunId;
+                runId = currentRunId ?? string.Empty;
                 return true;
             }
 
@@ -2654,8 +2547,8 @@ public class LoneWolf_UltraUsurper
 
         while (!Bot.ShouldExit && DateTime.UtcNow < timeout)
         {
-            if (refreshRunId && TryReadRun(out string currentRunId))
-                runId = currentRunId;
+            if (refreshRunId && TryReadRun(out string? currentRunId))
+                runId = currentRunId ?? string.Empty;
 
             if (string.IsNullOrWhiteSpace(runId))
             {
@@ -2673,15 +2566,13 @@ public class LoneWolf_UltraUsurper
 
             Dictionary<string, string> entries = ReadSyncEntries();
             int ready = ExpectedPlayers.Count(player =>
-                entries.TryGetValue($"{player}.{phase}", out string value)
-                && value.Equals(runId, StringComparison.Ordinal)
+                entries.TryGetValue($"{player}.{phase}", out string? value)
+                && string.Equals(value, runId, StringComparison.Ordinal)
             );
 
             if (ready != lastReady)
             {
-                Core.Logger(
-                    $"{LogPrefix} {phase} sync: {ready}/{ExpectedPlayers.Length}."
-                );
+                Core.Logger($"{LogPrefix} {phase} sync: {ready}/{ExpectedPlayers.Length}.");
                 lastReady = ready;
             }
 
@@ -2689,8 +2580,8 @@ public class LoneWolf_UltraUsurper
             {
                 if (refreshRunId)
                 {
-                    if (!TryReadRun(out string confirmedRunId)
-                        || !confirmedRunId.Equals(runId, StringComparison.Ordinal))
+                    if (!TryReadRun(out string? confirmedRunId)
+                        || !string.Equals(confirmedRunId, runId, StringComparison.Ordinal))
                     {
                         markedRunId = string.Empty;
                         Bot.Sleep(SyncPollMs);
@@ -2704,7 +2595,6 @@ public class LoneWolf_UltraUsurper
 
             Bot.Sleep(SyncPollMs);
         }
-
         return Fail($"{phase} synchronization timed out.");
     }
 
@@ -2716,7 +2606,7 @@ public class LoneWolf_UltraUsurper
         return UpdateSyncEntry($"Boss.{signal}", $"{runId}|{value}");
     }
 
-    private bool TryGetBossSignal(string signal, out string value)
+    private bool TryGetBossSignal(string signal, out string? value)
     {
         value = string.Empty;
 
@@ -2725,7 +2615,7 @@ public class LoneWolf_UltraUsurper
 
         Dictionary<string, string> entries = ReadSyncEntries();
 
-        if (!entries.TryGetValue($"Boss.{signal}", out string storedValue))
+        if (!entries.TryGetValue($"Boss.{signal}", out string? storedValue))
             return false;
 
         string prefix = runId + "|";
@@ -2733,29 +2623,28 @@ public class LoneWolf_UltraUsurper
         if (!storedValue.StartsWith(prefix, StringComparison.Ordinal))
             return false;
 
-        value = storedValue.Substring(prefix.Length);
+        value = storedValue[prefix.Length..];
         return true;
     }
 
-    private bool TryReadRun(out string currentRunId)
+    private bool TryReadRun(out string? currentRunId)
     {
         currentRunId = string.Empty;
         Dictionary<string, string> entries = ReadSyncEntries();
 
-        if (!entries.TryGetValue("Run.Id", out string value))
+        if (!entries.TryGetValue("Run.Id", out string? value))
             return false;
 
         int separator = value.IndexOf('|');
 
-        if (separator <= 0
-            || !long.TryParse(value.Substring(separator + 1), out long ticks))
+        if (separator <= 0 || !long.TryParse(value[(separator + 1)..], out long ticks))
         {
             return false;
         }
 
-        string id = value.Substring(0, separator);
+        string id = value[..separator];
 
-        if (entries.TryGetValue("Run.Completed", out string completedRun)
+        if (entries.TryGetValue("Run.Completed", out string? completedRun)
             && completedRun.Equals(id, StringComparison.Ordinal))
         {
             return false;
@@ -2763,7 +2652,7 @@ public class LoneWolf_UltraUsurper
 
         try
         {
-            DateTime created = new DateTime(ticks, DateTimeKind.Utc);
+            DateTime created = new(ticks, DateTimeKind.Utc);
             TimeSpan age = DateTime.UtcNow - created;
 
             if (age < TimeSpan.FromSeconds(-5)
@@ -2798,7 +2687,7 @@ public class LoneWolf_UltraUsurper
         Ultra.UpdateEntry(syncFilePath, key, value);
         Dictionary<string, string> entries = ReadSyncEntriesUnlocked();
 
-        return entries.TryGetValue(key, out string savedValue)
+        return entries.TryGetValue(key, out string? savedValue)
             && savedValue.Equals(value, StringComparison.Ordinal);
     }, false);
 
@@ -2815,7 +2704,7 @@ public class LoneWolf_UltraUsurper
             if (firstSeparator <= 0 || lastSeparator <= firstSeparator)
                 continue;
 
-            string key = line.Substring(0, firstSeparator).Trim();
+            string key = line[..firstSeparator].Trim();
             string value = line.Substring(
                 firstSeparator + 1,
                 lastSeparator - firstSeparator - 1
@@ -2881,22 +2770,14 @@ public class LoneWolf_UltraUsurper
     }
 
     private void Warn(string message, bool logOnly = false)
-    { 
-        Core.Logger(
-            $"{LogPrefix} {message}",
-            messageBox: !logOnly,
-            stopBot: false
-        );
+    {
+        Core.Logger($"{LogPrefix} {message}", messageBox: !logOnly, stopBot: false);
     }
 
     private bool Fail(string message)
     {
         fatalFailureReported = true;
-        Core.Logger(
-            $"{LogPrefix} {message}",
-            messageBox: true,
-            stopBot: false
-        );
+        Core.Logger($"{LogPrefix} {message}", messageBox: true, stopBot: false);
         return false;
     }
 
@@ -2928,4 +2809,3 @@ public class LoneWolf_UltraUsurper
         Player2
     }
 }
-//lonewolf12
