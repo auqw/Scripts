@@ -1737,7 +1737,6 @@ public class CoreBots
 
     int retrys = 0;
 
-    private bool _warnedCorruptQuestsFile = false;
     private static readonly HttpClient _questsHttpClient = new HttpClient();
     private const string QuestsFallbackUrl =
         "https://raw.githubusercontent.com/auqw/Scripts/refs/heads/Skua/QuestData.json";
