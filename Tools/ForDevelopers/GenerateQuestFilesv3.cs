@@ -302,6 +302,7 @@ public class QuestFileUpdaterV3
         ref int added,
         ref int updated)
     {
+        // Fast path: try the full range first
         var batch = loader.UpdateRangeAsync(filePath, start, end, null, CancellationToken.None).GetAwaiter().GetResult();
         if (batch != null && batch.Count > 0)
         {
@@ -309,20 +310,36 @@ public class QuestFileUpdaterV3
             return batch.Count;
         }
 
-        // Full batch returned empty — probe individual IDs
+        // Full batch returned empty — split into smaller sub-batches before going 1-by-1.
         int found = 0;
-        for (int probe = start; probe <= end; probe++)
+        const int subBatchSize = 5;
+
+        for (int subStart = start; subStart <= end && !Bot.ShouldExit; subStart += subBatchSize)
         {
-            if (Bot.ShouldExit) break;
-            var single = loader.UpdateRangeAsync(filePath, probe, probe, null, CancellationToken.None).GetAwaiter().GetResult();
-            if (single != null && single.Count > 0)
+            int subEnd = Math.Min(subStart + subBatchSize - 1, end);
+            var sub = loader.UpdateRangeAsync(filePath, subStart, subEnd, null, CancellationToken.None).GetAwaiter().GetResult();
+
+            if (sub != null && sub.Count > 0)
             {
-                ProcessBatch(single, existingData, map, seenThisRun, ref added, ref updated);
-                found += single.Count;
+                ProcessBatch(sub, existingData, map, seenThisRun, ref added, ref updated);
+                found += sub.Count;
+                continue;
+            }
+
+            // Sub-batch still empty — probe each ID individually
+            for (int probe = subStart; probe <= subEnd && !Bot.ShouldExit; probe++)
+            {
+                var single = loader.UpdateRangeAsync(filePath, probe, probe, null, CancellationToken.None).GetAwaiter().GetResult();
+                if (single != null && single.Count > 0)
+                {
+                    ProcessBatch(single, existingData, map, seenThisRun, ref added, ref updated);
+                    found += single.Count;
+                }
             }
         }
+
         if (found > 0)
-            Core.Logger($"Found {found} quest(s) in range {start}-{end} via individual probe (some IDs undefined).");
+            Core.Logger($"Found {found} quest(s) in range {start}-{end} via sub-batch probing (some IDs undefined).");
         return found;
     }
 }
