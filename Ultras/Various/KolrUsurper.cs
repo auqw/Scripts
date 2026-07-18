@@ -801,7 +801,27 @@ public class LoneWolf_UltraUsurper
             Core.Join("underworld");
             Bot.Wait.ForMapLoad("underworld");
 
-            while (!Bot.ShouldExit && !Core.CheckInventory(parchment, 2))
+            if (Bot.ShouldExit)
+                return;
+
+            if (!string.Equals(
+                    Bot.Map.Name,
+                    "underworld",
+                    StringComparison.OrdinalIgnoreCase
+                ))
+            {
+                Warn(
+                    $"Failed to join underworld while restocking {ScrollName}. Continuing with the current inventory.",
+                    logOnly
+                );
+                return;
+            }
+
+            DateTime parchmentFarmDeadline = DateTime.UtcNow.AddMinutes(5);
+
+            while (!Bot.ShouldExit
+                    && !Core.CheckInventory(parchment, 2)
+                    && DateTime.UtcNow < parchmentFarmDeadline)
             {
                 if (!Bot.Player.Alive)
                 {
@@ -853,12 +873,16 @@ public class LoneWolf_UltraUsurper
 
             Bot.Combat.CancelTarget();
 
-            if (Bot.ShouldExit || !Core.CheckInventory(parchment, 2))
+            if (!Core.CheckInventory(parchment, 2))
             {
-                Warn(
-                    $"Failed to obtain 2 {parchment}. Continuing without restocking.",
-                    logOnly
-                );
+                if (!Bot.ShouldExit)
+                {
+                    Warn(
+                        $"Timed out while obtaining 2 {parchment}. Continuing without restocking {ScrollName}.",
+                        logOnly
+                    );
+                }
+
                 return;
             }
 
