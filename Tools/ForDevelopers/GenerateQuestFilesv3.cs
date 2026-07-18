@@ -124,6 +124,10 @@ public class QuestFileUpdaterV3
 
                 int e = Math.Min(s + batchSize - 1, fetchEnd);
 
+                // Create a cancellation token linked to ShouldExit
+                using var batchCts = new CancellationTokenSource();
+                var batchToken = batchCts.Token;
+
                 // Check skip range — if any ID in [s, e] falls within [skipStart, skipEnd]
                 if (skipEnd > 0 && e >= skipStart && s <= skipEnd)
                 {
@@ -132,7 +136,7 @@ public class QuestFileUpdaterV3
                     {
                         int preEnd = skipStart - 1;
                         Core.Logger($"Fetching quests {s} to {preEnd} (before skip range)...");
-                        var preBatch = service.UpdateRangeAsync(clientPath, s, preEnd, null, CancellationToken.None).GetAwaiter().GetResult();
+                        var preBatch = service.UpdateRangeAsync(clientPath, s, preEnd, null, batchToken).GetAwaiter().GetResult();
                         if (preBatch != null && preBatch.Count > 0)
                             ProcessBatch(preBatch, existingData, map, seenThisRun, ref added, ref updated);
                     }
@@ -162,7 +166,7 @@ public class QuestFileUpdaterV3
                 }
 
                 Core.Logger($"Fetching quests {s} to {e}...");
-                var batch = service.UpdateRangeAsync(clientPath, s, e, null, CancellationToken.None).GetAwaiter().GetResult();
+                var batch = service.UpdateRangeAsync(clientPath, s, e, null, batchToken).GetAwaiter().GetResult();
 
                 if (batch == null || batch.Count == 0)
                 {
@@ -241,12 +245,57 @@ public class QuestFileUpdaterV3
         if ((a.Rewards == null) != (b.Rewards == null)) return true;
         if ((a.SimpleRewards == null) != (b.SimpleRewards == null)) return true;
 
-        if (a.AcceptRequirements != null && JsonConvert.SerializeObject(a.AcceptRequirements) != JsonConvert.SerializeObject(b.AcceptRequirements)) return true;
-        if (a.Requirements != null && JsonConvert.SerializeObject(a.Requirements) != JsonConvert.SerializeObject(b.Requirements)) return true;
-        if (a.Rewards != null && JsonConvert.SerializeObject(a.Rewards) != JsonConvert.SerializeObject(b.Rewards)) return true;
-        if (a.SimpleRewards != null && JsonConvert.SerializeObject(a.SimpleRewards) != JsonConvert.SerializeObject(b.SimpleRewards)) return true;
+        if (!ItemBaseListsEqual(a.AcceptRequirements, b.AcceptRequirements)) return true;
+        if (!ItemBaseListsEqual(a.Requirements, b.Requirements)) return true;
+        if (!ItemBaseListsEqual(a.Rewards, b.Rewards)) return true;
+        if (!SimpleRewardListsEqual(a.SimpleRewards, b.SimpleRewards)) return true;
 
         return false;
+    }
+
+    private static bool ItemBaseListsEqual(List<ItemBase>? a, List<ItemBase>? b)
+    {
+        if (a == null && b == null) return true;
+        if (a == null || b == null) return false;
+        if (a.Count != b.Count) return false;
+        for (int i = 0; i < a.Count; i++)
+        {
+            if (a[i].ID != b[i].ID) return false;
+            if (a[i].Name != b[i].Name) return false;
+            if (a[i].Quantity != b[i].Quantity) return false;
+            if (a[i].Stack != b[i].Stack) return false;
+            if (a[i].Temp != b[i].Temp) return false;
+            if (a[i].Coins != b[i].Coins) return false;
+            if (a[i].Upgrade != b[i].Upgrade) return false;
+            if (a[i].Wear != b[i].Wear) return false;
+            if (a[i].Type != b[i].Type) return false;
+            if (a[i].Category != b[i].Category) return false;
+            if (a[i].Description != b[i].Description) return false;
+            if (a[i].ES != b[i].ES) return false;
+            if (a[i].Link != b[i].Link) return false;
+            if (a[i].File != b[i].File) return false;
+            if (a[i].Meta != b[i].Meta) return false;
+        }
+        return true;
+    }
+
+    private static bool SimpleRewardListsEqual(List<SimpleReward>? a, List<SimpleReward>? b)
+    {
+        if (a == null && b == null) return true;
+        if (a == null || b == null) return false;
+        if (a.Count != b.Count) return false;
+        for (int i = 0; i < a.Count; i++)
+        {
+            if (a[i].ItemID != b[i].ItemID) return false;
+            if (a[i].iRate != b[i].iRate) return false;
+            if (a[i].Quantity != b[i].Quantity) return false;
+            if (a[i].Stack != b[i].Stack) return false;
+            if (a[i].Temp != b[i].Temp) return false;
+            if (a[i].Coins != b[i].Coins) return false;
+            if (a[i].Upgrade != b[i].Upgrade) return false;
+            if (a[i].Wear != b[i].Wear) return false;
+        }
+        return true;
     }
 
     private void ProcessBatch(
