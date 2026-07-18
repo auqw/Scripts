@@ -71,6 +71,10 @@ public class QuestFileUpdaterV3
                 }
             }
 
+            // Ensure target directories exist
+            Directory.CreateDirectory(Path.GetDirectoryName(clientPath)!);
+            Directory.CreateDirectory(Path.GetDirectoryName(scriptsPath)!);
+
             // Load existing data
             List<QuestData> existingData = File.Exists(clientPath)
                 ? service.GetFromFileAsync(clientPath).GetAwaiter().GetResult()
@@ -130,28 +134,7 @@ public class QuestFileUpdaterV3
                         Core.Logger($"Fetching quests {s} to {preEnd} (before skip range)...");
                         var preBatch = service.UpdateRangeAsync(clientPath, s, preEnd, null, CancellationToken.None).GetAwaiter().GetResult();
                         if (preBatch != null && preBatch.Count > 0)
-                        {
-                            foreach (var quest in preBatch)
-                            {
-                                if (seenThisRun.Add(quest.ID))
-                                {
-                                    if (!map.ContainsKey(quest.ID))
-                                    {
-                                        existingData.Add(quest);
-                                        map[quest.ID] = quest;
-                                        added++;
-                                    }
-                                    else if (QuestChanged(map[quest.ID], quest))
-                                    {
-                                        int idx = existingData.FindIndex(x => x.ID == quest.ID);
-                                        if (idx >= 0) existingData[idx] = quest;
-                                        map[quest.ID] = quest;
-                                        updated++;
-                                    }
-                                }
-                            }
-                            Core.Logger($"Done with quests {s} to {preEnd}.");
-                        }
+                            ProcessBatch(preBatch, existingData, map, seenThisRun, ref added, ref updated);
                     }
 
                     Core.Logger($"Skipping quests {skipStart} to {skipEnd} (in skip range).");
@@ -195,25 +178,7 @@ public class QuestFileUpdaterV3
 
                 emptyInARow = 0;
 
-                foreach (var quest in batch)
-                {
-                    if (!seenThisRun.Add(quest.ID))
-                        continue;
-
-                    if (!map.ContainsKey(quest.ID))
-                    {
-                        existingData.Add(quest);
-                        map[quest.ID] = quest;
-                        added++;
-                    }
-                    else if (QuestChanged(map[quest.ID], quest))
-                    {
-                        int idx = existingData.FindIndex(x => x.ID == quest.ID);
-                        if (idx >= 0) existingData[idx] = quest;
-                        map[quest.ID] = quest;
-                        updated++;
-                    }
-                }
+                ProcessBatch(batch, existingData, map, seenThisRun, ref added, ref updated);
 
                 batchCount++;
                 Core.Logger($"Done with quests {s} to {e} ({batch.Count} returned, {added + updated} total new/changed so far)");
@@ -253,6 +218,63 @@ public class QuestFileUpdaterV3
         Core.Logger($"Saved {data.Count} quests.");
     }
 
-    private static bool QuestChanged(QuestData a, QuestData b) =>
-        JsonConvert.SerializeObject(a) != JsonConvert.SerializeObject(b);
+    private static bool QuestChanged(QuestData a, QuestData b)
+    {
+        if (a.ID != b.ID) return true;
+        if (a.Slot != b.Slot) return true;
+        if (a.Value != b.Value) return true;
+        if (a.Name != b.Name) return true;
+        if (a.Once != b.Once) return true;
+        if (a.Field != b.Field) return true;
+        if (a.Index != b.Index) return true;
+        if (a.Upgrade != b.Upgrade) return true;
+        if (a.Level != b.Level) return true;
+        if (a.RequiredClassID != b.RequiredClassID) return true;
+        if (a.RequiredClassPoints != b.RequiredClassPoints) return true;
+        if (a.RequiredFactionId != b.RequiredFactionId) return true;
+        if (a.RequiredFactionRep != b.RequiredFactionRep) return true;
+        if (a.Gold != b.Gold) return true;
+        if (a.XP != b.XP) return true;
+
+        if ((a.AcceptRequirements == null) != (b.AcceptRequirements == null)) return true;
+        if ((a.Requirements == null) != (b.Requirements == null)) return true;
+        if ((a.Rewards == null) != (b.Rewards == null)) return true;
+        if ((a.SimpleRewards == null) != (b.SimpleRewards == null)) return true;
+
+        if (a.AcceptRequirements != null && JsonConvert.SerializeObject(a.AcceptRequirements) != JsonConvert.SerializeObject(b.AcceptRequirements)) return true;
+        if (a.Requirements != null && JsonConvert.SerializeObject(a.Requirements) != JsonConvert.SerializeObject(b.Requirements)) return true;
+        if (a.Rewards != null && JsonConvert.SerializeObject(a.Rewards) != JsonConvert.SerializeObject(b.Rewards)) return true;
+        if (a.SimpleRewards != null && JsonConvert.SerializeObject(a.SimpleRewards) != JsonConvert.SerializeObject(b.SimpleRewards)) return true;
+
+        return false;
+    }
+
+    private void ProcessBatch(
+        List<QuestData> batch,
+        List<QuestData> existingData,
+        Dictionary<int, QuestData> map,
+        HashSet<int> seenThisRun,
+        ref int added,
+        ref int updated)
+    {
+        foreach (var quest in batch)
+        {
+            if (!seenThisRun.Add(quest.ID))
+                continue;
+
+            if (!map.ContainsKey(quest.ID))
+            {
+                existingData.Add(quest);
+                map[quest.ID] = quest;
+                added++;
+            }
+            else if (QuestChanged(map[quest.ID], quest))
+            {
+                int idx = existingData.FindIndex(x => x.ID == quest.ID);
+                if (idx >= 0) existingData[idx] = quest;
+                map[quest.ID] = quest;
+                updated++;
+            }
+        }
+    }
 }
