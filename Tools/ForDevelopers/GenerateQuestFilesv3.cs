@@ -120,10 +120,41 @@ public class QuestFileUpdaterV3
 
                 int e = Math.Min(s + batchSize - 1, fetchEnd);
 
-                // Check skip range — if any ID in [s, e] falls within [skipStart, skipEnd], skip it
+                // Check skip range — if any ID in [s, e] falls within [skipStart, skipEnd]
                 if (skipEnd > 0 && e >= skipStart && s <= skipEnd)
                 {
-                    Core.Logger($"Skipping quests {s} to {e} (overlaps skip range).");
+                    // Process the portion before the skip range first
+                    if (s < skipStart)
+                    {
+                        int preEnd = skipStart - 1;
+                        Core.Logger($"Fetching quests {s} to {preEnd} (before skip range)...");
+                        var preBatch = service.UpdateRangeAsync(clientPath, s, preEnd, null, CancellationToken.None).GetAwaiter().GetResult();
+                        if (preBatch != null && preBatch.Count > 0)
+                        {
+                            foreach (var quest in preBatch)
+                            {
+                                if (seenThisRun.Add(quest.ID))
+                                {
+                                    if (!map.ContainsKey(quest.ID))
+                                    {
+                                        existingData.Add(quest);
+                                        map[quest.ID] = quest;
+                                        added++;
+                                    }
+                                    else if (QuestChanged(map[quest.ID], quest))
+                                    {
+                                        int idx = existingData.FindIndex(x => x.ID == quest.ID);
+                                        if (idx >= 0) existingData[idx] = quest;
+                                        map[quest.ID] = quest;
+                                        updated++;
+                                    }
+                                }
+                            }
+                            Core.Logger($"Done with quests {s} to {preEnd}.");
+                        }
+                    }
+
+                    Core.Logger($"Skipping quests {skipStart} to {skipEnd} (in skip range).");
                     s = skipEnd + 1;
                     continue;
                 }
@@ -199,7 +230,7 @@ public class QuestFileUpdaterV3
         }
         catch (System.Exception ex)
         {
-            Core.Logger("Error: " + ex.Message);
+            Core.Logger("Error: " + ex.ToString());
         }
         finally
         {
@@ -211,7 +242,14 @@ public class QuestFileUpdaterV3
     {
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
         File.WriteAllText(clientPath, json);
-        try { File.Copy(clientPath, scriptsPath, true); } catch { }
+        try
+        {
+            File.Copy(clientPath, scriptsPath, true);
+        }
+        catch (System.Exception ex)
+        {
+            Core.Logger($"Warning: Failed to copy quest data to scripts path: {ex.Message}");
+        }
         Core.Logger($"Saved {data.Count} quests.");
     }
 
