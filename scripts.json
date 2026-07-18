@@ -26585,8 +26585,8 @@
       "v3"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFilesv3.cs",
-    "size": 11458,
-    "sha256": "9ab593f8cb1368da5735cb459ecbf11afca49ce9d15932bd4e4662e0a725e137",
+    "size": 13641,
+    "sha256": "e887216975bb63c4d8ee60186d07fff849b4b0c1e1a9ade18a86037a5e41b7fc",
     "fileName": "GenerateQuestFilesv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFilesv3.cs"
   },
