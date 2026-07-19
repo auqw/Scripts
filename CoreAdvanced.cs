@@ -3406,6 +3406,7 @@ public class CoreAdvanced
                 #endregion
 
                 #region Lucky - Vainglory - Dauntless/Valiance - Anima
+                case "debris highlord":
                 case "void highlord":
                 case "void highlord (ioda)":
                     if (!uAnima() || !uValiance() || !uVainglory())
@@ -4161,6 +4162,7 @@ public class CoreAdvanced
                 case "undeadslayer":
                 case "underworld chronomancer":
                 case "unlucky leperchaun":
+                case "debris highlord":
                 case "void highlord":
                 case "void highlord (ioda)":
                 case "verus doomknight":
