@@ -9426,6 +9426,152 @@
       ]
     }
   },
+  "Debris Highlord": {
+    "Atk": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 50,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 30,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 90,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 30,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 50,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 30,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        }
+      ]
+    },
+    "Def": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 90,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        }
+      ]
+    },
+    "Farm": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 50,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 30,
+              "comparison": "greater",
+              "isPercentage": true
+            }
+          ]
+        }
+      ]
+    }
+  },
   "Void Highlord": {
     "Atk": {
       "skillUseMode": "WaitForCooldown",
