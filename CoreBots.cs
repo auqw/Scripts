@@ -1,4 +1,4 @@
-﻿/*
+/*
 name: null
 description: null
 tags: null
@@ -7947,6 +7947,9 @@ public class CoreBots
                 equippedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
             }
 
+            // Enhance equipped gear for the newly equipped class
+            new CoreEnhancements().ApplyCurrent();
+
             // Start skills for the actual equipped class
             Bot.Skills.StartAdvanced(className, false, classMode);
             return true;
@@ -12329,4 +12332,1910 @@ public static class StopExtensions
     /// </summary>
     public static void StopSync(this IScriptInterface bot, bool crashed = false) =>
         bot.StopAsync(crashed).GetAwaiter().GetResult();
+}
+
+public enum EnhancementType // Enhancement Pattern ID
+{
+    Fighter = 2,
+    Thief = 3,
+    Hybrid = 5,
+    Wizard = 6,
+    Healer = 7,
+    SpellBreaker = 8,
+    Lucky = 9,
+}
+
+public enum CapeSpecial // Enhancement Pattern ID
+{
+    None = 0,
+    Forge = 10,
+    Absolution = 11,
+    Avarice = 12,
+    Vainglory = 24,
+    Penitence = 29,
+    Lament = 30,
+}
+
+public enum WeaponSpecial // Proc ID
+{
+    Forge = 0,
+    None = 1,
+    Spiral_Carve = 2,
+    Awe_Blast = 3,
+    Health_Vamp = 4,
+    Mana_Vamp = 5,
+    Powerword_Die = 6,
+    Lacerate = 7,
+    Smite = 8,
+    Valiance = 9,
+    Arcanas_Concerto = 10,
+    Acheron = 11,
+    Elysium = 12,
+    Praxis = 13,
+    Dauntless = 14,
+    Ravenous = 15
+}
+
+public enum HelmSpecial //Enhancement Pattern ID
+{
+    None = 0,
+    Forge = 10, // Not really 99, but cant have 0 3 times
+    Vim = 25,
+    Examen = 26,
+    Anima = 28,
+    Pneuma = 27,
+    Hearty = 32,
+}
+
+// CoreEnhancements start
+public class CoreEnhancements
+{
+    private IScriptInterface Bot => IScriptInterface.Instance;
+    private CoreBots C => CoreBots.Instance;
+
+    private CapeSpecial CurrentCapeSpecial()
+    {
+        InventoryItem? EquippedCape = Bot.Inventory.Items.Find(i =>
+            i.Equipped && i.Category == ItemCategory.Cape
+        );
+        if (EquippedCape == null)
+            return CapeSpecial.None;
+        int patternId = EquippedCape.EnhancementPatternID;
+        if (Enum.IsDefined(typeof(EnhancementType), patternId))
+            return CapeSpecial.None;
+        return (CapeSpecial)patternId;
+    }
+
+    private HelmSpecial CurrentHelmSpecial()
+    {
+        InventoryItem? EquippedHelm = Bot.Inventory.Items.Find(i =>
+            i.Equipped && i.Category == ItemCategory.Helm
+        );
+        if (EquippedHelm == null)
+            return HelmSpecial.None;
+        int patternId = EquippedHelm.EnhancementPatternID;
+        if (Enum.IsDefined(typeof(EnhancementType), patternId))
+            return HelmSpecial.None;
+        return (HelmSpecial)patternId;
+    }
+
+    public void ApplyCurrent()
+    {
+        if (string.IsNullOrWhiteSpace(Bot.Player?.CurrentClass?.Name))
+            return;
+
+        Apply(Bot.Player.CurrentClass.Name);
+    }
+
+    public void Apply(string className)
+    {
+        if (string.IsNullOrWhiteSpace(className))
+            return;
+
+        string normalized = className.Trim().ToLowerInvariant();
+        C.Logger($"[CoreEnhancements] Enhancing for: {className}");
+
+        // Try Forge presets first (with quest checks), fall back to Awe if not unlocked
+        if (!TryApplyForge(normalized))
+            ApplyAweFallback(normalized);
+    }
+
+    /// <summary>
+    /// Tries to apply a Forge enhancement preset with quest-completion checks.
+    /// Returns true if a Forge preset was applied, false if quests aren't met or class not found.
+    /// </summary>
+    private bool TryApplyForge(string normalized)
+    {
+        switch (normalized)
+        {
+            case "horc evader":
+                if (!uLacerate() || !uVim() || !uVainglory())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Thief,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Lacerate,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                return true;
+
+            case "lord of order":
+                if (!uArcanasConcerto() || !uForgeHelm() || !uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Arcanas_Concerto,
+                    hSpecial: HelmSpecial.Forge,
+                    cSpecial: CapeSpecial.Forge
+                );
+                return true;
+
+            case "great thief":
+                if (!uDauntless() || !uVim() || !uLament())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    hSpecial: HelmSpecial.Vim
+                );
+                return true;
+
+            case "timekeeper":
+            case "timekiller":
+                if (!uLacerate() || !uVim() || !uLament())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: WeaponSpecial.Lacerate,
+                    hSpecial: HelmSpecial.Vim
+                );
+                return true;
+
+            case "corrupted chronomancer":
+            case "underworld chronomancer":
+            case "eternal chronomancer":
+            case "immortal chronomancer":
+            case "dark metal necro":
+                if (!uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: WeaponSpecial.Spiral_Carve
+                );
+                return true;
+
+            case "glacial berserker":
+                if (!uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                return true;
+
+            case "legendary elemental warrior":
+            case "mythic elemental warrior":
+            case "ultra elemental warrior":
+                if (!uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: WeaponSpecial.Mana_Vamp
+                );
+                return true;
+
+            case "draconic chronomancer":
+                if (!uSmite() || !uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: WeaponSpecial.Smite
+                );
+                return true;
+
+            case "ultra omniknight":
+            case "dark ultra omninight":
+                if (!uElysium() || !uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: WeaponSpecial.Elysium
+                );
+                return true;
+
+            case "archfiend":
+            case "eternal inversionist":
+            case "dragonlord":
+                if (!uVainglory() || !uValiance() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "continuum chronomancer":
+            case "quantum chronomancer":
+            case "chaos avenger":
+                if (!uDauntless() || !uValiance() || !uVainglory() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "doom metal necro":
+            case "neo metal necro":
+                if (!uLacerate() || !uForgeHelm() || !uLament())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: uLament() ? CapeSpecial.Lament : CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Lacerate,
+                    hSpecial: HelmSpecial.Forge
+                );
+                return true;
+
+            case "yami no ronin":
+            case "martial artist":
+            case "master martial artist":
+                if ((!uDauntless() && !uValiance() && !uSmite()) || !uVainglory() || !uVim())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: uDauntless() ? WeaponSpecial.Dauntless : uValiance() ? WeaponSpecial.Valiance : WeaponSpecial.Smite,
+                    hSpecial: HelmSpecial.Vim
+                );
+                return true;
+
+            case "nechronomancer":
+            case "necrotic chronomancer":
+                if (!uVainglory() || !uArcanasConcerto() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "shadowwalker of time":
+            case "shadowstalker of time":
+            case "shadowweaver of time":
+                if (!uVainglory() || !uElysium() || !uVim())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Vim
+                );
+                return true;
+
+            case "legion doomknight":
+                if (!uVainglory() || !uValiance())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: CurrentHelmSpecial()
+                );
+                return true;
+
+            case "antique hunter":
+            case "artifact hunter":
+                if (!uVainglory() || !uElysium() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "abyssal angel":
+            case "abyssal angel's shadow":
+                if (!uLament() || !uElysium() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "verus doomknight":
+                if (!uRavenous() || !uForgeHelm() || !uVainglory())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Ravenous,
+                    hSpecial: uAnima() ? HelmSpecial.Anima : HelmSpecial.Forge
+                );
+                return true;
+
+            case "void highlord":
+            case "void highlord (ioda)":
+                if (!uAnima() || !uValiance() || !uVainglory())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: !uDauntless() ? (uRavenous() ? WeaponSpecial.Ravenous : (uValiance() ? WeaponSpecial.Valiance : WeaponSpecial.Forge)) : WeaponSpecial.Dauntless,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "flame dragon warrior":
+                if (!uAvarice() || !uDauntless() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Avarice,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "chaos slayer":
+            case "chaos slayer berserker":
+            case "chaos slayer cleric":
+            case "chaos slayer mystic":
+            case "chaos slayer thief":
+                if (!uAvarice() || !uElysium() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Avarice,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "archpaladin":
+                if (!uLament() || !uAnima() || (!uPraxis() && !uLacerate()))
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    wSpecial: uPraxis() ? WeaponSpecial.Praxis : WeaponSpecial.Lacerate,
+                    hSpecial: HelmSpecial.Anima,
+                    cSpecial: CapeSpecial.Lament
+                );
+                return true;
+
+            case "stonecrusher":
+                if (!uValiance() || !uForgeHelm() || !uLament())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Forge,
+                    cSpecial: CapeSpecial.Lament
+                );
+                return true;
+
+            case "frostval barbarian":
+                if (!uAbsolution() || !uValiance() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    cSpecial: CapeSpecial.Absolution,
+                    wSpecial: uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "lightcaster":
+                if (!uValiance() || !uPneuma() || !uVainglory())
+                {
+                    if (!uLament() || !uPraxis())
+                        return false;
+                }
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: !uVainglory() ? CapeSpecial.Lament : CapeSpecial.Vainglory,
+                    wSpecial: !uValiance() ? WeaponSpecial.Praxis : WeaponSpecial.Valiance,
+                    hSpecial: !uPneuma() ? CurrentHelmSpecial() : HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "archivist of time":
+                if (!uValiance() || !uPneuma() || !uVainglory())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "infinity knight":
+                if (!uForgeCape())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    hSpecial: CurrentHelmSpecial()
+                );
+                return true;
+
+            case "archmage":
+            case "darklord":
+            case "arcana invoker":
+                if (!uVainglory() || !uValiance() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    cSpecial: CapeSpecial.Forge,
+                    wSpecial: uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Forge
+                );
+                return true;
+
+            case "master of moglins":
+            case "dark master of moglins":
+                if (!uPenitence() || !uAcheron() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Penitence,
+                    wSpecial: WeaponSpecial.Acheron,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "legion revenant":
+            case "legion revenant (ioda)":
+                if (!uVainglory() || !uValiance() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "vampire lord":
+            case "enchanted vampire lord":
+            case "royal vampire lord":
+            case "darkside":
+            case "dark lord":
+                if (!uAvarice() || !uElysium() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Avarice,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "shaman":
+                if (!uVainglory() || !uElysium() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "blaze binder":
+                if (!uAvarice() || !uAcheron() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Avarice,
+                    wSpecial: WeaponSpecial.Acheron,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "royal battlemage":
+                if (!uLament() || !uElysium() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "scarlet sorceress":
+                if (!uLament() || !uValiance() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "sovereign of storms":
+                if (!uVainglory() || !uDauntless() || !uRavenous() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: uVainglory() ? CapeSpecial.Vainglory : CapeSpecial.Forge,
+                    wSpecial: uDauntless() ? WeaponSpecial.Dauntless : (uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Forge),
+                    hSpecial: uPneuma() ? HelmSpecial.Pneuma : HelmSpecial.Forge
+                );
+                return true;
+
+            case "lich":
+                if (!(uRavenous() && uLament() && uExamen()))
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    hSpecial: HelmSpecial.Examen
+                );
+                return true;
+
+            case "dragon of time":
+                if (!uAvarice() || !uElysium() || !uPneuma())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    cSpecial: CapeSpecial.Avarice,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "paladin chronomancer":
+            case "obsidian paladin chronomancer":
+                if (!uValiance())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    cSpecial: CapeSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.None
+                );
+                return true;
+
+            case "arachnomancer":
+                if (!uAbsolution() || !uVim())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: uPenitence() ? CapeSpecial.Penitence : CapeSpecial.Absolution,
+                    wSpecial: uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Vim
+                );
+                return true;
+
+            case "phantom chronomancer":
+            case "phantasm chronomancer":
+                if (uElysium() || uRavenous())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Ravenous,
+                    hSpecial: HelmSpecial.Examen
+                );
+                return true;
+
+            case "scion of flames":
+                if ((!uVainglory() || !uLament()) && (!uPneuma() || !uForgeHelm()) && (!uRavenous() || !uValiance()))
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: uVainglory() ? CapeSpecial.Vainglory : CapeSpecial.Lament,
+                    wSpecial: uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance,
+                    hSpecial: uPneuma() ? HelmSpecial.Pneuma : HelmSpecial.Forge
+                );
+                return true;
+
+            case "healer":
+            case "healer (rare)":
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    cSpecial: CurrentCapeSpecial(),
+                    wSpecial: uValiance() ? WeaponSpecial.Valiance : WeaponSpecial.Awe_Blast,
+                    hSpecial: CurrentHelmSpecial()
+                );
+                return true;
+
+            case "chrono shadowslayer":
+            case "chrono shadowhunter":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: uLament() ? CapeSpecial.Lament : (uForgeCape() ? CapeSpecial.Forge : CurrentCapeSpecial()),
+                    wSpecial: uRavenous() ? WeaponSpecial.Ravenous : (uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : (uForgeWeapon() ? WeaponSpecial.Forge : WeaponSpecial.Awe_Blast)),
+                    hSpecial: uVim() ? HelmSpecial.Vim : (uForgeHelm() ? HelmSpecial.Forge : CurrentHelmSpecial())
+                );
+                return true;
+
+            case "glacial warlord":
+            case "glaceran warlord":
+            case "dark glaceran warlord":
+            case "savage glaceran warlord":
+                if (!uVainglory() || !uValiance() || !uAnima())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "king's echo":
+            case "kings echo":
+                if (!uElysium() || !uExamen() || !uLament())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    cSpecial: CapeSpecial.Lament,
+                    wSpecial: WeaponSpecial.Elysium,
+                    hSpecial: HelmSpecial.Examen
+                );
+                return true;
+
+            case "dragonslayer general":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: uVainglory() ? CapeSpecial.Vainglory : uForgeCape() ? CapeSpecial.Forge : CurrentCapeSpecial(),
+                    wSpecial: uValiance() ? WeaponSpecial.Valiance : uSmite() ? WeaponSpecial.Smite : WeaponSpecial.Mana_Vamp,
+                    hSpecial: uAnima() ? HelmSpecial.Anima : uForgeHelm() ? HelmSpecial.Forge : CurrentHelmSpecial()
+                );
+                return true;
+
+            case "chrono chaorruptor":
+                if (!uRavenous() || !uAnima() || !uVainglory())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Ravenous,
+                    hSpecial: HelmSpecial.Anima
+                );
+                return true;
+
+            case "chrono dataknight":
+            case "chrono dragonknight":
+                if (!uRavenous() || !uPneuma() || !uVainglory())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Vainglory,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    hSpecial: HelmSpecial.Pneuma
+                );
+                return true;
+
+            case "legendary hero":
+            case "dark legendary hero":
+                if (!uValiance() || !uForgeHelm() || !uAbsolution())
+                    return false;
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    cSpecial: CapeSpecial.Absolution,
+                    wSpecial: uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance,
+                    hSpecial: HelmSpecial.Forge
+                );
+                return true;
+
+            case "bard":
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Arcanas_Concerto,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                return true;
+
+            case "sentinel":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                return true;
+
+            case "master ranger":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Arcanas_Concerto,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                return true;
+
+            case "alpha omega":
+            case "alpha doommega":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Praxis,
+                    cSpecial: CapeSpecial.Avarice
+                );
+                return true;
+
+            case "guardian":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                return true;
+
+            case "hollowborn vindicator":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                return true;
+
+            case "phantom chronmancer":
+            case "phantasm chronmancer":
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    /// Applies Awe fallback enhancement (type + wSpecial only, no cape/helm specials).
+    /// Used when Forge presets are not available or quests aren't met.
+    /// </summary>
+    private void ApplyAweFallback(string normalized)
+    {
+        switch (normalized)
+        {
+            case "abyssal angel":
+            case "abyssal angel's shadow":
+            case "artifact hunter":
+            case "assassin":
+            case "archmage":
+            case "beastmaster":
+            case "berserker":
+            case "beta berserker":
+            case "blademaster assassin":
+            case "blademaster":
+            case "blood titan":
+            case "frostblood titan":
+            case "cardclasher":
+            case "chaos avenger member preview":
+            case "chaos champion prime":
+            case "chrono chaorruptor":
+            case "chrono commandant":
+            case "chronocommander":
+            case "chronocorrupter":
+            case "chunin":
+            case "classic alpha pirate":
+            case "classic barber":
+            case "classic doomknight":
+            case "classic exalted soul cleaver":
+            case "classic guardian":
+            case "classic paladin":
+            case "classic pirate":
+            case "classic soul cleaver":
+            case "continuum chronomancer":
+            case "corrupted chronomancer":
+            case "dark chaos berserker":
+            case "dark harbinger":
+            case "doomknight":
+            case "empyrean chronomancer":
+            case "eternal chronomancer":
+            case "evolved clawsuit":
+            case "evolved dark caster":
+            case "evolved leprechaun":
+            case "exalted harbinger":
+            case "exalted soul cleaver":
+            case "glaceran warlord":
+            case "dark glaceran warlord":
+            case "savage glaceran warlord":
+            case "glacial warlord":
+            case "great thief":
+            case "hollowborn vindicator member preview":
+            case "immortal chronomancer":
+            case "imperial chunin":
+            case "infinite dark caster":
+            case "infinite legion dark caster":
+            case "infinity titan":
+            case "legion blademaster assassin":
+            case "legion evolved dark caster":
+            case "legion swordmaster assassin":
+            case "leprechaun":
+            case "lycan":
+            case "master ranger":
+            case "mechajouster":
+            case "necromancer":
+            case "ninja warrior":
+            case "not a mod":
+            case "overworld chronomancer":
+            case "pinkomancer":
+            case "prismatic clawsuit":
+            case "quantum chronomancer":
+            case "ranger":
+            case "renegade":
+            case "rogue":
+            case "classic rogue":
+            case "rogue (rare)":
+            case "scarlet sorceress":
+            case "shadowscythe general":
+            case "skycharged grenadier":
+            case "skyguard grenadier":
+            case "sovereign of storms":
+            case "soul cleaver":
+            case "starlord":
+            case "swordmaster assassin":
+            case "swordmaster":
+            case "timekeeper":
+            case "timekiller":
+            case "timeless chronomancer":
+            case "undead leperchaun":
+            case "undeadslayer":
+            case "underworld chronomancer":
+            case "unlucky leperchaun":
+            case "void highlord":
+            case "void highlord (ioda)":
+            case "verus doomknight":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Spiral_Carve
+                );
+                break;
+
+            case "alpha doommega":
+            case "alpha omega":
+            case "alpha pirate":
+            case "beast warrior":
+            case "blood ancient":
+            case "chaos shaper":
+            case "classic defender":
+            case "clawsuit":
+            case "cryomancer mini pet coming soon":
+            case "dark legendary hero":
+            case "dragonsoul shinobi":
+            case "ultra omniknight":
+            case "dark ultra omninight":
+            case "doomknight overlord":
+            case "dragonslayer general":
+            case "drakel warlord":
+            case "glacial berserker test":
+            case "heroic naval commander":
+            case "legendary elemental warrior":
+            case "mythic elemental warrior":
+            case "legendary naval commander":
+            case "legion revenant member test":
+            case "naval commander":
+            case "paladin high lord":
+            case "paladin":
+            case "paladinslayer":
+            case "pirate":
+            case "pumpkin lord":
+            case "shadowflame dragonlord":
+            case "shadowstalker of time":
+            case "shadowwalker of time":
+            case "shadowweaver of time":
+            case "silver paladin":
+            case "thief of hours":
+            case "ultra elemental warrior":
+            case "void highlord tester":
+            case "warlord":
+            case "warrior":
+            case "warrior (rare)":
+            case "warriorscythe general":
+            case "yami no ronin":
+            case "arachnomancer":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Mana_Vamp
+                );
+                break;
+
+            case "chaos avenger":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    hSpecial: HelmSpecial.Anima,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "archpaladin":
+                EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                break;
+
+            case "lord of order":
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                break;
+
+            case "bard":
+            case "chrono assassin":
+            case "chronomancer":
+            case "chronomancer prime":
+            case "dark metal necro":
+            case "deathknight lord":
+            case "dragon shinobi":
+            case "dragonlord":
+            case "evolved pumpkin lord":
+            case "glacial berserker":
+            case "grunge rocker":
+            case "guardian":
+            case "heavy metal necro":
+            case "heavy metal rockstar":
+            case "hollowborn vindicator":
+            case "hobo highlord":
+            case "legendary hero":
+            case "nechronomancer":
+            case "phantom chronomancer":
+            case "phantasm chronomancer":
+            case "necrotic chronomancer":
+            case "draconic chronomancer":
+            case "no class":
+            case "nu metal necro":
+            case "obsidian no class":
+            case "protosartorium":
+            case "shadow dragon shinobi":
+            case "shadow ripper":
+            case "shadow rocker":
+            case "star captain":
+            case "troubador of love":
+            case "unchained rocker":
+            case "unchained rockstar":
+            case "undead goat":
+            case "unundead goat":
+            case "doom metal necro":
+            case "neo metal necro":
+            case "martial artist":
+            case "master martial artist":
+            case "antique hunter":
+            case "archivist of time":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                break;
+
+            case "eternal inversionist":
+            case "archfiend":
+            case "barber":
+            case "classic dragonlord":
+            case "dragonslayer":
+            case "enforcer":
+            case "flame dragon warrior":
+            case "rustbucket":
+            case "sentinel":
+            case "vampire":
+            case "vampire lord":
+            case "enchanted vampire lord":
+            case "royal vampire lord":
+            case "chrono shadowhunter":
+                EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Health_Vamp
+                );
+                break;
+
+            case "ninja":
+            case "classic ninja":
+            case "ninja (rare)":
+            case "horc evader":
+                EnhanceEquipped(
+                    type: EnhancementType.Thief,
+                    wSpecial: WeaponSpecial.Mana_Vamp
+                );
+                break;
+
+            case "acolyte":
+            case "arcane dark caster":
+            case "battlemage":
+            case "battlemage of love":
+            case "blaze binder":
+            case "blood sorceress":
+            case "dark battlemage":
+            case "dragon knight":
+            case "firelord summoner":
+            case "grim necromancer":
+            case "highseas commander":
+            case "infinity knight":
+            case "interstellar knight":
+            case "master of moglins":
+            case "dark master of moglins":
+            case "lich":
+            case "mystical dark caster":
+            case "northlands monk":
+            case "royal battlemage":
+            case "timeless dark caster":
+            case "witch":
+            case "scion of flames":
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                break;
+
+            case "stonecrusher":
+                EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                break;
+
+            case "chrono dataknight":
+            case "chrono dragonknight":
+            case "cryomancer":
+            case "dark caster":
+            case "dark cryomancer":
+            case "darkblood stormking":
+            case "darkside":
+            case "defender":
+            case "frost spiritreaver":
+            case "immortal dark caster":
+            case "legion paladin":
+            case "legion revenant":
+            case "legion revenant (ioda)":
+            case "lightcaster":
+            case "pink romancer":
+            case "psionic mindbreaker":
+            case "pyromancer":
+            case "sakura cryomancer":
+            case "troll spellsmith":
+            case "classic legion doomknight":
+            case "legion doomknight":
+            case "legion doomknight tester":
+            case "arcana invoker":
+            case "kings echo":
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    hSpecial: HelmSpecial.Examen,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            case "daimon":
+            case "dark lord":
+            case "evolved shaman":
+            case "lightmage":
+            case "mindbreaker":
+            case "vindicator of they":
+            case "elemental dracomancer":
+            case "lightcaster test":
+            case "love caster":
+            case "mage":
+            case "classic mage":
+            case "mage (rare)":
+            case "sorcerer":
+            case "the collector":
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Health_Vamp
+                );
+                break;
+
+            case "oracle":
+            case "shaman":
+                EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Mana_Vamp
+                );
+                break;
+
+            case "deathknight":
+            case "frostval barbarian":
+                EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    wSpecial: WeaponSpecial.Awe_Blast
+                );
+                break;
+
+            case "dragon of time":
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Health_Vamp
+                );
+                break;
+
+            case "obsidian paladin chronomancer":
+            case "paladin chronomancer":
+                EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    wSpecial: WeaponSpecial.Mana_Vamp
+                );
+                break;
+
+            default:
+                C.Logger($"[CoreEnhancements] No enhancement preset available for: {normalized}");
+                break;
+        }
+    }
+
+    public bool HasPreset(string className)
+    {
+        if (string.IsNullOrWhiteSpace(className))
+            return false;
+
+        return className.Trim().ToLowerInvariant() switch
+        {
+            "archpaladin" => true,
+            "stonecrusher" => true,
+            "lord of order" => true,
+            "dragon of time" => true,
+            "void highlord" => true,
+            "king's echo" => true,
+            "kings echo" => true,
+            _ => false,
+        };
+    }
+
+    public void EnhanceEquipped(
+        EnhancementType type,
+        CapeSpecial cSpecial = CapeSpecial.None,
+        HelmSpecial hSpecial = HelmSpecial.None,
+        WeaponSpecial wSpecial = WeaponSpecial.None
+    )
+    {
+        if (C.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
+            return;
+
+        List<InventoryItem> EquippedItems = Bot.Inventory.Items.FindAll(i =>
+            i.Equipped == true && EnhanceableCatagories.Contains(i.Category)
+        );
+        try
+        {
+            AutoEnhance(EquippedItems, type, cSpecial, hSpecial, wSpecial);
+        }
+        catch (Exception e)
+        {
+            C.Logger($"[CoreEnhancements] Enhancement crash: {e.Message}");
+        }
+    }
+
+    public void EnhanceItem(
+        string item,
+        EnhancementType type,
+        CapeSpecial cSpecial = CapeSpecial.None,
+        HelmSpecial hSpecial = HelmSpecial.None,
+        WeaponSpecial wSpecial = WeaponSpecial.None,
+        bool logging = false
+    )
+    {
+        if (string.IsNullOrEmpty(item))
+            return;
+
+        if (C.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
+            return;
+
+        if (!C.CheckInventory(item))
+        {
+            C.Logger($"[CoreEnhancements] Enhancement Failed: Could not find \"{item}\"");
+            return;
+        }
+
+        while (!Bot.ShouldExit && Bot.Player.InCombat)
+        {
+            if (Bot.Player.HasTarget)
+                Bot.Combat.CancelTarget();
+            C.JumpWait();
+            C.Sleep();
+        }
+
+        InventoryItem? SelectedItem = Bot.Inventory.Items.Find(i =>
+            i.Name.Equals(item, StringComparison.OrdinalIgnoreCase)
+            && EnhanceableCatagories.Contains(i.Category)
+        );
+
+        if (SelectedItem == null)
+        {
+            if (Bot.Inventory.Items.Any(i => i.Name.Equals(item, StringComparison.OrdinalIgnoreCase)))
+                C.Logger($"[CoreEnhancements] Enhancement Failed: {item} cannot be enhanced");
+            return;
+        }
+
+        try
+        {
+            AutoEnhance(new() { SelectedItem }, type, cSpecial, hSpecial, wSpecial, logging);
+        }
+        catch (Exception e)
+        {
+            C.Logger($"[CoreEnhancements] Enhancement crash: {e.Message}");
+        }
+    }
+
+    public void EnhanceItem(
+        string[] items,
+        EnhancementType type,
+        CapeSpecial cSpecial = CapeSpecial.None,
+        HelmSpecial hSpecial = HelmSpecial.None,
+        WeaponSpecial wSpecial = WeaponSpecial.None
+    )
+    {
+        if (items.Length == 0)
+            return;
+
+        if (C.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
+            return;
+
+        List<string> notFound = new();
+        foreach (string item in items)
+            if (!C.CheckInventory(item))
+                notFound.Add(item);
+
+        if (notFound.Count > 0)
+        {
+            if (notFound.Count == 1)
+                C.Logger($"[CoreEnhancements] Enhancement Failed: Could not find {notFound.First()}");
+            else
+                C.Logger($"[CoreEnhancements] Enhancement Failed: Could not find the following items: {string.Join(", ", notFound)}");
+            return;
+        }
+
+        List<InventoryItem> SelectedItems = Bot.Inventory.Items.FindAll(i =>
+            items.Contains(i.Name) && EnhanceableCatagories.Contains(i.Category)
+        );
+
+        if (SelectedItems.Count != items.Length)
+        {
+            List<string> unEnhanceable = new();
+
+            foreach (string item in items)
+                if (!Bot.Inventory.Items.Any(i =>
+                    i.Name == item && EnhanceableCatagories.Contains(i.Category)
+                ))
+                    unEnhanceable.Add(item);
+
+            if (unEnhanceable.Count == 1)
+                C.Logger($"[CoreEnhancements] Enhancement Failed: Unenhanceable item found, {unEnhanceable.First()}");
+            else
+                C.Logger($"[CoreEnhancements] Enhancement Failed: The following items are unenhanceable, {string.Join(", ", unEnhanceable)}");
+
+            return;
+        }
+
+        try
+        {
+            AutoEnhance(SelectedItems, type, cSpecial, hSpecial, wSpecial);
+        }
+        catch (Exception e)
+        {
+            C.Logger($"[CoreEnhancements] Enhancement crash: {e.Message}");
+        }
+    }
+
+    private static readonly ItemCategory[] EnhanceableCatagories =
+    {
+        ItemCategory.Sword,
+        ItemCategory.Axe,
+        ItemCategory.Dagger,
+        ItemCategory.Gun,
+        ItemCategory.HandGun,
+        ItemCategory.Rifle,
+        ItemCategory.Bow,
+        ItemCategory.Mace,
+        ItemCategory.Gauntlet,
+        ItemCategory.Polearm,
+        ItemCategory.Staff,
+        ItemCategory.Wand,
+        ItemCategory.Whip,
+        ItemCategory.Class,
+        ItemCategory.Helm,
+        ItemCategory.Cape,
+    };
+
+    private readonly ItemCategory[] WeaponCatagories = EnhanceableCatagories[..12];
+
+    private void AutoEnhance(
+        List<InventoryItem> ItemList,
+        EnhancementType type,
+        CapeSpecial cSpecial,
+        HelmSpecial hSpecial,
+        WeaponSpecial wSpecial,
+        bool logging = false
+    )
+    {
+        if (type == 0)
+            return;
+
+        if (ItemList.Count == 0)
+        {
+            C.Logger("[CoreEnhancements] Enhancement Failed:\t\"ItemList\" is empty");
+            return;
+        }
+
+        InventoryItem? cape = null;
+        if (cSpecial != CapeSpecial.None && ItemList.Any(i => i.Category == ItemCategory.Cape))
+        {
+            cape = ItemList.Find(i => i.Category == ItemCategory.Cape);
+            if (cape != null)
+                ItemList.Remove(cape);
+        }
+
+        InventoryItem? helm = null;
+        if (hSpecial != HelmSpecial.None && ItemList.Any(i => i.Category == ItemCategory.Helm))
+        {
+            helm = ItemList.Find(i => i.Category == ItemCategory.Helm);
+            if (helm != null)
+                ItemList.Remove(helm);
+        }
+
+        InventoryItem? weapon = null;
+        if (
+            wSpecial != WeaponSpecial.None
+            && ItemList.Any(i => i.ItemGroup == "Weapon")
+            && (uAwe() || (int)wSpecial > 6)
+        )
+        {
+            weapon = ItemList.Find(i => i.ItemGroup == "Weapon");
+            if (weapon != null)
+                ItemList.Remove(weapon);
+        }
+
+        bool weaponAlreadyEnhanced = weapon == null || AlreadyHasRequestedEnhancement(weapon, type, cSpecial, hSpecial, wSpecial, logging);
+
+        if (ItemList.All(i => AlreadyHasRequestedEnhancement(i, type, cSpecial, hSpecial, wSpecial, logging))
+            && (cape == null || AlreadyHasRequestedEnhancement(cape, type, cSpecial, hSpecial, wSpecial, logging))
+            && (helm == null || AlreadyHasRequestedEnhancement(helm, type, cSpecial, hSpecial, wSpecial, logging))
+            && weaponAlreadyEnhanced)
+        {
+            C.Logger("[CoreEnhancements] All equipped items already have requested enhancements. Skipping AutoEnhance.");
+            return;
+        }
+
+        int skipCounter = 0;
+
+        if (ItemList.Count > 0)
+        {
+            int shopID = type switch
+            {
+                EnhancementType.Fighter => Bot.Player.Level >= 50 ? 768 : 141,
+                EnhancementType.Thief => Bot.Player.Level >= 50 ? 767 : 142,
+                EnhancementType.Hybrid => Bot.Player.Level >= 50 ? 766 : 143,
+                EnhancementType.Wizard => Bot.Player.Level >= 50 ? 765 : 144,
+                EnhancementType.Healer => Bot.Player.Level >= 50 ? 762 : 145,
+                EnhancementType.SpellBreaker => Bot.Player.Level >= 50 ? 764 : 146,
+                EnhancementType.Lucky => Bot.Player.Level >= 50 ? 763 : 147,
+                _ => 0,
+            };
+
+            if (shopID == 0)
+            {
+                C.Logger($"[CoreEnhancements] Enhancement Failed:\tInvalid EnhancementType given, received {(int)type} | {type}");
+                return;
+            }
+
+            foreach (InventoryItem item in ItemList)
+            {
+                if (AlreadyHasRequestedEnhancement(item, type, cSpecial, hSpecial, wSpecial, logging))
+                {
+                    if (logging)
+                        C.Logger($"[CoreEnhancements] Skipping already-enhanced item: \"{item.Name}\"");
+                    skipCounter++;
+                    continue;
+                }
+
+                _AutoEnhance(item, shopID, Bot.Map?.Name, logging);
+                C.Sleep();
+            }
+        }
+
+        if (cape != null)
+        {
+            bool canEnhance = true;
+
+            switch (cSpecial)
+            {
+                case CapeSpecial.Forge:
+                    if (!uForgeCape())
+                    {
+                        C.Logger("[CoreEnhancements] Enhancement Failed:\tYou did not unlock the Forge (Cape) Enhancement yet");
+                        canEnhance = false;
+                    }
+                    break;
+                case CapeSpecial.Absolution:
+                    if (!uAbsolution())
+                        Fail();
+                    break;
+                case CapeSpecial.Avarice:
+                    if (!uAvarice())
+                        Fail();
+                    break;
+                case CapeSpecial.Vainglory:
+                    if (!uVainglory())
+                        Fail();
+                    break;
+                case CapeSpecial.Penitence:
+                    if (!uPenitence())
+                        Fail();
+                    break;
+                case CapeSpecial.Lament:
+                    if (!uLament())
+                        Fail();
+                    break;
+                default:
+                    C.Logger($"[CoreEnhancements] Enhancement Failed:\tInvalid \"CapeSpecial\" given, received {(int)cSpecial} | {cSpecial}");
+                    return;
+
+                    void Fail()
+                    {
+                        C.Logger($"[CoreEnhancements] Enhancement Failed:\tYou did not unlock the {cSpecial} Enhancement yet");
+                        canEnhance = false;
+                    }
+            }
+
+            if (canEnhance)
+            {
+                if (AlreadyHasRequestedEnhancement(cape, type, cSpecial, hSpecial, wSpecial, logging))
+                {
+                    if (logging)
+                        C.Logger($"[CoreEnhancements] Skipping already-enhanced item: \"{cape.Name}\"");
+                    skipCounter++;
+                }
+                else
+                {
+                    _AutoEnhance(cape, 2143, ((int)cSpecial > 0) ? "forge" : null, logging);
+                }
+            }
+            else
+                skipCounter++;
+        }
+
+        if (helm != null)
+        {
+            bool canEnhance = true;
+
+            switch (hSpecial)
+            {
+                case HelmSpecial.Vim:
+                    if (!uVim())
+                        Fail();
+                    break;
+                case HelmSpecial.Examen:
+                    if (!uExamen())
+                        Fail();
+                    break;
+                case HelmSpecial.Forge:
+                    if (!uForgeHelm())
+                        Fail();
+                    break;
+                case HelmSpecial.Anima:
+                    if (!uAnima())
+                        Fail();
+                    break;
+                case HelmSpecial.Pneuma:
+                    if (!uPneuma())
+                        Fail();
+                    break;
+                case HelmSpecial.Hearty:
+                    if (!uHearty())
+                        Fail();
+                    break;
+                default:
+                    C.Logger($"[CoreEnhancements] Enhancement Failed:\tInvalid \"HelmSpecial\" given, received {(int)hSpecial} | {hSpecial}");
+                    return;
+
+                    void Fail()
+                    {
+                        C.Logger($"[CoreEnhancements] Enhancement Failed:\tYou did not unlock the {hSpecial} Enhancement yet");
+                        canEnhance = false;
+                    }
+            }
+
+            if (canEnhance)
+            {
+                if (AlreadyHasRequestedEnhancement(helm, type, cSpecial, hSpecial, wSpecial, logging))
+                {
+                    if (logging)
+                        C.Logger($"[CoreEnhancements] Skipping already-enhanced item: \"{helm.Name}\"");
+                    skipCounter++;
+                }
+                else
+                {
+                    _AutoEnhance(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
+                }
+            }
+            else
+                skipCounter++;
+        }
+
+        if (weapon != null)
+        {
+            int shopID = 0;
+            bool canEnhance = true;
+
+            if ((int)wSpecial <= 6)
+            {
+                shopID = type switch
+                {
+                    EnhancementType.Fighter => 635,
+                    EnhancementType.Thief => 637,
+                    EnhancementType.Hybrid => 633,
+                    EnhancementType.Wizard => 636,
+                    EnhancementType.SpellBreaker => 636,
+                    EnhancementType.Healer => 638,
+                    EnhancementType.Lucky => 639,
+                    _ => 0,
+                };
+            }
+            else
+            {
+                switch (wSpecial)
+                {
+                    case WeaponSpecial.Forge:
+                        if (!uForgeWeapon())
+                        {
+                            C.Logger("[CoreEnhancements] Enhancement Failed:\tYou did not unlock the Forge (Weapon) Enhancement yet");
+                            canEnhance = false;
+                        }
+                        break;
+                    case WeaponSpecial.Lacerate:
+                        if (!uLacerate())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Smite:
+                        if (!uSmite())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Valiance:
+                        if (!uValiance())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Arcanas_Concerto:
+                        if (!uArcanasConcerto())
+                        {
+                            C.Logger("[CoreEnhancements] Enhancement Failed:\tYou did not unlock the Arcana's Concerto Enhancement yet");
+                            canEnhance = false;
+                        }
+                        break;
+                    case WeaponSpecial.Elysium:
+                        if (!uElysium())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Acheron:
+                        if (!uAcheron())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Praxis:
+                        if (!uPraxis())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Dauntless:
+                        if (!uDauntless())
+                            Fail();
+                        break;
+                    case WeaponSpecial.Ravenous:
+                        if (!uRavenous())
+                            Fail();
+                        break;
+                    default:
+                        C.Logger($"[CoreEnhancements] Enhancement Failed:\tInvalid \"WeaponSpecial\" given, received {(int)wSpecial} | {wSpecial}");
+                        return;
+
+                        void Fail()
+                        {
+                            C.Logger($"[CoreEnhancements] Enhancement Failed:\tYou did not unlock the {wSpecial} Enhancement yet");
+                            canEnhance = false;
+                        }
+                }
+
+                shopID = 2142;
+            }
+
+            if (canEnhance)
+            {
+                if (AlreadyHasRequestedEnhancement(weapon, type, cSpecial, hSpecial, wSpecial, logging))
+                {
+                    if (logging)
+                        C.Logger($"[CoreEnhancements] Skipping already-enhanced item: \"{weapon.Name}\"");
+                    skipCounter++;
+                }
+                else
+                {
+                    _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
+                }
+            }
+            else
+                skipCounter++;
+        }
+
+        if (skipCounter > 0)
+            C.Logger($"[CoreEnhancements] Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}");
+
+        void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = false)
+        {
+            bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
+            bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
+            bool specialOnWeapon = item.ItemGroup == "Weapon" && wSpecial.ToString() != "None";
+            string mapName = map ?? Bot.Map?.Name ?? "whitemap";
+
+            if (AlreadyHasRequestedEnhancement(item, type, cSpecial, hSpecial, wSpecial, logging))
+                return;
+
+            List<ShopItem> shopItems = C.GetShopItems(mapName, shopID);
+
+            if (!shopItems.Any(x => x.Category == ItemCategory.Enhancement) || shopItems.Count == 0)
+            {
+                C.Logger($"[CoreEnhancements] Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {mapName}, shopID: {shopID}): Couldn't find enhancements in shop {shopID}");
+                return;
+            }
+
+            if (logging && specialOnWeapon)
+            {
+                C.Logger($"[CoreEnhancements] Weapon enhancement search: {item.Name} Pattern={item.EnhancementPatternID} Proc={getProcID(item)} Requested={wSpecial}({(int)wSpecial}) shopID={shopID}");
+            }
+
+            if (Bot.Player.Level == item.EnhancementLevel)
+            {
+                if (specialOnCape)
+                {
+                    if ((int)cSpecial == item.EnhancementPatternID)
+                    {
+                        skipCounter++;
+                        return;
+                    }
+                }
+                else if (specialOnHelm)
+                {
+                    if ((int)hSpecial == item.EnhancementPatternID)
+                    {
+                        skipCounter++;
+                        return;
+                    }
+                }
+                else if (specialOnWeapon)
+                {
+                    bool procMatches = (int)wSpecial == getProcID(item)
+                        || ((int)wSpecial == 99 && getProcID(item) == 0);
+
+                    bool weaponAlreadyApplied;
+                    if (wSpecial == WeaponSpecial.Forge)
+                    {
+                        weaponAlreadyApplied = procMatches
+                            && (item.EnhancementPatternID == (int)type || item.EnhancementPatternID == 10);
+                    }
+                    else
+                    {
+                        weaponAlreadyApplied = procMatches;
+                    }
+
+                    if (weaponAlreadyApplied)
+                    {
+                        skipCounter++;
+                        return;
+                    }
+                }
+                else if ((int)type == item.EnhancementPatternID)
+                {
+                    skipCounter++;
+                    return;
+                }
+            }
+
+            if (logging)
+            {
+                if (specialOnCape)
+                    C.Logger($"[CoreEnhancements] Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                else if (specialOnWeapon)
+                    C.Logger($"[CoreEnhancements] Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                else
+                    C.Logger($"[CoreEnhancements] Searching Enhancement:\t{type} - \"{item.Name}\"");
+            }
+
+            List<ShopItem> availableEnh = new();
+            foreach (ShopItem enh in shopItems)
+            {
+                if ((!Bot.Player.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
+                    continue;
+
+                string enhName = enh.Name.Replace(" ", "").Replace("'", "").ToLower();
+
+                if (specialOnCape && enhName.Contains(cSpecial.ToString().Replace("_", "").ToLower()))
+                    availableEnh.Add(enh);
+                else if (specialOnWeapon && enhName.Contains(wSpecial.ToString().Replace("_", "").ToLower()))
+                    availableEnh.Add(enh);
+                else if (specialOnHelm && enhName.Contains(hSpecial.ToString().Replace("_", "").ToLower()))
+                    availableEnh.Add(enh);
+                else if (item.Category == ItemCategory.Class && enhName.Contains("armor"))
+                    availableEnh.Add(enh);
+                else if (item.Category == ItemCategory.Helm && enhName.Contains("helm"))
+                    availableEnh.Add(enh);
+                else if (item.Category == ItemCategory.Cape && enhName.Contains("cape"))
+                    availableEnh.Add(enh);
+                else if (item.ItemGroup == "Weapon" && enhName.Contains("weapon"))
+                    availableEnh.Add(enh);
+            }
+
+            ShopItem? bestEnhancement = null;
+            if (availableEnh.Count == 0)
+            {
+                if (logging)
+                    C.Logger("[CoreEnhancements] Enhancement Failed:\t\"availableEnh\" is empty");
+                return;
+            }
+            else if (availableEnh.Count == 1)
+                bestEnhancement = availableEnh.First();
+            else
+            {
+                List<ShopItem> sortedList = availableEnh
+                    .OrderByDescending(x => x.Level)
+                    .ThenByDescending(x => x.Upgrade ? 1 : 0)
+                    .ToList();
+                bestEnhancement = sortedList[0];
+            }
+
+            if (bestEnhancement == null)
+            {
+                if (logging)
+                    C.Logger($"[CoreEnhancements] Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
+                return;
+            }
+
+            if (bestEnhancement.ID == getEnhID(item)
+                && item.EnhancementLevel > 0
+                && bestEnhancement.Level == item.EnhancementLevel)
+            {
+                if (logging)
+                    C.Logger($"[CoreEnhancements] Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
+                return;
+            }
+
+            int roomId = Bot.Map?.RoomID ?? 1;
+            Bot.Send.Packet($"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{bestEnhancement.ID}%{shopID}%");
+
+            if (logging)
+            {
+                if (specialOnCape)
+                    C.Logger($"[CoreEnhancements] Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+                else if (specialOnWeapon)
+                    C.Logger($"[CoreEnhancements] Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+                else
+                    C.Logger($"[CoreEnhancements] Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+            }
+            C.Sleep();
+        }
+    }
+
+    private bool AlreadyHasRequestedEnhancement(
+        InventoryItem item,
+        EnhancementType type,
+        CapeSpecial cSpecial,
+        HelmSpecial hSpecial,
+        WeaponSpecial wSpecial,
+        bool logging = false
+    )
+    {
+        if (item == null || item.EnhancementLevel <= 0 || item.EnhancementLevel != Bot.Player.Level)
+            return false;
+
+        if (item.Category == ItemCategory.Cape)
+        {
+            if (cSpecial != CapeSpecial.None)
+                return (int)cSpecial == item.EnhancementPatternID;
+
+            return (int)type == item.EnhancementPatternID;
+        }
+
+        if (item.Category == ItemCategory.Helm)
+        {
+            if (hSpecial != HelmSpecial.None)
+                return (int)hSpecial == item.EnhancementPatternID;
+
+            return (int)type == item.EnhancementPatternID;
+        }
+
+        if (item.ItemGroup == "Weapon")
+        {
+            if (wSpecial == WeaponSpecial.None)
+                return (int)type == item.EnhancementPatternID;
+
+            return WeaponAlreadyHasRequestedEnhancement(item, type, wSpecial);
+        }
+
+        if (item.Category == ItemCategory.Class)
+            return (int)type == item.EnhancementPatternID;
+
+        return false;
+    }
+
+    private int getProcID(InventoryItem? item) =>
+        item == null ? 0 : C.GetItemProperty<int>(item, "ProcID");
+
+    private int getEnhID(InventoryItem? item) =>
+        item == null ? 0 : C.GetItemProperty<int>(item, "iEnh");
+
+    private bool WeaponAlreadyHasRequestedEnhancement(
+        InventoryItem item,
+        EnhancementType type,
+        WeaponSpecial wSpecial
+    )
+    {
+        if (item == null || item.ItemGroup != "Weapon" || item.EnhancementLevel <= 0)
+            return false;
+
+        int currentPattern = item.EnhancementPatternID;
+        int currentProc = getProcID(item);
+
+        if (wSpecial == WeaponSpecial.None)
+            return currentPattern == (int)type;
+
+        if ((int)wSpecial <= 6)
+            return currentPattern == (int)type && currentProc == (int)wSpecial;
+
+        if (wSpecial == WeaponSpecial.Forge)
+            return currentProc == 0 && (currentPattern == (int)type || currentPattern == 10);
+
+        return currentProc == (int)wSpecial;
+    }
+
+    public bool uAwe() => C.isCompletedBefore(2937);
+    public bool uForgeWeapon() => C.isCompletedBefore(8738);
+    public bool uLacerate() => C.isCompletedBefore(8739);
+    public bool uSmite() => C.isCompletedBefore(8740);
+    public bool uValiance() => C.isCompletedBefore(8741);
+    public bool uArcanasConcerto() => C.isCompletedBefore(8742);
+    public bool uAbsolution() => C.isCompletedBefore(8743);
+    public bool uVainglory() => C.isCompletedBefore(8744);
+    public bool uAvarice() => C.isCompletedBefore(8745);
+    public bool uForgeCape() => C.isCompletedBefore(8758);
+    public bool uElysium() => C.isCompletedBefore(8821);
+    public bool uAcheron() => C.isCompletedBefore(8820);
+    public bool uPenitence() => C.isCompletedBefore(8822);
+    public bool uLament() => C.isCompletedBefore(8823);
+    public bool uVim() => C.isCompletedBefore(8824);
+    public bool uExamen() => C.isCompletedBefore(8825);
+    public bool uForgeHelm() => C.isCompletedBefore(8828);
+    public bool uPneuma() => C.isCompletedBefore(8827);
+    public bool uAnima() => C.isCompletedBefore(8826);
+    public bool uDauntless() => C.isCompletedBefore(9172);
+    public bool uPraxis() => C.isCompletedBefore(9171);
+    public bool uRavenous() => C.isCompletedBefore(9560);
+    public bool uHearty()
+    {
+        return C.isCompletedBefore(9466) && FactionRank("Grimskull Trolling") >= 7;
+    }
+
+    private int FactionRank(string faction)
+    {
+        if (string.IsNullOrWhiteSpace(faction))
+            return 0;
+
+        return Bot.Reputation.GetRank(faction);
+    }
 }
