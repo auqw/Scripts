@@ -1639,6 +1639,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/River.cs"
   },
   {
+    "name": "Sword Haven Maze",
+    "description": "This will finish the ShadowVoid Story.",
+    "tags": [
+      "story",
+      "quest",
+      "sword haven maze",
+      "swordhavenmaze"
+    ],
+    "path": "Story/SwordHavenMaze.cs",
+    "size": 2801,
+    "sha256": "f1e0152b3db148e56f541fbb9db715fce55d7a796895b4a20e955037009d0e83",
+    "fileName": "SwordHavenMaze.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SwordHavenMaze.cs"
+  },
+  {
     "name": "Borgars Story",
     "description": "This will complete the Borgars story.",
     "tags": [
@@ -10286,6 +10301,41 @@
     "sha256": "e6e55730714ca7ac41ad6b87f65c151df7ec38992b23934411b81f39aee47b7b",
     "fileName": "InevitabilisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InevitabilisMerge.cs"
+  },
+  {
+    "name": "Swordhaven Maze Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Swordhaven Maze Merge [2740] in /swordhavenmaze",
+    "tags": [
+      "swordhaven",
+      "maze",
+      "merge",
+      "swordhavenmaze",
+      "extinction",
+      "artist",
+      "aficionado",
+      "house",
+      "volkov",
+      "uniform",
+      "ceremonial",
+      "ruby",
+      "rapiers",
+      "warrior",
+      "morph",
+      "cap",
+      "",
+      "jubilant",
+      "artists",
+      "shadow",
+      "artistas",
+      "instrument",
+      "brush",
+      "rapier"
+    ],
+    "path": "Other/MergeShops/SwordhavenMazeMerge.cs",
+    "size": 7048,
+    "sha256": "cc1c13de08e5beb1800bbb66fa1dd0d51715feb1c97e87e90399000360350883",
+    "fileName": "SwordhavenMazeMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SwordhavenMazeMerge.cs"
   },
   {
     "name": "OriginulMerge",
