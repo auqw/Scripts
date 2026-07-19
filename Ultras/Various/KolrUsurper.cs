@@ -218,7 +218,7 @@ public class LoneWolf_UltraUsurper
             Bot.Skills.Stop();
 
             if (stopBotWhenFinished)
-                Bot.Stop();
+                Bot.StopAsync();
         }
     }
 
@@ -1830,7 +1830,7 @@ public class LoneWolf_UltraUsurper
     {
         resetCycle = 0;
 
-        return TryGetBossSignal("Reset", out string? value)
+        return TryGetBossSignal("Reset", out string value)
             && int.TryParse(value, out resetCycle)
             && resetCycle > 0;
     }
@@ -2058,7 +2058,7 @@ public class LoneWolf_UltraUsurper
         nextHealRequestPollAt = DateTime.UtcNow.AddMilliseconds(HealRequestPollMs);
         cachedLrNeedsHeal = false;
 
-        if (!TryGetBossSignal("LrNeedsHeal", out string? value))
+        if (!TryGetBossSignal("LrNeedsHeal", out string value))
             return;
 
         string[] parts = value.Split('|');
@@ -2606,7 +2606,7 @@ public class LoneWolf_UltraUsurper
         return UpdateSyncEntry($"Boss.{signal}", $"{runId}|{value}");
     }
 
-    private bool TryGetBossSignal(string signal, out string? value)
+    private bool TryGetBossSignal(string signal, out string value)
     {
         value = string.Empty;
 
