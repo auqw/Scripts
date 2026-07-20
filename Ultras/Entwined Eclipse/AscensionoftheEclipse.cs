@@ -755,17 +755,26 @@ public class AscendEclipseTest
         {
             try
             {
+                if (name != "pext" && name != "packetFromServer")
+                    return;
+
+                // Prefilter on the raw packet text so the expensive dynamic JSON parse
+                // only runs for packets that can actually contain a convergence message.
+                if (args.Length == 0 || args[0] is not string raw ||
+                    !raw.Contains("Converges", StringComparison.OrdinalIgnoreCase))
+                    return;
+
                 dynamic? data = null;
 
                 if (name == "pext")
                 {
-                    var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
+                    var packet = JsonConvert.DeserializeObject<dynamic>(raw)!;
                     if (packet?["params"]?["type"]?.ToString() == "json")
                         data = packet["params"]["dataObj"];
                 }
                 else if (name == "packetFromServer")
                 {
-                    var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
+                    var packet = JsonConvert.DeserializeObject<dynamic>(raw)!;
                     data = packet?["b"]?["o"];
                 }
 
@@ -1334,7 +1343,12 @@ public class AscendEclipseTest
 
     void ResetReusableSyncFiles()
     {
-        Core.Logger("[Sync] Moving to /whitemap before clearing reusable sync files.");
+        // Sync files are cleared at startup only; stale lines from earlier runs are
+        // pruned by SyncArmy, so per-run clearing is unnecessary.
+        if (syncFilesClearedOnStartup)
+            return;
+
+        Core.Logger("[Sync] Moving to /whitemap before clearing startup sync files.");
         Core.Join("whitemap", "Enter", "Spawn");
         WaitForMapName("whitemap", 8000);
         Bot.Sleep(1000);
@@ -1343,45 +1357,21 @@ public class AscendEclipseTest
 
         if (!isPlayer1)
         {
-            if (!syncFilesClearedOnStartup)
-                Core.Logger("[Sync] Waiting briefly while player1 clears startup sync files.");
-            else
-                Core.Logger("[Sync] Waiting briefly while player1 resets reusable reset sync file.");
-
+            Core.Logger("[Sync] Waiting briefly while player1 clears startup sync files.");
             Bot.Sleep(1500);
-
-            if (!syncFilesClearedOnStartup)
-            {
-                syncFilesClearedOnStartup = true;
-                Core.Logger("[Sync] Done waiting for player1 startup sync clear.");
-            }
-            else
-            {
-                Core.Logger("[Sync] Done waiting for player1 sync reset.");
-            }
-
-            return;
-        }
-
-        if (!syncFilesClearedOnStartup)
-        {
-            Core.Logger("[Sync] Player1 is clearing startup sync files for AscendEclipse.");
-
-            ResetSyncFile(SyncGroupPath("AscendEclipse_reset_ready.sync"));
-            ResetSyncFile(SyncGroupPath("AscendEclipse_run_ready.sync"));
-
             syncFilesClearedOnStartup = true;
-
-            Core.Logger("[Sync] Startup sync files cleared.");
-            Bot.Sleep(1500);
+            Core.Logger("[Sync] Done waiting for player1 startup sync clear.");
             return;
         }
 
-        Core.Logger("[Sync] Player1 is resetting reusable reset sync file for the new AscendEclipse run.");
+        Core.Logger("[Sync] Player1 is clearing startup sync files for AscendEclipse.");
 
         ResetSyncFile(SyncGroupPath("AscendEclipse_reset_ready.sync"));
+        ResetSyncFile(SyncGroupPath("AscendEclipse_run_ready.sync"));
 
-        Core.Logger("[Sync] Reusable reset sync file reset complete.");
+        syncFilesClearedOnStartup = true;
+
+        Core.Logger("[Sync] Startup sync files cleared.");
         Bot.Sleep(1500);
     }
 
@@ -1414,20 +1404,21 @@ public class AscendEclipseTest
 
         while (!Bot.ShouldExit)
         {
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
             string[] lines = ReadSyncLines(path);
 
             lines = lines
                 .Where(l => !l.StartsWith($"{checkpoint}:{username}:", StringComparison.OrdinalIgnoreCase))
+                .Where(l => !IsStaleSyncLine(l, now))
                 .ToArray();
 
             WriteSyncLines(
                 path,
                 lines
-                    .Append($"{checkpoint}:{username}:ready:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}")
+                    .Append($"{checkpoint}:{username}:ready:{now}")
                     .ToArray()
             );
-
-            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
             int ready = ReadSyncLines(path)
                 .Select(l => l.Split(':'))
@@ -1467,6 +1458,26 @@ public class AscendEclipseTest
             File.WriteAllLines(path, lines);
         }
         catch { Bot.Sleep(100); }
+    }
+
+    /// <summary>
+    /// True when a sync line's trailing unix timestamp is older than 10 minutes.
+    /// Handles both ready lines (checkpoint:user:ready:ts) and death-reset signals
+    /// (checkpoint:user:ts); lines without a parseable timestamp are kept.
+    /// </summary>
+    bool IsStaleSyncLine(string line, long now)
+    {
+        const long maxAgeSeconds = 600;
+
+        int lastColon = line.LastIndexOf(':');
+
+        if (lastColon < 0 || lastColon == line.Length - 1)
+            return false;
+
+        if (!long.TryParse(line[(lastColon + 1)..], out long ts))
+            return false;
+
+        return now - ts > maxAgeSeconds;
     }
 
     void UseClassSkills()
