@@ -3,26 +3,26 @@ name: All Dailies
 description: Does all the avaiable dailies.
 tags: all dailies, dailies, daily, all
 */
-//cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreDailies.cs
-//cs_include Scripts/CoreStory.cs
-//cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Core/CoreBots2.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Core/CoreFarms2.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Core/CoreDailies2.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Core/CoreStory2.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Core/CoreAdvanced2.cs
 
-//cs_include Scripts/Nation/CoreNation.cs
-//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
-//cs_include Scripts/Good/BLoD/CoreBLOD.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/CoreNationv3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/CoreSDKAv3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/CoreBLODv3.cs
 
-//cs_include Scripts/Story/BattleUnder.cs
-//cs_include Scripts/Story/Nation/CitadelRuins.cs
-//cs_include Scripts/Story/DragonFableOrigins.cs
-//cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Story/Friendship.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/BattleUnderv3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/CitadelRuinsv3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/DragonFableOriginsv3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/Glacerav3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/Friendshipv3.cs
 
-//cs_include Scripts/Dailies/LordOfOrder.cs
-//cs_include Scripts/Dailies/MineCrafting.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/LordOfOrderv3.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/MineCraftingv3.cs
 
-//cs_include Scripts/Tools/BankAllItems.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Dailies/Dependencies-AllDaillies/BankAllItemsv3.cs
 
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -30,13 +30,13 @@ using Skua.Core.Options;
 public class FarmAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
-    private CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily
+    private CoreBots2 Core => CoreBots2.Instance;
+    private static CoreDailies2 Daily
     {
-        get => _Daily ??= new CoreDailies();
+        get => _Daily ??= new CoreDailies2();
         set => _Daily = value;
     }
-    private static CoreDailies _Daily;
+    private static CoreDailies2 _Daily;
     private static LordOfOrder LOO
     {
         get => _LOO ??= new LordOfOrder();
@@ -86,7 +86,7 @@ public class FarmAllDailies
             "only do the few that we recommend to make it a bit quicker?",
             DailySet.All
         ),
-        CoreBots.Instance.SkipOptions,
+        CoreBots2.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -98,8 +98,15 @@ public class FarmAllDailies
         Core.SetOptions(false);
     }
 
+    public void RunAll()
+    {
+        DoAllDailies();
+    }
+
     public void DoAllDailies(DailySet Set = DailySet.All)
     {
+        Core.EquipClass(ClassType.Solo);
+
         if (Set == DailySet.Recommended)
         {
             Core.Logger($"Doing selected set of dailies: Recommended");
