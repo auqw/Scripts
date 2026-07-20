@@ -3375,12 +3375,12 @@ public class CoreAdvanced
 
                 #region Lucky - Vainglory - Dauntless - Anima
                 case "chaos avenger":
-                    if (!uDauntless() || !uAnima() || !uVainglory())
+                    if (!uAnima() || !uVainglory())
                         goto default;
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
-                    wSpecial =uDauntless() ? WeaponSpecial.Dauntless: WeaponSpecial.Valiance;
+                    wSpecial = uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Valiance;
                     hSpecial = HelmSpecial.Anima;
                     break;
                 #endregion
@@ -3417,7 +3417,7 @@ public class CoreAdvanced
 
                 #region Lucky - Vainglory - Praxis - Vim
                 case "yami no ronin":
-                    if (!uPraxis() && !uVainglory() || !uVim())
+                    if (!uPraxis() || !uVainglory() || !uVim())
                         goto default;
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
