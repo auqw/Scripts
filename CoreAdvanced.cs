@@ -2466,6 +2466,69 @@ public class CoreAdvanced
 
     public readonly ItemCategory[] WeaponCatagories = EnhanceableCatagories[..12];
 
+    private bool AlreadyHasRequestedEnhancement(
+        InventoryItem item,
+        EnhancementType type,
+        CapeSpecial cSpecial,
+        HelmSpecial hSpecial,
+        WeaponSpecial wSpecial,
+        bool logging = false
+    )
+    {
+        if (item == null || item.EnhancementLevel <= 0 || item.EnhancementLevel != Bot.Player.Level)
+            return false;
+
+        if (item.Category == ItemCategory.Cape)
+        {
+            if (cSpecial != CapeSpecial.None)
+                return (int)cSpecial == item.EnhancementPatternID;
+            return (int)type == item.EnhancementPatternID;
+        }
+
+        if (item.Category == ItemCategory.Helm)
+        {
+            if (hSpecial != HelmSpecial.None)
+                return (int)hSpecial == item.EnhancementPatternID;
+            return (int)type == item.EnhancementPatternID;
+        }
+
+        if (item.ItemGroup == "Weapon")
+        {
+            if (wSpecial == WeaponSpecial.None)
+                return (int)type == item.EnhancementPatternID;
+            return WeaponAlreadyHasRequestedEnhancement(item, type, wSpecial);
+        }
+
+        if (item.Category == ItemCategory.Class)
+            return (int)type == item.EnhancementPatternID;
+
+        return false;
+    }
+
+    private bool WeaponAlreadyHasRequestedEnhancement(
+        InventoryItem item,
+        EnhancementType type,
+        WeaponSpecial wSpecial
+    )
+    {
+        if (item == null || item.ItemGroup != "Weapon" || item.EnhancementLevel <= 0)
+            return false;
+
+        int currentPattern = item.EnhancementPatternID;
+        int currentProc = getProcID(item);
+
+        if (wSpecial == WeaponSpecial.None)
+            return currentPattern == (int)type;
+
+        if ((int)wSpecial > 0 && (int)wSpecial <= 6)
+            return currentPattern == (int)type && currentProc == (int)wSpecial;
+
+        if (wSpecial == WeaponSpecial.Forge)
+            return currentProc == 0 && (currentPattern == (int)type || currentPattern == 10);
+
+        return currentProc == (int)wSpecial;
+    }
+
     private void AutoEnhance(
         List<InventoryItem> ItemList,
         EnhancementType type,
@@ -2514,7 +2577,7 @@ public class CoreAdvanced
         if (
             wSpecial != WeaponSpecial.None
             && ItemList.Any(i => i.ItemGroup == "Weapon")
-            && (uAwe() || (int)wSpecial > 6)
+            && (uAwe() || wSpecial == WeaponSpecial.Forge || (int)wSpecial > 6)
         )
         {
             weapon = ItemList.Find(i => i.ItemGroup == "Weapon");
@@ -2564,6 +2627,11 @@ public class CoreAdvanced
             // Enhancing the remaining items
             foreach (InventoryItem item in ItemList)
             {
+                if (AlreadyHasRequestedEnhancement(item, type, cSpecial, hSpecial, wSpecial, logging))
+                {
+                    skipCounter++;
+                    continue;
+                }
                 _AutoEnhance(item, shopID, Bot.Map?.Name, logging);
                 Core.Sleep();
             }
@@ -2620,7 +2688,11 @@ public class CoreAdvanced
                     }
             }
 
-            if (canEnhance)
+            if (AlreadyHasRequestedEnhancement(cape, type, cSpecial, hSpecial, wSpecial, logging))
+            {
+                skipCounter++;
+            }
+            else if (canEnhance)
                 _AutoEnhance(cape, 2143, ((int)cSpecial > 0) ? "forge" : null, logging);
             else
                 skipCounter++;
@@ -2672,7 +2744,11 @@ public class CoreAdvanced
                     }
             }
 
-            if (canEnhance)
+            if (AlreadyHasRequestedEnhancement(helm, type, cSpecial, hSpecial, wSpecial, logging))
+            {
+                skipCounter++;
+            }
+            else if (canEnhance)
                 _AutoEnhance(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
             else
                 skipCounter++;
@@ -2684,7 +2760,7 @@ public class CoreAdvanced
             int shopID = 0;
             bool canEnhance = true;
 
-            if ((int)wSpecial <= 6)
+            if ((int)wSpecial > 0 && (int)wSpecial <= 6)
             {
                 switch (type)
                 {
@@ -2787,8 +2863,12 @@ public class CoreAdvanced
                 shopID = 2142;
             }
 
-            if (canEnhance)
-                _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
+            if (AlreadyHasRequestedEnhancement(weapon, type, cSpecial, hSpecial, wSpecial, logging))
+            {
+                skipCounter++;
+            }
+            else if (canEnhance)
+                _AutoEnhance(weapon, shopID, (wSpecial == WeaponSpecial.Forge || (int)wSpecial > 6) ? "forge" : null, logging);
             else
                 skipCounter++;
         }
@@ -2838,7 +2918,7 @@ public class CoreAdvanced
                 else if (specialOnWeapon)
                 {
                     if (
-                        ((int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID
+                        ((int)wSpecial > 0 && (int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID
                         && (
                             (int)wSpecial == getProcID(item)
                             || ((int)wSpecial == 99 && getProcID(item) == 0)
@@ -2865,7 +2945,7 @@ public class CoreAdvanced
                     );
                 else if (specialOnWeapon)
                     Core.Logger(
-                        $"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
+                        $"Searching Enhancement:\t{((int)wSpecial > 0 && (int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
                     );
                 else
                     Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
@@ -2979,7 +3059,7 @@ public class CoreAdvanced
             {
                 if (logging)
                     Core.Logger(
-                        $"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+                        $"Enhancement Applied:\t{((int)wSpecial > 0 && (int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
                     );
             }
             else
@@ -4493,29 +4573,28 @@ public enum CapeSpecial // Enhancement Pattern ID
 
 public enum WeaponSpecial // Proc ID
 {
-    None = 0,
+    Forge = 0,
+    None = 1,
     Spiral_Carve = 2,
     Awe_Blast = 3,
     Health_Vamp = 4,
     Mana_Vamp = 5,
     Powerword_Die = 6,
-    Ravenous = 7,
-
-    Forge = 99, // Not really 99, but cant have 0 3 times
-    Lacerate = 8,
-    Smite = 9,
-    Valiance = 10,
-    Arcanas_Concerto = 11,
+    Lacerate = 7,
+    Smite = 8,
+    Valiance = 9,
+    Arcanas_Concerto = 10,
+    Acheron = 11,
     Elysium = 12,
-    Acheron = 13,
-    Praxis = 14,
-    Dauntless = 15,
+    Praxis = 13,
+    Dauntless = 14,
+    Ravenous = 15,
 }
 
 public enum HelmSpecial //Enhancement Pattern ID
 {
     None = 0,
-    Forge = 99, // Not really 99, but cant have 0 3 times
+    Forge = 10,
     Vim = 25,
     Examen = 26,
     Anima = 28,
