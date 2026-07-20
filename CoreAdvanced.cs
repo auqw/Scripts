@@ -2919,10 +2919,7 @@ public class CoreAdvanced
                 {
                     if (
                         ((int)wSpecial > 0 && (int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID
-                        && (
-                            (int)wSpecial == getProcID(item)
-                            || ((int)wSpecial == 99 && getProcID(item) == 0)
-                        )
+                        && (int)wSpecial == getProcID(item)
                     )
                     {
                         skipCounter++;
@@ -4573,8 +4570,8 @@ public enum CapeSpecial // Enhancement Pattern ID
 
 public enum WeaponSpecial // Proc ID
 {
-    Forge = 0,
-    None = 1,
+    None = 0,
+    Forge = 1,
     Spiral_Carve = 2,
     Awe_Blast = 3,
     Health_Vamp = 4,
@@ -4600,6 +4597,55 @@ public enum HelmSpecial //Enhancement Pattern ID
     Anima = 28,
     Pneuma = 27,
     Hearty = 32,
+}
+
+// Backwards-compatibility helpers: some numeric IDs for WeaponSpecial and HelmSpecial
+// have been renumbered. To avoid breaking persisted/external data that stores
+// the raw numeric values, use these mapping helpers when reading/writing IDs.
+public static class SpecialIdMapper
+{
+    // Map legacy numeric IDs to current WeaponSpecial values
+    public static WeaponSpecial WeaponFromId(int id)
+    {
+        // Legacy -> Current mappings (handle both old and new numeric IDs)
+        switch (id)
+        {
+            case 0: return WeaponSpecial.Forge; // legacy/current
+            case 1: return WeaponSpecial.None; // legacy/current
+            case 2: return WeaponSpecial.Spiral_Carve;
+            case 3: return WeaponSpecial.Awe_Blast;
+            case 4: return WeaponSpecial.Health_Vamp;
+            case 5: return WeaponSpecial.Mana_Vamp;
+            case 6: return WeaponSpecial.Powerword_Die;
+            case 7: return WeaponSpecial.Lacerate;
+            case 8: return WeaponSpecial.Smite;
+            case 9: return WeaponSpecial.Valiance;
+            case 10: return WeaponSpecial.Arcanas_Concerto;
+            case 11: return WeaponSpecial.Acheron;
+            case 12: return WeaponSpecial.Elysium;
+            case 13: return WeaponSpecial.Praxis;
+            case 14: return WeaponSpecial.Dauntless;
+            case 15: return WeaponSpecial.Ravenous;
+            // Unknown/changed IDs: default to None
+            default: return WeaponSpecial.None;
+        }
+    }
+
+    // Map legacy numeric IDs to current HelmSpecial values
+    public static HelmSpecial HelmFromId(int id)
+    {
+        switch (id)
+        {
+            case 0: return HelmSpecial.None;
+            case 10: return HelmSpecial.Forge;
+            case 25: return HelmSpecial.Vim;
+            case 26: return HelmSpecial.Examen;
+            case 27: return HelmSpecial.Pneuma;
+            case 28: return HelmSpecial.Anima;
+            case 32: return HelmSpecial.Hearty;
+            default: return HelmSpecial.None;
+        }
+    }
 }
 
 public enum mergeOptionsEnum
