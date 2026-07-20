@@ -102,19 +102,35 @@ public class RolesUnreversed
 
     public void DoRolesUnreversed(Rewards reward = Rewards.All, bool QuestOnly = false)
     {
+        if (reward == Rewards.None)
+            return;
+
         if (!Core.isCompletedBefore(QuestID))
         {
             Core.Logger("Completing previous quest *once*");
             TaP.DoTugandPull(QuestOnly: true);
         }
 
-        string[] chosenReward = [];
-        if (!QuestOnly)
-            chosenReward = reward == Rewards.All
-                ? SelectableRewards
-                : new[] { reward.ToString().Replace('_', ' ') };
+        string[] chosenRewardNames = [];
+        int[] chosenRewardIds = [];
 
-        if (!QuestOnly && Core.CheckInventory(chosenReward))
+        if (!QuestOnly)
+        {
+            if (reward == Rewards.All)
+            {
+                Rewards[] allRewards = [.. Enum.GetValues<Rewards>().Where(r => r != Rewards.All && r != Rewards.None)];
+
+                chosenRewardNames = [.. allRewards.Select(r => r.ToString().Replace('_', ' '))];
+                chosenRewardIds = [.. allRewards.Select(r => (int)r)];
+            }
+            else
+            {
+                chosenRewardNames = [reward.ToString().Replace('_', ' ')];
+                chosenRewardIds = [(int)reward];
+            }
+        }
+
+        if (!QuestOnly && Core.CheckInventory(chosenRewardNames))
             return;
 
         if (QuestOnly && Core.isCompletedBefore(QuestID))
@@ -133,7 +149,7 @@ public class RolesUnreversed
             return;
         }
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(Core.QuestRewards(QuestID)))
+        while (!Bot.ShouldExit && !Core.CheckInventory(chosenRewardNames))
         {
             Core.EnsureAccept(QuestID);
 
@@ -143,30 +159,36 @@ public class RolesUnreversed
             */
             HB.FreshSouls(5, 50);
 
-            Core.EnsureCompleteChoose(QuestID, chosenReward);
+            if (reward == Rewards.All)
+                Core.EnsureCompleteChoose(QuestID, chosenRewardNames);
+            else
+                Core.EnsureComplete(QuestID, chosenRewardIds[0]);
         }
     }
+
 
     private const int QuestID = 10793;
     public enum Rewards
     {
-        All,
-        Hollowborn_Hood_of_Nulgath,
-        Hollowborn_Legacy_of_Nulgath_Horns,
-        Hollowborn_Skull_of_Nulgath,
-        Dual_Hollowborn_Spear_of_Nulgath,
-        Dual_Hollowborn_Phoenix_Blade_of_Nulgath,
-        Dual_Hollowborn_Overfiend_Blade_of_Nulgath,
-        Dual_Hollowborn_DragonBlade_of_Nulgath,
-        Dual_Hollowborn_Void_Sword,
-        Dual_Hollowborn_Soulreaper_of_Nulgath,
-        Hollowborn_Hands_of_Nulgath,
-        Hollowborn_Mini_Nulgath_Battle_Pet,
-        Hollowborn_Nulgath_Larvae,
-        Hollowborn_Void_Orb,
-        Hollowborn_Shadow_Morph_of_the_Oversoul,
-        None
+        All = 0,
+        Hollowborn_Hood_of_Nulgath = 101890,
+        Hollowborn_Legacy_of_Nulgath_Horns = 101892,
+        Hollowborn_Skull_of_Nulgath = 101894,
+        Dual_Hollowborn_Spear_of_Nulgath = 101897,
+        Dual_Hollowborn_Phoenix_Blade_of_Nulgath = 101901,
+        Dual_Hollowborn_Overfiend_Blade_of_Nulgath = 101903,
+        Dual_Hollowborn_DragonBlade_of_Nulgath = 101905,
+        Dual_Hollowborn_Void_Sword = 101907,
+        Dual_Hollowborn_Soulreaper_of_Nulgath = 101909,
+        Hollowborn_Hands_of_Nulgath = 101917,
+        Hollowborn_Mini_Nulgath_Battle_Pet = 101922,
+        Hollowborn_Nulgath_Larvae = 101923,
+        Hollowborn_Void_Orb = 101927,
+        Hollowborn_Shadow_Morph_of_the_Oversoul = 101928,
+        None = -1
     }
+
+
     private readonly string[] SelectableRewards =
 {
     "Hollowborn Hood of Nulgath",
