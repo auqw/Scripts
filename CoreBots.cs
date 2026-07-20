@@ -1,4 +1,4 @@
-﻿/*
+/*
 name: null
 description: null
 tags: null
@@ -145,6 +145,13 @@ public class CoreBots
 
     private static CoreBots? _instance;
     public static CoreBots Instance => _instance ??= new CoreBots();
+
+    /// <summary>
+    /// Hook registered by scripts that include CoreAdvanced to auto-enhance on EquipClass.
+    /// Set: CoreBots.OnEquipClass = (c) => CoreAdvanced.Instance.SmartEnhance(c);
+    /// </summary>
+    public static Action<string>? OnEquipClass { get; set; }
+
     private IScriptInterface Bot => IScriptInterface.Instance;
 
     private const string DiscordLink = "https://discord.gg/mScWZYYSKS";
@@ -6512,7 +6519,15 @@ public class CoreBots
 
         // If we own one → equip it, otherwise keep whatever class is currently equipped
         if (ownedDotClass != null)
+        {
             Equip(ownedDotClass.Name);
+            // Auto-enhance via registered hook
+            if (!(CBOBool("DisableAutoEnhance", out bool _disableEnh) && _disableEnh))
+            {
+                try { OnEquipClass?.Invoke(ownedDotClass.Name); }
+                catch { }
+            }
+        }
         else
         {
             Logger("⚠️ No recommended DoT class found — using currently equipped class.");
@@ -7945,6 +7960,13 @@ public class CoreBots
                 Bot.Wait.ForItemEquip(className);
                 Sleep(100); // small buffer to let server sync
                 equippedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
+            }
+
+            // Auto-enhance via registered hook (scripts that include CoreAdvanced)
+            if (!(CBOBool("DisableAutoEnhance", out bool _disableEnh) && _disableEnh))
+            {
+                try { OnEquipClass?.Invoke(className); }
+                catch { }
             }
 
             // Start skills for the actual equipped class
