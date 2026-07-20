@@ -33,6 +33,20 @@ public class CoreAdvanced
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
+    private static CoreAdvanced? _instance;
+    public static CoreAdvanced Instance => _instance ??= new CoreAdvanced();
+
+    /// <summary>
+    /// Auto-registers the OnEquipClass hook so EquipClass auto-enhances when CoreAdvanced is included.
+    /// </summary>
+    static CoreAdvanced()
+    {
+        CoreBots.OnEquipClass = (c) =>
+        {
+            try { Instance.SmartEnhance(c); }
+            catch { }
+        };
+    }
 
     public void ScriptMain(IScriptInterface Bot)
     {
