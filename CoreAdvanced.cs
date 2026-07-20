@@ -41,10 +41,10 @@ public class CoreAdvanced
     /// </summary>
     static CoreAdvanced()
     {
-        CoreBots.OnEquipClass = (c) =>
+        CoreBots.OnEquipClass += (c) =>
         {
             try { Instance.SmartEnhance(c); }
-            catch { }
+            catch (Exception ex) { IScriptInterface.Instance.Log($"[Enhancement] SmartEnhance failed for {c}: {ex.Message}"); }
         };
     }
 
