@@ -147,10 +147,10 @@ public class CoreBots
     public static CoreBots Instance => _instance ??= new CoreBots();
 
     /// <summary>
-    /// Hook registered by scripts that include CoreAdvanced to auto-enhance on EquipClass.
-    /// Set: CoreBots.OnEquipClass = (c) => CoreAdvanced.Instance.SmartEnhance(c);
+    /// Event raised when a class is equipped; scripts subscribe to auto-enhance.
+    /// Usage: CoreBots.OnEquipClass += c => CoreAdvanced.Instance.SmartEnhance(c);
     /// </summary>
-    public static Action<string>? OnEquipClass { get; set; }
+    public static event Action<string>? OnEquipClass;
 
     private IScriptInterface Bot => IScriptInterface.Instance;
 
@@ -6525,7 +6525,7 @@ public class CoreBots
             if (!(CBOBool("DisableAutoEnhance", out bool _disableEnh) && _disableEnh))
             {
                 try { OnEquipClass?.Invoke(ownedDotClass.Name); }
-                catch { }
+                catch (Exception ex) { Bot.Log($"[Enhancement] Auto-enhance failed for {ownedDotClass.Name}: {ex.Message}"); }
             }
         }
         else
@@ -7966,7 +7966,7 @@ public class CoreBots
             if (!(CBOBool("DisableAutoEnhance", out bool _disableEnh) && _disableEnh))
             {
                 try { OnEquipClass?.Invoke(className); }
-                catch { }
+                catch (Exception ex) { Bot.Log($"[Enhancement] Auto-enhance failed for {className}: {ex.Message}"); }
             }
 
             // Start skills for the actual equipped class
