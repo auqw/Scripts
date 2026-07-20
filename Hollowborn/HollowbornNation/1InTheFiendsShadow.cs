@@ -77,7 +77,7 @@ public class InTheFiendsShadow
             Core.AddDrop(chosenReward);
         Core.AddDrop("Void Soul");
 
-        if (!QuestOnly)
+        if (reward != Rewards.None && !QuestOnly && !VoidSoulOnly)
             Core.Logger($"Reward Chosen: {(reward == Rewards.All ? "All" : reward.ToString().Replace('_', ' '))}");
 
         if (QuestOnly)
