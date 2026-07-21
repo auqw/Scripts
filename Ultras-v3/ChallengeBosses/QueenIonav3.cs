@@ -6,6 +6,7 @@ description: Queen Iona v3 — farm using Engine/Ultra infrastructure.
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/UltraPotions.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/UltraGeneral.cs
+//cs_include Scripts/Ultras-v3/Dependencies-Ultras/UltraEnhancements.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
 using System;
@@ -76,7 +77,7 @@ public class QueenIonav3
         usePotions = Bot.Config!.Get<bool>("UsePotions");
 
         if (Bot.Config!.Get<bool>("DoEnh"))
-            new CoreEnhancements().ApplyCurrent();
+            new UltraEnhancements().Apply();
 
         Bot.Sleep(2500);
     }
@@ -86,6 +87,7 @@ public class QueenIonav3
         const string map = "queeniona";
         const string boss = "Queen Iona";
         const string item = "Lightning Diadem";
+        const int quant = 100;
 
         const int questId = 9852;
 
