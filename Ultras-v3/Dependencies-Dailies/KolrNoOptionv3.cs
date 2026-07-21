@@ -1,6 +1,7 @@
 /*
-name: Kolrv3 (No Option)
+name: Kolrv3  No Op
 description: Farm Kolr, Usurper of Flames for Choronzonite. No config needed.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

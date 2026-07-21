@@ -1,6 +1,8 @@
 /*
-name: QueenIonav3 (No Option)
+name: QueenIonav3  No Op
 description: Queen Iona v3 — no config needed, automatically uses enhancements and potions.
+tags: null
+
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs
