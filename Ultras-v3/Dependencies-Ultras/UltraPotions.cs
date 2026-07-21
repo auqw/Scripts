@@ -31,12 +31,12 @@ public class UltraPotions
     }
     private static CoreUltrav3 _Ultra;
 
-    private static PotionBuyer Pots
+    private static PotionBuyerv2 Pots
     {
-        get => _Pots ??= new PotionBuyer();
+        get => _Pots ??= new PotionBuyerv2();
         set => _Pots = value;
     }
-    private static PotionBuyer _Pots;
+    private static PotionBuyerv2 _Pots;
 
     #region Class Detection
 
