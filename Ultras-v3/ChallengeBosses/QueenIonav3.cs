@@ -87,7 +87,6 @@ public class QueenIonav3
         const string map = "queeniona";
         const string boss = "Queen Iona";
         const string item = "Lightning Diadem";
-        const int quant = 100;
 
         const int questId = 9852;
 
