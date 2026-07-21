@@ -124,7 +124,7 @@
   },
   {
     "name": "Mad Weapon Crafting",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"Mad Weapon Crafting\".",
     "tags": [
       "mad weapon crafting",
       "drops"
@@ -137,7 +137,7 @@
   },
   {
     "name": "Grim Dark Set",
-    "description": "farms the \"Grim Dark\" set from Quest",
+    "description": "farms the \"Grim Dark\" set from Quest: \"Doom Regin Doom’s Reward\".",
     "tags": [
       "doom",
       "region",
@@ -155,7 +155,7 @@
   },
   {
     "name": "Eternal Dragon Drops",
-    "description": "Farms \"all drops\" From Mob",
+    "description": "Farms \"all drops\" From Mob: \"Eternal Dragon\".",
     "tags": [
       "eternal dragon",
       "drops"
@@ -168,7 +168,7 @@
   },
   {
     "name": "Master of Your Craft",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"Master of Your Craft\".",
     "tags": [
       "master of your craft",
       "drops"
@@ -195,7 +195,7 @@
   },
   {
     "name": "Fire Avatar Favor",
-    "description": "Farms \"Fire Avatar's Favor\" From Mob",
+    "description": "Farms \"Fire Avatar's Favor\" From Mob: \"fireavatar\".",
     "tags": [
       "fire avatar's favor",
       "fire avatar",
@@ -209,7 +209,7 @@
   },
   {
     "name": "Shadowed War Mage Set",
-    "description": "Farms \"All Drops\" From Mob",
+    "description": "Farms \"All Drops\" From Mob: \"ShadowKnight Gar\".",
     "tags": [
       "shadowknight gar",
       "set"
@@ -222,7 +222,7 @@
   },
   {
     "name": "Tyronius Weddin gGift",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"Flames of Love\".",
     "tags": [
       "flames of love",
       "drops"
@@ -235,7 +235,7 @@
   },
   {
     "name": "Astravian Oracle Set",
-    "description": "does the follow quests to get the astravian oracle set",
+    "description": "does the follow quests to get the astravian oracle set: 'mourning cygnus' & 'extinguished eridanus'",
     "tags": [
       "mourning cygnus",
       "extinguished eridanus",
@@ -251,7 +251,7 @@
   },
   {
     "name": "Weapon Reflection",
-    "description": "Farms \"Weapon Reflection\" From Quest",
+    "description": "Farms \"Weapon Reflection\" From Quest: \"Dual Wield Forge\".",
     "tags": [
       "weapon reflection",
       "dual wield forge",
@@ -265,7 +265,7 @@
   },
   {
     "name": "Mithril PvP Amulet",
-    "description": "Farms \"Mithril PvP Amulet\" From Mob",
+    "description": "Farms \"Mithril PvP Amulet\" From Mob: \"Reaper\".",
     "tags": [
       "mitril pvp amulet",
       "diamoind pvp amulet",
@@ -280,7 +280,7 @@
   },
   {
     "name": "Elemental Dragon Slayer set",
-    "description": "farms the \"Elemental Dragon Slayer\" set from Quest",
+    "description": "farms the \"Elemental Dragon Slayer\" set from Quest: \"Mysterious Chest\".",
     "tags": [
       "elemental dragon slayer",
       "set"
@@ -352,7 +352,7 @@
   },
   {
     "name": "Snowball Amberarms Drops",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"Snowball Thinks You're the Best\".",
     "tags": [
       "snowball thinks you're the best",
       "drops"
@@ -378,7 +378,7 @@
   },
   {
     "name": "Midnight Assassin Set",
-    "description": "farms the \"Midnight Assassin\" set from Quest",
+    "description": "farms the \"Midnight Assassin\" set from Quest: \"Vampire Medals, Mega Vampire Medals\".",
     "tags": [
       "vampire medals",
       "mega vampire medals",
@@ -392,7 +392,7 @@
   },
   {
     "name": "Revontheus Set",
-    "description": "farms the \"Revontheus\" set from Mob",
+    "description": "farms the \"Revontheus\" set from Mob: \"Undead Legend\".",
     "tags": [
       "revontheus",
       "undead legend",
@@ -406,7 +406,7 @@
   },
   {
     "name": "corrupt draconic paragon",
-    "description": "farms the corrupt draconic paragon set from Quest",
+    "description": "farms the corrupt draconic paragon set from Quest: \"Defeat the Underfiend\".",
     "tags": [
       "corrupt draconic paragon",
       "set"
@@ -419,7 +419,7 @@
   },
   {
     "name": "Sanctified Arbiter Set",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"One Holy Discovery\".",
     "tags": [
       "sanctified arbiter",
       "drops",
@@ -433,7 +433,7 @@
   },
   {
     "name": "Shadowflame War Medal",
-    "description": "farms \"Item\" from uest",
+    "description": "farms \"Item\" from uest: \"shadow medals, mega shadow medals\".",
     "tags": [
       "shadowflame war medal",
       "shadow medal",
@@ -460,7 +460,7 @@
   },
   {
     "name": "DeathKnightLootQuest",
-    "description": "This script will farm everything in DeathKnightLootChestQuest id",
+    "description": "This script will farm everything in DeathKnightLootChestQuest id: 6509 in /ivoliss",
     "tags": [
       "death",
       "knight",
@@ -491,7 +491,7 @@
   },
   {
     "name": "Diabolical Warden Set",
-    "description": "farms the \"Diabolical Warden\" set from Quest",
+    "description": "farms the \"Diabolical Warden\" set from Quest: \"Summoning and Sealing\".",
     "tags": [
       "diabolical warden",
       "set"
@@ -518,10 +518,12 @@
   },
   {
     "name": "Gachapon Machine",
-    "description": "does either \"I heard you like Gacha\" or \"Kotapon II",
+    "description": "does either \"I heard you like Gacha\" or \"Kotapon II: Get'cha Gear\" for a bunch of items",
     "tags": [
       "i heard you like gacha",
-      "kotapon ii"
+      "kotapon ii: get'cha gear",
+      "gacha",
+      "gachaponmachine"
     ],
     "path": "Other/GachaponMachineQuests.cs",
     "size": 4238,
@@ -546,7 +548,7 @@
   },
   {
     "name": "DragonLord Grand Master",
-    "description": "farms the \"DragonLord Grand Master\" set from Quest",
+    "description": "farms the \"DragonLord Grand Master\" set from Quest: \"The Flame Dragon\".",
     "tags": [
       "dragonlord grand master",
       "set"
@@ -637,7 +639,7 @@
   },
   {
     "name": "Dark Ranger Armor",
-    "description": "farms the \"Dark Ranger\" set from Quest",
+    "description": "farms the \"Dark Ranger\" set from Quest: \"Dark Ranger Corps\".",
     "tags": [
       "dark ranger",
       "armor",
@@ -651,7 +653,7 @@
   },
   {
     "name": "Mind Breaking It In",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"Mind Breaking It In\".",
     "tags": [
       "mind breaking it in",
       "mindbreaker",
@@ -665,7 +667,7 @@
   },
   {
     "name": "Lycan Shaman Set",
-    "description": "farms the \"Lycan Shaman\" set from Quest",
+    "description": "farms the \"Lycan Shaman\" set from Quest: \"Blood Rage\".",
     "tags": [
       "blood rage",
       "lycan shaman",
@@ -698,7 +700,7 @@
   },
   {
     "name": "Warfury Emblem",
-    "description": "Farms \"Warfury Emblem\" from quest",
+    "description": "Farms \"Warfury Emblem\" from quest: \"Warfury Training\".",
     "tags": [
       "war",
       "fury",
@@ -1318,8 +1320,8 @@
       "null"
     ],
     "path": "Darkon/CoreDarkon.cs",
-    "size": 17024,
-    "sha256": "601fdc41428cba47f3df72a61ebc79fd5fd957d60fb3f178c2a39821724788f8",
+    "size": 17171,
+    "sha256": "2892e690ef78ecf9aa35c83059925f3f5d3b2c422d371e5344b665cba03775e8",
     "fileName": "CoreDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/CoreDarkon.cs"
   },
@@ -3118,6 +3120,70 @@
     "tags": [
       "null"
     ],
+    "path": "Ultrasv3/TestZone.cs",
+    "size": 7511,
+    "sha256": "5b31241839adf3dcef4aa37ab4e5a1df1aa00fe882c2a07584cf44ab2e97aee8",
+    "fileName": "TestZone.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/TestZone.cs"
+  },
+  {
+    "name": "Do Ultras and ailies and Challenge Bosses",
+    "description": "Runs all ultras, dailies, and challenge bosses.",
+    "tags": [
+      "ultras",
+      "dailies",
+      "challenge bosses",
+      "all"
+    ],
+    "path": "Ultrasv3/DoUltrasDoDailiesDoChallengeBosses.cs",
+    "size": 1482,
+    "sha256": "48fcc155a7e67c07d244c56bd698f280e442a8bc95760df889a8fb09422d8a56",
+    "fileName": "DoUltrasDoDailiesDoChallengeBosses.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoUltrasDoDailiesDoChallengeBosses.cs"
+  },
+  {
+    "name": "Do All Ultras Story Prerequisites",
+    "description": "Completes all story prerequisites needed to unlock every Ultra boss. Covers: Ultra Ezrajal, Ultra Warden, Ultra Engineer (ExaltiaTower), Ultra Avatar Tyndarius + Ultra Speaker (Shadows of War), Ultra Dage (Isle of Fotia), Champion Drakath (13 Lords of Chaos), Ultra Drago + Ultra Darkon (Elegy of Madness / Astravia). Skipped: Ultra Nulgath and Ultra Gramiel (Level 80 only, no story required).",
+    "tags": [
+      "story",
+      "quest",
+      "ultra",
+      "ezrajal",
+      "warden",
+      "engineer",
+      "tyndarius",
+      "speaker",
+      "dage",
+      "drakath",
+      "darkon",
+      "drago",
+      "all",
+      "complete"
+    ],
+    "path": "Ultrasv3/DoAllUltrasStorys.cs",
+    "size": 3871,
+    "sha256": "e4e1dc92b5b6cf0e2a7efe6cf0e798f39af97077b04f5a090efc0712194311a3",
+    "fileName": "DoAllUltrasStorys.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoAllUltrasStorys.cs"
+  },
+  {
+    "name": "AllUltras",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DoAllUltras.cs",
+    "size": 8239,
+    "sha256": "d0994112291d14c0a250833e75e8e328606c6c83b4861e53237c84a462a53b6c",
+    "fileName": "DoAllUltras.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoAllUltras.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
     "path": "Army/Template.cs",
     "size": 2550,
     "sha256": "31e42ca39bb3675dfd5dd2fd9b4e116a2afcdc71bf65a1f00e2c402db132b978",
@@ -3147,279 +3213,6 @@
     "sha256": "a1093ca1bb9eb3e2a29ad0127e10c4810ddb2c93bb39814d95f1cd48b009ac2d",
     "fileName": "ArmySpiritOrbs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySpiritOrbs.cs"
-  },
-  {
-    "name": "UltraEngineer",
-    "description": "Ultra Engineer helper prioritizing drones with army synchronization and consumables.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraEngineer.cs",
-    "size": 11207,
-    "sha256": "eeafef85175bb110b6152345687a1115555050568ebcea621a195c0830d2d51e",
-    "fileName": "UltraEngineer.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Ultras/CoreUltra.cs",
-    "size": 58053,
-    "sha256": "277e51894c381226956e53c0462f76f1ebb65e00c5f0d53cd7221a5566a459c4",
-    "fileName": "CoreUltra.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
-  },
-  {
-    "name": "UltraNulgath",
-    "description": "Nulgath the Archfiend helper with taunter rotation and blade priority.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraNulgath.cs",
-    "size": 14144,
-    "sha256": "49a606bbd9ecb316a33b6f2593f465aab8ccdaafb2c6d9ec50ed329fe6613406",
-    "fileName": "UltraNulgath.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Ultras/CoreEngine.cs",
-    "size": 106681,
-    "sha256": "43a03938f2cf1308dd30d2018c3c9da1da1e1b3e54eddb5653b159b8ef9090e6",
-    "fileName": "CoreEngine.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Ultras/Xyfrag.cs",
-    "size": 4344,
-    "sha256": "b403c7cc014c507525086cd9323cc54b0b2225ddcc1d21dd19717b86f0f0321e",
-    "fileName": "Xyfrag.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Xyfrag.cs"
-  },
-  {
-    "name": "Do All Ultras Story Prerequisites",
-    "description": "Completes all story prerequisites needed to unlock every Ultra boss. Covers",
-    "tags": [
-      "story",
-      "quest",
-      "ultra",
-      "ezrajal",
-      "warden",
-      "engineer",
-      "tyndarius",
-      "speaker",
-      "dage",
-      "drakath",
-      "darkon",
-      "drago",
-      "all",
-      "complete"
-    ],
-    "path": "Ultras/DoAllUltrasStory.cs",
-    "size": 3871,
-    "sha256": "e4e1dc92b5b6cf0e2a7efe6cf0e798f39af97077b04f5a090efc0712194311a3",
-    "fileName": "DoAllUltrasStory.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DoAllUltrasStory.cs"
-  },
-  {
-    "name": "UltraEzrajal",
-    "description": "Ultra Ezrajal helper handling Counter Attack windows with army sync.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraEzrajal.cs",
-    "size": 11791,
-    "sha256": "cb9ed2c3db3c6df2cbf2e3c073e5588511128e63da03348f3ca2516746fe0367",
-    "fileName": "UltraEzrajal.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
-  },
-  {
-    "name": "NightBane",
-    "description": "Using 4-7 accounts to kill NightBane",
-    "tags": [
-      "nightbane",
-      "ultra",
-      "night bane",
-      "voidnightbane"
-    ],
-    "path": "Ultras/NightBane.cs",
-    "size": 13396,
-    "sha256": "7d3a7e2adfe0efa87849ce4cae1ec138b9470bdbd0f424337620eafd388f3dff",
-    "fileName": "NightBane.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/NightBane.cs"
-  },
-  {
-    "name": "AstralEmpyrean",
-    "description": "Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.",
-    "tags": [
-      "ultra",
-      "astralempyrean",
-      "astral empyrean"
-    ],
-    "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12425,
-    "sha256": "b953ff680aea4c7f93feb26f39c0210503e31d03fde14fb0cc15794a9fc59c7d",
-    "fileName": "AstralEmpyrean.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
-  },
-  {
-    "name": "Flibbitiestgibbet",
-    "description": "Using 4-7 accounts to kill Flibbitiestgibbet",
-    "tags": [
-      "flibbitiestgibbet",
-      "ultra",
-      "voidflibbitiestgibbet"
-    ],
-    "path": "Ultras/Flibbitiestgibbet.cs",
-    "size": 13466,
-    "sha256": "df2ecc8492e21d33aea2afa62c9c19504523eaa55c1ab2cb43d0a6d1f39048b5",
-    "fileName": "Flibbitiestgibbet.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Flibbitiestgibbet.cs"
-  },
-  {
-    "name": "UltraWarden",
-    "description": "Ultra Warden helper with HP-band taunt trigger and army synchronization.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraWarden.cs",
-    "size": 4714,
-    "sha256": "7db7ea8076599dc1e3d9feddc5c991497d0d3892a833440f98437dfe845d47ab",
-    "fileName": "UltraWarden.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
-  },
-  {
-    "name": "UltraDrago",
-    "description": "Ultra King Drago helper with taunter classes and priority adds.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraDrago.cs",
-    "size": 14092,
-    "sha256": "56a9cb856d22cce140ac3b17f2651c89f7f9193d4b2b4d98192ea02e8f8cbb74",
-    "fileName": "UltraDrago.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
-  },
-  {
-    "name": "UltraDarkon",
-    "description": "Ultra Darkon spam taunt",
-    "tags": [
-      "ultra",
-      "darkon",
-      "taunt",
-      "spam",
-      "ultra darkon",
-      "ultra darkon"
-    ],
-    "path": "Ultras/UltraDarkon.cs",
-    "size": 11041,
-    "sha256": "f66d7f6794db8033509f08329c22418318ce946b792261b9e2266ea1deb5c7ff",
-    "fileName": "UltraDarkon.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDarkon.cs"
-  },
-  {
-    "name": "DarkCarnax",
-    "description": "Farming script for Nightmare Dark Carnax with movement zone automation.",
-    "tags": [
-      "ultra",
-      "carnax",
-      "dark carnax",
-      "synthetic viscera"
-    ],
-    "path": "Ultras/DarkCarnax.cs",
-    "size": 11853,
-    "sha256": "12bb2acc2ad1d79fd90311959b628c17495355c445acd3a0dc37a5ef10496bf5",
-    "fileName": "DarkCarnax.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
-  },
-  {
-    "name": "QueenIona",
-    "description": "Queen Iona solo",
-    "tags": [
-      "ultra",
-      "queen",
-      "iona",
-      "queen iona"
-    ],
-    "path": "Ultras/QueenIona.cs",
-    "size": 7566,
-    "sha256": "df03cdf6f0a3ae99789f7ffb0d2dac3c96e32b784cecece2fb01b7ae61f14a98",
-    "fileName": "QueenIona.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/QueenIona.cs"
-  },
-  {
-    "name": "UltraSpeaker",
-    "description": "Ultra First Speaker helper with zoning, taunt timing, and custom rotation.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraSpeaker.cs",
-    "size": 11291,
-    "sha256": "6297764a133d970b9cfb9b7254b4cdb0c86b54559c77d008a566303c60411df1",
-    "fileName": "UltraSpeaker.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
-  },
-  {
-    "name": "UltraDage",
-    "description": "Two-taunter strategy for Ultra Dage with aura-based taunting and army synchronization.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraDage.cs",
-    "size": 14472,
-    "sha256": "0f97b66d1a059b55ae5ba110cb4955729e50128a2e4ef7d53e9b09708728dd2f",
-    "fileName": "UltraDage.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
-  },
-  {
-    "name": "ChampionDrakath",
-    "description": "Champion Drakath helper with threshold-based taunt timing and army sync.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/ChampionDrakath.cs",
-    "size": 18022,
-    "sha256": "9143000ae0bb7bcd32044e155b02a655a79d68d857bee512cc2ba575be1ef023",
-    "fileName": "ChampionDrakath.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
-  },
-  {
-    "name": "UltraAvatarTyndarius",
-    "description": "Ultra Avatar Tyndarius helper with taunter rotation and orb priority.",
-    "tags": [
-      "ultra"
-    ],
-    "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 16477,
-    "sha256": "0139ac36b81bde394f9888787595f38a1ba9ded10adfd2cb7c99ee5b516596b8",
-    "fileName": "UltraAvatarTyndarius.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
-  },
-  {
-    "name": "UltraGramiel",
-    "description": "Ultra Gramiel - auto-assigns role by class",
-    "tags": [
-      "ultra",
-      "gramiel",
-      "ultra gramiel"
-    ],
-    "path": "Ultras/UltraGramiel.cs",
-    "size": 25451,
-    "sha256": "3bcd8761a6282c77cc16413acd9924388a2515b710b787c3b4b4da083c2facb9",
-    "fileName": "UltraGramiel.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraGramiel.cs"
   },
   {
     "name": "null",
@@ -4758,7 +4551,7 @@
   },
   {
     "name": "Blinding Light of Destiny (Full)",
-    "description": "This bot will do the entire farm for the Blinding Light of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Blinding Light of Destiny *Note*: it uses dailies!",
     "tags": [
       "BLOD",
       "blinding",
@@ -4863,7 +4656,7 @@
   },
   {
     "name": "Sanctified Light of Destiny",
-    "description": "This bot will do the entire farm for the Sanctified Light of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Sanctified Light of Destiny *Note*: it uses dailies due to BLOD",
     "tags": [
       "BLOD",
       "SLOD",
@@ -6363,8 +6156,8 @@
       "grotto"
     ],
     "path": "Other/MergeShops/PortalsMerge.cs",
-    "size": 14691,
-    "sha256": "de3ae625baaf592f9dd2ebe6bb436714ce84ed8b29b6245d66599433b68879cd",
+    "size": 14952,
+    "sha256": "c48a5bb6d8131e7bd35aa4591efeb9c67dc37128216919e8e717cbaece7a6d56",
     "fileName": "PortalsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/PortalsMerge.cs"
   },
@@ -18369,7 +18162,7 @@
   },
   {
     "name": "Sunken Treasure Quest Rewards",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"Sunken Treasure?\".",
     "tags": [
       "sunken treasure",
       "drops",
@@ -18453,7 +18246,7 @@
   },
   {
     "name": "Second First Mate",
-    "description": "Farms \"All Drops\" From Quest",
+    "description": "Farms \"All Drops\" From Quest: \"A Second First Mate\".",
     "tags": [
       "a second first mate",
       "set",
@@ -18675,7 +18468,7 @@
   },
   {
     "name": "Fausto's and Lengjin's Quests",
-    "description": "Storyline for the map",
+    "description": "Storyline for the map: \"Parades\"",
     "tags": [
       "seasonal",
       "yokai",
@@ -26174,6 +25967,665 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SepulchureSaga/04ShadowfallRise.cs"
   },
   {
+    "name": "Kathoolv3 No Op",
+    "description": "Kill God of the Depths for Sacrosanct Morsel (Frenzy Feast daily). No config needed.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesDailies/KathoolNoOptionv3.cs",
+    "size": 7971,
+    "sha256": "966aa4c28da8c6c6d732127b8ea7dfd254ef6e49c2944d9cba90989660b0755d",
+    "fileName": "KathoolNoOptionv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/KathoolNoOptionv3.cs"
+  },
+  {
+    "name": "DoAllChallengeBosses",
+    "description": "Runs all challenge boss dailies with shared queue — Queen Iona > Kolr > Kathool > Astral Empyrean.",
+    "tags": [
+      "all",
+      "challenge",
+      "bosses",
+      "dailies",
+      "queeniona",
+      "kolr",
+      "kathool",
+      "astralempyrean"
+    ],
+    "path": "Ultrasv3/DependenciesDailies/DoAllChallengeBosses.cs",
+    "size": 4040,
+    "sha256": "575d2fbc5ac893fead0e9fc8221d967301fe56d2744ad37433e18bf1f18524af",
+    "fileName": "DoAllChallengeBosses.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/DoAllChallengeBosses.cs"
+  },
+  {
+    "name": "QueenIonav3  No Op",
+    "description": "Queen Iona v3 — no config needed, automatically uses enhancements and potions.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesDailies/QueenIonaNoOptionv3.cs",
+    "size": 6486,
+    "sha256": "28066963a0a8735ff6adee0451b41833462088c2732ec22dd4386e41480ad1a6",
+    "fileName": "QueenIonaNoOptionv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/QueenIonaNoOptionv3.cs"
+  },
+  {
+    "name": "AstralEmpyreanv3 no Op",
+    "description": "Three-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization. No config needed.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs",
+    "size": 12578,
+    "sha256": "023506d043da40ff8a45a458f1bbe40ea82b0c966d51bc555eaad7b05b8c43cb",
+    "fileName": "AstralEmpyreanNoOptionv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs"
+  },
+  {
+    "name": "Kolrv3  No Op",
+    "description": "Farm Kolr, Usurper of Flames for Choronzonite. No config needed.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs",
+    "size": 7285,
+    "sha256": "df813310e98fbe6f16a85de273ce3abb0d41515a060527024423c18a01ebc3bf",
+    "fileName": "KolrNoOptionv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs"
+  },
+  {
+    "name": "Midnight Sun (Sun Side Test)",
+    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
+    "tags": [
+      "greatblade",
+      "entwined",
+      "eclipse",
+      "midnight",
+      "sun",
+      "farm",
+      "test",
+      "army"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/MidnightSun.cs",
+    "size": 55323,
+    "sha256": "44b99cdb55bfe594df36404dbbce83ec5d7b9ebbeb801f9d81d0144669167ad8",
+    "fileName": "MidnightSun.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/MidnightSun.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/CoreUltra.cs",
+    "size": 58053,
+    "sha256": "277e51894c381226956e53c0462f76f1ebb65e00c5f0d53cd7221a5566a459c4",
+    "fileName": "CoreUltra.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/CoreUltra.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/CoreEngine.cs",
+    "size": 106681,
+    "sha256": "43a03938f2cf1308dd30d2018c3c9da1da1e1b3e54eddb5653b159b8ef9090e6",
+    "fileName": "CoreEngine.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/CoreEngine.cs"
+  },
+  {
+    "name": "Solstice Moon Test",
+    "description": "Runs only the Solstice Moon / Shrine - Left portion for testing Lunar Haze and Hollow Midnight taunt timing.",
+    "tags": [
+      "solstice",
+      "moon",
+      "hollow midnight",
+      "lunar haze",
+      "army",
+      "taunt",
+      "test"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/SolsticeMoon.cs",
+    "size": 60589,
+    "sha256": "342ebba91b81e948d6320ebd7de2d0a0c09867e5bd44e0db70f54aa550e15be6",
+    "fileName": "SolsticeMoon.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/SolsticeMoon.cs"
+  },
+  {
+    "name": "Victor Matsuri Story (Pre-Masakado)",
+    "description": "Runs Empress Ai No Miko's questline in /victormatsuri up to (but not including) the Masakado quest (10295). Used as a setup step before handing off to the dedicated Masakado army script. Quest 10295 must be handled separately via MasakadoKingsEchoArmy.",
+    "tags": [
+      "victor matsuri",
+      "victormatsuri",
+      "empress ai no miko",
+      "story",
+      "pre-masakado",
+      "eclipse",
+      "rite of ascension"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/VictorMatsuriStory.cs",
+    "size": 3124,
+    "sha256": "d569a8254fb3fb4858bf0952f88b7c55c6946b22213c4ec91502daae0949daad",
+    "fileName": "VictorMatsuriStory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/VictorMatsuriStory.cs"
+  },
+  {
+    "name": "Greatblade of the Entwined Eclipse (Full Chain)",
+    "description": "End-to-end farm for Greatblade of the Entwined Eclipse. Runs Victor Matsuri storyline, kills Masakado via the King's Echo army flow for Victor of the Festival, farms Slivers of Sunlight/Moonlight, merges Rite of Ascension, farms Ecliptic Offering in Ascension of the Eclipse, then merges the full blade chain up to the final Greatblade.",
+    "tags": [
+      "greatblade",
+      "entwined",
+      "eclipse",
+      "full",
+      "chain",
+      "victor",
+      "matsuri",
+      "masakado",
+      "rite",
+      "ascension",
+      "midnight",
+      "solstice",
+      "ascend",
+      "army"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs",
+    "size": 21673,
+    "sha256": "c95d203692601ea29389658accdb3f250829f3bb8a188d0057daa0d26630662b",
+    "fileName": "0GreatbladeOfTheEntwinedEclipse.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs"
+  },
+  {
+    "name": "Masakado King's Echo",
+    "description": "Solo or army helper for Victor Matsuri's final boss, Masakado, using King's Echo and Royal Resolve.",
+    "tags": [
+      "masakado",
+      "victor matsuri",
+      "kings echo",
+      "king's echo",
+      "army",
+      "solo",
+      "royal resolve"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/Masakado.cs",
+    "size": 24034,
+    "sha256": "f61bd3dbf031336b9114a90703fbf915f5424fb28ce0a59dc3f27580905993ee",
+    "fileName": "Masakado.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/Masakado.cs"
+  },
+  {
+    "name": "Ascend Eclipse Test",
+    "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
+    "tags": [
+      "greatblade",
+      "entwined",
+      "eclipse",
+      "ascend",
+      "ascendeclipse",
+      "army",
+      "taunt",
+      "test"
+    ],
+    "path": "Ultrasv3/Entwined Eclipse/AscensionoftheEclipse.cs",
+    "size": 82310,
+    "sha256": "0ab6c9b964d2b2393079813418d7f2ede0d01ca5eca42f587d9fa9c50b7bd4f2",
+    "fileName": "AscensionoftheEclipse.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/AscensionoftheEclipse.cs"
+  },
+  {
+    "name": "Empowered Weapons of Nulgath",
+    "description": "pick an empowered weapon, if you own teh requirements and 25 insignias, itll farm the empowered ver.",
+    "tags": [
+      "empowered",
+      "nulgath",
+      "reavers",
+      "bloodletter",
+      "overfiend blade",
+      "shadow spear",
+      "prismatic manslayers",
+      "legacy of nulgath",
+      "worshipper of nulgath",
+      "evovled void armor"
+    ],
+    "path": "Ultrasv3/Weapons/EmpoweredNationItem.cs",
+    "size": 13114,
+    "sha256": "2ef475704dfc21b3e598de621d12de14b374d60f19987ca396deb517a4a24c88",
+    "fileName": "EmpoweredNationItem.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Weapons/EmpoweredNationItem.cs"
+  },
+  {
+    "name": "UltraEngineerv3",
+    "description": "Ultra Engineer v3 — prioritizes drones with KillWithPriority and army sync. Uses synced class equip and no-taunt fight flow.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/3UltraEngineerv3.cs",
+    "size": 6111,
+    "sha256": "93a661869649fbed9aacfa38705c8838eabcd354c4d9c16752326f074847a645",
+    "fileName": "3UltraEngineerv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/3UltraEngineerv3.cs"
+  },
+  {
+    "name": "UltraGramielv3",
+    "description": "Ultra Gramiel v3 — two-phase fight (crystals then Gramiel) with chat-driven crystal taunt warnings and pulse-driven taunt rotation.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/11UltraGramielv3.cs",
+    "size": 19953,
+    "sha256": "10b53d45709453273843f24e3092e617c1142616f79c70747d5e62f897bdaa04",
+    "fileName": "11UltraGramielv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/11UltraGramielv3.cs"
+  },
+  {
+    "name": "ChampionDrakathv3",
+    "description": "Champion Drakath v3 — 3 taunters + 1 DPS with UltraAsync pulse taunt (0/4/8).",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/5ChampionDrakathv3.cs",
+    "size": 8914,
+    "sha256": "3678ada1609813fa961d4a3a551ac3ad4c479f090d5bd37133b977a5a281c630",
+    "fileName": "5ChampionDrakathv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/5ChampionDrakathv3.cs"
+  },
+  {
+    "name": "UltraDragov3",
+    "description": "Ultra King Drago v3 — Taunter1AttackRightSummon1 + Taunter2AttackRightSummon2 + DPSAttackRightSummon1 + DPSAttackRightSummon2.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/7UltraDragov3.cs",
+    "size": 11971,
+    "sha256": "d17feaabda9a5740acc83eac4cdb430da4d86dcb7f184e4d414f367b0680caf7",
+    "fileName": "7UltraDragov3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/7UltraDragov3.cs"
+  },
+  {
+    "name": "UltraSpeakerv3",
+    "description": "Ultra First Speaker v3 — chat-driven taunt system with position management and stasis handling.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/10UltraSpeakerv3.cs",
+    "size": 19766,
+    "sha256": "ee16be7d01f8205dada38e632b30fce99054a6e491a6359b5820eabd996c70e2",
+    "fileName": "10UltraSpeakerv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/10UltraSpeakerv3.cs"
+  },
+  {
+    "name": "UltraDagev3",
+    "description": "Ultra Dage v3 — pulse-driven dual taunter with zone movement handler and army sync.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/9UltraDagev3.cs",
+    "size": 11113,
+    "sha256": "1b8ed0393655a667430c3939ca70c6fe67e5d68c0707177c91fe5f3886bd67b0",
+    "fileName": "9UltraDagev3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/9UltraDagev3.cs"
+  },
+  {
+    "name": "UltraNulgathv3",
+    "description": "Ultra Nulgath v3 — 3 taunters + 1 DPSAttackBlade with pulse-driven taunt and army sync.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/6UltraNulgathv3.cs",
+    "size": 11201,
+    "sha256": "5848017d48137923cabd19dc61cbbc908174a3804cb15d698c6fd010d25e5955",
+    "fileName": "6UltraNulgathv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/6UltraNulgathv3.cs"
+  },
+  {
+    "name": "UltraWardenv3",
+    "description": "Ultra Warden v3 — timer-based 2-taunter rotation with army synchronization.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/2UltraWardenv3.cs",
+    "size": 8518,
+    "sha256": "2e44912a24168f4eba0122c61a041f3408542dc0c0c356bbd40f286af0502505",
+    "fileName": "2UltraWardenv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/2UltraWardenv3.cs"
+  },
+  {
+    "name": "UltraAvatarTyndariusv3",
+    "description": "Ultra Avatar Tyndarius v3 — Ball1TaunterAttackBall2 + Ball2TaunterAttackBall2 + Ball2Attacker1 + Ball2Attacker2 with pulse-driven targeting.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/4UltraAvatarTyndariusv3.cs",
+    "size": 10196,
+    "sha256": "bde35319f3278a489df067924711d1e88be0de2a1d13fce510fd73109d2b136c",
+    "fileName": "4UltraAvatarTyndariusv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/4UltraAvatarTyndariusv3.cs"
+  },
+  {
+    "name": "UltraEzrajalv3",
+    "description": "Ultra Ezrajal v3 — handles Counter Attack windows with army sync. Uses synced class equip and no-taunt fight flow.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/1UltraEzrajalv3.cs",
+    "size": 6440,
+    "sha256": "2bf81cf4e44e2f32d81a0f35a68b08aa9b4e4adef30353905d57860603333dd7",
+    "fileName": "1UltraEzrajalv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/1UltraEzrajalv3.cs"
+  },
+  {
+    "name": "UltraDarkonv3",
+    "description": "Ultra Darkon v3 — turn-based dual taunter with sync file coordination and army sync.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/IndividualUltras/8UltraDarkonv3.cs",
+    "size": 9870,
+    "sha256": "26991d16c075ecbbb0e0bbc933f1bebaedd3262c3aafe281a246e4beb52d5fd9",
+    "fileName": "8UltraDarkonv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/8UltraDarkonv3.cs"
+  },
+  {
+    "name": "Army Prismatas",
+    "description": "Farms gold using the Prismatas in /archmage and selling the elemental bindings",
+    "tags": [
+      "prismatas",
+      "elemental binding",
+      "gold",
+      "farm"
+    ],
+    "path": "Ultrasv3/FarmGold/ArmyPrismatasv3.cs",
+    "size": 8758,
+    "sha256": "61c882b625fbccd118415cb049f60179e15d7c039c215b94271692e65c7e30c3",
+    "fileName": "ArmyPrismatasv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/FarmGold/ArmyPrismatasv3.cs"
+  },
+  {
+    "name": "Flibbitiestgibbet",
+    "description": "Ultra Flibbitiestgibbet helper for army farming voidflibbi.",
+    "tags": [
+      "ultra",
+      "flibbitiestgibbet",
+      "voidflibbitiestgibbet"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/Flibbitiestgibbetv3.cs",
+    "size": 8791,
+    "sha256": "ca663a79f0206aa549022419292d690044bbfbcd65196902b0693b81c7025f67",
+    "fileName": "Flibbitiestgibbetv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Flibbitiestgibbetv3.cs"
+  },
+  {
+    "name": "NightmareCarnax",
+    "description": "NightmareCarnax helper for army farming Calamitous Ruin.",
+    "tags": [
+      "ultra",
+      "carnax",
+      "nightmare carnax"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/NightmareCarnaxv3.cs",
+    "size": 7949,
+    "sha256": "9507120f5edfc57468ae44a5352ed1ca6cb9248a037083a7ba0dd7655a94af28",
+    "fileName": "NightmareCarnaxv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/NightmareCarnaxv3.cs"
+  },
+  {
+    "name": "NightBane",
+    "description": "NightBane helper for army farming NightBane.",
+    "tags": [
+      "ultra",
+      "nightbane",
+      "voidnightbane"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/NightBanev3.cs",
+    "size": 8970,
+    "sha256": "e020076096c4721e791b01b468f3e6e7c7857719adc3b6bd251f759b44ad684e",
+    "fileName": "NightBanev3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/NightBanev3.cs"
+  },
+  {
+    "name": "Kathoolv3",
+    "description": "Kill God of the Depths for Sacrosanct Morsel (Frenzy Feast daily).",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/Kathoolv3.cs",
+    "size": 9420,
+    "sha256": "6dcb6aa3e29b509583ea430a8b5112f78481f65481a2fb92930dfefc4f7bf5d7",
+    "fileName": "Kathoolv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kathoolv3.cs"
+  },
+  {
+    "name": "Azalith",
+    "description": "Azalith helper for army farming Azalith and The Divine Will.",
+    "tags": [
+      "ultra"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/Azalithv3.cs",
+    "size": 7795,
+    "sha256": "f94f1da245dd7024e14746626f9aacca2b324c6bf06fb2fa3c6294ad22d7b6b7",
+    "fileName": "Azalithv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Azalithv3.cs"
+  },
+  {
+    "name": "AstralEmpyreanv3",
+    "description": "Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs",
+    "size": 15385,
+    "sha256": "378c59911a2ced09e19c62e5cbb8169ab5d200398d33ee22db1b0fa5a78624ca",
+    "fileName": "AstralEmpyreanv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs"
+  },
+  {
+    "name": "Kolrv3",
+    "description": "Solo farm Kolr, Usurper of Flames for Choronzonite. Room limit of 1.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/Kolrv3.cs",
+    "size": 6324,
+    "sha256": "dbeb0fe6ae0aecdbd17da8d25581e075011f99f6c07cdc404683d6e85c3480e9",
+    "fileName": "Kolrv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kolrv3.cs"
+  },
+  {
+    "name": "QueenIonav3",
+    "description": "Queen Iona v3 — farm using Engine/Ultra infrastructure.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/QueenIonav3.cs",
+    "size": 6924,
+    "sha256": "2cbf57dff514b1f4a58cda2fe5d8c453585e2fc335099d45498badc9a632a923",
+    "fileName": "QueenIonav3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/QueenIonav3.cs"
+  },
+  {
+    "name": "GetScrolls",
+    "description": "Provides methods for acquiring combat scrolls (Enrage, Decay).",
+    "tags": [
+      "ultra",
+      "scrolls",
+      "enrage",
+      "decay"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/GetScrolls.cs",
+    "size": 3701,
+    "sha256": "4b91acc48331e967dcec45d789578e88b07354fa7511a3d8c427f803d22d1a39",
+    "fileName": "GetScrolls.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/GetScrolls.cs"
+  },
+  {
+    "name": "UltraPotions",
+    "description": "Ultra potion helper/presets with BuyReagents enabled",
+    "tags": [
+      "ultra",
+      "potions"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraPotions.cs",
+    "size": 12893,
+    "sha256": "366b6ee9414c62cd1dd3b96ef12b7dd295be63368871e9876ef46e764cd92c67",
+    "fileName": "UltraPotions.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraPotions.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraQueue.cs",
+    "size": 5922,
+    "sha256": "aca412d40b1c11bbc12a092218fd256d8f54f3448059f3901fece3771f4158db",
+    "fileName": "UltraQueue.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraQueue.cs"
+  },
+  {
+    "name": "UltraDeath",
+    "description": "Army death sync — detects and propagates death events across army members.",
+    "tags": [
+      "ultra",
+      "death",
+      "sync",
+      "army"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraDeath.cs",
+    "size": 8288,
+    "sha256": "0dbf242cf7495916470746c64ba0106269a1c990df44ba715895dc9df6ba7aee",
+    "fileName": "UltraDeath.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraDeath.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs",
+    "size": 19092,
+    "sha256": "2b19f6b96506d04ed979d587ff3de0cedee003f8a8451db3b97fc81fbec52346",
+    "fileName": "PrerequisitesChecker.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraGeneral.cs",
+    "size": 28004,
+    "sha256": "10e75fa59e461f230594c26a566b2fc67eaf7c1b48cfe32652dc9e9a74e5fbe9",
+    "fileName": "UltraGeneral.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraGeneral.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/CoreUltrav3.cs",
+    "size": 65727,
+    "sha256": "54214ee04fb4a19451c230d2e6bead238f0e15c846fb3775daf737138ce979b5",
+    "fileName": "CoreUltrav3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreUltrav3.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraCustomClassSync.cs",
+    "size": 13182,
+    "sha256": "4faa63daadb23528724ac81cf69332e03e5379d517f41113bbd97692d7bf72b6",
+    "fileName": "UltraCustomClassSync.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraCustomClassSync.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/CoreEnginev3.cs",
+    "size": 115220,
+    "sha256": "9f3c9b59f9b03da0ce72473adf7c46e2da7eb41e2ee6e314b6e3bfb3fe5f0b62",
+    "fileName": "CoreEnginev3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreEnginev3.cs"
+  },
+  {
+    "name": "Potions",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/GetPotions.cs",
+    "size": 21720,
+    "sha256": "fe4d0f623280f26c8ed865f9b0ee1983db1949e1cdbcc9021dd5a4d19d462fa2",
+    "fileName": "GetPotions.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/GetPotions.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraWaitForArmy.cs",
+    "size": 16603,
+    "sha256": "dcce083b7865f6cb75b2183f1e2bdaff27c428980b609717349ede744480c723",
+    "fileName": "UltraWaitForArmy.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraWaitForArmy.cs"
+  },
+  {
+    "name": "UltraAsync",
+    "description": "Pulse-driven taunt loop for Ultra boss scripts.",
+    "tags": [
+      "ultra",
+      "async",
+      "taunt",
+      "pulse"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraAsync.cs",
+    "size": 7132,
+    "sha256": "c30e21d97cb6df219a20a03ed045ba2fb82ce426b29a3434ab6380f84df1f155",
+    "fileName": "UltraAsync.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraAsync.cs"
+  },
+  {
+    "name": "UltraEnhancements",
+    "description": "Centralised enhancement presets for all Ultra boss scripts.",
+    "tags": [
+      "ultra",
+      "enhancements"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraEnhancements.cs",
+    "size": 26034,
+    "sha256": "b76fb17fd6f013b3415577eda2da86dce8ddf36bac23c0e32870672431d7f81b",
+    "fileName": "UltraEnhancements.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraEnhancements.cs"
+  },
+  {
+    "name": "UltraPulse",
+    "description": "5-second wall-clock pulse generator for Ultra taunt systems.",
+    "tags": [
+      "ultra",
+      "pulse",
+      "taunt"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraPulse.cs",
+    "size": 365,
+    "sha256": "ecc608ab2e51a63d278ba525266ef7a54728e8bcc1b322057e53fce69092a0f5",
+    "fileName": "UltraPulse.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraPulse.cs"
+  },
+  {
     "name": "Army Prismatas",
     "description": "Farms gold using the Prismatas in /archmage and selling the elemental bindings",
     "tags": [
@@ -26205,7 +26657,7 @@
   },
   {
     "name": "Army Leveling",
-    "description": "Levles using aggroing on cell",
+    "description": "Levles using aggroing on cell: \"r11\" of shadowbattleon.",
     "tags": [
       "null"
     ],
@@ -26217,7 +26669,7 @@
   },
   {
     "name": "LichwarGoldXP",
-    "description": "Levels/farms gold using aggroing on cell",
+    "description": "Levels/farms gold using aggroing on cell: \"r11\" of /LichWar. - all accounts *Must* be members",
     "tags": [
       "army",
       "gold",
@@ -26432,183 +26884,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
   },
   {
-    "name": "KillMasakado",
-    "description": "This script will complete the Empress Ai No Miko's questline in /victormatsuri.",
-    "tags": [
-      "killmasakado",
-      "kill masakado",
-      "masakado"
-    ],
-    "path": "Ultras/Various/KillMasakado.cs",
-    "size": 7259,
-    "sha256": "d14ec6a35b242fc8129a3c46291c16d40ec5dc5ffc295fcfa352fe39747ce200",
-    "fileName": "KillMasakado.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KillMasakado.cs"
-  },
-  {
-    "name": "KolrUsurper",
-    "description": "Two-player Kolr, Usurper of Flames script with selectable DPS and optional Great Flame of Yew farming.",
-    "tags": [
-      "ultra",
-      "army",
-      "two-player",
-      "usurper",
-      "kolr",
-      "usurper of flames",
-      "verus doomknight",
-      "legion revenant",
-      "kings echo",
-      "void highlord",
-      "hollowborn vindicator",
-      "chaos avenger",
-      "archpaladin",
-      "lonewolf12"
-    ],
-    "path": "Ultras/Various/KolrUsurper.cs",
-    "size": 85483,
-    "sha256": "ef3d38f9a7a688a71018df1491615ffb88e8353b8bbe67da9df3e86bc909a439",
-    "fileName": "KolrUsurper.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KolrUsurper.cs"
-  },
-  {
-    "name": "Midnight Sun (Sun Side Test)",
-    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "midnight",
-      "sun",
-      "farm",
-      "test",
-      "army"
-    ],
-    "path": "Ultras/Entwined Eclipse/MidnightSun.cs",
-    "size": 55285,
-    "sha256": "72dc2735949720bf2aa0a837254177190a813250904e3199cad1909077a2541f",
-    "fileName": "MidnightSun.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/MidnightSun.cs"
-  },
-  {
-    "name": "Solstice Moon Test",
-    "description": "Runs only the Solstice Moon / Shrine - Left portion for testing Lunar Haze and Hollow Midnight taunt timing.",
-    "tags": [
-      "solstice",
-      "moon",
-      "hollow midnight",
-      "lunar haze",
-      "army",
-      "taunt",
-      "test"
-    ],
-    "path": "Ultras/Entwined Eclipse/SolsticeMoon.cs",
-    "size": 60550,
-    "sha256": "bd08f4bae1fd89b2249f2f9a74d219121071e387a81dabeed73000066f055df5",
-    "fileName": "SolsticeMoon.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/SolsticeMoon.cs"
-  },
-  {
-    "name": "Victor Matsuri Story (Pre-Masakado)",
-    "description": "Runs Empress Ai No Miko's questline in /victormatsuri up to (but not including) the Masakado quest (10295). Used as a setup step before handing off to the dedicated Masakado army script. Quest 10295 must be handled separately via MasakadoKingsEchoArmy.",
-    "tags": [
-      "victor matsuri",
-      "victormatsuri",
-      "empress ai no miko",
-      "story",
-      "pre-masakado",
-      "eclipse",
-      "rite of ascension"
-    ],
-    "path": "Ultras/Entwined Eclipse/VictorMatsuriStory.cs",
-    "size": 3124,
-    "sha256": "d569a8254fb3fb4858bf0952f88b7c55c6946b22213c4ec91502daae0949daad",
-    "fileName": "VictorMatsuriStory.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/VictorMatsuriStory.cs"
-  },
-  {
-    "name": "Greatblade of the Entwined Eclipse (Full Chain)",
-    "description": "End-to-end farm for Greatblade of the Entwined Eclipse. Runs Victor Matsuri storyline, kills Masakado via the King's Echo army flow for Victor of the Festival, farms Slivers of Sunlight/Moonlight, merges Rite of Ascension, farms Ecliptic Offering in Ascension of the Eclipse, then merges the full blade chain up to the final Greatblade.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "full",
-      "chain",
-      "victor",
-      "matsuri",
-      "masakado",
-      "rite",
-      "ascension",
-      "midnight",
-      "solstice",
-      "ascend",
-      "army"
-    ],
-    "path": "Ultras/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs",
-    "size": 21602,
-    "sha256": "553ad5da37d5a697bfded58dddddb9b6cae4dbfead044062d2251421ebfb63e1",
-    "fileName": "0GreatbladeOfTheEntwinedEclipse.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs"
-  },
-  {
-    "name": "Masakado King's Echo",
-    "description": "Solo or army helper for Victor Matsuri's final boss, Masakado, using King's Echo and Royal Resolve.",
-    "tags": [
-      "masakado",
-      "victor matsuri",
-      "kings echo",
-      "king's echo",
-      "army",
-      "solo",
-      "royal resolve"
-    ],
-    "path": "Ultras/Entwined Eclipse/Masakado.cs",
-    "size": 23954,
-    "sha256": "eb7d1939faf3a8d11ec2a4054125c8e66944df794d5f1655f45a80bb69fbde1b",
-    "fileName": "Masakado.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/Masakado.cs"
-  },
-  {
-    "name": "Ascend Eclipse Test",
-    "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "ascend",
-      "ascendeclipse",
-      "army",
-      "taunt",
-      "test"
-    ],
-    "path": "Ultras/Entwined Eclipse/AscensionoftheEclipse.cs",
-    "size": 82272,
-    "sha256": "2b4cae074481323a624ba378190504a7c2ef45b037d4ff3c5abf9dc9af0a92ef",
-    "fileName": "AscensionoftheEclipse.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/AscensionoftheEclipse.cs"
-  },
-  {
-    "name": "Empowered Weapons of Nulgath",
-    "description": "pick an empowered weapon, if you own teh requirements and 25 insignias, itll farm the empowered ver.",
-    "tags": [
-      "empowered",
-      "nulgath",
-      "reavers",
-      "bloodletter",
-      "overfiend blade",
-      "shadow spear",
-      "prismatic manslayers",
-      "legacy of nulgath",
-      "worshipper of nulgath",
-      "evovled void armor"
-    ],
-    "path": "Ultras/Weapons/EmpoweredNationItem.cs",
-    "size": 13114,
-    "sha256": "2ef475704dfc21b3e598de621d12de14b374d60f19987ca396deb517a4a24c88",
-    "fileName": "EmpoweredNationItem.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Weapons/EmpoweredNationItem.cs"
-  },
-  {
     "name": "Merge Shop Bot Generator/Helper",
     "description": "Fill in the map and shop ID and this tool will generate most of the merge bot for you, then you fill in the rest",
     "tags": [
@@ -26619,8 +26894,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1178900,
-    "sha256": "58ca7e0e388f313fe484d9bed0e3606b91316f1bec26a14b3780f379c4d792c3",
+    "size": 1179211,
+    "sha256": "daf100b240f5c46f7f7f4700fb107cda0dce0242ed340d77538c0856ab0a34db",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -28604,7 +28879,7 @@
   },
   {
     "name": "BlindingScytheofDestiny",
-    "description": "This bot will do the entire farm for the Blinding Scythe of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Blinding Scythe of Destiny *Note*: it uses dailies!",
     "tags": [
       "BLOD",
       "blinding",
@@ -28639,7 +28914,7 @@
   },
   {
     "name": "BlindingMaceofDestiny",
-    "description": "This bot will do the entire farm for the Blinding Mace of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Blinding Mace of Destiny *Note*: it uses dailies!",
     "tags": [
       "BLOD",
       "blinding",
@@ -28674,7 +28949,7 @@
   },
   {
     "name": "BlindingBowofDestiny",
-    "description": "This bot will do the entire farm for the Blinding Bow of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Blinding Bow of Destiny *Note*: it uses dailies!",
     "tags": [
       "BLOD",
       "blinding",
@@ -28709,7 +28984,7 @@
   },
   {
     "name": "BlindingBroadswordofDestiny",
-    "description": "This bot will do the entire farm for the Blinding Broadsword of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Blinding Broadsword of Destiny *Note*: it uses dailies!",
     "tags": [
       "BLOD",
       "blinding",
@@ -28744,7 +29019,7 @@
   },
   {
     "name": "BlindingBladeofDestiny",
-    "description": "This bot will do the entire farm for the Blinding Blade of Destiny *Note*",
+    "description": "This bot will do the entire farm for the Blinding Blade of Destiny *Note*: it uses dailies!",
     "tags": [
       "BLOD",
       "blinding",
@@ -32097,7 +32372,7 @@
   },
   {
     "name": "Legion Sword Master Assassin",
-    "description": "farms the required materials for the class",
+    "description": "farms the required materials for the class: \"legion swordmaster assassin\"",
     "tags": [
       "legion",
       "class",
@@ -33355,6 +33630,42 @@
     "sha256": "8b4ed89bc954ab3b8408352cd2b4131cb54541e89c3487f2dbff9c1d6ecfe80d",
     "fileName": "00DoAllDageTheEvilIsland.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/DageTheEvilIsland/00DoAllDageTheEvilIsland.cs"
+  },
+  {
+    "name": "ChallengeBossTemplateNoTaunt",
+    "description": "Challenge Boss Template v3 — no-taunt fight flow with synced class equip. Copy and adapt for specific bosses.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/DeveloperTools/0ChallengeBossTemplateNoTauntv3DevTools.cs",
+    "size": 7682,
+    "sha256": "9f887cebf88937b495766b0ea9b8e9fed3597ebdbfaa19032420c727891866f6",
+    "fileName": "0ChallengeBossTemplateNoTauntv3DevTools.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/0ChallengeBossTemplateNoTauntv3DevTools.cs"
+  },
+  {
+    "name": "AstralEmpyreanv3",
+    "description": "Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3ArmyDeathv3DevTools.cs",
+    "size": 16563,
+    "sha256": "6044903dd0a64719acfcc3e800cc4621a4c2681e30da8faea6c9429bea526cca",
+    "fileName": "AstralEmpyreanv3ArmyDeathv3DevTools.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3ArmyDeathv3DevTools.cs"
+  },
+  {
+    "name": "AstralEmpyreanv3",
+    "description": "Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3OneDeathv3DevTools.cs",
+    "size": 15397,
+    "sha256": "acfb384a7ae19c7ee5a13bd5722bd8ac172666375e1883aeb353c7513c779ec0",
+    "fileName": "AstralEmpyreanv3OneDeathv3DevTools.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3OneDeathv3DevTools.cs"
   },
   {
     "name": "null",
