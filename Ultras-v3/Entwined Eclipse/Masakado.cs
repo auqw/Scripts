@@ -5,7 +5,8 @@ tags: masakado, victor matsuri, kings echo, king's echo, army, solo, royal resol
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultras-v3/Entwined Eclipse/CoreUltra.cs
+//cs_include Scripts/Ultras-v3/Entwined Eclipse/CoreEngine.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Skills;

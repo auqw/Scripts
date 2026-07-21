@@ -5,9 +5,9 @@ tags: solstice, moon, hollow midnight, lunar haze, army, taunt, test
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/CoreAdvanced.cs 
+//cs_include Scripts/Ultras-v3/Entwined Eclipse/CoreUltra.cs
+//cs_include Scripts/Ultras-v3/Entwined Eclipse/CoreEngine.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;

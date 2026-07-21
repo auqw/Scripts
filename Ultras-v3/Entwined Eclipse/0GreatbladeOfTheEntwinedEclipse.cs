@@ -7,6 +7,7 @@ tags: greatblade, entwined, eclipse, full, chain, victor, matsuri, masakado, rit
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
+//cs_include Scripts/Ultras-v3/Entwined Eclipse/CoreUltra.cs
 //cs_include Scripts/Ultras-v3/Entwined Eclipse/VictorMatsuriStory.cs
 //cs_include Scripts/Ultras-v3/Entwined Eclipse/Masakado.cs
 //cs_include Scripts/Ultras-v3/Entwined Eclipse/MidnightSun.cs
