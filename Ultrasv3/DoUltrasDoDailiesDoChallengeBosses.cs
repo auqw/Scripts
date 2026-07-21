@@ -9,7 +9,7 @@ tags: ultras,dailies,challenge bosses,all
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraWaitForArmy.cs
 
 //cs_include Scripts/Ultrasv3/DoAllUltras.cs
-//cs_include Scripts/Ultrasv3/Dependencies-Dailies/DoAllChallengeBosses.cs
+//cs_include Scripts/Ultrasv3/DependenciesDailies/DoAllChallengeBosses.cs
 //cs_include Scripts/Dailies/0AllDailies.cs
 
 using Skua.Core.Interfaces;

@@ -11,10 +11,10 @@ tags: all, challenge, bosses, dailies, queeniona, kolr, kathool, astralempyrean
 //cs_include Scripts/Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultrasv3/Dependencies-Dailies/QueenIonaNoOptionv3.cs
-//cs_include Scripts/Ultrasv3/Dependencies-Dailies/KolrNoOptionv3.cs
-//cs_include Scripts/Ultrasv3/Dependencies-Dailies/KathoolNoOptionv3.cs
-//cs_include Scripts/Ultrasv3/Dependencies-Dailies/AstralEmpyreanNoOptionv3.cs
+//cs_include Scripts/Ultrasv3/DependenciesDailies/QueenIonaNoOptionv3.cs
+//cs_include Scripts/Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs
+//cs_include Scripts/Ultrasv3/DependenciesDailies/KathoolNoOptionv3.cs
+//cs_include Scripts/Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs
 
 using System;
 using System.Collections.Generic;
