@@ -52,17 +52,14 @@ public class CoreDarkon
         Core.AddDrop("Darkon's Receipt");
         Core.FarmingLogger("Darkon's Receipt", Quantity);
         Core.EquipClass(ClassType.Farm);
-
+        if (Core.CheckInventory(52924))
+        {
+            Core.Logger("Preselling existing bananas as it can break.. somehow (AE fuckery?)");
+            Core.SellItem(52924, all: true);
+        }
         Core.RegisterQuests(7324);
-        Core.KillMonster(
-            "arcangrove",
-            "LeftBack",
-            "Left",
-            "*",
-            "Darkon's Receipt",
-            Quantity,
-            isTemp: false
-        );
+        while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
+            Core.KillMonster("arcangrove", "LeftBack", "Left", "*");
         Core.CancelRegisteredQuests();
     }
 
@@ -157,7 +154,7 @@ public class CoreDarkon
                 "Nulgath's mask",
                 1,
                 false,
-                publicRoom: true 
+                publicRoom: true
             );
             Bot.Wait.ForPickup("Darkon's Receipt");
         }

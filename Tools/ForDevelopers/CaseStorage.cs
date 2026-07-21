@@ -14631,6 +14631,12 @@ case ""Banana"":
                     Core.FarmingLogger(""Banana"", quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(52924);
+                     if (Core.CheckInventory(52924))
+                    {
+                        Core.Logger(""Preselling existing bananas as it can break.. somehow (AE fuckery?)"");
+                        Core.SellItem(52924, all: true);
+                    }
+                    Core.RegisterQuests(7324);
                     Core.HuntMonster(""arcangrove"", ""Gorillaphant"", req.Name, quant, req.Temp, false);
                     break;
     "
