@@ -1,6 +1,7 @@
 /*
 name: UltraSpeaker_v3
 description: Ultra First Speaker v3 — chat-driven taunt system with position management and stasis handling.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

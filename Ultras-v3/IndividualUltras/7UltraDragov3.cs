@@ -1,6 +1,7 @@
 /*
 name: UltraDrago_v3
 description: Ultra King Drago v3 — Taunter1AttackRightSummon1 + Taunter2AttackRightSummon2 + DPSAttackRightSummon1 + DPSAttackRightSummon2.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

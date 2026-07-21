@@ -1,5 +1,5 @@
 /*
-name: Do Ultras + Dailies + Challenge Bosses
+name: Do Ultras and ailies and Challenge Bosses
 description: Runs all ultras, dailies, and challenge bosses.
 tags: ultras,dailies,challenge bosses,all
 */

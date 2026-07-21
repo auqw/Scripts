@@ -1,6 +1,7 @@
 /*
 name: Kolrv3
 description: Solo farm Kolr, Usurper of Flames for Choronzonite. Room limit of 1.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

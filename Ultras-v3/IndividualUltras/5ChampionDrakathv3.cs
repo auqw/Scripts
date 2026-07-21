@@ -1,6 +1,7 @@
 /*
 name: ChampionDrakath_v3
 description: Champion Drakath v3 — 3 taunters + 1 DPS with UltraAsync pulse taunt (0/4/8).
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

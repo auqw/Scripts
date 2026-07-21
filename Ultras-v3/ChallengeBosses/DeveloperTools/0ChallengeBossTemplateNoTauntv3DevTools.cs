@@ -1,6 +1,7 @@
 /*
 name: ChallengeBossTemplateNoTaunt
 description: Challenge Boss Template v3 — no-taunt fight flow with synced class equip. Copy and adapt for specific bosses.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

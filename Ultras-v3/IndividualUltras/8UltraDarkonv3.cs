@@ -1,6 +1,7 @@
 /*
 name: UltraDarkon_v3
 description: Ultra Darkon v3 — turn-based dual taunter with sync file coordination and army sync.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

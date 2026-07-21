@@ -1,6 +1,7 @@
 /*
 name: UltraGramiel_v3
 description: Ultra Gramiel v3 — two-phase fight (crystals then Gramiel) with chat-driven crystal taunt warnings and pulse-driven taunt rotation.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs

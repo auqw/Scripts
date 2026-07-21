@@ -1,6 +1,7 @@
 /*
 name: Azalith
 description: Azalith helper for army farming Azalith and The Divine Will.
+tags: null
 tags: Ultra
 */
 

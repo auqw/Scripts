@@ -1,6 +1,7 @@
 /*
 name: AstralEmpyreanv3
 description: Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.
+tags: null
 */
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreEnginev3.cs
 //cs_include Scripts/Ultras-v3/Dependencies-Ultras/CoreUltrav3.cs
