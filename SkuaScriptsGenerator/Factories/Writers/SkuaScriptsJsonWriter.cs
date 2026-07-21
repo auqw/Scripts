@@ -23,7 +23,10 @@ public class SkuaScriptsJsonWriter : ISkuaScriptWriter
                     .ToArray();
                 foreach (var line in lines)
                 {
-                    var parts = line.Split(':');
+                    var parts = line.Split(':', 2);
+                    if (parts.Length < 2)
+                        continue;
+                        
                     var key = parts[0].Trim();
                     var value = parts[1].Trim();
                     switch (key)
