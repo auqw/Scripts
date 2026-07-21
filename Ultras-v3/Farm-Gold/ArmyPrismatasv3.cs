@@ -15,7 +15,7 @@ tags: Prismatas, elemental binding, gold, farm
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class ArmyPristmas
+public class ArmyPristmasv3
 {
     private static CoreAdvanced Adv
     {

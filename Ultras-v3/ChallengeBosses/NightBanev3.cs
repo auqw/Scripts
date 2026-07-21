@@ -19,7 +19,7 @@ using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class NightBane
+public class NightBanev2
 {
     private static CoreAdvanced Adv
     {

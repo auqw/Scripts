@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 
-public class Kathoolv3
+public class KathoolNoOpv3
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots C => CoreBots.Instance;

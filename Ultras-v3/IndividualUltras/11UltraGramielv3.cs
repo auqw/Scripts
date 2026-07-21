@@ -235,7 +235,6 @@ public class UltraGramiel_v3
         const string waitSyncFile = "ultra_gramiel.sync";
         const string gramielFightTimeSyncFile = "UltraGramielFightTime.sync";
         const string completionSyncFile = "UltraGramielCompletion.sync";
-        const string retreatSyncFile = "UltraGramielRetreat.sync";
         int armySize = 4;
 
         const int questId = 10301;

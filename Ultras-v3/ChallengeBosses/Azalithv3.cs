@@ -19,7 +19,7 @@ using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class Azalith
+public class Azalithv3
 {
     private static CoreAdvanced Adv
     {

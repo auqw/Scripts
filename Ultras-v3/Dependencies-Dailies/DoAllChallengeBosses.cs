@@ -76,16 +76,16 @@ public class DoAllChallengeBosses
             switch (boss)
             {
                 case "QueenIona":
-                    new QueenIonav3().RunBoss();
+                    new QueenIonaNoOpv3().RunBoss();
                     break;
                 case "Kolr":
-                    new Kolrv3().RunBoss();
+                    new KolrNoOpv3().RunBoss();
                     break;
                 case "Kathool":
-                    new Kathoolv3().RunBoss();
+                    new KathoolNoOpv3().RunBoss();
                     break;
                 case "AstralEmpyrean":
-                    new AstralEmpyreanv3().RunBoss();
+                    new AstralEmpyreanNoOpv3().RunBoss();
                     break;
                 default:
                     C.Logger($"Unknown challenge boss in queue: {boss}", "Error", true, true);

@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class AstralEmpyreanv3
+public class AstralEmpyreanv3OneDeathv3DevTools
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots C => CoreBots.Instance;

@@ -16,7 +16,7 @@ using System.IO;
 using System.Linq;
 using Skua.Core.Interfaces;
 
-public class Kolrv3
+public class KolrNoOpv3
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots C => CoreBots.Instance;
@@ -141,7 +141,6 @@ public class Kolrv3
 
     private void Fight()
     {
-        const string map = "flameusurper";
         const string boss = "Kolr, Usurper of Flames";
         const string bossDefeatedTemp = "Choronzonite";
 

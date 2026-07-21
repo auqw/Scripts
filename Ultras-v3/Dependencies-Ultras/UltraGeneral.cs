@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 
 public class UltraGeneral
 {

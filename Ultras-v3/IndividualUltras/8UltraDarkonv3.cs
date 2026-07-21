@@ -162,7 +162,6 @@ public class UltraDarkon_v3
         const string waitSyncFile = "Ultra_Darkon.sync";
         const string fightTimeSyncFile = "UltraDarkonFightTime.sync";
         const string completionSyncFile = "UltraDarkonCompletion.sync";
-        const string retreatSyncFile = "UltraDarkonRetreat.sync";
         int armySize = 4;
 
         const int questId = 8746;

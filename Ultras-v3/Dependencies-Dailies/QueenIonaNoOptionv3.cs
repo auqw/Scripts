@@ -16,7 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 
-public class QueenIonav3
+public class QueenIonaNoOpv3
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots C => CoreBots.Instance;
@@ -73,7 +73,6 @@ public class QueenIonav3
         const string map = "queeniona";
         const string boss = "Queen Iona";
         const string item = "Lightning Diadem";
-        const int quant = 10;
         const int armySize = 4;
         const string waitSyncFile = "queeniona.sync";
 

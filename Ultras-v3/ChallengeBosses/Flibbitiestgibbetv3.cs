@@ -19,7 +19,7 @@ using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class Flibbitiestgibbet
+public class Flibbitiestgibbetv3
 {
     private static CoreAdvanced Adv
     {
