@@ -3136,8 +3136,8 @@
       "all"
     ],
     "path": "Ultrasv3/DoUltrasDoDailiesDoChallengeBosses.cs",
-    "size": 1482,
-    "sha256": "48fcc155a7e67c07d244c56bd698f280e442a8bc95760df889a8fb09422d8a56",
+    "size": 1481,
+    "sha256": "75c853486353d9b486f707eb20ab84ff5a18133736ed8152a985713e01fd916b",
     "fileName": "DoUltrasDoDailiesDoChallengeBosses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoUltrasDoDailiesDoChallengeBosses.cs"
   },
@@ -25992,8 +25992,8 @@
       "astralempyrean"
     ],
     "path": "Ultrasv3/DependenciesDailies/DoAllChallengeBosses.cs",
-    "size": 4040,
-    "sha256": "575d2fbc5ac893fead0e9fc8221d967301fe56d2744ad37433e18bf1f18524af",
+    "size": 4036,
+    "sha256": "c36d33ba91b67f3fc6469e753d45ed208b344b6c53d1fc386359fb2177ce6682",
     "fileName": "DoAllChallengeBosses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/DoAllChallengeBosses.cs"
   },
