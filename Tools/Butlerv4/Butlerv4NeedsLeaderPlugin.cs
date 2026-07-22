@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-public class Butlerv4NeedsLeaderPlugin
+public class Butlerv4
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
@@ -64,6 +64,36 @@ public class Butlerv4NeedsLeaderPlugin
     {
         Core.SetOptions(disableClassSwap: true);
         Core.LoggerInChat = false;
+
+        // Copy LeaderButlerSync.dll to Skua plugins folder
+        try
+        {
+            string scriptsDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Skua",
+                "Scripts"
+            );
+            string sourceDll = Path.Combine(scriptsDir, "Tools", "Butlerv4", "LeaderButlerSync.dll");
+            string destDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Skua",
+                "plugins"
+            );
+            string destDll = Path.Combine(destDir, "LeaderButlerSync.dll");
+
+            if (File.Exists(sourceDll))
+            {
+                Directory.CreateDirectory(destDir);
+                File.Copy(sourceDll, destDll, overwrite: true);
+                Core.Logger($"Copied LeaderButlerSync.dll to plugins folder.");
+            }
+            else
+                Core.Logger($"LeaderButlerSync.dll not found at {sourceDll}");
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"Failed to copy plugin: {ex.Message}");
+        }
 
         Bot.Events.ExtensionPacketReceived += ChatListener;
         Execute();
