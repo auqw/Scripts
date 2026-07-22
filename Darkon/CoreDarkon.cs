@@ -57,9 +57,13 @@ public class CoreDarkon
             Core.Logger("Preselling existing bananas as it can break.. somehow (AE fuckery?)");
             Core.SellItem(52924, all: true);
         }
-        Core.RegisterQuests(7324);
+        
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
-            Core.KillMonster("arcangrove", "LeftBack", "Left", "*");
+        {
+            Core.EnsureAccept(7324);
+            Core.KillMonster("arcangrove", "LeftBack", "Left", "*", "Banana", 22);
+            Core.EnsureAccept(7324);
+        }
         Core.CancelRegisteredQuests();
     }
 
