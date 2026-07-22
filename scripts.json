@@ -3525,6 +3525,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/YandereStalker.cs"
   },
   {
+    "name": "Butler version 4",
+    "description": "Follows a player using Goto; sync-file fallback for locked zones; transition-safe goto; reduced blinking; combat-aware syncing; server-aware sleeping.",
+    "tags": [
+      "butler",
+      "follow",
+      "sync",
+      "locked-zone",
+      "quickdeaggro",
+      "lowlog"
+    ],
+    "path": "Tools/Butlerv4NeedsLeaderPlugin.cs",
+    "size": 18826,
+    "sha256": "ae499a768fa173de5d6ed3d10d191ec30551d83f241817e1044d16018e28037b",
+    "fileName": "Butlerv4NeedsLeaderPlugin.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4NeedsLeaderPlugin.cs"
+  },
+  {
     "name": "Ultra Speaker Merge PreReqs",
     "description": "Gets the prerequisites for the Ultra Speaker merge.",
     "tags": [
