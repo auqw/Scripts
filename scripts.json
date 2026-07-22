@@ -3525,23 +3525,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/YandereStalker.cs"
   },
   {
-    "name": "Butler version 4",
-    "description": "Follows a player using Goto; sync-file fallback for locked zones; transition-safe goto; reduced blinking; combat-aware syncing; server-aware sleeping.",
-    "tags": [
-      "butler",
-      "follow",
-      "sync",
-      "locked-zone",
-      "quickdeaggro",
-      "lowlog"
-    ],
-    "path": "Tools/Butlerv4NeedsLeaderPlugin.cs",
-    "size": 18826,
-    "sha256": "ae499a768fa173de5d6ed3d10d191ec30551d83f241817e1044d16018e28037b",
-    "fileName": "Butlerv4NeedsLeaderPlugin.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4NeedsLeaderPlugin.cs"
-  },
-  {
     "name": "Ultra Speaker Merge PreReqs",
     "description": "Gets the prerequisites for the Ultra Speaker merge.",
     "tags": [
@@ -26899,6 +26882,23 @@
     "sha256": "7c29cf9ac8b7b6848237c9f6565191939bdb09494be9e7340280be277f200a6f",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
+  },
+  {
+    "name": "Butler version 4",
+    "description": "Follows a player using Goto; sync-file fallback for locked zones; transition-safe goto; reduced blinking; combat-aware syncing; server-aware sleeping.",
+    "tags": [
+      "butler",
+      "follow",
+      "sync",
+      "locked-zone",
+      "quickdeaggro",
+      "lowlog"
+    ],
+    "path": "Tools/Butlerv4/Butlerv4NeedsLeaderPlugin.cs",
+    "size": 18255,
+    "sha256": "b347f4e0a443e1bfab8418b516d44862a4f6312bc3f794a03b481bb9d67d303e",
+    "fileName": "Butlerv4NeedsLeaderPlugin.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/Butlerv4NeedsLeaderPlugin.cs"
   },
   {
     "name": "Merge Shop Bot Generator/Helper",
