@@ -26873,11 +26873,11 @@
       "quickdeaggro",
       "lowlog"
     ],
-    "path": "Tools/Butlerv4/Butlerv4NeedsLeaderPlugin.cs",
+    "path": "Tools/Butlerv4/Butlerv4.cs",
     "size": 19524,
     "sha256": "eebef8a13538d7a7fd4341e8f7f973b7af82efe8fdd5b0023cda9b982554b485",
-    "fileName": "Butlerv4NeedsLeaderPlugin.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/Butlerv4NeedsLeaderPlugin.cs"
+    "fileName": "Butlerv4.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/Butlerv4.cs"
   },
   {
     "name": "Merge Shop Bot Generator/Helper",
