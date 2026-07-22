@@ -3328,27 +3328,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ChooseBestGear(Racial).cs"
   },
   {
-    "name": "Butler version 3.0",
-    "description": "This will follow a player and copy their actions and do attack actions.",
-    "tags": [
-      "butler",
-      "follow",
-      "player",
-      "copy",
-      "actions",
-      "attack",
-      "maidr",
-      "auto",
-      "goto",
-      "version 3"
-    ],
-    "path": "Tools/Butlerv3.cs",
-    "size": 18697,
-    "sha256": "38adeb8e59b2afed452fbb3275892e924137ac95785205b599d30be570a9260e",
-    "fileName": "Butlerv3.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
-  },
-  {
     "name": "Buy Out Shops",
     "description": "This bot will buy all items in one or multiple shops and follow the logic of the by you selected mode.",
     "tags": [
