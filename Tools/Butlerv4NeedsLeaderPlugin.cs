@@ -551,14 +551,17 @@ public class Butlerv4NeedsLeaderPlugin
             if (cmd == "server")
             {
                 string? text = dataObj[2]?.ToString();
-                if (text.Contains("ignoring goto")) GotoIsOff = true;
+                if (!string.IsNullOrEmpty(text) && text.Contains("ignoring goto")) GotoIsOff = true;
             }
             else if (cmd == "warning")
             {
-                string chat = Convert.ToString(packet);
-                if (chat.Contains("Locked zone") || chat.Contains("not available")) LockedZoneWarning = true;
-                if (chat.Contains("full")) RoomFull = true;
-                if (chat.Contains("ignoring goto")) GotoIsOff = true;
+                string? chat = Convert.ToString(packet);
+                if (!string.IsNullOrEmpty(chat))
+                {
+                    if (chat.Contains("Locked zone") || chat.Contains("not available")) LockedZoneWarning = true;
+                    if (chat.Contains("full")) RoomFull = true;
+                    if (chat.Contains("ignoring goto")) GotoIsOff = true;
+                }
             }
         }
         catch (Exception ex)
