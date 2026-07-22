@@ -66,19 +66,15 @@ public class Butlerv4
         Core.LoggerInChat = false;
 
         // Copy LeaderButlerSync.dll to Skua plugins folder
+        string skuaBase = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Skua"
+        );
+
         try
         {
-            string scriptsDir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Skua",
-                "Scripts"
-            );
-            string sourceDll = Path.Combine(scriptsDir, "Tools", "Butlerv4", "LeaderButlerSync.dll");
-            string destDir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Skua",
-                "plugins"
-            );
+            string sourceDll = Path.Combine(skuaBase, "Scripts", "Tools", "Butlerv4", "LeaderButlerSync.dll");
+            string destDir = Path.Combine(skuaBase, "plugins");
             string destDll = Path.Combine(destDir, "LeaderButlerSync.dll");
 
             if (File.Exists(sourceDll))
@@ -90,9 +86,17 @@ public class Butlerv4
             else
                 Core.Logger($"LeaderButlerSync.dll not found at {sourceDll}");
         }
+        catch (IOException ioEx)
+        {
+            Core.Logger($"Failed to copy plugin due to I/O error: {ioEx.ToString()}");
+        }
+        catch (UnauthorizedAccessException uaEx)
+        {
+            Core.Logger($"Failed to copy plugin due to insufficient permissions: {uaEx.ToString()}");
+        }
         catch (Exception ex)
         {
-            Core.Logger($"Failed to copy plugin: {ex.Message}");
+            Core.Logger($"Failed to copy plugin: {ex.ToString()}");
         }
 
         Bot.Events.ExtensionPacketReceived += ChatListener;
