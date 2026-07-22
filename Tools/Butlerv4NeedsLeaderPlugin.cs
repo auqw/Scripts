@@ -49,7 +49,7 @@ public class Butlerv4NeedsLeaderPlugin
     volatile bool RoomFull;
     volatile bool IsParked;
 
-    string? playerName;
+    string playerName = string.Empty;
     string syncFilePath = "";
 
     private int noSyncFileCounter = 0;
@@ -78,7 +78,6 @@ public class Butlerv4NeedsLeaderPlugin
 
         string myUsername = Bot.Player.Username ?? "";
         int leaderIndex = 0;
-        playerName = null;
 
         for (int i = 1; i <= 4; i++)
         {
