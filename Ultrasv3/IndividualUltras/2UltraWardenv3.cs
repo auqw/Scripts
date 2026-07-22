@@ -14,7 +14,6 @@ tags: null
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraAsync.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs
 
 using System;
 using System.IO;
@@ -73,9 +72,6 @@ public class UltraWardenv3
         _tauntCts = new();
         Bot.Events.ScriptStopping -= StopTauntEvent;
         Bot.Events.ScriptStopping += StopTauntEvent;
-
-        if (!new PrerequisitesChecker().PrerequisiteSyncGate(4))
-            return;
 
         try
         {

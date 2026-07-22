@@ -15,7 +15,6 @@ tags: null
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraDeath.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs
 
 using System;
 using System.Linq;
@@ -67,9 +66,6 @@ public class UltraAvatarTyndariusv3
     public void RunBoss()
     {
         C.SetOptions(true);
-
-        if (!new PrerequisitesChecker().PrerequisiteSyncGate(4))
-            return;
 
         try
         {

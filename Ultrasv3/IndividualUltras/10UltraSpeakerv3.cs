@@ -13,7 +13,6 @@ tags: null
 //cs_include Scripts/Ultrasv3/DependenciesUltras/GetScrolls.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs
 
 using System;
 using System.IO;
@@ -81,9 +80,6 @@ public class UltraSpeakerv3
         );
         try { File.WriteAllText(_fbsMuteFile, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()); } catch { }
         Engine.Boot(); // Use CoreEngine auto-rotation
-
-        if (!new PrerequisitesChecker().PrerequisiteSyncGate(4))
-            return;
 
         Bot.Events.ExtensionPacketReceived += SpeakerMessageListener;
         Bot.Flash.FlashCall += SpeakerFlashListener;

@@ -40,6 +40,14 @@ public class DoAllUltras
     private CoreBots C => CoreBots.Instance;
     public IScriptInterface Bot => IScriptInterface.Instance;
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "DoAllUltras";
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("UsePrerequisitesChecker", "Use Prerequisites Checker", "Enable to run the prerequisites checker before starting ultras. Disable to skip.", true),
+        CoreBots.Instance.SkipOptions,
+    };
+
     private const string BossParticipantSyncFile = "ultrasv3_participants.sync";
     private const string BossSyncFile = "ultrasv3_bosses.sync";
 
@@ -57,8 +65,11 @@ public class DoAllUltras
 
     public void RunAll()
     {
-        if (!new PrerequisitesChecker().PrerequisiteSyncGate(4))
-            return;
+        if (Bot.Config!.Get<bool>("UsePrerequisitesChecker"))
+        {
+            if (!new PrerequisitesChecker().PrerequisiteSyncGate(4))
+                return;
+        }
 
         var allBosses = new[] { "UltraEzrajal", "UltraWarden", "UltraEngineer", "UltraAvatarTyndarius", "ChampionDrakath", "UltraNulgath", "UltraDrago", "UltraDarkon", "UltraDage", "UltraSpeaker", "UltraGramiel" };
 
