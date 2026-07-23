@@ -1,6 +1,6 @@
 /*
 name: Kolrv3
-description: Solo farm Kolr, Usurper of Flames for Choronzonite. Room limit of 1.
+description: 2 man Kolr Scripts, uses KE LoO. Don't change the classes, KE LoO has a specific skillset for this boss.
 tags: null
 */
 //cs_include Scripts/Ultrasv3/DependenciesUltras/CoreEnginev3.cs
