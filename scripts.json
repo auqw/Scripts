@@ -26572,6 +26572,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreEnginev3.cs"
   },
   {
+    "name": "UltraCounterAttack",
+    "description": "Detects the \"Counter Attack\" aura (4s) via ExtensionPacketReceived.",
+    "tags": [
+      "ultra",
+      "counter",
+      "attack"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraCounterAttack.cs",
+    "size": 4788,
+    "sha256": "da1d80a33ed179ca7da228abc518fb0bc025214bba613d63d6ff8f98e5fbe12b",
+    "fileName": "UltraCounterAttack.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraCounterAttack.cs"
+  },
+  {
     "name": "Potions",
     "description": "null",
     "tags": [
