@@ -26023,13 +26023,13 @@
   },
   {
     "name": "Kolrv3  No Op",
-    "description": "Farm Kolr, Usurper of Flames for Choronzonite. No config needed.",
+    "description": "Farm Kolr, Usurper of Flames for Choronzonite. No config needed. It needs 4 clients, it will go to the map 2/2 2/2.",
     "tags": [
       "null"
     ],
     "path": "Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs",
-    "size": 7285,
-    "sha256": "df813310e98fbe6f16a85de273ce3abb0d41515a060527024423c18a01ebc3bf",
+    "size": 7336,
+    "sha256": "b89d916f04a4a71083bbbed94760d35680f68ad1621192cb0623ebcb2fa7f0b0",
     "fileName": "KolrNoOptionv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs"
   },
