@@ -3185,8 +3185,8 @@
       "null"
     ],
     "path": "Army/Template.cs",
-    "size": 2550,
-    "sha256": "31e42ca39bb3675dfd5dd2fd9b4e116a2afcdc71bf65a1f00e2c402db132b978",
+    "size": 2588,
+    "sha256": "15dece1d619216bb35302ff330a9b2386d56e5ae930999f9c93ffc0ea4717a5d",
     "fileName": "Template.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Template.cs"
   },
@@ -3209,8 +3209,8 @@
       "null"
     ],
     "path": "Army/ArmySpiritOrbs.cs",
-    "size": 3378,
-    "sha256": "a1093ca1bb9eb3e2a29ad0127e10c4810ddb2c93bb39814d95f1cd48b009ac2d",
+    "size": 3416,
+    "sha256": "8c6bfcde2d344723ad1f722d53797573f5e2b429d94ea3923e7106c0e20d4a35",
     "fileName": "ArmySpiritOrbs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySpiritOrbs.cs"
   },
@@ -8399,8 +8399,8 @@
       "storms"
     ],
     "path": "Other/MergeShops/LothianTreasuryMerge.cs",
-    "size": 7977,
-    "sha256": "d80ee1ee2578d73792ff1bee6c01a9205770a119339a21033b7636c8c8f918c3",
+    "size": 8015,
+    "sha256": "6ba38143282483739338efbd1c2ab34b0283d743db2eae47e510f3ca94666c42",
     "fileName": "LothianTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LothianTreasuryMerge.cs"
   },
@@ -12084,8 +12084,8 @@
       "class"
     ],
     "path": "Other/Classes/SovereignOfStorms.cs",
-    "size": 1907,
-    "sha256": "57c374e3ee8681782fb18190ffcf9d9576d6560f88b15d8b12142bf3b9644103",
+    "size": 1945,
+    "sha256": "9299bc0ba22a093e078b83a5af7f99d4655ce6a391d10cd444c0877afda7ddc6",
     "fileName": "SovereignOfStorms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/SovereignOfStorms.cs"
   },
@@ -12120,8 +12120,8 @@
       "legion"
     ],
     "path": "Other/Classes/Lich.cs",
-    "size": 11482,
-    "sha256": "d6e920e0fc6e3ee0aa394a45a2d728ccec50fdc70f8e64054a86cdaea0b26dce",
+    "size": 11520,
+    "sha256": "212aa7430e42f56c8faf0dec9666bb0ccc5c98a47d144754cf851b25bb0a9ae6",
     "fileName": "Lich.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Lich.cs"
   },
@@ -12148,8 +12148,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 46528,
-    "sha256": "e24d2cd60b72d2798572104843ddfc4c0ef741a33a6cacf23d47d7e7ca752d01",
+    "size": 46566,
+    "sha256": "83fd2ea59f0cc9347a8e4d1cac0bd5d5291f92a89b8e848b09268628149563db",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -26647,8 +26647,8 @@
       "farm"
     ],
     "path": "Army/Farm/ArmyPrismatas.cs",
-    "size": 3876,
-    "sha256": "c1eb5c48949aff66f65b243cdb9311b1be28b765ec890454ca05074429b06b4f",
+    "size": 3914,
+    "sha256": "41648f8cda566b1fec77bae531b2eba677ca8f5733746257f13f0d66c6f50097",
     "fileName": "ArmyPrismatas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
   },
@@ -26662,8 +26662,8 @@
       "carcossacourt"
     ],
     "path": "Army/Farm/ArmyWarMap.cs",
-    "size": 6284,
-    "sha256": "6e2c91fe903e22e63f5a969fd389df7b01025f3d61d9ca537f38e36fefdcde73",
+    "size": 6322,
+    "sha256": "29ac276714f016cff529a9fae6f7cc06630db51434221b2e29205e3743e230b3",
     "fileName": "ArmyWarMap.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyWarMap.cs"
   },
@@ -26674,8 +26674,8 @@
       "null"
     ],
     "path": "Army/Farm/ArmyLeveling.cs",
-    "size": 4470,
-    "sha256": "ed1b35df4edb87a99d18bbaabc76980e8b6f18066e30823a385bc17d795be51a",
+    "size": 4508,
+    "sha256": "80f8303de60569714e68c9b7fa3f242418c588f68a918d5a7317c90f9777ca74",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
@@ -26690,8 +26690,8 @@
       "upgrade"
     ],
     "path": "Army/Farm/ArmyLichWarGoldXp[Mem].cs",
-    "size": 4608,
-    "sha256": "ac15ba6ff82e966fede28b45afaab7aea939bcd36f1d111fff0300bd03f4076c",
+    "size": 4646,
+    "sha256": "20f54f4a9017d85ac47e3d22ab3c2b14f9e94c2e6571eda38f9930c30b0595fb",
     "fileName": "ArmyLichWarGoldXp[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLichWarGoldXp[Mem].cs"
   },
@@ -26843,8 +26843,8 @@
       "badge"
     ],
     "path": "Army/Badges/TouchMass.cs",
-    "size": 5781,
-    "sha256": "acc7e80c407d4a51a63210be1ed1b3d577d246c50390b168a12899bdd9d977c1",
+    "size": 5819,
+    "sha256": "b55b8945ed902210d66f0c86abfee05ed15de13617c7d4b8cb9a2f98b5287212",
     "fileName": "TouchMass.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Badges/TouchMass.cs"
   },
@@ -26859,8 +26859,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyLR.cs",
-    "size": 16508,
-    "sha256": "1a0139869bf3365174084988cfb711e415e38cf9fec9a5f168cdc8de437ab277",
+    "size": 16546,
+    "sha256": "a5fe00b0ab1a5c440bc3d6ca5e30d5880a32214cb3c57dfc0869fc9cfeacbf8e",
     "fileName": "ArmyLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
@@ -26890,8 +26890,8 @@
       "wrongturnatvoidbuquerque"
     ],
     "path": "Army/Dailies/WrongTurnatVoidbuquerque.cs",
-    "size": 8837,
-    "sha256": "7c29cf9ac8b7b6848237c9f6565191939bdb09494be9e7340280be277f200a6f",
+    "size": 8875,
+    "sha256": "9f49d1e63f4042af8ecd337adc7cd23f1ac12771b767f61863c2a7a7e9cd3761",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
   },
