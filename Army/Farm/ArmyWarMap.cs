@@ -4,8 +4,8 @@ description: Levels the players acc using an arnmy on /CarcossaCourt with 3 sele
 tags: war, army, leveling, CarcossaCourt
 */
 
-//cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs

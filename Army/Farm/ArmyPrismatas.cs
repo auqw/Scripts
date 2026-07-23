@@ -4,8 +4,8 @@ description: Farms gold using the Prismatas in /archmage and selling the element
 tags: Prismatas, elemental binding, gold, farm
 */
 
-//cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
