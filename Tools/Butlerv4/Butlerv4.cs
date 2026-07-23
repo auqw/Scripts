@@ -11,6 +11,7 @@ tags: butler, follow, sync, locked-zone, quickdeaggro, lowlog
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -65,7 +66,7 @@ public class Butlerv4
         Core.SetOptions(disableClassSwap: true);
         Core.LoggerInChat = false;
 
-        // Copy LeaderButlerSync.dll to Skua plugins folder
+        // Ensure LeaderButlerSync.dll is present in the Skua plugins folder
         string skuaBase = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Skua"
@@ -73,30 +74,39 @@ public class Butlerv4
 
         try
         {
-            string sourceDll = Path.Combine(skuaBase, "Scripts", "Tools", "Butlerv4", "LeaderButlerSync.dll");
             string destDir = Path.Combine(skuaBase, "plugins");
             string destDll = Path.Combine(destDir, "LeaderButlerSync.dll");
 
-            if (File.Exists(sourceDll))
+            // Some clients only sync .cs files, so the DLL never gets pulled down
+            // alongside this script. If it's missing, fetch it directly into plugins.
+            if (!File.Exists(destDll))
             {
-                Directory.CreateDirectory(destDir);
-                File.Copy(sourceDll, destDll, overwrite: true);
-                Core.Logger($"Copied LeaderButlerSync.dll to plugins folder.");
+                const string dllUrl = "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/LeaderButlerSync.dll";
+                try
+                {
+                    Directory.CreateDirectory(destDir);
+                    using var http = new HttpClient();
+                    byte[] data = http.GetByteArrayAsync(dllUrl).GetAwaiter().GetResult();
+                    File.WriteAllBytes(destDll, data);
+                    Core.Logger($"Downloaded LeaderButlerSync.dll to plugins folder.");
+                }
+                catch (Exception dlEx)
+                {
+                    Core.Logger($"Failed to download LeaderButlerSync.dll: {dlEx.Message}");
+                }
             }
-            else
-                Core.Logger($"LeaderButlerSync.dll not found at {sourceDll}");
         }
         catch (IOException ioEx)
         {
-            Core.Logger($"Failed to copy plugin due to I/O error: {ioEx.ToString()}");
+            Core.Logger($"Failed to set up plugin due to I/O error: {ioEx.ToString()}");
         }
         catch (UnauthorizedAccessException uaEx)
         {
-            Core.Logger($"Failed to copy plugin due to insufficient permissions: {uaEx.ToString()}");
+            Core.Logger($"Failed to set up plugin due to insufficient permissions: {uaEx.ToString()}");
         }
         catch (Exception ex)
         {
-            Core.Logger($"Failed to copy plugin: {ex.ToString()}");
+            Core.Logger($"Failed to set up plugin: {ex.ToString()}");
         }
 
         Bot.Events.ExtensionPacketReceived += ChatListener;
