@@ -6,7 +6,7 @@ tags: ultra, army, two-player, usurper, kolr, usurper of flames, verus doomknigh
 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 
 using System;
 using System.Collections.Generic;
