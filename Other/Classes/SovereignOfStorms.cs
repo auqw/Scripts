@@ -14,9 +14,9 @@ tags: sos, sovereign, sovereignofstorms, lothian treasury, queen iona, iona, cla
 //cs_include Scripts/Other/MergeShops/LiaTaraHillLootMerge.cs
 //cs_include Scripts/Other/MergeShops/ColdThunderMerge.cs
 //cs_include Scripts/Other/MergeShops/LothianTreasuryMerge.cs
-//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
 //cs_include Scripts/Ultras/QueenIona.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 using Skua.Core.Interfaces;
 
 public class SovereignOfStorms

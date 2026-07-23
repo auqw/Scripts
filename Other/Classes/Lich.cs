@@ -43,8 +43,8 @@ tags: Lich, class, pre-requisites, necronomicon, nictos, klaatu, verata, necromi
 //cs_include Scripts/Nation/AFDL/WillpowerExtraction.cs
 //cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
 //cs_include Scripts/Nation/CoreNation.cs
-//cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 //cs_include Scripts/Nation/EmpoweringItems.cs
 //cs_include Scripts/Nation/MergeShops/DilligasMerge.cs
 //cs_include Scripts/Nation/MergeShops/DirtlickersMerge.cs

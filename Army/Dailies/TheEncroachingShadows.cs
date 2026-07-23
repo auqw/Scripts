@@ -4,8 +4,8 @@ description: `The Encroaching Shadows` quest with an army.
 tags: The Encroaching Shadows, TheEncroachingShadows, Encroaching, Shadows, army, void aura
 */
 
-//cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
