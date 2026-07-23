@@ -1,6 +1,6 @@
 /*
 name: Kolrv3  No Op
-description: Farm Kolr, Usurper of Flames for Choronzonite. No config needed.
+description: Farm Kolr, Usurper of Flames for Choronzonite. No config needed. It needs 4 clients, it will go to the map 2/2 2/2.
 tags: null
 */
 //cs_include Scripts/Ultrasv3/DependenciesUltras/CoreEnginev3.cs
