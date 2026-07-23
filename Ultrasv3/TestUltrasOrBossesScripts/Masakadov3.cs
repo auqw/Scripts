@@ -10,14 +10,13 @@ tags: null
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraGeneral.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraWaitForArmy.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraAsync.cs
+//cs_include Scripts/Ultrasv3/DependenciesUltras/UltraCounterAttack.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/GetScrolls.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -42,7 +41,8 @@ public class Masakadov3
     public List<IOption> Options = new()
     {
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 4),
-        new Option<string>("TauntClass", "Taunt Class", "Class that will taunt the boss. Leave empty for no taunter.", "Imperial Chunin"),
+        new Option<string>("TauntClass1", "Taunt Class 1", "First taunter class. Leave empty for no taunter.", "ArchPaladin"),
+        new Option<string>("TauntClass2", "Taunt Class 2", "Second taunter class. Leave empty for single taunter.", "Lord Of Order"),
         new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "King's Echo"),
         new Option<string>("Class2", "Class 2", "Preset class 2 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "StoneCrusher"),
         new Option<string>("Class3", "Class 3", "Preset class 3 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "ArchPaladin"),
@@ -69,6 +69,8 @@ public class Masakadov3
         try { File.WriteAllText(_fbsMuteFile, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()); } catch { }
         Engine.Boot();
 
+        UltraCounterAttack.Enable();
+
         try
         {
             _tauntCts?.Cancel();
@@ -82,6 +84,7 @@ public class Masakadov3
         finally
         {
             Bot.Events.ScriptStopping -= StopTauntEvent;
+            UltraCounterAttack.Disable();
             _tauntCts.Cancel();
             try { if (File.Exists(_fbsMuteFile)) File.Delete(_fbsMuteFile); } catch { }
             Engine.DisableSkills();
@@ -104,7 +107,21 @@ public class Masakadov3
         usePotions = Bot.Config!.Get<bool>("UsePotions");
 
         string? className = Bot.Player.CurrentClass?.Name;
-        if (className == Bot.Config!.Get<string>("TauntClass")) _role = "Taunter";
+        string? tc1 = Bot.Config!.Get<string>("TauntClass1");
+        string? tc2 = Bot.Config!.Get<string>("TauntClass2");
+        bool hasTwoTaunters = !string.IsNullOrWhiteSpace(tc1) && !string.IsNullOrWhiteSpace(tc2);
+
+        if (hasTwoTaunters)
+        {
+            if (className == tc1) _role = "Taunter1";
+            else if (className == tc2) _role = "Taunter2";
+            else _role = "Dps";
+        }
+        else
+        {
+            if (className == tc1) _role = "Taunter";
+            else _role = "Dps";
+        }
         C.Logger($"[Masakadov3] Role: {_role} ({className})");
 
         if (Bot.Config!.Get<bool>("DoEnh"))
@@ -119,8 +136,7 @@ public class Masakadov3
 
     private bool IsTaunter()
     {
-        string? className = Bot.Player.CurrentClass?.Name;
-        return className == Bot.Config!.Get<string>("TauntClass");
+        return _role is "Taunter" or "Taunter1" or "Taunter2";
     }
 
     private bool StopTauntEvent(Exception? e)
@@ -133,9 +149,10 @@ public class Masakadov3
     {
         const string map = "victormatsuri";
         const string boss = "Masakado";
-        const string bossDefeatedTemp = "Masakado Defeated";
+        const string bossDefeatedTemp = "Agehachou Crest";
 
         const string waitSyncFile = "masakadov3_ready.sync";
+        const string fightTimeSyncFile = "masakadov3_fighttime.sync";
         const string completionSyncFile = "masakadov3_completion.sync";
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
 
@@ -145,6 +162,7 @@ public class Masakadov3
         if (!UltraGeneral.IsQuestGreen(Bot, questId))
             UltraGeneral.EnsureAcceptOnce(Bot, questId);
 
+        Ultra.ClearSyncFile(Ultra.ResolveSyncPath(fightTimeSyncFile));
         Ultra.ClearSyncFile(Ultra.ResolveSyncPath(completionSyncFile));
 
         bool skipThird = IsTaunter();
@@ -170,7 +188,25 @@ public class Masakadov3
         Engine.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
 
-        if (_role == "Taunter")
+        string fightTimeSyncPath = Ultra.ResolveSyncPath(fightTimeSyncFile);
+        bool hasTwoTaunters = !string.IsNullOrWhiteSpace(Bot.Config!.Get<string>("TauntClass2"));
+
+        if (hasTwoTaunters)
+        {
+            if (_role == "Taunter1")
+            {
+                C.Logger("[Masakadov3] Taunter1 (Primary) — setting fight start time.");
+                DateTime fightStart = UltraAsync.SetFightTime(C, fightTimeSyncPath);
+                UltraAsync.StartTauntLoop(Bot, C, Engine, fightStart, 0, 2, cancellationToken: _tauntCts.Token);
+            }
+            else if (_role == "Taunter2")
+            {
+                C.Logger("[Masakadov3] Taunter2 (Secondary) — reading fight start time.");
+                DateTime fightStart = UltraAsync.GetFightTime(Ultra, C, fightTimeSyncPath);
+                UltraAsync.StartTauntLoop(Bot, C, Engine, fightStart, 1, 2, cancellationToken: _tauntCts.Token);
+            }
+        }
+        else if (_role == "Taunter")
         {
             C.Logger("[Masakadov3] Taunter detected — starting taunt loop.");
             UltraAsync.StartTauntLoop(Bot, C, Engine, DateTime.UtcNow, 0, 1, cancellationToken: _tauntCts.Token);
@@ -202,6 +238,7 @@ public class Masakadov3
             {
                 C.Logger("Boss defeated. Finishing quest.");
                 Bot.Events.ScriptStopping -= StopTauntEvent;
+                UltraCounterAttack.Disable();
                 _tauntCts.Cancel();
                 Engine.DisableSkills();
                 Engine.Join(map);
@@ -211,17 +248,7 @@ public class Masakadov3
                 break;
             }
 
-            // Counter Attack handler — stop attacking when Masakado reflects
-            if (Bot.Player.HasTarget
-                && Bot.Target?.Auras?.Any(a => a != null && a.Name == "Counter Attack") == true)
-            {
-                Bot.Combat.CancelAutoAttack();
-                Bot.Sleep(2000);
-            }
-            else
-            {
-                Bot.Combat.Attack(boss);
-            }
+            Bot.Combat.Attack(boss);
 
             if (usePotions)
                 Pots.ActivateEquippedPotion();
