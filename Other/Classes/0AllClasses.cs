@@ -87,7 +87,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 //cs_include Scripts/Story/DarkCarnax.cs
 
-//cs_include Scripts/Ultras/QueenIona.cs
+//cs_include Scripts/Ultrasv3/ChallengeBosses/QueenIonav3.cs
 //cs_include Scripts/Evil/VordredsArmor.cs
 //cs_include Scripts/Other/Concerts/BattleConcert2023.cs
 //cs_include Scripts/Other/Concerts/NeoMetalNecro.cs
