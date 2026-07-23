@@ -26434,13 +26434,13 @@
   },
   {
     "name": "Kolrv3",
-    "description": "Solo farm Kolr, Usurper of Flames for Choronzonite. Room limit of 1.",
+    "description": "2 man Kolr Scripts, uses KE LoO. Don't change the classes, KE LoO has a specific skillset for this boss.",
     "tags": [
       "null"
     ],
     "path": "Ultrasv3/ChallengeBosses/Kolrv3.cs",
-    "size": 6324,
-    "sha256": "dbeb0fe6ae0aecdbd17da8d25581e075011f99f6c07cdc404683d6e85c3480e9",
+    "size": 6360,
+    "sha256": "d90be5d2c7255641ea55b421dcac118c1e90563c77d4a268f945a2a6b08afa07",
     "fileName": "Kolrv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kolrv3.cs"
   },
