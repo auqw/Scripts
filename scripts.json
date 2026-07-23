@@ -26328,6 +26328,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/8UltraDarkonv3.cs"
   },
   {
+    "name": "Masakadov3",
+    "description": "Challenge Boss Template v3 — single-taunter fight flow with synced class equip. Copy and adapt for specific bosses.",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/TestUltrasOrBossesScripts/Masakadov3.cs",
+    "size": 9611,
+    "sha256": "a500b05082dee3030e2ae2420dd5358f52206c6e7ed4ca2cd54a6708720cb76e",
+    "fileName": "Masakadov3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/TestUltrasOrBossesScripts/Masakadov3.cs"
+  },
+  {
     "name": "Army Prismatas",
     "description": "Farms gold using the Prismatas in /archmage and selling the elemental bindings",
     "tags": [
