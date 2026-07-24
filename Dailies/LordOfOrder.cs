@@ -82,12 +82,13 @@ public class LordOfOrder
             return;
         }
 
-        Core.Logger("Daily: Lord Of Order Class");
+        Core.Logger("⚔️ Daily: Lord Of Order Class");
         Core.Logger(
-            "For the idiots that keep complaining its not continuing, this is a *daily* Quest, upto the LOO Quest [7165] (10 dailies)"
+            "It's a DAILY quest chain, 10 quests total, up to [7165]. One completes per run, per day. Read the logs below before you file a bug report."
         );
 
         Farm.Experience(50);
+
         // Heart of Servitude
         if (Bot.Quests.IsAvailable(7156) && !Core.isCompletedBefore(7156))
         {
@@ -120,6 +121,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7156);
             Core.ToBank(Core.QuestRewards(7156));
+            Core.Logger("✅ [1/10] Heart of Servitude [7156] complete. Servitude served. This is a DAILY — the chain continues tomorrow, not right now, calm down.");
             return;
         }
 
@@ -142,6 +144,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7157);
             Core.ToBank(Core.QuestRewards(7157));
+            Core.Logger("✅ [2/10] Spirit of Justice [7157] complete. Justice: served, piping hot. DAILY quest — see you in the next 24h for #3.");
             return;
         }
 
@@ -161,6 +164,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7158);
             Core.ToBank(Core.QuestRewards(7158));
+            Core.Logger("✅ [3/10] Purification of Chaos [7158] complete. Chaos purified, mildly inconvenienced. It's a DAILY — quest #4 unlocks tomorrow, patience.");
             return;
         }
 
@@ -199,6 +203,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7159);
             Core.ToBank(Core.QuestRewards(7159));
+            Core.Logger("✅ [4/10] Steadfast Will [7159] complete. Will: steadfast'd. DAILY quest, meaning daily — quest #5 waits for the sun to reset.");
             return;
         }
 
@@ -234,6 +239,7 @@ public class LordOfOrder
             }
             Core.EnsureComplete(7160);
             Core.ToBank(Core.QuestRewards(7160));
+            Core.Logger("✅ [5/10] Strike of Order [7160] complete. Halfway there. Still a DAILY. Still resets tomorrow. Still not a bug.");
             return;
         }
 
@@ -259,6 +265,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7161);
             Core.ToBank(Core.QuestRewards(7161));
+            Core.Logger("✅ [6/10] Harmony [7161] complete. Everyone's vibing. DAILY quest, quest #7 drops after your next reset — go touch grass.");
             return;
         }
 
@@ -279,6 +286,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7162);
             Core.ToBank(Core.QuestRewards(7162));
+            Core.Logger("✅ [7/10] Ordinance [7162] complete. Ordinance ordinanced. DAILY quest — 2 left after this, they're not going anywhere but neither is the reset timer.");
             return;
         }
 
@@ -303,6 +311,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7163);
             Core.ToBank(Core.QuestRewards(7163));
+            Core.Logger("✅ [8/10] Axiom [7163] complete. The Law of Low Drop Rates remains undefeated. DAILY quest — one more after tomorrow's reset, hang tight.");
             return;
         }
 
@@ -332,6 +341,7 @@ public class LordOfOrder
 
             Core.EnsureComplete(7164);
             Core.ToBank(Core.QuestRewards(7164));
+            Core.Logger("✅ [9/10] Blessing of Order [7164] complete. That's the last DAILY of the set — tomorrow's reset unlocks The Final Challenge. Almost there, don't rage quit now.");
             return;
         }
 
@@ -358,6 +368,7 @@ public class LordOfOrder
 
                 Core.EnsureCompleteChoose(7165);
                 Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
+                Core.Logger("🏆 [10/10] The Final Challenge [7165] complete. That's all 10 LOO dailies down — Lord Of Order is FULLY finished. No more dailies today, no more quests, nothing. Go outside.");
 
                 if (rankUpClass)
                     Adv.RankUpClass("Lord Of Order");
