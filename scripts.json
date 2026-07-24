@@ -2743,8 +2743,8 @@
       "ultra"
     ],
     "path": "Ultrasv2/UltraDragov2.cs",
-    "size": 13214,
-    "sha256": "ef9b40f25c3bab6d4034d44935df0912190ed186134e8f16cef434e133a09693",
+    "size": 13267,
+    "sha256": "b3f5e6aa191a6be322be222f96175f0d883f934ca098945d682ec41bc718c620",
     "fileName": "UltraDragov2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv2/UltraDragov2.cs"
   },
@@ -2881,8 +2881,8 @@
       "ultra"
     ],
     "path": "Ultrasv2/UltraDailies.cs",
-    "size": 37880,
-    "sha256": "dc13fc36dc321558796c3ba3cf17d2c51487ff60d58a75bd1ee7aa0efc6d77ae",
+    "size": 38020,
+    "sha256": "e466e9e4ad10caa6bfafd6a4f68ba48fbf0cf9011d1725929cda48ebb98b6546",
     "fileName": "UltraDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv2/UltraDailies.cs"
   },
