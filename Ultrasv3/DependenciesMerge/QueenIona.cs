@@ -4,8 +4,8 @@ description: Queen Iona solo
 tags: Ultra, queen, iona, queen iona
 */
 
-//cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
+//cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
