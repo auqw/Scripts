@@ -2666,7 +2666,8 @@ public class CoreEnginev3
             .ToArray();
 
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
-        string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
+        // jumpCorrectPad (the AS3 entry-point correction) uses "Left" — match it directly
+        string pad = string.IsNullOrWhiteSpace(setPad) || setPad == "Spawn" ? "Left" : setPad;
 
         var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
@@ -2712,15 +2713,30 @@ public class CoreEnginev3
         _bestCell = targetCell;
         _bestPad = pad;
 
-        if (!string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
-        {
-            Log("MAP", $"⁀➴ Jumping to '{targetCell}' ({pad})");
-            Bot.Map.Jump(targetCell, pad);
-            Bot.Player.SetSpawnPoint();
-        }
-        else
+        if (IsInCell(targetCell))
         {
             Log("MAP", $"✅ Already in {targetCell}");
+            return;
+        }
+
+        // Jump directly to entry-point pad with autoCorrect=false (instant & reliable)
+        // autoCorrect=true's only benefit is the 50ms pad-correction to "Left".
+        // We skip that entirely by jumping to "Left" right away.
+        Log("MAP", $"⁀➴ Moving to '{targetCell}' ({pad})");
+        Bot.Map.Jump(targetCell, pad, autoCorrect: false);
+
+        // Verify
+        if (!IsInCell(targetCell))
+        {
+            Log("MAP", $"⚠️ Jump to '{targetCell}' silently failed (still at '{Bot.Player.Cell}'). Retrying...");
+            if (Bot.Player.InCombat || Bot.Player.State == 2)
+            {
+                Bot.Combat.CancelAutoAttack();
+                Bot.Combat.CancelTarget();
+                Bot.Wait.ForCombatExit();
+            }
+            Bot.Map.Jump(targetCell, pad, autoCorrect: false);
+            Bot.Wait.ForTrue(() => IsInCell(targetCell), 10);
         }
     }
 
