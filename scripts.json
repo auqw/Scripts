@@ -9088,6 +9088,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraWaitForArmy.cs"
   },
   {
+    "name": "QueenIona",
+    "description": "Queen Iona solo",
+    "tags": [
+      "ultra",
+      "queen",
+      "iona",
+      "queen iona"
+    ],
+    "path": "Ultrasv3/DependenciesMerge/QueenIona.cs",
+    "size": 7604,
+    "sha256": "81e43bd7d148e76df0a7e53316827217abf84e94c1e9468f639ddbed4583f165",
+    "fileName": "QueenIona.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesMerge/QueenIona.cs"
+  },
+  {
     "name": "Ascend Eclipse Test",
     "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
     "tags": [
@@ -14636,7 +14651,7 @@
     ],
     "path": "Other/Classes/SovereignOfStorms.cs",
     "size": 1965,
-    "sha256": "84ab300edc98f5a95063dbaf4250359df7b2509b792ce3cb03f4ba691822479a",
+    "sha256": "cc8a49451458181940411957a850ebca9cdcb40679b9400a45e2f1dc72c353f3",
     "fileName": "SovereignOfStorms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/SovereignOfStorms.cs"
   },
@@ -17225,7 +17240,7 @@
     ],
     "path": "Other/MergeShops/LothianTreasuryMerge.cs",
     "size": 8035,
-    "sha256": "f734294343f3673f6ef9944ffbd7541965c19d44fec8edde09a139a1cd5fa34b",
+    "sha256": "35a1960649721cdbc0432f480b360cd86147d2493ac46158ba3ead28bf4b63a7",
     "fileName": "LothianTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LothianTreasuryMerge.cs"
   },
