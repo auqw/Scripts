@@ -20,6 +20,7 @@ using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 
 public class UltraDailies
@@ -108,33 +109,33 @@ public class UltraDailies
         {
             switch (NormalizeString(boss))
             {
-            case "ultradailies":
-            case "all":
-                RunBossQueue(new[] { "UltraEzrajal", "UltraWarden", "UltraEngineer", "UltraAvatarTyndarius" });
-                break;
-            case "ultraezrajal":
-            case "ultra ezrajal":
-                PrepEzrajal();
-                FightEzrajal();
-                break;
-            case "ultrawarden":
-            case "ultra warden":
-                PrepWarden();
-                FightWarden();
-                break;
-            case "ultraengineer":
-            case "ultra engineer":
-                PrepEngineer();
-                FightEngineer();
-                break;
-            case "ultraavatartyndarius":
-            case "ultra avatar tyndarius":
-                PrepAvatarTyndarius();
-                FightAvatarTyndarius();
-                break;
-            default:
-                C.Logger($"Unknown boss selected: {boss}", "Error", true, true);
-                break;
+                case "ultradailies":
+                case "all":
+                    RunBossQueue(new[] { "UltraEzrajal", "UltraWarden", "UltraEngineer", "UltraAvatarTyndarius" });
+                    break;
+                case "ultraezrajal":
+                case "ultra ezrajal":
+                    PrepEzrajal();
+                    FightEzrajal();
+                    break;
+                case "ultrawarden":
+                case "ultra warden":
+                    PrepWarden();
+                    FightWarden();
+                    break;
+                case "ultraengineer":
+                case "ultra engineer":
+                    PrepEngineer();
+                    FightEngineer();
+                    break;
+                case "ultraavatartyndarius":
+                case "ultra avatar tyndarius":
+                    PrepAvatarTyndarius();
+                    FightAvatarTyndarius();
+                    break;
+                default:
+                    C.Logger($"Unknown boss selected: {boss}", "Error", true, true);
+                    break;
             }
         }
         finally

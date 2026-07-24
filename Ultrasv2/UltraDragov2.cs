@@ -14,7 +14,8 @@ tags: Ultra
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
-
+using Skua.Core.Interfaces;
+using Skua.Core.Options;
 public class UltraDragov2
 {
     private static CoreAdvanced Adv
