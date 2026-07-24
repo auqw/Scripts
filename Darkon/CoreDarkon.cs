@@ -61,8 +61,8 @@ public class CoreDarkon
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
         {
             Core.EnsureAccept(7324);
-            Core.KillMonster("arcangrove", "LeftBack", "Left", "*", "Banana", 22);
-            Core.EnsureAccept(7324);
+            Core.KillMonster("arcangrove", "LeftBack", "Left", "*", "Banana", 22, false);
+            Core.EnsureComplete(7324);
         }
         Core.CancelRegisteredQuests();
     }
