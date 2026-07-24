@@ -13,7 +13,7 @@ tags: lothian, treasury, merge, queeniona, dark, thunder, master, long, lightnin
 //cs_include Scripts/Other/MergeShops/LoughshineLootMerge.cs
 //cs_include Scripts/Other/MergeShops/LiaTaraHillLootMerge.cs
 //cs_include Scripts/Other/MergeShops/ColdThunderMerge.cs
-//cs_include Scripts/Ultrasv3/ChallengeBosses/QueenIonav3.cs
+//cs_include Scripts/Ultrasv3/DependenciesMerge/QueenIona.cs
 //cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreEngine.cs
 //cs_include Scripts/Ultrasv3/Entwined Eclipse/CoreUltra.cs
 using Skua.Core.Interfaces;
