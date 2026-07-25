@@ -4547,8 +4547,8 @@
       "null"
     ],
     "path": "Story/TheLastSunSet/TheLastSunSetCore.cs",
-    "size": 2541,
-    "sha256": "80b473cac4cf6035e153766ad9724d3ea5f099ff4df1bd1935eddd39dd984fe1",
+    "size": 2480,
+    "sha256": "04b58f3ff2ddd719d7ab23aa4d837c658895891d6d60b59a41fe257cec587b0e",
     "fileName": "TheLastSunSetCore.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/TheLastSunSetCore.cs"
   },
@@ -13437,8 +13437,8 @@
       "farm"
     ],
     "path": "Farm/REP/CarcossaCourtRep.cs",
-    "size": 1002,
-    "sha256": "8c7fb14e7b6049e12f0d6dc74eff5e879bf193772c099fe3bbd8a52bb2403948",
+    "size": 1064,
+    "sha256": "896e6de1903ad868d870dbd27d5f66ac42ad6cf5e499a152ded5eaa034ee9905",
     "fileName": "CarcossaCourtRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/CarcossaCourtRep.cs"
   },
