@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 164978,
-    "sha256": "4e907d746fc0a16569540615c0a1fc0dad0db5b4917b60c5802c347c6b7c85af",
+    "size": 166640,
+    "sha256": "a6f786904a628c55a6b1cee43ba081b9016e4fbc326a216e345fd424763740fd",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 442437,
-    "sha256": "2694afded994f2f819493187a07ef4d260ed7ac9f5a8c2128b03c8535ae2767e",
+    "size": 444450,
+    "sha256": "c6bcbe30b03f37bf7cffe79e7b85d520bcd51b2f8cb35ea7704895086cf54538",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4508,6 +4508,49 @@
     "sha256": "ce4efb8a7eee6a2ca31b7b1681160e19fb613a0c38d9f7ea5396024393beb1bb",
     "fileName": "FungiforaFunGuy[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Dailies/FungiforaFunGuy[Mem].cs"
+  },
+  {
+    "name": "0templeofdoom",
+    "description": "This will complete the \"templeofdoom\" part of the arc.",
+    "tags": [
+      "story",
+      "quest",
+      "the last sun set",
+      "templeofdoom"
+    ],
+    "path": "Story/TheLastSunSet/0TempleofDoom.cs",
+    "size": 852,
+    "sha256": "9d85146372a495241b69f50d07aa38f38222e19a36153c1f77136425a67cb81d",
+    "fileName": "0TempleofDoom.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0TempleofDoom.cs"
+  },
+  {
+    "name": "Complete The Last Sun Set",
+    "description": "This will complete the \"The Last Sun Set\" arc.",
+    "tags": [
+      "story",
+      "quest",
+      "the last sun set",
+      "complete",
+      "all"
+    ],
+    "path": "Story/TheLastSunSet/0DoAll.cs",
+    "size": 847,
+    "sha256": "ec96b9173cc257f67bfac41dfc0694a95bad22c56ce4474af87b24a4ba83a945",
+    "fileName": "0DoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0DoAll.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Story/TheLastSunSet/TheLastSunSetCore.cs",
+    "size": 2479,
+    "sha256": "911368f9b910c6d02f8d7fd6dbb90b94f5a29775bc6a37b5e31ef755c34bcb37",
+    "fileName": "TheLastSunSetCore.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/TheLastSunSetCore.cs"
   },
   {
     "name": "CrulonWed Story",
