@@ -939,7 +939,7 @@ public class CoreFarms
         if (Bot.Player.Level >= level && Bot.Player.Gold >= gold)
             return;
 
-        if (!Core.isCompletedBefore(7979))
+        if (!Core.isCompletedBefore(7985))
         {
             Core.Logger(
                 "Please use Scripts/Story/Legion/SevenCircles(War).cs to use the SevenCircles method"
