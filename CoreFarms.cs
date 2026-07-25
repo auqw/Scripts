@@ -1407,6 +1407,7 @@ public class CoreFarms
         VampireREP();
         YewMountainsREP();
         YokaiREP();
+        CarcossaCourRep();
         if (doDeathPit)
         {
             DeathPitBrawlREP();
@@ -1414,6 +1415,54 @@ public class CoreFarms
         }
 
         ToggleBoost(BoostType.Reputation, false);
+    }
+
+    private void CarcossaCourRep(int rank = 10)
+    {
+        if (FactionRank("Carcosa Court") >= rank)
+            return;
+
+        if (!new[] { 10810, 10811, 10812 }.Any(Bot.Quests.IsUnlocked))
+        {
+            Core.Logger("*MUST* have completed the story atleast upto the \"Light and Lemming\" Quest in //Templeofdoom");
+            return;
+        }
+
+        Core.EquipClass(ClassType.Farm);
+        Core.SavedState(true, "templeofdoom");
+        ToggleBoost(BoostType.Reputation);
+        Core.Logger($"Farming rank {rank}");
+
+        int[] currentQuests = [];
+        bool maxedQuests = false;
+
+        while (!Bot.ShouldExit && FactionRank("Carcosa Court") < rank)
+        {
+            if (!maxedQuests)
+            {
+                int[] availableQuests =
+                    Bot.Quests.IsUnlocked(10812) ? new[] { 10810, 10811, 10812 } :
+                    Bot.Quests.IsUnlocked(10811) ? new[] { 10810, 10811 } :
+                    new[] { 10810 };
+
+                if (!availableQuests.SequenceEqual(currentQuests))
+                {
+                    Core.CancelRegisteredQuests();
+                    Core.RegisterQuests(availableQuests);
+                    currentQuests = availableQuests;
+                    Core.Logger($"Registered quests: {string.Join(", ", currentQuests)}");
+                }
+
+                if (availableQuests.Length == 3)
+                    maxedQuests = true;
+            }
+
+            Core.KillMonster("templeofdoom", "r7", "Bottom", "*");
+        }
+
+        Core.CancelRegisteredQuests();
+        ToggleBoost(BoostType.Reputation, false);
+        Core.SavedState(false);
     }
 
     public void AegisREP(int rank = 10)
