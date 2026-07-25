@@ -957,7 +957,7 @@ public class CoreFarms
         Core.SavedState(true, "sevencircleswar");
         Core.Logger($"Farming {gold} gold using SCW Method");
 
-        Core.RegisterQuests(7979, 7980, 7981);
+        Core.RegisterQuests(7980, 7981, 7985);
 
         while (
             !Bot.ShouldExit
@@ -970,7 +970,7 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.KillMonster("sevencircleswar", "Enter", "Right", "*", log: false);
+            Core.KillMonster("sevencircleswar", "r9", "Left", "*", log: false);
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Experience, false);
