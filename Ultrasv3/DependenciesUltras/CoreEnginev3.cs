@@ -2666,7 +2666,8 @@ public class CoreEnginev3
             .ToArray();
 
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
-        string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
+        // jumpCorrectPad (the AS3 entry-point correction) uses "Left" — match it directly
+        string pad = string.IsNullOrWhiteSpace(setPad) || setPad == "Spawn" ? "Left" : setPad;
 
         var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
@@ -2712,15 +2713,113 @@ public class CoreEnginev3
         _bestCell = targetCell;
         _bestPad = pad;
 
-        if (!string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
-        {
-            Log("MAP", $"⁀➴ Jumping to '{targetCell}' ({pad})");
-            Bot.Map.Jump(targetCell, pad);
-            Bot.Player.SetSpawnPoint();
-        }
-        else
+        if (IsInCell(targetCell))
         {
             Log("MAP", $"✅ Already in {targetCell}");
+            return;
+        }
+
+        // Jump directly to entry-point pad with autoCorrect=false (instant & reliable)
+        // autoCorrect=true's only benefit is the 50ms pad-correction to "Left".
+        // We skip that entirely by jumping to "Left" right away.
+        Log("MAP", $"⁀➴ Moving to '{targetCell}' ({pad})");
+        Bot.Map.Jump(targetCell, pad, autoCorrect: false);
+
+        // Verify
+        if (!IsInCell(targetCell))
+        {
+            Log("MAP", $"⚠️ Jump to '{targetCell}' silently failed (still at '{Bot.Player.Cell}'). Retrying...");
+            if (Bot.Player.InCombat || Bot.Player.State == 2)
+            {
+                Bot.Combat.CancelAutoAttack();
+                Bot.Combat.CancelTarget();
+                Bot.Wait.ForCombatExit();
+            }
+            Bot.Map.Jump(targetCell, pad, autoCorrect: false);
+            Bot.Wait.ForTrue(() => IsInCell(targetCell), 10);
+        }
+    }
+
+    /// <summary>
+    /// Identical to ChooseBestCell but treats the entire monsterNames string as a single monster name
+    /// (no comma/pipe splitting). Use this for monsters with commas in their name like "Kolr, Usurper of Flames".
+    /// </summary>
+    /// <param name="monsterName">Single monster name (commas treated as part of the name, not separators).</param>
+    /// <param name="alt">If true, picks the first monster's cell instead of the most populated.</param>
+    /// <param name="setCell">Explicit cell override.</param>
+    /// <param name="setPad">Pad to jump to (default "Spawn").</param>
+    public void ChooseBestCellOneMonster(
+        string? monsterName,
+        bool alt = false,
+        string? setCell = null,
+        string setPad = "Spawn"
+    )
+    {
+        bool wildcard = string.IsNullOrWhiteSpace(monsterName) || monsterName == "*";
+        string pad = string.IsNullOrWhiteSpace(setPad) || setPad == "Spawn" ? "Left" : setPad;
+
+        var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
+            .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
+            .Where(m =>
+                wildcard
+                || string.Equals(m.Name ?? string.Empty, monsterName, StringComparison.OrdinalIgnoreCase)
+            )
+            .ToList();
+
+        if (monsters.Count == 0)
+        {
+            Log("MAP", $"❌ No matching monsters found for \"{monsterName}\"");
+            return;
+        }
+
+        string? targetCell =
+            !string.IsNullOrWhiteSpace(setCell) ? setCell
+            : alt ? monsters.FirstOrDefault()?.Cell
+            : monsters
+                .GroupBy(m => m.Cell, StringComparer.Ordinal)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key)
+                .FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(targetCell))
+        {
+            Log("MAP", "❌ No valid target cell");
+            return;
+        }
+
+        var mapCells = new HashSet<string>(
+            Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>(),
+            StringComparer.Ordinal
+        );
+        if (!mapCells.Contains(targetCell))
+        {
+            Log("MAP", $"❌ Cell not in map: {targetCell}");
+            return;
+        }
+
+        _bestCell = targetCell;
+        _bestPad = pad;
+
+        if (IsInCell(targetCell))
+        {
+            Log("MAP", $"✅ Already in {targetCell}");
+            return;
+        }
+
+        Log("MAP", $"⁀➴ Moving to '{targetCell}' ({pad})");
+        Bot.Map.Jump(targetCell, pad, autoCorrect: false);
+
+        if (!IsInCell(targetCell))
+        {
+            Log("MAP", $"⚠️ Jump to '{targetCell}' silently failed (still at '{Bot.Player.Cell}'). Retrying...");
+            if (Bot.Player.InCombat || Bot.Player.State == 2)
+            {
+                Bot.Combat.CancelAutoAttack();
+                Bot.Combat.CancelTarget();
+                Bot.Wait.ForCombatExit();
+            }
+            Bot.Map.Jump(targetCell, pad, autoCorrect: false);
+            Bot.Wait.ForTrue(() => IsInCell(targetCell), 10);
         }
     }
 

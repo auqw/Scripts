@@ -725,7 +725,7 @@ public class UltraEnhancements
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Health_Vamp,
+                    wSpecial: WeaponSpecial.Ravenous,
                     cSpecial: CapeSpecial.Lament
                 );
                 break;
@@ -769,6 +769,25 @@ public class UltraEnhancements
                 Adv.SmartEnhance(className);
                 break;
         }
+    }
+
+    public void ApplyNoVainglory()
+    {
+        Apply();
+
+        string className = Bot.Player?.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        InventoryItem? cape = Bot.Inventory.Items.Find(i => i.Equipped && i.Category == ItemCategory.Cape);
+        if (cape == null)
+        {
+            C.Logger($"[UltraEnhancements] No equipped cape found for Nulgath override ({className}).");
+            return;
+        }
+
+        C.Logger($"[UltraEnhancements] NoVainglory enhancing for: {className} and forcing Forge cape");
+        Adv.EnhanceItem(cape.Name, EnhancementType.Lucky, cSpecial: CapeSpecial.Absolution);
     }
 }
 

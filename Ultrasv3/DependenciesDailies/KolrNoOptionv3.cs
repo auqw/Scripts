@@ -167,7 +167,7 @@ public class KolrNoOpv3
         C.Join($"flameusurper-{C.PrivateRoomNumber + _roomOffset}");
         UltraWaitForArmy.Instance.NewWaitForArmy(armySize - 1, waitSyncFile, useSkill: true);
 
-        Bot.Map.Jump("r2", "Bottom");
+        Engine.ChooseBestCellOneMonster(boss);
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(2000);
 
