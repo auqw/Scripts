@@ -7,6 +7,8 @@ tags: story, quest, The Last Sun Set, complete, all
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/Oasis/CoreOasis.cs
 //cs_include Scripts/Story/TheLastSunSet/TheLastSunSetCore.cs
 
 using Skua.Core.Interfaces;
