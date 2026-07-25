@@ -97,11 +97,8 @@ public class EmpoweredWeaponsofNulgath
 
         Farm.Experience(80);
         Core.AddDrop(Nation.bagDrops);
-        int[] questList = Core.FromTo(8694, 8701);
-        Array.Resize(ref questList, questList.Length + 3);
-        questList[^3] = 10546;
-        questList[^2] = 10547;
-        questList[^1] = 10548;
+        var questList = Core.FromTo(8694, 8701).ToList();
+        questList.AddRange([10546, 10547, 10548]);
         foreach (int Quest in questList)
         {
             Quest? q = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
