@@ -1,7 +1,7 @@
 /*
 name: Empowered Weapons of Nulgath
 description: pick an empowered weapon, if you own teh requirements and 25 insignias, itll farm the empowered ver.
-tags: empowered, nulgath, reavers, bloodletter, overfiend blade, shadow spear, prismatic manslayers, legacy of nulgath, worshipper of nulgath, evovled void armor
+tags: empowered, nulgath, reavers, bloodletter, overfiend blade, shadow spear, prismatic manslayers, legacy of nulgath, worshipper of nulgath, evolved void armor, oblivion blade, charged oblivion blade
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -97,7 +97,12 @@ public class EmpoweredWeaponsofNulgath
 
         Farm.Experience(80);
         Core.AddDrop(Nation.bagDrops);
-        foreach (int Quest in Core.FromTo(8694, 8701))
+        int[] questList = Core.FromTo(8694, 8701);
+        Array.Resize(ref questList, questList.Length + 3);
+        questList[^3] = 10546;
+        questList[^2] = 10547;
+        questList[^1] = 10548;
+        foreach (int Quest in questList)
         {
             Quest? q = Core.InitializeWithRetries(() => Core.EnsureLoad(Quest));
             if (q == null)
@@ -313,6 +318,44 @@ public class EmpoweredWeaponsofNulgath
                 Nation.FarmDiamondofNulgath();
                 Core.EnsureComplete(8699);
                 break;
+            
+            //Empowered Oblivion Blade 10546
+            case EmpoweredItems.Empowered_Oblivion_Blade:
+                if (!Core.CheckInventory("Oblivion Blade of Nulgath"))
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
+
+                Core.EnsureAccept(10546);
+                Nation.NulgathsRouletteofMisfortune("Bane of Nulgath", 1);
+                Nation.FarmDarkCrystalShard(150);
+                Nation.FarmDiamondofNulgath(500);
+                Nation.FarmTotemofNulgath(30);
+                Nation.FarmVoucher(false);
+                Core.EnsureComplete(10546);
+                break;
+
+            //Empowered Charged Oblivion Blade 10547/10548
+            case EmpoweredItems.Empowered_Charged_Oblivion_Blade:
+                if (!Core.CheckInventory("Oblivion Blade of Nulgath") || !(Core.CheckInventory("Oblivion Blade of Nulgath Pet") || Core.CheckInventory("Oblivion Blade of Nulgath Pet (Rare)")))
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
+
+                if (Core.CheckInventory("Oblivion Blade of Nulgath Pet")) Core.EnsureAccept(10547);
+                else Core.EnsureAccept(10548);
+                Nation.NulgathsRouletteofMisfortune("Bane of Nulgath", 1);
+                Nation.FarmDarkCrystalShard(150);
+                Nation.FarmDiamondofNulgath(500);
+                Nation.FarmTotemofNulgath(30);
+                Nation.FarmVoucher(false);
+                if (Core.CheckInventory("Oblivion Blade of Nulgath Pet")) Core.EnsureComplete(10547);
+                else Core.EnsureComplete(10548);
+                break;
         }
     }
 }
@@ -332,4 +375,6 @@ public enum EmpoweredItems
     Empowered_Evolved_Blood = 70451,
     Empowered_Evolved_Hex = 70452,
     Empowered_Evolved_Shadow = 70453,
+    Empowered_Oblivion_Blade = 70454,
+    Empowered_Charged_Oblivion_Blade = 70455
 };
