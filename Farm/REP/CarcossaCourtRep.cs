@@ -8,6 +8,7 @@ tags: CarcossaCourt, rep, reputation, farm
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/TheLastSunSet/TheLastSunSetCore.cs
 //cs_include Scripts/Story/Oasis/CoreOasis.cs
 using Skua.Core.Interfaces;
 
