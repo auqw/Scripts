@@ -41,7 +41,7 @@ public class TheLastSunSetCore
         Core.SetOptions(false);
     }
 
-    public void DoALl()
+    public void DoAll()
     {
         TempleofDoom();
     }

@@ -1,20 +1,25 @@
 /*
-name: Complete The Last Sun Set
-description: This will complete the "The Last Sun Set" arc.
-tags: story, quest, The Last Sun Set, complete, all
+name: CarcossaCourt REP
+description: This script will farm CarcossaCourt REP to rank 10.
+tags: CarcossaCourt, rep, reputation, farm
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/Story/TheLastSunSet/TheLastSunSetCore.cs
-
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/Oasis/CoreOasis.cs
 using Skua.Core.Interfaces;
 
-public class DoAllTLSS
+public class CarcossaCourRep
 {
-    public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
     private static TheLastSunSetCore TLSSC
     {
         get => __TLSSC ??= new TheLastSunSetCore();
@@ -27,6 +32,7 @@ public class DoAllTLSS
         Core.SetOptions();
 
         TLSSC.DoAll();
+        Farm.CarcossaCourtRep();
 
         Core.SetOptions(false);
     }

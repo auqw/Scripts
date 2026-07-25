@@ -1407,7 +1407,7 @@ public class CoreFarms
         VampireREP();
         YewMountainsREP();
         YokaiREP();
-        CarcossaCourRep();
+        CarcossaCourtRep();
         if (doDeathPit)
         {
             DeathPitBrawlREP();
@@ -1417,7 +1417,7 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation, false);
     }
 
-    private void CarcossaCourRep(int rank = 10)
+    public void CarcossaCourtRep(int rank = 10)
     {
         if (FactionRank("Carcosa Court") >= rank)
             return;
