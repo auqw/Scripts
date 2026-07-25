@@ -4519,8 +4519,8 @@
       "templeofdoom"
     ],
     "path": "Story/TheLastSunSet/0TempleofDoom.cs",
-    "size": 852,
-    "sha256": "9d85146372a495241b69f50d07aa38f38222e19a36153c1f77136425a67cb81d",
+    "size": 951,
+    "sha256": "85a90bc5bf6ce08718b9686eb793735ae3463b4762c88b850909bac6075df817",
     "fileName": "0TempleofDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0TempleofDoom.cs"
   },
@@ -4535,8 +4535,8 @@
       "all"
     ],
     "path": "Story/TheLastSunSet/0DoAll.cs",
-    "size": 847,
-    "sha256": "fd91835240edea8454dd3d4ee8ad7214c32259e2145b59ecb0fe6f6f94e30806",
+    "size": 946,
+    "sha256": "155bef11bf1868340a332195faceaed867eda1aeb584927d30933b72f69d1fed",
     "fileName": "0DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0DoAll.cs"
   },
@@ -4547,8 +4547,8 @@
       "null"
     ],
     "path": "Story/TheLastSunSet/TheLastSunSetCore.cs",
-    "size": 2479,
-    "sha256": "abf569c6b444dd716761a7cba1d3761d0947204051523e9759bccff1f619debb",
+    "size": 2541,
+    "sha256": "80b473cac4cf6035e153766ad9724d3ea5f099ff4df1bd1935eddd39dd984fe1",
     "fileName": "TheLastSunSetCore.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/TheLastSunSetCore.cs"
   },
