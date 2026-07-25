@@ -986,7 +986,7 @@ public class CoreFrostvale
 
         // 8425 Comparing Claws
         Story.MapItemQuest(8425, "deerhunt", 9373, 4);
-        Story.KillQuest(8425, "deerhunt", new[] { "Scared Wolf", "Frightened Owl" });
+        Story.KillQuest(8425, "deerhunt", new[] { "Frightened Owl", "Scared Wolf" });
 
         // 8426 Lair Investigated
         Story.MapItemQuest(8426, "deerhunt", new[] { 9374, 9375 });
