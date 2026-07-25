@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 166640,
-    "sha256": "a6f786904a628c55a6b1cee43ba081b9016e4fbc326a216e345fd424763740fd",
+    "size": 166641,
+    "sha256": "46913ca1ad980a8e345020ca47a7efc5354ce98e43b552cccc1ccd63afd8ed40",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -4536,7 +4536,7 @@
     ],
     "path": "Story/TheLastSunSet/0DoAll.cs",
     "size": 847,
-    "sha256": "ec96b9173cc257f67bfac41dfc0694a95bad22c56ce4474af87b24a4ba83a945",
+    "sha256": "fd91835240edea8454dd3d4ee8ad7214c32259e2145b59ecb0fe6f6f94e30806",
     "fileName": "0DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0DoAll.cs"
   },
@@ -4548,7 +4548,7 @@
     ],
     "path": "Story/TheLastSunSet/TheLastSunSetCore.cs",
     "size": 2479,
-    "sha256": "911368f9b910c6d02f8d7fd6dbb90b94f5a29775bc6a37b5e31ef755c34bcb37",
+    "sha256": "abf569c6b444dd716761a7cba1d3761d0947204051523e9759bccff1f619debb",
     "fileName": "TheLastSunSetCore.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/TheLastSunSetCore.cs"
   },
@@ -13426,6 +13426,21 @@
     "sha256": "d2bed8997e6bd037bb5352d834f4f19725c40e731f7458119a225ac1d0bcd881",
     "fileName": "BrethwrenREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BrethwrenREP.cs"
+  },
+  {
+    "name": "CarcossaCourt REP",
+    "description": "This script will farm CarcossaCourt REP to rank 10.",
+    "tags": [
+      "carcossacourt",
+      "rep",
+      "reputation",
+      "farm"
+    ],
+    "path": "Farm/REP/CarcossaCourtRep.cs",
+    "size": 1002,
+    "sha256": "8c7fb14e7b6049e12f0d6dc74eff5e879bf193772c099fe3bbd8a52bb2403948",
+    "fileName": "CarcossaCourtRep.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/CarcossaCourtRep.cs"
   },
   {
     "name": "Brightoak REP",
