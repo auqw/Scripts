@@ -6,7 +6,7 @@ tags: butler, follow, goto, tcp
 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/.Debug/Butlerv4FromScratch/DownloadDll.cs
+//cs_include Scripts/Tools/Butlerv4/DownloadDLL.cs
 
 using System;
 using System.Linq;
