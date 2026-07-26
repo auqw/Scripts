@@ -8741,19 +8741,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Dailies/WrongTurnatVoidbuquerque.cs"
   },
   {
-    "name": "Butler version 4",
-    "description": "Follows a player using Goto; sync-file fallback for locked zones; transition-safe goto; reduced blinking; combat-aware syncing; server-aware sleeping.",
+    "name": "Download LeaderButlerSyncv2 DLL",
+    "description": "Downloads LeaderButlerSyncv2.dll to the Skua plugins folder if missing.",
+    "tags": [
+      "dll",
+      "download",
+      "butler",
+      "plugin"
+    ],
+    "path": "Tools/Butlerv4/DownloadDLL.cs",
+    "size": 1860,
+    "sha256": "eb28482aadf909572f3019c85b4e69459bf97693b7dd30c140f0bdcbfa242752",
+    "fileName": "DownloadDLL.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/DownloadDLL.cs"
+  },
+  {
+    "name": "Butlerv4 (TCP)",
+    "description": "Follows a leader via Goto every ~1s. Connects via TCP for leader location data.",
     "tags": [
       "butler",
       "follow",
-      "sync",
-      "locked-zone",
-      "quickdeaggro",
-      "lowlog"
+      "goto",
+      "tcp"
     ],
     "path": "Tools/Butlerv4/Butlerv4.cs",
-    "size": 20033,
-    "sha256": "c34abaa4ca6204cb2d3cbb7f7e16cd2e04dc0819a5793e49af5e879d59e70248",
+    "size": 13607,
+    "sha256": "9efa7e403435e48d081180b944d75b6ce2a6cda4dd31197310776fef356698ec",
     "fileName": "Butlerv4.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/Butlerv4.cs"
   },
