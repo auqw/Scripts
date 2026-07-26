@@ -8765,8 +8765,8 @@
       "tcp"
     ],
     "path": "Tools/Butlerv4/Butlerv4.cs",
-    "size": 13607,
-    "sha256": "9efa7e403435e48d081180b944d75b6ce2a6cda4dd31197310776fef356698ec",
+    "size": 13595,
+    "sha256": "861fc174a61cced66113ee2b745e54e6031dea3efef2af1cfe13e279eeb907c5",
     "fileName": "Butlerv4.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/Butlerv4.cs"
   },
