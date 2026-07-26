@@ -1,17 +1,17 @@
 /*
-name: Butler version 4
-description: Follows a player using Goto; sync-file fallback for locked zones; transition-safe goto; reduced blinking; combat-aware syncing; server-aware sleeping.
-tags: butler, follow, sync, locked-zone, quickdeaggro, lowlog
+name: Butlerv4 (TCP)
+description: Follows a leader via Goto every ~1s. Connects via TCP for leader location data.
+tags: butler, follow, goto, tcp
 */
 
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/.Debug/Butlerv4FromScratch/DownloadDll.cs
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -41,87 +41,42 @@ public class Butlerv4
         new Option<string>("Leader3Butlers", "Butlers For Leader 3", "Comma-separated butler account names. Example: acc1,acc2,acc3", ""),
         new Option<string>("Leader4Name", "Leader 4 Name", "Name of leader 4.", ""),
         new Option<string>("Leader4Butlers", "Butlers For Leader 4", "Comma-separated butler account names. Example: acc1,acc2,acc3", ""),
-        new Option<bool>("AutoEnhance", "Enable Auto-Enhance", "Automatically enhance your class when starting.", true),
+        new Option<bool>("AutoEnhance", "Auto Enhance", "Automatically enhance equipped class on startup.", true),
+        new Option<bool>("UseGoto", "Use Goto", "Use Goto to follow instead of direct Join+Jump.", true),
         CoreBots.Instance.SkipOptions,
     };
 
-    volatile bool LockedZoneWarning;
-    volatile bool GotoIsOff;
-    volatile bool RoomFull;
-    volatile bool IsParked;
-
     string playerName = string.Empty;
-    string syncFilePath = "";
-
-    private int noSyncFileCounter = 0;
-    private const int noSyncFileThreshold = 5;
     private volatile bool _gotoPending;
     private DateTime _lastGotoTime = DateTime.MinValue;
     private const int GotoMinIntervalMs = 500;
-    private const int LeaderIdleTimeoutMinutes = 3;
-    private DateTime _lastLeaderAttackTime = DateTime.UtcNow;
+
+    // ── TCP state ────────────────────────────────────────────────────
+    private TcpClient? _tcp;
+    private NetworkStream? _stream;
+    private System.IO.StreamReader? _streamReader;
+    private string _tcpMap = "";
+    private string _tcpRoom = "";
+    private string _tcpCell = "";
+    private string _tcpPad = "";
+    private bool _tcpInCombat = false;
+    private bool _tcpHasTarget = false;
+    private bool _lockedZone = false;
+    private bool _roomFull = false;
+    private bool _pvpZone = false;
+    private bool _gotoIgnored = false;
+    private bool _differentServer = false;
+    private bool _isParked = false;
+    private bool _houseJoined = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions(disableClassSwap: true);
-        Core.LoggerInChat = false;
-
-        // Ensure LeaderButlerSync.dll is present in the Skua plugins folder
-        string skuaBase = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Skua"
-        );
-
-        try
-        {
-            string destDir = Path.Combine(skuaBase, "plugins");
-            string destDll = Path.Combine(destDir, "LeaderButlerSync.dll");
-
-            // Some clients only sync .cs files, so the DLL never gets pulled down
-            // alongside this script. If it's missing, fetch it directly into plugins.
-            if (!File.Exists(destDll))
-            {
-                const string dllUrl = "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/LeaderButlerSync.dll";
-                try
-                {
-                    Directory.CreateDirectory(destDir);
-                    using var http = new HttpClient();
-                    byte[] data = http.GetByteArrayAsync(dllUrl).GetAwaiter().GetResult();
-                    File.WriteAllBytes(destDll, data);
-                    Core.Logger($"Downloaded LeaderButlerSync.dll to plugins folder.");
-                }
-                catch (Exception dlEx)
-                {
-                    Core.Logger($"Failed to download LeaderButlerSync.dll: {dlEx.Message}");
-                }
-            }
-        }
-        catch (IOException ioEx)
-        {
-            Core.Logger($"Failed to set up plugin due to I/O error: {ioEx.ToString()}");
-        }
-        catch (UnauthorizedAccessException uaEx)
-        {
-            Core.Logger($"Failed to set up plugin due to insufficient permissions: {uaEx.ToString()}");
-        }
-        catch (Exception ex)
-        {
-            Core.Logger($"Failed to set up plugin: {ex.ToString()}");
-        }
+        DownloadDLL.Download();
 
         Bot.Events.ExtensionPacketReceived += ChatListener;
-        Execute();
-        Bot.Events.ExtensionPacketReceived -= ChatListener;
-
-        Core.SetOptions(false);
-    }
-
-    public void Execute()
-    {
-        Core.Join("whitemap-100000");
 
         string myUsername = Bot.Player.Username ?? "";
-        int leaderIndex = 0;
 
         for (int i = 1; i <= 4; i++)
         {
@@ -129,7 +84,6 @@ public class Butlerv4
             var butlers = butlerList.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             if (butlers.Any(b => string.Equals(b, myUsername, StringComparison.OrdinalIgnoreCase)))
             {
-                leaderIndex = i;
                 playerName = Bot.Config!.Get<string>($"Leader{i}Name") ?? "";
                 break;
             }
@@ -137,106 +91,245 @@ public class Butlerv4
 
         if (string.IsNullOrEmpty(playerName))
         {
-            Core.Logger($"This account ({myUsername}) is not assigned to any leader's butler list.", messageBox: true, stopBot: true);
+            Core.Logger($"This account is not assigned to any leader's butler list.", messageBox: true, stopBot: true);
             return;
         }
 
-        Core.Logger($"Following Leader {leaderIndex}: {playerName}");
+        ConnectToLeader();
 
-        if (playerName == Bot.Player.Username)
+        // Auto-enhance equipped class if enabled
+        if (Bot.Config!.Get<bool>("AutoEnhance"))
         {
-            Core.Logger("Cannot follow yourself.", messageBox: true, stopBot: true);
-            return;
+            string currentClass = Bot.Player.CurrentClass?.Name ?? "";
+            if (!string.IsNullOrEmpty(currentClass) && Core.CheckInventory(currentClass))
+            {
+                Core.Logger($"[Butler] Auto-enhancing class: {currentClass}");
+                Adv.SmartEnhance(currentClass);
+            }
         }
 
-        TryAutoEnhance();
-
-        string charLocDir = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "Skua",
-            "character_locations"
-        );
-        Directory.CreateDirectory(charLocDir);
-
-        syncFilePath = Path.Combine(charLocDir, $"{playerName}_location.sync");
-
-        long lastTicks = 0;
-        int staleCounter = 0;
-        const int staleThreshold = 60;
-
-        while (!Bot.ShouldExit)
-        {
-            while (!Bot.ShouldExit && Bot.Player?.Alive != true) Core.Sleep(250);
-
-            if (!TryReadSyncData(out var data))
-                continue;
-
-            // Stale tick detection
-            if (data.Ticks == lastTicks)
-            {
-                staleCounter++;
-                if (staleCounter >= staleThreshold)
-                {
-                    EnterSafeState("Leader offline (stale ticks), parking");
-                    staleCounter = 0;
-                }
-                Core.Sleep(250);
-                continue;
-            }
-            staleCounter = 0;
-            lastTicks = data.Ticks;
-
-            if (!data.LeaderLoggedIn) { EnterSafeState("Leader logged out, parking"); continue; }
-
-            // Leader idle detection: reset timer when leader attacks, park after 3 minutes idle
-            if (data.LeaderInCombat || data.LeaderHasTarget)
-                _lastLeaderAttackTime = DateTime.UtcNow;
-            else if ((DateTime.UtcNow - _lastLeaderAttackTime).TotalMinutes >= LeaderIdleTimeoutMinutes)
-            {
-                Core.Logger("Leader hasn't attacked, parking");
-                EnterSafeState($"Leader hasn't attacked in {LeaderIdleTimeoutMinutes} minutes.");
-                continue;
-            }
-
-            if (!IsSameServer(data.LeaderServer))
-            {
-                EnterSafeState("Leader changed server, parking");
-                continue;
-            }
-
-            string currentMap = Bot.Map.Name?.ToLower() ?? "";
-            string currentCell = Bot.Player?.Cell ?? "Enter";
-
-            bool mapMismatch = !string.Equals(data.Map, currentMap, StringComparison.OrdinalIgnoreCase);
-            bool cellMismatch = !string.Equals(currentCell, data.Cell, StringComparison.OrdinalIgnoreCase);
-
-            if (mapMismatch || cellMismatch)
-            {
-                HandleMapOrCellMismatch(data);
-                continue;
-            }
-
-            if (GotoIsOff)
-            {
-                Core.Logger($"{playerName} goto disabled. Stopping.");
-                break;
-            }
-
-            if (RoomFull)
-            {
-                TryHandleRoomFull();
-                continue;
-            }
-
-            if (!mapMismatch)
-                HandlePadMismatch(data);
-
-            UpdateCombatState(data);
-            Core.Sleep(250);
-        }
+        DontAttack();
+        FollowLeader();
 
         Bot.Events.ExtensionPacketReceived -= ChatListener;
-        QuickDeaggro();
+    }
+
+    private void FollowLeader()
+    {
+        while (!Bot.ShouldExit)
+        {
+            while (!Bot.ShouldExit && Bot.Player?.Alive != true)
+                Core.Sleep(250);
+
+            PollTcpData();
+
+            if (_isParked)
+            {
+                _lockedZone = false;
+                _roomFull = false;
+                _pvpZone = false;
+                _gotoIgnored = false;
+                _differentServer = false;
+                Core.Sleep(5000);
+                _isParked = false;
+                continue;
+            }
+
+            // Leader offline check — if TCP isn't connected, park
+            if (_tcp == null || !_tcp.Connected)
+            {
+                EnterSafeState("Leader is offline or unreachable, parking");
+                continue;
+            }
+
+            if (_differentServer)
+            {
+                EnterSafeState("Leader could not be found. Either in a different server or logged off, parking");
+                continue;
+            }
+
+            if (_lockedZone)
+            {
+                Core.Logger($"[Butler] Locked zone — tcpMap=[{_tcpMap}] tcpRoom=[{_tcpRoom}]");
+                Core.Join($"{_tcpMap}-{_tcpRoom}");
+                Core.Jump(_tcpCell, _tcpPad);
+                _lockedZone = false;
+                continue;
+            }
+
+            if (_roomFull)
+            {
+                EnterSafeState("Room is full, parking");
+                continue;
+            }
+
+            if (_pvpZone)
+            {
+                Core.Logger($"[Butler] PvP zone — tcpMap=[{_tcpMap}] tcpRoom=[{_tcpRoom}]");
+                Core.Join($"{_tcpMap}-{_tcpRoom}");
+                Core.Jump(_tcpCell, _tcpPad);
+                _pvpZone = false;
+                continue;
+            }
+
+            if (_gotoIgnored)
+            {
+                if (Bot.Config!.Get<bool>("UseGoto"))
+                {
+                    Core.Logger("Please disable incognito mode in CBO for your leader or turn on its Goto", messageBox: true, stopBot: true);
+                    return;
+                }
+                _gotoIgnored = false;
+                continue;
+            }
+
+            if (int.TryParse(_tcpRoom, out int roomNum) && roomNum < 1000)
+            {
+                EnterSafeState($"Leader in room {roomNum}. Please choose a room number higher than 1000, parking");
+                continue;
+            }
+
+            TryGotoLeader();
+
+            if (_tcpInCombat || _tcpHasTarget)
+                Bot.Combat.Attack("*");
+            else if ((Bot.Player.InCombat || Bot.Player.HasTarget) && !IsLeaderInSameCell())
+                QuickDeaggro();
+
+            Core.Sleep(500);
+        }
+    }
+
+    private void TryGotoLeader()
+    {
+        if (_gotoPending)
+            return;
+
+        var now = DateTime.UtcNow;
+        if ((now - _lastGotoTime).TotalMilliseconds < GotoMinIntervalMs)
+            return;
+
+        // If we have TCP data and everything matches, skip the Goto
+        if (!string.IsNullOrEmpty(_tcpCell) &&
+            string.Equals(_tcpMap, Bot.Map?.Name, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(_tcpCell, Bot.Player?.Cell, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        // Otherwise map/cell/pad differs → Goto to leader
+        _lastGotoTime = now;
+        _gotoPending = true;
+
+        _ = Task.Run(() =>
+        {
+            try
+            {
+                if (Bot.Config!.Get<bool>("UseGoto"))
+                    Bot.Player?.Goto(playerName);
+                else
+                {
+                    string map = _tcpMap;
+                    string room = _tcpRoom;
+                    string cell = _tcpCell;
+                    string pad = _tcpPad;
+                    if (!string.IsNullOrEmpty(map) && !string.IsNullOrEmpty(room))
+                    {
+                        Core.Join($"{map}-{room}");
+                        Core.Jump(cell, pad);
+                    }
+                }
+            }
+            catch { }
+            _gotoPending = false;
+        });
+    }
+
+    // ================================================================
+    //  TCP
+    // ================================================================
+
+    private void ConnectToLeader()
+    {
+        int port = LeaderButlerSyncv2.LeaderButlerSyncPlugin.ReadLeaderPort(playerName);
+        if (port < 0)
+            return;
+
+        try
+        {
+            _tcp = new TcpClient();
+            _tcp.Connect("127.0.0.1", port);
+            _tcp.NoDelay = true;
+            _stream = _tcp.GetStream();
+            _streamReader = new System.IO.StreamReader(_stream, Encoding.UTF8);
+
+            string handshake = $"HELLO|{Bot.Player.Username}|{playerName}\n";
+            byte[] hb = Encoding.UTF8.GetBytes(handshake);
+            _stream.Write(hb, 0, hb.Length);
+            _stream.Flush();
+
+            _streamReader.ReadLine(); // welcome
+        }
+        catch
+        {
+            Disconnect();
+        }
+    }
+
+    private void PollTcpData()
+    {
+        if (_tcp == null || !_tcp.Connected)
+        {
+            ConnectToLeader();
+            return;
+        }
+
+        try
+        {
+            while (_stream!.DataAvailable)
+            {
+                string? line = _streamReader!.ReadLine();
+                if (line == null)
+                {
+                    Disconnect();
+                    return;
+                }
+                var parts = line.Split('|');
+                if (parts.Length >= 9)
+                {
+                    _tcpMap = parts[0] ?? "";
+                    _tcpRoom = parts[1] ?? "";
+                    _tcpCell = parts[2] ?? "";
+                    _tcpPad = parts[3] ?? "";
+                    _tcpInCombat = parts[6] == "1";
+                    _tcpHasTarget = parts[7] == "1";
+                }
+            }
+        }
+        catch
+        {
+            Disconnect();
+        }
+    }
+
+    private void Disconnect()
+    {
+        _streamReader?.Close();
+        _stream?.Close();
+        _tcp?.Close();
+        _streamReader = null;
+        _stream = null;
+        _tcp = null;
+    }
+
+    // ================================================================
+    //  COMBAT
+    // ================================================================
+
+    private void DontAttack()
+    {
+        Bot.Combat.CancelTarget();
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
     }
 
     private bool IsButlerAlive()
@@ -244,21 +337,14 @@ public class Butlerv4
         return Bot.Player?.Alive == true;
     }
 
-    private void AntiAutoAggro(string oldCell, string oldPad)
+    private bool IsLeaderInSameCell()
     {
-        if (!IsButlerAlive())
-            return;
-
-        Core.Sleep(50);
-
-        if (Bot.Player.Cell == oldCell && Bot.Player.Pad == oldPad &&
-            (Bot.Player.InCombat || Bot.Player.HasTarget))
-        {
-            Core.JumpWait();
-        }
+        return !string.IsNullOrEmpty(_tcpCell) &&
+               string.Equals(_tcpMap, Bot.Map?.Name, StringComparison.OrdinalIgnoreCase) &&
+               string.Equals(_tcpCell, Bot.Player?.Cell, StringComparison.OrdinalIgnoreCase);
     }
 
-    void QuickDeaggro()
+    private void QuickDeaggro()
     {
         if (!IsButlerAlive())
             return;
@@ -270,310 +356,25 @@ public class Butlerv4
         }
     }
 
-    void DontAttack()
-    {
-        Bot.Combat.CancelTarget();
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-    }
-
     void EnterSafeState(string reason)
     {
-        if (!IsParked)
+        if (_isParked)
+            return;
+
+        Core.Logger(reason);
+
+        if (!_houseJoined)
         {
-            Core.Logger(reason);
-
-            Core.Join("whitemap-100000");
-            Bot.Wait.ForMapLoad("whitemap");
-            JoinHouse();
-
-            IsParked = true;
-        }
-        else
-        {
-            Core.Logger("Safe parked. Sleeping 10 seconds.");
-        }
-
-        Core.Sleep(10000);
-    }
-
-    void JoinHouse()
-    {
-        try
-        {
+            _houseJoined = true;
             if (Bot.House.Items.Any(h => h.Equipped))
             {
-                string? toSend = null;
-
-                void modifyPacket(dynamic packet)
-                {
-                    try
-                    {
-                        string pkt = Convert.ToString(packet) ?? "";
-                        if (pkt.Contains("%xt%zm%house%")) toSend = pkt;
-                    }
-                    catch (Exception ex)
-                    {
-                        Core.Logger($"[Butler] JoinHouse modifyPacket: {ex.Message}");
-                    }
-                }
-
-                Bot.Events.ExtensionPacketReceived += modifyPacket;
                 Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
                 Bot.Wait.ForMapLoad("house");
-
-                if (Bot.Wait.ForTrue(() => toSend != null, 20))
-                    Bot.Send.ClientPacket(toSend!, "json");
-
-                Bot.Events.ExtensionPacketReceived -= modifyPacket;
-
-                for (int i = 0; i < 7; i++) Bot.Send.ClientServer(" ", "");
             }
             else Core.Join("yulgar-100000");
         }
-        catch (Exception ex)
-        {
-            Core.Logger($"[Butler] JoinHouse failed: {ex.Message}");
-            Core.Join("yulgar-100000");
-        }
-    }
 
-    private static string? ReadSyncFileSafe(string path, int retries = 5, int delayMs = 50)
-    {
-        if (!File.Exists(path)) return null;
-
-        for (int i = 0; i < retries; i++)
-        {
-            try
-            {
-                using FileStream fs = new(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                using StreamReader sr = new(fs);
-                string? text = sr.ReadToEnd();
-
-                if (!string.IsNullOrWhiteSpace(text) && text.Split('|').Length >= 10)
-                    return text.Trim();
-            }
-            catch (Exception ex)
-            {
-                Core.Logger($"[Butler] ReadSyncFileSafe retry {i + 1}/{retries}: {ex.Message}");
-            }
-
-            Core.Sleep(delayMs);
-        }
-
-        return null;
-    }
-
-    private void AsyncGoto(string playerName)
-    {
-        if (_gotoPending)
-            return;
-
-        var now = DateTime.UtcNow;
-        if ((now - _lastGotoTime).TotalMilliseconds < GotoMinIntervalMs)
-            return;
-
-        _lastGotoTime = now;
-        _gotoPending = true;
-
-        string oldCell = Bot.Player.Cell ?? "Enter";
-        string oldPad = Bot.Player.Pad ?? "Left";
-
-        _ = Task.Run(() =>
-        {
-            try
-            {
-                Bot.Player.Goto(playerName);
-            }
-            catch { }
-
-            // Break aggro if Goto didn't actually move us
-            AntiAutoAggro(oldCell, oldPad);
-
-            _gotoPending = false;
-        });
-    }
-
-    private struct SyncData
-    {
-        public string Map;
-        public string Room;
-        public string Cell;
-        public string Pad;
-        public bool LeaderLoggedIn;
-        public string LeaderServer;
-        public long Ticks;
-        public bool LeaderInCombat;
-        public bool LeaderHasTarget;
-        public bool LeaderAlive;
-    }
-
-    private void TryAutoEnhance()
-    {
-        bool autoEnhanceToggle = Bot.Config!.Get<bool>("AutoEnhance");
-        Core.CBOBool("DisableAutoEnhance", out bool disableAutoEnhance);
-        if (autoEnhanceToggle && !disableAutoEnhance)
-        {
-            string currentClass = Bot.Player.CurrentClass?.Name ?? "";
-            if (!string.IsNullOrEmpty(currentClass))
-            {
-                Core.Logger($"Enhancing class: {currentClass}");
-                Adv.SmartEnhance(currentClass);
-            }
-        }
-    }
-
-    private bool TryReadSyncData(out SyncData data)
-    {
-        data = default;
-        string? content = ReadSyncFileSafe(syncFilePath);
-        if (content == null)
-        {
-            noSyncFileCounter++;
-            if (noSyncFileCounter >= noSyncFileThreshold)
-            {
-                EnterSafeState("Sync file missing, parking");
-                noSyncFileCounter = 0;
-            }
-            Core.Sleep(500);
-            return false;
-        }
-        noSyncFileCounter = 0;
-
-        var parts = content.Split('|');
-        data = new SyncData
-        {
-            Map = parts.ElementAtOrDefault(0)?.ToLower() ?? "unknown",
-            Room = parts.ElementAtOrDefault(1) ?? "0",
-            Cell = parts.ElementAtOrDefault(2) ?? "Enter",
-            Pad = parts.ElementAtOrDefault(3) ?? "Left",
-            LeaderLoggedIn = parts.ElementAtOrDefault(4) == "1",
-            LeaderServer = parts.ElementAtOrDefault(5) ?? "",
-            Ticks = long.TryParse(parts.ElementAtOrDefault(6), out var t) ? t : 0,
-            LeaderInCombat = parts.ElementAtOrDefault(7) == "1",
-            LeaderHasTarget = parts.ElementAtOrDefault(8) == "1",
-            LeaderAlive = parts.ElementAtOrDefault(9) == "1",
-        };
-        return true;
-    }
-
-    private bool IsSameServer(string leaderServer)
-    {
-        string myServer = Bot.Player.ServerIP ?? "";
-        return string.Equals(leaderServer, myServer, StringComparison.OrdinalIgnoreCase);
-    }
-
-    private void HandleMapOrCellMismatch(SyncData data)
-    {
-        QuickDeaggro();
-
-        if (LockedZoneWarning)
-        {
-            Core.Logger("Locked zone - joining via sync file.");
-            Bot.Events.ExtensionPacketReceived -= ChatListener;
-            try
-            {
-                Core.Join("whitemap-100000");
-
-                string? syncContent = ReadSyncFileSafe(syncFilePath);
-                if (syncContent != null)
-                {
-                    var syncParts = syncContent.Split('|');
-                    string lockedMap = syncParts.ElementAtOrDefault(0)?.ToLower() ?? "unknown";
-                    string lockedRoom = syncParts.ElementAtOrDefault(1) ?? "0";
-
-                    Core.Join($"{lockedMap}-{lockedRoom}");
-                    Bot.Wait.ForMapLoad(lockedMap);
-
-                    AsyncGoto(playerName);
-                    DontAttack();
-                    Core.Sleep(50);
-                }
-
-                LockedZoneWarning = false;
-            }
-            finally
-            {
-                Bot.Events.ExtensionPacketReceived += ChatListener;
-            }
-        }
-        else
-        {
-            string? finalCheck = ReadSyncFileSafe(syncFilePath);
-            if (finalCheck != null)
-            {
-                var finalParts = finalCheck.Split('|');
-                string finalRoom = finalParts.ElementAtOrDefault(1) ?? "0";
-
-                if (!int.TryParse(finalRoom, out int finalRoomNumber) ||
-                    finalRoomNumber == -1 || finalRoomNumber < 10000)
-                {
-                    EnterSafeState($"Non-private room detected, parking");
-                    return;
-                }
-            }
-
-            if (IsParked)
-            {
-                Core.Logger("Leader valid again. Rejoining.");
-                Core.Join("whitemap-100000");
-                Bot.Wait.ForMapLoad("whitemap");
-                IsParked = false;
-            }
-
-            AsyncGoto(playerName);
-            DontAttack();
-        }
-    }
-
-    private void TryHandleRoomFull()
-    {
-        string? syncContent = ReadSyncFileSafe(syncFilePath);
-        if (syncContent == null)
-        {
-            RoomFull = false;
-            return;
-        }
-
-        var parts = syncContent.Split('|');
-        string roomMap = parts.ElementAtOrDefault(0)?.ToLower() ?? "";
-        string roomNum = parts.ElementAtOrDefault(1) ?? "0";
-
-        Core.Logger($"[Butler] Room full — trying to join {roomMap}-{roomNum} directly.");
-        Core.Join($"{roomMap}-{roomNum}");
-        Bot.Wait.ForMapLoad(roomMap);
-
-        if (Bot.Map.PlayerExists(playerName))
-        {
-            Core.Logger("[Butler] Joined leader's room.");
-            RoomFull = false;
-        }
-        else
-        {
-            Core.Logger("[Butler] Could not join leader's room — retrying later.");
-            RoomFull = false;
-        }
-    }
-
-    private void HandlePadMismatch(SyncData data)
-    {
-        string myPad = Bot.Player?.Pad ?? "Left";
-        if (string.Equals(myPad, data.Pad, StringComparison.OrdinalIgnoreCase))
-            return;
-
-        // Same cell, just jump to the correct pad — no Goto needed
-        Core.Logger($"[Butler] Jumping to pad: {data.Pad}");
-        Bot.Map.Jump(data.Cell, data.Pad);
-        DontAttack();
-        Core.Sleep(50);
-    }
-
-    private void UpdateCombatState(SyncData data)
-    {
-        bool shouldAttack = data.LeaderAlive && (data.LeaderHasTarget || data.LeaderInCombat);
-        if (shouldAttack) Bot.Combat.Attack("*");
-        else if (Bot.Player.InCombat || Bot.Player.HasTarget) QuickDeaggro();
+        _isParked = true;
     }
 
     void ChatListener(dynamic packet)
@@ -594,22 +395,27 @@ public class Butlerv4
             if (cmd == "server")
             {
                 string? text = dataObj[2]?.ToString();
-                if (!string.IsNullOrEmpty(text) && text.Contains("ignoring goto")) GotoIsOff = true;
+                if (!string.IsNullOrEmpty(text) && text.Contains("ignoring goto"))
+                    _gotoIgnored = true;
             }
             else if (cmd == "warning")
             {
                 string? chat = Convert.ToString(packet);
                 if (!string.IsNullOrEmpty(chat))
                 {
-                    if (chat.Contains("Locked zone") || chat.Contains("not available")) LockedZoneWarning = true;
-                    if (chat.Contains("full")) RoomFull = true;
-                    if (chat.Contains("ignoring goto")) GotoIsOff = true;
+                    if (chat.Contains("Locked zone") || chat.Contains("not available"))
+                        _lockedZone = true;
+                    if (chat.Contains("full"))
+                        _roomFull = true;
+                    if (chat.Contains("PvP zone"))
+                        _pvpZone = true;
+                    if (chat.Contains("ignoring goto"))
+                        _gotoIgnored = true;
+                    if (chat.Contains("could not be found"))
+                        _differentServer = true;
                 }
             }
         }
-        catch (Exception ex)
-        {
-            Core.Logger($"[Butler] ChatListener: {ex.Message}");
-        }
+        catch { }
     }
 }
