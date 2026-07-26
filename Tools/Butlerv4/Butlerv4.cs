@@ -6,7 +6,6 @@ tags: butler, follow, goto, tcp
 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Tools/Butlerv4/DownloadDLL.cs
 
 using System;
 using System.Linq;
@@ -72,7 +71,6 @@ public class Butlerv4
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions(disableClassSwap: true);
-        DownloadDLL.Download();
 
         Bot.Events.ExtensionPacketReceived += ChatListener;
 
