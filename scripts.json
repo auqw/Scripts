@@ -1999,6 +1999,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
   {
+    "name": "Two Player PvP DoomArena",
+    "description": "Player 1 challenges Player 2 to a duel, then defeats Player 2. Completes the daily quest.",
+    "tags": [
+      "army",
+      "pvp",
+      "duel",
+      "doomarena",
+      "1v1",
+      "trophy",
+      "daily",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/DoomArenaPVP.cs",
+    "size": 12091,
+    "sha256": "872066ea084d6a4f2d4d6c3ab93234156db4f1aa18b3703093cc7ebdb0ef4ba5",
+    "fileName": "DoomArenaPVP.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/DoomArenaPVP.cs"
+  },
+  {
     "name": "KolrUsurper",
     "description": "Two-player Kolr, Usurper of Flames script with selectable DPS and optional Great Flame of Yew farming.",
     "tags": [
