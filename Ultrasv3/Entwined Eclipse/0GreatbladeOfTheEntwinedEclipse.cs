@@ -76,34 +76,34 @@ public class GreatbladeOfTheEntwinedEclipse
 
     // ── Items / shop ─────────────────────────────────────────────────────────
     const string VictorOfTheFestival = "Victor of the Festival";
-    const string SliverSunlight      = "Sliver of Sunlight";
-    const string SliverMoonlight     = "Sliver of Moonlight";
-    const string EclipticOffering    = "Ecliptic Offering";
-    const string RiteOfAscension     = "Rite of Ascension";
+    const string SliverSunlight = "Sliver of Sunlight";
+    const string SliverMoonlight = "Sliver of Moonlight";
+    const string EclipticOffering = "Ecliptic Offering";
+    const string RiteOfAscension = "Rite of Ascension";
 
-    const string Solarbrand          = "Solarbrand";
-    const string Lunarbrand          = "Lunarbrand";
-    const string Umbrabrand          = "Umbrabrand";
-    const string BladeBurningSun     = "Blade of the Burning Sun";
-    const string BladeGlowingMoon    = "Blade of the Glowing Moon";
-    const string BladeBoundEclipse   = "Blade of the Bound Eclipse";
-    const string GreatMidnightSun    = "Greatblade of the Midnight Sun";
-    const string GreatSolsticeMoon   = "Greatblade of the Solstice Moon";
+    const string Solarbrand = "Solarbrand";
+    const string Lunarbrand = "Lunarbrand";
+    const string Umbrabrand = "Umbrabrand";
+    const string BladeBurningSun = "Blade of the Burning Sun";
+    const string BladeGlowingMoon = "Blade of the Glowing Moon";
+    const string BladeBoundEclipse = "Blade of the Bound Eclipse";
+    const string GreatMidnightSun = "Greatblade of the Midnight Sun";
+    const string GreatSolsticeMoon = "Greatblade of the Solstice Moon";
     const string GreatEntwinedEclipse = "Greatblade of the Entwined Eclipse";
 
-    const string MergeMap  = "templeshrine";
-    const int    MergeShop = 2303;
+    const string MergeMap = "templeshrine";
+    const int MergeShop = 2303;
 
-    const int ID_RiteOfAscension      = 78809;
-    const int ID_Solarbrand           = 78465;
-    const int ID_Lunarbrand           = 78460;
-    const int ID_Umbrabrand           = 78455;
-    const int ID_BladeBurningSun     = 78466;
-    const int ID_BladeGlowingMoon    = 78461;
-    const int ID_BladeBoundEclipse   = 78456;
-    const int ID_GreatMidnightSun    = 78467;
-    const int ID_GreatSolsticeMoon   = 78462;
-    const int ID_GreatEntwinedEclipse = 78457;
+    const int ID_RiteOfAscension = 10741;
+    const int ID_Solarbrand = 10744;
+    const int ID_Lunarbrand = 10745;
+    const int ID_Umbrabrand = 10746;
+    const int ID_BladeBurningSun = 10747;
+    const int ID_BladeGlowingMoon = 10748;
+    const int ID_BladeBoundEclipse = 10749;
+    const int ID_GreatMidnightSun = 10750;
+    const int ID_GreatSolsticeMoon = 10751;
+    const int ID_GreatEntwinedEclipse = 10752;
 
     // Full-chain material totals from a clean inventory:
     // Sun/Moon: 3× basic brand (5 ea) + 2× middle blade (50 ea) + 1× greatblade (100) + 1× Rite = 216.
@@ -345,15 +345,15 @@ public class GreatbladeOfTheEntwinedEclipse
         CraftPlan plan = BuildRemainingCraftPlan();
         Core.Logger($"[Phase 5] Merging remaining blade chain at /{MergeMap} shop {MergeShop}.");
 
-        MergeCrafts(plan, Solarbrand,        ID_Solarbrand);
-        MergeCrafts(plan, Lunarbrand,        ID_Lunarbrand);
-        MergeCrafts(plan, BladeBurningSun,   ID_BladeBurningSun);
-        MergeCrafts(plan, BladeGlowingMoon,  ID_BladeGlowingMoon);
-        MergeCrafts(plan, GreatMidnightSun,  ID_GreatMidnightSun);
+        MergeCrafts(plan, Solarbrand, ID_Solarbrand);
+        MergeCrafts(plan, Lunarbrand, ID_Lunarbrand);
+        MergeCrafts(plan, BladeBurningSun, ID_BladeBurningSun);
+        MergeCrafts(plan, BladeGlowingMoon, ID_BladeGlowingMoon);
+        MergeCrafts(plan, GreatMidnightSun, ID_GreatMidnightSun);
         MergeCrafts(plan, GreatSolsticeMoon, ID_GreatSolsticeMoon);
 
-        MergeCrafts(plan, Umbrabrand,           ID_Umbrabrand);
-        MergeCrafts(plan, BladeBoundEclipse,    ID_BladeBoundEclipse);
+        MergeCrafts(plan, Umbrabrand, ID_Umbrabrand);
+        MergeCrafts(plan, BladeBoundEclipse, ID_BladeBoundEclipse);
         MergeCrafts(plan, GreatEntwinedEclipse, ID_GreatEntwinedEclipse);
     }
 
@@ -368,7 +368,13 @@ public class GreatbladeOfTheEntwinedEclipse
 
         int before = Bot.Inventory.GetQuantity(itemName);
         Core.Logger($"[Phase 5] Merging {toCraft}× {itemName} ({before} currently owned)...");
-        Core.BuyItem(MergeMap, MergeShop, itemName, toCraft, shopItemID);
+
+        // Merge results have a max stack of 1 in this shop, so each copy has
+        // to be bought (merged) one at a time rather than in a single bulk buy.
+        for (int i = 0; i < toCraft; i++)
+        {
+            Core.BuyItem(MergeMap, MergeShop, itemName, 1, shopItemID);
+        }
 
         int after = Bot.Inventory.GetQuantity(itemName);
         if (after < before + toCraft)

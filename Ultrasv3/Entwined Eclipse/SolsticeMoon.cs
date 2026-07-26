@@ -93,17 +93,19 @@ public class SolsticeMoonTest
     const string MergeMap = "templeshrine";
     const int MergeShop = 2303;
 
-    // Shop item IDs (prevents name-lookup ambiguity)
-    const int ID_Solarbrand = 78465;
-    const int ID_Lunarbrand = 78460;
-    const int ID_BladeBurningSun = 78466;
-    const int ID_BladeGlowingMoon = 78461;
-    const int ID_GreatMidnightSun = 78467;
-    const int ID_GreatSolsticeMoon = 78462;
-    // const int ID_Umbrabrand        = 78455;
-    // const int ID_BladeBoundEclipse = 78456;
-    // const int ID_GreatEntwinedEcl  = 78457;
-    // const int ID_RiteOfAscension   = 78809;
+    // Shop item IDs (prevents name-lookup ambiguity)   
+    const int ID_RiteOfAscension      = 10741;
+    const int ID_Solarbrand           = 10744;
+    const int ID_Lunarbrand           = 10745;
+    const int ID_Umbrabrand           = 10746;
+    const int ID_BladeBurningSun     = 10747;
+    const int ID_BladeGlowingMoon    = 10748;
+    const int ID_BladeBoundEclipse   = 10749;
+    const int ID_GreatMidnightSun    = 10750;
+    const int ID_GreatSolsticeMoon   = 10751;
+    const int ID_GreatEntwinedEclipse = 10752;
+
+    
 
     // ── Totals for basic blade chain ─────────────────────────────────────────
     // Solarbrand ×3  (5  Sun ea)  →  15 Sun
