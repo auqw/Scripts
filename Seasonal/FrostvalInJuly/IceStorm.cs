@@ -71,7 +71,7 @@ public class IceStorm
         Story.KillQuest(8173, "brightlights", "Chaos Gemrald");
 
         // 8174|Fire and Fuses
-        Story.KillQuest(8174, "brightlights", new[] { "Fire Imp", "Water Goblin" });
+        Story.KillQuest(8174, "brightlights", new[] { "Water Goblin", "Fire Imp" });
 
         // 8175|Light up the Night
         if (!Story.QuestProgression(8175))
