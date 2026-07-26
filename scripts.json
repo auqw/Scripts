@@ -9331,11 +9331,13 @@
       "prismatic manslayers",
       "legacy of nulgath",
       "worshipper of nulgath",
-      "evovled void armor"
+      "evolved void armor",
+      "oblivion blade",
+      "charged oblivion blade"
     ],
     "path": "Ultrasv3/Weapons/EmpoweredNationItem.cs",
-    "size": 13114,
-    "sha256": "2ef475704dfc21b3e598de621d12de14b374d60f19987ca396deb517a4a24c88",
+    "size": 15216,
+    "sha256": "d0214a006bf29a12c99d61175f31a18342a9c7ce87faacd072e3ed1e71190031",
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Weapons/EmpoweredNationItem.cs"
   },
