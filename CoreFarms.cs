@@ -1419,7 +1419,7 @@ public class CoreFarms
 
     public void CarcossaCourtRep(int rank = 10)
     {
-        if (FactionRank("Carcosa Court") >= rank)
+        if (FactionRank("Carcossa Court") >= rank)
             return;
 
         if (!new[] { 10810, 10811, 10812 }.Any(Bot.Quests.IsUnlocked))
@@ -1436,7 +1436,7 @@ public class CoreFarms
         int[] currentQuests = [];
         bool maxedQuests = false;
 
-        while (!Bot.ShouldExit && FactionRank("Carcosa Court") < rank)
+        while (!Bot.ShouldExit && FactionRank("Carcossa Court") < rank)
         {
             if (!maxedQuests)
             {
