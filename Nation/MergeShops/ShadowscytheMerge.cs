@@ -159,7 +159,7 @@ public class ShadowscytheMerge
                     Core.RegisterQuests(4750);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("shadowblast", "Carnage", "Shadow Seal", isTemp: false);
+                        Core.HuntMonster("shadowblast", "Carnage", "Shadow Seal", 25, isTemp: false);
                         Core.HuntMonster(
                             "shadowblast",
                             "Legion Fenrir",
