@@ -9380,6 +9380,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/QueenIonav3.cs"
   },
   {
+    "name": "Kasukov3",
+    "description": "Kasuko challenge boss v3 — 2 taunters taunt Kasuko and attack Whirlpool. Army sync with taunt loop via UltraAsync.",
+    "tags": [
+      "kasuko",
+      "challenge boss"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/Kasukov3.cs",
+    "size": 14080,
+    "sha256": "c754e54b8f33ca5fd1880edcb72560c49f184976353b3f2c724fa6e593a830b9",
+    "fileName": "Kasukov3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kasukov3.cs"
+  },
+  {
     "name": "AstralEmpyreanv3",
     "description": "Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.",
     "tags": [
