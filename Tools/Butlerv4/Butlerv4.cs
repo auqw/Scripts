@@ -221,6 +221,7 @@ public class Butlerv4
         {
             try
             {
+                if (Bot.ShouldExit) return;
                 if (Bot.Config!.Get<bool>("UseGoto"))
                     Bot.Player?.Goto(playerName);
                 else
@@ -231,7 +232,9 @@ public class Butlerv4
                     string pad = _tcpPad;
                     if (!string.IsNullOrEmpty(map) && !string.IsNullOrEmpty(room))
                     {
+                        if (Bot.ShouldExit) return;
                         Core.Join($"{map}-{room}");
+                        if (Bot.ShouldExit) return;
                         Core.Jump(cell, pad);
                     }
                 }
