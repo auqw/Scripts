@@ -1,6 +1,6 @@
 /*
-name: AstralEmpyreanv3 no Op
-description: Three-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization. No config needed.
+name: AstralEmpyreanv3 no options
+description: Three-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization. No config needed. Run 4 accounts.
 tags: null
 */
 //cs_include Scripts/Ultrasv3/DependenciesUltras/CoreEnginev3.cs
@@ -156,6 +156,7 @@ public class AstralEmpyreanNoOpv3
         const string waitSyncFile = "AstralEmpyreanv3.sync";
         const string completionSyncFile = "AstralEmpyreanv3Completion.sync";
         const string retreatSyncFile = "AstralEmpyreanv3Retreat.sync";
+        const string wipeSyncFile = "AstralEmpyreanWipe.sync";
         int armySize = 4;
 
         const int questId = 9803;
@@ -163,6 +164,7 @@ public class AstralEmpyreanNoOpv3
         if (!UltraGeneral.IsQuestGreen(Bot, questId))
             UltraGeneral.EnsureAcceptOnce(Bot, questId);
 
+        Ultra.ClearSyncFile(Ultra.ResolveSyncPath(wipeSyncFile));
         Ultra.ClearSyncFile(Ultra.ResolveSyncPath(completionSyncFile));
 
         bool skipThird = IsTaunter();
@@ -223,59 +225,30 @@ public class AstralEmpyreanNoOpv3
             // Refresh mute file so FBS plugin stays muted during the fight
             try { File.WriteAllText(_fbsMuteFile, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()); } catch { }
 
-            // Check if any alive army member detected a death
-            if (Bot.Player.Alive && Death.HasDeathOccurred())
+            // Army-wipe check: all players (alive or dead) report their state.
+            if (UltraGeneral.IsWholeArmyDead(Ultra, Bot, Ultra.ResolveSyncPath(wipeSyncFile)))
             {
                 _deathRetries++;
-                C.Logger($"[AstralEmpyreanv3] Army death detected. Retreating. Retry {_deathRetries}/{MaxDeathRetries}.");
-
+                C.Logger($"[AstralEmpyreanv3] Army wipe detected ({_deathRetries}/{MaxDeathRetries}). Retreating to house.");
                 Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
                 Bot.Events.ScriptStopping -= StopTauntEvent;
                 _tauntCts.Cancel();
                 Engine.DisableSkills();
-
                 Engine.Join(map);
                 Ultra.PersistentJoinHouse();
-
                 if (_deathRetries >= MaxDeathRetries)
                 {
-                    C.Logger($"{MaxDeathRetries} Retries, Stopping the scripts.", messageBox: true, stopBot: true);
+                    C.Logger($"{MaxDeathRetries} wipes reached. Stopping the bot.", messageBox: true, stopBot: true);
                     break;
                 }
-
-                Death.ClearDeaths();
-                UltraWaitForArmy.Instance.NewWaitForArmy(armySize - 1, retreatSyncFile, useSkill: false);
-                C.Logger("[AstralEmpyreanv3] All retreated. Restarting fight.");
+                Bot.Sleep(3000);
                 return;
             }
 
             if (!Bot.Player.Alive)
             {
-                _deathRetries++;
-                C.Logger($"[AstralEmpyreanv3] Death detected. Retry {_deathRetries}/{MaxDeathRetries}.");
-
-                Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
-                Bot.Events.ScriptStopping -= StopTauntEvent;
-                _tauntCts.Cancel();
-
-                Death.SignalDeath();
-                Ultra.ClearSyncFile(Ultra.ResolveSyncPath(completionSyncFile));
-                Ultra.ClearSyncFile(Ultra.ResolveSyncPath(retreatSyncFile));
-
-                Engine.Join(map);
-                Ultra.PersistentJoinHouse();
-
-                if (_deathRetries >= MaxDeathRetries)
-                {
-                    C.Logger($"{MaxDeathRetries} Retries, Stopping the scripts.", messageBox: true, stopBot: true);
-                    break;
-                }
-
-                Ultra.ClearSyncFile(Ultra.ResolveSyncPath("ultra_death.sync"));
-                Death.ClearDeaths();
-                UltraWaitForArmy.Instance.NewWaitForArmy(armySize - 1, retreatSyncFile, useSkill: false);
-                C.Logger("[AstralEmpyreanv3] All retreated. Restarting fight.");
-                return;
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
             }
 
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains(bossDefeatedTemp, 1), completionSyncFile))
