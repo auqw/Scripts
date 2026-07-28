@@ -47,9 +47,15 @@ public class AstralEmpyreanv3
     private const int MaxDeathRetries = 3;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "AstralEmpyreanv3";
+    public string[] MultiOptions = { "SelectDrops" };
+    public List<IOption> SelectDrops = new()
+    {
+        new Option<bool>("NovaEmpyreanGuard", "Nova Empyrean Guard", "Farm Nova Empyrean Guard from Astral Empyrean.", false),
+    };
     public List<IOption> Options = new()
     {
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 4),
+        new Option<bool>("DoDailyOnly", "Do Daily Only", "True: do the daily quest only. False: farm selected drops instead.", true),
         new Option<string>("Taunter1Class", "Taunter 1 Class (Primary)", "Class name for Taunter 1 (sets fight start time).", "Verus DoomKnight"),
         new Option<string>("Taunter2Class", "Taunter 2 Class (Secondary)", "Class name for Taunter 2.", "Lord Of Order"),
         new Option<string>("Taunter3Class", "Taunter 3 Class (Tertiary)", "Class name for Taunter 3.", "ArchPaladin"),
@@ -73,6 +79,18 @@ public class AstralEmpyreanv3
         Bot.StopSync();
     }
 
+    private bool DoDailyOnly => Bot.Config!.Get<bool>("DoDailyOnly");
+
+    private bool HasSelectedDrops()
+    {
+        if (Bot.Config!.Get<bool>("SelectDrops", "NovaEmpyreanGuard"))
+        {
+            if (!C.CheckInventory("Nova Empyrean Guard", 1))
+                return false;
+        }
+        return true;
+    }
+
     public void RunBoss()
     {
         C.SetOptions(true);
@@ -90,16 +108,47 @@ public class AstralEmpyreanv3
 
         try
         {
-            while (_deathRetries < MaxDeathRetries)
-            {
-                Engine.Boot();
-                _tauntCts?.Cancel();
-                _tauntCts = new();
-                Bot.Events.ScriptStopping -= StopTauntEvent;
-                Bot.Events.ScriptStopping += StopTauntEvent;
+            bool dailyOnly = DoDailyOnly;
 
-                Prep();
-                Fight();
+            if (dailyOnly)
+            {
+                // Daily mode: existing death-retry loop with quest completion
+                while (_deathRetries < MaxDeathRetries)
+                {
+                    Engine.Boot();
+                    _tauntCts?.Cancel();
+                    _tauntCts = new();
+                    Bot.Events.ScriptStopping -= StopTauntEvent;
+                    Bot.Events.ScriptStopping += StopTauntEvent;
+                    Prep();
+                    Fight();
+                }
+            }
+            else
+            {
+                // Drop-farm mode: cycle kills until Nova Empyrean Guard collected
+                if (Bot.Config!.Get<bool>("SelectDrops", "NovaEmpyreanGuard"))
+                    C.AddDrop("Nova Empyrean Guard");
+
+                while (!Bot.ShouldExit && !HasSelectedDrops())
+                {
+                    int current = Bot.Inventory.GetQuantity("Nova Empyrean Guard");
+                    C.Logger($"Nova Empyrean Guard: {current}/1");
+
+                    Engine.Boot();
+                    _tauntCts?.Cancel();
+                    _tauntCts = new();
+                    Bot.Events.ScriptStopping -= StopTauntEvent;
+                    Bot.Events.ScriptStopping += StopTauntEvent;
+                    Prep();
+                    Fight();
+
+                    Engine.EnableSkills();
+                    Bot.Sleep(1000);
+                }
+
+                if (!Bot.ShouldExit)
+                    C.Logger("Nova Empyrean Guard collected. Farm complete.");
             }
         }
         finally
@@ -158,6 +207,12 @@ public class AstralEmpyreanv3
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
 
+        if (!DoDailyOnly)
+        {
+            if (Bot.Config!.Get<bool>("SelectDrops", "NovaEmpyreanGuard"))
+                C.AddDrop("Nova Empyrean Guard");
+        }
+
         int potionQuant = Bot.Config!.Get<int>("PotionQuantity");
         if (usePotions)
         {
@@ -180,14 +235,26 @@ public class AstralEmpyreanv3
         const string waitSyncFile = "AstralEmpyreanv3.sync";
         const string completionSyncFile = "AstralEmpyreanv3Completion.sync";
         const string retreatSyncFile = "AstralEmpyreanv3Retreat.sync";
+        const string killSyncFile = "AstralEmpyreanKill.sync";
+        const string wipeSyncFile = "AstralEmpyreanWipe.sync";
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
 
         
         const int questId = 9803;
 
-        if (!UltraGeneral.IsQuestGreen(Bot, questId))
-            UltraGeneral.EnsureAcceptOnce(Bot, questId);
+        bool dailyOnly = DoDailyOnly;
 
+        if (dailyOnly)
+        {
+            if (!UltraGeneral.IsQuestGreen(Bot, questId))
+                UltraGeneral.EnsureAcceptOnce(Bot, questId);
+        }
+        else
+        {
+            Ultra.ClearSyncFile(Ultra.ResolveSyncPath(killSyncFile));
+        }
+
+        Ultra.ClearSyncFile(Ultra.ResolveSyncPath(wipeSyncFile));
         Ultra.ClearSyncFile(Ultra.ResolveSyncPath(completionSyncFile));
 
         bool skipThird = IsTaunter();
@@ -234,7 +301,8 @@ public class AstralEmpyreanv3
             UltraAsync.StartTauntLoop(Bot, C, Engine, fightStartTime, 2, 3, cancellationToken: _tauntCts.Token);
         }
 
-        Bot.Events.ExtensionPacketReceived += AstralZoneListener;
+        if (!dailyOnly)
+            Bot.Events.ExtensionPacketReceived += AstralZoneListener;
         Bot.Sleep(2000);
 
         // Pre-seed completion sync file so all 4 entries exist before the loop starts.
@@ -246,81 +314,87 @@ public class AstralEmpyreanv3
             Ultra.UpdateEntry(Ultra.ResolveSyncPath(completionSyncFile), _myKey, "0");
         }
 
+        bool bossWasEngaged = false;
+
         while (!Bot.ShouldExit)
         {
             // Refresh mute file so FBS plugin stays muted during the fight
             try { File.WriteAllText(_fbsMuteFile, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()); } catch { }
 
-            // Check if any army member died — alive players retreat immediately
-            if (Bot.Player.Alive && Death.HasDeathOccurred())
+            // Army-wipe check: all players (alive or dead) report their state.
+            // IsWholeArmyDead writes !bot.Player.Alive and checks if ALL entries are "1".
+            if (UltraGeneral.IsWholeArmyDead(Ultra, Bot, Ultra.ResolveSyncPath(wipeSyncFile)))
             {
                 _deathRetries++;
-                C.Logger($"[AstralEmpyreanv3] Army death detected. Retreating. Retry {_deathRetries}/{MaxDeathRetries}.");
-
+                C.Logger($"[AstralEmpyreanv3] Army wipe detected ({_deathRetries}/{MaxDeathRetries}). Retreating to house.");
                 Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
                 Bot.Events.ScriptStopping -= StopTauntEvent;
                 _tauntCts.Cancel();
                 Engine.DisableSkills();
-
                 Engine.Join(map);
                 Ultra.PersistentJoinHouse();
-
                 if (_deathRetries >= MaxDeathRetries)
                 {
-                    C.Logger($"{MaxDeathRetries} Retries, Stopping the scripts.", messageBox: true, stopBot: true);
+                    C.Logger($"{MaxDeathRetries} wipes reached. Stopping the bot.", messageBox: true, stopBot: true);
                     break;
                 }
-
-                Death.ClearDeaths();
-
-                UltraWaitForArmy.Instance.NewWaitForArmy(armySize - 1, retreatSyncFile, useSkill: false);
-                C.Logger("[AstralEmpyreanv3] All retreated. Restarting fight.");
+                Bot.Sleep(3000);
                 return;
             }
 
             if (!Bot.Player.Alive)
             {
-                _deathRetries++;
-                C.Logger($"[AstralEmpyreanv3] Death detected. Retry {_deathRetries}/{MaxDeathRetries}.");
-
-                Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
-                Bot.Events.ScriptStopping -= StopTauntEvent;
-                _tauntCts.Cancel();
-
-                Death.SignalDeath();
-                Ultra.ClearSyncFile(Ultra.ResolveSyncPath(completionSyncFile));
-                Ultra.ClearSyncFile(Ultra.ResolveSyncPath(retreatSyncFile));
-
-                Engine.Join(map);
-                Ultra.PersistentJoinHouse();
-
-                if (_deathRetries >= MaxDeathRetries)
-                {
-                    C.Logger($"{MaxDeathRetries} Retries, Stopping the scripts.", messageBox: true, stopBot: true);
-                    break;
-                }
-
-                Ultra.ClearSyncFile(Ultra.ResolveSyncPath("ultra_death.sync"));
-                Death.ClearDeaths();
-
-                UltraWaitForArmy.Instance.NewWaitForArmy(armySize - 1, retreatSyncFile, useSkill: false);
-                C.Logger("[AstralEmpyreanv3] All retreated. Restarting fight.");
-                return;
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
             }
 
-            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains(bossDefeatedTemp, 1), completionSyncFile))
+            if (dailyOnly)
             {
-                C.Logger("Boss defeated. Finishing quest.");
-                Bot.Events.ScriptStopping -= StopTauntEvent;
-                _tauntCts.Cancel();
-                Engine.DisableSkills();
-                Engine.Join(map);
-                Ultra.PersistentJoinHouse();
-                Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
-                UltraGeneral.CompleteQuest(Bot, questId);
-                Bot.Sleep(3000);
-                _deathRetries = MaxDeathRetries;
-                break;
+                // Daily: check boss temp item → complete quest
+                if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains(bossDefeatedTemp, 1), completionSyncFile))
+                {
+                    C.Logger("Boss defeated. Finishing quest.");
+                    Bot.Events.ScriptStopping -= StopTauntEvent;
+                    _tauntCts.Cancel();
+                    Engine.DisableSkills();
+                    Engine.Join(map);
+                    Ultra.PersistentJoinHouse();
+                    Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
+                    UltraGeneral.CompleteQuest(Bot, questId);
+                    Bot.Sleep(3000);
+                    _deathRetries = MaxDeathRetries;
+                    break;
+                }
+            }
+            else
+            {
+                // Drop-farm mode: detect boss death by target state
+                if (Bot.Player.HasTarget && Bot.Player.Target?.Name == boss)
+                    bossWasEngaged = true;
+
+                if (bossWasEngaged && (!Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0))
+                {
+                    string key = $"{Bot.Player.Username}|kill";
+                    Ultra.UpdateEntry(Ultra.ResolveSyncPath(killSyncFile), key, "1");
+
+                    string[] lines = Ultra.ReadLines(Ultra.ResolveSyncPath(killSyncFile));
+                    int killCount = lines.Count(l => l.Contains(":1:"));
+                    C.Logger($"Boss kill signal: {killCount}/{armySize}");
+
+                    if (killCount >= armySize)
+                    {
+                        C.Logger("All players confirmed boss kill. Retreating to house.");
+                        _deathRetries = 0;
+                        Bot.Events.ScriptStopping -= StopTauntEvent;
+                        _tauntCts.Cancel();
+                        Engine.DisableSkills();
+                        Engine.Join(map);
+                        Ultra.PersistentJoinHouse();
+                        Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
+                        Bot.Sleep(3000);
+                        break;
+                    }
+                }
             }
 
             // Default — attack the boss
