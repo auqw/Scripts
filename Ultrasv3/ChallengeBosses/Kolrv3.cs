@@ -33,9 +33,16 @@ public class Kolrv3
     bool usePotions;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "Kolrv3";
+    public string[] MultiOptions = { "SelectDrops" };
+    public List<IOption> SelectDrops = new()
+    {
+        new Option<bool>("GreatFlameOfYew", "Great Flame of Yew", "Farm Great Flame of Yew from Kolr.", false),
+        new Option<int>("GreatFlameOfYewQuant", "Great Flame of Yew Quantity", "How many Great Flame of Yew to farm per player.", 1),
+    };
     public List<IOption> Options = new()
     {
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 2),
+        new Option<bool>("DoDailyOnly", "Do Daily Only", "True: do the daily quest only. False: farm selected drops instead.", true),
         new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "Lord Of Order"),
         new Option<string>("Class2", "Class 2", "Preset class 2 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "King's Echo"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
@@ -62,8 +69,37 @@ public class Kolrv3
 
         try
         {
-            Prep();
-            Fight();
+            bool dailyOnly = DoDailyOnly;
+
+            if (dailyOnly)
+            {
+                // Daily mode: single run, complete quest, done
+                Prep();
+                Fight();
+            }
+            else
+            {
+                // Drop-farm mode: cycle kills until drops collected
+                if (Bot.Config!.Get<bool>("SelectDrops", "GreatFlameOfYew"))
+                    C.AddDrop("Great Flame of Yew");
+
+                while (!Bot.ShouldExit && !HasSelectedDrops())
+                {
+                    int current = Bot.Inventory.GetQuantity("Great Flame of Yew");
+                    int target = Bot.Config!.Get<int>("SelectDrops", "GreatFlameOfYewQuant");
+                    C.Logger($"Great Flame of Yew: {current}/{target}");
+
+                    Prep();
+                    Fight(); // kills boss once, syncs army, joins house
+
+                    // Re-enable skills for next cycle (Fight disables them on boss kill)
+                    Engine.EnableSkills();
+                    Bot.Sleep(1000);
+                }
+
+                if (!Bot.ShouldExit)
+                    C.Logger("All selected drops collected. Farm complete.");
+            }
         }
         finally
         {
@@ -75,8 +111,10 @@ public class Kolrv3
 
     private void EquipPresetClasses()
     {
-        UltraGeneral.EquipPresetClasses(Ultra, Bot, "challengeboss_template_class-v3.sync");
+        UltraGeneral.EquipPresetClasses(Ultra, Bot, "kolrv3_class-v3.sync");
     }
+
+    private bool DoDailyOnly => Bot.Config!.Get<bool>("DoDailyOnly");
 
     private void Prep()
     {
@@ -90,7 +128,28 @@ public class Kolrv3
         if (Bot.Config!.Get<bool>("DoEnh"))
             Enh.ApplyKolr();
 
+        // Register drops for SelectDrops if not doing daily-only
+        if (!DoDailyOnly)
+        {
+            if (Bot.Config!.Get<bool>("SelectDrops", "GreatFlameOfYew"))
+                C.AddDrop("Great Flame of Yew");
+        }
+
         Bot.Sleep(2500);
+    }
+
+    /// <summary>
+    /// Returns true when all enabled SelectDrops targets are met.
+    /// </summary>
+    private bool HasSelectedDrops()
+    {
+        if (Bot.Config!.Get<bool>("SelectDrops", "GreatFlameOfYew"))
+        {
+            int quant = Bot.Config!.Get<int>("SelectDrops", "GreatFlameOfYewQuant");
+            if (!C.CheckInventory("Great Flame of Yew", quant))
+                return false;
+        }
+        return true;
     }
 
     private void Fight()
@@ -101,13 +160,24 @@ public class Kolrv3
 
         const string waitSyncFile = "kolrv3.sync";
         const string completionSyncFile = "Kolrv3Completion.sync";
+        const string killSyncFile = "Kolrv3Kill.sync";
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
 
         
         const int questId = 10715;
 
-        if (!UltraGeneral.IsQuestGreen(Bot, questId))
-            UltraGeneral.EnsureAcceptOnce(Bot, questId);
+        bool dailyOnly = DoDailyOnly;
+
+        if (dailyOnly)
+        {
+            if (!UltraGeneral.IsQuestGreen(Bot, questId))
+                UltraGeneral.EnsureAcceptOnce(Bot, questId);
+        }
+        else
+        {
+            // Drop mode: fresh kill sync file each cycle
+            Ultra.ClearSyncFile(Ultra.ResolveSyncPath(killSyncFile));
+        }
 
         Ultra.ClearSyncFile(Ultra.ResolveSyncPath(completionSyncFile));
 
@@ -128,7 +198,7 @@ public class Kolrv3
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(2000);
 
-        // Pre-seed completion sync file so all 4 entries exist before the loop starts.
+        // Pre-seed completion sync file so all entries exist before the loop starts.
         string? _username = Bot.Player.Username;
         string? _className = Bot.Player.CurrentClass?.Name;
         if (!string.IsNullOrWhiteSpace(_username) && !string.IsNullOrWhiteSpace(_className))
@@ -136,6 +206,8 @@ public class Kolrv3
             string _myKey = $"{_username}|{_className}".Replace(":", "-");
             Ultra.UpdateEntry(Ultra.ResolveSyncPath(completionSyncFile), _myKey, "0");
         }
+
+        bool bossWasEngaged = false;
 
         while (!Bot.ShouldExit)
         {
@@ -148,18 +220,52 @@ public class Kolrv3
                 continue;
             }
 
-            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains(bossDefeatedTemp, 1), completionSyncFile))
+            if (dailyOnly)
             {
-                C.Logger("Boss defeated. Finishing quest.");
-                Engine.DisableSkills();
-                Engine.Join(map);
-                Ultra.PersistentJoinHouse();
-                UltraGeneral.CompleteQuest(Bot, questId);
-                Bot.Sleep(3000);
-                break;
+                // Daily mode: check for boss temp item, complete quest
+                if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains(bossDefeatedTemp, 1), completionSyncFile))
+                {
+                    C.Logger("Boss defeated. Finishing quest.");
+                    Engine.DisableSkills();
+                    Engine.Join(map);
+                    Ultra.PersistentJoinHouse();
+                    UltraGeneral.CompleteQuest(Bot, questId);
+                    Bot.Sleep(3000);
+                    break;
+                }
+            }
+            else
+            {
+                // Drop-farm mode: detect boss death by target state
+                // Mark engaged once we've attacked the boss
+                if (Bot.Player.HasTarget && Bot.Player.Target?.Name == boss)
+                    bossWasEngaged = true;
+
+                // Boss died: target lost after having been engaged
+                if (bossWasEngaged && (!Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0))
+                {
+                    // Signal this player's kill to the sync file
+                    string key = $"{Bot.Player.Username}|kill";
+                    Ultra.UpdateEntry(Ultra.ResolveSyncPath(killSyncFile), key, "1");
+
+                    // Check if all army members have signaled the kill
+                    string[] lines = Ultra.ReadLines(Ultra.ResolveSyncPath(killSyncFile));
+                    int killCount = lines.Count(l => l.Contains(":1:"));
+                    C.Logger($"Boss kill signal: {killCount}/{armySize}");
+
+                    if (killCount >= armySize)
+                    {
+                        C.Logger("All players confirmed boss kill. Retreating to house.");
+                        Engine.DisableSkills();
+                        Engine.Join(map);
+                        Ultra.PersistentJoinHouse();
+                        Bot.Sleep(3000);
+                        break;
+                    }
+                }
             }
 
-            // Default — attack the boss
+            // Attack the boss if not on cooldown
             if (Bot.Player.Target?.Name != boss)
                 Bot.Combat.Attack(boss);
 
