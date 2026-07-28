@@ -9399,8 +9399,8 @@
       "null"
     ],
     "path": "Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs",
-    "size": 15385,
-    "sha256": "378c59911a2ced09e19c62e5cbb8169ab5d200398d33ee22db1b0fa5a78624ca",
+    "size": 18368,
+    "sha256": "025c975fcf4f79794f014203a0f91d7ebe07b74ff2fb47365514bf39bcc06c38",
     "fileName": "AstralEmpyreanv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs"
   },
@@ -9439,8 +9439,8 @@
       "null"
     ],
     "path": "Ultrasv3/ChallengeBosses/Kolrv3.cs",
-    "size": 6369,
-    "sha256": "f42d6d5b1b09d6448351bf15d9233f04d1055d3904ae8b4ed5ade79de9a2e99d",
+    "size": 10681,
+    "sha256": "f13f2419a1c937ac73733c58e6353f03905b008b59a77cc0a4e6f5b5e079609d",
     "fileName": "Kolrv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kolrv3.cs"
   },
@@ -9644,14 +9644,14 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/KathoolNoOptionv3.cs"
   },
   {
-    "name": "AstralEmpyreanv3 no Op",
-    "description": "Three-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization. No config needed.",
+    "name": "AstralEmpyreanv3 no options",
+    "description": "Three-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization. No config needed. Run 4 accounts.",
     "tags": [
       "null"
     ],
     "path": "Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs",
-    "size": 12578,
-    "sha256": "023506d043da40ff8a45a458f1bbe40ea82b0c966d51bc555eaad7b05b8c43cb",
+    "size": 11527,
+    "sha256": "720776841fed9d0e4fd1d5ca054b1eb25794c631cbd6376b77666f13357ea156",
     "fileName": "AstralEmpyreanNoOptionv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs"
   },
