@@ -6543,15 +6543,16 @@ public class CoreBots
 
         string[] dotClasses =
         {
+        "Dragon of Time",
+        "Blaze Binder",
+        "FireLord Summoner",
         "ShadowStalker of Time",
         "ShadowWeaver of Time",
         "ShadowWalker of Time",
         "Infinity Knight",
         "Interstellar Knight",
-        "Dragon of Time",
         "Timeless Dark Caster",
         "Frostval Barbarian",
-        "Blaze Binder",
         "DeathKnight",
         "DragonSoul Shinobi",
         "Shadow Dragon Shinobi",
@@ -6559,11 +6560,14 @@ public class CoreBots
         "Void Highlord"
     };
 
+        // Find all class items currently stored in inventory or bank
+        List<InventoryItem> ownedClasses = Bot.Inventory.Items.Concat(Bot.Bank.Items).Where(i => i.Category == ItemCategory.Class).ToList();
+
         // Find first owned DoT class in inventory
-        InventoryItem? ownedDotClass = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(i =>
-                i.Category == ItemCategory.Class &&
-                dotClasses.Contains(i.Name, StringComparer.OrdinalIgnoreCase));
+        InventoryItem? ownedDotClass = dotClasses
+            .Select(className => ownedClasses.FirstOrDefault(i =>
+                string.Equals(i.Name, className, StringComparison.OrdinalIgnoreCase))).FirstOrDefault(i => i != null);
+            
 
         // If we own one → equip it, otherwise keep whatever class is currently equipped
         if (ownedDotClass != null)
@@ -6587,12 +6591,41 @@ public class CoreBots
         bool usingShinobi =
             ownedDotClass?.Name is "DragonSoul Shinobi" or "Shadow Dragon Shinobi";
 
+        bool usingBlazeBinder =
+             ownedDotClass?.Name is "Blaze Binder" or "FireLord Summoner";
+
         Join("doomkitten");
 
         if (usingShinobi)
         {
             Logger("🎯 RNG GL due to class + kitten hit range.");
             Bot.Skills.StartAdvanced("4 | 1 | 3M<30 | 2H<30");
+
+            if (item == null)
+            {
+                Logger("🎯 No item selected, killing DoomKitten once.");
+                Bot.Kill.Monster("*");
+                Bot.Sleep(500);
+                return;
+            }
+
+            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            {
+                if (!Bot.Player?.HasTarget ?? true || Bot.Player?.Target?.HP > 0)
+                    Bot.Combat.Attack("*");
+
+                Bot.Sleep(500);
+            }
+
+            return;
+        }
+
+        // blaze binder special case
+        if (usingBlazeBinder)
+        {
+            Logger("🎯 RNG GL due to class + kitten hit range.");
+            Logger("if you cant kill doomkitten, try enhance with healer on all and healer mana vamp");
+            Bot.Skills.StartAdvanced("3 | 4 | 2");
 
             if (item == null)
             {
