@@ -3912,14 +3912,14 @@
     "name": "New Worlds, New Opportunities",
     "description": "Farms the resources of nation so instantly. Note that you must have Bounty Hunter's Drone Pet.",
     "tags": [
-      "bounty-hunters-pet",
+      "bounty hunters pet",
       "pet",
-      "nation-farm",
-      "farm-resources"
+      "nation farm",
+      "farm resources"
     ],
     "path": "Nation/NewWorldsNewOpportunities.cs",
     "size": 944,
-    "sha256": "e52217912c682378fd86e7b70761d74cb5e6c442f2b6f00e42f3c8d5e05297d5",
+    "sha256": "46d5ef84057759f1286a0a2452dbbfbc71f453e73c47e2e25ddf0435a7549efd",
     "fileName": "NewWorldsNewOpportunities.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/NewWorldsNewOpportunities.cs"
   },
@@ -15914,17 +15914,18 @@
     "name": "Fire Champion's Armor",
     "description": "This script will farm Fire Champion's Armor.",
     "tags": [
-      "fire-champion-s-armor",
-      "fire-champions-armor",
-      "polished-dragon-slayer",
-      "flame-forged-metal",
-      "void-scale",
-      "damage-dragon",
-      "hero-s-valiance"
+      "fire champions armor",
+      "fire champions armor",
+      "polished dragon slayer",
+      "flame forged metal",
+      "void scale",
+      "damage dragon",
+      "heros valiance",
+      "fca"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 4415,
-    "sha256": "acebd6591c7a791be2cbb7f98f352aa6c25b218459f294b21dc896aa54bd3b30",
+    "size": 4418,
+    "sha256": "ed83667d6098458a078b21171acb2fb5b98b94bf95140c50b62b504b8981aee9",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -27347,12 +27348,13 @@
       "archfiend",
       "class",
       "rankup",
-      "arch-fiend",
-      "yo mama"
+      "arch fiend",
+      "yo mama",
+      "archfiend class"
     ],
     "path": "Nation/Various/Archfiend.cs",
-    "size": 3396,
-    "sha256": "ce45968d64779755bbc09e6ca3134638a1a4df46df3f60e56d622d72c1c12dab",
+    "size": 3413,
+    "sha256": "17580e7cafefed1863aa33170828b8e90e3af4d111f2d38b36ab53f5fd2410ca",
     "fileName": "Archfiend.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/Archfiend.cs"
   },
@@ -27583,14 +27585,15 @@
     "name": "Necrotic Sword of the Abyss",
     "description": "This will farm the required materials and buy the item.",
     "tags": [
-      "necrotic-sword-of-the-abyss",
+      "necrotic sword of the abyss",
       "nation",
-      "boosted-item",
-      "nsoa"
+      "boosted item",
+      "nsoa",
+      "nsod"
     ],
     "path": "Nation/Various/NecroticSwordoftheAbyss.cs",
-    "size": 1977,
-    "sha256": "c5938ecac7e3dc1172e5a03141cf2cfc35ee678f35676a4407095d0d3e67c4af",
+    "size": 1983,
+    "sha256": "b2e374d72638a134e643fa67b0d7f93c1ddc1fe0a8f3492f73ded132ba55f7bf",
     "fileName": "NecroticSwordoftheAbyss.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/NecroticSwordoftheAbyss.cs"
   },
@@ -28016,12 +28019,12 @@
       "void",
       "highlord",
       "roentgenium",
-      "void-crystal-a",
-      "void-crystal-b"
+      "void crystal a",
+      "void crystal b"
     ],
     "path": "Nation/VHL/0VoidHighlord.cs",
     "size": 1495,
-    "sha256": "682c838f8680055c4553e9436bb742ed3392c5dc241169988051cb97a60420fd",
+    "sha256": "9f494b4579c87c5e89485c396b41d4b96d854bd469898a2c106137bb29bad751",
     "fileName": "0VoidHighlord.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/VHL/0VoidHighlord.cs"
   },
@@ -28036,12 +28039,12 @@
       "void",
       "highlord",
       "roentgenium",
-      "void-crystal-a",
-      "void-crystal-b"
+      "void crystal a",
+      "void crystal b"
     ],
     "path": "Nation/VHL/VoidCrystals.cs",
     "size": 1489,
-    "sha256": "3b1306548b7b403c5a8fd9d39c2f49ba93d8f798ca0dee9b51ae6ac29fdd30fe",
+    "sha256": "e885ec0f7824adfb0b8f3816991f8ff3f88a561c36d326219c902336c84899fd",
     "fileName": "VoidCrystals.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/VHL/VoidCrystals.cs"
   },
@@ -28068,13 +28071,13 @@
       "void",
       "highlord",
       "roentgenium",
-      "void-crystal-a",
-      "void-crystal-b",
+      "void crystal a",
+      "void crystal b",
       "challenge"
     ],
     "path": "Nation/VHL/VoidHighlordsChallenge.cs",
     "size": 1523,
-    "sha256": "5f9b1a50a80f52420d744109e6a27d5e9de7361c2a3a28f5f867b3bc3e619705",
+    "sha256": "f50195dc66001ee4afe0110d9d49c980159223505e369a8a5fe2ae2aea082ad0",
     "fileName": "VoidHighlordsChallenge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/VHL/VoidHighlordsChallenge.cs"
   },
