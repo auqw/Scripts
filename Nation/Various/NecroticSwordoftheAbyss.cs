@@ -1,7 +1,7 @@
 /*
 name: Necrotic Sword of the Abyss
 description: This will farm the required materials and buy the item.
-tags: necrotic-sword-of-the-abyss, nation, boosted-item, nsoa
+tags: necrotic sword of the abyss, nation, boosted item, nsoa, nsod
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs

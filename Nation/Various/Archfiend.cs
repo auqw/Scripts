@@ -1,7 +1,7 @@
 /*
 name: Archfiend
 description: Gets and ranks the Archfiend Class
-tags: archfiend, class, rankup, arch-fiend, yo mama
+tags: archfiend, class, rankup, arch fiend, yo mama, archfiend class
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
