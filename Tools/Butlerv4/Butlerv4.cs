@@ -149,7 +149,7 @@ public class Butlerv4
             if (_lockedZone)
             {
                 Core.Logger($"[Butler] Locked zone — tcpMap=[{_tcpMap}] tcpRoom=[{_tcpRoom}]");
-                Core.Join($"{_tcpMap}-{_tcpRoom}");
+                JoinLeaderMap(_tcpMap, _tcpRoom);
                 Core.Jump(_tcpCell, _tcpPad);
                 _lockedZone = false;
                 continue;
@@ -164,7 +164,7 @@ public class Butlerv4
             if (_pvpZone)
             {
                 Core.Logger($"[Butler] PvP zone — tcpMap=[{_tcpMap}] tcpRoom=[{_tcpRoom}]");
-                Core.Join($"{_tcpMap}-{_tcpRoom}");
+                JoinLeaderMap(_tcpMap, _tcpRoom);
                 Core.Jump(_tcpCell, _tcpPad);
                 _pvpZone = false;
                 continue;
@@ -207,6 +207,10 @@ public class Butlerv4
         if ((now - _lastGotoTime).TotalMilliseconds < GotoMinIntervalMs)
             return;
 
+        // If we haven't received any TCP data yet, wait — don't attempt to follow
+        if (string.IsNullOrEmpty(_tcpMap))
+            return;
+
         // If we have TCP data and everything matches, skip the Goto
         if (!string.IsNullOrEmpty(_tcpCell) &&
             string.Equals(_tcpMap, Bot.Map?.Name, StringComparison.OrdinalIgnoreCase) &&
@@ -230,18 +234,65 @@ public class Butlerv4
                     string room = _tcpRoom;
                     string cell = _tcpCell;
                     string pad = _tcpPad;
-                    if (!string.IsNullOrEmpty(map) && !string.IsNullOrEmpty(room))
-                    {
-                        if (Bot.ShouldExit) return;
-                        Core.Join($"{map}-{room}");
-                        if (Bot.ShouldExit) return;
-                        Core.Jump(cell, pad);
-                    }
+
+                    if (Bot.ShouldExit) return;
+                    JoinLeaderMap(map, room);
+                    if (Bot.ShouldExit) return;
+                    Core.Jump(cell, pad);
                 }
             }
             catch { }
             _gotoPending = false;
         });
+    }
+
+    // ================================================================
+    //  JOIN LEADER MAP (with room validation)
+    // ================================================================
+
+    /// <summary>
+    /// Joins the leader's map using the TCP-provided map name and room number.
+    /// The plugin sends "(no map)" when FullName isn't loaded yet — that's not
+    /// an error we need to fix in the plugin (it's already shipped). Instead we
+    /// detect those placeholder strings here and skip the join, waiting for the
+    /// next broadcast (200ms later) when the leader's UI has caught up.
+    /// </summary>
+    private void JoinLeaderMap(string map, string room)
+    {
+        // Validate map — skip if empty or unknown
+        if (string.IsNullOrEmpty(map) || map == "unknown")
+        {
+            Core.Logger($"[Butler] Invalid map data from leader (map='{map}'), skipping join.");
+            return;
+        }
+
+        // Room empty → leader data isn't ready yet, wait for next broadcast
+        if (string.IsNullOrEmpty(room))
+        {
+            Core.Logger($"[Butler] Leader room not yet available, waiting for next broadcast.");
+            return;
+        }
+
+        // Plugin sends "(no map)" when FullName UI element hasn't loaded yet.
+        // This is normal transient state — skip this tick and wait for valid data.
+        if (room.Contains('(') || room.Contains(')'))
+        {
+            Core.Logger($"[Butler] Leader room is a placeholder ('{room}'), map data not ready yet — waiting.");
+            return;
+        }
+
+        // Valid numeric room → join with suffix
+        if (int.TryParse(room, out _))
+        {
+            Core.Join($"{map}-{room}");
+            return;
+        }
+
+        // Non-numeric room with no parentheses → it's the base map name
+        // (e.g., the plugin returns "battleon" when there's no room suffix).
+        // Join the map without a suffix.
+        Core.Logger($"[Butler] Leader room '{room}' is not a number (likely a public/base map), joining directly.");
+        Core.Join(map);
     }
 
     // ================================================================
