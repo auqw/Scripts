@@ -473,7 +473,7 @@ public class CoreStory
                     !string.Equals(Bot.Player?.Cell, targetCell, StringComparison.OrdinalIgnoreCase)
                 )
                 {
-                    mapApi?.Jump(targetCell, "Left");
+                    mapApi?.Jump(targetCell, "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange(targetCell);
                     Bot.Player?.SetSpawnPoint();
                 }
@@ -516,7 +516,7 @@ public class CoreStory
                         )
                     )
                     {
-                        innerMap?.Jump(targetCell, "Left");
+                        innerMap?.Jump(targetCell, "Left", autoCorrect: false);
                         Bot.Wait.ForCellChange(targetCell);
                         Bot.Player?.SetSpawnPoint();
                     }
@@ -1486,7 +1486,7 @@ public class CoreStory
             if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
             {
                 string cellToJump = targetMonster?.Cell ?? "Enter";
-                Bot.Map.Jump(cellToJump, "Left");
+                Bot.Map.Jump(cellToJump, "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange(cellToJump);
             }
 
