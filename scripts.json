@@ -1668,6 +1668,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Template.cs"
   },
   {
+    "name": "Army Farm Void Auras",
+    "description": "Solo-farms Void Auras using custom NSoD-style methods so army sync can be added later without modifying CoreNSOD.",
+    "tags": [
+      "void aura",
+      "nsod",
+      "farm",
+      "solo",
+      "army"
+    ],
+    "path": "Army/ArmyFarmVoidAuras.cs",
+    "size": 11056,
+    "sha256": "070ee1a5e0cd150b62158d5dd5e7e23eefc1c8f2c182f78db5432616055d72b1",
+    "fileName": "ArmyFarmVoidAuras.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarmVoidAuras.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
@@ -9366,6 +9382,21 @@
     "sha256": "9507120f5edfc57468ae44a5352ed1ca6cb9248a037083a7ba0dd7655a94af28",
     "fileName": "NightmareCarnaxv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/NightmareCarnaxv3.cs"
+  },
+  {
+    "name": "BataraKala",
+    "description": "Batara Kala v3 — 2-taunter fight flow with pulse-driven taunts and army sync. Farms Kala Insignia (Ultra Kala).",
+    "tags": [
+      "batara",
+      "kala",
+      "ultra kala",
+      "insignia"
+    ],
+    "path": "Ultrasv3/ChallengeBosses/BataraKalav3.cs",
+    "size": 10899,
+    "sha256": "1ee4791802f37753e635232f422dae3a445328137c002fcddc2d079851973ee0",
+    "fileName": "BataraKalav3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/BataraKalav3.cs"
   },
   {
     "name": "QueenIonav3",
