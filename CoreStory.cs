@@ -1486,7 +1486,7 @@ public class CoreStory
             if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
             {
                 string cellToJump = targetMonster?.Cell ?? "Enter";
-                Bot.Map.Jump(cellToJump, "Left", autoCorrect: false);
+                Core.Jump(cellToJump, "Left");
                 Bot.Wait.ForCellChange(cellToJump);
             }
 
