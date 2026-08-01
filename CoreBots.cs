@@ -696,7 +696,7 @@ public class CoreBots
                 }) ?? "Enter"; // last-resort fallback if nothing else qualifies
             }
 
-            Bot.Map.Jump(targetCell, "Spawn");
+            Bot.Map.Jump(targetCell, "Spawn", autoCorrect: false);
             await Task.Delay(2500);
 
             // Quick toggle lagkiller to fix blackscreen if lag killer is off (so we can see the game again)
@@ -5245,7 +5245,8 @@ public class CoreBots
                         && !c.ToLower().Contains("enter")
                     )
                     ?? "Enter",
-                "Spawn"
+                "Spawn",
+                autoCorrect: false
             );
 
             JumpWait();
@@ -5350,7 +5351,8 @@ public class CoreBots
                     && !c.ToLower().Contains("blank")
                     && !c.ToLower().Contains("enter"))
             ?? "Enter",
-            "Spawn"
+            "Spawn",
+            autoCorrect: false
         );
 
         JumpWait();
@@ -5448,7 +5450,7 @@ public class CoreBots
                                  && (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
             ?? "Enter";
 
-        Bot.Map.Jump(safeCell, safeCell == "Enter" ? "Spawn" : "Left");
+        Bot.Map.Jump(safeCell, safeCell == "Enter" ? "Spawn" : "Left", autoCorrect: false);
         Bot.Wait.ForCellChange(safeCell);
         Sleep();
         JumpWait();
@@ -6413,7 +6415,7 @@ public class CoreBots
 
         if (Bot.Player.Cell != "Boss")
         {
-            Bot.Map.Jump("Boss", "Left");
+            Jump("Boss", "Left");
             Bot.Wait.ForCellChange("Boss");
         }
 
@@ -6434,7 +6436,7 @@ public class CoreBots
 
             if (Bot.Player.Cell != "Boss")
             {
-                Bot.Map.Jump("Boss", "Left");
+                Jump("Boss", "Left");
                 Bot.Wait.ForCellChange("Boss");
             }
 
@@ -6462,7 +6464,7 @@ public class CoreBots
 
                 if (Bot.Player!.Cell != "Boss")
                 {
-                    Bot.Map.Jump("Boss", "Left");
+                    Jump("Boss", "Left");
                     Bot.Wait.ForCellChange("Boss");
                 }
 
@@ -8685,7 +8687,7 @@ public class CoreBots
         // Sleep after sending the packet to give time for processing
         Sleep();
 
-        Bot.Map.Jump(CellPad.Item1, CellPad.Item2);
+        Jump(CellPad.Item1, CellPad.Item2);
         Sleep();
     }
 
@@ -9208,7 +9210,7 @@ public class CoreBots
                 break;
 
             case "wanders":
-                Bot.Map.Jump("Boss", "left");
+                Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                 Bot.Sleep(2500);
                 blackListedCells.UnionWith(
                     Bot.Player.Cell == "Boss"
@@ -9287,7 +9289,7 @@ public class CoreBots
         {
             for (int i = 0; i < jumpCount; i++)
             {
-                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, PrivateRooms);
+                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, autoCorrect: false);
                 Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Cell, 20);
             }
 
@@ -9739,7 +9741,7 @@ public class CoreBots
                     SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%8733%");
                 }
                 // Jump to Transition cell to goto yardb
-                Bot.Map.Jump("MoonCut", "Left");
+                Jump("MoonCut", "Left");
                 Bot.Wait.ForCellChange("MoonCut");
                 SimpleQuestBypass((28, 35));
                 Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map, autoCorrect: false);
@@ -9749,7 +9751,7 @@ public class CoreBots
             case "zephyrus":
                 Join("hyperium");
                 Bot.Wait.ForCellChange("R10");
-                Bot.Map.Jump("R10", "Left");
+                Jump("R10", "Left");
                 if (!Bot.Quests.HasBeenCompleted(693))
                     ChainComplete(693);
                 Bot.Map.Join(PrivateRooms ? $"{"zephyrus"}-" + PrivateRoomNumber : map, "R2", "Up", autoCorrect: false);
@@ -9759,7 +9761,7 @@ public class CoreBots
             case "icestormarena":
                 JumpWait();
                 if (Bot.Map.Name != null && Bot.Map.Name != map)
-                    Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map);
+                    Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map, autoCorrect: false);
                 Bot.Wait.ForMapLoad("icestormarena");
                 Bot.Send.ClientPacket(
                     "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
@@ -9767,7 +9769,7 @@ public class CoreBots
                 );
                 Sleep();
                 if (cell != null && Bot.Player.Cell != cell)
-                    Bot.Map.Jump(cell ?? "Enter", pad);
+                    Bot.Map.Jump(cell ?? "Enter", pad, autoCorrect: false);
                 Bot.Wait.ForCellChange(cell ?? "Enter");
                 break;
 
@@ -9924,7 +9926,7 @@ public class CoreBots
             }
 
             if (cell != null && Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell, pad);
+                Bot.Map.Jump(cell, pad, autoCorrect: false);
 
             Sleep(1500);
         }
@@ -9984,7 +9986,7 @@ public class CoreBots
                             Bot.Map.Join(
                                 map,
                                 cell ?? "Enter",
-                                cell == null ? "Spawn" : pad ?? "Left"
+                                cell == null ? "Spawn" : pad ?? "Left", autoCorrect: false
                             );
                         }
                         else
@@ -9997,7 +9999,7 @@ public class CoreBots
                             Bot.Map.Join(
                                 target,
                                 cell ?? "Enter",
-                                cell == null ? "Spawn" : pad ?? "Left"
+                                cell == null ? "Spawn" : pad ?? "Left", autoCorrect: false
                             );
                         }
 
@@ -10059,11 +10061,11 @@ public class CoreBots
                             if (!string.IsNullOrEmpty(map) && !Bot.Wait.ForMapLoad(map, 20))
                             {
                                 if (cell != null && Bot.Player.Cell != cell)
-                                    Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
+                                    Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad, autoCorrect: false);
                             }
                             else if (cell != null && Bot.Player.Cell != cell)
                             {
-                                Bot.Map.Jump(cell, pad ?? "Spawn");
+                                Bot.Map.Jump(cell, pad ?? "Spawn", autoCorrect: false);
                             }
 
                             Sleep();
@@ -10301,7 +10303,7 @@ public class CoreBots
 
             // Jump to the target cell if not already there
             if (Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell, targetPad);
+                Bot.Map.Jump(cell, targetPad, autoCorrect: false);
 
             Bot.Wait.ForCellChange(cell);
         }
@@ -10598,7 +10600,7 @@ public class CoreBots
         for (int i = 0; i < 20; i++)
         {
             if (Bot.Map.Name != null && Bot.Map.Name != map)
-                Bot.Map.Join(!PrivateRooms ? map : $"{map}-{PrivateRoomNumber}");
+                Bot.Map.Join(!PrivateRooms ? map : $"{map}-{PrivateRoomNumber}", autoCorrect: false);
             Bot.Wait.ForMapLoad(map);
 
             string? currentMap = Bot.Map.Name;
