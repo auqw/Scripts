@@ -5415,7 +5415,7 @@ public class CoreBots
 
             if (!string.Equals(Bot.Player.Cell, target.Cell, StringComparison.OrdinalIgnoreCase))
             {
-                Bot.Map.Jump(target.Cell, pad);
+                Bot.Map.Jump(target.Cell, pad, autoCorrect: false);
                 Bot.Wait.ForCellChange(target.Cell);
             }
 
