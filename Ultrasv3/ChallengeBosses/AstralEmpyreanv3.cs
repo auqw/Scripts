@@ -301,8 +301,10 @@ public class AstralEmpyreanv3
             UltraAsync.StartTauntLoop(Bot, C, Engine, fightStartTime, 2, 3, cancellationToken: _tauntCts.Token);
         }
 
-        if (!dailyOnly)
-            Bot.Events.ExtensionPacketReceived += AstralZoneListener;
+        // Zone listener must be active in BOTH modes — the zone mechanic (A/B safe boxes)
+        // applies whether we're doing the daily or farming drops. Dying to the zone
+        // mechanic fails the fight either way.
+        Bot.Events.ExtensionPacketReceived += AstralZoneListener;
         Bot.Sleep(2000);
 
         // Pre-seed completion sync file so all 4 entries exist before the loop starts.
