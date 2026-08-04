@@ -26474,6 +26474,32 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs"
   },
   {
+    "name": "Yes Ma'am Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Yes Ma'am / 1st Grade Merge [2749] in /extracredit",
+    "tags": [
+      "back-to-school",
+      "yes maam",
+      "1st grade",
+      "merge",
+      "extracredit",
+      "beat breaker",
+      "beatbox",
+      "whyphone",
+      "selfie",
+      "primo",
+      "pro",
+      "boss",
+      "based",
+      "ace",
+      "cosmo buns"
+    ],
+    "path": "Seasonal/BackToSchool/YesMaamMerge.cs",
+    "size": 8660,
+    "sha256": "32bb4fec4422882b36730b935122dfe22d7a075b0e4c955de9f5153f9693ebe2",
+    "fileName": "YesMaamMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BackToSchool/YesMaamMerge.cs"
+  },
+  {
     "name": "Extra Credit AC Items",
     "description": "This will farm the Extra Credit AC Items.",
     "tags": [
@@ -26547,6 +26573,22 @@
     "sha256": "a3945d78c256c6d39cdc53a3b28f316e94835f4669ceb1c78704d3ce5b8612f3",
     "fileName": "ExtraCreditMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BackToSchool/ExtraCreditMerge.cs"
+  },
+  {
+    "name": "Yes Ma'am",
+    "description": "Runs the Back-to-School 'Yes Ma'am!' test quest chain [10815 - 10823].",
+    "tags": [
+      "back-to-school",
+      "yes maam",
+      "seasonal",
+      "quest chain",
+      "extra credit"
+    ],
+    "path": "Seasonal/BackToSchool/YesMaam.cs",
+    "size": 2942,
+    "sha256": "5a79db4016810b6d1918120219ab41b5f9821a357b81a69392379bd27bd6cc88",
+    "fileName": "YesMaam.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BackToSchool/YesMaam.cs"
   },
   {
     "name": "Star Festival Story",
