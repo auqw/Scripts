@@ -135,6 +135,9 @@ public class TheEncroachingShadows
             PrepareSyncFiles();
             _armyMembers = WaitForArmyStart();
 
+            if (_armyMembers.Count != ArmySize)
+                return;
+
             if (!AssignAndEquipClasses())
                 return;
 
@@ -722,7 +725,11 @@ public class TheEncroachingShadows
             }
             else if (ready > ArmySize)
             {
-                Core.Logger($"Too many clients are using this sync set ({ready}/{ArmySize}).");
+                Core.Logger(
+                    $"Too many clients are using this sync set ({ready}/{ArmySize}). Set the same Army Size on every client and stop any extra copies.",
+                    stopBot: true
+                );
+                return new List<string>();
             }
 
             Bot.Sleep(250);
