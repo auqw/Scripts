@@ -44,12 +44,12 @@ public class YesMaam
             Core.KillMonster("bloodtusk", "r3", "Center", "Rock", "Rock Collected", 2);
         });
 
-        // Test #3: Math
+        // Test #3: Math — hunt (not fixed-cell) since these monsters aren't in the listed cell
         Test(10817, () =>
         {
-            Core.KillMonster("blackhorn", "r3", "Left", "Tomb Spider", "Tomb Spider Legs", 25);
-            Core.KillMonster("boxes", "Fort2", "Left", "Grizzlespit", "Grizzlespit Beard Hair", 500);
-            Core.KillMonster("arcangrove", "LeftBack", "Left", "Gorillaphant", "Gorillaphant Hair", 1000);
+            Core.HuntMonster("blackhorn", "Tomb Spider", "Tomb Spider Legs", 25);
+            Core.HuntMonster("boxes", "Grizzlespit", "Grizzlespit Beard Hair", 500);
+            Core.HuntMonster("arcangrove", "Gorillaphant", "Gorillaphant Hair", 1000);
         });
 
         // Test #4: Reading and Writing
@@ -69,9 +69,12 @@ public class YesMaam
             Core.KillMonster("redfurvalley", "r2", "Right", "*", "Drone Wires", 12);
         });
 
-        // Test #Subject
+        // Test #Subject — kill until the quest is completable (item name/temp status varies)
         Test(10821, () =>
-            Core.KillMonster("orctown", "Tower", "Right", "General Porkon", "General Porkon \"Convinced\"", 1));
+        {
+            while (!Bot.ShouldExit && !Bot.Quests.CanComplete(10821))
+                Core.KillMonster("orctown", "Tower", "Right", "General Porkon");
+        });
 
         // Return to Yes Ma'am
         Test(10822, () => Core.GetMapItem(16001, 1, "extracredit"));
