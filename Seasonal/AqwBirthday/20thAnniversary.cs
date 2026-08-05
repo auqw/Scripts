@@ -256,7 +256,7 @@ public class AnniversaryofDoom
         Story.KillQuest(
             8923,
             "deathofgames",
-            new[] { "Halenro the Paladin", "Mysterious Stranger", "Moglin Ghost" }
+            new[] { "Halenro the Paladin", "Moglin Ghost", "Mysterious Stranger" }
         );
 
         //Battle On... FOREVER! 8924
