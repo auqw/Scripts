@@ -3085,10 +3085,10 @@ public class CoreAdvanced
     }
 
     private int getProcID(InventoryItem? item) =>
-        item == null ? 0 : Core.GetItemProperty<int>(item, "ProcID") ?? 0;
+        item == null ? 0 : Core.GetItemProperty<int>(item, "ProcID");
 
     private int getEnhID(InventoryItem? item) =>
-        item == null ? 0 : Core.GetItemProperty<int>(item, "iEnh") ?? 0;
+        item == null ? 0 : Core.GetItemProperty<int>(item, "iEnh");
 
     public bool uAwe() => Core.isCompletedBefore(2937);
 
