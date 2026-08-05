@@ -8155,7 +8155,8 @@ public class CoreBots
             if (Bot.Inventory.Items.Any(x => x != null && x.ID == item.ID && x.Equipped))
                 break;
 
-            JumpWait();
+            if (Bot.Player.InCombat)
+                JumpWait();
 
             switch (item.CategoryString.ToLower())
             {
