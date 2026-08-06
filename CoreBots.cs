@@ -1804,7 +1804,6 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
         Bot.Options.AttackWithoutTarget = false;
 
-        int buy_quant;
         int StaticQuant = quant;
         if (item == null)
             return;
