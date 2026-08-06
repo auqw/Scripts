@@ -1994,6 +1994,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/YandereStalker.cs"
   },
   {
+    "name": "Infernal Arena LW",
+    "description": "Completes Infernal Arena with custom combat behavior for Deadly Duo through Naal.",
+    "tags": [
+      "story",
+      "quest",
+      "queen of monsters",
+      "infernal arena",
+      "deadly duo",
+      "naal",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/InfernalArenaLW.cs",
+    "size": 29205,
+    "sha256": "604a4bf481bd53d6c1003720801b9506ddfbe4fa3fb867947b95a770253f9123",
+    "fileName": "InfernalArenaLW.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/InfernalArenaLW.cs"
+  },
+  {
     "name": "Grimgaol",
     "description": "Goes through the Grimgaol dungeon... Testing Phase",
     "tags": [
