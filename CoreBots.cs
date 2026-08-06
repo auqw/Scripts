@@ -1814,7 +1814,6 @@ public class CoreBots
             Bot.Wait.ForMapLoad(map);
         }
 
-        Bot.Events.ExtensionPacketReceived += RelogRequieredListener;
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             if (Bot.Player.HasTarget)
@@ -1887,6 +1886,8 @@ public class CoreBots
             Logger("BuyItem Failed, crashed 5 times", stopBot: true);
             return;
         }
+
+        Bot.Events.ExtensionPacketReceived += RelogRequieredListener;
         Sleep(1000);
 
         Bot.Wait.ForActionCooldown(GameActions.BuyItem);
