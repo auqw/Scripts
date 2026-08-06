@@ -1804,13 +1804,8 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
         Bot.Options.AttackWithoutTarget = false;
 
-        int buy_quant;
         int StaticQuant = quant;
-        if (
-            item == null
-            || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0
-            || !_canBuy(shopID, item, quant)
-        )
+        if (item == null)
             return;
 
         if (Bot.Map.Name != map)
@@ -1819,7 +1814,6 @@ public class CoreBots
             Bot.Wait.ForMapLoad(map);
         }
 
-        Bot.Events.ExtensionPacketReceived += RelogRequieredListener;
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             if (Bot.Player.HasTarget)
@@ -1862,6 +1856,10 @@ public class CoreBots
         }
         item = resolvedItem;
 
+        int buy_quant = _CalcBuyQuantity(item, quant);
+        if (buy_quant <= 0 || !_canBuy(shopID, item, quant))
+            return;
+
         dynamic sItem = new ExpandoObject();
         bool succeeded = false;
         for (int i = 0; i < 5; i++)
@@ -1888,6 +1886,8 @@ public class CoreBots
             Logger("BuyItem Failed, crashed 5 times", stopBot: true);
             return;
         }
+
+        Bot.Events.ExtensionPacketReceived += RelogRequieredListener;
         Sleep(1000);
 
         Bot.Wait.ForActionCooldown(GameActions.BuyItem);
