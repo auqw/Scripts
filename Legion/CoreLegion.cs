@@ -850,7 +850,8 @@ public class CoreLegion
             Core.IsMember ? "Fire Imp" : "Firestorm Hatchling",
             "Obsidian Rock",
             quant,
-            log: false
+            log: false,
+            isTemp: false
         );
 
         Bot.Wait.ForPickup("Obsidian Rock");
