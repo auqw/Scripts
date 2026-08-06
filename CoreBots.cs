@@ -884,7 +884,7 @@ public class CoreBots
                 Bot.Events.ExtensionPacketReceived -= RespawnListener;
                 if (AntiLag)
                 {
-                    Bot.Options.SetFPS = 60;
+                    Bot.Options.SetFPS = 30;
                     if (Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                         Bot.Flash.CallGameFunction("world.toggleMonsters");
                 }
