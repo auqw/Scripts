@@ -1806,11 +1806,7 @@ public class CoreBots
 
         int buy_quant;
         int StaticQuant = quant;
-        if (
-            item == null
-            || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0
-            || !_canBuy(shopID, item, quant)
-        )
+        if (item == null)
             return;
 
         if (Bot.Map.Name != map)
@@ -1861,6 +1857,10 @@ public class CoreBots
             return;
         }
         item = resolvedItem;
+
+        int buy_quant = _CalcBuyQuantity(item, quant);
+        if (buy_quant <= 0 || !_canBuy(shopID, item, quant))
+            return;
 
         dynamic sItem = new ExpandoObject();
         bool succeeded = false;
