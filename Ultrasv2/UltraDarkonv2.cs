@@ -221,7 +221,8 @@ public class UltraDarkonv2
         Ultra.WaitForArmy(armySize - 1, "Ultra_Darkon.sync");
 
         Core.ChooseBestCell(boss);
-
+		Bot.Player.SetSpawnPoint();
+		
         Core.EnableSkills();
 
         // Sync fight start time
