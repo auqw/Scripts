@@ -9,7 +9,7 @@ tags: void aura, nsoD, farm, solo, army
 //cs_include Scripts/Ultrasv3/DependenciesUltras/CoreUltrav3.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraGeneral.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraEnhancements.cs
-//cs_include Scripts/Army/ArmyDependencies/ArmyGeneral.cs
+//cs_include Scripts/Ultrasv3/ArmyDependencies/ArmyGeneral.cs
 
 using System.Collections.Generic;
 using System.Linq;
