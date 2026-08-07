@@ -1678,8 +1678,8 @@
       "army"
     ],
     "path": "Army/ArmyFarmVoidAuras.cs",
-    "size": 11056,
-    "sha256": "070ee1a5e0cd150b62158d5dd5e7e23eefc1c8f2c182f78db5432616055d72b1",
+    "size": 11060,
+    "sha256": "5cd92259a7de0479b0aa53ed09d6e60ab724f04539e9676f7a44ebf3b45f2699",
     "fileName": "ArmyFarmVoidAuras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarmVoidAuras.cs"
   },
