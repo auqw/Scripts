@@ -1,3 +1,8 @@
+/*
+name: null
+description: null
+tags: null
+*/
 //cs_include Scripts/Ultrasv3/DependenciesUltras/CoreUltrav3.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/UltraGeneral.cs
 //cs_include Scripts/CoreBots.cs
