@@ -32,7 +32,7 @@ using Skua.Core.Options;
 // Cape: Penitence
 // Scroll: Enrage
 
-// Lord Of Order:
+// Lord of Order:
 // Weapon: Lucky Aweblast / Valiance
 // Class: Lucky
 // Helm: Forge
@@ -105,8 +105,8 @@ public class UltraDarkon
         {
             string[] classes = comp switch
             {
-                DarkonComp.Recommended => new[] { "LightCaster", "Legion Revenant", "Lord Of Order", "StoneCrusher" },
-                DarkonComp.Alternative => new[] { "ArchPaladin", "Legion Revenant", "Lord Of Order", "StoneCrusher" },
+                DarkonComp.Recommended => new[] { "LightCaster", "Legion Revenant", "Lord of Order", "StoneCrusher" },
+                DarkonComp.Alternative => new[] { "ArchPaladin", "Legion Revenant", "Lord of Order", "StoneCrusher" },
                 _ => throw new InvalidOperationException($"Unhandled DarkonComp value: {comp}")
             };
 
@@ -221,8 +221,8 @@ public class UltraDarkon
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky, // Class
                     hSpecial: HelmSpecial.Forge, // Helm

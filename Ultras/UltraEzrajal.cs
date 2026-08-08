@@ -47,7 +47,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Ravenous / Valiance / Arcana
 // └─ Cape: Vainglory
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -78,7 +78,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -109,7 +109,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Ravenous / Valiance / Arcana
 // └─ Cape: Vainglory
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -206,9 +206,9 @@ public class UltraEzrajal
         {
             string[] classes = comp switch
             {
-                EzrajalComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
-                EzrajalComp.Safe => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                EzrajalComp.F2PFastest => new[] { "Arcana Invoker", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
+                EzrajalComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Verus DoomKnight", "Legion Revenant", "Lord of Order" },
+                EzrajalComp.Safe => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                EzrajalComp.F2PFastest => new[] { "Arcana Invoker", "Verus DoomKnight", "Legion Revenant", "Lord of Order" },
                 _ => throw new InvalidOperationException($"Unhandled EzrajalComp value: {comp}")
             };
 
@@ -325,8 +325,8 @@ public class UltraEzrajal
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,

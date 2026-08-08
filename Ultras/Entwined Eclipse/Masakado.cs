@@ -44,7 +44,7 @@ public class MasakadoKingsEchoArmy
         new Option<string>("player1", "King's Echo",    "AQW account name for the King's Echo slot. Falls back to LR → Arcana Invoker → ArchMage if KE is missing.", ""),
         new Option<string>("player2", "StoneCrusher",  "AQW account name for the StoneCrusher slot. Falls back to ArchPaladin → LoO → LR.", ""),
         new Option<string>("player3", "Legion Revenant", "AQW account name for the Legion Revenant slot. Falls back to ArchPaladin → LoO → LightCaster.", ""),
-        new Option<string>("player4", "Lord Of Order", "AQW account name for the Lord Of Order slot. Falls back to ArchPaladin → LightCaster → LR.", ""),
+        new Option<string>("player4", "Lord of Order", "AQW account name for the Lord of Order slot. Falls back to ArchPaladin → LightCaster → LR.", ""),
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -89,7 +89,7 @@ public class MasakadoKingsEchoArmy
     const string ArchMage = "ArchMage";
     const string ArchPaladin = "ArchPaladin";
     const string StoneCrusher = "StoneCrusher";
-    const string LordOfOrder = "Lord Of Order";
+    const string LordOfOrder = "Lord of Order";
     const string LightCaster = "LightCaster";
     static readonly string[] FallbackClasses = new[]
     {

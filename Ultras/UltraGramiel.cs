@@ -38,7 +38,7 @@ using Skua.Core.Options;
 //
 // RIGHT CRYSTAL (MapID 3) - T1 & T2 Taunters
 // ──────────────────────────────────────────
-// Lord Of Order (T1)
+// Lord of Order (T1)
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Arcanas Concerto / Valiance / Awe Blast
@@ -74,7 +74,7 @@ using Skua.Core.Options;
 // └─ Potions: Potent Malevolence Elixir + Sage Tonic
 // RIGHT CRYSTAL (MapID 3) - T1 & T2 Taunters
 // ──────────────────────────────────────────
-// Lord Of Order (T1)
+// Lord of Order (T1)
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Arcanas / Valiance / Awe Blast
@@ -195,13 +195,13 @@ public class UltraGramiel
                 GramielComp.Recommended => new[] {
                     new[] { "StoneCrusher", "Infinity Titan" },
                     new[] { "ArchPaladin" },
-                    new[] { "Lord Of Order" },
+                    new[] { "Lord of Order" },
                     new[] { "Void Highlord" }
                 },
                 GramielComp.Alternate => new[] {
                     new[] { "StoneCrusher", "Infinity Titan" },
                     new[] { "LightCaster" },
-                    new[] { "Lord Of Order" },
+                    new[] { "Lord of Order" },
                     new[] { "Verus DoomKnight" }
                 },
                 _ => throw new NotImplementedException(),
@@ -227,7 +227,7 @@ public class UltraGramiel
                 crystalMapId = 2;
                 isT1Taunter = false;
                 break;
-            case "Lord Of Order":
+            case "Lord of Order":
                 crystalMapId = 3;
                 isT1Taunter = true;
                 break;
@@ -285,7 +285,7 @@ public class UltraGramiel
             case "ArchPaladin":
                 Ultra.UseAlchemyPotions("Potent Malevolence Elixir", "Sage Tonic");
                 break;
-            case "Lord Of Order":
+            case "Lord of Order":
                 Ultra.UseAlchemyPotions("Divine Elixir", "Sage Tonic");
                 break;
             case "Verus DoomKnight":
@@ -447,7 +447,7 @@ public class UltraGramiel
                 );
                 break;
 
-            // Lord Of Order
+            // Lord of Order
             case "lord of order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,

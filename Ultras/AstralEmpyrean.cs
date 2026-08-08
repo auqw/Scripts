@@ -282,8 +282,8 @@ public class AstralEmpyrean
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Examen,

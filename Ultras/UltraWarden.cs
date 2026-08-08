@@ -83,7 +83,7 @@ public class UltraWarden
         {
             string[] classes = comp switch
             {
-                WardenComp.Recommended => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "Verus DoomKnight" },
+                WardenComp.Recommended => new[] { "Legion Revenant", "ArchPaladin", "Lord of Order", "Verus DoomKnight" },
                 _ => throw new InvalidOperationException($"Unhandled WardenComp value: {comp}")
             };
 

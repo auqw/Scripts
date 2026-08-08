@@ -36,7 +36,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -67,7 +67,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -98,7 +98,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -195,9 +195,9 @@ public class UltraEngineer
         {
             string[] classes = comp switch
             {
-                EngineerComp.Fast => new[] { "Lich", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                EngineerComp.Safe => new[] { "Legion Revenant", "StoneCrusher", "ArchPaladin", "Lord Of Order" },
-                EngineerComp.F2PFast => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                EngineerComp.Fast => new[] { "Lich", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                EngineerComp.Safe => new[] { "Legion Revenant", "StoneCrusher", "ArchPaladin", "Lord of Order" },
+                EngineerComp.F2PFast => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord of Order" },
                 _ => throw new InvalidOperationException($"Unhandled EngineerComp value: {comp}")
             };
 
@@ -294,8 +294,8 @@ public class UltraEngineer
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,

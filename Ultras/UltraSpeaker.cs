@@ -42,7 +42,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Praxis
 // └─ Cape: Penitence
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Valiance
@@ -69,7 +69,7 @@ using Skua.Core.Options;
 // └─ Cape: Penitence
 // └─ Scroll: Enrage
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Luck
 // ├─ Weapon: Valiance
@@ -143,10 +143,10 @@ public class UltraSpeaker
         {
             string[] classes = comp switch
             {
-                SpeakerComp.Fast => new[] { "ArchPaladin", "Legion Revenant", "Quantum Chronomancer", "Lord Of Order" },
-                SpeakerComp.Safe => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "Verus DoomKnight" },
-                SpeakerComp.SafeV2 => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "StoneCrusher" },
-                _ => new[] { "ArchPaladin", "Legion Revenant", "Lord Of Order", "Verus DoomKnight" },
+                SpeakerComp.Fast => new[] { "ArchPaladin", "Legion Revenant", "Quantum Chronomancer", "Lord of Order" },
+                SpeakerComp.Safe => new[] { "Legion Revenant", "ArchPaladin", "Lord of Order", "Verus DoomKnight" },
+                SpeakerComp.SafeV2 => new[] { "Legion Revenant", "ArchPaladin", "Lord of Order", "StoneCrusher" },
+                _ => new[] { "ArchPaladin", "Legion Revenant", "Lord of Order", "Verus DoomKnight" },
             };
 
             Ultra.EquipClassSync(classes, 4, "speaker_class.sync");

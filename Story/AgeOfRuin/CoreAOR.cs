@@ -456,7 +456,7 @@ public class CoreAOR
         "Hollowborn Vindicator",
         "Lich",
         "ArchPaladin",
-        "Lord Of Order",
+        "Lord of Order",
         "StoneCrusher",
         "Dragon of Time",
         "Unundead Goat",

@@ -18,27 +18,27 @@ using Skua.Core.Options;
 // Chrono ShadowSlayer: Lucky | Vim | Valiance | Vainglory
 // Verus DoomKnight: Lucky | Anima | Ravenous | Vainglory
 // Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
-// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+// Lord of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
 #endregion
 
 #region F2P Fast
 // Dragon of Time (x2): Wizard | Pneuma | Elysium | Vainglory
 // Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
-// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+// Lord of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
 #endregion
 
 #region Common Comp
 // King's Echo: Lucky | Examen | Ravenous | Vainglory
 // Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
 // ArchPaladin: Lucky | Forge | Valiance | Lament
-// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+// Lord of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
 #endregion
 
 #region Balanced Comp
 // Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
 // ArchPaladin: Lucky | Forge | Valiance | Lament
 // StoneCrusher: Wizard | Pneuma | Valiance | Vainglory
-// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+// Lord of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
 #endregion
 
 #region Other DPS Options
@@ -76,7 +76,7 @@ public class UltraNulgath
             NulgathComp.Unselected
         ),
         new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "ArchPaladin"),
-        new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "Lord Of Order"),
+        new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "Lord of Order"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -220,25 +220,25 @@ public class UltraNulgath
                     new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter" },
                     new[] { "Verus DoomKnight" },
                     new[] { "Legion Revenant" },
-                    new[] { "Lord Of Order" }
+                    new[] { "Lord of Order" }
                 },
                 NulgathComp.F2PFast => new[] {
                     new[] { "Dragon of Time" },
                     new[] { "Dragon of Time" },
                     new[] { "Legion Revenant" },
-                    new[] { "Lord Of Order" }
+                    new[] { "Lord of Order" }
                 },
                 NulgathComp.Common => new[] {
                     new[] { "King's Echo" },
                     new[] { "Legion Revenant" },
                     new[] { "ArchPaladin" },
-                    new[] { "Lord Of Order" }
+                    new[] { "Lord of Order" }
                 },
                 NulgathComp.Balanced => new[] {
                     new[] { "Legion Revenant" },
                     new[] { "ArchPaladin" },
                     new[] {  C.CheckInventory("Infinity Titan") ? "Infinity Titan" : "StoneCrusher" },
-                    new[] { "Lord Of Order" }
+                    new[] { "Lord of Order" }
                 },
                 _ => throw new NotImplementedException(),
             };
@@ -296,8 +296,8 @@ public class UltraNulgath
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,

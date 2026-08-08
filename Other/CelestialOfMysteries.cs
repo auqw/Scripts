@@ -109,7 +109,7 @@ public class CelestialOfMysteries
         if (!Core.CheckInventory("Scythe Shard", 35))
         {
             Adv.EnhanceEquipped(EnhancementType.Lucky, wSpecial: WeaponSpecial.Health_Vamp);
-            Core.UseDodgeClass("Lord Of Order");
+            Core.UseDodgeClass("Lord of Order");
             Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false);
         }
         // Champion's Seal

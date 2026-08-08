@@ -60,7 +60,7 @@ public class GreatbladeOfTheEntwinedEclipse
         new Option<string>("player1", "King's Echo + Legion Revenant", "AQW account name for the King's Echo + Legion Revenant slot. This account MUST own BOTH classes: King's Echo is used for Masakado, Legion Revenant is used for the dungeons.", ""),
         new Option<string>("player2", "StoneCrusher", "AQW account name for the StoneCrusher slot. This account MUST own StoneCrusher for Masakado and all dungeon phases.", ""),
         new Option<string>("player3", "ArchPaladin", "AQW account name for the ArchPaladin slot. This account MUST own ArchPaladin for the dungeon phases; Masakado can also fall back to it.", ""),
-        new Option<string>("player4", "Lord Of Order", "AQW account name for the Lord Of Order slot. This account MUST own Lord Of Order for Masakado and all dungeon phases.", ""),
+        new Option<string>("player4", "Lord of Order", "AQW account name for the Lord of Order slot. This account MUST own Lord of Order for Masakado and all dungeon phases.", ""),
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>("autoEnhance", "Auto-Apply Enhancements", "ON: each sub-script auto-applies the correct enhancements for its assigned class.", true),

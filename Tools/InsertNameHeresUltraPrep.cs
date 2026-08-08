@@ -339,7 +339,7 @@ public class InsertNameHeresUltraPrep
                         items.Add("StoneCrusher");
                         break;
                     case "Player3":
-                        items.Add("Lord Of Order");
+                        items.Add("Lord of Order");
                         items.Add("Legion Revenant");
                         break;
                     case "Player4":
