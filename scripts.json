@@ -9485,6 +9485,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesMerge/QueenIona.cs"
   },
   {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/ArmyDependencies/ArmyGeneral.cs",
+    "size": 5203,
+    "sha256": "6b86435e4be260f40dd5583bc2a3a76d15be29892a392dd64cd1bcb839ac7f55",
+    "fileName": "ArmyGeneral.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ArmyDependencies/ArmyGeneral.cs"
+  },
+  {
     "name": "Ascend Eclipse Test",
     "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
     "tags": [
