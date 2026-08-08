@@ -41,7 +41,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Awe Blast / Valiance
@@ -72,7 +72,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Awe Blast / Valiance
@@ -103,7 +103,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Awe Blast / Valiance
@@ -183,7 +183,7 @@ public class UltraDrago
 
     List<string> TaunterGroup1 = new[] { "ArchPaladin" }.ToList();
     bool isTaunterGroup1 = false;
-    List<string> TaunterGroup2 = new[] { "Lord Of Order", "Lich", "Sentinel" }.ToList();
+    List<string> TaunterGroup2 = new[] { "Lord of Order", "Lich", "Sentinel" }.ToList();
     bool isTaunterGroup2 = false;
     public void ScriptMain(IScriptInterface bot)
     {
@@ -228,10 +228,10 @@ public class UltraDrago
         {
             string[] classes = comp switch
             {
-                DragoComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                DragoComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                DragoComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                _ => new[] { "ArchPaladin", "Legion Revenant", "Chaos Avenger", "Lord Of Order" },
+                DragoComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                DragoComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                DragoComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                _ => new[] { "ArchPaladin", "Legion Revenant", "Chaos Avenger", "Lord of Order" },
             };
 
             Ultra.EquipClassSync(classes, 4, "drago_class.sync");
@@ -373,8 +373,8 @@ public class UltraDrago
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,

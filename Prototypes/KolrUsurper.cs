@@ -59,7 +59,7 @@ public class LoneWolf_UltraUsurper
     private const string HollowbornVindicatorClass = "Hollowborn Vindicator";
     private const string ChaosAvengerClass = "Chaos Avenger";
     private const string ArchPaladinClass = "ArchPaladin";
-    private const string Player2Class = "Lord Of Order";
+    private const string Player2Class = "Lord of Order";
 
     private const string ScrollName = "Scroll of Enrage";
     private const string HonorPotionName = "Potent Honor Potion";
@@ -146,8 +146,8 @@ public class LoneWolf_UltraUsurper
         ),
         new Option<string>(
             "player2",
-            "Player 2 - Lord Of Order",
-            "Username assigned to Player 2 using Lord Of Order.",
+            "Player 2 - Lord of Order",
+            "Username assigned to Player 2 using Lord of Order.",
             ""
         ),
         new Option<DpsClass>(

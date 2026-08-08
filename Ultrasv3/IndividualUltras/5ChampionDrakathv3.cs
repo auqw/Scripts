@@ -37,7 +37,7 @@ public class ChampionDrakathv3
     private static string _fbsMuteFile = "";
 
     private const string Taunter1 = "ArchPaladin";
-    private const string Taunter2 = "Lord Of Order";
+    private const string Taunter2 = "Lord of Order";
     private const string Taunter3 = "Shaman";
     private const string Dps = "StoneCrusher";
 

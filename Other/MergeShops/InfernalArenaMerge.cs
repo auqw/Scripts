@@ -187,7 +187,7 @@ public class InfernalArenaMerge
                     break;
 
                 case "Scythe Shard":
-                    Core.UseDodgeClass("Lord Of Order");
+                    Core.UseDodgeClass("Lord of Order");
                     Core.HuntMonster(
                         "infernalarena",
                         "Azalith's Scythe",

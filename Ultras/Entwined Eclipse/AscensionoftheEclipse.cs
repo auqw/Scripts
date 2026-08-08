@@ -43,7 +43,7 @@ public class AscendEclipseTest
         new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
         new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""),
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
-        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
+        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord of Order.", ""),
 
         new Option<int>(
             "privateRoomNumber",
@@ -84,7 +84,7 @@ public class AscendEclipseTest
     const string player1Class = "Legion Revenant"; // moon/Midnight side
     const string player2Class = "StoneCrusher";    // sun/Solstice side
     const string player3Class = "ArchPaladin";     // sun/Solstice side
-    const string player4Class = "Lord Of Order";   // moon/Midnight side
+    const string player4Class = "Lord of Order";   // moon/Midnight side
 
     readonly int[] lrSkillList = new[] { 3, 4, 2, 1 };
     readonly int[] scSkillList = new[] { 3, 2, 4, 1 };

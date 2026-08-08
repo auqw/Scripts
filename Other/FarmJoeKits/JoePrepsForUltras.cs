@@ -500,7 +500,7 @@ public class JoePrepsForUltras
     {
         Core.Logger("Setting up Player 3 (Support)");
 
-        // Lord Of Order
+        // Lord of Order
         Core.Logger("Getting Lord of Order...");
         LOO.GetLoO(true);
 

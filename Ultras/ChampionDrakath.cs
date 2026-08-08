@@ -43,7 +43,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Absolution
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Helm: Forge
 // ├─ Class: Lucky
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -74,7 +74,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Healer / Wizard Mana Vamp
 // └─ Cape: Absolution
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Helm: Forge
 // ├─ Class: Lucky
 // ├─ Weapon: Valiance
@@ -105,7 +105,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Absolution
 //
-// Lord Of Order
+// Lord of Order
 // ├─ Helm: Forge
 // ├─ Class: Lucky
 // ├─ Weapon: Lucky Aweblast / Valiance
@@ -140,7 +140,7 @@ public class ChampionDrakath
         new Option<string>("a", "Taunter Class (Primary)", "", "ArchPaladin"),
         new Option<string>("b", "Taunter Class (Secondary)", "", "Legion Revenant"),
         new Option<string>("c", "Taunter Class (Tertiary)", "", "StoneCrusher"),
-        new Option<string>("d", "Taunter Class (Quaternary)", "", "Lord Of Order"),
+        new Option<string>("d", "Taunter Class (Quaternary)", "", "Lord of Order"),
         new Option<bool>("SoloTaunt", "Solo Taunt", "Only primary taunter", false),
         new Option<bool>("DoEnh", "Do Enhancements", "", true),
         new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "", HowManyTaunts.Two),
@@ -393,8 +393,8 @@ public class ChampionDrakath
                 );
                 break;
 
-            // Lord Of Order
-            case "Lord Of Order":
+            // Lord of Order
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,                 // Class
                     hSpecial: HelmSpecial.Forge,                 // Helm

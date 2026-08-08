@@ -12349,7 +12349,7 @@ case ""Infernal Incantation"":
             "Scythe Shard",
             @"
 case ""Scythe Shard"":
-                    Core.UseDodgeClass(""Lord Of Order"");
+                    Core.UseDodgeClass(""Lord of Order"");
                     Core.HuntMonster(""infernalarena"", ""Azalith's Scythe"", req.Name, quant, false, false);
                     break;
     "

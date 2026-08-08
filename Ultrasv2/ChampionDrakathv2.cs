@@ -57,7 +57,7 @@ public class ChampionDrakathv2
     {
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 4),
         new Option<string>("a", "Taunter Class (Primary)", "", "ArchPaladin"),
-        new Option<string>("b", "Taunter Class (Secondary)", "", "Lord Of Order"),
+        new Option<string>("b", "Taunter Class (Secondary)", "", "Lord of Order"),
         new Option<string>("c", "Taunter Class (Tertiary)", "", "StoneCrusher"),
         new Option<string>("d", "Taunter Class (Quaternary)", "", ""),
         new Option<bool>("SoloTaunt", "Solo Taunt", "Only primary taunter", false),
@@ -65,7 +65,7 @@ public class ChampionDrakathv2
 
         new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight. \nUse format: ClassName,Username. \nOnly type ClassName if you want it to be random.", "ArchPaladin"),
         new Option<string>("Class2", "Class 2", "Preset class 2 to auto-equip before the fight. \nUse format: ClassName,Username. \nOnly type ClassName if you want it to be random.", "StoneCrusher"),
-        new Option<string>("Class3", "Class 3", "Preset class 3 to auto-equip before the fight. \nUse format: ClassName,Username. \nOnly type ClassName if you want it to be random.", "Lord Of Order"),
+        new Option<string>("Class3", "Class 3", "Preset class 3 to auto-equip before the fight. \nUse format: ClassName,Username. \nOnly type ClassName if you want it to be random.", "Lord of Order"),
         new Option<string>("Class4", "Class 4", "Preset class 4 to auto-equip before the fight. \nUse format: ClassName,Username. \nOnly type ClassName if you want it to be random.", "King's Echo"),
 
         new Option<bool>("DoEnh", "Do Enhancements", "", true),

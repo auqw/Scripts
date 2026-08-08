@@ -155,9 +155,9 @@ public class UltraAvatarTyndarius
         {
             string[] classes = comp switch
             {
-                TyndariusComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                TyndariusComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                TyndariusComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                TyndariusComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                TyndariusComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Legion Revenant", "ArchPaladin", "Lord of Order" },
+                TyndariusComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord of Order" },
                 _ => throw new InvalidOperationException($"Unhandled TyndariusComp value: {comp}"),
             };
 
@@ -448,7 +448,7 @@ public class UltraAvatarTyndarius
     public enum DebuffTyndarius
     {
         // In order of fast > safe > f2p fast > other
-        [Description("Lord Of Order")]
+        [Description("Lord of Order")]
         LordOfOrder,
 
         [Description("Dragon of Time")]

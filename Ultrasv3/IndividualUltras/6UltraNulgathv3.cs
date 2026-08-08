@@ -36,7 +36,7 @@ public class UltraNulgathv3
     private static GetScrolls _Scrolls;
     private static string _fbsMuteFile = "";
 
-    private const string Taunter1 = "Lord Of Order";
+    private const string Taunter1 = "Lord of Order";
     private const string Taunter2 = "StoneCrusher";
     private const string Taunter3AttackBlade = "Verus DoomKnight";
     private const string DPSAttackBlade = "King's Echo";

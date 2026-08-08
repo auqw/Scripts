@@ -1,6 +1,6 @@
 /*
 name: Midnight Sun (Sun Side Test)
-description: Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.
+description: Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord of Order.
 tags: greatblade, entwined, eclipse, midnight, sun, farm, test, army
 */
 //cs_include Scripts/CoreBots.cs
@@ -43,7 +43,7 @@ public class MidnightSunTest
         new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
         new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""),
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
-        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
+        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord of Order.", ""),
 
         new Option<int>(
             "privateRoomNumber",
@@ -77,7 +77,7 @@ public class MidnightSunTest
     const string player1Class = "Legion Revenant"; // Dying Light + Hollow Solstice taunter
     const string player2Class = "StoneCrusher";    // Dawn Knight + Hollow Solstice taunter
     const string player3Class = "ArchPaladin";     // Dying Light taunter
-    const string player4Class = "Lord Of Order";   // Support
+    const string player4Class = "Lord of Order";   // Support
 
     readonly int[] lrSkillList = new[] { 3, 4, 2, 1 };
     readonly int[] scSkillList = new[] { 3, 2, 4, 1 };

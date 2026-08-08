@@ -37,7 +37,7 @@ public class KathoolNoOpv3
 
     private const string Dps1 = "Verus DoomKnight";
     private const string Dps2 = "King's Echo";
-    private const string Dps3 = "Lord Of Order";
+    private const string Dps3 = "Lord of Order";
     private const string Dps4 = "StoneCrusher";
 
     private static readonly string[][] UltraClassesByRole =

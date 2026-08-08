@@ -7037,7 +7037,7 @@ public class CoreBots
         { "ArchMage", "AM" },
         { "LightCaster", "LC" },
         { "ArchPaladin", "AP" },
-        { "Lord Of Order", "LOO" },
+        { "Lord of Order", "LOO" },
         { "StoneCrusher", "SC" },
         { "Yami no Ronin", "YnR" },
         { "Frostval Barbarian", "FB" },

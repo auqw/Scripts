@@ -43,7 +43,7 @@ public class Kolrv3
     {
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 2),
         new Option<bool>("DoDailyOnly", "Do Daily Only", "True: do the daily quest only. False: farm selected drops instead.", true),
-        new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "Lord Of Order"),
+        new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "Lord of Order"),
         new Option<string>("Class2", "Class 2", "Preset class 2 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "King's Echo"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         new Option<bool>("UsePotions", "Use Potions", "Enable buying and consuming recommended potions.", true),

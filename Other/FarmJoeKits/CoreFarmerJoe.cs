@@ -493,7 +493,7 @@ public class CoreFarmerJoe
         "Legion Revenant",
         "Dragon of Time",
         "ArchPaladin",
-        "Lord Of Order",
+        "Lord of Order",
         "Cryomancer",
         "Dragonslayer General",
         "Glacial Berserker",

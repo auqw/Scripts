@@ -1,6 +1,6 @@
 /*
-name: Lord Of Order (Daily)
-description: This bot will do the dailies for the Lord Of Order, after that is done it will get the remainder rewards
+name: Lord of Order (Daily)
+description: This bot will do the dailies for the Lord of Order, after that is done it will get the remainder rewards
 tags: daily, lord, order, LOO, mirror, realm, support, xing, xang, kitsune, alteon, vath, wolfwing, ledgermayne, khasaanda
 */
 //cs_include Scripts/CoreBots.cs
@@ -76,13 +76,13 @@ public class LordOfOrder
         )
         {
             if (rankUpClass)
-                Adv.RankUpClass("Lord Of Order");
+                Adv.RankUpClass("Lord of Order");
             if (getExtras)
                 Core.Logger("All desired rewards owned for LOO.");
             return;
         }
 
-        Core.Logger("⚔️ Daily: Lord Of Order Class");
+        Core.Logger("⚔️ Daily: Lord of Order Class");
         Core.Logger(
             "It's a DAILY quest chain, 10 quests total, up to [7165]. One completes per run, per day. Read the logs below before you file a bug report."
         );
@@ -367,11 +367,11 @@ public class LordOfOrder
                 Bot.Wait.ForPickup(50741);
 
                 Core.EnsureCompleteChoose(7165);
-                Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
-                Core.Logger("🏆 [10/10] The Final Challenge [7165] complete. That's all 10 LOO dailies down — Lord Of Order is FULLY finished. No more dailies today, no more quests, nothing. Go outside.");
+                Core.ToBank(Core.QuestRewards(7165).Except("Lord of Order"));
+                Core.Logger("🏆 [10/10] The Final Challenge [7165] complete. That's all 10 LOO dailies down — Lord of Order is FULLY finished. No more dailies today, no more quests, nothing. Go outside.");
 
                 if (rankUpClass)
-                    Adv.RankUpClass("Lord Of Order");
+                    Adv.RankUpClass("Lord of Order");
             }
         }
     }

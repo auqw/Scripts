@@ -119,7 +119,7 @@ public class EvalAcc
                 + importantItemCheckbox(3, "Legion Revenant")
                 + importantItemCheckbox(3, "ArchMage")
                 + importantItemCheckbox(3, "Dragon of Time")
-                + importantItemCheckbox(3, "Lord Of Order")
+                + importantItemCheckbox(3, "Lord of Order")
                 + importantItemCheckbox(3, "ArchPaladin")
                 + importantItemCheckbox(2, "Radiant Goddess of War")
                 + $"Awescended:\t\t\t{checkbox(Core.isCompletedBefore(8042))}\n"

@@ -37,7 +37,7 @@ public class UltraDragov3
     private static GetScrolls _Scrolls;
     private static string _fbsMuteFile = "";
 
-    private const string Taunter1AttackRightSummon1 = "Lord Of Order";
+    private const string Taunter1AttackRightSummon1 = "Lord of Order";
     private const string Taunter2AttackRightSummon2 = "Verus DoomKnight";
     private const string DPSAttackRightSummon1 = "StoneCrusher";
     private const string DPSAttackRightSummon2 = "King's Echo";
