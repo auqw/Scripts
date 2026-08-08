@@ -9270,7 +9270,7 @@
     ],
     "path": "Ultrasv3/FarmGold/ArmyPrismatasv3.cs",
     "size": 8758,
-    "sha256": "61c882b625fbccd118415cb049f60179e15d7c039c215b94271692e65c7e30c3",
+    "sha256": "929ed344da0bf4c0741b2b115cc758dd7e844f6103bbf8f14a5772557b1feced",
     "fileName": "ArmyPrismatasv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/FarmGold/ArmyPrismatasv3.cs"
   },
@@ -9350,7 +9350,7 @@
     ],
     "path": "Ultrasv3/DependenciesUltras/CoreEnginev3.cs",
     "size": 119126,
-    "sha256": "2764d7c230fe6dc9bd584a26fa483ef5d333e693770afcb100b67ac6749876d1",
+    "sha256": "954dd3f24ce2f0eecf680f121028bddbb182c6bdb658e0ef89acc82882c25274",
     "fileName": "CoreEnginev3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreEnginev3.cs"
   },
@@ -9387,7 +9387,7 @@
     ],
     "path": "Ultrasv3/DependenciesUltras/UltraEnhancements.cs",
     "size": 26715,
-    "sha256": "d4e9cf98d3ec34ba9eb3faf8e8e4b14013085915a0c9c8f09883a6b94be05d57",
+    "sha256": "41710f3f75b0f9a293d79052ff099c7eb60ae9353be1b72678c6aa35305e83d1",
     "fileName": "UltraEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraEnhancements.cs"
   },
@@ -9511,7 +9511,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/AscensionoftheEclipse.cs",
     "size": 82310,
-    "sha256": "0ab6c9b964d2b2393079813418d7f2ede0d01ca5eca42f587d9fa9c50b7bd4f2",
+    "sha256": "9a6d85af86acdf5c49fed8c0a57bf3640e7605f04ec82def0dfd24ddc1f06b49",
     "fileName": "AscensionoftheEclipse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/AscensionoftheEclipse.cs"
   },
@@ -9548,7 +9548,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs",
     "size": 21751,
-    "sha256": "ca7fd99559bae3415e4350e749100cdc73ef5024b0fb4f3edec7d8b3e1654022",
+    "sha256": "1bc48f0781d56c72178288ef4849fdc71ebcd05ce04ef390e5a395e03923af2c",
     "fileName": "0GreatbladeOfTheEntwinedEclipse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs"
   },
@@ -9560,7 +9560,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/CoreEngine.cs",
     "size": 106681,
-    "sha256": "43a03938f2cf1308dd30d2018c3c9da1da1e1b3e54eddb5653b159b8ef9090e6",
+    "sha256": "c1feb32e32e7dde14acc4753218c25559e7928deebfb71b68fcd5cc2f2a6a08b",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/CoreEngine.cs"
   },
@@ -9596,7 +9596,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/SolsticeMoon.cs",
     "size": 60629,
-    "sha256": "ccf5938001d631701a3b16c076203c6177a4cc2ae89688745589c068f04e929a",
+    "sha256": "78c3d983f7a5cc1b442bbf1e8a2517c8992e15a5b2fbf484b2bc7fbbfd6f6368",
     "fileName": "SolsticeMoon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/SolsticeMoon.cs"
   },
@@ -9614,13 +9614,13 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/Masakado.cs",
     "size": 24034,
-    "sha256": "f61bd3dbf031336b9114a90703fbf915f5424fb28ce0a59dc3f27580905993ee",
+    "sha256": "5d9c0f3c155a8936255245fecc2e85a631b5103237ece26443ca7d45afc89421",
     "fileName": "Masakado.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/Masakado.cs"
   },
   {
     "name": "Midnight Sun (Sun Side Test)",
-    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
+    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord of Order.",
     "tags": [
       "greatblade",
       "entwined",
@@ -9633,7 +9633,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/MidnightSun.cs",
     "size": 55323,
-    "sha256": "44b99cdb55bfe594df36404dbbce83ec5d7b9ebbeb801f9d81d0144669167ad8",
+    "sha256": "80db96a3089dd0571a97c1edea2f202dcb74924c6065948fa65e7a1372f09101",
     "fileName": "MidnightSun.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/MidnightSun.cs"
   },
@@ -9668,7 +9668,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/Kathoolv3.cs",
     "size": 9420,
-    "sha256": "6dcb6aa3e29b509583ea430a8b5112f78481f65481a2fb92930dfefc4f7bf5d7",
+    "sha256": "ff2aaf6ca6a11afe69f857fc95a011224199a99b221cf313c45dfd5d48f16cd6",
     "fileName": "Kathoolv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kathoolv3.cs"
   },
@@ -9682,7 +9682,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/NightmareCarnaxv3.cs",
     "size": 7949,
-    "sha256": "9507120f5edfc57468ae44a5352ed1ca6cb9248a037083a7ba0dd7655a94af28",
+    "sha256": "6f14a688e5e7f6e54a2823bf715264e25de496dcfd159b1c8256dfb9e249dcc8",
     "fileName": "NightmareCarnaxv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/NightmareCarnaxv3.cs"
   },
@@ -9697,7 +9697,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/BataraKalav3.cs",
     "size": 10899,
-    "sha256": "1ee4791802f37753e635232f422dae3a445328137c002fcddc2d079851973ee0",
+    "sha256": "5a39a8059ea2aeece82ae7824d8d990bc1061cf46b57d9cbf1ada472f3fe5876",
     "fileName": "BataraKalav3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/BataraKalav3.cs"
   },
@@ -9722,7 +9722,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/Kasukov3.cs",
     "size": 14080,
-    "sha256": "c754e54b8f33ca5fd1880edcb72560c49f184976353b3f2c724fa6e593a830b9",
+    "sha256": "3804990e8a60b5fed3d20c0f31702a4d58cb6f66a4ce4650b6f7dc064f1f1864",
     "fileName": "Kasukov3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kasukov3.cs"
   },
@@ -9734,7 +9734,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs",
     "size": 18566,
-    "sha256": "3d0a9b3c2f253ae1ee5cab826d2c3a9dee084821ee6cdf71f2e29d2af2787b6e",
+    "sha256": "b26e36a9d4f53d5e6fa2ce8d59983346ee82ff399542ec47071a9dca719a2cf5",
     "fileName": "AstralEmpyreanv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs"
   },
@@ -9748,7 +9748,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/NightBanev3.cs",
     "size": 8970,
-    "sha256": "e020076096c4721e791b01b468f3e6e7c7857719adc3b6bd251f759b44ad684e",
+    "sha256": "a309ba7409dc343a98ff9943a3bf2210f2d382b25279bce701a4895f0d75ec8e",
     "fileName": "NightBanev3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/NightBanev3.cs"
   },
@@ -9762,7 +9762,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/Flibbitiestgibbetv3.cs",
     "size": 8791,
-    "sha256": "ca663a79f0206aa549022419292d690044bbfbcd65196902b0693b81c7025f67",
+    "sha256": "30a66a51f8db35a5bf14a5de93d8adad66958e45cf50009d74cfeb3c0f0df40f",
     "fileName": "Flibbitiestgibbetv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Flibbitiestgibbetv3.cs"
   },
@@ -9774,7 +9774,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/Kolrv3.cs",
     "size": 10681,
-    "sha256": "f13f2419a1c937ac73733c58e6353f03905b008b59a77cc0a4e6f5b5e079609d",
+    "sha256": "2328e6eac415a5535d5631c94b59b703461d8e97700eda5e2f2a643f361624fa",
     "fileName": "Kolrv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Kolrv3.cs"
   },
@@ -9786,7 +9786,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/Azalithv3.cs",
     "size": 7795,
-    "sha256": "f94f1da245dd7024e14746626f9aacca2b324c6bf06fb2fa3c6294ad22d7b6b7",
+    "sha256": "dd5c9490e4100791316c246cdb644d621ad9cc17f383e9f3c05d0b722e0cf2b3",
     "fileName": "Azalithv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/Azalithv3.cs"
   },
@@ -9798,7 +9798,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/1UltraEzrajalv3.cs",
     "size": 6281,
-    "sha256": "841bc412f4abd48bcf22dd16cb66cb21a449a477ed4f89cc33c2ea3d3ca9a8af",
+    "sha256": "912eb510c918ffffb66221e122fc509bbc21eb92ab77e4ccadfeb306339fae1f",
     "fileName": "1UltraEzrajalv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/1UltraEzrajalv3.cs"
   },
@@ -9810,7 +9810,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/9UltraDagev3.cs",
     "size": 10954,
-    "sha256": "497974a0121e378217be3a55081dfbae6223f053859e73bd3822b1ff42fda461",
+    "sha256": "bc3f3f3ef82c06e6c15af2db15401779da79beb94e92240cc6eed0730446443c",
     "fileName": "9UltraDagev3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/9UltraDagev3.cs"
   },
@@ -9822,7 +9822,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/10UltraSpeakerv3.cs",
     "size": 19607,
-    "sha256": "d27aec5f3b5ef66848cbbfcb7b661d9b82da21be759d2c513203bb563a9df46d",
+    "sha256": "6daf88173e8df3e158075f28b1a4eefa7d289e4dbbfd7cad20226e12c97da591",
     "fileName": "10UltraSpeakerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/10UltraSpeakerv3.cs"
   },
@@ -9834,7 +9834,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/11UltraGramielv3.cs",
     "size": 19794,
-    "sha256": "5309763b00264d5a9bbd8fe8d278b8dcf442ba292bf7c495e8ed89e55e78e129",
+    "sha256": "3d2400d556eebe0fb267bbe0ad811c3a08b09dbd43bd03dc2822ae974128bda2",
     "fileName": "11UltraGramielv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/11UltraGramielv3.cs"
   },
@@ -9846,7 +9846,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/7UltraDragov3.cs",
     "size": 11812,
-    "sha256": "214e88df65dda46e9f13ca1ea18cf6562c6c247566e81122a10796f33985f6ca",
+    "sha256": "0217aeb1478e94e461fd41a28288e3e1f5a99226b6a65842a02edfdf9547a6d0",
     "fileName": "7UltraDragov3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/7UltraDragov3.cs"
   },
@@ -9858,7 +9858,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/8UltraDarkonv3.cs",
     "size": 9711,
-    "sha256": "f5fa9f18c465072ffa6fd7f61a6d15e3d10768c910db12a39dd7c5e9458c4589",
+    "sha256": "f6fc79c507f790a710eb61fcb7db3eb3933545887ef7300ad5b790f504b48b09",
     "fileName": "8UltraDarkonv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/8UltraDarkonv3.cs"
   },
@@ -9870,7 +9870,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/4UltraAvatarTyndariusv3.cs",
     "size": 10037,
-    "sha256": "c161372c98022059d8d249a9304f26738edb990804cafbd32142f7e749ad8c93",
+    "sha256": "8cc0678afb142dcaec4e36da4e6f82a818480fdd65c4b225545e77044a4ae2c0",
     "fileName": "4UltraAvatarTyndariusv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/4UltraAvatarTyndariusv3.cs"
   },
@@ -9882,7 +9882,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/5ChampionDrakathv3.cs",
     "size": 8755,
-    "sha256": "20e2bf0d2add1ed435030608735440d6e3c3158269a127132efcee2d6b3cc954",
+    "sha256": "7398ccf597f6d27a30c068c560c5ee9abaa0b4fde8c6ddfa6eb722aeea03199c",
     "fileName": "5ChampionDrakathv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/5ChampionDrakathv3.cs"
   },
@@ -9894,7 +9894,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/2UltraWardenv3.cs",
     "size": 8359,
-    "sha256": "c8df2e73b98d2fb3efd5470b93b969544e26807ea9bb175e974c284d71bc553c",
+    "sha256": "09650ed92a6355f2c2883f5fd78a2524d61e7ad98ec7cbbc8d2585dfc95440fe",
     "fileName": "2UltraWardenv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/2UltraWardenv3.cs"
   },
@@ -9906,7 +9906,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/3UltraEngineerv3.cs",
     "size": 5952,
-    "sha256": "603e240aea9ce54550f72016c51510202565117cf59741a01d94aa6ce82bdbcc",
+    "sha256": "683c226a42c9d075d1e25a3c1bb907fc2fe872eb2331537da05b04371ebb025b",
     "fileName": "3UltraEngineerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/3UltraEngineerv3.cs"
   },
@@ -9918,7 +9918,7 @@
     ],
     "path": "Ultrasv3/IndividualUltras/6UltraNulgathv3.cs",
     "size": 11042,
-    "sha256": "8e7f59feca8c40502a3b0950080c99d69d4fd47f2751281b26a824f55ac788e4",
+    "sha256": "b4a61d517adbd92f860632f3dd8cf3f76f944e915a6b1a0e47956e564b6aba01",
     "fileName": "6UltraNulgathv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/6UltraNulgathv3.cs"
   },
@@ -9942,7 +9942,7 @@
     ],
     "path": "Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs",
     "size": 7345,
-    "sha256": "39565f423e2c7d04b63208357ce366be53c0a480404b8632fbcefa7aed6d6bce",
+    "sha256": "e98b9bd58a3292b5d967e199453d947f5c5a2781e9ea850776dceb37349b67e5",
     "fileName": "KolrNoOptionv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/KolrNoOptionv3.cs"
   },
@@ -9973,7 +9973,7 @@
     ],
     "path": "Ultrasv3/DependenciesDailies/KathoolNoOptionv3.cs",
     "size": 7971,
-    "sha256": "966aa4c28da8c6c6d732127b8ea7dfd254ef6e49c2944d9cba90989660b0755d",
+    "sha256": "64a374bfaf4c16f6256c2151965c5fc4da9584cf915108fbbe0e9674c54367d9",
     "fileName": "KathoolNoOptionv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/KathoolNoOptionv3.cs"
   },
@@ -9985,7 +9985,7 @@
     ],
     "path": "Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs",
     "size": 11527,
-    "sha256": "720776841fed9d0e4fd1d5ca054b1eb25794c631cbd6376b77666f13357ea156",
+    "sha256": "bb9e8ab7c2af2e26e4011b0aab475df58979aeb34a63142542510afe5ccf1d6e",
     "fileName": "AstralEmpyreanNoOptionv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs"
   },
@@ -9997,7 +9997,7 @@
     ],
     "path": "Ultrasv3/TestUltrasOrBossesScripts/Masakadov3.cs",
     "size": 10454,
-    "sha256": "43ed70464d4c1ec257e322439efca370d212e40dadf11f3d34fe70559a8b8961",
+    "sha256": "f1aa1b173b561d064c6bead6091c0816ffdf8d780e6d31b3dee1e548e131266f",
     "fileName": "Masakadov3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/TestUltrasOrBossesScripts/Masakadov3.cs"
   },
@@ -30441,7 +30441,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3OneDeathv3DevTools.cs",
     "size": 15397,
-    "sha256": "acfb384a7ae19c7ee5a13bd5722bd8ac172666375e1883aeb353c7513c779ec0",
+    "sha256": "e9861d87ac107bd87755aedd0c32c91e85aa10848539f979eedd8d72ff37bd15",
     "fileName": "AstralEmpyreanv3OneDeathv3DevTools.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3OneDeathv3DevTools.cs"
   },
@@ -30453,7 +30453,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/DeveloperTools/0ChallengeBossTemplateNoTauntv3DevTools.cs",
     "size": 7682,
-    "sha256": "9f887cebf88937b495766b0ea9b8e9fed3597ebdbfaa19032420c727891866f6",
+    "sha256": "0232a7ec3cab69c936414e3dafffd1d9fa28b9890e19fa265ad572f13de160a8",
     "fileName": "0ChallengeBossTemplateNoTauntv3DevTools.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/0ChallengeBossTemplateNoTauntv3DevTools.cs"
   },
@@ -30465,7 +30465,7 @@
     ],
     "path": "Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3ArmyDeathv3DevTools.cs",
     "size": 16563,
-    "sha256": "6044903dd0a64719acfcc3e800cc4621a4c2681e30da8faea6c9429bea526cca",
+    "sha256": "14e0be166d9931a29dd533449812fc2c5e8fe0e4b662ce5d85d8c1316784ede6",
     "fileName": "AstralEmpyreanv3ArmyDeathv3DevTools.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3ArmyDeathv3DevTools.cs"
   },
