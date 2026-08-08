@@ -39,7 +39,7 @@ public class UltraDagev3
 
     private const string Taunter1 = "Verus DoomKnight";
     private const string Taunter2 = "ArchPaladin";
-    private const string Decayer = "Lord Of Order";
+    private const string Decayer = "Lord of Order";
     // DPS classes
     private const string Dps1 = "King's Echo";
 

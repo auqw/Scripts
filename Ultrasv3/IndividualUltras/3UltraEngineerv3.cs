@@ -33,7 +33,7 @@ public class UltraEngineerv3
 
     private const string Dps1 = "Verus DoomKnight";
     private const string Dps2 = "StoneCrusher";
-    private const string Dps3 = "Lord Of Order";
+    private const string Dps3 = "Lord of Order";
     private const string Dps4 = "King's Echo";
 
     private static readonly string[][] UltraClassesByRole =

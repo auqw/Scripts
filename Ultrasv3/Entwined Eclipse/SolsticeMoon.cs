@@ -43,7 +43,7 @@ public class SolsticeMoonTest
         new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
         new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""),
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
-        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
+        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord of Order.", ""),
 
         new Option<int>(
             "privateRoomNumber",
@@ -127,7 +127,7 @@ public class SolsticeMoonTest
     const string player1Class = "Legion Revenant";  // Lunar Haze taunter
     const string player2Class = "StoneCrusher";     // DPS/support
     const string player3Class = "ArchPaladin";      // Hollow Midnight taunter
-    const string player4Class = "Lord Of Order";    // Hollow Midnight taunter
+    const string player4Class = "Lord of Order";    // Hollow Midnight taunter
 
     readonly int[] lrSkillList = new[] { 3, 4, 2, 1 };
     readonly int[] scSkillList = new[] { 3, 2, 4, 1 };
@@ -1160,7 +1160,7 @@ public class SolsticeMoonTest
                 UseFirstAvailableSkill(apSkillList);
                 break;
 
-            case "lord of order":
+            case "Lord of Order":
                 UseFirstAvailableSkill(looSkillList);
                 break;
         }
@@ -1286,7 +1286,7 @@ public class SolsticeMoonTest
                 );
                 break;
 
-            case "lord of order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.None,
@@ -1567,7 +1567,7 @@ public class SolsticeMoonTest
                 UsePotionSet("Fate Tonic", "Potent Battle Elixir");
                 break;
 
-            case "lord of order":
+            case "Lord of Order":
                 UsePotionSet("Fate Tonic", "Potent Destruction Elixir");
                 break;
 

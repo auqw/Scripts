@@ -51,10 +51,10 @@ public class AstralEmpyreanv3ArmyDeathv3DevTools
     {
         new Option<int>("ArmySize", "Army Size", "How many players are in your army (including yourself).", 4),
         new Option<string>("Taunter1Class", "Taunter 1 Class (Primary)", "Class name for Taunter 1 (sets fight start time).", "Verus DoomKnight"),
-        new Option<string>("Taunter2Class", "Taunter 2 Class (Secondary)", "Class name for Taunter 2.", "Lord Of Order"),
+        new Option<string>("Taunter2Class", "Taunter 2 Class (Secondary)", "Class name for Taunter 2.", "Lord of Order"),
         new Option<string>("Taunter3Class", "Taunter 3 Class (Tertiary)", "Class name for Taunter 3.", "ArchPaladin"),
         new Option<string>("Class1", "Class 1", "Preset class 1 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "ArchPaladin"),
-        new Option<string>("Class2", "Class 2", "Preset class 2 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "Lord Of Order"),
+        new Option<string>("Class2", "Class 2", "Preset class 2 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "Lord of Order"),
         new Option<string>("Class3", "Class 3", "Preset class 3 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "StoneCrusher"),
         new Option<string>("Class4", "Class 4", "Preset class 4 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", "Verus DoomKnight"),
         new Option<string>("Class5", "Class 5", "Preset class 5 to auto-equip before the fight.\nUse format: ClassName,Username.\nOnly type ClassName if you want it to be random.", ""),

@@ -41,7 +41,7 @@ public class UltraDarkonv3
     private static string _fbsMuteFile = "";
 
     private const string Taunter1 = "Verus DoomKnight";
-    private const string Taunter2 = "Lord Of Order";
+    private const string Taunter2 = "Lord of Order";
     // DPS classes
     private const string Dps1 = "StoneCrusher";
     private const string Dps2 = "King's Echo";

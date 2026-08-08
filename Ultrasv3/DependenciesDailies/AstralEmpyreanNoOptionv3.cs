@@ -40,7 +40,7 @@ public class AstralEmpyreanNoOpv3
     private static string _fbsMuteFile = "";
 
     private const string Taunter1 = "Verus DoomKnight";
-    private const string Taunter2 = "Lord Of Order";
+    private const string Taunter2 = "Lord of Order";
     private const string Taunter3 = "ArchPaladin";
     private const string Dps1 = "StoneCrusher";
 

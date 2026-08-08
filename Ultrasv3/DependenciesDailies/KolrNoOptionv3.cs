@@ -31,9 +31,9 @@ public class KolrNoOpv3
     private static string _fbsMuteFile = "";
 
     private const string Group1Dps1 = "King's Echo";
-    private const string Group1Dps2 = "Lord Of Order";
+    private const string Group1Dps2 = "Lord of Order";
     private const string Group2Dps1 = "King's Echo";
-    private const string Group2Dps2 = "Lord Of Order";
+    private const string Group2Dps2 = "Lord of Order";
 
     private static readonly string[][] UltraClassesByRole =
     {

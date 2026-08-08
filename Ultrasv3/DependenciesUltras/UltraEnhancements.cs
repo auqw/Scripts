@@ -48,7 +48,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: Adv.uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : WeaponSpecial.Awe_Blast,
@@ -158,7 +158,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Awe_Blast,
@@ -255,7 +255,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Health_Vamp,
@@ -311,7 +311,7 @@ public class UltraEnhancements
         switch (className)
         {
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Valiance,
@@ -364,7 +364,7 @@ public class UltraEnhancements
         switch (className)
         {
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Awe_Blast,
@@ -431,7 +431,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Valiance
@@ -500,7 +500,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Health_Vamp
@@ -565,7 +565,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: Adv.uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : WeaponSpecial.Valiance,
@@ -667,7 +667,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
@@ -738,7 +738,7 @@ public class UltraEnhancements
                 );
                 break;
 
-            case "Lord Of Order":
+            case "Lord of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     wSpecial: WeaponSpecial.Health_Vamp,

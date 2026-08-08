@@ -43,7 +43,7 @@ public class UltraGramielv3
     // Crystal taunter roles — 2 groups (T1 and T2) across 2 crystals (left and right)
     private const string LeftCrystalT1 = "StoneCrusher";
     private const string RightCrystalT1 = "ArchPaladin";
-    private const string LeftCrystalT2 = "Lord Of Order";
+    private const string LeftCrystalT2 = "Lord of Order";
     private const string RightCrystalT2 = "ArchFiend";
 
     private static readonly string[][] UltraClassesByRole =

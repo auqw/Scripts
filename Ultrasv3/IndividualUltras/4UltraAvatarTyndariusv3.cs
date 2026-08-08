@@ -37,7 +37,7 @@ public class UltraAvatarTyndariusv3
     private static UltraDeath _Death;
 
     private const string Ball1TaunterAttackBall2 = "Verus DoomKnight";
-    private const string Ball2TaunterAttackBall2 = "Lord Of Order";
+    private const string Ball2TaunterAttackBall2 = "Lord of Order";
     private const string Ball2Attacker1 = "StoneCrusher";
     private const string Ball2Attacker2 = "King's Echo";
 
