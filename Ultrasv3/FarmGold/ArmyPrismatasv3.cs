@@ -124,11 +124,10 @@ public class ArmyPristmasv3
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
         if (armySize > 1)
             Ultra.WaitForArmy(armySize - 1, "ArmyPrismatas.sync", 3000, 500, 10000);
-        var (bestCell, _) = Core.ChooseBestCell(boss);
-
         Core.Join(map);
         C.AddDrop("Elemental Binding");
-        C.Jump("r2", "Left");
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
 
