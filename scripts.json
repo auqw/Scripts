@@ -2752,8 +2752,8 @@
       "ultra darkon"
     ],
     "path": "Ultras/UltraDarkon.cs",
-    "size": 11041,
-    "sha256": "815be5369b94d920c253feb6df499ec073b803a46226f1fe7c7670a988b8b37e",
+    "size": 11045,
+    "sha256": "8569c4ec129084a1fbfb30042e835487e56a85518cd7c1129bc4fd4083f61a1a",
     "fileName": "UltraDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDarkon.cs"
   },
@@ -2764,8 +2764,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 11291,
-    "sha256": "ae8cf93cfc7f9e49c574acc8f3c07f24c9dd7ec5d316d6728e3834f2205b0e16",
+    "size": 11295,
+    "sha256": "bccb59befbc56368edc8b456603b2b0747c8dd98e14a8f86d14e682ac6923ec0",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -2776,8 +2776,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 13637,
-    "sha256": "2f32ae8a326174358c79392f4562bf37fed59cb3b1e9a7a85413f3810b4062d3",
+    "size": 13641,
+    "sha256": "9cf1037e7bf285440bd7a43bac67d1cbad9507f0b16d8b4fe25855007882f78d",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
@@ -2788,8 +2788,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 58053,
-    "sha256": "277e51894c381226956e53c0462f76f1ebb65e00c5f0d53cd7221a5566a459c4",
+    "size": 58055,
+    "sha256": "fff21c23e6e5ea8e32dd08c4adae5091c99b24a7a725e8b2ae9032c87625471e",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -2803,8 +2803,8 @@
       "voidnightbane"
     ],
     "path": "Ultras/NightBane.cs",
-    "size": 13396,
-    "sha256": "7d3a7e2adfe0efa87849ce4cae1ec138b9470bdbd0f424337620eafd388f3dff",
+    "size": 13400,
+    "sha256": "96712a8dd24d274b70b937f0784ac7f7f87472bd1c5d70f7367efbc0dbaff683",
     "fileName": "NightBane.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/NightBane.cs"
   },
@@ -2815,8 +2815,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 17509,
-    "sha256": "deebfab0dbe1a0bd592553a31d2d9599c6936fea04111c8ed2ba4ab364187b77",
+    "size": 17513,
+    "sha256": "de46dbdcc9588775b00755ef6c0abcb78bdce669b2f0d9801671c02c5c0e0240",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -2827,8 +2827,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 13755,
-    "sha256": "e89717e3677a8aa9e2cfae371dd127b612ad330b36607420a1f8cce8ffee582d",
+    "size": 13759,
+    "sha256": "58a748a9b39e208594080be8a3af1b8dedbcac13220fdaf2337a30b23516318d",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -2839,8 +2839,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 106681,
-    "sha256": "43a03938f2cf1308dd30d2018c3c9da1da1e1b3e54eddb5653b159b8ef9090e6",
+    "size": 106683,
+    "sha256": "35b1d67199343ef61edd09395cbe479dd2e47830d3457b8db13d4e01ea66efbe",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -2851,8 +2851,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 15961,
-    "sha256": "09d66f993c4b99662f2fe2b3c3aeeb9af7c6593a05a5f1971597606ea65b7883",
+    "size": 15965,
+    "sha256": "c06212cc51c1c895cf2ddc359d85e80382d97b41700965038ed2900755526cfa",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -2863,8 +2863,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 10831,
-    "sha256": "bfa008cada1ca424d6c8203a71a410592924c13ba36429cc9e445e9e6be293ad",
+    "size": 10835,
+    "sha256": "07cd0da9b82f4818626f6d43350ce2b584813223611cb85f218b48169f4fbdf8",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -2875,35 +2875,10 @@
       "ultra"
     ],
     "path": "Ultras/UltraDage.cs",
-    "size": 14072,
-    "sha256": "35e1fac00e3444d2f97e16035e0f33eef17c749864b3197069a91260556236ed",
+    "size": 14076,
+    "sha256": "9a4fd4c01c361ac30252e4fff7b618016270972f27e45922ed50d141d2a7a3b5",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
-  },
-  {
-    "name": "Do All Ultras Story Prerequisites",
-    "description": "Completes all story prerequisites needed to unlock every Ultra boss. Covers: Ultra Ezrajal, Ultra Warden, Ultra Engineer (ExaltiaTower), Ultra Avatar Tyndarius + Ultra Speaker (Shadows of War), Ultra Dage (Isle of Fotia), Champion Drakath (13 Lords of Chaos), Ultra Drago + Ultra Darkon (Elegy of Madness / Astravia). Skipped: Ultra Nulgath and Ultra Gramiel (Level 80 only, no story required).",
-    "tags": [
-      "story",
-      "quest",
-      "ultra",
-      "ezrajal",
-      "warden",
-      "engineer",
-      "tyndarius",
-      "speaker",
-      "dage",
-      "drakath",
-      "darkon",
-      "drago",
-      "all",
-      "complete"
-    ],
-    "path": "Ultras/DoAllUltrasStory.cs",
-    "size": 3871,
-    "sha256": "e4e1dc92b5b6cf0e2a7efe6cf0e798f39af97077b04f5a090efc0712194311a3",
-    "fileName": "DoAllUltrasStory.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DoAllUltrasStory.cs"
   },
   {
     "name": "AstralEmpyrean",
@@ -2914,8 +2889,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12425,
-    "sha256": "581c2611a4c214465ed1d8aa4a798e4022ef192ace9598bb0bc8d0e188bea0d3",
+    "size": 12429,
+    "sha256": "c2b1112557937b64a58523724223b6692430db34082edbec8c967ee450e1705c",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
@@ -2926,8 +2901,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraWarden.cs",
-    "size": 4567,
-    "sha256": "919b659a7a9af23017976c5a019972d6427034675b9b703748ac10246023b6df",
+    "size": 4571,
+    "sha256": "9c9958f22b595e89734504cca1f33efc900490d85e2b6aeb238105ea27253ffc",
     "fileName": "UltraWarden.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
   },
@@ -2940,8 +2915,8 @@
       "ultra gramiel"
     ],
     "path": "Ultras/UltraGramiel.cs",
-    "size": 25451,
-    "sha256": "69a985333cdb3b9d946bc6561dc9ebd6e70968cd6fa9e68c3b61f618f70fa551",
+    "size": 25455,
+    "sha256": "82c89c8826b4b6c54b16590fe2367b42cb381686cbd4160427805900327a0b8b",
     "fileName": "UltraGramiel.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraGramiel.cs"
   },
@@ -2954,8 +2929,8 @@
       "voidflibbitiestgibbet"
     ],
     "path": "Ultras/Flibbitiestgibbet.cs",
-    "size": 13466,
-    "sha256": "df2ecc8492e21d33aea2afa62c9c19504523eaa55c1ab2cb43d0a6d1f39048b5",
+    "size": 13470,
+    "sha256": "0019c6da8e3599bd5f901cbc748e18e689ec6e6e5bb4d808d5c5d1ae3a0570ee",
     "fileName": "Flibbitiestgibbet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Flibbitiestgibbet.cs"
   },
@@ -2969,8 +2944,8 @@
       "queen iona"
     ],
     "path": "Ultras/QueenIona.cs",
-    "size": 7566,
-    "sha256": "df03cdf6f0a3ae99789f7ffb0d2dac3c96e32b784cecece2fb01b7ae61f14a98",
+    "size": 7570,
+    "sha256": "97f086fbe723d9bdff8ac9462fccbc89a1f0ba906c38fcc74d815732d8313175",
     "fileName": "QueenIona.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/QueenIona.cs"
   },
@@ -2981,8 +2956,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 11394,
-    "sha256": "fbec52eca068528a659336d65ebc33e5a9fc36b0cf973c4097d25a168907a4f9",
+    "size": 11398,
+    "sha256": "3f8d03310b70f19ded9b1d79233ee49a3b8946dbbb8c05c0f7a4c8c3508184d8",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -2996,8 +2971,8 @@
       "synthetic viscera"
     ],
     "path": "Ultras/DarkCarnax.cs",
-    "size": 11853,
-    "sha256": "64eb0d28ddff24a48bf9f457f54a610793eb45f023aa6801f594b2af27aed4b6",
+    "size": 11857,
+    "sha256": "f339edeffcc3d9e771b619cf4cd4a7a3f90d3e7b7c932b7148b0aa063ebec323",
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
   },
@@ -3008,8 +2983,8 @@
       "null"
     ],
     "path": "Ultras/Xyfrag.cs",
-    "size": 4199,
-    "sha256": "48f59e205168692011dcc65bc2b237304fa86412fa6621ee72099067530f56f6",
+    "size": 4203,
+    "sha256": "af80395e8a8188912a9c8f168acad4c81fb6fdf2d467e4bc257492d47016ddcf",
     "fileName": "Xyfrag.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Xyfrag.cs"
   },
@@ -12996,148 +12971,10 @@
       "lonewolf12"
     ],
     "path": "Ultras/Various/KolrUsurper.cs",
-    "size": 85483,
-    "sha256": "606e4145132123a35b54951068669b62eef754546f90085e4ba6ddb3845be562",
+    "size": 85484,
+    "sha256": "2036fa19da1283daa997a303a2f7390d16c31bf26c579e976a43dd5f0d8b543f",
     "fileName": "KolrUsurper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KolrUsurper.cs"
-  },
-  {
-    "name": "Ascend Eclipse Test",
-    "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "ascend",
-      "ascendeclipse",
-      "army",
-      "taunt",
-      "test"
-    ],
-    "path": "Ultras/Entwined Eclipse/AscensionoftheEclipse.cs",
-    "size": 81720,
-    "sha256": "e1456f6bafc16ca97782ada5c70f11c3d96ce2aa97ca41f9d8c6892e54538fab",
-    "fileName": "AscensionoftheEclipse.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/AscensionoftheEclipse.cs"
-  },
-  {
-    "name": "Greatblade of the Entwined Eclipse (Full Chain)",
-    "description": "End-to-end farm for Greatblade of the Entwined Eclipse. Runs Victor Matsuri storyline, kills Masakado via the King's Echo army flow for Victor of the Festival, farms Slivers of Sunlight/Moonlight, merges Rite of Ascension, farms Ecliptic Offering in Ascension of the Eclipse, then merges the full blade chain up to the final Greatblade.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "full",
-      "chain",
-      "victor",
-      "matsuri",
-      "masakado",
-      "rite",
-      "ascension",
-      "midnight",
-      "solstice",
-      "ascend",
-      "army"
-    ],
-    "path": "Ultras/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs",
-    "size": 21602,
-    "sha256": "a3211a658f759ed14eb77737ca3655f50114a55b23665024da6714c831f51184",
-    "fileName": "0GreatbladeOfTheEntwinedEclipse.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs"
-  },
-  {
-    "name": "Victor Matsuri Story (Pre-Masakado)",
-    "description": "Runs Empress Ai No Miko's questline in /victormatsuri up to (but not including) the Masakado quest (10295). Used as a setup step before handing off to the dedicated Masakado army script. Quest 10295 must be handled separately via MasakadoKingsEchoArmy.",
-    "tags": [
-      "victor matsuri",
-      "victormatsuri",
-      "empress ai no miko",
-      "story",
-      "pre-masakado",
-      "eclipse",
-      "rite of ascension"
-    ],
-    "path": "Ultras/Entwined Eclipse/VictorMatsuriStory.cs",
-    "size": 3124,
-    "sha256": "d569a8254fb3fb4858bf0952f88b7c55c6946b22213c4ec91502daae0949daad",
-    "fileName": "VictorMatsuriStory.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/VictorMatsuriStory.cs"
-  },
-  {
-    "name": "Solstice Moon Test",
-    "description": "Runs only the Solstice Moon / Shrine - Left portion for testing Lunar Haze and Hollow Midnight taunt timing.",
-    "tags": [
-      "solstice",
-      "moon",
-      "hollow midnight",
-      "lunar haze",
-      "army",
-      "taunt",
-      "test"
-    ],
-    "path": "Ultras/Entwined Eclipse/SolsticeMoon.cs",
-    "size": 60550,
-    "sha256": "d9a1f1faaccf4f55d236f2e282b7078cac5fc58c9a267feaef8373eae11dfa21",
-    "fileName": "SolsticeMoon.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/SolsticeMoon.cs"
-  },
-  {
-    "name": "Masakado King's Echo",
-    "description": "Solo or army helper for Victor Matsuri's final boss, Masakado, using King's Echo and Royal Resolve.",
-    "tags": [
-      "masakado",
-      "victor matsuri",
-      "kings echo",
-      "king's echo",
-      "army",
-      "solo",
-      "royal resolve"
-    ],
-    "path": "Ultras/Entwined Eclipse/Masakado.cs",
-    "size": 23954,
-    "sha256": "01c9e5398b8a29514e7f8e217f8614fd5ead41b3b69eb0f92c7d5654466e5262",
-    "fileName": "Masakado.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/Masakado.cs"
-  },
-  {
-    "name": "Midnight Sun (Sun Side Test)",
-    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord of Order.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "midnight",
-      "sun",
-      "farm",
-      "test",
-      "army"
-    ],
-    "path": "Ultras/Entwined Eclipse/MidnightSun.cs",
-    "size": 55285,
-    "sha256": "772aa5c3235c537f17963200828db411ac2da3179ee6cbfffa3100b48983cbf5",
-    "fileName": "MidnightSun.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/MidnightSun.cs"
-  },
-  {
-    "name": "Empowered Weapons of Nulgath",
-    "description": "pick an empowered weapon, if you own teh requirements and 25 insignias, itll farm the empowered ver.",
-    "tags": [
-      "empowered",
-      "nulgath",
-      "reavers",
-      "bloodletter",
-      "overfiend blade",
-      "shadow spear",
-      "prismatic manslayers",
-      "legacy of nulgath",
-      "worshipper of nulgath",
-      "evovled void armor"
-    ],
-    "path": "Ultras/Weapons/EmpoweredNationItem.cs",
-    "size": 13114,
-    "sha256": "2ef475704dfc21b3e598de621d12de14b374d60f19987ca396deb517a4a24c88",
-    "fileName": "EmpoweredNationItem.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Weapons/EmpoweredNationItem.cs"
   },
   {
     "name": "Cavern Celestite",
