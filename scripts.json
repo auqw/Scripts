@@ -2863,8 +2863,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 10858,
-    "sha256": "f218707b5445ebfc8e7780b2f378b8577a0543739c9a46399b09d8ff091761e5",
+    "size": 11029,
+    "sha256": "4aeedd6df19434f08b6bc067eaa94abf7b9a571ee74538e09380aa9a8b90a957",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -2889,8 +2889,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12723,
-    "sha256": "e640df59ed20f728660f3617f8c19b05a5027700c100cbe230fbc865ad9135d9",
+    "size": 12622,
+    "sha256": "cc1c2093edc3319438c5ed755e6d6c0ef42c3fa1a4ca61771cee28cecdfacc9d",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
@@ -9244,8 +9244,8 @@
       "farm"
     ],
     "path": "Ultrasv3/FarmGold/ArmyPrismatasv3.cs",
-    "size": 9025,
-    "sha256": "93ab9afd3396f852d86723a2e899d441727cc67ed2eddab18a44cd45ea497467",
+    "size": 8995,
+    "sha256": "70e892d370e49d06b30abed690ccd76e17649b9775c7293a0e624b822bea3dcb",
     "fileName": "ArmyPrismatasv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/FarmGold/ArmyPrismatasv3.cs"
   },
