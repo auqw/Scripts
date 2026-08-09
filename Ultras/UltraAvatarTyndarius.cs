@@ -200,7 +200,8 @@ public class UltraAvatarTyndarius
         C.EnsureAccept(8245);
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_tyndarius.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)
@@ -209,6 +210,13 @@ public class UltraAvatarTyndarius
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
                 continue;
             }
 

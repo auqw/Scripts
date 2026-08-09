@@ -268,7 +268,8 @@ public class UltraDrago
         Core.Join(map);
         C.EnsureAccept(8397);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 

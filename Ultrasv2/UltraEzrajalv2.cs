@@ -124,7 +124,8 @@ public class UltraEzrajalv2
         Core.Join(map);
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
         Ultra.WaitForArmy(armySize - 1, "ultra_ezrajal.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -167,6 +168,13 @@ public class UltraEzrajalv2
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
                 continue;
             }
 

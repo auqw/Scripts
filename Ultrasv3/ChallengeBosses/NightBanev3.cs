@@ -138,7 +138,8 @@ public class NightBanev2
 
         Core.Join(map);
         Ultra.WaitForArmy(ArmySize - 1, "NightBane.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 

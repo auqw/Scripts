@@ -2486,12 +2486,7 @@ public class CoreEnginev1
         }
     }
 
-    public void ChooseBestCell(
-        string? monsterNames,
-        bool alt = false,
-        string? setCell = null,
-        string setPad = "Spawn"
-    )
+    public (string? BestCell, string? BestPad) ChooseBestCell(string? monsterNames, bool alt = false, string? setCell = null, string setPad = "Spawn")
     {
         var names = (monsterNames ?? string.Empty)
             .Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries)
@@ -2515,7 +2510,7 @@ public class CoreEnginev1
         if (monsters.Count == 0)
         {
             Log("MAP", "❌ No matching monsters found");
-            return;
+            return (null, null);
         }
 
         string? targetCell =
@@ -2530,7 +2525,7 @@ public class CoreEnginev1
         if (string.IsNullOrWhiteSpace(targetCell))
         {
             Log("MAP", "❌ No valid target cell");
-            return;
+            return (null, null);
         }
 
         var mapCells = new HashSet<string>(
@@ -2540,7 +2535,7 @@ public class CoreEnginev1
         if (!mapCells.Contains(targetCell))
         {
             Log("MAP", $"❌ Cell not in map: {targetCell}");
-            return;
+            return (null, null);
         }
 
         _bestCell = targetCell;
@@ -2556,7 +2551,10 @@ public class CoreEnginev1
         {
             Log("MAP", $"✅ Already in {targetCell}");
         }
+
+        return (targetCell, pad);
     }
+
 
     void WhiteMap() => Join("whitemap");
 

@@ -245,7 +245,8 @@ public class Flibbitiestgibbet
 
         Core.Join(map);
         Ultra.WaitForArmy(Players - 1, "Flibbitiestgibbet.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
         while (!Bot.ShouldExit)
@@ -254,6 +255,13 @@ public class Flibbitiestgibbet
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
                 continue;
             }
 

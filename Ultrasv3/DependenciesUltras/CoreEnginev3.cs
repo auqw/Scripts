@@ -2652,12 +2652,7 @@ public class CoreEnginev3
         }
     }
 
-    public void ChooseBestCell(
-        string? monsterNames,
-        bool alt = false,
-        string? setCell = null,
-        string setPad = "Spawn"
-    )
+    public (string? BestCell, string? BestPad) ChooseBestCell(string? monsterNames, bool alt = false, string? setCell = null, string setPad = "Spawn")
     {
         var names = (monsterNames ?? string.Empty)
             .Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries)
@@ -2666,8 +2661,7 @@ public class CoreEnginev3
             .ToArray();
 
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
-        // jumpCorrectPad (the AS3 entry-point correction) uses "Left" — match it directly
-        string pad = string.IsNullOrWhiteSpace(setPad) || setPad == "Spawn" ? "Left" : setPad;
+        string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
 
         var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
@@ -2682,7 +2676,7 @@ public class CoreEnginev3
         if (monsters.Count == 0)
         {
             Log("MAP", "❌ No matching monsters found");
-            return;
+            return (null, null);
         }
 
         string? targetCell =
@@ -2697,7 +2691,7 @@ public class CoreEnginev3
         if (string.IsNullOrWhiteSpace(targetCell))
         {
             Log("MAP", "❌ No valid target cell");
-            return;
+            return (null, null);
         }
 
         var mapCells = new HashSet<string>(
@@ -2707,37 +2701,24 @@ public class CoreEnginev3
         if (!mapCells.Contains(targetCell))
         {
             Log("MAP", $"❌ Cell not in map: {targetCell}");
-            return;
+            return (null, null);
         }
 
         _bestCell = targetCell;
         _bestPad = pad;
 
-        if (IsInCell(targetCell))
+        if (!string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
+        {
+            Log("MAP", $"⁀➴ Jumping to '{targetCell}' ({pad})");
+            Bot.Map.Jump(targetCell, pad);
+            Bot.Player.SetSpawnPoint();
+        }
+        else
         {
             Log("MAP", $"✅ Already in {targetCell}");
-            return;
         }
 
-        // Jump directly to entry-point pad with autoCorrect=false (instant & reliable)
-        // autoCorrect=true's only benefit is the 50ms pad-correction to "Left".
-        // We skip that entirely by jumping to "Left" right away.
-        Log("MAP", $"⁀➴ Moving to '{targetCell}' ({pad})");
-        Bot.Map.Jump(targetCell, pad, autoCorrect: false);
-
-        // Verify
-        if (!IsInCell(targetCell))
-        {
-            Log("MAP", $"⚠️ Jump to '{targetCell}' silently failed (still at '{Bot.Player.Cell}'). Retrying...");
-            if (Bot.Player.InCombat || Bot.Player.State == 2)
-            {
-                Bot.Combat.CancelAutoAttack();
-                Bot.Combat.CancelTarget();
-                Bot.Wait.ForCombatExit();
-            }
-            Bot.Map.Jump(targetCell, pad, autoCorrect: false);
-            Bot.Wait.ForTrue(() => IsInCell(targetCell), 10);
-        }
+        return (targetCell, pad);
     }
 
     /// <summary>
@@ -3169,7 +3150,7 @@ public class CoreEnginev3
     {
         if (Cast(4))
             return;
-        
+
         if (Cast(1))
             return;
     }
@@ -3178,26 +3159,26 @@ public class CoreEnginev3
     {
         int energyStacks = GetAuraStacks("Residual Energy", true);
 
-        if (NotUltraDarkon() && 
+        if (NotUltraDarkon() &&
         Bot.Player.Mana < 26)
         {
-            if (Cast(4)) 
+            if (Cast(4))
                 return;
         }
 
-        if ((!NotUltraDarkon()) && 
+        if ((!NotUltraDarkon()) &&
         Bot.Player.Mana < 37)
         {
-            if (Cast(4)) 
+            if (Cast(4))
                 return;
         }
 
-        if (NotUltraDage() && 
-        (!NotUltraDarkon() 
-        || !NotUltraSpeaker() 
-        || !NotKolr())  && 
-        KolrLowHp() && 
-        !HasAura("Putrefaction", true) && 
+        if (NotUltraDage() &&
+        (!NotUltraDarkon()
+        || !NotUltraSpeaker()
+        || !NotKolr()) &&
+        KolrLowHp() &&
+        !HasAura("Putrefaction", true) &&
         (IsHealthLow(80) && Left("Royal Resolve", 1, true)))
         {
             if (Cast(3))
@@ -3210,10 +3191,10 @@ public class CoreEnginev3
                 return;
         }
 
-        if (Cast(2)) 
+        if (Cast(2))
             return;
 
-        if (Cast(1)) 
+        if (Cast(1))
             return;
     }
 
@@ -3260,7 +3241,7 @@ public class CoreEnginev3
             if (Cast(4))
                 return;
         }
-        
+
         if (Cast(2))
             return;
 
@@ -3277,7 +3258,7 @@ public class CoreEnginev3
 
         if (Cast(4))
             return;
-        
+
         if (IsHealthLow(70))
         {
             if (Cast(3))
@@ -3290,7 +3271,7 @@ public class CoreEnginev3
         if (Cast(3))
             return;
 
-        if (Cast(4)) 
+        if (Cast(4))
             return;
 
         if (Cast(2))
@@ -3319,8 +3300,8 @@ public class CoreEnginev3
                 return;
         }
 
-        if (!NotKolr() && 
-        !HasAura("Putrefaction", true) && 
+        if (!NotKolr() &&
+        !HasAura("Putrefaction", true) &&
         (IsHealthLow(70) || IsArmyHealthLow(70)))
         {
             if (Cast(2))
@@ -3397,7 +3378,7 @@ public class CoreEnginev3
 
 
         if (Cast(1))
-        return;
+            return;
     }
 
     void ArchPaladinClass()
@@ -3520,7 +3501,7 @@ public class CoreEnginev3
             return;
     }
 
-void ArchmageClass()
+    void ArchmageClass()
     {
         if (IsManaLow(30))
             if (Cast(2))
@@ -3549,7 +3530,7 @@ void ArchmageClass()
 
         if (Cast(1))
             return;
-        
+
         if (NotUltraSpeaker())
         {
             if (Cast(1))
@@ -3625,31 +3606,31 @@ void ArchmageClass()
             return;
     }
 
-private bool TryCastRotation(int[] sequence, ref int step)
-{
-    if (sequence == null || sequence.Length == 0)
-        return false;
-
-    int attempts = 0;
-    while (attempts < sequence.Length)
+    private bool TryCastRotation(int[] sequence, ref int step)
     {
-        int index = sequence[step];
-        if (Cast(index))
+        if (sequence == null || sequence.Length == 0)
+            return false;
+
+        int attempts = 0;
+        while (attempts < sequence.Length)
         {
+            int index = sequence[step];
+            if (Cast(index))
+            {
+                step++;
+                if (step >= sequence.Length)
+                    step = 0;
+                return true;
+            }
+
             step++;
             if (step >= sequence.Length)
                 step = 0;
-            return true;
+            attempts++;
         }
 
-        step++;
-        if (step >= sequence.Length)
-            step = 0;
-        attempts++;
+        return false;
     }
-
-    return false;
-}
 
     // --- chrono classes ---------------------------------------------------------------
 
@@ -4020,9 +4001,9 @@ private bool TryCastRotation(int[] sequence, ref int step)
             if (Cast(4))
                 return;
         if (Cast(1))
-                return;
+            return;
         if (Cast(2))
-                return;
+            return;
         if (Cast(3))
             return;
     }

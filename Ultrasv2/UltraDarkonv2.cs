@@ -220,7 +220,8 @@ public class UltraDarkonv2
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
         Ultra.WaitForArmy(armySize - 1, "Ultra_Darkon.sync");
 
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
 
         Core.EnableSkills();
 

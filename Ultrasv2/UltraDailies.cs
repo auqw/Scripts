@@ -489,7 +489,8 @@ public class UltraDailies
         Core.Join(map);
         int armySize = GetBossParticipantCount("UltraEzrajal");
         Ultra.WaitForArmy(armySize - 1, "ultra_ezrajal.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -602,7 +603,8 @@ public class UltraDailies
         Core.Join(map);
         int armySize = GetBossParticipantCount("UltraWarden");
         Ultra.WaitForArmy(armySize - 1, "ultra_warden.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -720,7 +722,8 @@ public class UltraDailies
         Core.Join(map);
         int armySize = GetBossParticipantCount("UltraEngineer");
         Ultra.WaitForArmy(armySize - 1, "ultra_engineer.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -828,7 +831,8 @@ public class UltraDailies
         Core.Join(map);
         int armySize = GetBossParticipantCount("UltraAvatarTyndarius");
         Ultra.WaitForArmy(armySize - 1, "ultra_tyndarius.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Core.EnableSkills();
 
         bool armyWipeDetected = false;

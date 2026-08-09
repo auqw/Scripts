@@ -234,7 +234,7 @@ public class ChampionDrakath
 
         Core.Join(map);
         Ultra.WaitForArmy(3, "champion_drakath.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -247,6 +247,13 @@ public class ChampionDrakath
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
                 continue;
             }
 

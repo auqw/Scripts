@@ -136,7 +136,8 @@ public class UltraNulgath
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_nulgath.sync");
 
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
         #endregion

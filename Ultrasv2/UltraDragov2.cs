@@ -222,7 +222,8 @@ public class UltraDragov2
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
         Ultra.WaitForArmy(armySize - 1, "ultra_drago.sync");
 
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
+         
 
         Bot.Player.SetSpawnPoint();
 

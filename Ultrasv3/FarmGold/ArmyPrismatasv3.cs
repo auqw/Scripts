@@ -112,6 +112,7 @@ public class ArmyPristmasv3
     void KillPrismatas()
     {
         const string map = "archmage";
+        const string boss = "Prismata";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
@@ -123,6 +124,7 @@ public class ArmyPristmasv3
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
         if (armySize > 1)
             Ultra.WaitForArmy(armySize - 1, "ArmyPrismatas.sync", 3000, 500, 10000);
+        var (bestCell, _) = Core.ChooseBestCell(boss);
 
         Core.Join(map);
         C.AddDrop("Elemental Binding");
@@ -145,6 +147,13 @@ public class ArmyPristmasv3
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
                 continue;
             }
 

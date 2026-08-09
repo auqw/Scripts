@@ -177,7 +177,7 @@ public class AstralEmpyrean
 
         Core.Join(map);
         Ultra.WaitForArmy((int)Bot.Config!.Get<Players>("PlayerCount") - 1, "AstralEmpyrean.sync");
-        Core.ChooseBestCell(boss);
+        var (bestCell, _) = Core.ChooseBestCell(boss); 
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -189,14 +189,23 @@ public class AstralEmpyrean
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Astral's Supernova"), syncPath))
+
+            if (Bot.Player.Cell != bestCell)
             {
-                C.Jump("Enter", "Spawn");
-                C.Logger("All players finished farm.");
-                if (Bot.Quests.CanCompleteFullCheck(9803))
-                    C.EnsureComplete(9803);
-                break;
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
+                continue;
             }
+            
+            if (Bot.Player.Cell != Core.ChooseBestCell)
+                if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Astral's Supernova"), syncPath))
+                {
+                    C.Jump("Enter", "Spawn");
+                    C.Logger("All players finished farm.");
+                    if (Bot.Quests.CanCompleteFullCheck(9803))
+                        C.EnsureComplete(9803);
+                    break;
+                }
 
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
