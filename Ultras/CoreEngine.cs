@@ -35,7 +35,7 @@ using Skua.Core.Models.Quests;
 using Skua.Core.Models.Shops;
 using Skua.Core.Models.Skills;
 
-public class CoreEngine
+public class CoreEnginev1
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreAdvanced Adv

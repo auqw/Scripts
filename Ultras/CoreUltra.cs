@@ -20,7 +20,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class CoreUltra
+public class CoreUltrav1
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();

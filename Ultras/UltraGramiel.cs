@@ -99,8 +99,8 @@ public class UltraGramiel
     private CoreBots C => CoreBots.Instance;
     private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreEngine Core = new();
-    public CoreUltra Ultra = new();
+    public CoreEnginev1 Core = new();
+    public CoreUltrav1 Ultra = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraGramiel";

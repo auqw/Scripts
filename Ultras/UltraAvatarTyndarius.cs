@@ -69,8 +69,8 @@ public class UltraAvatarTyndarius
         set => _Story = value;
     }
     private static CoreStory _Story;
-    public CoreEngine Core = new();
-    public CoreUltra Ultra = new();
+    public CoreEnginev1 Core = new();
+    public CoreUltrav1 Ultra = new();
 
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
 

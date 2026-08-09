@@ -158,8 +158,8 @@ public class UltraDrago
     }
     private static CoreAstravia _Astravia;
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreEngine Core = new();
-    public CoreUltra Ultra = new();
+    public CoreEnginev1 Core = new();
+    public CoreUltrav1 Ultra = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDrago";

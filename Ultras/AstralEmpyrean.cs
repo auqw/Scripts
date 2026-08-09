@@ -126,8 +126,8 @@ public class AstralEmpyrean
         set => _Story = value;
     }
     private static CoreStory _Story;
-    public CoreEngine Core = new();
-    public CoreUltra Ultra = new();
+    public CoreEnginev1 Core = new();
+    public CoreUltrav1 Ultra = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "AstralEmpyrean";

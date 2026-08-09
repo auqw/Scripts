@@ -159,8 +159,8 @@ public class UltraEzrajal
     private CoreBots C => CoreBots.Instance;
     private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreEngine Core = new();
-    public CoreUltra Ultra = new();
+    public CoreEnginev1 Core = new();
+    public CoreUltrav1 Ultra = new();
 
     public string OptionsStorage = "UltraEzrajal2";
     public bool DontPreconfigure = true;

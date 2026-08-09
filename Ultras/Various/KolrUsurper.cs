@@ -24,7 +24,7 @@ public class LoneWolf_UltraUsurper
     public IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
     private CoreAdvanced Adv = new();
-    private CoreUltra Ultra = new();
+    public CoreUltrav1 Ultra = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "LoneWolf_UltraUsurper";
