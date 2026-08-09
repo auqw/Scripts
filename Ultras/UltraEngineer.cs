@@ -229,13 +229,19 @@ public class UltraEngineer
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_engineer.sync");
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)
         {
-            
+
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
 
             if (Bot.Player.Cell != bestCell)
             {
