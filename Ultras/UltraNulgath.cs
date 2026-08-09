@@ -149,6 +149,13 @@ public class UltraNulgath
                 continue;
             }
 
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
+                continue;
+            }
+
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Nulgath the Archfiend Defeated?", 1), syncPath))
             {
                 C.Logger("All players finished farm.");

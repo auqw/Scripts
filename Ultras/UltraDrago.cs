@@ -283,6 +283,13 @@ public class UltraDrago
                 continue;
             }
 
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                Bot.Map.Jump(bestCell);
+                continue;
+            }
+
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Drago Dethroned", 1), syncPath))
             {
                 C.JumpWait();
