@@ -612,7 +612,15 @@ public class CoreUltrav3
     public bool CheckArmyProgressBool(Func<bool> condition, string syncFilePath = "army_sync.sync")
     {
         if (!Bot.Player.Alive)
+        {
+            if (!string.IsNullOrWhiteSpace(Bot.Player.Username))
+            {
+                string deadKey = $"{Bot.Player.Username}|PlaceHolder".Replace(":", "-");
+                UpdateEntry(ResolveSyncPath(syncFilePath), deadKey, "0");
+            }
+
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        }
 
         if (string.IsNullOrWhiteSpace(Bot.Player.Username))
             Bot.Wait.ForTrue(() => !string.IsNullOrWhiteSpace(Bot.Player.Username), 20);
@@ -639,25 +647,17 @@ public class CoreUltrav3
         foreach (string line in lines)
         {
             string[] parts = line.Split(':');
-            if (parts.Length < 3)
-                continue;
+            if (parts.Length < 3) continue;
 
             string[] keyParts = parts[0].Split('|');
-            if (keyParts.Length < 1 || string.IsNullOrWhiteSpace(keyParts[0]))
-                continue;
+            if (keyParts.Length < 1 || string.IsNullOrWhiteSpace(keyParts[0])) continue;
 
-            if (!int.TryParse(parts[1], out int status))
-                continue;
-
-            if (!long.TryParse(parts[2], out long ts))
-                continue;
-
-            if (now - ts > staleThreshold)
-                continue;
+            if (!int.TryParse(parts[1], out int status)) continue;
+            if (!long.TryParse(parts[2], out long ts)) continue;
+            if (now - ts > staleThreshold) continue;
 
             activeMembers++;
-            if (status == 1)
-                completedMembers++;
+            if (status == 1) completedMembers++;
         }
 
         return activeMembers > 0 && completedMembers == activeMembers;
@@ -665,32 +665,48 @@ public class CoreUltrav3
 
     public void ClearSyncFile(string filePath)
     {
-        try
+        for (int attempt = 0; attempt < 50; attempt++)
         {
-            // If file doesn't exist → create it empty.
-            if (!File.Exists(filePath))
+            try
             {
-                File.WriteAllText(filePath, "");
-                Bot?.Log($"[ArmySync] Created fresh sync file: {filePath}");
+                // If file doesn't exist → create it empty.
+                if (!File.Exists(filePath))
+                {
+                    using var fs = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                    Bot?.Log($"[ArmySync] Created fresh sync file: {filePath}");
+                    return;
+                }
+
+                // If file exists but is already empty → do nothing.
+                FileInfo fi = new(filePath);
+                if (fi.Length == 0)
+                {
+                    Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
+                    return;
+                }
+
+                // Clear it.
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Write, FileShare.None))
+                {
+                    fs.SetLength(0);
+                }
+
+                Bot?.Log("[ArmySync] Sync file cleared.");
                 return;
             }
-
-            // If file exists but is already empty → do nothing.
-            FileInfo fi = new(filePath);
-            if (fi.Length == 0)
+            catch (IOException)
             {
-                Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
+                // Another bot has the file locked (ReadLines/UpdateEntry mid-operation) — back off and retry.
+                Bot?.Sleep(100 + (attempt * 20));
+            }
+            catch (Exception ex)
+            {
+                Bot?.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
                 return;
             }
+        }
 
-            // Clear it.
-            File.WriteAllText(filePath, "");
-            Bot?.Log("[ArmySync] Sync file cleared.");
-        }
-        catch (Exception ex)
-        {
-            Bot?.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
-        }
+        Bot?.Log($"[ArmySync] Failed to clear sync file after retries: {filePath}");
     }
 
     // -------------------------------------------------------
@@ -1926,7 +1942,7 @@ public class CoreUltrav3
             {
                 C.Logger($"[CoreUltra] PersistentJoinHouse failed: {ex.Message}");
             }
-            
+
             Bot.Sleep(1000);
         }
     }
