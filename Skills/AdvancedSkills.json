@@ -5653,7 +5653,7 @@
       ]
     }
   },
-  "Lord Of Order": {
+  "Lord of Order": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
