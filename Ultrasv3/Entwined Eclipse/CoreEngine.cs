@@ -2698,7 +2698,7 @@ public class CoreEngine
             case "infinity titan":
                 InfinityTitanClass();
                 break;
-            case "Lord of Order":
+            case "lord of order":
                 LordsOfOrderClass();
                 break;
             case "void highlord":

@@ -1129,7 +1129,7 @@ public class MidnightSunTest
                 UseFirstAvailableSkill(apSkillList);
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 UseFirstAvailableSkill(looSkillList);
                 break;
         }
@@ -1405,7 +1405,7 @@ public class MidnightSunTest
                 UsePotionSet("Fate Tonic", "Potent Battle Elixir");
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 UsePotionSet("Fate Tonic", "Potent Destruction Elixir");
                 break;
 
@@ -1537,7 +1537,7 @@ public class MidnightSunTest
                 );
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.None,

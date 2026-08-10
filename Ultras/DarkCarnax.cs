@@ -251,7 +251,7 @@ public class UltraDarkCarnax
                 );
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,

@@ -410,7 +410,7 @@ public class MasakadoKingsEchoArmy
                 );
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 Core.Logger($"{Core.Username()} applying Lord of Order support enhancements.");
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -573,7 +573,7 @@ public class MasakadoKingsEchoArmy
                 Bot.Skills.UseSkill(2);
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 Bot.Skills.UseSkill(1);
                 Bot.Sleep(250);
                 Bot.Skills.UseSkill(2);

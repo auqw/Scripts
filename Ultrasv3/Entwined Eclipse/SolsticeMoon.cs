@@ -1160,7 +1160,7 @@ public class SolsticeMoonTest
                 UseFirstAvailableSkill(apSkillList);
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 UseFirstAvailableSkill(looSkillList);
                 break;
         }
@@ -1286,7 +1286,7 @@ public class SolsticeMoonTest
                 );
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.None,
@@ -1567,7 +1567,7 @@ public class SolsticeMoonTest
                 UsePotionSet("Fate Tonic", "Potent Battle Elixir");
                 break;
 
-            case "Lord of Order":
+            case "lord of order":
                 UsePotionSet("Fate Tonic", "Potent Destruction Elixir");
                 break;
 
