@@ -186,7 +186,7 @@ public class CoreUltrav3
         int band5 = (pct / 5) * 5;
 
         const string key = "warden.bands";
-        var seen = (AppDomain.CurrentDomain.GetData(key) as HashSet<int>) ?? new HashSet<int>();
+        var seen = (AppDomain.CurrentDomain.GetData(key) as HashSet<int>) ?? [];
 
         if (!seen.Contains(band5))
         {
@@ -401,7 +401,7 @@ public class CoreUltrav3
             string username = keyParts[0];
             string className = keyParts[1];
 
-            List<string> lines = Slurp(path).ToList();
+            List<string> lines = [.. Slurp(path)];
 
             // purge broken historical entries (|Peasant etc.)
             lines.RemoveAll(l => l.StartsWith("|", StringComparison.Ordinal));
@@ -424,7 +424,7 @@ public class CoreUltrav3
             else
                 lines.Add(entry);
 
-            Yeet(path, lines.ToArray());
+            Yeet(path, [.. lines]);
         }
 
 
@@ -433,7 +433,7 @@ public class CoreUltrav3
             string[] lines = Slurp(path);
             long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             const int staleThreshold = 600; // 10 minutes
-            List<string> valid = new();
+            List<string> valid = [];
 
             foreach (string line in lines)
             {
@@ -452,7 +452,7 @@ public class CoreUltrav3
 
             // Rewrite file only if we cleaned something out
             if (valid.Count != lines.Length)
-                Yeet(path, valid.ToArray());
+                Yeet(path, [.. valid]);
 
             return valid.Count(l => l.Split(':')[1] == "1");
         }
@@ -804,51 +804,47 @@ public class CoreUltrav3
             {
                 // Open the file exclusively for the full read/modify/write cycle.
                 // This avoids lost updates when multiple clients are writing the same sync file.
-                List<string> lines = new List<string>();
+                List<string> lines = [];
                 string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
                 string entry = $"{key}:{payload}:{stamp}";
 
-                using (var fs = new FileStream(
+                using var fs = new FileStream(
                     path,
                     FileMode.OpenOrCreate,
                     FileAccess.ReadWrite,
-                    FileShare.None))
+                    FileShare.None);
+                using (var reader = new StreamReader(fs, leaveOpen: true))
                 {
-                    using (var reader = new StreamReader(fs, leaveOpen: true))
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        string? line;
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(line))
-                                lines.Add(line);
-                        }
-                    }
-
-                    int idx = lines.FindIndex(l =>
-                    {
-                        string[] parts = l.Split(':');
-                        return parts.Length > 0 &&
-                            parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
-                    });
-
-                    if (idx >= 0)
-                        lines[idx] = entry;
-                    else
-                        lines.Add(entry);
-
-                    fs.SetLength(0);
-                    fs.Position = 0;
-
-                    using (var writer = new StreamWriter(fs))
-                    {
-                        foreach (var line in lines)
-                        {
-                            writer.WriteLine(line);
-                        }
-                        writer.Flush();
-                        fs.Flush(true);
+                        if (!string.IsNullOrWhiteSpace(line))
+                            lines.Add(line);
                     }
                 }
+
+                int idx = lines.FindIndex(l =>
+                {
+                    string[] parts = l.Split(':');
+                    return parts.Length > 0 &&
+                        parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
+                });
+
+                if (idx >= 0)
+                    lines[idx] = entry;
+                else
+                    lines.Add(entry);
+
+                fs.SetLength(0);
+                fs.Position = 0;
+
+                using var writer = new StreamWriter(fs);
+                foreach (var line in lines)
+                {
+                    writer.WriteLine(line);
+                }
+                writer.Flush();
+                fs.Flush(true);
 
                 return; // Success
             }
@@ -895,7 +891,7 @@ public class CoreUltrav3
                 allNeeded.Add(cls);
 
         // Check which of those this client owns (inventory + bank)
-        List<string> myClasses = new();
+        List<string> myClasses = [];
         foreach (string cls in allNeeded)
         {
             if (C.CheckInventory(cls, toInv: true))
@@ -1035,9 +1031,7 @@ public class CoreUltrav3
                 if (payloadPart.StartsWith("READY|", StringComparison.OrdinalIgnoreCase))
                     classListStr = payloadPart.Substring(6); // Remove "READY|" prefix
 
-                playerClasses[playerName] = classListStr
-                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .ToList();
+                playerClasses[playerName] = [.. classListStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)];
             }
         }
 
@@ -1062,7 +1056,7 @@ public class CoreUltrav3
         Dictionary<string, string> assignments = new(StringComparer.OrdinalIgnoreCase);
         HashSet<string> assignedPlayers = new(StringComparer.OrdinalIgnoreCase);
         Dictionary<string, int> classUsedCount = new(StringComparer.OrdinalIgnoreCase);
-        HashSet<int> filledSlots = new();
+        HashSet<int> filledSlots = [];
 
         if (preferredUsernameAssignments != null && preferredUsernameAssignments.Count > 0)
         {
@@ -1117,9 +1111,8 @@ public class CoreUltrav3
 
         // Deterministic greedy assignment
         // Alpha-sort players so every client computes the identical result.
-        List<string> sortedPlayers = playerClasses
-            .Keys.OrderBy(p => p, StringComparer.OrdinalIgnoreCase)
-            .ToList();
+        List<string> sortedPlayers = [.. playerClasses
+            .Keys.OrderBy(p => p, StringComparer.OrdinalIgnoreCase)];
 
         for (int s = 0; s < classSlots.Length; s++)
         {
@@ -1146,14 +1139,13 @@ public class CoreUltrav3
                         continue;
                 }
 
-                List<string> candidates = sortedPlayers
+                List<string> candidates = [.. sortedPlayers
                     .Where(p =>
                         !assignedPlayers.Contains(p)
                         && playerClasses[p].Any(c =>
                             c.Equals(acceptedClass, StringComparison.OrdinalIgnoreCase)
                         )
-                    )
-                    .ToList();
+                    )];
 
                 if (candidates.Count == 0)
                     continue;

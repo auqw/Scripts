@@ -89,7 +89,7 @@ public class UltraCustomClassSync
                     continue;
                 if (!parts[1].StartsWith("READY|", StringComparison.OrdinalIgnoreCase))
                     continue;
-                if (!long.TryParse(parts[parts.Length - 1], out long ts))
+                if (!long.TryParse(parts[^1], out long ts))
                     continue;
                 if (now - ts <= staleThreshold)
                     validCount++;
@@ -146,7 +146,7 @@ public class UltraCustomClassSync
                 string playerName = parts[0];
                 string payloadPart = parts[1];
 
-                if (!long.TryParse(parts[parts.Length - 1], out long ts))
+                if (!long.TryParse(parts[^1], out long ts))
                     continue;
                 if (now - ts > staleThreshold)
                     continue;
