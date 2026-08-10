@@ -69,7 +69,7 @@ public class WitchQueensAtelierMerge
                     Core.RegisterQuests(10824);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("birgittaspire", "r2", "Left", "Witch Queen Talia", req.Name, isTemp: false, log: false);
+                        Core.KillMonster("birgittaspire", "r2", "Left", "Witch Queen Talia", req.Name, quant, isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -81,7 +81,7 @@ public class WitchQueensAtelierMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("birgittaspire", "r2", "Left", "Witch Queen Talia", req.Name, isTemp: false, log: false);
+                        Core.KillMonster("birgittaspire", "r2", "Left", "Witch Queen Talia", req.Name, quant, isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
