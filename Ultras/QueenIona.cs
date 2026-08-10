@@ -17,7 +17,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class QueenIona
+public class QueenIonav1
 {
     private CoreBots C => CoreBots.Instance;
     public IScriptInterface Bot => IScriptInterface.Instance;

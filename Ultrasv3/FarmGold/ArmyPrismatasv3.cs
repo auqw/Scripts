@@ -149,13 +149,6 @@ public class ArmyPristmasv3
                 continue;
             }
 
-            if (Bot.Player.Cell != bestCell)
-            {
-                Bot.Sleep(200);
-                Bot.Map.Jump(bestCell, bestPad);
-                continue;
-            }
-
             if (Bot.Player.Cell != "r2")
             {
                 Bot.Map.Jump("r2", "Left");

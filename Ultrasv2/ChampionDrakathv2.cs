@@ -252,13 +252,6 @@ public class ChampionDrakathv2
                 continue;
             }
 
-            if (Bot.Player.Cell != bestCell)
-            {
-                Bot.Sleep(200);
-                Bot.Map.Jump(bestCell, bestPad);
-                continue;
-            }
-
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Champion Drakath Defeated"), syncPath))
             {
                 Bot.Sleep(2500);

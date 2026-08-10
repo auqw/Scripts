@@ -162,13 +162,6 @@ public class UltraEngineerv2
                 continue;
             }
 
-            if (Bot.Player.Cell != bestCell)
-            {
-                Bot.Sleep(200);
-                Bot.Map.Jump(bestCell, bestPad);
-                continue;
-            }
-
             // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Engineer Defeated", 1), syncPath))
             {

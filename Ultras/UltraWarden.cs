@@ -125,7 +125,8 @@ public class UltraWarden
             if (Bot.Player.Cell != bestCell)
             {
                 Bot.Sleep(200);
-                Bot.Map.Jump(bestCell, bestPad);
+                C.Jump(bestCell!, bestPad!);
+                Bot.Wait.ForCellChange(bestCell);
                 continue;
             }
 

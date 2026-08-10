@@ -150,7 +150,8 @@ public class UltraDarkon
 
         Core.Join("ultradarkon");
         Ultra.WaitForArmy(3, "Ultra_Darkon.sync");
-        Core.ChooseBestCell("Darkon the Conductor");
+        var (bestCell, bestPad) = Core.ChooseBestCell("Darkon the Conductor");
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
         while (!Bot.ShouldExit)
         {
@@ -179,6 +180,16 @@ public class UltraDarkon
                 }
                 continue;
             }
+
+            if (Bot.Player.Cell != bestCell)
+            {
+                Bot.Sleep(200);
+                C.Jump(bestCell!, bestPad!);
+                Bot.Wait.ForCellChange(bestCell);
+                continue;
+            }
+
+            
 
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
