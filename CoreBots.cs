@@ -199,7 +199,6 @@ public class CoreBots
         {
             // Prevent duplicate subscriptions if script restarts internally
             Bot.Events.ScriptStopping -= CrashDetector;
-            Bot.Events.CellChanged -= ;
 
 
             Bot.Events.ScriptStopping += CrashDetector;
