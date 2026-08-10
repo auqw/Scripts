@@ -830,7 +830,7 @@
   },
   "Bard": {
     "Base": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
         {
