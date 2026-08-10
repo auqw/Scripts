@@ -2963,7 +2963,7 @@ public class CoreEnginev3
             case "infinity titan":
                 InfinityTitanClass();
                 break;
-            case "Lord of Order":
+            case "lord of order":
                 LordOfOrderClass();
                 break;
             case "void highlord":
