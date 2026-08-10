@@ -2972,7 +2972,7 @@
     ],
     "path": "Ultras/DarkCarnax.cs",
     "size": 12110,
-    "sha256": "9f5cb289540ac26c1d661f46fd9700d9522c760182191f81dc18096d667c89a2",
+    "sha256": "870286c7ad94d09f3efe0871714b95743044130a4eb8e53b21096b0ce1df3550",
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
   },
@@ -9486,7 +9486,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/AscensionoftheEclipse.cs",
     "size": 82310,
-    "sha256": "9a6d85af86acdf5c49fed8c0a57bf3640e7605f04ec82def0dfd24ddc1f06b49",
+    "sha256": "6021a31c4edb96a25da9c00c9424cef888b3ec0beb194ea378c8908564de6caf",
     "fileName": "AscensionoftheEclipse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/AscensionoftheEclipse.cs"
   },
@@ -9535,7 +9535,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/CoreEngine.cs",
     "size": 106681,
-    "sha256": "c1feb32e32e7dde14acc4753218c25559e7928deebfb71b68fcd5cc2f2a6a08b",
+    "sha256": "43a03938f2cf1308dd30d2018c3c9da1da1e1b3e54eddb5653b159b8ef9090e6",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/CoreEngine.cs"
   },
@@ -9571,7 +9571,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/SolsticeMoon.cs",
     "size": 60629,
-    "sha256": "78c3d983f7a5cc1b442bbf1e8a2517c8992e15a5b2fbf484b2bc7fbbfd6f6368",
+    "sha256": "73c630a7274af46fab7a5e8e2e89fb31e17631e22619489de7526c0cec9bfd58",
     "fileName": "SolsticeMoon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/SolsticeMoon.cs"
   },
@@ -9589,7 +9589,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/Masakado.cs",
     "size": 24034,
-    "sha256": "5d9c0f3c155a8936255245fecc2e85a631b5103237ece26443ca7d45afc89421",
+    "sha256": "66bf2cef3e68a036fd5f3124deafd23f4482729c418f065df1830c6890b3985c",
     "fileName": "Masakado.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/Masakado.cs"
   },
@@ -9608,7 +9608,7 @@
     ],
     "path": "Ultrasv3/Entwined Eclipse/MidnightSun.cs",
     "size": 55323,
-    "sha256": "80db96a3089dd0571a97c1edea2f202dcb74924c6065948fa65e7a1372f09101",
+    "sha256": "0b6542fcd86374a7f9857a2c11c28bd6080d3f0c2f3bf5c95e424376c3832ad5",
     "fileName": "MidnightSun.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/MidnightSun.cs"
   },
