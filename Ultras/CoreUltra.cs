@@ -23,7 +23,7 @@ using Skua.Core.Options;
 public class CoreUltrav1
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreEngine Core = new();
+    public CoreEnginev1 Core = new();
     private CoreBots C => CoreBots.Instance;
     private static CoreAdvanced Adv
     {

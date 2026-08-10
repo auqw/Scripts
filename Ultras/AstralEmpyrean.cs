@@ -177,7 +177,7 @@ public class AstralEmpyrean
 
         Core.Join(map);
         Ultra.WaitForArmy((int)Bot.Config!.Get<Players>("PlayerCount") - 1, "AstralEmpyrean.sync");
-        var (bestCell, _) = Core.ChooseBestCell(boss);
+        var (bestCell, bestPad) = Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -193,7 +193,7 @@ public class AstralEmpyrean
             if (Bot.Player.Cell != bestCell)
             {
                 Bot.Sleep(200);
-                Bot.Map.Jump(bestCell);
+                Bot.Map.Jump(bestCell, bestPad);
                 continue;
             }
 

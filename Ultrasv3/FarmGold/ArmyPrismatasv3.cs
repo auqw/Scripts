@@ -126,7 +126,7 @@ public class ArmyPristmasv3
             Ultra.WaitForArmy(armySize - 1, "ArmyPrismatas.sync", 3000, 500, 10000);
         Core.Join(map);
         C.AddDrop("Elemental Binding");
-        var (bestCell, _) = Core.ChooseBestCell(boss);
+        var (bestCell, bestPad) = Core.ChooseBestCell(boss);
 
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
@@ -152,7 +152,7 @@ public class ArmyPristmasv3
             if (Bot.Player.Cell != bestCell)
             {
                 Bot.Sleep(200);
-                Bot.Map.Jump(bestCell);
+                Bot.Map.Jump(bestCell, bestPad);
                 continue;
             }
 
