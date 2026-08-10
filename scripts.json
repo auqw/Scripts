@@ -9386,8 +9386,8 @@
       "null"
     ],
     "path": "Ultrasv3/DependenciesUltras/CoreUltrav3.cs",
-    "size": 66616,
-    "sha256": "2e6a2826a2f50489f40fd0a158188d65f95dd347ed7dabf80cd6217aae2836a9",
+    "size": 66255,
+    "sha256": "e120c931d23165f2969f7b604cade9b22fcb738651dd6f0fda8874e33de88321",
     "fileName": "CoreUltrav3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreUltrav3.cs"
   },
@@ -9427,8 +9427,8 @@
       "null"
     ],
     "path": "Ultrasv3/DependenciesUltras/UltraCustomClassSync.cs",
-    "size": 13182,
-    "sha256": "4faa63daadb23528724ac81cf69332e03e5379d517f41113bbd97692d7bf72b6",
+    "size": 13153,
+    "sha256": "cf7d0b608f16dfc1728a2e5ea3f5c9b80b31dacd6d6b0e18dbb987ca03f5e277",
     "fileName": "UltraCustomClassSync.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraCustomClassSync.cs"
   },
