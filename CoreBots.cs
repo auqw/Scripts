@@ -199,11 +199,10 @@ public class CoreBots
         {
             // Prevent duplicate subscriptions if script restarts internally
             Bot.Events.ScriptStopping -= CrashDetector;
-            Bot.Events.CellChanged -= SkipCutSceneBlackScreenFix;
+            Bot.Events.CellChanged -= ;
 
 
             Bot.Events.ScriptStopping += CrashDetector;
-            Bot.Events.CellChanged += SkipCutSceneBlackScreenFix;
 
             _scriptStopwatch = Stopwatch.StartNew();
 
@@ -669,47 +668,47 @@ public class CoreBots
     }
 
     // For use when Quests randomly send u to a cutscene and skipcutscene is on, this will jump u to enter to fix the blackscreen *if* lagkiller* is on
-    async void SkipCutSceneBlackScreenFix(string map, string cell, string pad)
-    {
-        if (Bot.Options.LagKiller == true || !Bot.Player.Alive || Bot.Player.Cell == null)
-            return;
+    // async void SkipCutSceneBlackScreenFix(string map, string cell, string pad)
+    // {
+    //     if (Bot.Options.LagKiller == true || !Bot.Player.Alive || Bot.Player.Cell == null)
+    //         return;
 
-        string cellLower = Bot.Player.Cell.ToLower();
-        if (!cellLower.Contains("blank") && !cellLower.Contains("wait"))
-            return;
+    //     string cellLower = Bot.Player.Cell.ToLower();
+    //     if (!cellLower.Contains("blank") && !cellLower.Contains("wait"))
+    //         return;
 
-        await Task.Run(async () =>
-        {
-            // Prefer "Enter" cell if it exists, otherwise fall back to the first
-            // available cell that isn't blank, wait, or a cutscene cell.
-            string targetCell = "Enter";
+    //     await Task.Run(async () =>
+    //     {
+    //         // Prefer "Enter" cell if it exists, otherwise fall back to the first
+    //         // available cell that isn't blank, wait, or a cutscene cell.
+    //         string targetCell = "Enter";
 
-            var cells = Bot.Map.Cells; // <-- confirm real property/method name
-            if (cells == null || !cells.Any(c => c.Equals("Enter", StringComparison.OrdinalIgnoreCase)))
-            {
-                targetCell = cells?.FirstOrDefault(c =>
-                {
-                    string cLower = c.ToLower();
-                    return !cLower.Contains("blank")
-                        && !cLower.Contains("wait")
-                        && !cLower.Contains("cut");
-                }) ?? "Enter"; // last-resort fallback if nothing else qualifies
-            }
+    //         var cells = Bot.Map.Cells; // <-- confirm real property/method name
+    //         if (cells == null || !cells.Any(c => c.Equals("Enter", StringComparison.OrdinalIgnoreCase)))
+    //         {
+    //             targetCell = cells?.FirstOrDefault(c =>
+    //             {
+    //                 string cLower = c.ToLower();
+    //                 return !cLower.Contains("blank")
+    //                     && !cLower.Contains("wait")
+    //                     && !cLower.Contains("cut");
+    //             }) ?? "Enter"; // last-resort fallback if nothing else qualifies
+    //         }
 
-            Bot.Map.Jump(targetCell, "Spawn", autoCorrect: false);
-            await Task.Delay(2500);
+    //         Bot.Map.Jump(targetCell, "Spawn", autoCorrect: false);
+    //         await Task.Delay(2500);
 
-            // Quick toggle lagkiller to fix blackscreen if lag killer is off (so we can see the game again)
-            if (!Bot.Options.LagKiller)
-            {
-                Bot.Options.LagKiller = true;
-                await Task.Delay(1000);
-                Bot.Options.LagKiller = false;
-                await Task.Delay(1000);
-            }
-            // Black Screen should now be fixed.
-        });
-    }
+    //         // Quick toggle lagkiller to fix blackscreen if lag killer is off (so we can see the game again)
+    //         if (!Bot.Options.LagKiller)
+    //         {
+    //             Bot.Options.LagKiller = true;
+    //             await Task.Delay(1000);
+    //             Bot.Options.LagKiller = false;
+    //             await Task.Delay(1000);
+    //         }
+    //         // Black Screen should now be fixed.
+    //     });
+    // }
 
     // Whether the player is a Member (set to true if necessary during setOptions)
     public bool isUpgraded()
@@ -907,7 +906,6 @@ public class CoreBots
     public bool StopBotEvent(Exception? e)
     {
         Bot.Events.ScriptStopping -= StopBotEvent;
-        Bot.Events.CellChanged -= SkipCutSceneBlackScreenFix;
         SetOptions(false);
         return StopBot(e != null);
     }
