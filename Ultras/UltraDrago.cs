@@ -268,7 +268,7 @@ public class UltraDrago
         Core.Join(map);
         C.EnsureAccept(8397);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
-        var (bestCell, _) = Core.ChooseBestCell(boss);
+        var (bestCell, bestPad) = Core.ChooseBestCell(boss);
          
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
@@ -286,7 +286,7 @@ public class UltraDrago
             if (Bot.Player.Cell != bestCell)
             {
                 Bot.Sleep(200);
-                Bot.Map.Jump(bestCell);
+                Bot.Map.Jump(bestCell, bestPad);
                 continue;
             }
 

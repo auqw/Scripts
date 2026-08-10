@@ -228,7 +228,7 @@ public class UltraEngineer
         C.AddDrop("Engineer Insignia");
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_engineer.sync");
-        var (bestCell, _) = Core.ChooseBestCell(boss);
+        var (bestCell, bestPad) = Core.ChooseBestCell(boss);
 
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
@@ -246,7 +246,7 @@ public class UltraEngineer
             if (Bot.Player.Cell != bestCell)
             {
                 Bot.Sleep(200);
-                Bot.Map.Jump(bestCell);
+                Bot.Map.Jump(bestCell, bestPad);
                 continue;
             }
 

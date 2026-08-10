@@ -6,6 +6,7 @@ tags: ultra, death, sync, army
 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/Ultrasv3/DependenciesUltras/CoreUltrav3.cs
+//cs_include Scripts/Ultrasv3/DependenciesUltras/UltraWaitForArmy.cs
 
 using System;
 using System.IO;

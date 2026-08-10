@@ -19,8 +19,8 @@ using Skua.Core.Options;
 public class TestZone
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreEngine Core = new();
-    public CoreUltra Ultra = new();
+    public CoreEnginev1 Core = new();
+    public CoreUltrav1 Ultra = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
