@@ -527,7 +527,7 @@ public class CoreEnginev1
             .Where(t => t.Length > 0)
             .ToArray();
 
-        MonsterKey[] prioKeys = Array.Empty<MonsterKey>();
+        MonsterKey[] prioKeys = [];
         if (priority && targets.Length > 0)
             prioKeys = targets.Select(MonsterKey.FromName).ToArray();
         MonsterKey[] targetKeys = targets.Select(MonsterKey.FromName).ToArray();
@@ -1049,7 +1049,7 @@ public class CoreEnginev1
         bool mem = Bot.Player.IsMember == true;
 
         var wants = new List<string>();
-        foreach (var p in priority ?? Array.Empty<string>())
+        foreach (var p in priority ?? [])
             if (!string.IsNullOrWhiteSpace(p))
                 wants.Add(p);
 
@@ -1624,8 +1624,8 @@ public class CoreEnginev1
         }
 
         // scan inventory + bank
-        var bank = Bot.Bank.Items ?? Enumerable.Empty<InventoryItem>();
-        var inv = Bot.Inventory.Items ?? Enumerable.Empty<InventoryItem>();
+        var bank = Bot.Bank.Items ?? [];
+        var inv = Bot.Inventory.Items ?? [];
 
         var bankNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var b in bank)
@@ -2497,7 +2497,7 @@ public class CoreEnginev1
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
         string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
 
-        var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
+        var monsters = (Bot.Monsters.MapMonsters ?? [])
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
             .Where(m =>
                 wildcard
