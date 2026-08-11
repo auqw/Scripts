@@ -67,6 +67,7 @@ public class Butlerv4
     private bool _differentServer = false;
     private bool _isParked = false;
     private bool _houseJoined = false;
+    private bool _leaderPortLookupFailedLogged = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -301,7 +302,7 @@ public class Butlerv4
 
     private void ConnectToLeader()
     {
-        int port = LeaderButlerSyncv2.LeaderButlerSyncPlugin.ReadLeaderPort(playerName);
+        int port = ReadLeaderPort(playerName);
         if (port < 0)
             return;
 
@@ -311,7 +312,7 @@ public class Butlerv4
             _tcp.Connect("127.0.0.1", port);
             _tcp.NoDelay = true;
             _stream = _tcp.GetStream();
-            _streamReader = new System.IO.StreamReader(_stream, Encoding.UTF8);
+            _streamReader = new StreamReader(_stream, Encoding.UTF8);
 
             string handshake = $"HELLO|{Bot.Player.Username}|{playerName}\n";
             byte[] hb = Encoding.UTF8.GetBytes(handshake);
@@ -324,6 +325,36 @@ public class Butlerv4
         {
             Disconnect();
         }
+    }
+
+    private int ReadLeaderPort(string leaderName)
+    {
+        try
+        {
+            var pluginType = AppDomain.CurrentDomain.GetAssemblies()
+                .Select(assembly => assembly.GetType("LeaderButlerSyncv2.LeaderButlerSyncPlugin", false) ?? assembly.GetType("LeaderButlerSyncPlugin", false))
+                .FirstOrDefault(type => type != null);
+
+            var method = pluginType?.GetMethod("ReadLeaderPort", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            if (method?.Invoke(null, new object[] { leaderName }) is int port)
+                return port;
+        }
+        catch (Exception ex)
+        {
+            if (!_leaderPortLookupFailedLogged)
+            {
+                Core.Logger($"[Butler] Failed to read leader port from LeaderButlerSyncv2.dll: {ex.Message}");
+                _leaderPortLookupFailedLogged = true;
+            }
+        }
+
+        if (!_leaderPortLookupFailedLogged)
+        {
+            Core.Logger("[Butler] LeaderButlerSyncv2.dll is not loaded. Put it in Skua/plugins and restart your clients.");
+            _leaderPortLookupFailedLogged = true;
+        }
+
+        return -1;
     }
 
     private void PollTcpData()
