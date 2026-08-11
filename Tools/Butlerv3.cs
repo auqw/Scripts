@@ -13,7 +13,7 @@ using Skua.Core.Models.Players;
 using Skua.Core.Options;
 
 // Butler version: 3.0
-public class Butler3
+public class Butlerv3
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
