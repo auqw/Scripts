@@ -4058,20 +4058,21 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
 
-        // Core.RegisterQuests(916, 917, 919, 921, 922); //Dissertations Bupers Camel 916, Crafty Creepers: A Favorite of Mine 917, Parched Pets 919, Oasis Ornaments 921, The Power of Pomade 922
+        Core.RegisterQuests(916, 917, 919, 921, 922); //Dissertations Bupers Camel 916, Crafty Creepers: A Favorite of Mine 917, Parched Pets 919, Oasis Ornaments 921, The Power of Pomade 922
         while (!Bot.ShouldExit && FactionRank("Sandsea") < rank)
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.EnsureAcceptmultiple(new[] { 916, 917, 919, 921, 922 });
-            Core.HuntMonster("sandsea", "Bupers Camel", "Bupers Camel Document", 10, log: false);
-            Core.HuntMonster("sandsea", "Bupers Camel", "Barrel of Desert Water", 10, log: false);
-            Core.HuntMonster("sandsea", "Bupers Camel", "Flexible Camel Spit", 7, log: false);
-            Core.HuntMonster("sandsea", "Bupers Camel", "Oasis Jewelry Piece", 4, log: false);
-            Core.HuntMonster("sandsea", "Bupers Camel", "Camel Skull", 2, log: false);
-            Core.HuntMonster("sandsea", "Cactus Creeper", "Sandsea Cotton", 8, log: false);
-            Core.HuntMonster("sandsea", "Cactus Creeper", "Cactus Creeper Head", 8, log: false);
-            Core.EnsureComplete(916, 917, 919, 921, 922);
+            // Core.EnsureAcceptmultiple(new[] { 916, 917, 919, 921, 922 });
+            Core.KillMonster("sandsea", "Enter", "Spawn", "*", log: false);
+            // Core.HuntMonster("sandsea", "Bupers Camel", "Bupers Camel Document", 10, log: false);
+            // Core.HuntMonster("sandsea", "Bupers Camel", "Barrel of Desert Water", 10, log: false);
+            // Core.HuntMonster("sandsea", "Bupers Camel", "Flexible Camel Spit", 7, log: false);
+            // Core.HuntMonster("sandsea", "Bupers Camel", "Oasis Jewelry Piece", 4, log: false);
+            // Core.HuntMonster("sandsea", "Bupers Camel", "Camel Skull", 2, log: false);
+            // Core.HuntMonster("sandsea", "Cactus Creeper", "Sandsea Cotton", 8, log: false);
+            // Core.HuntMonster("sandsea", "Cactus Creeper", "Cactus Creeper Head", 8, log: false);
+            // Core.EnsureComplete(916, 917, 919, 921, 922);
         }
         // Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
