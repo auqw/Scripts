@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 447559,
-    "sha256": "df2902cf100cd53796ed005bffebb3e21e245237136a8a9af60d2b9c0237d981",
+    "size": 447790,
+    "sha256": "b1c184fe9ae57c53bafa919cac9da366a988d108ad885db0f298a43cc89fdce9",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -9302,8 +9302,8 @@
       "null"
     ],
     "path": "Ultrasv3/DependenciesUltras/CoreEnginev3.cs",
-    "size": 118435,
-    "sha256": "7d4c3eae111ac6bdf2b61d8f18aee1d301b93c189eedb99226e5adf55743f2c0",
+    "size": 118410,
+    "sha256": "082c9d2773f1d9fd681126c66e3c3675522c2bedb511cc423a8332f983932702",
     "fileName": "CoreEnginev3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreEnginev3.cs"
   },
