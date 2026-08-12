@@ -90,6 +90,7 @@ public class VoidSpartan
             Nation.FarmUni13(1);
             Nation.FarmBloodGem(5);
             Nation.FarmGemofNulgath(10);
+            Bot.Quests.UpdateQuest(4055);
             Core.HuntMonster("pyrewatch", "Flame Soldier", "Zee's Red Jasper", 1, false);
             //jumpwait jumps to same cell which is auto-aggro, spawn("Enter") isnt, so force jump there.
             Core.JumpWait();
