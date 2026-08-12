@@ -5173,9 +5173,14 @@ public class CoreBots
 
                 if (Bot.Player?.Cell != targetMonster?.Cell)
                 {
-                    Jump(targetMonster?.Cell ?? "Enter");
+                    Jump(
+                        /* Target Cell; */ (targetMonster?.Cell) ?? "Enter",
+                        /* Target Pad [hard coded]; */ targetMonster?.Cell == null ? "Spawn" : "Left");
+                        
                     Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
-                    Bot.Player!.SetSpawnPoint();
+
+                    if (targetMonster?.Cell != null)
+                        Bot.Player!.SetSpawnPoint();
                 }
                 if (!Bot.Player!.HasTarget && targetMonster != null && targetMonster.HP > 0)
                     Bot.Combat.Attack(targetMonster.Name);
@@ -6566,7 +6571,7 @@ public class CoreBots
         InventoryItem? ownedDotClass = dotClasses
             .Select(className => ownedClasses.FirstOrDefault(i =>
                 string.Equals(i.Name, className, StringComparison.OrdinalIgnoreCase))).FirstOrDefault(i => i != null);
-            
+
 
         // If we own one → equip it, otherwise keep whatever class is currently equipped
         if (ownedDotClass != null)
