@@ -2663,7 +2663,7 @@ public class CoreEnginev3
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
         string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
 
-        var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
+        var monsters = (Bot.Monsters.MapMonsters ?? [])
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
             .Where(m =>
                 wildcard
