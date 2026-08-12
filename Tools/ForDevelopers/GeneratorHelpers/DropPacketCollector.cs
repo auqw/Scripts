@@ -1,8 +1,9 @@
 /*
-name: Drop Packet Collector
-description: Collects and logs every monster drop in the current map from monsterDrops packets.
-tags: developer, drops, packets, monsters, collector
+name: null
+description: null
+tags: null
 */
+
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/Tools\ForDevelopers/GeneratorHelpers/Generatesupportutils.cs
 

@@ -1,3 +1,8 @@
+/*
+name: null
+description: null
+tags: null
+*/
 using Newtonsoft.Json.Linq;
 
 /// <summary>Small helpers shared by the developer generator/collector scripts.</summary>
