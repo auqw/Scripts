@@ -3155,17 +3155,15 @@ public class CoreBots
             }
 
             ItemBase[] requiredItems = q
-           .AcceptRequirements.Where(x => !x.Temp)
-           .Concat(q.Requirements.Where(x => !x.Temp))
-           .Where(item => item != null && item.ID > 0)
-           .ToArray();
+                .AcceptRequirements.Where(x => !x.Temp)
+                .Concat(q.Requirements.Where(x => !x.Temp))
+                .Where(item => item != null && item.ID > 0)
+                .ToArray();
 
-            // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
             requiredItems
                 .ToList()
                 .ForEach(item =>
                 {
-                    // Check if either the Name or ID is not in the drops or pickup list
                     if (
                         item != null
                         && (
@@ -3174,14 +3172,11 @@ public class CoreBots
                         )
                     )
                     {
-
-                        // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
                         AddDrop(item.Name);
                         AddDrop(item.ID);
                     }
                 });
 
-            // Collect unique item IDs and unbank them in one call
             int[] itemsToUnbank = q
                 .AcceptRequirements.Concat(q.Requirements)
                 .Select(x => x.ID)
@@ -3192,41 +3187,142 @@ public class CoreBots
         }
         GC.Collect();
 
+        // Actually cancel any previous run before starting a new one, and dispose it.
+        questCTS?.Cancel();
+        questCTS?.Dispose();
         questCTS = new();
-        int i = 0;
-        //no initializationwithretries in asyncs as init has sleeps in it.
+        CancellationToken token = questCTS.Token; // capture locally so a later reassignment of the field can't be read by this loop
+
+        Dictionary<int, int> stuckCounts = [];
+        List<Quest> allQuests = chooseQuests.Keys.Concat(nonChooseQuests.Keys).Distinct().ToList();
+
+        // Tracks quests currently being turned in, so the watcher and manager can't race on the same one.
+        HashSet<int> inFlight = [];
+        object inFlightLock = new();
+
+        bool TryClaim(int questId)
+        {
+            lock (inFlightLock)
+            {
+                if (inFlight.Contains(questId))
+                    return false;
+                inFlight.Add(questId);
+                return true;
+            }
+        }
+        void Release(int questId)
+        {
+            lock (inFlightLock) { inFlight.Remove(questId); }
+        }
+
+        // Shared completion logic used by the watcher.
+        async Task CompleteQuest(Quest quest)
+        {
+            int rewardId = -1;
+
+            if (chooseQuests.ContainsKey(quest))
+            {
+                Quest? activeQuest = Bot.Quests.Active.FirstOrDefault(aq => aq?.ID == quest.ID);
+                if (activeQuest != null)
+                {
+                    ItemBase? reward = activeQuest.Rewards.FirstOrDefault(r =>
+                        r != null && r.Quantity < r.MaxStack
+                    );
+                    rewardId = reward?.ID ?? -1;
+                }
+            }
+
+            Bot.Send.Packet(
+                $"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%"
+            );
+
+            await Task.Delay(ActionDelay * 2);
+
+            stuckCounts.TryGetValue(quest.ID, out int stuckCount);
+
+            if (Bot.Quests.IsInProgress(quest.ID))
+                stuckCount++;
+            else
+                stuckCount = 0;
+
+            stuckCounts[quest.ID] = stuckCount;
+
+            if (stuckCount >= 20 && Bot.Quests.IsInProgress(quest.ID))
+            {
+                await Task.Delay(ActionDelay * 2);
+                Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
+                await Task.Delay(ActionDelay * 2);
+                Bot.Quests.Load(quest.ID);
+                await Task.Delay(ActionDelay * 2);
+                Bot.Quests.Accept(quest.ID);
+                stuckCounts[quest.ID] = 0;
+                return;
+            }
+
+            await Task.Delay(ActionDelay * 2);
+            Bot.Quests.Accept(quest.ID);
+        }
+
+        // --- Fast watcher: polls completion state often, turns in immediately. ---
         Task.Run(async () =>
         {
-            while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
+            while (!Bot.ShouldExit && !token.IsCancellationRequested)
+            {
+                foreach (Quest quest in allQuests)
+                {
+                    if (Bot.ShouldExit || token.IsCancellationRequested)
+                        return;
+
+                    if (!Bot.Player.Alive)
+                        continue;
+
+                    if (Bot.Quests.IsInProgress(quest.ID) && Bot.Quests.CanComplete(quest.ID))
+                    {
+                        if (TryClaim(quest.ID))
+                        {
+                            try { await CompleteQuest(quest); }
+                            finally { Release(quest.ID); }
+                        }
+                    }
+                }
+
+                await Task.Delay(Math.Min(ActionDelay, 500), token).ContinueWith(_ => { });
+            }
+        }, token);
+
+        // --- Slower manager: handles ensure-load / accept / requirement progression. ---
+        Task.Run(async () =>
+        {
+            while (!Bot.ShouldExit && !token.IsCancellationRequested)
             {
                 foreach (
-                    Quest? quest in chooseQuests
-                        .Keys.Concat(nonChooseQuests.Keys)
+                    Quest quest in allQuests
                         .Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null)
-                        .Distinct()
                         .ToList()
                 )
                 {
-                    if (Bot.ShouldExit)
-                    {
-                        questCTS.Cancel();
+                    if (Bot.ShouldExit || token.IsCancellationRequested)
                         return;
-                    }
 
-                    // Ensure player is alive so it can load the quest.
                     if (!Bot.Player.Alive)
                     {
                         await Task.Delay(ActionDelay);
                         continue;
                     }
 
-                    Quest? q = Bot.Quests.EnsureLoad(quest.ID);
+                    // Skip quests the watcher is actively turning in right now.
+                    lock (inFlightLock)
+                    {
+                        if (inFlight.Contains(quest.ID))
+                            continue;
+                    }
 
+                    Quest? q = Bot.Quests.EnsureLoad(quest.ID);
                     await Task.Delay(ActionDelay * 2);
 
-                    if (q == null || quest == null)
+                    if (q == null)
                     {
-                        Bot.Quests.EnsureLoad(quest!.ID);
+                        Bot.Quests.EnsureLoad(quest.ID);
                         await Task.Delay(ActionDelay * 2);
                     }
 
@@ -3238,58 +3334,13 @@ public class CoreBots
 
                     await Task.Delay(ActionDelay * 2);
 
-                    if (Bot.Quests.CanComplete(quest.ID))
-                    {
-                        // Determine reward ID if quest is in the chooseQuests dictionary
-                        int rewardId = -1;
-
-                        if (chooseQuests.ContainsKey(quest))
-                        {
-                            Quest? activeQuest = Bot.Quests.Active.FirstOrDefault(q =>
-                                q?.ID == quest.ID
-                            );
-                            if (activeQuest != null)
-                            {
-                                ItemBase? reward = activeQuest.Rewards.FirstOrDefault(r =>
-                                    r != null && r.Quantity < r.MaxStack
-                                );
-                                rewardId = reward?.ID ?? -1;
-                            }
-                        }
-
-                        // Ensure quest is loaded, and is entirely completable.
-
-                        // Send the quest completion packet
-                        Bot.Send.Packet(
-                            $"%xt%zm%tryQuestComplete%{Bot.Map.RoomID}%{quest.ID}%{rewardId}%false%{(quest.Once || !string.IsNullOrEmpty(quest?.Field) ? 1 : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest!.ID))}%wvz%"
-                        );
-
-                        // Check if the quest is still in progress
-                        await Task.Delay(ActionDelay * 2);
-                        if (Bot.Quests.IsInProgress(quest!.ID))
-                            i++;
-
-                        if (i >= 20 && Bot.Quests.IsInProgress(quest.ID))
-                        {
-                            await Task.Delay(ActionDelay * 2);
-                            Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
-                            await Task.Delay(ActionDelay * 2);
-                            Bot.Quests.Load(quest.ID);
-                            await Task.Delay(ActionDelay * 2);
-                            Bot.Quests.Accept(quest.ID);
-                            i = 0;
-                            continue;
-                        }
-                        await Task.Delay(ActionDelay * 2);
-                        Bot.Quests.Accept(quest.ID);
-                    }
+                    // If it's now completable, the watcher will pick it up on its next
+                    // (much shorter) tick — the manager doesn't send completion packets at all.
                 }
             }
             GC.Collect();
-        });
-        questCTS = new();
+        }, token);
     }
-
 
     /// <summary>
     /// Cancels the current registered quests.
@@ -3307,10 +3358,10 @@ public class CoreBots
             Bot.Quests.UnregisterQuests(registeredQuests);
             AbandonQuest(registeredQuests);
         }
-        registeredQuests = Array.Empty<int>();
+        registeredQuests = [];
     }
 
-    private int[] registeredQuests = Array.Empty<int>();
+    private int[] registeredQuests = [];
 
     /// <summary>
     /// Ensures the quest is ready for acceptance by handling membership checks,
@@ -4180,7 +4231,7 @@ public class CoreBots
     public string[] QuestRewards(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
-            return Array.Empty<string>();
+            return [];
 
         List<string> toReturn = [];
 
@@ -4204,7 +4255,7 @@ public class CoreBots
                     $"Failed to load quests with IDs: {string.Join(", ", questIDs)}",
                     "QuestRewards"
                 );
-                return Array.Empty<string>();
+                return [];
             }
 
             toReturn.AddRange(
@@ -4225,7 +4276,7 @@ public class CoreBots
     public int[] QuestRewardsInt(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
-            return Array.Empty<int>();
+            return [];
 
         List<int> toReturn = [];
 
@@ -4255,7 +4306,7 @@ public class CoreBots
     public T[] QuestRequirements<T>(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
-            return Array.Empty<T>();
+            return [];
 
         List<T> toReturn = [];
 
@@ -5176,7 +5227,7 @@ public class CoreBots
                     Jump(
                         /* Target Cell; */ (targetMonster?.Cell) ?? "Enter",
                         /* Target Pad [hard coded]; */ targetMonster?.Cell == null ? "Spawn" : "Left");
-                        
+
                     Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
 
                     if (targetMonster?.Cell != null)
