@@ -38,7 +38,8 @@ public class UltraSpeakerv3
 
     // Chat-driven taunt roles — 1 ListenTaunter, 3 TruthTaunters
     private const string ListenTaunterClass = "ArchPaladin";
-    private const string TruthTaunter1Class = "Lord of Order";
+    // Replaced LOO with LC for T1
+    private const string TruthTaunter1Class = "LightCaster";
     private const string TruthTaunter2Class = "StoneCrusher";
     private const string TruthTaunter3Class = "Verus DoomKnight";
 
