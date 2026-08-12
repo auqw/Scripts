@@ -292,10 +292,10 @@ public class MasakadoKingsEchoArmy
             return FirstOwned(LegionRevenant, ArchPaladin, LordOfOrder, LightCaster);
 
         if (username.Equals(p4, StringComparison.OrdinalIgnoreCase))
-            return FirstOwned(LordOfOrder, ArchPaladin, LightCaster, LegionRevenant);
+            return FirstOwned(LightCaster, LordOfOrder, ArchPaladin, LegionRevenant);
 
         Core.Logger($"{username} was not matched to an army slot; using solo fallback selection.");
-        return FirstOwned(KingsEcho, LegionRevenant, ArchMage, "Arcana Invoker", ArchPaladin, LordOfOrder, LightCaster);
+        return FirstOwned(KingsEcho, LegionRevenant, ArchMage, "Arcana Invoker", ArchPaladin, LightCaster, LordOfOrder);
     }
 
     string FirstOwned(params string[] classNames)
