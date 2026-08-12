@@ -51,9 +51,9 @@ public class ArmyBankAllItems
 
             // if either are enabled set them to empty, so the next acc doesnt try to
             if (Core.FarmGearOn && Core.FarmGear.Length > 0)
-                Core.FarmGear = Array.Empty<string>();
+                Core.FarmGear = [];
             if (Core.SoloGearOn && Core.SoloGear.Length > 0)
-                Core.SoloGear = Array.Empty<string>();
+                Core.SoloGear = [];
         }
     }
 }

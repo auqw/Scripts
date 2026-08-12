@@ -2336,7 +2336,7 @@ public class CoreAdvanced
                                     f.ToString().Length > maxFrameLength
                                         ? string.Concat(f.ToString().AsSpan(0, maxFrameLength), "…")
                                         : f.ToString()
-                                ) ?? Array.Empty<string>()
+                                ) ?? []
                         )
                         + (st.FrameCount > maxFrames ? "\n…" : "");
 
@@ -2344,7 +2344,7 @@ public class CoreAdvanced
             if (ex.InnerException != null)
             {
                 string[] innerLines =
-                    ex.InnerException.StackTrace?.Split('\n') ?? Array.Empty<string>();
+                    ex.InnerException.StackTrace?.Split('\n') ?? [];
                 inner =
                     $"\n🔹 **Inner Exception** 🔹\nMessage: {ex.InnerException.Message}\n"
                     + string.Join(

@@ -150,9 +150,7 @@ public class MergeTemplateHelperV2
             shopItemIDs,
             ignoreCaseStorage
         );
-        List<GeneratedCase> cases = ingredients
-            .Select(ingredient => GenerateCase(ingredient, context))
-            .ToList();
+        List<GeneratedCase> cases = [.. ingredients.Select(ingredient => GenerateCase(ingredient, context))];
         List<(Quest Target, Quest Predecessor)> unlocks = [];
         HashSet<int> inspectedUnlockQuests = [];
         foreach (ItemBase ingredient in ingredients)
@@ -260,7 +258,7 @@ public class MergeTemplateHelperV2
         string outputDirectory = Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP");
         Directory.CreateDirectory(outputDirectory);
         string path = Path.Combine(outputDirectory, className + ".cs");
-        Core.WriteFile(path, lines.ToArray());
+        Core.WriteFile(path, [.. lines]);
         return path;
     }
 
@@ -508,10 +506,8 @@ public class MergeTemplateHelperV2
         List<ItemBase> requirements = quest.Requirements ?? new();
         IReadOnlyList<int> mapObjects = context.MapObjectsByQuest.TryGetValue(quest.ID, out IReadOnlyList<int>? ids)
             ? ids
-            : Array.Empty<int>();
-        List<ItemBase> unresolved = requirements
-            .Where(requirement => !CanResolveWithoutMapObject(requirement, context))
-            .ToList();
+            : [];
+        List<ItemBase> unresolved = [.. requirements.Where(requirement => !CanResolveWithoutMapObject(requirement, context))];
         Dictionary<int, int> mapObjectByItem = mapObjects.Count >= unresolved.Count
             ? unresolved.Select((requirement, index) => (requirement.ID, mapObjects[index]))
                 .GroupBy(pair => pair.ID)
@@ -636,14 +632,13 @@ public class MergeTemplateHelperV2
 
     private static string ExtractStoredCaseBody(string value)
     {
-        string[] lines = value.Replace("\r", "")
+        string[] lines = [.. value.Replace("\r", "")
             .Split('\n')
             .SkipWhile(string.IsNullOrWhiteSpace)
             .Reverse()
             .SkipWhile(string.IsNullOrWhiteSpace)
             .Reverse()
-            .Select(line => line.TrimEnd())
-            .ToArray();
+            .Select(line => line.TrimEnd())];
         int bodyStart = 0;
         while (bodyStart < lines.Length
             && lines[bodyStart].TrimStart().StartsWith("case ", StringComparison.Ordinal))
@@ -660,7 +655,7 @@ public class MergeTemplateHelperV2
 
     private static string Identifier(string value)
     {
-        string result = new(value.Where(char.IsLetterOrDigit).ToArray());
+        string result = new([.. value.Where(char.IsLetterOrDigit)]);
         if (string.IsNullOrEmpty(result))
             result = "GeneratedMerge";
         return char.IsDigit(result[0]) ? "Merge" + result : result;

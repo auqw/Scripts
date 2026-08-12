@@ -240,10 +240,10 @@ public class CoreNation
         Core.RegisterQuests(Core.CheckInventory("Bounty Hunter's Drone Pet") ? 6183 : 6697);
         if (item == null)
         {
-            ItemBase[] QuestRewards = Core.EnsureLoad(
+            ItemBase[] QuestRewards = [.. Core.EnsureLoad(
                     Core.CheckInventory("Bounty Hunter's Drone Pet") ? 6183 : 6697
                 )
-                .Rewards.ToArray();
+                .Rewards];
             foreach (ItemBase Item in QuestRewards)
             {
                 if (Core.CheckInventory(Item.Name, Item.MaxStack))
@@ -1103,7 +1103,7 @@ public class CoreNation
 
         #region Quest registration
 
-        List<int> quests = new() { 2857 };
+        List<int> quests = [2857];
 
         if (item != Uni(13) && Core.CheckInventory(38261))
             quests.Add(9542);
@@ -1111,13 +1111,13 @@ public class CoreNation
         if (Core.CheckInventory("Drudgen the Assistant"))
             quests.Add(870);
 
-        Core.RegisterQuests(quests.ToArray());
+        Core.RegisterQuests([.. quests]);
 
         #endregion
 
         #region Drop registration (much cleaner)
 
-        List<string> drops = new();
+        List<string> drops = [];
 
         if (item != null)
             drops.Add(item);
@@ -1667,17 +1667,18 @@ public class CoreNation
             { "Unidentified 10", 202 },
         };
 
-        List<ItemBase> rewards = Core.InitializeWithRetries(() => Core.EnsureLoad(2857).Rewards) ?? new List<ItemBase>();
+        List<ItemBase> rewards = Core.InitializeWithRetries(() => Core.EnsureLoad(2857).Rewards) ?? [];
         ItemBase? itemBase = rewards.Find(x => x != null && x.Name == item);
 
         if (!string.IsNullOrEmpty(item))
             Core.FarmingLogger(item, quant);
 
         // Choose the appropriate quest based on pet availability
-        List<int> QuestToRegister = new();
-
-        // 2857 - Supplies to Spin The Wheel of Chance
-        QuestToRegister.AddRange(new[] { 2857 });
+        List<int> QuestToRegister =
+        [
+            // 2857 - Supplies to Spin The Wheel of Chance
+            .. new[] { 2857 },
+        ];
 
         // 609 - Bamboozle vs Drudgen
         if (Core.CheckInventory(CragName))
@@ -1694,10 +1695,10 @@ public class CoreNation
         if (Core.CheckInventory(38261))
             QuestToRegister.Add(9542);
 
-        QuestToRegister = QuestToRegister.Distinct().ToList();
+        QuestToRegister = [.. QuestToRegister.Distinct()];
 
         // Register unique quests only
-        Core.RegisterQuests(QuestToRegister.ToArray());
+        Core.RegisterQuests([.. QuestToRegister]);
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
@@ -2057,7 +2058,7 @@ public class CoreNation
 
         if (SRoE)
         {
-            ShopItem[] shopItems = Core.GetShopItems("tercessuinotlim", 1951).ToArray();
+            ShopItem[] shopItems = [.. Core.GetShopItems("tercessuinotlim", 1951)];
 
             bool buyAll = SRoEItems?.Length == 1 &&
                           SRoEItems[0].Equals("All", StringComparison.OrdinalIgnoreCase);
@@ -2067,7 +2068,7 @@ public class CoreNation
             if (!buyAll && SRoEItems?.Length > 0)
                 selectedSet = [.. SRoEItems];
 
-            List<ShopItem> build = new();
+            List<ShopItem> build = [];
 
             foreach (ShopItem item in shopItems)
             {
@@ -2084,7 +2085,7 @@ public class CoreNation
             }
 
             if (build.Count > 0)
-                itemsToBuy = build.ToArray();
+                itemsToBuy = [.. build];
         }
 
 

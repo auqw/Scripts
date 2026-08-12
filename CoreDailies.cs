@@ -189,7 +189,7 @@ public class CoreDailies
             Core.Logger($"All metals were found with the needed quantity ({quant}).");
 
             // Sort metals in the desired order
-            metals = metals.OrderBy(metal => Array.IndexOf(metals, metal)).ToArray();
+            metals = [.. metals.OrderBy(metal => Array.IndexOf(metals, metal))];
 
             if (ToBank)
                 Core.ToBank(metals);
@@ -912,7 +912,7 @@ public class CoreDailies
         Quest boostQuest = Core.EnsureLoad(4069);
 
         // Concatenate inventory and bank items
-        List<InventoryItem> allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items).ToList();
+        List<InventoryItem> allItems = [.. Bot.Inventory.Items, .. Bot.Bank.Items];
 
         // Build a dictionary of valid reward items and their inventory quantities, skipping XP boost if level 100
         Dictionary<ItemBase, int> rewardQuantities = boostQuest
@@ -1115,7 +1115,7 @@ public class CoreDailies
         //Buying BoneBreaker Fortress Map
         Core.BuyItem("battleon", 1046, 27222);
 
-        ItemBase[] QuestReward = Core.EnsureLoad(3898).Rewards.ToArray();
+        ItemBase[] QuestReward = [.. Core.EnsureLoad(3898).Rewards];
 
         if (KeepReward)
             Core.AddDrop("BoneBreaker Medallion");
@@ -1294,7 +1294,7 @@ public class CoreDailies
             }
             if (friend.CanGift)
             {
-                int[] _gifts = gifts.Select(x => (int)x).ToArray();
+                int[] _gifts = [.. gifts.Select(x => (int)x)];
                 if (!Core.CheckInventory(_gifts, any: true))
                 {
                     if (gifts.Length == 1)
@@ -1304,7 +1304,7 @@ public class CoreDailies
                             "Farming for one of the following items: "
                                 + string.Join(
                                     " | ",
-                                    gifts.Select(x => x.ToString().Replace('_', ' ')).ToArray()
+                                    [.. gifts.Select(x => x.ToString().Replace('_', ' '))]
                                 )
                         );
 
@@ -1505,12 +1505,8 @@ public class CoreDailies
         #endregion
     }
 
-    public int[] frGiftIDs = ((frGift[])Enum.GetValues(typeof(frGift)))
-        .Select(x => (int)x)
-        .ToArray();
-    public string[] frGiftNames = ((frGift[])Enum.GetValues(typeof(frGift)))
-        .Select(x => x.ToString())
-        .ToArray();
+    public int[] frGiftIDs = [.. ((frGift[])Enum.GetValues(typeof(frGift))).Select(x => (int)x)];
+    public string[] frGiftNames = [.. ((frGift[])Enum.GetValues(typeof(frGift))).Select(x => x.ToString())];
     public string[] frRewards =
     {
         "Gold Voucher 25k",

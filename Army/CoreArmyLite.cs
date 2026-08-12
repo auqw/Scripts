@@ -280,22 +280,22 @@ public class CoreArmyLite
     /// <summary>
     /// Set the AggroMon using Cells. Aggros everything in the Cell.
     /// </summary>
-    public void AggroMonCells(params string[] cells) => _AggroMonCells = cells.ToList();
+    public void AggroMonCells(params string[] cells) => _AggroMonCells = [.. cells];
 
     /// <summary>
     /// Set the AggroMon using Monster Names. Aggros everything with the specified name.
     /// </summary>
-    public void AggroMonNames(params string[] names) => _AggroMonNames = names.ToList();
+    public void AggroMonNames(params string[] names) => _AggroMonNames = [.. names];
 
     /// <summary>
     /// Set the AggroMon using Monster IDs. Aggros everything using the specified ID.
     /// </summary>
-    public void AggroMonIDs(params int[] monsterIDs) => _AggroMonIDs = monsterIDs.ToList();
+    public void AggroMonIDs(params int[] monsterIDs) => _AggroMonIDs = [.. monsterIDs];
 
     /// <summary>
     /// Set the AggroMon using Monster Map IDs. Aggros everything using the specified Map ID.
     /// </summary>
-    public void AggroMonMIDs(params int[] monsterMapIDs) => _AggroMonMIDs = monsterMapIDs.ToList();
+    public void AggroMonMIDs(params int[] monsterMapIDs) => _AggroMonMIDs = [.. monsterMapIDs];
 
     private List<string> _AggroMonCells
     {
@@ -373,7 +373,7 @@ public class CoreArmyLite
         DivideOnCells(SortedDict);
         _getCellsForSmartAggroMon = false;
 
-        AggroMonCells(_SmartAggroMonCells.ToArray());
+        AggroMonCells([.. _SmartAggroMonCells]);
         //leaving this here incase... somethings broke?
         // AggroMonCells(Core.ButlerOnMe() ? new[] { Bot.Player.Cell } : _SmartAggroMonCells.ToArray());
         AggroMonStart(map);
@@ -399,14 +399,14 @@ public class CoreArmyLite
             Core.EquipClass(classtype);
 
         if (questIDs.Count > 0)
-            Core.RegisterQuests(questIDs.ToArray());
+            Core.RegisterQuests([.. questIDs]);
 
         if (drops == null || drops.Count == 0 || drops.All(x => string.IsNullOrEmpty(x)))
             Bot.Drops.Stop();
         else
             Core.AddDrop(drops.ToArray());
 
-        SmartAggroMonStart(map, monNames.ToArray());
+        SmartAggroMonStart(map, [.. monNames]);
 
         while (!Bot.ShouldExit)
         {
@@ -872,7 +872,7 @@ public class CoreArmyLite
             foreach (string cell in monsters.Select(m => m.Cell))
                 if (!_cells.Contains(cell))
                     _cells.Add(cell);
-            cells = _cells.OrderBy(x => x).ToArray();
+            cells = [.. _cells.OrderBy(x => x)];
         }
 
         //Dividing the players amongst the cells
@@ -919,7 +919,7 @@ public class CoreArmyLite
             {
                 cellToAggro.Add(cells[i]);
             }
-            AggroMonCells(cellToAggro.ToArray());
+            AggroMonCells([.. cellToAggro]);
         }
 
         if (string.IsNullOrEmpty(priorityCell))
@@ -1080,7 +1080,7 @@ public class CoreArmyLite
             index++; // Increment the index after processing
         }
 
-        return players.ToArray();
+        return [.. players];
     }
 
     public int PartySize() =>
@@ -1349,7 +1349,7 @@ public class CoreArmyLite
             Bot.StopSync(true);
         }
 
-        return toReturn.ToArray();
+        return [.. toReturn];
     }
     private int _doForAllIndex = 0;
     public (string, string)[]? doForAllAccountDetails;
@@ -1813,14 +1813,13 @@ public class CoreArmyLite
         }
 
         // Flatten any comma-separated entries
-        LockedMapList = LockedMapList
+        LockedMapList = [.. LockedMapList
             .SelectMany(entry =>
                 entry.Split(
                     ',',
                     StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
                 )
-            )
-            .ToList();
+            )];
 
         _LockedMapsList.AddRange(LockedMapList.Where(map => !_LockedMapsList.Contains(map)));
 
