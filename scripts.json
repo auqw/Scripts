@@ -1750,8 +1750,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 18697,
-    "sha256": "38adeb8e59b2afed452fbb3275892e924137ac95785205b599d30be570a9260e",
+    "size": 18698,
+    "sha256": "7c80cdcfbca5bec32c32f7c27c55545212bbd4711bc844bbce6e378472fab941",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
@@ -9051,8 +9051,8 @@
       "plugin"
     ],
     "path": "Tools/Butlerv4/DownloadDLL.cs",
-    "size": 1860,
-    "sha256": "eb28482aadf909572f3019c85b4e69459bf97693b7dd30c140f0bdcbfa242752",
+    "size": 4781,
+    "sha256": "4514cb6d9b3a84a1962fa128600030935a44475180b8c318089d5bed19020982",
     "fileName": "DownloadDLL.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/DownloadDLL.cs"
   },
@@ -9066,8 +9066,8 @@
       "tcp"
     ],
     "path": "Tools/Butlerv4/Butlerv4.cs",
-    "size": 15745,
-    "sha256": "625eefa28b223a0bdf0109f0495c8df07ebe925b4c0dc1b3479dce7eda01a5c2",
+    "size": 16973,
+    "sha256": "2a97216023d60223b6514c372a340a2b10d694181cca4250b5c8945b9e523a3c",
     "fileName": "Butlerv4.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv4/Butlerv4.cs"
   },
