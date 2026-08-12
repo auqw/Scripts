@@ -30274,18 +30274,50 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/7DeadlyDragons/Extra/HatchTheEgg.cs"
   },
   {
-    "name": "Drop Packet Collector",
-    "description": "Collects and logs every monster drop in the current map from monsterDrops packets.",
+    "name": "null",
+    "description": "null",
     "tags": [
-      "developer",
-      "drops",
-      "packets",
-      "monsters",
-      "collector"
+      "null"
+    ],
+    "path": "Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs",
+    "size": 16688,
+    "sha256": "2a4f84f2140e5e67d376f498ef2d5ee4868c4f7db0a8deae79728032b7a55767",
+    "fileName": "LocationSwfQuestReader.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs",
+    "size": 1016,
+    "sha256": "48f55729d8e1d0ab72a14c04ee55591e6faf8111525ba88d1e91db9c6b411344",
+    "fileName": "Generatesupportutils.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs",
+    "size": 8032,
+    "sha256": "157cbb19ba4d5b9e256fd8a1d3ef1c5f17ab95935ad8fdfcf60b9c085fdfedbe",
+    "fileName": "QuestPacketCollector.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/DropPacketCollector.cs",
-    "size": 8910,
-    "sha256": "0fb601307469060e42f832d2cf2f9ab18a4cef6bf38079e7ddb4b1a42ac9fa6f",
+    "size": 8774,
+    "sha256": "742817d0e0995f681b0fe0787fa4e452190b93beef51df83f7f864ef822e4e7c",
     "fileName": "DropPacketCollector.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/DropPacketCollector.cs"
   },
