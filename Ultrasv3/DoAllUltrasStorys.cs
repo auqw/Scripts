@@ -55,25 +55,24 @@ public class DoAllUltrasStory
     public void DoAllUltrasPrereqs()
     {
         // Ultra Nulgath  → Level 80 only, no story required
-        // Ultra Gramiel  → Level 80 only, no story required
-        Core.Logger("Leveling to 80 for Ultra Nulgath / Gramiel");
+        Core.Logger("Leveling to 80 for Ultra Nulgath");
         Farm.Experience(80);
 
         // Unlocks: Ultra Ezrajal, Ultra Warden, Ultra Engineer
         Core.Logger("Exaltia Tower story → Ultra Ezrajal / Warden / Engineer");
         Exaltia.StoryLine();
 
-        // Unlocks: Ultra Avatar Tyndarius (Tyndarius step) + Ultra Speaker (ManaCradle step)
-        Core.Logger("Shadows of War story → Ultra Avatar Tyndarius + Ultra Speaker");
-        SoW.CompleteCoreSoW();
-
-        // Unlocks: Ultra Dage
-        Core.Logger("Isle of Fotia story → Ultra Dage");
-        Fotia.CompleteALL();
+        // Unlocks: Ultra Avatar Tyndarius
+        Core.Logger("Shadows of War story → Ultra Avatar Tyndarius");
+        SoW.Tyndarius();
 
         // Unlocks: Champion Drakath
         Core.Logger("13 Lords of Chaos story → Champion Drakath");
         LoC.Complete13LOC(true);
+
+        // Unlocks: Ultra Dage
+        Core.Logger("Dage Challenge story → Ultra Dage");
+        DageChallenge.DageChallengeQuests();
 
         // Unlocks: Ultra Drago (AstraviaJudgement / Mahapadma) + Ultra Darkon (TheWorld)
         Core.Logger("Elegy of Madness / Astravia story → Ultra Drago + Ultra Darkon");
@@ -82,9 +81,10 @@ public class DoAllUltrasStory
         // Unlocks: Ultra Gramiel
         Core.Logger("Hollowborn story → Ultra Gramiel");
         Hollowborn.DoAll();
+        
+        // Unlocks: Ultra Avatar Tyndarius (Tyndarius step) + Ultra Speaker (ManaCradle step)
+        Core.Logger("Shadows of War story → Ultra Avatar Tyndarius + Ultra Speaker");
+        SoW.CompleteCoreSoW();
 
-        // Unlocks: Ultra Dage
-        Core.Logger("Dage Challenge story → Ultra Dage");
-        DageChallenge.DageChallengeQuests();
     }
 }
