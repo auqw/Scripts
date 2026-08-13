@@ -7253,7 +7253,12 @@ public class CoreBots
         // MESSAGE BOX (RAW SAFE)
         // =========================
         if (messageBox && !ForceOffMessageboxes)
-            Message(rawMessage, caller);
+        {
+            if (stopBot)
+                Bot.ShowMessageBox(rawMessage, caller);
+            else
+                Message(rawMessage, caller);
+        }
 
         // =========================
         // STOP BOT FLAG
