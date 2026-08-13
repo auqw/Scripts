@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 447790,
-    "sha256": "b1c184fe9ae57c53bafa919cac9da366a988d108ad885db0f298a43cc89fdce9",
+    "size": 447912,
+    "sha256": "a1badf995954fd3fbd0a236d3abd77eb42ad4bffe5b04a4f89904af8275eed30",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4753,8 +4753,8 @@
       "complete"
     ],
     "path": "Ultrasv3/DoAllUltrasStorys.cs",
-    "size": 3871,
-    "sha256": "e4e1dc92b5b6cf0e2a7efe6cf0e798f39af97077b04f5a090efc0712194311a3",
+    "size": 3828,
+    "sha256": "f804b1d965bf1a796529be89e24456fce88da022f0d8e445744bd6a30d1436a8",
     "fileName": "DoAllUltrasStorys.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoAllUltrasStorys.cs"
   },
@@ -22826,8 +22826,8 @@
       "farm"
     ],
     "path": "Army/Farm/ArmyPrismatas.cs",
-    "size": 3914,
-    "sha256": "41648f8cda566b1fec77bae531b2eba677ca8f5733746257f13f0d66c6f50097",
+    "size": 6088,
+    "sha256": "6ff1f991853b9e66e3fab6d6325514d7c1a5355589e868630eb89c2debed59a5",
     "fileName": "ArmyPrismatas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
   },
