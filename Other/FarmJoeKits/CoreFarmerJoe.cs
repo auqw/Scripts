@@ -822,7 +822,7 @@ public class CoreFarmerJoe
         if (
             (
                 !Core.CheckInventory("Archfiend DoomLord", toInv: false)
-                || !AnyRank10(new[] { "Archfiend DoomLord" })
+                || !AnyRank10(new[] { "Archfiend" })
             ) || !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
         )
         {
