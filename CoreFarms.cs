@@ -3119,43 +3119,22 @@ public class CoreFarms
             && Core.CheckInventory("Fishing Dynamite", fishingDynamiteQuant)
         )
             return;
+        Core.RegisterQuests(1682);
 
-        void FarmItem(
-            string itemName,
-            int quantity,
-            string map,
-            string cell,
-            string pad,
-            string monster
-        )
+        FarmItem("Fishing Bait", fishingBaitQuant, "greenguardwest", "West3", "Right", "Frogzard");
+        FarmItem("Fishing Dynamite", fishingDynamiteQuant, "greenguardwest", "West4", "Right", "Slime");
+
+        Core.CancelRegisteredQuests();
+        Core.Logger("Returning to Fishing Map");
+
+        void FarmItem(string itemName, int quantity, string map, string cell, string pad, string monster)
         {
             if (quantity <= 0)
                 return;
 
-            Core.AddDrop(itemName);
-            Core.RegisterQuests(1682);
-            Core.FarmingLogger(itemName, quantity);
-
-            while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quantity))
-            {
-                Core.KillMonster(map, cell, pad, monster, log: false);
-                Bot.Wait.ForPickup(itemName);
-            }
+            Core.KillMonster(map, cell, pad, monster, itemName, quantity);
+            Bot.Wait.ForPickup(itemName);
         }
-
-        FarmItem("Fishing Bait", fishingBaitQuant, "greenguardwest", "West3", "Right", "Frogzard");
-        FarmItem(
-            "Fishing Dynamite",
-            fishingDynamiteQuant,
-            "greenguardwest",
-            "West4",
-            "Right",
-            "Slime"
-        );
-
-        Bot.Quests.UnregisterQuests(1682);
-        Core.AbandonQuest(1682);
-        Core.Logger("Returning to Fishing Map");
     }
 
     public void GetFish(int itemID, int quant, int quest)
