@@ -300,223 +300,215 @@ public class HeadoftheLegionBeast
         Core.Logger($"✓ Collected {totalCollected} souls | Final: {soulsAtEnd}/{SOULS_MAX_STACK} | Kills: {killCount}", "SoulsHeresy");
     }
 
-    /// <summary>
-    /// Farms the specified quantity of "Penance" items.
-    /// Each Penance requires 10 of each essence and 15 Souls of Heresy.
-    /// Souls of Heresy have a maximum stack size of 300.
-    /// </summary>
-    /// <param name="quant">The target quantity of "Penance" items to collect. Default is 300.</param>
-    public void Penance(int quant = 300)
+   /// <summary>
+/// Farms the specified quantity of "Penance" items.
+/// Each Penance requires 1 of each essence and 15 Souls of Heresy.
+/// Souls of Heresy have a maximum stack size of 300.
+/// </summary>
+/// <param name="quant">The target quantity of "Penance" items to collect. Default is 300.</param>
+public void Penance(int quant = 300)
+{
+    if (Core.CheckInventory("Penance", quant))
     {
-        if (Core.CheckInventory("Penance", quant))
-        {
-            Core.FarmingLogger("Penance", quant);
-            Core.Logger($"Already have {quant} Penance. Skipping.", "Penance");
-            return;
-        }
-
-        Core.AddDrop(HeadLegionBeast);
         Core.FarmingLogger("Penance", quant);
-        Core.EquipClass(ClassType.Farm);
+        Core.Logger($"Already have {quant} Penance. Skipping.", "Penance");
+        return;
+    }
 
-        const int essencePerPenance = 10;
-        const int soulsPerPenance = 15;
-        const int soulsMaxStack = 300;
-        const int maxPenancePerSoulStack = soulsMaxStack / soulsPerPenance;
+    Core.AddDrop(HeadLegionBeast);
+    Core.FarmingLogger("Penance", quant);
+    Core.EquipClass(ClassType.Farm);
 
-        int currentPenance = Bot.Inventory.GetQuantity("Penance");
-        int penanceRemaining = Math.Max(0, quant - currentPenance);
+    const int essencePerPenance = 1;
+    const int soulsPerPenance = 15;
+    const int soulsMaxStack = 300;
+    const int maxPenancePerSoulStack = soulsMaxStack / soulsPerPenance;
 
-        int totalSoulsNeeded = penanceRemaining * soulsPerPenance;
-        int totalSoulsUsed = 0;
-        int penanceBought = currentPenance;
+    int currentPenance = Bot.Inventory.GetQuantity("Penance");
+    int penanceBought = currentPenance;
+    int totalSoulsUsed = 0;
 
-        Core.Logger("", "Penance");
-        Core.Logger("┌─ PHASE 1: Penance Material Farming", "Penance");
-        Core.Logger(
-            $"│ Target: {quant} Penance | Existing: {currentPenance} | Remaining: {penanceRemaining}",
-            "Penance");
-        Core.Logger(
-            $"│ Cost: {essencePerPenance} of each essence + {soulsPerPenance} Souls per Penance",
-            "Penance");
-        Core.Logger(
-            $"│ Souls max stack: {soulsMaxStack} ({maxPenancePerSoulStack} Penance)",
-            "Penance");
-        Core.Logger("├────────────────────────────────────────", "Penance");
+    Core.Logger("", "Penance");
+    Core.Logger("┌─ PHASE 1: Penance Material Farming", "Penance");
+    Core.Logger(
+        $"│ Target: {quant} Penance | Existing: {currentPenance} | Remaining: {quant - currentPenance}",
+        "Penance");
+    Core.Logger(
+        $"│ Cost: {essencePerPenance} of each essence + {soulsPerPenance} Souls per Penance",
+        "Penance");
+    Core.Logger(
+        $"│ Souls max stack: {soulsMaxStack} ({maxPenancePerSoulStack} Penance)",
+        "Penance");
+    Core.Logger("├────────────────────────────────────────", "Penance");
 
-        while (!Bot.ShouldExit && penanceBought < quant)
+    while (!Bot.ShouldExit && penanceBought < quant)
+    {
+        currentPenance = Bot.Inventory.GetQuantity("Penance");
+        int penanceRemaining = quant - currentPenance;
+
+        if (penanceRemaining <= 0)
+            break;
+
+        int wrath = Bot.Inventory.GetQuantity("Essence of Wrath");
+        int violence = Bot.Inventory.GetQuantity("Essence of Violence");
+        int treachery = Bot.Inventory.GetQuantity("Essence of Treachery");
+        int souls = Bot.Inventory.GetQuantity("Souls of Heresy");
+
+        // Merge anything we can immediately make from existing materials.
+        int craftableFromEssences = Math.Min(
+            wrath / essencePerPenance,
+            Math.Min(
+                violence / essencePerPenance,
+                treachery / essencePerPenance));
+
+        int craftableFromSouls = souls / soulsPerPenance;
+
+        int immediatelyCraftable = Math.Min(
+            penanceRemaining,
+            Math.Min(craftableFromEssences, craftableFromSouls));
+
+        if (immediatelyCraftable > 0)
         {
+            int soulsCost = immediatelyCraftable * soulsPerPenance;
+
+            Core.Logger(
+                $"│ → Merging {immediatelyCraftable} Penance " +
+                $"({immediatelyCraftable * essencePerPenance} each essence + {soulsCost} souls)...",
+                "Penance");
+
+            Core.BuyItem(
+                "sevencircleswar",
+                1984,
+                "Penance",
+                immediatelyCraftable);
+
+            Bot.Wait.ForPickup("Penance");
+
             currentPenance = Bot.Inventory.GetQuantity("Penance");
-            penanceRemaining = quant - currentPenance;
+            penanceBought = currentPenance;
+            totalSoulsUsed += soulsCost;
 
-            if (penanceRemaining <= 0)
-                break;
-
-            int wrath = Bot.Inventory.GetQuantity("Essence of Wrath");
-            int violence = Bot.Inventory.GetQuantity("Essence of Violence");
-            int treachery = Bot.Inventory.GetQuantity("Essence of Treachery");
-            int souls = Bot.Inventory.GetQuantity("Souls of Heresy");
-
-            // Determine how many Penance can be purchased immediately.
-            int craftableFromEssences = Math.Min(
-                wrath / essencePerPenance,
-                Math.Min(
-                    violence / essencePerPenance,
-                    treachery / essencePerPenance));
-
-            int craftableFromSouls = souls / soulsPerPenance;
-
-            int immediatelyCraftable = Math.Min(
-                penanceRemaining,
-                Math.Min(craftableFromEssences, craftableFromSouls));
-
-            // If we have enough materials, merge immediately.
-            if (immediatelyCraftable > 0)
-            {
-                int soulsCost = immediatelyCraftable * soulsPerPenance;
-
-                Core.Logger(
-                    $"│ → Merging {immediatelyCraftable} Penance " +
-                    $"({immediatelyCraftable * essencePerPenance} each essence + {soulsCost} souls)...",
-                    "Penance");
-
-                Core.BuyItem(
-                    "sevencircleswar",
-                    1984,
-                    "Penance",
-                    immediatelyCraftable);
-
-                Bot.Wait.ForPickup("Penance");
-
-                currentPenance = Bot.Inventory.GetQuantity("Penance");
-                penanceBought = currentPenance;
-                totalSoulsUsed += soulsCost;
-
-                Core.Logger(
-                    $"│ ✓ Penance: {penanceBought}/{quant} | " +
-                    $"Souls remaining: {Bot.Inventory.GetQuantity("Souls of Heresy")}/{soulsMaxStack}",
-                    "Penance");
-
-                Core.Sleep(500);
-                continue;
-            }
-
-            // Work out the next batch. Never prepare more than the remaining target
-            // or the amount that can fit in one Souls of Heresy stack.
-            int batchSize = Math.Min(penanceRemaining, maxPenancePerSoulStack);
-
-            int essenceTarget = batchSize * essencePerPenance;
-            int soulsTarget = batchSize * soulsPerPenance;
-
-            // Farm only missing Essence of Wrath.
-            wrath = Bot.Inventory.GetQuantity("Essence of Wrath");
-
-            if (wrath < essenceTarget)
-            {
-                int missing = essenceTarget - wrath;
-
-                Core.Logger(
-                    $"│ ↓ Farming {missing} Essence of Wrath " +
-                    $"({wrath}/{essenceTarget})...",
-                    "Penance");
-
-                EssenceWrath(essenceTarget);
-            }
-
-            if (Bot.ShouldExit)
-                break;
-
-            // Farm only missing Essence of Violence.
-            violence = Bot.Inventory.GetQuantity("Essence of Violence");
-
-            if (violence < essenceTarget)
-            {
-                int missing = essenceTarget - violence;
-
-                Core.Logger(
-                    $"│ ↓ Farming {missing} Essence of Violence " +
-                    $"({violence}/{essenceTarget})...",
-                    "Penance");
-
-                EssenceViolence(essenceTarget);
-            }
-
-            if (Bot.ShouldExit)
-                break;
-
-            // Farm only missing Essence of Treachery.
-            treachery = Bot.Inventory.GetQuantity("Essence of Treachery");
-
-            if (treachery < essenceTarget)
-            {
-                int missing = essenceTarget - treachery;
-
-                Core.Logger(
-                    $"│ ↓ Farming {missing} Essence of Treachery " +
-                    $"({treachery}/{essenceTarget})...",
-                    "Penance");
-
-                EssenceTreachery(essenceTarget);
-            }
-
-            if (Bot.ShouldExit)
-                break;
-
-            // Recheck everything after essence farming.
-            wrath = Bot.Inventory.GetQuantity("Essence of Wrath");
-            violence = Bot.Inventory.GetQuantity("Essence of Violence");
-            treachery = Bot.Inventory.GetQuantity("Essence of Treachery");
-            souls = Bot.Inventory.GetQuantity("Souls of Heresy");
-
-            craftableFromEssences = Math.Min(
-                wrath / essencePerPenance,
-                Math.Min(
-                    violence / essencePerPenance,
-                    treachery / essencePerPenance));
-
-            craftableFromSouls = souls / soulsPerPenance;
-
-            immediatelyCraftable = Math.Min(
-                penanceRemaining,
-                Math.Min(craftableFromEssences, craftableFromSouls));
-
-            // If essences are ready but Souls aren't, farm ONLY Souls.
-            if (immediatelyCraftable <= 0 && souls < soulsTarget)
-            {
-                int soulsNeeded = Math.Min(
-                    soulsTarget - souls,
-                    soulsMaxStack - souls);
-
-                if (soulsNeeded > 0)
-                {
-                    Core.Logger(
-                        $"│ ↓ Farming {soulsNeeded} Souls of Heresy " +
-                        $"({souls}/{soulsMaxStack})...",
-                        "Penance");
-
-                    SoulsHeresy(souls + soulsNeeded);
-
-                    souls = Bot.Inventory.GetQuantity("Souls of Heresy");
-
-                    Core.Logger(
-                        $"│ ↑ Souls complete: {souls}/{soulsMaxStack}",
-                        "Penance");
-                }
-            }
+            Core.Logger(
+                $"│ ✓ Penance: {penanceBought}/{quant} | " +
+                $"Souls remaining: {Bot.Inventory.GetQuantity("Souls of Heresy")}/{soulsMaxStack}",
+                "Penance");
 
             Core.Sleep(500);
+            continue;
         }
 
-        penanceBought = Bot.Inventory.GetQuantity("Penance");
+        // Prepare only enough materials for the next batch.
+        // A full 300 Souls stack supports exactly 20 Penance.
+        int batchSize = Math.Min(penanceRemaining, maxPenancePerSoulStack);
+        int essenceTarget = batchSize * essencePerPenance;
+        int soulsTarget = batchSize * soulsPerPenance;
 
-        Bot.Log("Penance: ├────────────────────────────────────────");
-        Bot.Log($"Penance: └─ ✓ Phase Complete! {penanceBought}/{quant} Penance");
-        Bot.Log($"Penance: ✓ Souls used: {totalSoulsUsed}");
-        Bot.Log("Penance: ");
-        Bot.Log($"╔{new string('═', boxWidth)}╗");
-        Bot.Log($"║{CenterWithFill("✦ PENANCE FARMING SESSION COMPLETE ✦")}║");
-        Bot.Log($"╚{new string('═', boxWidth)}╝");
+        // Farm only the missing Essence of Wrath.
+        wrath = Bot.Inventory.GetQuantity("Essence of Wrath");
+
+        if (wrath < essenceTarget)
+        {
+            Core.Logger(
+                $"│ ↓ Farming {essenceTarget - wrath} Essence of Wrath " +
+                $"({wrath}/{essenceTarget})...",
+                "Penance");
+
+            EssenceWrath(essenceTarget);
+
+            if (Bot.ShouldExit)
+                break;
+        }
+
+        // Farm only the missing Essence of Violence.
+        violence = Bot.Inventory.GetQuantity("Essence of Violence");
+
+        if (violence < essenceTarget)
+        {
+            Core.Logger(
+                $"│ ↓ Farming {essenceTarget - violence} Essence of Violence " +
+                $"({violence}/{essenceTarget})...",
+                "Penance");
+
+            EssenceViolence(essenceTarget);
+
+            if (Bot.ShouldExit)
+                break;
+        }
+
+        // Farm only the missing Essence of Treachery.
+        treachery = Bot.Inventory.GetQuantity("Essence of Treachery");
+
+        if (treachery < essenceTarget)
+        {
+            Core.Logger(
+                $"│ ↓ Farming {essenceTarget - treachery} Essence of Treachery " +
+                $"({treachery}/{essenceTarget})...",
+                "Penance");
+
+            EssenceTreachery(essenceTarget);
+
+            if (Bot.ShouldExit)
+                break;
+        }
+
+        // Recheck essence quantities after farming.
+        wrath = Bot.Inventory.GetQuantity("Essence of Wrath");
+        violence = Bot.Inventory.GetQuantity("Essence of Violence");
+        treachery = Bot.Inventory.GetQuantity("Essence of Treachery");
+        souls = Bot.Inventory.GetQuantity("Souls of Heresy");
+
+        craftableFromEssences = Math.Min(
+            wrath / essencePerPenance,
+            Math.Min(
+                violence / essencePerPenance,
+                treachery / essencePerPenance));
+
+        craftableFromSouls = souls / soulsPerPenance;
+
+        immediatelyCraftable = Math.Min(
+            penanceRemaining,
+            Math.Min(craftableFromEssences, craftableFromSouls));
+
+        // If the essences are ready but Souls are not, farm only the
+        // missing Souls required for this batch.
+        if (immediatelyCraftable <= 0 && souls < soulsTarget)
+        {
+            int soulsNeeded = Math.Min(
+                soulsTarget - souls,
+                soulsMaxStack - souls);
+
+            if (soulsNeeded > 0)
+            {
+                Core.Logger(
+                    $"│ ↓ Farming {soulsNeeded} Souls of Heresy " +
+                    $"({souls}/{soulsMaxStack})...",
+                    "Penance");
+
+                // SoulsHeresy() takes the amount to farm.
+                SoulsHeresy(soulsNeeded);
+
+                souls = Bot.Inventory.GetQuantity("Souls of Heresy");
+
+                Core.Logger(
+                    $"│ ↑ Souls complete: {souls}/{soulsMaxStack}",
+                    "Penance");
+            }
+        }
+
+        Core.Sleep(500);
     }
+
+    penanceBought = Bot.Inventory.GetQuantity("Penance");
+
+    Core.Logger("Penance: ├────────────────────────────────────────");
+    Core.Logger($"Penance: └─ ✓ Phase Complete! {penanceBought}/{quant} Penance");
+    Core.Logger($"Penance: ✓ Souls used: {totalSoulsUsed}");
+    Core.Logger("Penance: ");
+    Core.Logger($"╔{new string('═', boxWidth)}╗");
+    Core.Logger($"║{CenterWithFill("✦ PENANCE FARMING SESSION COMPLETE ✦")}║");
+    Core.Logger($"╚{new string('═', boxWidth)}╝");
+}
+   
     const int boxWidth = 44;
 
     string CenterWithFill(string text)
