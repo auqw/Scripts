@@ -29094,8 +29094,8 @@
       "null"
     ],
     "path": "Ultrasv3/IndividualUltras/8UltraDarkonv3.cs",
-    "size": 9711,
-    "sha256": "f6fc79c507f790a710eb61fcb7db3eb3933545887ef7300ad5b790f504b48b09",
+    "size": 9712,
+    "sha256": "20eff6309e3810d70fe5ed7eec6c7e6e45c97cf86f1b020c0344848fe76a9c8d",
     "fileName": "8UltraDarkonv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/8UltraDarkonv3.cs"
   },
@@ -29178,8 +29178,8 @@
       "null"
     ],
     "path": "Ultrasv3/IndividualUltras/11UltraGramielv3.cs",
-    "size": 19794,
-    "sha256": "3d2400d556eebe0fb267bbe0ad811c3a08b09dbd43bd03dc2822ae974128bda2",
+    "size": 19795,
+    "sha256": "bb1c8b7b4236aad41d8b42ece9a6ce4d8fe84b73c8eaa3ffcbeb5a7051e0e61c",
     "fileName": "11UltraGramielv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/11UltraGramielv3.cs"
   },
@@ -29190,8 +29190,8 @@
       "null"
     ],
     "path": "Ultrasv3/IndividualUltras/4UltraAvatarTyndariusv3.cs",
-    "size": 10037,
-    "sha256": "8cc0678afb142dcaec4e36da4e6f82a818480fdd65c4b225545e77044a4ae2c0",
+    "size": 10038,
+    "sha256": "3a9488154d399d7a5f74953124d57fa476b2a938d424a0bbd2cc8b45df85a5c1",
     "fileName": "4UltraAvatarTyndariusv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/IndividualUltras/4UltraAvatarTyndariusv3.cs"
   },
@@ -29226,8 +29226,8 @@
       "null"
     ],
     "path": "Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs",
-    "size": 11527,
-    "sha256": "bb9e8ab7c2af2e26e4011b0aab475df58979aeb34a63142542510afe5ccf1d6e",
+    "size": 11528,
+    "sha256": "ec633c8a4f9117baf1146a1716aa260addf2505e38a104d9d4c53fe08f5d4f90",
     "fileName": "AstralEmpyreanNoOptionv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesDailies/AstralEmpyreanNoOptionv3.cs"
   },
@@ -29305,8 +29305,8 @@
       "null"
     ],
     "path": "Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs",
-    "size": 18566,
-    "sha256": "b26e36a9d4f53d5e6fa2ce8d59983346ee82ff399542ec47071a9dca719a2cf5",
+    "size": 18567,
+    "sha256": "72fd20ca13506753ed2dfdf177c69ba98b78a8a03cbdba4a6cc0cd0d6f691f68",
     "fileName": "AstralEmpyreanv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/AstralEmpyreanv3.cs"
   },
@@ -34694,8 +34694,8 @@
       "null"
     ],
     "path": "Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3OneDeathv3DevTools.cs",
-    "size": 15397,
-    "sha256": "e9861d87ac107bd87755aedd0c32c91e85aa10848539f979eedd8d72ff37bd15",
+    "size": 15398,
+    "sha256": "6eb8ff7c355f09c59ccc09a11ff65271714b49ee000532ad5eecc03e026fc807",
     "fileName": "AstralEmpyreanv3OneDeathv3DevTools.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3OneDeathv3DevTools.cs"
   },
@@ -34706,8 +34706,8 @@
       "null"
     ],
     "path": "Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3ArmyDeathv3DevTools.cs",
-    "size": 16563,
-    "sha256": "14e0be166d9931a29dd533449812fc2c5e8fe0e4b662ce5d85d8c1316784ede6",
+    "size": 16564,
+    "sha256": "80db37f15c757d242ee95b1db786fb18cad9f34ec5ae7386be0c59b809d5a5ac",
     "fileName": "AstralEmpyreanv3ArmyDeathv3DevTools.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/ChallengeBosses/DeveloperTools/AstralEmpyreanv3ArmyDeathv3DevTools.cs"
   },
