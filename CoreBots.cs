@@ -2,7 +2,7 @@
 name: null
 description: null
 tags: null
-version: 1.4.3.0
+version: 1.4.4.4
 */
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
