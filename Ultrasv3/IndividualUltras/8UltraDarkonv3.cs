@@ -58,7 +58,7 @@ public class UltraDarkonv3
     private CancellationTokenSource _wipeCts = new();
     private System.Threading.ManualResetEvent _retreatComplete = new(false);
     private UltraDeath.RetryCounter _deathRetries = new();
-    private const int MaxDeathRetries = 3;
+    private const int MaxDeathRetries = 10;
     private DateTime fightStartTime = DateTime.MinValue;
 
     public void ScriptMain(IScriptInterface bot)

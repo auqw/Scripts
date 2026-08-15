@@ -56,7 +56,7 @@ public class AstralEmpyreanNoOpv3
     private DateTime fightStartTime = DateTime.MinValue;
     private string _role = "";
     private int _deathRetries = 0;
-    private const int MaxDeathRetries = 3;
+    private const int MaxDeathRetries = 10;
 
     public void ScriptMain(IScriptInterface bot)
     {

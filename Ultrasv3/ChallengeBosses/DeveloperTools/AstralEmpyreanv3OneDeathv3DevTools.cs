@@ -44,7 +44,7 @@ public class AstralEmpyreanv3OneDeathv3DevTools
     private DateTime fightStartTime = DateTime.MinValue;
     private string _role = "";
     private int _deathRetries = 0;
-    private const int MaxDeathRetries = 3;
+    private const int MaxDeathRetries = 10;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "AstralEmpyreanv3";
     public List<IOption> Options = new()
