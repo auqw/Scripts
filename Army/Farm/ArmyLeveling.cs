@@ -135,12 +135,13 @@ public class ArmyLeveling
     }
 
 
-    void Prereqs()
+    private void Prereqs()
     {
         if (C.isCompletedBefore(9425))
             return;
 
         Story.PreLoad(this);
+        C.Logger("Doing \"shadowbattleon\" prerequisite quests");
 
         // Mega Shadow Hunt Medal 9422
         Story.KillQuest(9422, "shadowbattleon", "Doomed Beast");
