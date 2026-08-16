@@ -75,7 +75,7 @@ public class LegionExercise3
             {
                 Core.Logger($"Hunting Chaos Egg for Chaos Egg, (24) [Temp = false]");
                 while (!Core.CheckInventory("Chaos Egg", 24))
-                    Core.HuntMonster("Uppercity", "Chaos Egg", publicRoom: false, log: false);
+                    Core.HuntMonster("Uppercity", "Chaos Egg", "Chaos Egg", 24, isTemp: false);
             }
             Core.HuntMonster(
                 "Mobius",
