@@ -101,8 +101,8 @@ public class UltraAvatarTyndariusv2
         new Option<int>("PotionQuantity", "Potion Quantity", "How many potions to keep stocked.", 10),CoreBots.Instance.SkipOptions,
     };
 
-    private string NormalizeString(string s) => (s ?? "").Trim().ToLower();
-    private bool HasAssignedClass(string name) =>
+    private string NormalizeString(string? s) => (s ?? "").Trim().ToLower();
+    private bool HasAssignedClass(string? name) =>
         !string.IsNullOrWhiteSpace(name) &&
         NormalizeString(Bot.Player.CurrentClass?.Name) == NormalizeString(name);
 
@@ -132,14 +132,14 @@ public class UltraAvatarTyndariusv2
     {
         EquipPresetClasses();
 
-        string ball1  = (Bot.Config!.Get<string>("Ball1Taunter") ?? "").Trim();
-        string ball2  = (Bot.Config!.Get<string>("Ball2Killer") ?? "").Trim();
-        string tyn1   = (Bot.Config!.Get<string>("TynTaunter1") ?? "").Trim();
-        string tyn2   = (Bot.Config!.Get<string>("TynTaunter2") ?? "").Trim();
+        string ball1 = (Bot.Config!.Get<string>("Ball1Taunter") ?? "").Trim();
+        string ball2 = (Bot.Config!.Get<string>("Ball2Killer") ?? "").Trim();
+        string tyn1 = (Bot.Config!.Get<string>("TynTaunter1") ?? "").Trim();
+        string tyn2 = (Bot.Config!.Get<string>("TynTaunter2") ?? "").Trim();
 
         isBall1Taunter = HasAssignedClass(ball1);
-        isBall2Killer  = HasAssignedClass(ball2);
-        isTynTaunter   = HasAssignedClass(tyn1) || HasAssignedClass(tyn2);
+        isBall2Killer = HasAssignedClass(ball2);
+        isTynTaunter = HasAssignedClass(tyn1) || HasAssignedClass(tyn2);
 
         string cn = Bot.Player.CurrentClass?.Name ?? string.Empty;
         if (cn.Equals(tyn1, StringComparison.OrdinalIgnoreCase))
@@ -170,7 +170,7 @@ public class UltraAvatarTyndariusv2
 
     void Fight()
     {
-        const string map  = "ultratyndarius";
+        const string map = "ultratyndarius";
         const string boss = "Ultra Avatar Tyndarius";
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
@@ -187,7 +187,7 @@ public class UltraAvatarTyndariusv2
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
         Ultra.WaitForArmy(armySize - 1, "ultra_tyndarius.sync");
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
         Core.EnableSkills();
 
         bool armyWipeDetected = false;
@@ -252,7 +252,7 @@ public class UltraAvatarTyndariusv2
 
             bool ball1Alive = Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x.Alive && x.MapID == 1);
             bool ball2Alive = Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x.Alive && x.MapID == 3);
-            bool bothDead   = !ball1Alive && !ball2Alive;
+            bool bothDead = !ball1Alive && !ball2Alive;
 
             // ── Ball1 taunter / Ball2 killer roles ────────────────────────────────
             if (isBall1Taunter)

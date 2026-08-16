@@ -109,10 +109,10 @@ public class UltraDarkonv2
         CoreBots.Instance.SkipOptions,
     };
 
-    private string NormalizeString(string input) =>
+    private string NormalizeString(string? input) =>
         (input ?? "").Trim().ToLower();
 
-    bool HasAssignedClass(string assignedClass) =>
+    bool HasAssignedClass(string? assignedClass) =>
         NormalizeString(Bot.Player.CurrentClass?.Name)
         == NormalizeString(assignedClass);
 
@@ -154,10 +154,10 @@ public class UltraDarkonv2
         EquipPresetClasses();
 
         string primaryTaunter =
-            Bot.Config!.Get<string>("PrimaryTaunter");
+            (Bot.Config!.Get<string>("PrimaryTaunter") ?? string.Empty).Trim();
 
         string secondaryTaunter =
-            Bot.Config!.Get<string>("SecondaryTaunter");
+            (Bot.Config!.Get<string>("SecondaryTaunter") ?? string.Empty).Trim();
 
         isPrimaryTaunter = HasAssignedClass(primaryTaunter);
         isSecondaryTaunter = HasAssignedClass(secondaryTaunter);
@@ -221,7 +221,7 @@ public class UltraDarkonv2
         Ultra.WaitForArmy(armySize - 1, "Ultra_Darkon.sync");
 
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
 
         Core.EnableSkills();
 

@@ -238,9 +238,9 @@ public class UltraSpeakerv3
             // Refresh mute file so FBS plugin stays muted during the fight
             try { File.WriteAllText(_fbsMuteFile, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()); } catch { }
 
-            if (!Bot.Player.Alive)
+            if (Bot.Player?.Alive != true)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                Bot.Wait.ForTrue(() => Bot.Player?.Alive == true, 20);
                 // Just respawned — re-sync truth taunt turn counter from sync file
                 try
                 {
@@ -394,11 +394,11 @@ public class UltraSpeakerv3
             var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
             data = packet?["b"]?["o"];
 
-            if (data == null || data["cmd"]?.ToString() != "ct")
+            if (data == null || data!["cmd"]?.ToString() != "ct")
                 return;
 
             // FlashCall version: check anim messages
-            if (data["anims"] != null)
+            if (data!["anims"] != null)
             {
                 foreach (var anim in data["anims"])
                 {

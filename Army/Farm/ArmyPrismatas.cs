@@ -150,7 +150,7 @@ public class ArmyPristmas
 
         foreach (var (voucher, maxQuant, price) in vouchers)
         {
-            int currentQty = Bot.Inventory.Items.FirstOrDefault(i => i.Name == voucher)?.Amount ?? 0;
+            int currentQty = Bot.Inventory.GetQuantity(voucher);
 
             if (currentQty >= maxQuant)
             {

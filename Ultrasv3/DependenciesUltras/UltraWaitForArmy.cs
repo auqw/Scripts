@@ -277,9 +277,9 @@ public class UltraWaitForArmy
         {
             Bot.Skills.UseSkill(3);
             Bot?.Sleep(300);
-            Bot.Skills.UseSkill(2);
+            Bot?.Skills.UseSkill(2);
             Bot?.Sleep(300);
-            Bot.Skills.UseSkill(1);
+            Bot?.Skills.UseSkill(1);
             Bot?.Sleep(300);
         }
     }
@@ -531,9 +531,9 @@ public class UltraWaitForArmy
             {
                 Bot.Skills.UseSkill(3);
                 Bot?.Sleep(300);
-                Bot.Skills.UseSkill(2);
+                Bot?.Skills.UseSkill(2);
                 Bot?.Sleep(300);
-                Bot.Skills.UseSkill(1);
+                Bot?.Skills.UseSkill(1);
                 Bot?.Sleep(300);
             }
             else

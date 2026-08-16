@@ -1551,7 +1551,7 @@ public class CoreEnginev3
         if (!Bot.Inventory.TryGetItem(name, out InventoryItem? item))
             return false;
 
-        if (Bot.Inventory.IsEquipped(name) && item.ID > 0)
+        if (item != null && Bot.Inventory.IsEquipped(name) && item.ID > 0)
         {
             Bot.Send.Packet($"%xt%zm%unequipItem%{Bot.Map.RoomID}%{item.ID}%");
             Bot.Sleep(D1);
@@ -1565,7 +1565,7 @@ public class CoreEnginev3
             if (Bot.Inventory.IsEquipped(name))
                 return true;
 
-            if (item.ID > 0)
+            if (item != null && item.ID > 0)
             {
                 Bot.Send.Packet($"%xt%zm%unequipItem%{Bot.Map.RoomID}%{item.ID}%");
                 Bot.Sleep(500);

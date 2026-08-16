@@ -29,17 +29,17 @@ public class UltraGeneral
 
         armySize = armySize > 0
             ? armySize
-            : Math.Max(1, bot.Config!.Get<int>("ArmySize"));
+            : Math.Max(1, bot!.Config!.Get<int>("ArmySize"));
 
         var presetEntries = new[]
         {
-            bot.Config!.Get<string>("Class1"),
-            bot.Config.Get<string>("Class2"),
-            bot.Config.Get<string>("Class3"),
-            bot.Config.Get<string>("Class4"),
-            bot.Config.Get<string>("Class5"),
-            bot.Config.Get<string>("Class6"),
-            bot.Config.Get<string>("Class7"),
+            bot!.Config!.Get<string>("Class1"),
+            bot.Config!.Get<string>("Class2"),
+            bot.Config!.Get<string>("Class3"),
+            bot.Config!.Get<string>("Class4"),
+            bot.Config!.Get<string>("Class5"),
+            bot.Config!.Get<string>("Class6"),
+            bot.Config!.Get<string>("Class7"),
         }
         .Select(cl => cl?.Trim())
         .Where(cl => !string.IsNullOrEmpty(cl))
@@ -76,7 +76,7 @@ public class UltraGeneral
                 .ToArray();
         }
 
-        ultra.EquipClassSync(
+        ultra!.EquipClassSync(
             classSlots,
             armySize,
             syncFilePath,
@@ -92,17 +92,17 @@ public class UltraGeneral
 
         armySize = armySize > 0
             ? armySize
-            : Math.Max(1, bot.Config!.Get<int>("ArmySize"));
+            : Math.Max(1, bot!.Config!.Get<int>("ArmySize"));
 
         var presetEntries = new[]
         {
-            bot.Config!.Get<string>("Class1"),
-            bot.Config.Get<string>("Class2"),
-            bot.Config.Get<string>("Class3"),
-            bot.Config.Get<string>("Class4"),
-            bot.Config.Get<string>("Class5"),
-            bot.Config.Get<string>("Class6"),
-            bot.Config.Get<string>("Class7"),
+            bot!.Config!.Get<string>("Class1"),
+            bot.Config!.Get<string>("Class2"),
+            bot.Config!.Get<string>("Class3"),
+            bot.Config!.Get<string>("Class4"),
+            bot.Config!.Get<string>("Class5"),
+            bot.Config!.Get<string>("Class6"),
+            bot.Config!.Get<string>("Class7"),
         }
         .Select(cl => cl?.Trim())
         .Where(cl => !string.IsNullOrEmpty(cl))
@@ -139,7 +139,7 @@ public class UltraGeneral
                 .ToArray();
         }
 
-        string syncFile = ultra.ResolveSyncPath(syncFilePath);
+        string syncFile = ultra!.ResolveSyncPath(syncFilePath);
 
         try
         {
@@ -450,8 +450,8 @@ public class UltraGeneral
         if (ultra == null || bot == null || string.IsNullOrWhiteSpace(syncFilePath))
             return;
 
-        string path = ultra.ResolveSyncPath(syncFilePath);
-        string username = bot.Player?.Username ?? Guid.NewGuid().ToString();
+        string path = ultra!.ResolveSyncPath(syncFilePath);
+        string username = bot!.Player?.Username ?? Guid.NewGuid().ToString();
         string payload = string.Join(",", neededBosses
             .Select(b => b?.Trim())
             .Where(b => !string.IsNullOrEmpty(b)));
@@ -464,8 +464,8 @@ public class UltraGeneral
         if (ultra == null || bot == null || string.IsNullOrWhiteSpace(syncFilePath))
             return;
 
-        string path = ultra.ResolveSyncPath(syncFilePath);
-        string username = bot.Player?.Username ?? Guid.NewGuid().ToString();
+        string path = ultra!.ResolveSyncPath(syncFilePath);
+        string username = bot!.Player?.Username ?? Guid.NewGuid().ToString();
         string payload = string.Join(",", bossStatuses.Select(kvp => $"{kvp.Key}={(kvp.Value ? "true" : "false")}"));
 
         ultra.UpdateEntry(path, username, payload);
@@ -476,7 +476,7 @@ public class UltraGeneral
         if (ultra == null || bot == null || string.IsNullOrWhiteSpace(syncFilePath))
             return Math.Max(1, defaultCount);
 
-        string path = ultra.ResolveSyncPath(syncFilePath);
+        string path = ultra!.ResolveSyncPath(syncFilePath);
         string[] lines = ultra.ReadLines(path);
         long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         const int staleThreshold = 600;
@@ -606,12 +606,12 @@ public class UltraGeneral
         if (ultra == null || bot == null || string.IsNullOrWhiteSpace(syncFilePath))
             return false;
 
-        string? username = bot.Player?.Username;
+        string? username = bot!.Player?.Username;
         if (string.IsNullOrWhiteSpace(username))
             return false;
 
         string key = username.Replace(":", "-");
-        string syncFile = ultra.ResolveSyncPath(syncFilePath);
+        string syncFile = ultra!.ResolveSyncPath(syncFilePath);
         ultra.UpdateEntry(syncFile, key, localState ? "1" : "0");
 
         string[] lines = ultra.ReadLines(syncFile);
@@ -638,7 +638,7 @@ public class UltraGeneral
         return activeMembers > 0 && activeMembers == matchingMembers;
     }
 
-    private static (string ClassName, string? Username) ParseClassOption(string raw)
+    private static (string ClassName, string? Username) ParseClassOption(string? raw)
     {
         if (string.IsNullOrWhiteSpace(raw))
             return (string.Empty, null);

@@ -181,15 +181,15 @@ public class UltraDarkon
                 continue;
             }
 
-            if (Bot.Player.Cell != bestCell)
+            if (Bot.Player?.Cell != bestCell)
             {
                 Bot.Sleep(200);
                 C.Jump(bestCell!, bestPad!);
-                Bot.Wait.ForCellChange(bestCell);
+                Bot.Wait.ForCellChange(bestCell!);
                 continue;
             }
 
-            
+
 
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");

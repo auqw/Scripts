@@ -155,7 +155,6 @@ public class AstralEmpyreanNoOpv3
 
         const string waitSyncFile = "AstralEmpyreanv3.sync";
         const string completionSyncFile = "AstralEmpyreanv3Completion.sync";
-        const string retreatSyncFile = "AstralEmpyreanv3Retreat.sync";
         const string wipeSyncFile = "AstralEmpyreanWipe.sync";
         int armySize = 4;
 

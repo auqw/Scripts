@@ -40,7 +40,7 @@ public class UltraPotions
 
     #region Class Detection
 
-    public string NormalizeString(string s) =>
+    public string NormalizeString(string? s) =>
         string.IsNullOrWhiteSpace(s)
             ? string.Empty
             : s.Replace(" ", "").ToLowerInvariant();

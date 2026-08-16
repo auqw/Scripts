@@ -192,7 +192,7 @@ public class Butlerv4
 
             if (_tcpInCombat || _tcpHasTarget)
                 Bot.Combat.Attack("*");
-            else if ((Bot.Player.InCombat || Bot.Player.HasTarget) && !IsLeaderInSameCell())
+            else if ((Bot.Player?.InCombat == true || Bot.Player?.HasTarget == true) && !IsLeaderInSameCell())
                 QuickDeaggro();
 
             Core.Sleep(500);
@@ -467,9 +467,9 @@ public class Butlerv4
             if (packet == null) return;
 
             var paramsObj = packet["params"];
-            if (paramsObj == null || paramsObj.type != "str") return;
+            if (paramsObj == null || paramsObj!.type != "str") return;
 
-            dynamic? dataObj = paramsObj.dataObj;
+            dynamic? dataObj = paramsObj!.dataObj;
             if (dataObj == null) return;
 
             string? cmd = dataObj[0];

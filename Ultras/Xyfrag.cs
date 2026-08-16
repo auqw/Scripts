@@ -95,7 +95,7 @@ public class Xyfrag
         Core.Join(map);
         Ultra.WaitForArmy(6, "xyfrag.sync");
         var (bestCell, bestPad) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
         while (!Bot.ShouldExit)
@@ -111,7 +111,7 @@ public class Xyfrag
             {
                 Bot.Sleep(200);
                 C.Jump(bestCell!, bestPad!);
-                Bot.Wait.ForCellChange(bestCell);
+                Bot.Wait.ForCellChange(bestCell!);
                 continue;
             }
 
@@ -124,7 +124,7 @@ public class Xyfrag
                     Adv.GearStore(true, true);
                 break;
             }
-            
+
             if (Core.HasClassEquipped(taunter)) // After 2M → always taunt
             {
                 Core.DisableSkills();

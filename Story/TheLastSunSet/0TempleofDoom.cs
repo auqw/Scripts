@@ -13,7 +13,7 @@ tags: story, quest, The Last Sun Set, templeofdoom
 
 using Skua.Core.Interfaces;
 
-public class templeofdoom
+public class TempleOfDoom
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;

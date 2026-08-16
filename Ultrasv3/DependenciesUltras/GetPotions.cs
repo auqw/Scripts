@@ -112,7 +112,7 @@ public class PotionBuyerv2
             ? [.. Enumerable.Repeat(true, potions!.Length)]
             : null;
 
-        string raw = Bot.Config!.Get<string>("PotionQuant");
+        string raw = Bot.Config!.Get<string>("PotionQuant") ?? string.Empty;
 
         int potionQuant;
 
@@ -184,7 +184,7 @@ public class PotionBuyerv2
             ["Judgment Tonic"] = () => Bot.Config!.Get<bool>("FarmJudgment"),
             ["Fortitude Tonic"] = () => Bot.Config!.Get<bool>("FarmFortitude"),
             ["Fate Tonic"] = () => Bot.Config!.Get<bool>("FarmFate"),
-            ["Sage Tonic"] = () => Bot.Config!.Get<bool>("FarmSage"),            
+            ["Sage Tonic"] = () => Bot.Config!.Get<bool>("FarmSage"),
             ["Potent Battle Elixir"] = () => Bot.Config!.Get<bool>("FarmBattle"),
             ["Potent Malevolence Elixir"] = () => Bot.Config!.Get<bool>("FarmMalevolence"),
             ["Potent Honor Potion"] = () => Bot.Config!.Get<bool>("FarmHonor"),

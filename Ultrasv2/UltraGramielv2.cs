@@ -151,10 +151,10 @@ public class UltraGramielv2
 
     private void ApplyTaunterClasses()
     {
-        string leftT1Class = Bot.Config!.Get<string>("LeftCrystalT1").Trim();
-        string rightT1Class = Bot.Config!.Get<string>("RightCrystalT1").Trim();
-        string leftT2Class = Bot.Config!.Get<string>("LeftCrystalT2").Trim();
-        string rightT2Class = Bot.Config!.Get<string>("RightCrystalT2").Trim();
+        string leftT1Class = (Bot.Config!.Get<string>("LeftCrystalT1") ?? string.Empty).Trim();
+        string rightT1Class = (Bot.Config!.Get<string>("RightCrystalT1") ?? string.Empty).Trim();
+        string leftT2Class = (Bot.Config!.Get<string>("LeftCrystalT2") ?? string.Empty).Trim();
+        string rightT2Class = (Bot.Config!.Get<string>("RightCrystalT2") ?? string.Empty).Trim();
 
         string className = Bot.Player.CurrentClass?.Name ?? string.Empty;
 

@@ -246,7 +246,7 @@ public class NightBane
         Core.Join(map);
         Ultra.WaitForArmy(Players - 1, "NightBane.sync");
         var (bestCell, bestPad) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
         while (!Bot.ShouldExit)
@@ -262,7 +262,7 @@ public class NightBane
             {
                 Bot.Sleep(200);
                 C.Jump(bestCell!, bestPad!);
-                Bot.Wait.ForCellChange(bestCell);
+                Bot.Wait.ForCellChange(bestCell!);
                 continue;
             }
 

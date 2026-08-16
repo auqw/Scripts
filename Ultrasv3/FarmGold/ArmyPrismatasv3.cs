@@ -220,7 +220,7 @@ public class ArmyPristmasv3
         );
     }
 
-    private (string ClassName, string Username) ParseClassEntry(string raw)
+    private (string ClassName, string Username) ParseClassEntry(string? raw)
     {
         if (string.IsNullOrWhiteSpace(raw))
             return (string.Empty, string.Empty);

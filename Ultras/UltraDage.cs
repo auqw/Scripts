@@ -185,7 +185,7 @@ public class UltraDage
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_dage.sync");
         var (bestCell, bestPad) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -202,7 +202,7 @@ public class UltraDage
             {
                 Bot.Sleep(200);
                 C.Jump(bestCell!, bestPad!);
-                Bot.Wait.ForCellChange(bestCell);
+                Bot.Wait.ForCellChange(bestCell!);
                 continue;
             }
 

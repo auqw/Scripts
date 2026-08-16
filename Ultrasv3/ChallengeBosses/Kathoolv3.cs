@@ -127,10 +127,10 @@ public class Kathoolv3
             var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
             data = packet?["b"]?["o"];
 
-            if (data == null || data["cmd"]?.ToString() != "ct")
+            if (data == null || data!["cmd"]?.ToString() != "ct")
                 return;
 
-            if (data["anims"] != null)
+            if (data!["anims"] != null)
             {
                 foreach (var anim in data["anims"])
                 {
@@ -159,7 +159,7 @@ public class Kathoolv3
         const string completionSyncFile = "KathoolCompletion.sync";
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
 
-        
+
         const int questId = 9350;
 
         if (!UltraGeneral.IsQuestGreen(Bot, questId))

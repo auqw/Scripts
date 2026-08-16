@@ -111,10 +111,10 @@ public class UltraDragov2
         CoreBots.Instance.SkipOptions,
     };
 
-    private string NormalizeString(string input) =>
+    private string NormalizeString(string? input) =>
         (input ?? "").Trim().ToLower();
 
-    bool HasAssignedClass(string assignedClass) =>
+    bool HasAssignedClass(string? assignedClass) =>
         NormalizeString(Bot.Player.CurrentClass?.Name)
         == NormalizeString(assignedClass);
 
@@ -154,10 +154,10 @@ public class UltraDragov2
         Astravia.AstraviaJudgement();
 
         string primaryTaunter =
-            Bot.Config!.Get<string>("PrimaryTaunter");
+            (Bot.Config!.Get<string>("PrimaryTaunter") ?? string.Empty).Trim();
 
         string secondaryTaunter =
-            Bot.Config!.Get<string>("SecondaryTaunter");
+            (Bot.Config!.Get<string>("SecondaryTaunter") ?? string.Empty).Trim();
 
         isPrimaryTaunter = HasAssignedClass(primaryTaunter);
 
@@ -223,7 +223,7 @@ public class UltraDragov2
         Ultra.WaitForArmy(armySize - 1, "ultra_drago.sync");
 
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
 
         Bot.Player.SetSpawnPoint();
 

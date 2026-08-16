@@ -234,12 +234,11 @@ public class AstralEmpyreanv3
 
         const string waitSyncFile = "AstralEmpyreanv3.sync";
         const string completionSyncFile = "AstralEmpyreanv3Completion.sync";
-        const string retreatSyncFile = "AstralEmpyreanv3Retreat.sync";
         const string killSyncFile = "AstralEmpyreanKill.sync";
         const string wipeSyncFile = "AstralEmpyreanWipe.sync";
         int armySize = Math.Max(1, Bot.Config!.Get<int>("ArmySize"));
 
-        
+
         const int questId = 9803;
 
         bool dailyOnly = DoDailyOnly;

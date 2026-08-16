@@ -109,7 +109,7 @@ public class UltraWarden
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_warden.sync");
         var (bestCell, bestPad) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -126,7 +126,7 @@ public class UltraWarden
             {
                 Bot.Sleep(200);
                 C.Jump(bestCell!, bestPad!);
-                Bot.Wait.ForCellChange(bestCell);
+                Bot.Wait.ForCellChange(bestCell!);
                 continue;
             }
 

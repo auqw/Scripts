@@ -119,7 +119,4 @@ public class DownloadDLLException : System.Exception
     public DownloadDLLException() { }
     public DownloadDLLException(string message) : base(message) { }
     public DownloadDLLException(string message, System.Exception inner) : base(message, inner) { }
-    protected DownloadDLLException(
-        System.Runtime.Serialization.SerializationInfo info,
-        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }

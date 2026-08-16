@@ -269,7 +269,7 @@ public class UltraDrago
         C.EnsureAccept(8397);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
         var (bestCell, bestPad) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -287,7 +287,7 @@ public class UltraDrago
             {
                 Bot.Sleep(200);
                 C.Jump(bestCell!, bestPad!);
-                Bot.Wait.ForCellChange(bestCell);
+                Bot.Wait.ForCellChange(bestCell!);
                 continue;
             }
 

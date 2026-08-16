@@ -128,9 +128,9 @@ public class UltraSpeakerv2
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
 
-        string t1 = Bot.Config!.Get<string>("Taunter1").Trim();
-        string t2 = Bot.Config!.Get<string>("Taunter2").Trim();
-        string t3 = Bot.Config!.Get<string>("Taunter3").Trim();
+        string t1 = (Bot.Config!.Get<string>("Taunter1") ?? string.Empty).Trim();
+        string t2 = (Bot.Config!.Get<string>("Taunter2") ?? string.Empty).Trim();
+        string t3 = (Bot.Config!.Get<string>("Taunter3") ?? string.Empty).Trim();
         string cn = className ?? string.Empty;
         bool isTaunter = cn.Equals(t1, StringComparison.OrdinalIgnoreCase)
             || cn.Equals(t2, StringComparison.OrdinalIgnoreCase)
@@ -286,22 +286,22 @@ public class UltraSpeakerv2
             }
 
             // Combat logic - only attack if monster exists
-            if (Bot.Monsters.CurrentMonsters.Any(m => m.Name == "The First Speaker" && m.Alive))
+            if (Bot.Monsters.CurrentMonsters?.Any(m => m != null && m.Name == "The First Speaker" && m.Alive) == true)
             {
                 Bot.Combat.Attack("The First Speaker");
 
                 Pots.ActivateEquippedPotion();
 
                 // Timer-based taunt rotation — only for taunters
-                string cn = Bot.Player.CurrentClass?.Name ?? string.Empty;
-                string t1 = Bot.Config!.Get<string>("Taunter1").Trim();
-                string t2 = Bot.Config!.Get<string>("Taunter2").Trim();
-                string t3 = Bot.Config!.Get<string>("Taunter3").Trim();
+                string cn = Bot.Player?.CurrentClass?.Name ?? string.Empty;
+                string t1 = (Bot.Config!.Get<string>("Taunter1") ?? string.Empty).Trim();
+                string t2 = (Bot.Config!.Get<string>("Taunter2") ?? string.Empty).Trim();
+                string t3 = (Bot.Config!.Get<string>("Taunter3") ?? string.Empty).Trim();
                 bool isTaunter = cn.Equals(t1, StringComparison.OrdinalIgnoreCase)
                     || cn.Equals(t2, StringComparison.OrdinalIgnoreCase)
                     || cn.Equals(t3, StringComparison.OrdinalIgnoreCase);
 
-                if (isTaunter && Bot.Player.HasTarget)
+                if (isTaunter && Bot.Player?.HasTarget == true)
                 {
                     TimeSpan timeSinceFightStart = DateTime.Now - fightStartTime;
                     double currentTime = timeSinceFightStart.TotalSeconds;

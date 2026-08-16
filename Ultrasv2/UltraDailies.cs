@@ -386,8 +386,8 @@ public class UltraDailies
         }
     }
 
-    private string NormalizeString(string input) => (input ?? string.Empty).Trim().ToLowerInvariant();
-    private bool HasAssignedClass(string assignedClass) =>
+    private string NormalizeString(string? input) => (input ?? string.Empty).Trim().ToLowerInvariant();
+    private bool HasAssignedClass(string? assignedClass) =>
         NormalizeString(Bot.Player.CurrentClass?.Name) == NormalizeString(assignedClass);
 
     private void EquipPresetClasses(string syncFile, int armySize) =>
@@ -490,7 +490,7 @@ public class UltraDailies
         int armySize = GetBossParticipantCount("UltraEzrajal");
         Ultra.WaitForArmy(armySize - 1, "ultra_ezrajal.sync");
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -604,7 +604,7 @@ public class UltraDailies
         int armySize = GetBossParticipantCount("UltraWarden");
         Ultra.WaitForArmy(armySize - 1, "ultra_warden.sync");
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -723,7 +723,7 @@ public class UltraDailies
         int armySize = GetBossParticipantCount("UltraEngineer");
         Ultra.WaitForArmy(armySize - 1, "ultra_engineer.sync");
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
@@ -832,7 +832,7 @@ public class UltraDailies
         int armySize = GetBossParticipantCount("UltraAvatarTyndarius");
         Ultra.WaitForArmy(armySize - 1, "ultra_tyndarius.sync");
         var (bestCell, _) = Core.ChooseBestCell(boss);
-         
+
         Core.EnableSkills();
 
         bool armyWipeDetected = false;

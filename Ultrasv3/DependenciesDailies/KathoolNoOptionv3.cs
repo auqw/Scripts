@@ -128,10 +128,10 @@ public class KathoolNoOpv3
             var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
             data = packet?["b"]?["o"];
 
-            if (data == null || data["cmd"]?.ToString() != "ct")
+            if (data == null || data!["cmd"]?.ToString() != "ct")
                 return;
 
-            if (data["anims"] != null)
+            if (data!["anims"] != null)
             {
                 foreach (var anim in data["anims"])
                 {
