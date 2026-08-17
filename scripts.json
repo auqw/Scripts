@@ -28329,7 +28329,10 @@
     "tags": [
       "rangda",
       "merge",
-      "rangda",
+      "sableng",
+      "gendeng",
+      "archipelago",
+      "marshland",
       "gatotkaca",
       "gatot",
       "crown",
@@ -28378,8 +28381,8 @@
       "ceremonial"
     ],
     "path": "Seasonal/IndonesianDay/RangdaMerge.cs",
-    "size": 12758,
-    "sha256": "5255d2134916b722315329e1ba798e07b6a41cc8678cdf6799b682fee734e769",
+    "size": 10130,
+    "sha256": "b9a39b010a941b6370bd634da407711af9863bbd2838cba95f192e233a747436",
     "fileName": "RangdaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/IndonesianDay/RangdaMerge.cs"
   },
