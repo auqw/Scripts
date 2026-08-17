@@ -37,7 +37,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
-using System.Net.Http;
 using System.Data.Common;
 
 public class CoreBots
@@ -194,15 +193,16 @@ public class CoreBots
 
         // Clear Handlers incase script starts a 2nd time somehow whilst the script is running 
         Bot.Handlers.Clear();
-        Bot.Events.PlayerAFK -= RetryCellOnAFK;
 
         if (changeTo)
         {
             // Prevent duplicate subscriptions if script restarts internally
             Bot.Events.ScriptStopping -= CrashDetector;
+            Bot.Events.PlayerAFK -= RetryCellOnAFK;
+            Bot.Sleep(1500);
 
+            // Reinitialize them
             Bot.Events.PlayerAFK += RetryCellOnAFK;
-
             Bot.Events.ScriptStopping += CrashDetector;
 
             _scriptStopwatch = Stopwatch.StartNew();
@@ -667,49 +667,6 @@ public class CoreBots
             _scriptStopwatch = null;
         }
     }
-
-    // For use when Quests randomly send u to a cutscene and skipcutscene is on, this will jump u to enter to fix the blackscreen *if* lagkiller* is on
-    // async void SkipCutSceneBlackScreenFix(string map, string cell, string pad)
-    // {
-    //     if (Bot.Options.LagKiller == true || !Bot.Player.Alive || Bot.Player.Cell == null)
-    //         return;
-
-    //     string cellLower = Bot.Player.Cell.ToLower();
-    //     if (!cellLower.Contains("blank") && !cellLower.Contains("wait"))
-    //         return;
-
-    //     await Task.Run(async () =>
-    //     {
-    //         // Prefer "Enter" cell if it exists, otherwise fall back to the first
-    //         // available cell that isn't blank, wait, or a cutscene cell.
-    //         string targetCell = "Enter";
-
-    //         var cells = Bot.Map.Cells; // <-- confirm real property/method name
-    //         if (cells == null || !cells.Any(c => c.Equals("Enter", StringComparison.OrdinalIgnoreCase)))
-    //         {
-    //             targetCell = cells?.FirstOrDefault(c =>
-    //             {
-    //                 string cLower = c.ToLower();
-    //                 return !cLower.Contains("blank")
-    //                     && !cLower.Contains("wait")
-    //                     && !cLower.Contains("cut");
-    //             }) ?? "Enter"; // last-resort fallback if nothing else qualifies
-    //         }
-
-    //         Bot.Map.Jump(targetCell, "Spawn", autoCorrect: inPublicRoom());
-    //         await Task.Delay(2500);
-
-    //         // Quick toggle lagkiller to fix blackscreen if lag killer is off (so we can see the game again)
-    //         if (!Bot.Options.LagKiller)
-    //         {
-    //             Bot.Options.LagKiller = true;
-    //             await Task.Delay(1000);
-    //             Bot.Options.LagKiller = false;
-    //             await Task.Delay(1000);
-    //         }
-    //         // Black Screen should now be fixed.
-    //     });
-    // }
 
     // Whether the player is a Member (set to true if necessary during setOptions)
     public bool isUpgraded()
@@ -1698,33 +1655,6 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
-    // public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
-    // {
-    //     _CheckInventorySpace();
-
-    //     ShopItem? item = parseShopItem(
-    //         GetShopItems(map, shopID),
-    //         shopID,
-    //         itemName,
-    //         shopItemID
-    //     );
-
-    //     if (item == null)
-    //     {
-    //         Logger(
-    //             $"Failed to find the item '{itemName}' in the shop with ID {shopID}, skipping it."
-    //         );
-    //         return;
-    //     }
-
-    //     if (!string.IsNullOrEmpty(item.CategoryString)
-    //         && CategoryStrings.Contains(item.CategoryString))
-    //     {
-    //         _CheckHouseSpace();
-    //     }
-
-    //     _BuyItem(map, shopID, item, quant, Log);
-    // }
     public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         _CheckInventorySpace();
@@ -3374,7 +3304,7 @@ public class CoreBots
             GC.Collect();
         }, token);
     }
-    
+
     /// <summary>
     /// Cancels the current registered quests.
     /// </summary>
@@ -7820,37 +7750,15 @@ public class CoreBots
         }
     }
 
-    // /// <summary>
-    // /// Checks, and prompts for the latest Skua Version
-    // /// <param name="targetVersion">Current Skua Version to Check against</param>
-    // /// </summary>
-    // private void SkuaVersionChecker(string targetVersion = "1.4.2.0")
-    // {
-    //     if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2" || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
-    //         return;
-
-    //     if (
-    //         Bot.ShowMessageBox(
-    //             $"This script requires Skua {targetVersion} or above, "
-    //                 + "click OK to open the download page of the latest release, or update yourself via the `Skua Manager > \"Update\" tab`",
-    //             "Outdated Skua detected",
-    //             "OK"
-    //         ).Text == "OK"
-    //     )
-    //         Process.Start("explorer", "https://github.com/auqw/Skua/releases/latest");
-    //     Logger(
-    //         $"This script requires Skua {targetVersion} or above. Stopping the script",
-    //         messageBox: true,
-    //         stopBot: true
-    //     );
-    // }
-    // 
-
     private const int MaxRetries = 3;
 
     private async Task SkuaVersionCheckerAsync()
     {
-        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2")
+        if (Bot.Version == null
+        // Skua
+        || Bot.Version.ToString() == "1.4.4.4"
+        // VibeSkua
+        || Bot.Version.ToString() == "1.8.5.0")
             return;
 
         bool isPt = System.Globalization.CultureInfo.CurrentUICulture
@@ -8715,13 +8623,17 @@ public class CoreBots
         string? cell = Bot.Player?.Cell;
         string? pad = Bot.Player?.Pad;
 
-        if (string.IsNullOrWhiteSpace(cell)){ return; }
+        if (string.IsNullOrWhiteSpace(cell))
+            return;
 
-        pad = string.IsNullOrWhiteSpace(pad) ? cell.Equals("Enter", StringComparison.OrdinalIgnoreCase) ? "Spawn" : "Left" : pad;
+        if (string.IsNullOrWhiteSpace(pad))
+            pad = cell.Equals("Enter", StringComparison.OrdinalIgnoreCase) ? "Spawn" : "Left";
 
         Logger("AFK detected, retrying current cell jump");
         Logger($"Jumping to [{cell}, {pad}]");
-        Bot.Map.Jump(cell, pad, autoCorrect: inPublicRoom());
+
+        Bot.Map.Jump(cell, pad);
+
         Logger($"Jump request to [{cell}, {pad}] sent as an anti-AFK measure.");
     }
 
@@ -9975,7 +9887,7 @@ public class CoreBots
 
             #endregion baconcat.. is annoying
 
-            #region Bypass Banned
+            #region Bypass breaks shit...
 
             // This doesn't mean that you cant do a bypass inside the boat itself, it just can't be in Join because it fucks up CanBuy
             // Write the ID that can be used for the bypass in a comment after it, so people can easily
@@ -9991,7 +9903,7 @@ public class CoreBots
                 //         break;
                 //     else
                 //     {
-                //         Bot.Log("Masp isn't currently Available.");
+                //         Bot.Log("Map isn't currently Available.");
                 //         Bot.StopAsync();
                 //     }
                 //     break;
