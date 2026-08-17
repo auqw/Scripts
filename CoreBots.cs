@@ -194,12 +194,14 @@ public class CoreBots
 
         // Clear Handlers incase script starts a 2nd time somehow whilst the script is running 
         Bot.Handlers.Clear();
+        Bot.Events.PlayerAFK -= RetryCellOnAFK;
 
         if (changeTo)
         {
             // Prevent duplicate subscriptions if script restarts internally
             Bot.Events.ScriptStopping -= CrashDetector;
 
+            Bot.Events.PlayerAFK += RetryCellOnAFK;
 
             Bot.Events.ScriptStopping += CrashDetector;
 
@@ -8703,6 +8705,24 @@ public class CoreBots
             "Core File Info"
         );
         Bot.StopSync(true);
+    }
+
+    private void RetryCellOnAFK()
+    {
+        if (Bot.ShouldExit || Bot.Map.Name.Equals("afkquest", StringComparison.OrdinalIgnoreCase))
+            return;
+
+        string? cell = Bot.Player?.Cell;
+        string? pad = Bot.Player?.Pad;
+
+        if (string.IsNullOrWhiteSpace(cell)){ return; }
+
+        pad = string.IsNullOrWhiteSpace(pad) ? cell.Equals("Enter", StringComparison.OrdinalIgnoreCase) ? "Spawn" : "Left" : pad;
+
+        Logger("AFK detected, retrying current cell jump");
+        Logger($"Jumping to [{cell}, {pad}]");
+        Bot.Map.Jump(cell, pad, autoCorrect: inPublicRoom());
+        Logger($"Jump request to [{cell}, {pad}] sent as an anti-AFK measure.");
     }
 
     public void PlayerAFK()
