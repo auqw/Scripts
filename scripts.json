@@ -7071,6 +7071,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/HydraMerge.cs"
   },
   {
+    "name": "Witch Queen's Atelier Merge",
+    "description": "This script will farm the items required to get all the items from the Witch Queen's Atelier Merge Shop.",
+    "tags": [
+      "witch",
+      "queen",
+      "atelier",
+      "merge",
+      "birgittaspire",
+      "talia",
+      "galilera",
+      "starlight",
+      "chaser",
+      "visionary",
+      "astrolabe"
+    ],
+    "path": "Other/MergeShops/WitchQueensAtelierMerge.cs",
+    "size": 9848,
+    "sha256": "f6a0c6a8bcfe71a703c1568ad0ff4cf3b356394b76fcf13ca36dd0f52062fae9",
+    "fileName": "WitchQueensAtelierMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WitchQueensAtelierMerge.cs"
+  },
+  {
     "name": "Carcossa Canteen Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Carcossa Canteen Merge [2624] in /forgealbedo",
     "tags": [
