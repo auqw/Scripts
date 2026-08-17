@@ -67,43 +67,32 @@ public class LegionExercise3
             $"Potato Prediction Inc. Decided: {displayPercentage} is The Chance for Desired Rewards."
         );
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Judgement Hammer" }))
+        while (!Bot.ShouldExit)
         {
             Core.EnsureAccept(823);
             Core.EquipClass(ClassType.Farm);
-            if (!Core.CheckInventory("Chaos Egg", 24))
-            {
-                Core.Logger($"Hunting Chaos Egg for Chaos Egg, (24) [Temp = false]");
-                while (!Core.CheckInventory("Chaos Egg", 24))
-                    Core.HuntMonster("Uppercity", "Chaos Egg", "Chaos Egg", 24, isTemp: false);
-            }
-            Core.HuntMonster(
-                "Mobius",
-                "Chaos Sp-Eye",
-                "Chaorrupted Essence",
-                50,
-                isTemp: false,
-                publicRoom: false
-            );
-            Core.Sleep(2500);
+            Core.HuntMonster("Uppercity", "Chaos Egg", "Chaos Egg", 24, isTemp: false);
+            Core.KillMonster("chaosmarsh", "Forest3", "Left", "Chaos Spider", "Chaorrupted Essence", 50, isTemp: false, publicRoom: false);
+
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "Underworld",
-                "Dreadfiend Of Nulgath",
-                "Darkness Core",
-                publicRoom: false
-            );
+            Core.HuntMonster("Underworld", "Dreadfiend Of Nulgath", "Darkness Core", publicRoom: false);
+
             Core.EnsureComplete(823);
-            Core.Logger($"Finished Quest {i++} Times");
+            if (Bot.Drops.Exists("Judgement Hammer"))
+                Bot.Wait.ForPickup("Judgement Hammer");
+
+            if (Core.CheckInventory("Judgement Hammer"))
+            {
+                Core.Logger($"{Rewards} Aquired");
+                Core.Logger($"Farming Took {i++} Times");
+            }
         }
 
-        Core.Logger($"{Rewards} Aquired");
-        Core.Logger($"Farming Took {i++} Times");
 
         if (Dice > i++)
-            Core.Logger($"Perdiction: {Dice} was Higher Congratulations");
+            Core.Logger($"Perdiction: [{Dice}] was Higher... Congratulations!");
 
-        Core.Logger($"Perdiction: {Dice} was lower sorry it took so long");
+        Core.Logger($"Perdiction: [{Dice}] was lower... sorry it took so long D:!");
 
         Core.ToBank(Rewards);
     }
