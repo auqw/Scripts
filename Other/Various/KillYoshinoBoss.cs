@@ -41,9 +41,8 @@ public class KillYoshinoBoss
 
         Core.EquipClass(ClassType.Solo);
 
-
         Core.AddDrop("Limited Event Coin");
-        Core.RegisterQuests(5720);
+        Core.EnsureAccept(5720);
         Core.KillMonster("yoshino", "r2", "Right", "*", "Limited Event Monster Proof");
         Core.JumpWait();
         Farm.ToggleBoost(BoostType.Gold);
