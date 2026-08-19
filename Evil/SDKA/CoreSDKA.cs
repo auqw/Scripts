@@ -138,7 +138,24 @@ public class CoreSDKA
         Core.AddDrop(SDKAItems);
         Core.Logger("Step 1/5: Unlock Hard Core Metals");
         UnlockHardCoreMetals();
-        Daily.HardCoreMetals(["Arsenic", "Chromium", "Rhodium"], 1, ToBank: true);
+        if (!Core.CheckInventory(
+                ["Arsenic", "Accursed Arsenic", "Accursed Arsenic of Doom", "Daggers of Destruction", "Shadow Daggers of Destruction", "Necrotic Daggers of Destruction"],
+                any: true,
+                toInv: false
+            ))
+            Daily.HardCoreMetals(["Arsenic"], ToBank: true);
+        else if (!Core.CheckInventory(
+                ["Chromium", "Calamitous Chromium", "Calamitous Chromium of Doom", "Broadsword of Bane", "Shadow Broadsword of Bane", "Necrotic Broadsword of Bane"],
+                any: true,
+                toInv: false
+            ))
+            Daily.HardCoreMetals(["Chromium"], ToBank: true);
+        else if (!Core.CheckInventory(
+                ["Rhodium", "Reprehensible Rhodium", "Reprehensible Rhodium of Doom", "Bow to the Shadows", "ShadowBow of the Shadows", "Necrotic Bow of the Shadow"],
+                any: true,
+                toInv: false
+            ))
+            Daily.HardCoreMetals(["Rhodium"], ToBank: true);
         Core.Logger("Step 2/5: Getting Necrotic Daggers");
         NecroticDaggers();
         Core.Logger("Step 3/5: Getting Necrotic Broadsword");
