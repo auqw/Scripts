@@ -138,6 +138,7 @@ public class CoreSDKA
         Core.AddDrop(SDKAItems);
         Core.Logger("Step 1/5: Unlock Hard Core Metals");
         UnlockHardCoreMetals();
+        Daily.HardCoreMetals(["Arsenic", "Chromium", "Rhodium"], 1, ToBank: true);
         Core.Logger("Step 2/5: Getting Necrotic Daggers");
         NecroticDaggers();
         Core.Logger("Step 3/5: Getting Necrotic Broadsword");
