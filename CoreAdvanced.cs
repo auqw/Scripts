@@ -1958,11 +1958,6 @@ public class CoreAdvanced
 
             if (EnhAfter)
             {
-                ReEnhanceAfter = CurrentClassEnh();
-                ReCEnhanceAfter = CurrentCapeSpecial();
-                ReHEnhanceAfter = CurrentHelmSpecial();
-                ReWEnhanceAfter = CurrentWeaponSpecial();
-
                 Core.Logger(
                     $" - Enhancements → Class: {ReEnhanceAfter}" +
                     $"{(ReCEnhanceAfter != CapeSpecial.None ? $", Cape: {ReCEnhanceAfter}" : "")}" +
