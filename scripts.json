@@ -12390,7 +12390,7 @@
   },
   {
     "name": "JoePrepsForUltras",
-    "description": "This script will farm all the required items for Ultra Bosses",
+    "description": "This script will farm all the required items for Ultra Bosses for the Grimoire client ultra scripts made by Insert.",
     "tags": [
       "joe",
       "ultra",
@@ -12399,8 +12399,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 28138,
-    "sha256": "036b048242b3bd66a349ba19488632363c034a92d1b291e2e64f8311943c45ae",
+    "size": 28440,
+    "sha256": "1e90b59f20cc0e233a6cd5d64bde8ad601497bc061273993646cdd94bba3dfe3",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
