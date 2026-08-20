@@ -1,6 +1,6 @@
 /*
 name: JoePrepsForUltras
-description: This script will farm all the required items for Ultra Bosses
+description: This script will farm all the required items for Ultra Bosses for the Grimoire client ultra scripts made by Insert.
 tags: joe, ultra, boss, preparation, farm
 */
 
@@ -399,6 +399,7 @@ public class JoePrepsForUltras
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
+        Core.Logger("THIS SCRIPT IS MADE TO PREP FOR InsertNameHere ULTRAS!!! \nA.K.A FOR Grimoire ULTRAS!!!\n \n THIS IS NOT MADE FOR Skua ULTRAS!!! \n \nthis script is also old af, it was made before Skua could do ultras lol", messageBox: true);
 
         PlayerSetup();
 
