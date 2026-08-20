@@ -1282,14 +1282,10 @@ public class CoreNation
     void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
     {
         if (!returnPolicyActive)
-        {
             return;
-        }
 
         if (!Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
-        {
             return;
-        }
 
         Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (quest?.Rewards == null)
@@ -1310,7 +1306,7 @@ public class CoreNation
 
             if (Core.CheckInventory(preferred.ID, preferred.MaxStack))
             {
-                Core.DebugLogger(this, $"Preferred item '{item}' is already maxed ({Bot.Inventory.GetQuantity(preferred.Name)}{preferred.MaxStack}) - skipping quest");
+                Core.DebugLogger(this, $"Preferred item '{item}' is already maxed ({Bot.Inventory.GetQuantity(preferred.Name)}/{preferred.MaxStack}) - skipping quest");
                 return;
             }
         }
@@ -1321,15 +1317,14 @@ public class CoreNation
             return;
         }
 
-
         Core.EnsureAccept(7551);
         Core.ResetQuest(7551);
         Core.DarkMakaiItem("Dark Makai Rune");
 
         ItemBase? reward = item != null
-            ? quest.Rewards.FirstOrDefault(r => r.Name == item)
-            : quest.Rewards.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack));
-
+            ? quest.Rewards.FirstOrDefault(r => r.ID != 57446 && r.Name == item)
+            : quest.Rewards.FirstOrDefault(r => r.ID != 57446 && !Core.CheckInventory(r.ID, r.MaxStack));
+                
         if (!Bot.Quests.CanCompleteFullCheck(7551))
         {
             Core.DebugLogger(this, "Quest 7551 cannot be completed - missing requirements");
@@ -1338,14 +1333,15 @@ public class CoreNation
 
         if (reward != null)
         {
-            Core.DebugLogger(this, "Completing quest with specific reward: {reward.Name} (ID: {reward.ID})");
+            Core.DebugLogger(this, $"Completing quest with specific reward: {reward.Name} (ID: {reward.ID})");
             Core.EnsureComplete(7551, reward.ID);
             Bot.Wait.ForQuestComplete(7551);
             Bot.Wait.ForPickup(reward.ID);
             return;
         }
 
-        Core.EnsureComplete(7551);
+        // Complete without a selected reward; Receipt of Swindle is guaranteed.
+        Bot.Quests.EnsureComplete(7551, -1);
     }
 
     /// <summary>
