@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 174786,
-    "sha256": "6d41c35b00e4acb943d18bec80a7521bf15e73cac8ff29c42362576dcf03a8b4",
+    "size": 174563,
+    "sha256": "db6efcd052c0227355ca210a43c9365b204a82b78e4bc4a87eaae5d00b07acdb",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -20127,8 +20127,8 @@
       "null"
     ],
     "path": "Good/BLoD/CoreBLOD.cs",
-    "size": 27743,
-    "sha256": "2b01e041182b5d188750bbea0f99784e24db26d82e920bf5988eedf1404dec60",
+    "size": 27469,
+    "sha256": "25330ecc6440b408a7907c26d856337ca27d33c561c6bf2b68ed9b9d9f82e87a",
     "fileName": "CoreBLOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/CoreBLOD.cs"
   },
