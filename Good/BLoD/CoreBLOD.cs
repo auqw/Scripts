@@ -300,30 +300,9 @@ public class CoreBLOD
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            Core.KillMonster(
-                "battleunderc",
-                "r5",
-                "Left",
-                "Crystalized Jellyfish",
-                "Jellyfish Soul",
-                log: false
-            );
-            Core.KillMonster(
-                "battleundera",
-                "r7",
-                "Left",
-                "Bone Terror",
-                "Bone Terror Soul",
-                log: false
-            );
-            Core.KillMonster(
-                "battleunderb",
-                "r3",
-                "Right",
-                "Undead Champion",
-                "Undead Champion Soul",
-                log: false
-            );
+            Core.KillMonster("battleunderc", "r5", "Left", "Crystalized Jellyfish", "Jellyfish Soul", log: false);
+            Core.KillMonster("battleundera", "r7", "Left", "Bone Terror", "Bone Terror Soul", log: false);
+            Core.KillMonster("battleunderb", "r3", "Right", "Undead Champion", "Undead Champion Soul", log: false);
             Bot.Wait.ForPickup(item);
         }
 
@@ -361,7 +340,7 @@ public class CoreBLOD
 
         GetBlindingWeapon(weapon);
 
-        int quest = (weapon) switch
+        int quest = weapon switch
         {
             WeaponOfDestiny.Bow => 2174,
             WeaponOfDestiny.Daggers => 2175,
@@ -372,17 +351,20 @@ public class CoreBLOD
             _ => 0,
         };
 
-        if (Core.CheckInventory("Blinding Light Fragments", 10))
-            Core.ChainComplete(quest);
         Core.Logger("Selling \"Blinding Light Fragments\" before starting this as it can bug out and just stay at 1/1 forever.. ( blame ae).");
+        Core.Unbank("Blinding Light Fragments");
         Core.SellItem("Blinding Light Fragments", all: true);
-        
+
         Core.AddDrop("Blinding Light Fragments");
         Core.AddDrop(Core.QuestRewards(quest));
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger(item, quant);
-        Core.RegisterQuests(quest);
-        Core.KillMonster("battleunderb", "Enter", "Spawn", "Skeleton Warrior", item, quant, log: false, isTemp: false);
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        {
+            Core.EnsureAccept(quest);
+            Core.KillMonster("battleunderb", "Enter", "Spawn", "*", "Blinding Light Fragments", 10, isTemp: false, log: false);
+            Core.EnsureComplete(quest);
+        }
         Core.CancelRegisteredQuests();
     }
 
