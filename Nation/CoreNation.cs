@@ -998,7 +998,7 @@ public class CoreNation
             {
                 Core.EnsureAccept(2566);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster("elemental", "Mana Golem", "Mana Energy for Nulgath", 10, isTemp: false, log: false); 
+                Core.HuntMonster("elemental", "Mana Golem", "Mana Energy for Nulgath", 10, isTemp: false, log: false);
                 Core.EquipClass(ClassType.Farm);
 
                 while (
@@ -1324,7 +1324,7 @@ public class CoreNation
         ItemBase? reward = item != null
             ? quest.Rewards.FirstOrDefault(r => r.ID != 57446 && r.Name == item)
             : quest.Rewards.FirstOrDefault(r => r.ID != 57446 && !Core.CheckInventory(r.ID, r.MaxStack));
-                
+
         if (!Bot.Quests.CanCompleteFullCheck(7551))
         {
             Core.DebugLogger(this, "Quest 7551 cannot be completed - missing requirements");
@@ -1341,7 +1341,9 @@ public class CoreNation
         }
 
         // Complete without a selected reward; Receipt of Swindle is guaranteed.
-        Bot.Quests.EnsureComplete(7551, -1);
+        // EnsureComplete automaticly uses the first reward id avaible( if hno reward id is provided), else -1.
+        // and we need to use the Core varient as it has teh safety nets.. but.quest. ensurecomplete does not. ( not all of them atleast) 
+        Core.EnsureComplete(7551, -1);
     }
 
     /// <summary>
