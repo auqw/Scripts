@@ -793,11 +793,22 @@ public class UnlockForgeEnhancements
 
         if (!Core.isCompletedBefore(8746))
         {
-            Core.Logger("You must have faced Darkon the Conductor and done the weekly quest in order to unlock \"Arcana's Concerto\"");
+            Core.Logger("You must have faced Darkon the Conductor and done the weekly quest in order to unlock \"Arcana's Concerto\".");
             return;
         }
+
+        // Farm everything required for Prince Darkon's Poleaxe.
         PDPPR.FarmPreReqs();
 
+        // Prince Darkon's Poleaxe is an actual requirement for Arcana's Concerto.
+        // Do not claim Quest 8742 is complete until we have it.
+        if (!Core.CheckInventory("Prince Darkon's Poleaxe"))
+        {
+            Core.Logger("\"Prince Darkon's Poleaxe\" is required to continue the Arcana's Concerto unlock. Farm/merge it at /ultradrago.");
+            return;
+        }
+
+        // Darkon's Debris 2 (Reconstructed) is the other required item.
         if (!Core.CheckInventory("Darkon's Debris 2 (Reconstructed)"))
         {
             if (!Core.CheckInventory("Darkon's Debris 2 (Recovered)"))
@@ -805,41 +816,63 @@ public class UnlockForgeEnhancements
                 Darkon.UnfinishedMusicalScore(22);
                 Adv.BuyItem("theworld", 2141, "Darkon's Debris 2 (Recovered)");
             }
+
             Darkon.BanditsCorrespondence(22);
             Darkon.SukisPrestiege(22);
             Darkon.AncientRemnant(22);
             Darkon.WheelofFortune(22, 0);
+
             if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
             {
                 if (!Core.CheckInventory("Darkon Insignia", 20))
                 {
-                    Core.Logger(" x20 \"Darkon Insignia\" is Required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
+                    Core.Logger("x20 \"Darkon Insignia\" is required to continue the quest. Our bots cannot *currently* kill this mob; use Grim (different client) & @InsertNameHere's ultra bot.");
                     return;
                 }
-                else
-                    Adv.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
+
+                Adv.BuyItem(
+                    "ultradarkon",
+                    2147,
+                    "Darkon's Debris 2 (Reconstructed)"
+                );
             }
             else
-                Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false, please buy the \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, and complete the quest yourself (QuestID: 8742).");
+            {
+                Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false. Please buy \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, then complete QuestID 8742 yourself.");
+                return;
+            }
         }
 
+        // Quest 8742 also requires these insignias.
         if (!Core.CheckInventory("King Drago Insignia", 5))
         {
-            Core.Logger(" x5 \"King Drago Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
+            Core.Logger("x5 \"King Drago Insignia\" is required to continue the quest. Our bots cannot *currently* kill this mob; use Grim (different client) & @InsertNameHere's ultra bot.");
             return;
         }
+
         if (!Core.CheckInventory("Darkon Insignia", 5))
         {
-            Core.Logger(" x5 \"Darkon Insignia\" is required to continue quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot");
+            Core.Logger("x5 \"Darkon Insignia\" is required to continue the quest. Our bots cannot *currently* kill this mob; use Grim (different client) & @InsertNameHere's ultra bot.");
             return;
         }
+
+        // Final sanity check: both actual Arcana's Concerto items must exist.
+        if (!Core.CheckInventory("Prince Darkon's Poleaxe") ||
+            !Core.CheckInventory("Darkon's Debris 2 (Reconstructed)"))
+        {
+            Core.Logger("Arcana's Concerto requirements are not complete. \"Prince Darkon's Poleaxe\" and \"Darkon's Debris 2 (Reconstructed)\" are both required.");
+            return;
+        }
+
         if (Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"))
         {
             Core.ChainComplete(8742);
             Core.Logger("Enhancement Unlocked: Arcana's Concerto");
         }
         else
-            Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false, please buy the \"Darkon's Debris 2 (Reconstructed)\" from the shop manually, and complete the quest yourself (QuestID: 8742).");
+        {
+            Core.Logger("\"UseInsignOnArcanasConcerto\" is set to false. Please complete QuestID 8742 manually.");
+        }
     }
 
     public void Acheron()
