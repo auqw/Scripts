@@ -41,6 +41,7 @@ public class AriaGreenhouse
         Fire();
         Energy();
         Kylokos();
+        Darkness();
     }
 
     public void Nature()
