@@ -133,25 +133,25 @@ public class AriaGreenhouse
         Story.KillQuest(10192, "feverfew", "Coral Creeper");
 
         // 10193 | Black Silk and White Fleece
-        if (!Story.QuestProgression(10193))
+        if (!Story.QuestProgression(10193) || !Core.CheckInventory("Hyonix's Treasure Chest"))
         {
             Core.HuntMonsterQuest(10193, ("blackseakeep", "Blacksea Pirate Mage", ClassType.Farm));
         }
 
         // 10194 | Sunlight and Moonbeams
-        if (!Story.QuestProgression(10194))
+        if (!Story.QuestProgression(10194) || !Core.CheckInventory("Sunlit Sea"))
         {
             Core.HuntMonsterQuest(10194, ("sunlightzone", "Blighted Water", ClassType.Farm));
         }
 
         // 10195 | Midnight and Noon
-        if (!Story.QuestProgression(10195))
+        if (!Story.QuestProgression(10195) || !Core.CheckInventory("Midnight Sea"))
         {
             Core.HuntMonsterQuest(10195, ("midnightzone", "Venerated Wraith", ClassType.Farm));
         }
 
         // 10196 | Lie and Truth
-        if (!Story.QuestProgression(10196))
+        if (!Story.QuestProgression(10196) || !Core.CheckInventory("Abyssal Sea"))
         {
             Core.HuntMonsterQuest(10196, ("abyssalzone", "Blighted Water", ClassType.Farm));
         }
