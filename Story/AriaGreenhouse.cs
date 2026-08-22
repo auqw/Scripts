@@ -361,4 +361,85 @@ public class AriaGreenhouse
             Core.HuntMonsterQuest(10318, ("yokaiportal", "Kitsune Spirits", ClassType.Farm));
         }
     }
+
+    public void Darkness()
+    {
+        if (Core.isCompletedBefore(10834))
+            return;
+
+        Story.PreLoad(this);
+
+        // 10825 | I Don't Know Your Name
+        if (!Story.QuestProgression(10825))
+        {
+            Core.HuntMonsterQuest(10825,
+                ("well", "Gell Oh No", ClassType.Solo));
+        }
+
+
+        // 10826 | I Still Don't Know You
+        if (!Story.QuestProgression(10826))
+        {
+            Story.MapItemQuest(10826, "mudluk", 16093, 8);
+        }
+
+
+        // 10827 | I Heard You're Looking For Me
+        if (!Story.QuestProgression(10827))
+        {
+            Story.MapItemQuest(10827, "abaddoncave", 16094, 7);
+        }
+
+
+        // 10828 | I'm Looking for You
+        if (!Story.QuestProgression(10828))
+        {
+            Core.HuntMonsterQuest(10828,
+                ("doomwood", "Weakened Ectomancer", ClassType.Solo));
+        }
+
+
+        // 10829 | I'm Getting Closer
+        if (!Story.QuestProgression(10829))
+        {
+            Story.MapItemQuest(10829, "maul", 16096, 3);
+        }
+
+
+        // 10830 | I'm Getting Even Closer
+        if (!Story.QuestProgression(10830))
+        {
+            Core.HuntMonsterQuest(10830,
+                ("yokaitreasure", "Quicksilver", ClassType.Solo));
+        }
+
+
+        // 10831 | I'm Right Behind You
+        if (!Story.QuestProgression(10831))
+        {
+            Story.MapItemQuest(10831, "ashray", 16098, 2);
+        }
+
+
+        // 10832 | I'm Breathing Down Your Neck
+        if (!Story.QuestProgression(10832))
+        {
+            Story.MapItemQuest(10832, "lavarun", 16099);
+        }
+
+
+        // 10833 | Now I Know Where You Live
+        if (!Story.QuestProgression(10833))
+        {
+            Story.MapItemQuest(10833, "terminagrove", 16100);
+        }
+
+
+        // 10834 | See You Later, Stalker
+        if (!Story.QuestProgression(10834))
+        {
+            Story.MapItemQuest(10834, "greifplayhouse", 16095);
+        }
+
+    }
 }
