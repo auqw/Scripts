@@ -1011,8 +1011,8 @@
       "kylokos"
     ],
     "path": "Story/AriaGreenhouse.cs",
-    "size": 10772,
-    "sha256": "2c164d15ba58ad8979316333fb5f21f77308fec3d4596fa114e8e6a9c31642bc",
+    "size": 12732,
+    "sha256": "87a4bd96216cee5fc9b6a0454773ddd8a50624b376ae96d0ebc28c726f75a901",
     "fileName": "AriaGreenhouse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AriaGreenhouse.cs"
   },
@@ -22773,8 +22773,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs",
-    "size": 38110,
-    "sha256": "e33e58cbcf5be4cbed07bacfe2f23f387a40334bbec8f50a873d1ec9570bc4cb",
+    "size": 38109,
+    "sha256": "6add7b74b272757c2750c0e7aa39f461edd4246f9b9ba4f90f4a07e7431b57b9",
     "fileName": "WeeklyReleaseGeneratorV2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs"
   },
