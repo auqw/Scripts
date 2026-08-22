@@ -8,7 +8,7 @@ tags: developer, generator, story, quests, drops, packets, v2
 //cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/DropPacketCollector.cs
 //cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs
 //cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs
-//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/GeneratorSupportUtils.cs
+//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs
 
 using System.Diagnostics;
 using System.Globalization;
