@@ -3070,7 +3070,7 @@ public class CoreBots
 
     private void OnQuestTurnedIn(int questID)
     {
-        Logger($"[QuestTurnIn] Turn-in event fired (QuestID={questID}).");
+        DebugLogger(this, $"[QuestTurnIn] Turn-in event fired (QuestID={questID}).", "RegisterQuest Debug");
         MarkTurnInSeen();
     }
 
