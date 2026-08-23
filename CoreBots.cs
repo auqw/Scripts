@@ -3022,33 +3022,121 @@ public class CoreBots
 
     #endregion Drops
 
-    #region Quest
+    #region Quest\
+    // ============================================================
+    // Fields
+    // ============================================================
 
-    private CancellationTokenSource? questCTS = null;
+    private CancellationTokenSource? questCTS;
+    private int[] registeredQuests = [];
+    private List<Task> _questTasks = [];
 
-    private async Task EnsureQuestAccepted(int questID)
+    private DateTime _lastTurnInSeen = DateTime.UtcNow;
+    private readonly object _turnInSeenLock = new();
+    private bool _turnInEventHooked = false;
+
+    // Shadow-tracks whether WE believe the quest log is open. The Flash
+    // bridge can't reliably read the client's real state, so this is a
+    // heuristic maintained locally, not authoritative — it only decides
+    // which recovery path to take (open vs. close-wait-reopen), and can
+    // drift if the player manually toggles the log while this runs.
+    private bool _questLogAssumedOpen = false;
+    private readonly object _questLogStateLock = new();
+
+    // ============================================================
+    // Turn-in watchdog helpers
+    // ============================================================
+
+    private void MarkTurnInSeen()
     {
-        if (!Bot.Quests.IsInProgress(questID))
-        {
-            Bot.Quests.Accept(questID);
-            await Task.Delay(ActionDelay * 2); // Wait for the action delay to ensure the quest is accepted
-        }
+        lock (_turnInSeenLock)
+            _lastTurnInSeen = DateTime.UtcNow;
     }
 
+    private TimeSpan TimeSinceLastTurnIn()
+    {
+        lock (_turnInSeenLock)
+            return DateTime.UtcNow - _lastTurnInSeen;
+    }
+
+    private void EnsureTurnInEventHooked()
+    {
+        if (_turnInEventHooked)
+            return;
+
+        Bot.Events.QuestTurnedIn += OnQuestTurnedIn;
+        _turnInEventHooked = true;
+    }
+
+    private void OnQuestTurnedIn(int questID)
+    {
+        Logger($"[QuestTurnIn] Turn-in event fired (QuestID={questID}).");
+        MarkTurnInSeen();
+    }
+
+    // ============================================================
+    // Quest log open/close helper
+    // ============================================================
+
+    private async Task EnsureQuestLogOpenAsync(CancellationToken token)
+    {
+        bool wasOpen;
+        lock (_questLogStateLock)
+            wasOpen = _questLogAssumedOpen;
+
+        if (!wasOpen)
+        {
+            Logger("[QuestTurnIn] Quest log believed closed — opening it.");
+            Bot.Flash.CallGameFunction("world.toggleQuestLog");
+        }
+        else
+        {
+            Logger("[QuestTurnIn] Quest log believed open — cycling it (close, wait, reopen).");
+            Bot.Flash.CallGameFunction("world.toggleQuestLog"); // close
+            await Task.Delay(2500, token);
+            Bot.Flash.CallGameFunction("world.toggleQuestLog"); // reopen
+        }
+
+        lock (_questLogStateLock)
+            _questLogAssumedOpen = true;
+    }
+
+    // ============================================================
+    // RegisterQuests
+    // ============================================================
+
     /// <summary>
-    /// This will register quests to be completed while doing something else, i.e. while in combat.
-    /// If it has quests already registered, it will cancel them first and then register the new quests.
+    /// Registers one or more quests to be accepted, tracked, and turned in automatically
+    /// while the bot does something else (e.g. while in combat). Any previously registered
+    /// quests are fully torn down first via <see cref="CancelRegisteredQuests"/> — deterministically
+    /// waiting for old background loops to exit, unhooking the turn-in event, and unregistering/abandoning
+    /// the old set — before the new quests are registered. Runs three background loops for the lifetime
+    /// of this registration:
+    /// <list type="bullet">
+    /// <item><description>a fast watcher that completes/turns in quests as soon as they become completable;</description></item>
+    /// <item><description>a slower manager that accepts quests that aren't currently in progress;</description></item>
+    /// <item><description>a turn-in watchdog that listens for <see cref="Bot.Events.QuestTurnedIn"/> and, if a quest
+    /// is in progress and completable but no turn-in has been observed for roughly 60 seconds (with a few seconds
+    /// of random jitter), ensures the quest log is open — opening it if closed, or cycling it closed-then-reopen
+    /// if already believed open — mirroring the manual fix for quests that get stuck showing complete (e.g. "1/1")
+    /// without turning in.</description></item>
+    /// </list>
+    /// Quests the player is missing acceptance requirements for, or that require membership the player
+    /// doesn't have, are skipped with a logged reason rather than failing the whole call.
     /// </summary>
-    /// <param name="questIDs">ID of the quests to be completed.</param>
+    /// <param name="questIDs">IDs of the quests to register and complete.</param>
     public void RegisterQuests(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
             return;
 
+        CancelRegisteredQuests();
+
+        EnsureTurnInEventHooked();
+
         Dictionary<Quest, int> chooseQuests = [];
         Dictionary<Quest, int> nonChooseQuests = [];
 
-        // PreChecks
         foreach (int questID in questIDs.Distinct())
         {
             Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
@@ -3118,14 +3206,10 @@ public class CoreBots
             Unbank(itemsToUnbank);
         }
 
-        GC.Collect();
-
-        // Actually cancel any previous run before starting a new one, and dispose it.
-        questCTS?.Cancel();
-        questCTS?.Dispose();
-
         questCTS = new();
         CancellationToken token = questCTS.Token;
+
+        MarkTurnInSeen();
 
         Dictionary<int, int> stuckCounts = [];
         List<Quest> allQuests = chooseQuests.Keys
@@ -3133,7 +3217,8 @@ public class CoreBots
             .Distinct()
             .ToList();
 
-        // Tracks quests currently being turned in, so the watcher and manager can't race on the same one.
+        registeredQuests = allQuests.Select(q => q.ID).ToArray();
+
         HashSet<int> inFlight = [];
         object inFlightLock = new();
 
@@ -3155,7 +3240,6 @@ public class CoreBots
                 inFlight.Remove(questId);
         }
 
-        // Shared completion logic used by the watcher.
         async Task CompleteQuest(Quest quest)
         {
             int rewardId = -1;
@@ -3181,7 +3265,7 @@ public class CoreBots
                     : Bot.Flash.CallGameFunction<int>("world.maximumQuestTurnIns", quest.ID))}%wvz%"
             );
 
-            await Task.Delay(ActionDelay * 2);
+            await Task.Delay(ActionDelay * 2, token);
 
             stuckCounts.TryGetValue(quest.ID, out int stuckCount);
 
@@ -3194,19 +3278,13 @@ public class CoreBots
 
             if (stuckCount >= 20 && Bot.Quests.IsInProgress(quest.ID))
             {
-                await Task.Delay(ActionDelay * 2);
-
+                await Task.Delay(ActionDelay * 2, token);
                 Bot.Flash.CallGameFunction("world.abandonQuest", quest.ID);
-
-                await Task.Delay(ActionDelay * 2);
-
+                await Task.Delay(ActionDelay * 2, token);
                 Bot.Quests.Load(quest.ID);
-
-                await Task.Delay(ActionDelay * 2);
-
+                await Task.Delay(ActionDelay * 2, token);
                 // Keep this recovery Accept().
                 Bot.Quests.Accept(quest.ID);
-
                 stuckCounts[quest.ID] = 0;
                 return;
             }
@@ -3217,114 +3295,178 @@ public class CoreBots
         }
 
         // --- Fast watcher: polls completion state often, turns in immediately. ---
-        _ = Task.Run(async () =>
+        Task watcherTask = Task.Run(async () =>
         {
-            while (!Bot.ShouldExit && !token.IsCancellationRequested)
+            try
             {
-                foreach (Quest quest in allQuests)
+                while (!Bot.ShouldExit && !token.IsCancellationRequested)
                 {
-                    if (Bot.ShouldExit || token.IsCancellationRequested)
-                        return;
-
-                    if (!Bot.Player.Alive)
-                        continue;
-
-                    if (Bot.Quests.IsInProgress(quest.ID) &&
-                        Bot.Quests.CanComplete(quest.ID))
+                    foreach (Quest quest in allQuests)
                     {
-                        if (TryClaim(quest.ID))
+                        if (!Bot.Player.Alive)
+                            continue;
+
+                        if (Bot.Quests.IsInProgress(quest.ID) &&
+                            Bot.Quests.CanComplete(quest.ID))
                         {
-                            try
+                            if (TryClaim(quest.ID))
                             {
-                                await CompleteQuest(quest);
-                            }
-                            finally
-                            {
-                                Release(quest.ID);
+                                try
+                                {
+                                    await CompleteQuest(quest);
+                                }
+                                finally
+                                {
+                                    Release(quest.ID);
+                                }
                             }
                         }
                     }
-                }
 
-                await Task.Delay(
-                    Math.Min(ActionDelay, 500),
-                    token
-                ).ContinueWith(_ => { });
+                    await Task.Delay(Math.Min(ActionDelay, 500), token);
+                }
             }
+            catch (OperationCanceledException) { }
         }, token);
 
-        // --- Slower manager: handles ensure-load / accept / requirement progression. ---
-        _ = Task.Run(async () =>
+        // --- Slower manager: accepts quests that aren't currently in progress. ---
+        // Completion state is the watcher's job — this loop no longer duplicates it.
+        Task managerTask = Task.Run(async () =>
         {
-            while (!Bot.ShouldExit && !token.IsCancellationRequested)
+            try
             {
-                foreach (Quest quest in allQuests
-                    .Where(x => Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null)
-                    .ToList())
+                while (!Bot.ShouldExit && !token.IsCancellationRequested)
                 {
-                    if (Bot.ShouldExit || token.IsCancellationRequested)
-                        return;
-
-                    if (!Bot.Player.Alive)
+                    foreach (Quest quest in allQuests)
                     {
-                        await Task.Delay(ActionDelay);
-                        continue;
-                    }
-
-                    // Skip quests the watcher is actively turning in right now.
-                    lock (inFlightLock)
-                    {
-                        if (inFlight.Contains(quest.ID))
+                        if (!Bot.Player.Alive)
+                        {
+                            await Task.Delay(ActionDelay, token);
                             continue;
+                        }
+
+                        lock (inFlightLock)
+                        {
+                            if (inFlight.Contains(quest.ID))
+                                continue;
+                        }
+
+                        Quest? q = Bot.Quests.EnsureLoad(quest.ID);
+                        if (q == null)
+                            continue;
+
+                        if (!Bot.Quests.IsInProgress(quest.ID))
+                            Bot.Quests.Accept(quest.ID);
+
+                        await Task.Delay(ActionDelay * 2, token);
                     }
-
-                    Quest? q = Bot.Quests.TryGetQuest(quest.ID, out Quest? loadedQuest)
-                        ? loadedQuest
-                        : Bot.Quests.EnsureLoad(quest.ID);
-
-                    await Task.Delay(ActionDelay * 2);
-
-                    if (q == null)
-                        continue;
-
-                    if (Bot.Quests.IsInProgress(quest.ID) &&
-                        !Bot.Quests.CanComplete(quest.ID))
-                        continue;
-
-                    if (!Bot.Quests.IsInProgress(quest.ID))
-                        Bot.Quests.Accept(quest.ID);
-
-                    await Task.Delay(ActionDelay * 2);
-
-                    // If it's now completable, the watcher will pick it up on its next
-                    // (much shorter) tick.
                 }
             }
-
-            GC.Collect();
+            catch (OperationCanceledException) { }
         }, token);
+
+        // --- Turn-in watchdog. ---
+        // Fires only when a quest is actually in progress AND completable but
+        // hasn't been acknowledged for ~60s (+2-5s jitter) — this targets the
+        // real stuck-1/1 failure, not just "any quest active."
+        Task watchdogTask = Task.Run(async () =>
+        {
+            try
+            {
+                Random rng = new();
+                TimeSpan threshold = TimeSpan.FromSeconds(60 + rng.Next(2, 6));
+
+                while (!Bot.ShouldExit && !token.IsCancellationRequested)
+                {
+                    await Task.Delay(2000, token);
+
+                    bool anyStuckCompletable = allQuests.Any(q =>
+                        Bot.Quests.IsInProgress(q.ID) && Bot.Quests.CanComplete(q.ID));
+
+                    if (!anyStuckCompletable)
+                    {
+                        MarkTurnInSeen();
+                        continue;
+                    }
+
+                    TimeSpan elapsed = TimeSinceLastTurnIn();
+
+                    if (elapsed >= threshold)
+                    {
+                        Logger($"Completable quest unacknowledged for {elapsed.TotalSeconds:F0}s " +
+                               $"(threshold {threshold.TotalSeconds:F0}s) — nudging quest log.");
+
+                        await EnsureQuestLogOpenAsync(token);
+
+                        MarkTurnInSeen();
+                        threshold = TimeSpan.FromSeconds(60 + rng.Next(2, 6));
+                    }
+                }
+            }
+            catch (OperationCanceledException) { }
+        }, token);
+
+        _questTasks = [watcherTask, managerTask, watchdogTask];
     }
 
+    // ============================================================
+    // CancelRegisteredQuests
+    // ============================================================
+
+
+
     /// <summary>
-    /// Cancels the current registered quests.
+    /// Cancels the current registered quests. Deterministically waits for the background
+    /// watcher/manager/watchdog loops from a prior <see cref="RegisterQuests"/> call to actually
+    /// exit before returning, so a subsequent registration can't overlap with tasks that haven't
+    /// finished shutting down.
     /// </summary>
     public void CancelRegisteredQuests()
     {
         Bot.Lite.ReacceptQuest = false;
+
         if (questCTS != null)
         {
-            questCTS?.Cancel();
-            Bot.Wait.ForTrue(() => questCTS == null, 10);
+            questCTS.Cancel();
+
+            try
+            {
+                bool tasksStopped = Task.WaitAll(
+                    _questTasks.ToArray(),
+                    TimeSpan.FromSeconds(5)
+                );
+
+                if (!tasksStopped)
+                    Logger("[Quest] Background tasks did not exit within the 5 second shutdown timeout.");
+            }
+            catch (AggregateException)
+            {
+                // Expected: cancelled tasks may surface cancellation exceptions here.
+            }
+
+            questCTS.Dispose();
+            questCTS = null;
+            _questTasks.Clear();
         }
+
+        if (_turnInEventHooked)
+        {
+            Bot.Events.QuestTurnedIn -= OnQuestTurnedIn;
+            _turnInEventHooked = false;
+        }
+
+        lock (_questLogStateLock)
+            _questLogAssumedOpen = false;
+
         if (Bot.Quests.Registered.Any())
         {
             Bot.Quests.UnregisterQuests(registeredQuests);
             AbandonQuest(registeredQuests);
         }
+
         registeredQuests = [];
     }
 
-    private int[] registeredQuests = [];
 
     /// <summary>
     /// Ensures the quest is ready for acceptance by handling membership checks,
