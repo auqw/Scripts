@@ -1,8 +1,236 @@
 [
   {
-    "ID": 95446,
-    "Name": "Bourgeois\u0027 Flag",
+    "ID": 76322,
+    "Name": "A Fish",
+    "Category": "Item",
+    "Meta": ""
+  },
+  {
+    "ID": 45806,
+    "Name": "A Rock Inanitas Is Making You Keep",
+    "Category": "Item",
+    "Meta": ""
+  },
+  {
+    "ID": 102776,
+    "Name": "A Warning",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 67287,
+    "Name": "Abyssal Lore Scrap",
     "Category": "Resource",
+    "Meta": ""
+  },
+  {
+    "ID": 85294,
+    "Name": "Almoravid\u0027s Bracer",
+    "Category": "Resource",
+    "Meta": ""
+  },
+  {
+    "ID": 93130,
+    "Name": "An Invisible Trail",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93131,
+    "Name": "Aria\u0027s Notes",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93126,
+    "Name": "Dew Drop\u0027s Testimony",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93209,
+    "Name": "Draconian\u0027s View",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93233,
+    "Name": "Dragon\u0027s Downfall",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93208,
+    "Name": "Elemental\u0027s View",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102779,
+    "Name": "Fa\u0027s Report",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93160,
+    "Name": "Farmer\u0027s Lineage",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93161,
+    "Name": "Fishmen Tales",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102773,
+    "Name": "Frogdrake\u0027s Hatred",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93214,
+    "Name": "Galanoth\u0027s Invitation",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 40187,
+    "Name": "Get Your Blinding Light of Destiny",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93134,
+    "Name": "Gold Petal",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93207,
+    "Name": "Green Dragon\u0027s View",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102780,
+    "Name": "Greif\u0027s Map",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93164,
+    "Name": "Hyonix\u0027s Treasure Chest",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93213,
+    "Name": "Inferno of Akriloth\u0027s Scale",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93211,
+    "Name": "Lava\u0027s Memories",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93129,
+    "Name": "Letter to Grave Robbers",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93162,
+    "Name": "Merdraconians\u0027 Account",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93166,
+    "Name": "Midnight Sea",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93132,
+    "Name": "Quicksilver Tongue",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93127,
+    "Name": "Red Shell\u0027s Story",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102778,
+    "Name": "Researcher\u0027s Report",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93163,
+    "Name": "Riverwalker\u0027s Archive",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102775,
+    "Name": "Smudged Receipt",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102777,
+    "Name": "Soggy Note",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93210,
+    "Name": "Stone\u0027s Memories",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93231,
+    "Name": "Storm Scale",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93165,
+    "Name": "Sunlit Sea",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93212,
+    "Name": "Torn Feathers",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 102772,
+    "Name": "Undead Slime\u0027s Advice",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93232,
+    "Name": "Volgritian\u0027s Disappearance",
+    "Category": "Note",
+    "Meta": ""
+  },
+  {
+    "ID": 93236,
+    "Name": "Volgritian\u0027s Permission",
+    "Category": "Note",
     "Meta": ""
   }
 ]
