@@ -223,9 +223,6 @@ public class CoreBots
             )
                 Bot.Config.Configure();
 
-            const int maxRetries = 3;
-            int retries = 0;
-
             // Pre-calc fallback server once
             string server =
                 Bot.Options.ReloginServer ??
@@ -235,35 +232,6 @@ public class CoreBots
                         s.Online &&
                         s.PlayerCount < s.MaxPlayers)?.Name
                 ?? "Twilly";
-
-            while (!Bot.Player.LoggedIn && retries < maxRetries)
-            {
-                retries++;
-
-                if (Bot.Servers.CachedServers == null || !Bot.Servers.CachedServers.Any())
-                {
-                    Logger("Server list not ready, waiting...");
-                    Sleep(3000);
-                    continue;
-                }
-
-                Logger($"Auto Login attempt {retries}/{maxRetries} → {server}");
-
-                try
-                {
-                    bool relogSuccess = Bot.Servers.EnsureRelogin(server);
-                    if (relogSuccess)
-                        break;
-
-                    Logger("Relogin failed, retrying...");
-                }
-                catch (Exception ex)
-                {
-                    Logger($"Relogin exception: {ex.Message}");
-                }
-
-                Sleep(5000);
-            }
 
             int loadAttempts = 0;
             while (!Bot.Player.Loaded && !Bot.ShouldExit)
