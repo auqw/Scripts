@@ -8727,7 +8727,7 @@ public class CoreBots
 
     private void RetryCellOnAFK()
     {
-        if (Bot.ShouldExit || Bot.Map.Name.Equals("afkquest", StringComparison.OrdinalIgnoreCase))
+        if (Bot.ShouldExit || Bot.Map.Name.Equals("afkquest", StringComparison.OrdinalIgnoreCase) || Bot.Map.Name.Equals("battleon", StringComparison.OrdinalIgnoreCase))
             return;
 
         string? cell = Bot.Player?.Cell;
