@@ -141,46 +141,42 @@ public class ArmyLR
             Bot.Quests.UpdateQuest(2060);
             ArmyHandler(
                 map: "judgement",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "judgement_items",
                 AggroCell: "r10a",
                 checkType: CheckType.Item,
                 Itemname: "Aeacus Empowered",
-                quant: 50,
-                UseBool: false
+                quant: 50
             );
 
             ArmyHandler(
                 map: "revenant",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF1_revenant",
                 AggroCell: "r2",
                 checkType: CheckType.Item,
                 Itemname: "Tethered Soul",
-                quant: 300,
-                UseBool: false
+                quant: 300
             );
 
             ArmyHandler(
                 map: "shadowrealmpast",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF1_shadowrealmpast",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
                 Itemname: "Darkened Essence",
-                quant: 500,
-                UseBool: false
+                quant: 500
             );
 
             ArmyHandler(
                 map: "necrodungeon",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF1_necrodungeon",
                 AggroCell: "r22",
                 checkType: CheckType.Item,
                 Itemname: "Dracolich Contract",
-                quant: 1000,
-                UseBool: false
+                quant: 1000
             );
             C.EnsureComplete(6897);
             Bot.Wait.ForPickup("Revenant's Spellscroll");
@@ -202,112 +198,102 @@ public class ArmyLR
             C.EnsureAccept(6898);
             ArmyHandler(
                 map: "doomvault",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_doomvault",
                 AggroCell: "r1",
                 checkType: CheckType.Item,
                 Itemname: "Grim Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "mummies",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_mummies",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
                 Itemname: "Ancient Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "wrath",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_wrath",
                 AggroCell: "r2",
                 checkType: CheckType.Item,
                 Itemname: "Pirate Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "doomwar",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_doomwar",
                 AggroCell: "r6",
                 checkType: CheckType.Item,
                 Itemname: "Battleon Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "overworld",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_overworld",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
                 Itemname: "Mirror Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "deathpits",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_deathpits",
                 AggroCell: "r1",
                 checkType: CheckType.Item,
                 Itemname: "Darkblood Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "maxius",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_maxius",
                 AggroCell: "r4",
                 checkType: CheckType.Item,
                 Itemname: "Vampire Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "curseshore",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_curseshore",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
                 Itemname: "Spirit Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "dragonbone",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_dragonbone",
                 AggroCell: "r2",
                 checkType: CheckType.Item,
                 Itemname: "Dragon Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             ArmyHandler(
                 map: "doomwood",
-                QuestIDs: Array.Empty<int>(),
+                QuestIDs: [],
                 WaitForArmysyncPath: "LF2_doomwood",
                 AggroCell: "r3",
                 checkType: CheckType.Item,
                 Itemname: "Doomwood Cohort Conquered",
-                quant: 400,
-                UseBool: false
+                quant: 400
             );
 
             Bot.Wait.ForPickup("Conquest Wreath");
@@ -336,8 +322,13 @@ public class ArmyLR
             Adv.BuyItem("underworld", 216, "Hooded Legion Cowl");
             ArmyDarkToken(100);
             ArmyLegionTokens(4000);
+            DiamondTokenofDage(30);
+            ArmyEmblemOfDage(1);
             if (Bot.Quests.CanComplete(6899))
+            {
                 Bot.Quests.Complete(6899);
+                Bot.Wait.ForPickup("Exalted Crown");
+            }
         }
         C.CancelRegisteredQuests();
     }
@@ -357,14 +348,96 @@ public class ArmyLR
     {
         ArmyHandler(
             map: "evilwarnul",
-            QuestIDs: Array.Empty<int>(),
+            QuestIDs: [],
             WaitForArmysyncPath: "LF4_dagefavor",
             AggroCell: "r2",
             checkType: CheckType.Item,
             Itemname: "Dage's Favor",
-            quant: quant,
-            UseBool: false
+            quant: quant
+
         );
+    }
+
+    void DiamondTokenofDage(int quant = 300)
+    {
+        if (C.CheckInventory("Diamond Token of Dage", quant))
+            return;
+
+        if (!C.CheckInventory("Legion Round 4 Medal"))
+            CLR.LegionRound4Medal();
+        if (!C.CheckInventory("Legion Token", 50))
+            // farm via CLR due to it just being a requirement dont wait for others.. 
+            CLR.FarmLegionToken(50);
+
+        C.FarmingLogger("Diamond Token of Dage", quant);
+        C.AddDrop("Diamond Token of Dage", "Legion Token");
+        C.RegisterQuests(4743);
+
+        while (!Bot.ShouldExit && !C.CheckInventory("Diamond Token of Dage", quant))
+        {
+            ArmyHandler(
+                map: "tercessuinotlim",
+                QuestIDs: [],
+                WaitForArmysyncPath: "Makai",
+                AggroCell: "m2",
+                checkType: CheckType.Item,
+                Itemname: "Defeated Makai",
+                quant: 25
+            );
+
+            ArmyHandler(
+                map: "aqlesson",
+                QuestIDs: [],
+                WaitForArmysyncPath: "Carnax",
+                AggroCell: "Frame9",
+                checkType: CheckType.Item,
+                Itemname: "Carnax Eye",
+                quant: 1
+            );
+
+            ArmyHandler(
+                map: "deepchaos",
+                QuestIDs: [],
+                WaitForArmysyncPath: "Kathool",
+                AggroCell: "Frame4",
+                checkType: CheckType.Item,
+                Itemname: "Kathool Tentacle",
+                quant: 1
+            );
+
+            ArmyHandler(
+                map: "lair",
+                QuestIDs: [],
+                WaitForArmysyncPath: "Red_Dragon",
+                AggroCell: "End",
+                checkType: CheckType.Item,
+                Itemname: "Red Dragon's Fang",
+                quant: 1
+            );
+
+            ArmyHandler(
+                map: "bloodtitan",
+                QuestIDs: [],
+                WaitForArmysyncPath: "Blood_Titan",
+                AggroCell: "Enter",
+                checkType: CheckType.Item,
+                Itemname: "Blood Titan's Blade",
+                quant: 1
+            );
+
+            ArmyHandler(
+                map: "dflesson",
+                QuestIDs: [],
+                WaitForArmysyncPath: "r12",
+                AggroCell: "Right",
+                checkType: CheckType.ItemID,
+                Itemname: null,
+                // Fluffy's Bones
+                ItemID: 33257,
+                quant: 1
+            );
+        }
+        C.CancelRegisteredQuests();
     }
 
     void ArmyEmblemOfDage(int quant)
@@ -376,8 +449,8 @@ public class ArmyLR
             AggroCell: "r12",
             checkType: CheckType.Item,
             Itemname: "Emblem of Dage",
-            quant: quant,
-            UseBool: false
+            quant: quant
+
         );
     }
 
@@ -390,8 +463,8 @@ public class ArmyLR
             AggroCell: "r3",
             checkType: CheckType.Item,
             Itemname: "Legion Token",
-            quant: quant,
-            UseBool: false
+            quant: quant
+
         );
     }
 
@@ -404,8 +477,8 @@ public class ArmyLR
             AggroCell: "r3",
             checkType: CheckType.Item,
             Itemname: "Dark Token",
-            quant: quant,
-            UseBool: false
+            quant: quant
+
         );
     }
 
@@ -416,8 +489,8 @@ public class ArmyLR
         string AggroCell,
         CheckType checkType,
         string? Itemname = null,
+        int? ItemID = null,
         int quant = 0,
-        bool UseBool = false,
         Func<bool>? condition = null
     )
     {
@@ -426,7 +499,6 @@ public class ArmyLR
         Ultra.ClearSyncFile(WaitForArmysyncPath);
         Bot.Sleep(2500);
 
-        // Log Players in current army.
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
 
         if (QuestIDs.Length > 0)
@@ -434,6 +506,8 @@ public class ArmyLR
 
         if (Itemname != null)
             C.AddDrop(Itemname);
+        else if (ItemID != null)
+            C.AddDrop((int)ItemID);
 
         if (map == "revenant")
         {
@@ -441,78 +515,54 @@ public class ArmyLR
             RevenantMapHandler();
         }
         if (map == "mummies")
-            // Update to `Act 5 Complete`
             Bot.Quests.UpdateQuest(4614);
 
         Core.Join(map);
-
         C.Jump(AggroCell, "Left");
 
-        // Don't Touch vv
         if (sArmy.Players().Length > 1)
-            // Dont make this the same as the syncPath
             Ultra.WaitForArmy(sArmy.Players().Length - 1, WaitForArmysyncPath);
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
         Bot.Options.AggroMonsters = true;
-        // Pick a variant below ( multiple can be used as long as the sync files are different.)
 
-        if (UseBool && condition != null)
+        string syncKey = checkType switch
         {
-            // Bool variant
-            while (!Bot.ShouldExit)
-            {
-                // Replace the `Bot.Player.Level >= 100` below with the bool
-                // you want want all accs to have true, leave the rest of this alone.
-                if (Ultra.CheckArmyProgressBool(condition, $"{Itemname}.Sync"))
-                {
-                    Bot.Options.AggroMonsters = false;
-                    C.Jump("Enter", "Spawn");
-                    C.Logger("All players finished farm.");
-                    break;
-                }
-                // Dead → wait for respawn
-                if (!Bot.Player.Alive)
-                {
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                    continue;
-                }
+            CheckType.Item => $"{Itemname}.Sync",
+            CheckType.ItemID => $"{ItemID}.Sync",
+            CheckType.Bool => $"{WaitForArmysyncPath}.Sync",
+            _ => $"{WaitForArmysyncPath}.Sync"
+        };
 
-                Bot.Combat.Attack("*");
-                Bot.Sleep(500);
-            }
-            return;
-        }
-
-        if (Itemname != null)
+        Func<bool> progressCheck = checkType switch
         {
-            //Int variant
-            while (!Bot.ShouldExit)
+            CheckType.Item when Itemname != null => () => C.CheckInventory(Itemname, quant),
+            CheckType.ItemID when ItemID != null => () => C.CheckInventory((int)ItemID, quant),
+            CheckType.Bool when condition != null => condition,
+            _ => throw new ArgumentException($"ArmyHandler: checkType {checkType} requires a matching Itemname/ItemID/condition argument.")
+        };
+
+        while (!Bot.ShouldExit)
+        {
+            if (Ultra.CheckArmyProgressBool(progressCheck, syncKey))
             {
-                // Replace `Itemname` with the wanted item
-                // Replace the 500 with the quantity you desire
-                // Replace `false` if the item is a temp item with `true` or leave as `false` for non-temp items.
-                if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(Itemname, quant), $"{Itemname}.Sync"))
-                {
-                    Bot.Options.AggroMonsters = false;
-                    C.Jump("Enter", "Spawn");
-                    C.Logger("All players finished farm.");
-                    break;
-                }
-
-                // Dead → wait for respawn
-                if (!Bot.Player.Alive)
-                {
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                    continue;
-                }
-
-                Bot.Combat.Attack("*");
-                Bot.Sleep(500);
+                Bot.Options.AggroMonsters = false;
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                break;
             }
-            return;
+
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            Bot.Combat.Attack("*");
+            Bot.Sleep(500);
         }
     }
+
 
     int _revenantBaseRoom = -1;
 
@@ -541,5 +591,6 @@ public class ArmyLR
     {
         Bool = 1,
         Item = 2,
+        ItemID = 3
     }
 }

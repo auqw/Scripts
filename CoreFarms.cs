@@ -3052,11 +3052,14 @@ public class CoreFarms
                 Core.Sleep(1000);
 
                 currentRep = FactionRep("Fishing");
-                Core.Logger(
-                    currentRep > startingRep
-                        ? $"Successful! [Dynamite Cast x{successful++}]"
-                        : $"Failed! [Dynamite Cast x{failed++}]"
-                );
+                if (/* ignore this check, its for when we're testing with max rep*/  rank <= 10)
+                {
+                    Core.Logger(
+                        currentRep > startingRep
+                            ? $"Successful! [Dynamite Cast x{successful++}]"
+                            : $"Failed! [Dynamite Cast x{failed++}]"
+                    );
+                }
             }
         }
 
