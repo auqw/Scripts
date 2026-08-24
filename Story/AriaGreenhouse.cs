@@ -94,6 +94,7 @@ public class AriaGreenhouse
         // 10187 | Alchemilla
         if (!Story.QuestProgression(10187))
         {
+            Bot.Quests.UpdateQuest(9689);
             Core.HuntMonsterQuest(10187, ("yokairealm", "Mikoto Kukol'nyy", ClassType.Solo));
         }
 
