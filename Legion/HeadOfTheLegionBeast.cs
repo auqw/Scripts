@@ -485,7 +485,7 @@ public void Penance(int quant = 300)
                     "Penance");
 
                 // SoulsHeresy() takes the amount to farm.
-                SoulsHeresy(soulsNeeded);
+                SoulsHeresy(soulsTarget);
 
                 souls = Bot.Inventory.GetQuantity("Souls of Heresy");
 
