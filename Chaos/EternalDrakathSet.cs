@@ -107,7 +107,24 @@ public class EternalDrakath
             while (!Bot.ShouldExit && !Core.CheckInventory("Star Fragment", 33))
             {
                 Core.HuntMonster("starsinc", "Living Star", "Living Star Defeated", 30, isTemp: false); 
-                Bot.Wait.ForPickup("Star Fragment");
+                Core.Logger(
+                    $"Living Star hunt returned. " +
+                    $"Defeated={Bot.Inventory.GetQuantity("Living Star Defeated")}, " +
+                    $"StarFragments={Bot.Inventory.GetQuantity("Star Fragment")}, " +
+                    $"QuestActive={Bot.Quests.IsInProgress(4413)}, " +
+                    $"CanComplete={Bot.Quests.CanComplete(4413)}"
+                );
+
+                bool pickedUp = Bot.Wait.ForPickup("Star Fragment");
+
+                Core.Logger(
+                    $"Star Fragment wait returned. " +
+                    $"PickupWait={pickedUp}, " +
+                    $"Defeated={Bot.Inventory.GetQuantity("Living Star Defeated")}, " +
+                    $"StarFragments={Bot.Inventory.GetQuantity("Star Fragment")}, " +
+                    $"QuestActive={Bot.Quests.IsInProgress(4413)}, " +
+                    $"CanComplete={Bot.Quests.CanComplete(4413)}"
+                );
             }
             Core.CancelRegisteredQuests();
         }
