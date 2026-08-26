@@ -234,7 +234,7 @@ public class CoreBots
                 ?? "Twilly";
 
             int loadAttempts = 0;
-            while (!Bot.Player.Loaded && !Bot.ShouldExit)
+            while (Bot.Player.LoggedIn && !Bot.Player.Loaded && !Bot.ShouldExit)
             {
                 if (loadAttempts >= 30)
                 {
