@@ -809,13 +809,12 @@ public class CoreBots
                 Bot.Events.ExtensionPacketReceived -= RespawnListener;
                 if (AntiLag)
                 {
-                    Bot.Options.SetFPS = 30;
+                    Bot.Options.SetFPS = 60;
                     if (Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
                         Bot.Flash.CallGameFunction("world.toggleMonsters");
                 }
 
-                Bot.Options.CustomName = Bot.Player.Username ?? Username().ToUpper();
-                // Bot.Options.CustomName = Username().ToUpper();
+                Bot.Options.CustomName = Bot.Player.Username ?? Username();
                 string? guild = Bot.Flash.GetGameObject<string>(
                     "world.myAvatar.objData.guild.Name"
                 );
@@ -7809,7 +7808,7 @@ public class CoreBots
             Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
             CancellationTokenSource cts = new();
             Bot.Wait.ForTrue(() => Bot.Servers.EnsureRelogin(cts.Token).Result, 20);
-            if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
+            if (Bot.Wait.ForTrue(() => Bot.Player?.Loaded ?? false, 20))
             {
                 SendPlayerToHouse(preferredServer, reason);
                 return;
