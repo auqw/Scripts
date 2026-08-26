@@ -533,8 +533,10 @@ public class CoreBots
                                 Sleep(300000);
                                 if (b.Player.AFK)
                                 {
+                                    Logger("30 second afk handler turned on, send logs", messageBox: true);
                                     b.Options.AutoRelogin = true;
                                     b.Servers.Logout();
+                                    Logger("corebots.cs afk handler logged out");
                                 }
                                 TimerRunning = false;
                             }
