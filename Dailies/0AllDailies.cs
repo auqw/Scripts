@@ -91,6 +91,7 @@ public class FarmAllDailies
 
     public void ScriptMain(IScriptInterface Bot)
     {
+        Core.BankingBlackList.AddRange(new[] {"Lord of Order"});
         Core.SetOptions();
 
         DoAllDailies(Bot.Config!.Get<DailySet>("Select Dailies Set"));
