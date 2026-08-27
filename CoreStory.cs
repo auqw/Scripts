@@ -29,7 +29,8 @@ public class CoreStory
         Core.RunCore();
     }
 
-    #region  KillQuest
+    #region KillQuest
+
     /// <summary>
     /// Completes a quest by killing a single specified monster until all required items are obtained.
     /// </summary>
@@ -39,21 +40,11 @@ public class CoreStory
     /// <param name="GetReward">Whether to receive the quest reward upon completion. Default is true.</param>
     /// <param name="Reward">The reward to pick up; "All" by default.</param>
     /// <param name="AutoCompleteQuest">Whether to automatically complete the quest after farming items. Default is true.</param>
-    /// <remarks>
-    /// Uses <see cref="_MonsterHuntBatch"/> internally to farm items. Clears <see cref="CurrentRequirements"/> after completion
-    /// </remarks>
-    public void KillQuest(
-        int QuestID,
-        string MapName,
-        string MonsterName,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    public void KillQuest(int QuestID, string MapName, string MonsterName, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
         if (string.IsNullOrEmpty(MapName))
             throw new ArgumentException("MapName cannot be null or empty", nameof(MapName));
+
         if (string.IsNullOrEmpty(MonsterName))
             throw new ArgumentException("MonsterName cannot be null or empty", nameof(MonsterName));
 
@@ -63,12 +54,14 @@ public class CoreStory
         );
 
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (QuestData == null)
         {
             Core.DebugLogger(this, $"Quest {QuestID} could not be loaded.");
             return;
         }
 
+        // Always use a live quest-state check.
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
@@ -78,12 +71,12 @@ public class CoreStory
             return;
         }
 
-        //Prevent turnin spam
+        // Prevent turn-in spam.
         Core.AcceptandCompleteTries = 5;
 
-        // Filter valid requirements and exclude items already obtained
-        List<ItemBase> validRequirements = QuestData
-            .Requirements.Where(r => r != null && !string.IsNullOrEmpty(r.Name))
+        // Filter valid requirements and exclude items already obtained.
+        List<ItemBase> validRequirements = QuestData.Requirements
+            .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
             .Where(r =>
                 !(
                     r.Temp
@@ -102,17 +95,18 @@ public class CoreStory
             return;
         }
 
-        // Accept the quest and join the map
+        // Accept the quest and join the map.
         Core.DebugLogger(this, $"Accepting quest {QuestID} and joining map {MapName}");
+
         Core.EnsureAccept(QuestID);
         Core.Join(MapName);
 
-        // Snapshot CurrentRequirements
+        // Snapshot requirements.
         CurrentRequirements.Clear();
         CurrentRequirements.AddRange(validRequirements);
 
-        // Add drops for quest items
-        var drops = CurrentRequirements
+        // Add drops for quest items.
+        string[] drops = CurrentRequirements
             .Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name))
             .Select(r => r.Name)
             .ToArray();
@@ -120,21 +114,27 @@ public class CoreStory
         if (drops.Length > 0)
         {
             Core.AddDrop(drops);
+
             Core.DebugLogger(
                 this,
                 $"Added drops for quest {QuestID}: [{string.Join(", ", drops)}]"
             );
         }
 
-        // Farming loop
-        while (CurrentRequirements.Count > 0)
+        // Farming loop.
+        while (!Bot.ShouldExit)
         {
-            // Remove already obtained items
+            // The server may have completed/turned in the quest independently.
+            if (QuestProgression(QuestID, false, "All", false))
+                return;
+
+            // Remove requirements that are already satisfied.
             CurrentRequirements.RemoveAll(r =>
                 r.Temp
                     ? Bot.TempInv.Contains(r.Name, r.Quantity)
                     : Core.CheckInventory(r.ID, r.Quantity)
             );
+
             if (CurrentRequirements.Count == 0)
                 break;
 
@@ -142,28 +142,51 @@ public class CoreStory
                 .Select(r => r.Name)
                 .Where(n => !string.IsNullOrEmpty(n))
                 .ToList();
+
             if (itemsToFarm.Count == 0)
                 break;
 
-            _MonsterHuntBatch(MapName, MonsterName, itemsToFarm, QuestID);
+            _MonsterHuntBatch(
+                MapName,
+                MonsterName,
+                itemsToFarm,
+                QuestID
+            );
 
-            //a little extra check for if it got turned in by itself...
-            if (QuestProgression(QuestID, GetReward, Reward, false))
+            // Catch a server-side turn-in that happened during farming.
+            if (QuestProgression(QuestID, false, "All", false))
                 return;
         }
 
-        // Snapshot items farmed
-        var farmedItems = validRequirements.Select(r => r.Name).ToArray();
+        if (Bot.ShouldExit)
+            return;
 
-        // Complete the quest
-        Core.DebugLogger(this, $"Attempting to complete quest {QuestID}");
+        // Final live completion check before attempting manual completion.
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
+        string[] farmedItems = validRequirements
+            .Select(r => r.Name)
+            .ToArray();
+
+        Core.DebugLogger(
+            this,
+            $"Attempting to complete quest {QuestID}"
+        );
+
         TryComplete(QuestData, AutoCompleteQuest);
 
-        // Delay & cleanup
         Bot.Sleep(1000);
+
         CurrentRequirements.Clear();
 
-        Core.DebugLogger(this, $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", farmedItems)}]");
+        // Check once more after the turn-in attempt.
+        QuestProgression(QuestID, GetReward, Reward, false);
+
+        Core.DebugLogger(
+            this,
+            $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", farmedItems)}]"
+        );
     }
 
     /// <summary>
@@ -171,40 +194,19 @@ public class CoreStory
     /// </summary>
     /// <param name="QuestID">The ID of the quest to complete.</param>
     /// <param name="MapName">The map in which the quest takes place.</param>
-    /// <param name="MonsterNames">Array of monster names corresponding to each quest item. If fewer than items, the last non-empty name is used.</param>
+    /// <param name="MonsterNames">Array of monster names corresponding to each quest item.</param>
     /// <param name="GetReward">Whether to receive the quest reward upon completion. Default is true.</param>
     /// <param name="Reward">The reward to pick up; "All" by default.</param>
     /// <param name="AutoCompleteQuest">Whether to automatically complete the quest after farming items. Default is true.</param>
-    /// <remarks>
-    /// Maps quest requirements to the specified monsters and uses <see cref="_MonsterHuntBatch"/> to farm each group.
-    /// Logs the items farmed and quest progress using Core.DebugLogger.
-    /// </remarks>
-    public void KillQuest(
-        int QuestID,
-        string MapName,
-        string[] MonsterNames,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    public void KillQuest(int QuestID, string MapName, string[] MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
         if (string.IsNullOrEmpty(MapName))
             throw new ArgumentException("MapName cannot be null or empty", nameof(MapName));
-        if (
-            MonsterNames == null
-            || MonsterNames.Length == 0
-            || MonsterNames.All(string.IsNullOrEmpty)
-        )
-            throw new ArgumentException(
-                "MonsterNames cannot be null or empty",
-                nameof(MonsterNames)
-            );
 
-        Core.DebugLogger(
-            this,
-            $"Starting KillQuest: QuestID={QuestID}, Map={MapName}, Monsters=[{string.Join(", ", MonsterNames)}]"
-        );
+        if (MonsterNames == null || MonsterNames.Length == 0 || MonsterNames.All(string.IsNullOrEmpty))
+            throw new ArgumentException("MonsterNames cannot be null or empty", nameof(MonsterNames));
+
+        Core.DebugLogger(this, $"Starting KillQuest: QuestID={QuestID}, Map={MapName}, Monsters=[{string.Join(", ", MonsterNames)}]");
 
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
@@ -222,27 +224,18 @@ public class CoreStory
             return;
         }
 
-        //Prevent turnin spam
         Core.AcceptandCompleteTries = 5;
 
-        // Filter valid requirements and exclude items already obtained
-        List<ItemBase> validRequirements = QuestData
-            .Requirements.Where(r => r != null && !string.IsNullOrEmpty(r.Name))
-            .Where(r =>
-                !(
-                    r.Temp
-                        ? Bot.TempInv.Contains(r.Name, r.Quantity)
-                        : Core.CheckInventory(r.ID, r.Quantity)
-                )
-            )
+        List<ItemBase> validRequirements = QuestData.Requirements
+            .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
+            .Where(r => !(r.Temp
+                ? Bot.TempInv.Contains(r.Name, r.Quantity)
+                : Core.CheckInventory(r.ID, r.Quantity)))
             .ToList();
 
         if (validRequirements.Count == 0)
         {
-            Core.DebugLogger(
-                this,
-                $"All quest requirements for Quest {QuestID} are already satisfied."
-            );
+            Core.DebugLogger(this, $"All quest requirements for Quest {QuestID} are already satisfied.");
             return;
         }
 
@@ -250,28 +243,10 @@ public class CoreStory
         Core.EnsureAccept(QuestID);
         Core.Join(MapName);
 
-        // Map each requirement to a monster name (use last non-empty if not enough provided)
-        Dictionary<string, string> itemToMonster = new();
-        string lastMonster = MonsterNames.Last(m => !string.IsNullOrEmpty(m));
-        for (int i = 0; i < validRequirements.Count; i++)
-        {
-            string monster =
-                i < MonsterNames.Length && !string.IsNullOrEmpty(MonsterNames[i])
-                    ? MonsterNames[i]
-                    : lastMonster;
-
-            itemToMonster[validRequirements[i].Name] = monster;
-            Core.Logger(
-                $"[{QuestID}] Requirement {validRequirements[i].Name} mapped to monster {monster}"
-            );
-        }
-
-        // Snapshot CurrentRequirements to avoid nulls
         CurrentRequirements.Clear();
         CurrentRequirements.AddRange(validRequirements);
 
-        // Add drops for items not already in inventory
-        var drops = CurrentRequirements
+        string[] drops = CurrentRequirements
             .Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name))
             .Select(r => r.Name)
             .ToArray();
@@ -279,83 +254,87 @@ public class CoreStory
         if (drops.Length > 0)
         {
             Core.AddDrop(drops);
-            Core.DebugLogger(this, $"Added drops: [{string.Join(", ", drops)}]");
+            Core.DebugLogger(this, $"Added drops for quest {QuestID}: [{string.Join(", ", drops)}]");
         }
 
-        // Main farming loop
-        while (
-            CurrentRequirements.Any(r =>
-                !(
-                    r.Temp
-                        ? Bot.TempInv.Contains(r.Name, r.Quantity)
-                        : Core.CheckInventory(r.ID, r.Quantity)
-                )
-            )
-        )
+        // Keep the original requirement -> monster relationship intact.
+        for (int i = 0; i < validRequirements.Count && !Bot.ShouldExit; i++)
         {
-            // Remove completed items from CurrentRequirements
-            CurrentRequirements.RemoveAll(r =>
-                r.Temp
-                    ? Bot.TempInv.Contains(r.Name, r.Quantity)
-                    : Core.CheckInventory(r.ID, r.Quantity)
-            );
+            ItemBase requirement = validRequirements[i];
+            string monster = MonsterNames[Math.Min(i, MonsterNames.Length - 1)];
 
-            if (CurrentRequirements.Count == 0)
-                break;
+            if (string.IsNullOrEmpty(monster))
+                continue;
 
-            // Group remaining items by monster
-            var monsterGroups = CurrentRequirements
-                .Where(r => !string.IsNullOrEmpty(r.Name))
-                .GroupBy(r => itemToMonster[r.Name]);
+            bool alreadyHave = requirement.Temp
+                ? Bot.TempInv.Contains(requirement.Name, requirement.Quantity)
+                : Core.CheckInventory(requirement.ID, requirement.Quantity);
 
-            foreach (var group in monsterGroups)
+            if (alreadyHave)
             {
-                string monster = group.Key;
-                if (string.IsNullOrEmpty(monster))
-                {
-                    Core.DebugLogger(this, "Skipped group with empty monster name.");
-                    continue;
-                }
-
-                var itemsToFarm = group
-                    .Where(r =>
-                        !(
-                            r.Temp
-                                ? Bot.TempInv.Contains(r.Name, r.Quantity)
-                                : Core.CheckInventory(r.ID, r.Quantity)
-                        )
-                    )
-                    .Select(r => r.Name)
-                    .Where(n => !string.IsNullOrEmpty(n))
-                    .ToList();
-
-                if (itemsToFarm.Count == 0)
-                {
-                    Core.DebugLogger(
-                        this,
-                        $"No valid items to farm for monster {monster}, skipping."
-                    );
-                    continue;
-                }
-
-                _MonsterHuntBatch(MapName, monster, itemsToFarm, QuestID);
+                CurrentRequirements.RemoveAll(r => r.ID == requirement.ID);
+                continue;
             }
+
+            if (QuestProgression(QuestID, GetReward, Reward))
+                return;
+
+            Core.DebugLogger(
+                this,
+                $"Farming requirement [{i + 1}/{validRequirements.Count}]: {requirement.Name} x{requirement.Quantity} from {monster}");
+
+            _MonsterHuntBatch(
+                MapName,
+                monster,
+                new[] { requirement.Name },
+                QuestID);
+
+            // Do not move to the next monster until this requirement is actually satisfied.
+            bool obtained = requirement.Temp
+                ? Bot.TempInv.Contains(requirement.Name, requirement.Quantity)
+                : Core.CheckInventory(requirement.ID, requirement.Quantity);
+
+            if (obtained)
+            {
+                CurrentRequirements.RemoveAll(r => r.ID == requirement.ID);
+
+                Core.DebugLogger(
+                    this,
+                    $"Requirement complete: {requirement.Name} x{requirement.Quantity}. Moving to next monster.");
+            }
+            else if (QuestProgression(QuestID, GetReward, Reward))
+                return;
         }
 
-        // Complete the quest
+        if (Bot.ShouldExit)
+            return;
+
+        if (QuestProgression(QuestID, GetReward, Reward))
+            return;
+
+        CurrentRequirements.RemoveAll(r =>
+            r.Temp
+                ? Bot.TempInv.Contains(r.Name, r.Quantity)
+                : Core.CheckInventory(r.ID, r.Quantity));
+
+        if (CurrentRequirements.Count > 0)
+        {
+            Core.DebugLogger(
+                this,
+                $"KillQuest {QuestID} still has {CurrentRequirements.Count} requirement(s) remaining.");
+            return;
+        }
+
         Core.DebugLogger(this, $"Attempting to complete quest {QuestID}");
         TryComplete(QuestData, AutoCompleteQuest);
 
-        // Small delay and cleanup
-        Bot.Sleep(200);
+        Bot.Sleep(1000);
         CurrentRequirements.Clear();
 
         Core.DebugLogger(
             this,
-            $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", validRequirements.Select(r => r.Name))}]"
-        );
+            $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", validRequirements.Select(r => r.Name))}]");
     }
-
     /// <summary>
     /// Internal method to hunt a monster for specific quest items.
     /// </summary>
@@ -363,14 +342,8 @@ public class CoreStory
     /// <param name="monster">The name of the monster to hunt.</param>
     /// <param name="itemNames">List of item names required from the monster.</param>
     /// <param name="Qid">The ID of the quest these items belong to.</param>
-    /// <remarks>
-    /// Dynamically checks <see cref="CurrentRequirements"/> to avoid null references and stops when the quest is completed
-    /// or all items are obtained. Moves the player to the optimal cell, attacks available monsters, and picks up drops.
-    /// Uses minimal logging for important events and avoids spamming logs during repeated attack cycles.
-    /// </remarks>
-    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames, int Qid)
+    private void _MonsterHuntBatch(string map, string monster, IReadOnlyCollection<string> itemNames, int Qid)
     {
-
         if (string.IsNullOrEmpty(map))
         {
             Bot.Log("Map is null or empty");
@@ -389,14 +362,13 @@ public class CoreStory
             return;
         }
 
-        // Ensure we are on the correct map
-        if (Bot.Map?.Name != map)
+        // Ensure we are on the correct map.
+        if (!string.Equals(Bot.Map?.Name, map, StringComparison.OrdinalIgnoreCase))
         {
             Core.Join(map);
             Bot.Wait.ForMapLoad(map);
         }
 
-        // Refresh needed items once before the loop for the initial log
         List<ItemBase> neededItems = (CurrentRequirements ?? new List<ItemBase>())
             .Where(r =>
                 r != null
@@ -418,14 +390,17 @@ public class CoreStory
             return;
         }
 
-        // **Important log moved here** — logs once per call
         Core.Logger(
-            $"Farming monster \"{monster}\" for items: [{string.Join(", ", neededItems.Select(r => $"{r?.Name} x{r?.Quantity}"))}]",
+            $"Farming monster \"{monster}\" for items: [{string.Join(", ", neededItems.Select(r => $"{r.Name} x{r.Quantity}"))}]",
             "_MonsterHuntBatch"
         );
 
         while (!Bot.ShouldExit)
         {
+            // Most important check: always ask for the current quest state.
+            if (QuestProgression(Qid, false, "All", false))
+                break;
+
             neededItems = (CurrentRequirements ?? new List<ItemBase>())
                 .Where(r =>
                     r != null
@@ -438,21 +413,25 @@ public class CoreStory
                 )
                 .ToList();
 
-            if (neededItems.Count == 0 || QuestProgression(Qid))
+            if (neededItems.Count == 0)
                 break;
 
-            var targetCellGroup = Bot
-                .Monsters.MapMonsters?.Where(m =>
-                    m != null && m.Name.FormatForCompare() == monster.FormatForCompare()
+            var targetCellGroup = Bot.Monsters.MapMonsters?
+                .Where(m =>
+                    m != null
+                    && m.Name.FormatForCompare() == monster.FormatForCompare()
                 )
                 .GroupBy(m => m.Cell)
                 .OrderByDescending(g => g.Count())
                 .FirstOrDefault();
 
-            string? targetCell = targetCellGroup?.Key ?? "Enter";
+            string targetCell = targetCellGroup?.Key ?? "Enter";
 
-            string? currentCell = Bot.Player?.Cell;
-            if (!string.Equals(currentCell, targetCell, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(
+                    Bot.Player?.Cell,
+                    targetCell,
+                    StringComparison.OrdinalIgnoreCase
+                ))
             {
                 Core.DebugLogger(
                     this,
@@ -461,84 +440,133 @@ public class CoreStory
                 );
 
                 IScriptMap? mapApi = Bot.Map;
-                if (!string.Equals(mapApi?.Name, map, StringComparison.OrdinalIgnoreCase))
+
+                if (!string.Equals(
+                        mapApi?.Name,
+                        map,
+                        StringComparison.OrdinalIgnoreCase
+                    ))
                 {
                     Core.Join(map);
                     Bot.Wait.ForMapLoad(map);
-                    mapApi = Bot.Map; // refresh after load
+                    mapApi = Bot.Map;
                 }
 
-                // jump only if player not already there (null-safe)
-                if (
-                    !string.Equals(Bot.Player?.Cell, targetCell, StringComparison.OrdinalIgnoreCase)
-                )
+                if (!string.Equals(
+                        Bot.Player?.Cell,
+                        targetCell,
+                        StringComparison.OrdinalIgnoreCase
+                    ))
                 {
-                    mapApi?.Jump(targetCell, "Left", autoCorrect: false);
+                    mapApi?.Jump(
+                        targetCell,
+                        "Left",
+                        autoCorrect: false
+                    );
+
                     Bot.Wait.ForCellChange(targetCell);
                     Bot.Player?.SetSpawnPoint();
                 }
             }
 
-            bool isAlive = Bot.Player?.Alive ?? false;
-            if (!isAlive)
+            if (!(Bot.Player?.Alive ?? false))
             {
-                Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
+                Bot.Wait.ForTrue(
+                    () => Bot.Player?.Alive ?? false,
+                    20
+                );
+
                 continue;
             }
 
             foreach (
                 Monster? M in Bot.Monsters.CurrentAvailableMonsters?.Where(m =>
-                    m != null && m.Name.FormatForCompare() == monster.FormatForCompare()
+                    m != null
+                    && m.Name.FormatForCompare() == monster.FormatForCompare()
                 ) ?? Enumerable.Empty<Monster>()
             )
             {
                 if (M == null || M.HP <= 0)
                     continue;
-                while (!Bot.ShouldExit && (neededItems.Count > 0 || !QuestProgression(Qid)))
+
+                while (!Bot.ShouldExit)
                 {
-                    bool hasTarget = Bot.Player?.HasTarget ?? false;
-                    int targetHP = Bot.Player?.Target?.HP ?? 0;
+                    // Check for server-side quest completion before attacking.
+                    if (QuestProgression(Qid, false, "All", false))
+                        break;
+
+                    neededItems = (CurrentRequirements ?? new List<ItemBase>())
+                        .Where(r =>
+                            r != null
+                            && itemNames.Contains(r.Name)
+                            && !(
+                                r.Temp
+                                    ? Bot.TempInv.Contains(r.Name, r.Quantity)
+                                    : Core.CheckInventory(r.ID, r.Quantity)
+                            )
+                        )
+                        .ToList();
+
+                    if (neededItems.Count == 0)
+                        break;
 
                     IScriptMap? innerMap = Bot.Map;
-                    if (!string.Equals(innerMap?.Name, map, StringComparison.OrdinalIgnoreCase))
+
+                    if (!string.Equals(
+                            innerMap?.Name,
+                            map,
+                            StringComparison.OrdinalIgnoreCase
+                        ))
                     {
                         Core.Join(map);
                         Bot.Wait.ForMapLoad(map);
-                        innerMap = Bot.Map; // refresh after load
+                        innerMap = Bot.Map;
                     }
 
-                    // null-safe cell check and jump
-                    if (
-                        !string.Equals(
+                    if (!string.Equals(
                             Bot.Player?.Cell,
                             targetCell,
                             StringComparison.OrdinalIgnoreCase
-                        )
-                    )
+                        ))
                     {
-                        innerMap?.Jump(targetCell, "Left", autoCorrect: false);
+                        innerMap?.Jump(
+                            targetCell,
+                            "Left",
+                            autoCorrect: false
+                        );
+
                         Bot.Wait.ForCellChange(targetCell);
                         Bot.Player?.SetSpawnPoint();
                     }
-                    if (!Bot.Player!.HasTarget || M != null && Bot.Player?.Target?.MapID != M.MapID)
-                    {
-                        Bot.Combat.Attack(M!.MapID);
-                    }
+
+                    if (
+                        !Bot.Player!.HasTarget
+                        || Bot.Player?.Target?.MapID != M.MapID
+                    )
+                        Bot.Combat.Attack(M.MapID);
 
                     Bot.Sleep(500);
 
-                    if (!Bot.Player!.HasTarget || Bot.Player?.Target?.HP <= 0)
-                    {
+                    // The server may have completed the quest during the kill.
+                    if (QuestProgression(Qid, false, "All", false))
                         break;
-                    }
+
+                    if (
+                        !Bot.Player!.HasTarget
+                        || Bot.Player?.Target?.HP <= 0
+                    )
+                        break;
 
                     string[] names = neededItems
                         .Where(r => r != null)
                         .Select(r => r.Name)
                         .ToArray();
+
                     if (
                         names.Length > 0
-                        && Bot.Drops.CurrentDrops.Any(d => d != null && names.Contains(d))
+                        && Bot.Drops.CurrentDrops.Any(
+                            d => d != null && names.Contains(d)
+                        )
                     )
                         Bot.Drops.Pickup(names);
 
@@ -554,6 +582,10 @@ public class CoreStory
                         )
                         .ToList();
                 }
+
+                // Stop checking additional monsters if the quest completed.
+                if (QuestProgression(Qid, false, "All", false))
+                    return;
             }
 
             if (CurrentRequirements is { Count: > 0 } reqs)
@@ -573,61 +605,73 @@ public class CoreStory
 
     #endregion
 
-    #region  MapItemQuest
+    #region MapItemQuest
+
     /// <summary>
-    /// Gets a MapItem X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// Gets a MapItem X times for a Quest, and turns in the quest if possible.
+    /// Automatically checks if the quest was completed server-side.
     /// </summary>
     /// <param name="QuestID">ID of the quest</param>
     /// <param name="MapName">Map where the items are</param>
     /// <param name="MapItemID">ID of the item</param>
-    /// <param name="Amount">The amount of <paramref name="MapItemID"/> to grab</param>
-    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="Amount">The amount of MapItemID to grab</param>
+    /// <param name="GetReward">Whether or not the Reward should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
-    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    public void MapItemQuest(
-        int QuestID,
-        string MapName,
-        int MapItemID,
-        int Amount = 1,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    /// <param name="AutoCompleteQuest">If the method should turn in the quest when possible</param>
+    public void MapItemQuest(int QuestID, string MapName, int MapItemID, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
-
-
-
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (QuestData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
             return;
         }
+
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        if (Bot.Map.Name != MapName)
-            Core.Join(MapName);
+        if (string.IsNullOrEmpty(MapName) || Amount <= 0)
+            return;
 
         Core.EnsureAccept(QuestID);
+
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
+        if (!string.Equals(Bot.Map?.Name, MapName, StringComparison.OrdinalIgnoreCase))
+        {
+            Core.Join(MapName);
+            Bot.Wait.ForMapLoad(MapName);
+        }
+
         Core.GetMapItem(MapItemID, Amount, MapName);
+
+        // MapItem collection can trigger server-side quest completion.
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
         TryComplete(QuestData, AutoCompleteQuest);
+
+        Bot.Sleep(500);
+
+        QuestProgression(QuestID, GetReward, Reward, false);
     }
 
     /// <summary>
     /// Completes a quest by collecting map items.
     /// </summary>
-    /// <param name="QuestID">The quest ID to complete.</param>
-    /// <param name="MapName">The map to grab items from.</param>
-    /// <param name="MapItemIDs">IDs of the map items required.</param>
-    /// <param name="Amount">Quantity of each item to collect.</param>
-    /// <param name="GetReward">Whether to collect the reward if completed.</param>
-    /// <param name="Reward">Which reward to pick ("All" by default).</param>
-    /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items.</param>
+    /// <param name="QuestID">The quest ID to complete</param>
+    /// <param name="MapName">The map to grab items from</param>
+    /// <param name="MapItemIDs">IDs of the map items required</param>
+    /// <param name="Amount">Quantity of each item to collect</param>
+    /// <param name="GetReward">Whether to collect the reward if completed</param>
+    /// <param name="Reward">Which reward to pick ("All" by default)</param>
+    /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items</param>
     public void MapItemQuest(int QuestID, string MapName, int[] MapItemIDs, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (QuestData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
@@ -637,10 +681,15 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        if (string.IsNullOrEmpty(MapName) || MapItemIDs == null || MapItemIDs.Length == 0 || Amount <= 0)
+            return;
+
         Core.EnsureAccept(QuestID);
 
-        // Build the list of map items to grab
-        var itemsToGrab = MapItemIDs
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
+        List<(int ItemID, int Quantity)> itemsToGrab = MapItemIDs
             .Where(id => !Bot.TempInv.Contains(id, Amount))
             .Select(id => (ItemID: id, Quantity: Amount))
             .ToList();
@@ -648,31 +697,34 @@ public class CoreStory
         if (itemsToGrab.Count > 0)
         {
             Core.Logger($"Grabbing items from map {MapName}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}");
-            Core.GetMapItems(itemsToGrab, MapName); // <-- updated to use the tuple overload
+            Core.GetMapItems(itemsToGrab, MapName);
+
+            if (QuestProgression(QuestID, false, "All", false))
+                return;
         }
 
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
         TryComplete(QuestData, AutoCompleteQuest);
+
+        Bot.Sleep(500);
+
+        QuestProgression(QuestID, GetReward, Reward, false);
     }
 
     /// <summary>
     /// Completes a quest by collecting multiple map items, batching them per map.
     /// </summary>
-    /// <param name="QuestID">The quest ID to complete.</param>
-    /// <param name="MapItems">Array of tuples containing MapItemID, Amount, and MapName.</param>
-    /// <param name="GetReward">Whether to collect the reward if completed.</param>
-    /// <param name="Reward">Which reward to pick ("All" by default).</param>
-    /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items.</param>
-    public void MapItemQuest(
-        int QuestID,
-        (int MapItemID, int Amount, string MapName)[] MapItems,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    /// <param name="QuestID">The quest ID to complete</param>
+    /// <param name="MapItems">Array of tuples containing MapItemID, Amount, and MapName</param>
+    /// <param name="GetReward">Whether to collect the reward if completed</param>
+    /// <param name="Reward">Which reward to pick ("All" by default)</param>
+    /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items</param>
+    public void MapItemQuest(int QuestID, (int MapItemID, int Amount, string MapName)[] MapItems, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
-
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (QuestData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
@@ -682,60 +734,80 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        if (MapItems == null || MapItems.Length == 0)
+            return;
+
         Core.EnsureAccept(QuestID);
 
-        // Group items by map
-        var itemsGroupedByMap = MapItems
-            .Where(mi => !Bot.TempInv.Contains(mi.MapItemID, mi.Amount)) // only items not already in temp inv
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
+        IEnumerable<IGrouping<string, (int MapItemID, int Amount, string MapName)>> itemsGroupedByMap = MapItems
+            .Where(mi =>
+                !string.IsNullOrEmpty(mi.MapName)
+                && mi.Amount > 0
+                && !Bot.TempInv.Contains(mi.MapItemID, mi.Amount)
+            )
             .GroupBy(mi => mi.MapName);
 
-        foreach (var group in itemsGroupedByMap)
+        foreach (IGrouping<string, (int MapItemID, int Amount, string MapName)> group in itemsGroupedByMap)
         {
+            if (QuestProgression(QuestID, false, "All", false))
+                return;
+
             string map = group.Key;
-            var itemsToGrab = group
+
+            (int ItemID, int Quantity)[] itemsToGrab = group
                 .Select(mi => (ItemID: mi.MapItemID, Quantity: mi.Amount))
                 .ToArray();
 
-            if (itemsToGrab.Length > 0)
+            if (itemsToGrab.Length == 0)
+                continue;
+
+            Core.Logger($"Grabbing items from map {map}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}");
+
+            if (!string.Equals(Bot.Map?.Name, map, StringComparison.OrdinalIgnoreCase))
             {
-                Core.Logger(
-                    $"Grabbing items from map {map}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}"
-                );
                 Core.Join(map);
-                Core.GetMapItems(itemsToGrab, map);
+                Bot.Wait.ForMapLoad(map);
             }
+
+            Core.GetMapItems(itemsToGrab, map);
+
+            if (QuestProgression(QuestID, false, "All", false))
+                return;
         }
 
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
         TryComplete(QuestData, AutoCompleteQuest);
+
+        Bot.Sleep(500);
+
+        QuestProgression(QuestID, GetReward, Reward, false);
     }
 
     #endregion
 
     #region MiscQuest
+
     /// <summary>
-    /// Buys an item X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// Buys an item X times for a Quest, and turns in the quest if possible.
+    /// Automatically checks if the quest was completed server-side.
     /// </summary>
     /// <param name="QuestID">ID of the quest</param>
     /// <param name="MapName">Map where the shop is located</param>
     /// <param name="ShopID">ID of the shop</param>
     /// <param name="ItemName">Name of the item to buy</param>
-    /// <param name="Amount">The amount of <paramref name="ItemName"/> to buy</param>
-    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="Amount">The amount of ItemName to buy</param>
+    /// <param name="GetReward">Whether or not the Reward should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
-    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    public void BuyQuest(
-        int QuestID,
-        string MapName,
-        int ShopID,
-        string ItemName,
-        int Amount = 1,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    /// <param name="AutoCompleteQuest">If the method should turn in the quest when the quest can be completed</param>
+    public void BuyQuest(int QuestID, string MapName, int ShopID, string ItemName, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (QuestData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
@@ -746,26 +818,36 @@ public class CoreStory
             return;
 
         Core.EnsureAccept(QuestID);
+
+        // The server may have completed the quest immediately after acceptance.
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
         Core.BuyItem(MapName, ShopID, ItemName, Amount);
+
+        // Buying the required item may complete the quest server-side.
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
         TryComplete(QuestData, AutoCompleteQuest);
+
+        Bot.Sleep(500);
+
+        // Confirm the completion after the turn-in attempt.
+        QuestProgression(QuestID, GetReward, Reward, false);
     }
 
     /// <summary>
-    /// Accepts a quest and then turns it in again
+    /// Accepts a quest and then turns it in again.
     /// </summary>
     /// <param name="QuestID">ID of the quest</param>
-    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="GetReward">Whether or not the Reward should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
-    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    public void ChainQuest(
-        int QuestID,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    /// <param name="AutoCompleteQuest">If the method should turn in the quest when the quest can be completed</param>
+    public void ChainQuest(int QuestID, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (QuestData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
@@ -775,10 +857,21 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        TryComplete(QuestData, AutoCompleteQuest);
-    }
-    #endregion
+        Core.EnsureAccept(QuestID);
 
+        // Catch quests that complete immediately after acceptance.
+        if (QuestProgression(QuestID, false, "All", false))
+            return;
+
+        TryComplete(QuestData, AutoCompleteQuest);
+
+        Bot.Sleep(500);
+
+        // Confirm the server-side completion.
+        QuestProgression(QuestID, GetReward, Reward, false);
+    }
+
+    #endregion
     public void QuestComplete(int questID) =>
         TryComplete(Core.InitializeWithRetries(() => Core.EnsureLoad(questID), 20), true);
 
@@ -791,6 +884,7 @@ public class CoreStory
         }
 
         Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestData.ID));
+
         if (questData == null)
         {
             Core.Logger($"Quest with ID {QuestData.ID} not found");
@@ -798,8 +892,16 @@ public class CoreStory
         }
 
         string[] missingItems = questData
-            .Requirements.Concat(questData.AcceptRequirements)
-            .Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity))
+            .Requirements
+            .Concat(questData.AcceptRequirements)
+            .Where(x =>
+                x != null
+                && (
+                    x.Temp
+                        ? !Bot.TempInv.Contains(x.ID, x.Quantity)
+                        : !Core.CheckInventory(x.ID, x.Quantity)
+                )
+            )
             .Select(x =>
             {
                 int have = x.Temp
@@ -821,7 +923,7 @@ public class CoreStory
 
         Core.Sleep();
 
-        // Always force proper completion
+        // Always force proper completion.
         Core.EnsureAccept(questData.ID);
         Core.EnsureComplete(questData.ID);
 
@@ -833,7 +935,6 @@ public class CoreStory
                 Bot.Wait.ForPickup(reward);
         }
 
-
         Core.Logger(
             $"Completed Quest: [{questData.ID}] - \"{questData.Name}\"",
             "QuestProgression"
@@ -843,10 +944,11 @@ public class CoreStory
     }
 
     /// <summary>
-    /// Skeleton of KillQuest, MapItemQuest, BuyQuest and ChainQuest. Only needs to be used inside a script if the quest spans across multiple maps
+    /// Skeleton of KillQuest, MapItemQuest, BuyQuest and ChainQuest.
+    /// Only needs to be used inside a script if the quest spans across multiple maps.
     /// </summary>
     /// <param name="QuestID">ID of the quest</param>
-    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="GetReward">Whether or not the Reward should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
     /// <param name="Log"></param>
     public bool QuestProgression(int QuestID, bool GetReward = true, string Reward = "All", bool Log = true)
@@ -854,20 +956,17 @@ public class CoreStory
         if (QuestID <= 0)
             return false;
 
-        // Cache previous result to avoid repeated processing in same loop tick
-        if (PreviousQuestID == QuestID)
-            return PreviousQuestState;
-        PreviousQuestID = QuestID;
-
-        // Load CBO test flag once
+        // Load CBO test flag once.
         if (!CBO_Checked)
         {
             if (Core.CBOBool("BCO_Story_TestBot", out bool testBot))
                 TestBot = testBot;
+
             CBO_Checked = true;
         }
 
         Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
+
         if (questData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
@@ -876,9 +975,7 @@ public class CoreStory
 
         int attempts = 0;
 
-        // ─────────────────────────────────────────────────────────────
-        // QUEST UNLOCK RECOVERY LOOP
-        // ─────────────────────────────────────────────────────────────
+        // Quest unlock recovery loop.
         while (!Bot.Quests.IsUnlocked(QuestID))
         {
             Core.Sleep(1000);
@@ -888,9 +985,14 @@ public class CoreStory
                 : 0;
 
             if (attempts == 0 || attempts % 3 == 0)
-                Core.Logger($"Progress check: Slot {questData.Slot} | Current {currentValue} / Target {questData.Value - 1}", "QuestProgression");
+            {
+                Core.Logger(
+                    $"Progress check: Slot {questData.Slot} | Current {currentValue} / Target {questData.Value - 1}",
+                    "QuestProgression"
+                );
+            }
 
-            // Find previous quest in same chain safely
+            // Find previous quest in the same chain safely.
             Quest? prevQuest = Bot.Quests.Tree?
                 .Where(q => q.Slot == questData.Slot && q.Value < questData.Value)
                 .OrderByDescending(q => q.Value)
@@ -898,62 +1000,79 @@ public class CoreStory
 
             if (prevQuest != null)
             {
-                // Safely gather requirements (quests may have null collections)
+                // Safely gather requirements.
                 string[] prevReqs = (prevQuest.Requirements ?? Enumerable.Empty<ItemBase>())
                     .Concat(prevQuest.AcceptRequirements ?? Enumerable.Empty<ItemBase>())
+                    .Where(req => req != null && !string.IsNullOrEmpty(req.Name))
                     .Select(req => req.Name)
                     .ToArray();
 
-                // If we already have the items, re-complete the quest to repair the chain
+                // If we already have the items, re-complete the previous quest
+                // to repair the chain.
                 if (prevReqs.Length > 0 && Core.CheckInventory(prevReqs))
                 {
-                    Core.Logger($"Attempting recovery via re-completing previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"", "QuestProgression");
+                    Core.Logger(
+                        $"Attempting recovery via re-completing previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"",
+                        "QuestProgression"
+                    );
 
                     TryComplete(prevQuest, true);
+
                     attempts = 0;
                     continue;
                 }
 
-                // Log missing requirements
-                string[] missingReqs = prevReqs.Where(req => !Core.CheckInventory(req)).ToArray();
+                // Log missing requirements.
+                string[] missingReqs = prevReqs
+                    .Where(req => !Core.CheckInventory(req))
+                    .ToArray();
+
                 if (missingReqs.Length > 0)
                 {
-                    Bot.Log($"Missing [{string.Join(", ", missingReqs)}] to accept {questData.Name} [{questData.ID}]");
-                    attempts = 5; // force relog sooner
+                    Bot.Log(
+                        $"Missing [{string.Join(", ", missingReqs)}] to accept {questData.Name} [{questData.ID}]"
+                    );
+
+                    attempts = 5;
                 }
             }
 
             attempts++;
 
-            // Relog after repeated failures
+            // Relog after repeated failures.
             if (attempts >= 5)
             {
-                Core.Logger($"Quest [{QuestID}] \"{questData.Name}\" still not unlocked after retries. Relogging...", "QuestProgression");
+                Core.Logger(
+                    $"Quest [{QuestID}] \"{questData.Name}\" still not unlocked after retries. Relogging...",
+                    "QuestProgression"
+                );
+
                 Core.Relogin("Quest progression recovery failed, relogging.");
                 attempts = 0;
             }
         }
 
-        // ─────────────────────────────────────────────────────────────
-        // COMPLETION CHECK
-        // ─────────────────────────────────────────────────────────────
+        // IMPORTANT:
+        // This is intentionally a fresh completion check every time.
+        // Do NOT cache PreviousQuestID or PreviousQuestState here.
         if (Core.isCompletedBefore(QuestID) && (!TestBot || questData.Once))
         {
             if (Log)
             {
                 if (TestBot)
-                    Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{questData.Name}\"");
+                    Core.Logger(
+                        $"Skipped (Once = true): [{QuestID}] - \"{questData.Name}\""
+                    );
                 else
-                    Core.Logger($"Already Completed: [{QuestID}] - \"{questData.Name}\"");
+                    Core.Logger(
+                        $"Already Completed: [{QuestID}] - \"{questData.Name}\""
+                    );
             }
 
-            PreviousQuestState = true;
             return true;
         }
 
-        // ─────────────────────────────────────────────────────────────
-        // REWARD HANDLING
-        // ─────────────────────────────────────────────────────────────
+        // Reward handling.
         if (GetReward)
         {
             if (Reward != "All")
@@ -961,59 +1080,65 @@ public class CoreStory
                 if (Core.CheckInventory(Reward))
                 {
                     Core.Logger($"Already have reward \"{Reward}\", skipping quest.");
-                    PreviousQuestState = true;
                     return true;
                 }
 
                 Core.AddDrop(Reward);
             }
             else
+            {
                 Core.AddDrop(Core.QuestRewards(QuestID));
+            }
         }
 
-        Core.Logger($"Doing Quest: [{QuestID}] - \"{questData.Name}\"");
+        if (Log)
+            Core.Logger($"Doing Quest: [{QuestID}] - \"{questData.Name}\"");
 
-        PreviousQuestState = false;
         return false;
     }
-
     private bool CBO_Checked = false;
 
     public void LegacyQuestManager(Action questLogic, params int[] questIDs)
     {
         List<Quest>? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(questIDs));
-        List<LegacyQuestObject> whereToGet = new();
+        List<LegacyQuestObject> whereToGet = [];
+
         if (questData == null || questData.Count == 0)
         {
             Core.Logger("No quests found, cannot run LegacyQuestManager", messageBox: true);
             return;
         }
 
-        //Core.DL_Enable();
+        _LegacyQuestStop = false;
+
         Core.DebugLogger(this, "-------------\t");
+
         foreach (Quest quest in questData)
         {
-            List<ItemBase> desiredQuestReward = quest
-                .Rewards.Where(r =>
+            List<ItemBase> desiredQuestReward = quest.Rewards
+                .Where(r =>
                     questData.Any(q =>
                         q.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name)
                     )
                 )
                 .ToList();
-            int requiredQuestID =
-                questData
-                    .Find(q =>
-                        q.Rewards.Any(r =>
-                            quest.AcceptRequirements != null
-                            && quest.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name)
-                        )
+
+            int requiredQuestID = questData
+                .Find(q =>
+                    q.Rewards.Any(r =>
+                        quest.AcceptRequirements != null
+                        && quest.AcceptRequirements.Any(a => a.ID == r.ID || a.Name == r.Name)
                     )
-                    ?.ID ?? 0;
-            List<ItemBase>? requiredQuestReward = quest
-                .AcceptRequirements?.Where(r =>
-                    questData.Any(q => q.Rewards.Any(a => a.ID == r.ID || a.Name == r.Name))
                 )
-                ?.ToList();
+                ?.ID ?? 0;
+
+            List<ItemBase>? requiredQuestReward = quest.AcceptRequirements?
+                .Where(r =>
+                    questData.Any(q =>
+                        q.Rewards.Any(a => a.ID == r.ID || a.Name == r.Name)
+                    )
+                )
+                .ToList();
 
             Core.DebugLogger(this, $"{quest.ID}\t\t");
             Core.DebugLogger(this, $"{desiredQuestReward.FirstOrDefault()?.Name}\t");
@@ -1024,9 +1149,7 @@ public class CoreStory
             if (requiredQuestReward?.Count == 0 && quest.AcceptRequirements?.Count > 0)
             {
                 Core.Logger(
-                    "The managed failed to find the location of \""
-                        + string.Join("\" + \"", quest.AcceptRequirements.Select(a => a.Name))
-                        + $"\" for Quest ID {quest.ID}, is the function missing a Quest ID?",
+                    $"The manager failed to find the location of \"{string.Join("\" \"", quest.AcceptRequirements.Select(a => a.Name))}\" for Quest ID {quest.ID}, is the function missing a Quest ID?",
                     messageBox: true
                 );
                 return;
@@ -1040,72 +1163,92 @@ public class CoreStory
             || whereToGet.All(x => x.requiredQuestReward?.Count == 0)
         )
         {
-            string ids = questData != null
-            ? string.Join(", ", questData.Select(q => q.ID))
-            : string.Empty;
+            string ids = string.Join(", ", questData.Select(q => q.ID));
 
             Core.Logger(
                 $"None of the Quest IDs filled in ({ids}) are supposed to be used in the LegacyQuestManager, " +
                 "please report to the bot makers that they must make this story line in the normal way."
             );
-
             return;
         }
 
-        var finalItemQuest = whereToGet.Find(x => x.desiredQuestReward.Count == 0);
+        LegacyQuestObject? finalItemQuest = whereToGet.Find(x => x.desiredQuestReward.Count == 0);
+
         if (finalItemQuest == null || finalItemQuest.desiredQuestID <= 0)
         {
             Core.Logger("Could not find the Quest ID of the last quest in the item chain");
             return;
         }
 
+        Quest? finalQuestData = Core.InitializeWithRetries(
+            () => Core.EnsureLoad(finalItemQuest.desiredQuestID)
+        );
+
+        if (finalQuestData == null)
+        {
+            Core.Logger($"Quest with ID {finalItemQuest.desiredQuestID} not found");
+            return;
+        }
+
         Core.Logger(
-            $"Final quest in Legacy Quest Chain: [{finalItemQuest.desiredQuestID}] \"{Core.EnsureLoad(finalItemQuest.desiredQuestID).Name}\""
+            $"Final quest in Legacy Quest Chain: [{finalItemQuest.desiredQuestID}] \"{finalQuestData.Name}\""
         );
 
         runQuest(finalItemQuest.desiredQuestID);
 
         foreach (LegacyQuestObject l in whereToGet)
+        {
             if (l.requiredQuestReward != null)
                 Core.ToBank(l.requiredQuestReward.Select(i => i.ID).ToArray());
+        }
 
         void runQuest(int questID)
         {
+            if (_LegacyQuestStop)
+                return;
+
             LegacyQuestObject? runQuestData = whereToGet.Find(d => d.desiredQuestID == questID);
 
             if (runQuestData == null)
             {
-                Core.Logger("runQuestData is NULL");
+                Core.Logger($"Could not find LegacyQuestObject for quest {questID}");
                 return;
             }
+
             Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(questID));
+
             if (questData == null)
             {
                 Core.Logger($"Quest with ID {questID} not found");
                 return;
             }
 
-            int[] requiredReward = runQuestData.requiredQuestReward!.Select(i => i.ID).ToArray();
+            int[] requiredReward = runQuestData.requiredQuestReward?
+                .Select(i => i.ID)
+                .ToArray() ?? Array.Empty<int>();
+
+            // Final quests don't have a desired intermediate reward.
             if (
                 runQuestData.desiredQuestReward.Count == 0
                 && questID != finalItemQuest.desiredQuestID
             )
             {
-                if (!Core.CheckInventory(requiredReward))
+                if (requiredReward.Length > 0 && !Core.CheckInventory(requiredReward))
                     runQuest(runQuestData.requiredQuestID);
+
                 return;
             }
 
-            int[] desiredReward = runQuestData.desiredQuestReward.Select(i => i.ID).ToArray();
-            if (
-                questID != finalItemQuest.desiredQuestID
-                    ? Core.CheckInventory(desiredReward)
-                    : Core.CheckInventory(
-                        Core.EnsureLoad(finalItemQuest.desiredQuestID)
-                            .Rewards.Select(x => x.ID)
-                            .ToArray()
-                    )
-            )
+            int[] desiredReward = runQuestData.desiredQuestReward
+                .Select(i => i.ID)
+                .ToArray();
+
+            int[] finalRewards = questID == finalItemQuest.desiredQuestID
+                ? questData.Rewards.Select(x => x.ID).ToArray()
+                : desiredReward;
+
+            // Always check the live inventory before doing the quest.
+            if (finalRewards.Length > 0 && Core.CheckInventory(finalRewards))
             {
                 Core.Logger(
                     $"Already Completed: [{questID}] - \"{questData.Name}\"",
@@ -1114,38 +1257,96 @@ public class CoreStory
                 return;
             }
 
-            if (!Core.CheckInventory(requiredReward))
+            // Make sure the previous quest in the chain is finished first.
+            if (
+                requiredReward.Length > 0
+                && !Core.CheckInventory(requiredReward)
+            )
+            {
                 runQuest(runQuestData.requiredQuestID);
+
+                if (_LegacyQuestStop)
+                    return;
+
+                // The previous quest may have completed server-side while
+                // the recursive call was running. Re-check before continuing.
+                if (!Core.CheckInventory(requiredReward))
+                    return;
+            }
 
             if (_LegacyQuestStop)
                 return;
 
-            Core.Logger($"Doing Quest: [{questID}] - \"{questData.Name}\"", "QuestProgression");
+            // The quest may have been completed by the server while recovering
+            // the previous quest. Do not run questLogic unnecessarily.
+            if (QuestProgression(questID, false, "All", false))
+                return;
+
+            Core.Logger(
+                $"Doing Quest: [{questID}] - \"{questData.Name}\"",
+                "QuestProgression"
+            );
+
             Core.EnsureAccept(questID);
-            Core.AddDrop(desiredReward);
+
+            // Acceptance itself can trigger completion for some quests.
+            if (QuestProgression(questID, false, "All", false))
+                return;
+
+            if (desiredReward.Length > 0)
+                Core.AddDrop(desiredReward);
 
             LegacyQuestID = questID;
+
+            // Run the actual farming/quest logic.
             questLogic();
 
+            if (_LegacyQuestStop)
+                return;
+
+            // IMPORTANT:
+            // questLogic() may have caused the server to complete and/or
+            // turn in the quest. Check the live quest state BEFORE TryComplete.
+            if (QuestProgression(questID, false, "All", false))
+            {
+                LegacyQuestAutoComplete = true;
+                return;
+            }
+
             TryComplete(questData, LegacyQuestAutoComplete);
+
+            // Give the server a moment to process the completion.
+            Bot.Sleep(500);
+
+            // Confirm whether the quest actually completed.
+            if (!QuestProgression(questID, false, "All", false))
+            {
+                Core.Logger(
+                    $"Quest [{questID}] did not report as completed after TryComplete.",
+                    "QuestProgression"
+                );
+            }
+
             foreach (int i in desiredReward)
                 Bot.Wait.ForPickup(i);
+
             if (questID == finalItemQuest.desiredQuestID)
+            {
                 Bot.Drops.Pickup(
-                    Core.EnsureLoad(finalItemQuest.desiredQuestID)
-                        .Rewards.Select(x => x.ID)
-                        .ToArray()
+                    finalQuestData.Rewards.Select(x => x.ID).ToArray()
                 );
+            }
+
             LegacyQuestAutoComplete = true;
         }
     }
 
     private class LegacyQuestObject
     {
-        public int desiredQuestID { get; set; } // In order to do ....
-        public List<ItemBase> desiredQuestReward { get; set; } // And obtain ...
-        public int requiredQuestID { get; set; } // You must do ...
-        public List<ItemBase>? requiredQuestReward { get; set; } // And obtain ...
+        public int desiredQuestID { get; set; }
+        public List<ItemBase> desiredQuestReward { get; set; }
+        public int requiredQuestID { get; set; }
+        public List<ItemBase>? requiredQuestReward { get; set; }
 
         public LegacyQuestObject(
             int desiredQuestID,
@@ -1169,11 +1370,11 @@ public class CoreStory
 
     /// <summary>
     /// Put this at the start of your story script so that the bot will load all quests that are used in the bot.
-    /// This will speed up any progression checks tremendiously.
+    /// This will speed up any progression checks tremendously.
     /// </summary>
     public void PreLoad(object _this, [CallerMemberName] string caller = "")
     {
-        List<int> QuestIDs = new();
+        List<int> QuestIDs = [];
         string[] ScriptSlice = Core.CompiledScript();
 
         if (ScriptSlice.Length == 0)
@@ -1185,26 +1386,35 @@ public class CoreStory
         }
 
         int classStartIndex = Array.IndexOf(ScriptSlice, $"public class {_this}");
+
         if (classStartIndex < 0)
             return;
 
-        int classEndIndex =
-            Array.IndexOf(ScriptSlice[classStartIndex..], "}") + classStartIndex + 1;
+        int classEndIndex = Array.IndexOf(
+            ScriptSlice[classStartIndex..],
+            "}"
+        ) + classStartIndex + 1;
+
+        if (classEndIndex <= classStartIndex)
+            return;
 
         ScriptSlice = ScriptSlice[classStartIndex..classEndIndex];
 
         int methodStartIndex = -1;
-        foreach (string p in new[] { "public", "private" })
+
+        foreach (string access in new[] { "public", "private", "protected" })
         {
-            foreach (string s in new[] { "void", "bool", "string", "int" })
+            foreach (string type in new[] { "void", "bool", "string", "int" })
             {
                 methodStartIndex = Array.FindIndex(
                     ScriptSlice,
-                    l => l.Contains($"{p} {s} {caller}")
+                    line => line.Contains($"{access} {type} {caller}")
                 );
+
                 if (methodStartIndex > -1)
                     break;
             }
+
             if (methodStartIndex > -1)
                 break;
         }
@@ -1215,8 +1425,10 @@ public class CoreStory
             return;
         }
 
-        // ===== FIX: prevent negative indent =====
-        int methodIndentCount = ScriptSlice[methodStartIndex + 1].IndexOf('{');
+        int methodIndentCount = -1;
+
+        if (methodStartIndex + 1 < ScriptSlice.Length)
+            methodIndentCount = ScriptSlice[methodStartIndex + 1].IndexOf('{');
 
         if (methodIndentCount < 0)
             methodIndentCount = ScriptSlice[methodStartIndex].IndexOf('{');
@@ -1224,19 +1436,21 @@ public class CoreStory
         if (methodIndentCount < 0)
             methodIndentCount = 0;
 
-        string indent = new string(' ', methodIndentCount);
-        // =======================================
+        string indent = new(' ', methodIndentCount);
 
-        int methodEndIndex =
-            Array.FindIndex(ScriptSlice, methodStartIndex, l => l == indent + "}") + 1;
+        int methodEndIndex = Array.FindIndex(
+            ScriptSlice,
+            methodStartIndex + 1,
+            line => line == indent + "}"
+        );
 
-        if (methodEndIndex <= methodStartIndex)
+        if (methodEndIndex < 0)
         {
             Core.Logger("Failed to parse methodEndIndex, no quests will be pre-loaded");
             return;
         }
 
-        ScriptSlice = ScriptSlice[methodStartIndex..methodEndIndex];
+        ScriptSlice = ScriptSlice[methodStartIndex..(methodEndIndex + 1)];
 
         string[] SearchParam =
         {
@@ -1248,44 +1462,67 @@ public class CoreStory
         "Core.EnsureAccept",
         "Core.EnsureComplete",
         "Core.EnsureCompleteChoose",
-        "Core.ChainComplete",
+        "Core.ChainComplete"
     };
 
-        foreach (string Line in ScriptSlice)
+        foreach (string line in ScriptSlice)
         {
-            if (!Line.Any(char.IsDigit))
-                continue;
-
-            string EdittedLine = Line.Replace(" ", "")
+            string editedLine = line.Replace(" ", "")
                 .Replace("!", "")
                 .Replace("(", "")
                 .Replace("if", "")
                 .Replace("else", "");
 
-            if (!SearchParam.Any(x => EdittedLine.StartsWith(x)))
+            if (!SearchParam.Any(x => editedLine.StartsWith(x)))
                 continue;
 
-            char[] digits = Line
-                .SkipWhile(c => !char.IsDigit(c))
-                .TakeWhile(char.IsDigit)
-                .ToArray();
+            int questStart = editedLine.IndexOf('(');
 
-            int QuestID = int.Parse(new string(digits));
+            if (questStart < 0)
+                continue;
 
-            if (!QuestIDs.Contains(QuestID) && !Bot.Quests.Tree.Exists(x => x.ID == QuestID))
+            string questArguments = editedLine[(questStart + 1)..];
+
+            string questIDString = new(
+                questArguments
+                    .SkipWhile(c => !char.IsDigit(c))
+                    .TakeWhile(char.IsDigit)
+                    .ToArray()
+            );
+
+            if (!int.TryParse(questIDString, out int QuestID))
+                continue;
+
+            if (
+                QuestID > 0
+                && !QuestIDs.Contains(QuestID)
+                && !Bot.Quests.Tree.Exists(x => x.ID == QuestID)
+            )
+            {
                 QuestIDs.Add(QuestID);
+            }
         }
 
-        if (
-            QuestIDs.Count + Bot.Quests.Tree.Count > Core.LoadedQuestLimit
-            && QuestIDs.Count < Core.LoadedQuestLimit
-        )
-            Bot.Flash.SetGameObject("world.questTree", new ExpandoObject());
-        else if (QuestIDs.Count > (Core.LoadedQuestLimit - Bot.Quests.Tree.Count))
+        int availableSlots = Core.LoadedQuestLimit - Bot.Quests.Tree.Count;
+
+        if (QuestIDs.Count > availableSlots)
         {
-            Core.Logger(
-                $"Found {QuestIDs.Count} Quests, this exceeds the max amount of loaded quests ({Core.LoadedQuestLimit}). No quests will be loaded."
-            );
+            if (QuestIDs.Count < Core.LoadedQuestLimit)
+            {
+                Bot.Flash.SetGameObject("world.questTree", new ExpandoObject());
+            }
+            else
+            {
+                Core.Logger(
+                    $"Found {QuestIDs.Count} Quests, this exceeds the max amount of loaded quests ({Core.LoadedQuestLimit}). No quests will be loaded."
+                );
+                return;
+            }
+        }
+
+        if (QuestIDs.Count == 0)
+        {
+            Core.Logger("No new quests found to pre-load.");
             return;
         }
 
@@ -1293,20 +1530,18 @@ public class CoreStory
 
         if (QuestIDs.Count > 30)
         {
-            double estimatedTime = (QuestIDs.Count / 30.0) * 1.6;
+            double estimatedTime = QuestIDs.Count / 30.0 * 1.6;
             Core.Logger($"Estimated Loading Time: {Math.Ceiling(estimatedTime)}s");
         }
 
         for (int i = 0; i < QuestIDs.Count; i += 30)
         {
-            int end = Math.Min(i + 30, QuestIDs.Count);
-            Bot.Quests.Load(QuestIDs.GetRange(i, end - i).ToArray());
+            int count = Math.Min(30, QuestIDs.Count - i);
+
+            Bot.Quests.Load(QuestIDs.GetRange(i, count).ToArray());
             Core.Sleep(1500);
         }
     }
-
-    private int PreviousQuestID = 0;
-    private bool PreviousQuestState = false;
 
     private void _SmartKill(string map, string monster, int iterations = 20)
     {
@@ -1412,28 +1647,23 @@ public class CoreStory
         }
     }
 
-    private readonly List<ItemBase> CurrentRequirements = new();
+    private readonly List<ItemBase> CurrentRequirements = [];
 
-    private void _MonsterHunt(
-        string map,
-        ref bool shouldRepeat,
-        string monster,
-        string itemName,
-        int quantity,
-        bool isTemp,
-        int index
-    )
+    private void _MonsterHunt(string map, ref bool shouldRepeat, string monster, string itemName, int quantity, bool isTemp, int index)
     {
-        // Check if the item is already in inventory
+        if (index < 0 || index >= CurrentRequirements.Count)
+        {
+            shouldRepeat = false;
+            return;
+        }
+
+        // Check if the item is already in inventory.
         if (
-            itemName == null
+            string.IsNullOrEmpty(itemName)
             || (
-                itemName != null
-                && (
-                    isTemp
-                        ? Bot.TempInv.Contains(itemName, quantity)
-                        : Core.CheckInventory(itemName, quantity)
-                )
+                isTemp
+                    ? Bot.TempInv.Contains(itemName, quantity)
+                    : Core.CheckInventory(itemName, quantity)
             )
         )
         {
@@ -1442,73 +1672,119 @@ public class CoreStory
             return;
         }
 
-        // Find the target monster
+        // Find the target monster.
         Monster? targetMonster = Core.InitializeWithRetries(() =>
             Bot.Monsters.MapMonsters.Find(x =>
                 x != null && x.Name.FormatForCompare() == monster.FormatForCompare()
             )
         );
+
         if (targetMonster == null)
         {
             Core.Logger(
-                $"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{itemName}\", Its Probably been renamed, please report this Missing monster to @Tato2 or @bogalj on Discord",
-                $"Missing Monster",
+                $"Monster \"{monster}\" not found on the map \"{Bot.Map.Name}\" for \"{itemName}\". " +
+                "It's probably been renamed, please report this missing monster to @Tato2 or @bogalj on Discord.",
+                "Missing Monster",
                 stopBot: true
             );
+
             shouldRepeat = false;
             return;
         }
 
-        Core.Logger($"Hunting \"{monster}\" for \"{itemName}\" x{quantity}", "_MonsterHunt");
+        Core.Logger(
+            $"Hunting \"{monster}\" for \"{itemName}\" x{quantity}",
+            "_MonsterHunt"
+        );
 
-        // Main loop for hunting the monster until the item is acquired
-        while (
-            !Bot.ShouldExit
-            && !(
-                isTemp
-                    ? Bot.TempInv.Contains(itemName!, quantity)
-                    : Core.CheckInventory(itemName, quantity)
-            )
-        )
+        // Main loop for hunting the monster until the item or quest is completed.
+        while (!Bot.ShouldExit)
         {
+            // The server can complete/turn in the quest while we are killing.
+            if (lastQuestID > 0 && QuestProgression(lastQuestID, false, "All", false))
+            {
+                shouldRepeat = false;
+                return;
+            }
+
+            bool hasItem = isTemp
+                ? Bot.TempInv.Contains(itemName, quantity)
+                : Core.CheckInventory(itemName, quantity);
+
+            if (hasItem)
+                break;
+
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
 
-            if (Bot.Map.Name != map)
+            if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
             {
                 Core.Join(map);
                 Bot.Wait.ForMapLoad(map);
+
+                // Refresh the monster after changing maps.
+                targetMonster = Core.InitializeWithRetries(() =>
+                    Bot.Monsters.MapMonsters.Find(x =>
+                        x != null && x.Name.FormatForCompare() == monster.FormatForCompare()
+                    )
+                );
+
+                if (targetMonster == null)
+                {
+                    Core.Logger(
+                        $"Monster \"{monster}\" was not found after joining \"{map}\".",
+                        "Missing Monster",
+                        stopBot: true
+                    );
+
+                    shouldRepeat = false;
+                    return;
+                }
             }
 
-            if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
+            string cellToJump = targetMonster.Cell ?? "Enter";
+
+            if (!string.Equals(Bot.Player.Cell, cellToJump, StringComparison.OrdinalIgnoreCase))
             {
-                string cellToJump = targetMonster?.Cell ?? "Enter";
                 Core.Jump(cellToJump, "Left");
                 Bot.Wait.ForCellChange(cellToJump);
             }
 
-            if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(targetMonster!.Name);
+            if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != targetMonster.MapID)
+                Bot.Combat.Attack(targetMonster.Name);
 
-            if (
-                isTemp
-                    ? Bot.TempInv.Contains(itemName!, quantity)
-                    : Core.CheckInventory(itemName, quantity)
-            )
-                break;
+            Core.Sleep();
+
+            // Check the quest again immediately after combat activity.
+            if (lastQuestID > 0 && QuestProgression(lastQuestID, false, "All", false))
+            {
+                shouldRepeat = false;
+                return;
+            }
 
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                 continue;
-
-            Core.Sleep();
         }
 
-        // Handle item pickup if not temporary
+        if (Bot.ShouldExit)
+        {
+            shouldRepeat = false;
+            return;
+        }
+
+        // Handle item pickup if not temporary.
         if (!isTemp)
-            Bot.Wait.ForPickup(itemName!);
+            Bot.Wait.ForPickup(itemName);
+
+        // Final quest check in case the pickup itself completed the quest.
+        if (lastQuestID > 0 && QuestProgression(lastQuestID, false, "All", false))
+        {
+            shouldRepeat = false;
+            return;
+        }
 
         CurrentRequirements.RemoveAt(index);
         shouldRepeat = false;
@@ -1516,17 +1792,25 @@ public class CoreStory
 
     private bool _RepeatCheck(ref bool shouldRepeat, int index)
     {
+        if (index < 0 || index >= CurrentRequirements.Count)
+        {
+            shouldRepeat = false;
+            return true;
+        }
+
+        ItemBase requirement = CurrentRequirements[index];
+
         if (
-            Core.CheckInventory(
-                CurrentRequirements[index].Name,
-                CurrentRequirements[index].Quantity
-            )
+            requirement.Temp
+                ? Bot.TempInv.Contains(requirement.Name, requirement.Quantity)
+                : Core.CheckInventory(requirement.ID, requirement.Quantity)
         )
         {
             CurrentRequirements.RemoveAt(index);
             shouldRepeat = false;
             return true;
         }
+
         return false;
     }
 
@@ -1534,25 +1818,39 @@ public class CoreStory
 
     private void _AddRequirement(int questID)
     {
-        if (questID > 0 && questID != lastQuestID)
-        {
-            lastQuestID = questID;
-            Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questID));
+        if (questID <= 0 || questID == lastQuestID)
+            return;
 
-            List<string> reqItems = new();
-            quest?.AcceptRequirements.ForEach(item => reqItems.Add(item.Name));
-            quest?.Requirements.ForEach(item =>
-            {
-                if (!CurrentRequirements.Where(i => i.Name == item.Name).Any())
-                {
-                    if (!item.Temp)
-                    {
-                        reqItems.Add(item.Name);
-                    }
-                    CurrentRequirements.Add(item);
-                }
-            });
-            Core.AddDrop(reqItems.ToArray());
+        lastQuestID = questID;
+
+        Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(questID));
+
+        if (quest == null)
+            return;
+
+        List<string> reqItems = [];
+
+        foreach (ItemBase item in quest.AcceptRequirements ?? Enumerable.Empty<ItemBase>())
+        {
+            if (!string.IsNullOrEmpty(item.Name))
+                reqItems.Add(item.Name);
         }
+
+        foreach (ItemBase item in quest.Requirements ?? Enumerable.Empty<ItemBase>())
+        {
+            if (
+                !string.IsNullOrEmpty(item.Name)
+                && !CurrentRequirements.Any(i => i.Name == item.Name)
+            )
+            {
+                if (!item.Temp)
+                    reqItems.Add(item.Name);
+
+                CurrentRequirements.Add(item);
+            }
+        }
+
+        if (reqItems.Count > 0)
+            Core.AddDrop(reqItems.ToArray());
     }
 }
