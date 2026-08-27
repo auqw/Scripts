@@ -132,12 +132,7 @@ public class TachyonMerge
                     Core.RegisterQuests(5084);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "tachyon",
-                            "Svelgr the Devourer",
-                            "Svelgr the Devourer Defeated",
-                            log: false
-                        );
+                        Core.HuntMonster("tachyon", "Svelgr the Devourer", "Svelgr the Devourer Defeated", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
