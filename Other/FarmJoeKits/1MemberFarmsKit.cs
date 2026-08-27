@@ -874,7 +874,7 @@ public class MemberFarm
         if (Core.CheckInventory(items, toInv: false))
             return;
 
-        Bot.Drops.Add(items);
+        Core.AddDrop(items);
         foreach (string item in items)
         {
             Core.HuntMonster(map, monster, item, 1, false, log: false);
@@ -887,12 +887,9 @@ public class MemberFarm
         if (Core.CheckInventory(TachyonShop, toInv: false))
             return;
 
-        Bot.Drops.Add(TachyonShop);
-        foreach (string TachyonItem in TachyonShop)
-        {
-            Tachyon.BuyAllMerge(TachyonItem);
-            Core.ToBank(TachyonItem);
-        }
+        Core.AddDrop(TachyonShop);
+        Tachyon.BuyAllMerge(buyMode: mergeOptionsEnum.acOnly);
+        Core.ToBank(TachyonShop);
     }
 
     public void BoneTowerMerge()
@@ -904,7 +901,7 @@ public class MemberFarm
         BonecastleTowerMerge.BuyAllMerge("Silver DeathKnight Lord");
         BonecastleTowerMerge.BuyAllMerge("Golden DeathKnight Lord");
 
-        Bot.Drops.Add(BoneTowerShop);
+        Core.AddDrop(BoneTowerShop);
         foreach (string BoneTowerItem in BoneTowerShop)
         {
             BonecastleTowerMerge.BuyAllMerge(BoneTowerItem);
