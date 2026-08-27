@@ -1732,69 +1732,85 @@ public class CoreAOR
     public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
     {
         string? classFromPlayer = Bot.Player.CurrentClass?.Name;
-
-        var itemToEnhance = Bot
-            .Inventory?.Items?.FirstOrDefault(x =>
-                x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
-            )
-            ?.Name;
-
-        // if (itemToEnhance != null)
-        //     Adv.EnhanceItem(
-        //         itemToEnhance,
-        //         EnhancementType.Lucky,
-        //         wSpecial: WeaponSpecial.Awe_Blast
-        //     );
-
         string? classNameToUse = Class ?? classFromPlayer;
+
         if (string.IsNullOrWhiteSpace(classNameToUse))
         {
             Core.Logger("KillThing aborted: no class specified and player has no current class.");
             return;
         }
 
-        // FIX: actually equip the class you selected
         Core.Equip(classNameToUse);
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
+
         Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
         Core.Equip(itemUsed);
-        Core.Logger($"{itemUsed} [Vigil] Equiped? {Bot.Inventory?.IsEquipped("Vigil")}");
-        // Move to mob cell and set respawn
+
+        Core.Logger($"{itemUsed} [Vigil] Equipped? {Bot.Inventory?.IsEquipped("Vigil")}");
+
         if (Bot.Player.Cell != "r2")
-            Core.Jump("r2", "Left");
-        Bot.Player.SetSpawnPoint();
-
-        while (
-            !Bot.ShouldExit
-            && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
-        )
         {
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
-
-            if (Bot.Player.Cell != "r2")
-                Core.Jump("r2", "Left");
-
-            // === Handle Oxidize aura (use Vigil to cleanse) ===
-            while (!Bot.ShouldExit && Bot.Self.Auras.Any(a => a.Name == "Oxidize") && !Bot.Self.Auras.Any(a => a.Name == "Vigil"))
-            {
-                if (Bot.Skills.CanUseSkill(5))
-                    Bot.Skills.UseSkill(5);
-                Core.Sleep(500);
-                if (Bot.Self.Auras.Any(a => a.Name == "Vigil"))
-                    break;
-            }
-
-            // === Attack phase ===
-            Bot.Combat.Attack("*");
-            Core.Sleep(500);
+            Core.Jump("r2", "Left");
+            Bot.Wait.ForCellChange("r2");
         }
 
+        Bot.Player.SetSpawnPoint();
+        Bot.Skills.Stop();
+
+        int skillIndex = 0;
+        int[] skillList = { 1, 2, 3, 4 };
+
+        try
+        {
+            while (
+                !Bot.ShouldExit
+                && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
+            )
+            {
+                if (!Bot.Player.Alive)
+                {
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    skillIndex = 0;
+                    continue;
+                }
+
+                if (Bot.Player.Cell != "r2")
+                {
+                    Core.Jump("r2", "Left");
+                    Bot.Wait.ForCellChange("r2");
+                }
+
+                // Use Vigil to cleanse Oxidize.
+                if (Bot.Self.HasActiveAura("Oxidize") && !Bot.Self.HasActiveAura("Vigil"))
+                {
+                    if (Bot.Skills.CanUseSkill(5))
+                        Bot.Skills.UseSkill(5);
+
+                    Bot.Sleep(500);
+                    continue;
+                }
+
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack("*");
+
+                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    continue;
+
+                if (Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                {
+                    if (Bot.Skills.UseSkill(skillList[skillIndex]))
+                        skillIndex = (skillIndex + 1) % skillList.Length;
+                }
+                Bot.Sleep(200);
+            }
+        }
+        finally
+        {
+            Bot.Skills.Resume();
+            Bot.Combat.StopAttacking = false;
+        }
         Core.Logger($"KillThing completed for {item} ({quant}).");
     }
 
