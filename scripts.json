@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 449998,
-    "sha256": "314200cea112acd78e2c96df53ba462baa46012fa7864009c36ce1a0fbf300cd",
+    "size": 450334,
+    "sha256": "d0cd86b7855ee2c0bac684428a66bbb19a593d3cc01a06b7ee103fc683fd9035",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -11768,8 +11768,8 @@
       "null"
     ],
     "path": "Other/Various/ShadowslayerSummoningRitual.cs",
-    "size": 6556,
-    "sha256": "2a75ede795f68ed1ee49882fc1e7de9cea6996420282f0a754ec6229e0a23323",
+    "size": 6390,
+    "sha256": "625f1e0fb8820db969bc77a8351ca12fa5674ba6eed929e223365159b4d216d5",
     "fileName": "ShadowslayerSummoningRitual.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/ShadowslayerSummoningRitual.cs"
   },

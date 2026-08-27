@@ -234,7 +234,7 @@ public class CoreBots
                 ?? "Twilly";
 
             int loadAttempts = 0;
-            while (!Bot.Player.Loaded && !Bot.ShouldExit)
+            while (Bot.Player.LoggedIn && !Bot.Player.Loaded && !Bot.ShouldExit)
             {
                 if (loadAttempts >= 30)
                 {
@@ -530,12 +530,16 @@ public class CoreBots
                             if (b.Player.AFK && !TimerRunning)
                             {
                                 TimerRunning = true;
+                                Logger("afk detected, starting timer");
                                 Sleep(300000);
                                 if (b.Player.AFK)
                                 {
+                                    Logger("300000 milisecond afk handler turned on, send logs");
                                     b.Options.AutoRelogin = true;
                                     b.Servers.Logout();
+                                    Logger("corebots.cs afk handler logged out");
                                 }
+                                else{Logger("afk cleared");}
                                 TimerRunning = false;
                             }
                         },
