@@ -3411,8 +3411,8 @@
       "set"
     ],
     "path": "Chaos/EternalDrakathSet.cs",
-    "size": 5521,
-    "sha256": "2ac0d58b1c9d3ec7640b83dc34660f52e3a87b865a774ab78fd249250b730b1c",
+    "size": 4611,
+    "sha256": "b3f6ffdb6fab3a2984270aa4d045b0db1ec84964315e6810a24f8787f34512b6",
     "fileName": "EternalDrakathSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/EternalDrakathSet.cs"
   },
