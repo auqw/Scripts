@@ -550,12 +550,7 @@ public class CoreUltrav3
     // private static bool _syncInitialized = false;
     // private bool startNewRun = false;
 
-    public bool CheckArmyProgress(
-       string itemName,
-       int targetQuantity,
-       bool isTemp,
-       string syncFilePath = "army_sync.sync"
-   )
+    public bool CheckArmyProgress(string itemName, int targetQuantity, bool isTemp, string syncFilePath = "army_sync.sync")
     {
         // Expected format: KEY:current:target:TYPE:timestamp
         // Example: Player1|ArchPaladin:50:100:TEMP:1735574400
@@ -587,17 +582,14 @@ public class CoreUltrav3
             if (parts.Length < 5)
                 continue;
 
-            // Parse quantities
             if (!int.TryParse(parts[1], out int current))
                 continue;
             if (!int.TryParse(parts[2], out int target))
                 continue;
 
-            // Parse timestamp (last part)
             if (!long.TryParse(parts[4], out long ts))
                 continue;
 
-            // Skip stale entries
             if (now - ts > staleThreshold)
                 continue;
 
@@ -663,104 +655,145 @@ public class CoreUltrav3
         return activeMembers > 0 && completedMembers == activeMembers;
     }
 
+    // -------------------------------------------------------
+    // Wipe the sync file. Now serialized on the same per-path
+    // mutex as UpdateEntry so it can't interleave with a write
+    // mid-cycle and corrupt/desync state.
+    // -------------------------------------------------------
     public void ClearSyncFile(string filePath)
     {
-        for (int attempt = 0; attempt < 50; attempt++)
-        {
-            try
-            {
-                // If file doesn't exist → create it empty.
-                if (!File.Exists(filePath))
-                {
-                    using var fs = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-                    Bot?.Log($"[ArmySync] Created fresh sync file: {filePath}");
-                    return;
-                }
+        using var mutex = GetSyncMutex(filePath);
+        bool acquired = AcquireSyncMutex(mutex, filePath);
+        if (!acquired)
+            return;
 
-                // If file exists but is already empty → do nothing.
-                FileInfo fi = new(filePath);
-                if (fi.Length == 0)
-                {
-                    Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
-                    return;
-                }
-
-                // Clear it.
-                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Write, FileShare.None))
-                {
-                    fs.SetLength(0);
-                }
-
-                Bot?.Log("[ArmySync] Sync file cleared.");
-                return;
-            }
-            catch (IOException)
-            {
-                // Another bot has the file locked (ReadLines/UpdateEntry mid-operation) — back off and retry.
-                Bot?.Sleep(100 + (attempt * 20));
-            }
-            catch (Exception ex)
-            {
-                Bot?.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
-                return;
-            }
-        }
-
-        Bot?.Log($"[ArmySync] Failed to clear sync file after retries: {filePath}");
-    }
-
-    // -------------------------------------------------------
-    // Resolve a safe writable path for the sync file
-    // -------------------------------------------------------
-    public string ResolveSyncPath(string path)
-    {
         try
         {
-            string expanded = Environment.ExpandEnvironmentVariables(path);
-            string? dir = Path.GetDirectoryName(expanded);
-
-            if (Path.IsPathRooted(expanded) && !string.IsNullOrEmpty(dir) && Directory.Exists(dir))
-                return expanded;
-
-            string baseDir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Skua",
-                "Options"
-            );
-
-            if (!Directory.Exists(baseDir))
-                Directory.CreateDirectory(baseDir);
-
-            string final = Path.Combine(baseDir, Path.GetFileName(path));
-
-            // Ensure file exists (retry for Windows lock)
-            for (int i = 0; i < 10; i++)
+            for (int attempt = 0; attempt < 50; attempt++)
             {
                 try
                 {
-                    if (!File.Exists(final))
+                    if (!File.Exists(filePath))
                     {
-                        using FileStream fs = new(
-                            final,
-                            FileMode.OpenOrCreate,
-                            FileAccess.Write,
-                            FileShare.ReadWrite
-                        );
+                        using var fs = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                        Bot?.Log($"[ArmySync] Created fresh sync file: {filePath}");
+                        return;
                     }
-                    return final;
+
+                    FileInfo fi = new(filePath);
+                    if (fi.Length == 0)
+                    {
+                        Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
+                        return;
+                    }
+
+                    File.SetAttributes(filePath, FileAttributes.Normal);
+
+                    using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Write, FileShare.None))
+                    {
+                        fs.SetLength(0);
+                    }
+
+                    Bot?.Log("[ArmySync] Sync file cleared.");
+                    return;
                 }
                 catch (IOException)
                 {
-                    Bot?.Sleep(50);
+                    Bot?.Sleep(100 + (attempt * 20));
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    try { File.SetAttributes(filePath, FileAttributes.Normal); } catch { }
+                    Bot?.Sleep(150 + (attempt * 25));
+                }
+                catch (Exception ex)
+                {
+                    Bot?.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
+                    return;
                 }
             }
 
-            return final;
+            Bot?.Log($"[ArmySync] Failed to clear sync file after retries: {filePath}");
+        }
+        finally
+        {
+            mutex.ReleaseMutex();
+        }
+    }
+
+    // -------------------------------------------------------
+    // Resolve a safe writable path for the sync file.
+    // ALWAYS lands in %AppData%\Skua\Options — a caller passing
+    // a rooted path that happened to point at an already-existing
+    // directory used to bypass the Options subfolder entirely.
+    // That bug is why files were landing in %AppData%\Skua directly.
+    // -------------------------------------------------------
+    public string ResolveSyncPath(string path)
+    {
+        string baseDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Skua",
+            "Options"
+        );
+
+        string fileName;
+        try
+        {
+            string expanded = Environment.ExpandEnvironmentVariables(path);
+            fileName = Path.GetFileName(expanded);
         }
         catch
         {
-            return Path.GetFullPath(path);
+            fileName = null!;
         }
+
+        if (string.IsNullOrWhiteSpace(fileName))
+            fileName = "army_sync.sync";
+
+        try
+        {
+            if (!Directory.Exists(baseDir))
+                Directory.CreateDirectory(baseDir);
+        }
+        catch
+        {
+            // fall through — File.Exists/creation below will surface the real error if any
+        }
+
+        string final = Path.Combine(baseDir, fileName);
+
+        for (int i = 0; i < 10; i++)
+        {
+            try
+            {
+                if (!File.Exists(final))
+                {
+                    using FileStream fs = new(
+                        final,
+                        FileMode.OpenOrCreate,
+                        FileAccess.Write,
+                        FileShare.ReadWrite
+                    );
+                }
+                return final;
+            }
+            catch (IOException)
+            {
+                Bot?.Sleep(50);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                try
+                {
+                    if (File.Exists(final))
+                        File.SetAttributes(final, FileAttributes.Normal);
+                }
+                catch { }
+                Bot?.Sleep(50);
+            }
+        }
+
+        return final;
     }
 
     // -------------------------------------------------------
@@ -786,75 +819,180 @@ public class CoreUltrav3
             {
                 Bot?.Sleep(50);
             }
+            catch (UnauthorizedAccessException)
+            {
+                try
+                {
+                    if (File.Exists(path))
+                        File.SetAttributes(path, FileAttributes.Normal);
+                }
+                catch { }
+                Bot?.Sleep(50);
+            }
         }
         return Array.Empty<string>();
     }
 
     // -------------------------------------------------------
-    // Insert or update a key in the sync file
+    // Insert or update a key in the sync file.
+    //
+    // Serialized machine-wide via a named Mutex per sync path (so the
+    // whole read-modify-write cycle is atomic across every client, not
+    // just protected by whoever currently holds the OS file lock), and
+    // written via temp-file + atomic swap so a crash mid-write can't
+    // zero out the file.
     // -------------------------------------------------------
     public void UpdateEntry(string path, string key, string payload)
     {
         if (string.IsNullOrWhiteSpace(key))
             return;
 
-        for (int attempt = 0; attempt < 50; attempt++)
+        using var mutex = GetSyncMutex(path);
+        bool acquired = AcquireSyncMutex(mutex, path);
+        if (!acquired)
+            return;
+
+        try
         {
-            try
-            {
-                // Open the file exclusively for the full read/modify/write cycle.
-                // This avoids lost updates when multiple clients are writing the same sync file.
-                List<string> lines = [];
-                string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-                string entry = $"{key}:{payload}:{stamp}";
+            CleanupOrphanedTempFiles(path);
 
-                using var fs = new FileStream(
-                    path,
-                    FileMode.OpenOrCreate,
-                    FileAccess.ReadWrite,
-                    FileShare.None);
-                using (var reader = new StreamReader(fs, leaveOpen: true))
+            var rng = new Random();
+
+            for (int attempt = 0; attempt < 50; attempt++)
+            {
+                try
                 {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
+                    List<string> lines = [];
+
+                    if (File.Exists(path))
                     {
-                        if (!string.IsNullOrWhiteSpace(line))
-                            lines.Add(line);
+                        using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        using var reader = new StreamReader(fs);
+                        string? line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(line))
+                                lines.Add(line);
+                        }
                     }
+
+                    string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+                    string entry = $"{key}:{payload}:{stamp}";
+
+                    int idx = lines.FindIndex(l =>
+                    {
+                        string[] parts = l.Split(':');
+                        return parts.Length > 0 &&
+                            parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
+                    });
+
+                    if (idx >= 0)
+                        lines[idx] = entry;
+                    else
+                        lines.Add(entry);
+
+                    string tempPath = path + ".tmp" + Guid.NewGuid().ToString("N")[..6];
+
+                    using (var fs = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    using (var writer = new StreamWriter(fs))
+                    {
+                        foreach (var line in lines)
+                            writer.WriteLine(line);
+                    }
+
+                    if (File.Exists(path))
+                    {
+                        File.SetAttributes(path, FileAttributes.Normal);
+                        File.Replace(tempPath, path, null);
+                    }
+                    else
+                    {
+                        File.Move(tempPath, path);
+                    }
+
+                    return; // Success
                 }
-
-                int idx = lines.FindIndex(l =>
+                catch (IOException)
                 {
-                    string[] parts = l.Split(':');
-                    return parts.Length > 0 &&
-                        parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
-                });
-
-                if (idx >= 0)
-                    lines[idx] = entry;
-                else
-                    lines.Add(entry);
-
-                fs.SetLength(0);
-                fs.Position = 0;
-
-                using var writer = new StreamWriter(fs);
-                foreach (var line in lines)
-                {
-                    writer.WriteLine(line);
+                    Bot?.Sleep(100 + (attempt * 20) + rng.Next(0, 50));
                 }
-                writer.Flush();
-                fs.Flush(true);
-
-                return; // Success
+                catch (UnauthorizedAccessException)
+                {
+                    try
+                    {
+                        if (File.Exists(path))
+                            File.SetAttributes(path, FileAttributes.Normal);
+                    }
+                    catch { }
+                    Bot?.Sleep(150 + (attempt * 25) + rng.Next(0, 50));
+                }
             }
-            catch (IOException)
+
+            Bot?.Log($"[ArmySync] Failed to update {path} after retries");
+        }
+        finally
+        {
+            mutex.ReleaseMutex();
+        }
+    }
+
+    // -------------------------------------------------------
+    // Named, machine-wide mutex helpers — one lock per unique sync
+    // file path, shared by UpdateEntry and ClearSyncFile so they can
+    // never interleave with each other either.
+    // -------------------------------------------------------
+    private static Mutex GetSyncMutex(string path)
+    {
+        string mutexName = "Global\\SkuaSync_" + Convert.ToBase64String(
+            System.Security.Cryptography.MD5.HashData(
+                System.Text.Encoding.UTF8.GetBytes(path))).Replace('/', '_').Replace('+', '_');
+
+        return new Mutex(false, mutexName);
+    }
+
+    private bool AcquireSyncMutex(Mutex mutex, string path)
+    {
+        try
+        {
+            return mutex.WaitOne(TimeSpan.FromSeconds(5));
+        }
+        catch (AbandonedMutexException)
+        {
+            // A previous client crashed mid-operation; we now own the lock.
+            // The sync file might reflect a half-finished write from that
+            // crash, but the temp-file swap means it's at worst "one write
+            // behind," never corrupted/truncated.
+            Bot?.Log($"[ArmySync] Recovered abandoned lock on {path}");
+            return true;
+        }
+    }
+
+    // -------------------------------------------------------
+    // Deletes leftover .tmp* files for this sync path older than
+    // 2 minutes (i.e. clearly abandoned from a crashed client).
+    // -------------------------------------------------------
+    private void CleanupOrphanedTempFiles(string path)
+    {
+        try
+        {
+            string? dir = Path.GetDirectoryName(path);
+            string fileName = Path.GetFileName(path);
+
+            if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir))
+                return;
+
+            foreach (var tempFile in Directory.GetFiles(dir, fileName + ".tmp*"))
             {
-                Bot?.Sleep(100 + (attempt * 20));
+                try
+                {
+                    var age = DateTime.UtcNow - File.GetLastWriteTimeUtc(tempFile);
+                    if (age > TimeSpan.FromMinutes(2))
+                        File.Delete(tempFile);
+                }
+                catch { }
             }
         }
-
-        Bot?.Log($"[ArmySync] Failed to update {path} after retries");
+        catch { }
     }
 
     // -------------------------------------------------------
