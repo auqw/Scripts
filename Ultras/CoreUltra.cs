@@ -750,7 +750,45 @@ public class CoreUltrav1
         return Array.Empty<string>();
     }
 
-     // -------------------------------------------------------
+    // -------------------------------------------------------
+    // Deletes leftover .tmp* files for this sync path that are
+    // older than 2 minutes (i.e. clearly abandoned, not mid-write).
+    // -------------------------------------------------------
+    private void CleanupOrphanedTempFiles(string path)
+    {
+        try
+        {
+            string? dir = Path.GetDirectoryName(path);
+            string fileName = Path.GetFileName(path);
+
+            if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir))
+                return;
+
+            foreach (var tempFile in Directory.GetFiles(dir, fileName + ".tmp*"))
+            {
+                try
+                {
+                    var age = DateTime.UtcNow - File.GetLastWriteTimeUtc(tempFile);
+                    if (age > TimeSpan.FromMinutes(2))
+                    {
+                        File.Delete(tempFile);
+                    }
+                }
+                catch
+                {
+                    // Ignore individual file failures (e.g. another client
+                    // deleted it first, or is mid-write on it right now).
+                }
+            }
+        }
+        catch
+        {
+            // Cleanup is best-effort; never let it block the actual update.
+        }
+    }
+
+
+    // -------------------------------------------------------
     // Insert or update a key in the sync file
     // Safe for multiple clients on the same machine reading/writing
     // the same sync file concurrently.
