@@ -100,10 +100,9 @@ public class Caladbolg
         Core.RegisterQuests(QuestID);
         while (!Bot.ShouldExit && !Core.CheckInventory(target))
         {
-            Legion.FarmLegionToken(5);
-            while (!Bot.ShouldExit && !Bot.TempInv.Contains(13148))
-                Core.KillMonster("underworld", "r9", "Left", "Dark Makai");
-            Bot.Wait.ForQuestComplete(QuestID);
+            if (!Core.CheckInventory("Legion Token", 5))
+                Legion.FarmLegionToken(5);
+            Core.KillMonster("underworld", "r9", "Left", 20, 13148, isTemp: true);
         }
         Core.CancelRegisteredQuests();
     }
