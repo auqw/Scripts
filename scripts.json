@@ -3183,8 +3183,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 58057,
-    "sha256": "ae78753a7917f8ef6c9843cbb6b711f0130be04833a2a7815fb6c1994ed22f7a",
+    "size": 62963,
+    "sha256": "4b3bede16260780259ba9a9716761c7a25c198d5862c81e27d56ef0a696ceb81",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -22821,8 +22821,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyLR.cs",
-    "size": 17615,
-    "sha256": "c9b08988093cc6280658a58ebb53a7cc5e715ac76cfa21f02f7618f1b7906e1d",
+    "size": 19196,
+    "sha256": "d1cbd782335a6f103a31669ea90e24779f3574dbd05e2a62f25e40f83c9cdc8d",
     "fileName": "ArmyLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
@@ -29008,8 +29008,8 @@
       "null"
     ],
     "path": "Ultrasv3/Entwined Eclipse/CoreUltra.cs",
-    "size": 58977,
-    "sha256": "9fddf0bbed2f8b3083c9c45d372eeefe2b6e0ebbdf89c887ef799c2bcba067de",
+    "size": 63881,
+    "sha256": "e0261daa9a8551b9c0531ccc411b751999a3e64bfd23886d558af44c15e63547",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/Entwined Eclipse/CoreUltra.cs"
   },
