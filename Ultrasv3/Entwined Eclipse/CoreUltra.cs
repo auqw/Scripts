@@ -768,78 +768,194 @@ public class CoreUltra
 
     // -------------------------------------------------------
     // Insert or update a key in the sync file
+    // Safe for multiple clients on the same machine reading/writing
+    // the same sync file concurrently.
     // -------------------------------------------------------
     public void UpdateEntry(string path, string key, string payload)
     {
         if (string.IsNullOrWhiteSpace(key))
             return;
 
-        for (int attempt = 0; attempt < 50; attempt++)
+        // Machine-wide named mutex, one per unique file path, so different
+        // sync files don't contend with each other.
+        string mutexName = "Global\\SkuaSync_" + Convert.ToBase64String(
+            System.Security.Cryptography.MD5.HashData(
+                System.Text.Encoding.UTF8.GetBytes(path))).Replace('/', '_').Replace('+', '_');
+
+        using var mutex = new Mutex(false, mutexName);
+
+        bool acquired = false;
+        try
         {
             try
             {
-                // Phase 1: Read existing content (shared lock)
-                List<string> lines = new List<string>();
+                acquired = mutex.WaitOne(TimeSpan.FromSeconds(5));
+            }
+            catch (AbandonedMutexException)
+            {
+                // A previous client crashed while holding the lock.
+                // We now own the mutex; the sync file might be mid-write from
+                // that crash, but the read-modify-write loop below will just
+                // read whatever's there and correct it on the next successful write.
+                acquired = true;
+                Bot.Log($"[ArmySync] Recovered abandoned lock on {path}");
+            }
 
-                if (File.Exists(path))
+            if (!acquired)
+            {
+                Bot.Log($"[ArmySync] Timed out waiting for lock on {path}");
+                return;
+            }
+
+            // Clean up any orphaned temp files left behind by a client that
+            // crashed between creating the temp file and swapping it in.
+            CleanupOrphanedTempFiles(path);
+
+            var rng = new Random();
+
+            for (int attempt = 0; attempt < 50; attempt++)
+            {
+                try
                 {
-                    using (var fs = new FileStream(
-                        path,
-                        FileMode.Open,
-                        FileAccess.Read,
-                        FileShare.Read))
-                    using (var reader = new StreamReader(fs))
+                    // Phase 1: Read existing content
+                    List<string> lines = new List<string>();
+
+                    if (File.Exists(path))
                     {
-                        string? line;
-                        while ((line = reader.ReadLine()) != null)
+                        using (var fs = new FileStream(
+                            path,
+                            FileMode.Open,
+                            FileAccess.Read,
+                            FileShare.ReadWrite))
+                        using (var reader = new StreamReader(fs))
                         {
-                            if (!string.IsNullOrWhiteSpace(line))
-                                lines.Add(line);
+                            string? line;
+                            while ((line = reader.ReadLine()) != null)
+                            {
+                                if (!string.IsNullOrWhiteSpace(line))
+                                    lines.Add(line);
+                            }
                         }
                     }
-                }
 
-                // Phase 2: Modify in memory
-                string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-                string entry = $"{key}:{payload}:{stamp}";
+                    // Phase 2: Modify in memory
+                    string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+                    string entry = $"{key}:{payload}:{stamp}";
 
-                int idx = lines.FindIndex(l =>
-                {
-                    string[] parts = l.Split(':');
-                    return parts.Length > 0 &&
-                        parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
-                });
-
-                if (idx >= 0)
-                    lines[idx] = entry;
-                else
-                    lines.Add(entry);
-
-                // Phase 3: Write with exclusive lock
-                using (var fs = new FileStream(
-                    path,
-                    FileMode.Create, // Truncate and write
-                    FileAccess.Write,
-                    FileShare.None)) // EXCLUSIVE - blocks everyone
-                using (var writer = new StreamWriter(fs))
-                {
-                    foreach (var line in lines)
+                    int idx = lines.FindIndex(l =>
                     {
-                        writer.WriteLine(line);
+                        string[] parts = l.Split(':');
+                        return parts.Length > 0 &&
+                            parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
+                    });
+
+                    if (idx >= 0)
+                        lines[idx] = entry;
+                    else
+                        lines.Add(entry);
+
+                    // Phase 3: Write to a temp file, then atomically swap it in.
+                    // This avoids holding an exclusive lock directly on the real
+                    // path while writing, and avoids partial/truncated files if
+                    // a client dies mid-write.
+                    string tempPath = path + ".tmp" + Guid.NewGuid().ToString("N").Substring(0, 6);
+
+                    using (var fs = new FileStream(
+                        tempPath,
+                        FileMode.Create,
+                        FileAccess.Write,
+                        FileShare.None))
+                    using (var writer = new StreamWriter(fs))
+                    {
+                        foreach (var line in lines)
+                        {
+                            writer.WriteLine(line);
+                        }
                     }
+
+                    if (File.Exists(path))
+                    {
+                        // Strip Hidden/ReadOnly/System so Replace can't get
+                        // denied on attribute grounds (this was the original
+                        // crash cause).
+                        File.SetAttributes(path, FileAttributes.Normal);
+                        File.Replace(tempPath, path, null);
+                    }
+                    else
+                    {
+                        File.Move(tempPath, path);
+                    }
+
+                    return; // Success
                 }
+                catch (IOException)
+                {
+                    // Transient share/lock contention (AV, indexer, another
+                    // process briefly touching the file). Retry with jitter.
+                    Bot.Sleep(100 + (attempt * 20) + rng.Next(0, 50));
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Same root cause as above but surfaces as UAE instead of
+                    // IOException — e.g. hidden/readonly attribute flip,
+                    // or a momentary permissions issue. This is what crashed
+                    // the script originally because it wasn't caught at all.
+                    try
+                    {
+                        if (File.Exists(path))
+                            File.SetAttributes(path, FileAttributes.Normal);
+                    }
+                    catch { /* best effort, fall through to retry */ }
 
-                return; // Success
+                    Bot.Sleep(150 + (attempt * 25) + rng.Next(0, 50));
+                }
             }
-            catch (IOException)
-            {
-                Bot.Sleep(100 + (attempt * 20));
-            }
+
+            Bot.Log($"[ArmySync] Failed to update {path} after retries");
         }
-
-        Bot.Log($"[ArmySync] Failed to update {path} after retries");
+        finally
+        {
+            if (acquired)
+                mutex.ReleaseMutex();
+        }
     }
 
+    // -------------------------------------------------------
+    // Deletes leftover .tmp* files for this sync path that are
+    // older than 2 minutes (i.e. clearly abandoned, not mid-write).
+    // -------------------------------------------------------
+    private void CleanupOrphanedTempFiles(string path)
+    {
+        try
+        {
+            string? dir = Path.GetDirectoryName(path);
+            string fileName = Path.GetFileName(path);
+
+            if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir))
+                return;
+
+            foreach (var tempFile in Directory.GetFiles(dir, fileName + ".tmp*"))
+            {
+                try
+                {
+                    var age = DateTime.UtcNow - File.GetLastWriteTimeUtc(tempFile);
+                    if (age > TimeSpan.FromMinutes(2))
+                    {
+                        File.Delete(tempFile);
+                    }
+                }
+                catch
+                {
+                    // Ignore individual file failures (e.g. another client
+                    // deleted it first, or is mid-write on it right now).
+                }
+            }
+        }
+        catch
+        {
+            // Cleanup is best-effort; never let it block the actual update.
+        }
+    }
     // -------------------------------------------------------
     // Sync-based class equipping for army comps
     // -------------------------------------------------------
