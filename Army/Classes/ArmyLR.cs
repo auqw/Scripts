@@ -565,6 +565,9 @@ public class ArmyLR
 
 
     int _revenantBaseRoom = -1;
+    const int RevenantBaseRoomDefault = 1; // pin explicitly instead of trusting live C.PrivateRoomNumber
+
+    bool _rosterCheckedThisSession = false;
 
     void RevenantMapHandler()
     {
@@ -573,16 +576,45 @@ public class ArmyLR
             return;
 
         if (_revenantBaseRoom == -1)
-            _revenantBaseRoom = C.PrivateRoomNumber; // lock base room once
+            _revenantBaseRoom = RevenantBaseRoomDefault;
 
-        string currentPlayer = Bot.Player.Username;
+        if (string.IsNullOrEmpty(Bot.Player.Username))
+            return; // not logged in yet, nothing to do
+
+        // Must match the normalization Players() applies to its entries
+        // (ToLower + Trim) or IndexOf silently fails and the room never updates.
+        string currentPlayer = Bot.Player.Username.ToLower().Trim();
+
+        // One-time startup sanity check: catch typos/mismatches in the shared
+        // config immediately and loudly, instead of discovering it later as
+        // "this bot never left the base room."
+        if (!_rosterCheckedThisSession)
+        {
+            _rosterCheckedThisSession = true;
+
+            if (!players.Contains(currentPlayer))
+            {
+                Bot.Log($"[RevenantMap] WARNING: '{currentPlayer}' not found in configured roster " +
+                        $"[{string.Join(", ", players)}]. Check the playerN entries in the shared cfg " +
+                        $"for typos, extra whitespace, or a missing entry for this account. " +
+                        $"This bot will NOT be assigned a room until this is fixed.");
+            }
+            else
+            {
+                Bot.Log($"[RevenantMap] Roster check OK: '{currentPlayer}' found at index " +
+                        $"{Array.IndexOf(players, currentPlayer)} of {players.Length}.");
+            }
+        }
+
         int playerIndex = Array.IndexOf(players, currentPlayer);
         if (playerIndex < 0)
-            return;
+            return; // already logged above; nothing more to do until config is fixed
 
         int roomOffset = playerIndex / 3; // 3 players per room
+        int targetRoom = _revenantBaseRoom + roomOffset;
 
-        C.PrivateRoomNumber = _revenantBaseRoom + roomOffset;
+        if (C.PrivateRoomNumber != targetRoom)
+            C.PrivateRoomNumber = targetRoom;
     }
 
 
