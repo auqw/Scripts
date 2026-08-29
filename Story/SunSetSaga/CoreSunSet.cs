@@ -106,7 +106,7 @@ public class CoreSunSet
         // 10844 | Law and Order
         Core.HuntMonsterQuest(
             10844,
-            ("templeofdoom", UseableMonsters[0], ClassType.Farm) // Aegis' Stone Veil x6
+            ("templeofdoom", UseableMonsters[0], ClassType.Solo) // Aegis' Stone Veil x6
         );
 
         // 10845 | There's an Order to These Things
