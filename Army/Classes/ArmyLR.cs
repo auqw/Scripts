@@ -103,6 +103,12 @@ public class ArmyLR
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
+        new Option<bool>(
+            "UseFirstClassEntertainment",
+            "Use First Class Entertainment?",
+            "Farm Legion Tokens using First Class Entertainment instead of Dreadrock.",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -321,7 +327,10 @@ public class ArmyLR
 
             Adv.BuyItem("underworld", 216, "Hooded Legion Cowl");
             ArmyDarkToken(100);
-            ArmyLegionTokens(4000);
+            if (Bot.Config!.Get<bool>("UseFirstClassEntertainment"))
+                ArmyFirstClassEntertainment(4000);
+            else
+                ArmyLegionTokens(4000);
             DiamondTokenofDage(30);
             ArmyEmblemOfDage(1);
             if (Bot.Quests.CanComplete(6899))
@@ -461,6 +470,20 @@ public class ArmyLR
             QuestIDs: new int[] { 4849 },
             WaitForArmysyncPath: "legion_tokens",
             AggroCell: "r3",
+            checkType: CheckType.Item,
+            Itemname: "Legion Token",
+            quant: quant
+
+        );
+    }
+
+    void ArmyFirstClassEntertainment(int quant)
+    {
+        ArmyHandler(
+            map: "legionarena",
+            QuestIDs: new int[] { 6743 },
+            WaitForArmysyncPath: "first_class_entertainment",
+            AggroCell: "Boss",
             checkType: CheckType.Item,
             Itemname: "Legion Token",
             quant: quant
