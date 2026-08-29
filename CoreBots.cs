@@ -5608,6 +5608,7 @@ public class CoreBots
     /// <summary>
     /// Loads the quest, unbanks required items, adds non-temp drops, iterates requirements (using provided map/monster/class tuples) to call HuntMonster() for each, then attempts to complete the quest.
     /// Requirements that are already satisfied are skipped and do not consume a tuple from MapMonsterClassPairs.
+    /// Repeatable (non-Once) quests that were already turned in get re-accepted instead of skipped, so farm loops keep working.
     /// </summary>
     public void HuntMonsterQuest(int questId, bool log = true, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
     {
@@ -5621,12 +5622,18 @@ public class CoreBots
             return;
         }
 
-        // Live completion check FIRST — if it's already done/turned-in, consumed
-        // turn-in items must not be misread as "missing requirements" to farm.
         if (isCompletedBefore(questId, log: false))
         {
-            Logger($"✅ Quest [{questId}] \"{quest.Name}\" already completed, skipping HuntMonsterQuest.");
-            return;
+            if (quest.Once)
+            {
+               DebugLogger(this,$"✅ Quest [{questId}] \"{quest.Name}\" is marked Once and already completed — nothing more to do.");
+                return;
+            }
+
+            // Repeatable quest, already turned in from a previous farm cycle —
+            // re-accept for a fresh cycle instead of treating it as "done forever."
+            DebugLogger(this,$"🔁 Quest [{questId}] \"{quest.Name}\" already turned in — re-accepting for another farm cycle.");
+            EnsureAccept(questId);
         }
 
         var itemsToUnbank = quest
@@ -5650,9 +5657,10 @@ public class CoreBots
             .Where(r => r != null && !CheckInventory(r.ID, r.Quantity))
             .ToList();
 
-        DebugLogger(this, $"🔎 HuntMonsterQuest[{questId}]: {quest.Requirements.Count} total requirement(s), "
-           + $"{missingRequirements.Count} missing: [{string.Join(", ", missingRequirements.Select(r => r.Name))}]"
-       );
+        DebugLogger(this,
+            $"🔎 HuntMonsterQuest[{questId}]: {quest.Requirements.Count} total requirement(s), "
+            + $"{missingRequirements.Count} missing: [{string.Join(", ", missingRequirements.Select(r => r.Name))}]"
+        );
 
         if (MapMonsterClassPairs.Length == 0 && missingRequirements.Count > 0)
         {
@@ -5672,11 +5680,9 @@ public class CoreBots
                 continue;
             }
 
-            // Mid-farm safety net: if the quest completes/turns in server-side
-            // partway through, stop dispatching further hunts.
-            if (isCompletedBefore(questId, log: false))
+            if (isCompletedBefore(questId, log: false) && quest.Once)
             {
-                Logger($"✅ Quest [{questId}] completed mid-loop, stopping further hunts.");
+                DebugLogger(this, $"✅ Quest [{questId}] completed mid-loop, stopping further hunts.");
                 return;
             }
 
