@@ -7699,6 +7699,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MazeMerge.cs"
   },
   {
+    "name": "Carcossan Armory Merge",
+    "description": "Farms the Carcossan Armory Merge [2760] in /templeofdoom.",
+    "tags": [
+      "templeofdoom",
+      "merge",
+      "carcossan",
+      "armory",
+      "merge"
+    ],
+    "path": "Other/MergeShops/CarcossanArmory.cs",
+    "size": 6762,
+    "sha256": "45aa003db8222740cb5de7ea07b2d33f98884f076a8ce0bc1133ae5b1a626894",
+    "fileName": "CarcossanArmory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CarcossanArmory.cs"
+  },
+  {
     "name": "Diogons Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Diogons Merge [2449] in /ectocave",
     "tags": [
@@ -15684,49 +15700,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Summer2015AdventureMap/7CyserosSecret.cs"
   },
   {
-    "name": "Complete The Last Sun Set",
-    "description": "This will complete the \"The Last Sun Set\" arc.",
-    "tags": [
-      "story",
-      "quest",
-      "the last sun set",
-      "complete",
-      "all"
-    ],
-    "path": "Story/TheLastSunSet/0DoAll.cs",
-    "size": 946,
-    "sha256": "155bef11bf1868340a332195faceaed867eda1aeb584927d30933b72f69d1fed",
-    "fileName": "0DoAll.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0DoAll.cs"
-  },
-  {
-    "name": "0templeofdoom",
-    "description": "This will complete the \"templeofdoom\" part of the arc.",
-    "tags": [
-      "story",
-      "quest",
-      "the last sun set",
-      "templeofdoom"
-    ],
-    "path": "Story/TheLastSunSet/0TempleofDoom.cs",
-    "size": 951,
-    "sha256": "7b60d70a820e28faaef3ed63414ac4e3a4c70681f87ab02da5276fe7f0869185",
-    "fileName": "0TempleofDoom.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/0TempleofDoom.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Story/TheLastSunSet/TheLastSunSetCore.cs",
-    "size": 2480,
-    "sha256": "04b58f3ff2ddd719d7ab23aa4d837c658895891d6d60b59a41fe257cec587b0e",
-    "fileName": "TheLastSunSetCore.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TheLastSunSet/TheLastSunSetCore.cs"
-  },
-  {
     "name": "Yokai Treasure",
     "description": "This script will complete \"Yokai Treasure\" storyline.",
     "tags": [
@@ -16890,6 +16863,48 @@
     "sha256": "b8945daf5d2db44f89107accba61f110bfdf9f76f3bf6127a7e577afb9233e7f",
     "fileName": "05cSekt(Yasaris).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/05cSekt(Yasaris).cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Story/SunSetSaga/CoreSunSet.cs",
+    "size": 3486,
+    "sha256": "09ef11dbd178d6d0217d5cffcb4b9a43c7438fd04055edc739196a70cd8cca25",
+    "fileName": "CoreSunSet.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SunSetSaga/CoreSunSet.cs"
+  },
+  {
+    "name": "Templeofdoom",
+    "description": "Completes the quest chain in /templeofdoom.",
+    "tags": [
+      "templeofdoom",
+      "story",
+      "quests",
+      "templeofdoom"
+    ],
+    "path": "Story/SunSetSaga/01Templeofdoom.cs",
+    "size": 904,
+    "sha256": "203cf01c8cfbde96d1a3e2b6276007cb49db1c27f75b7055e0acb0c615312a1b",
+    "fileName": "01Templeofdoom.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SunSetSaga/01Templeofdoom.cs"
+  },
+  {
+    "name": "SunSetDoAll",
+    "description": "Completes the quest chain in /templeofdoom.",
+    "tags": [
+      "templeofdoom",
+      "story",
+      "quests",
+      "templeofdoom"
+    ],
+    "path": "Story/SunSetSaga/00DoAll.cs",
+    "size": 995,
+    "sha256": "b6b7b5d060ec9362b968fc54e97757e2993cf3ac02d67551bb4ca4ec1640ec6d",
+    "fileName": "00DoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SunSetSaga/00DoAll.cs"
   },
   {
     "name": "Moon Lab",
