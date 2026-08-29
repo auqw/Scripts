@@ -5614,11 +5614,7 @@ public class CoreBots
     /// <param name="questId">The ID of the quest to load requirements from.</param>
     /// <param name="log">Whether to log each hunt action (forwarded to HuntMonster)</param>
     /// <param name="MapMonsterClassPairs">Array of map name, monster name, and class type tuples.</param>
-    public void HuntMonsterQuest(
-        int questId,
-        bool log = true,
-        params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs
-    )
+    public void HuntMonsterQuest(int questId, bool log = true, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
