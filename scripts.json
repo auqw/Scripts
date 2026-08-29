@@ -3723,6 +3723,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/WheelOfDoomSpam.cs"
   },
   {
+    "name": "Bank All Classes",
+    "description": "Banks every unequipped class in the inventory.",
+    "tags": [
+      "bank",
+      "classes",
+      "inventory",
+      "utility"
+    ],
+    "path": "Tools/BankAllClasses.cs",
+    "size": 802,
+    "sha256": "c17ee6f1268e3d986ddc205d94ec1d5f7ec499f8e3ac62a59484832bfad6f2ba",
+    "fileName": "BankAllClasses.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/BankAllClasses.cs"
+  },
+  {
     "name": "Choose Best Gear",
     "description": "Select a boost type you want to optimize for, and the bot will find and equip the best combination of gear for that boost.",
     "tags": [
