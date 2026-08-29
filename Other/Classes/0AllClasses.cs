@@ -1249,8 +1249,9 @@ public class AllClasses
 
     void CheckAndExecute(string className, Action action)
     {
-        // Check if the item is found and if it meets the quantity requirement.
-        if (!Core.CheckInventory(className) || Core.CheckClassRank(false, className) < 10)
+        InventoryItem? classItem = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(x => x.Category == ItemCategory.Class && x.Name.Equals(className, StringComparison.OrdinalIgnoreCase));
+
+        if (classItem == null || classItem.Quantity < 302500)
             action();
     }
 }
