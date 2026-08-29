@@ -494,7 +494,7 @@ public class CoreStory
             {
                 if (M == null || M.HP <= 0)
                     continue;
-                while (!Bot.ShouldExit && (neededItems.Count > 0 || !QuestProgression(Qid)))
+                while (!Bot.ShouldExit && neededItems.Count > 0 && !QuestProgression(Qid))
                 {
                     bool hasTarget = Bot.Player?.HasTarget ?? false;
                     int targetHP = Bot.Player?.Target?.HP ?? 0;
