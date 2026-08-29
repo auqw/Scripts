@@ -27,14 +27,15 @@ public class HollowSoul
 
     public void ScriptMain(IScriptInterface bot)
     {
+        Core.BankingBlackList.Add("Hollow Soul");
         Core.SetOptions();
-
-        GetYaSoulsHeeeere();
+        Core.SellItem("Hollow Soul", all: true);
+        GetYaSoulsHeeeere(1);
 
         Core.SetOptions(false);
     }
 
-    public void GetYaSoulsHeeeere(int? quant = null)
+    public void GetYaSoulsHeeeere(int? quant = 6000)
     {
         int HSQuant = quant ?? GetMax(10299, "Hollow Soul");
         if (Core.CheckInventory("Hollow Soul", HSQuant))
