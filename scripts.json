@@ -3656,13 +3656,19 @@
   },
   {
     "name": "RankUpEquippedClass",
-    "description": "null",
+    "description": "rank up current class",
     "tags": [
-      "null"
+      "rank",
+      "up",
+      "class",
+      "rank class",
+      "rank up class",
+      "class rank",
+      "class points"
     ],
     "path": "Tools/RankUpEquippedClass.cs",
-    "size": 1346,
-    "sha256": "d569f05bd1f0f2763981c0b3a3b3e56fc2b13a9df7d49a45551e93b9893e6e0d",
+    "size": 1427,
+    "sha256": "0c3b535a4555b45be216707d71e0e63397123578d035c198c5d165d9d909ef2c",
     "fileName": "RankUpEquippedClass.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/RankUpEquippedClass.cs"
   },
@@ -3761,13 +3767,20 @@
   },
   {
     "name": "RankUpAllClasses",
-    "description": "null",
+    "description": "rank up all classes",
     "tags": [
-      "null"
+      "rank",
+      "up",
+      "class",
+      "rank class",
+      "rank up class",
+      "rank up all class",
+      "class rank",
+      "class points"
     ],
     "path": "Tools/RankUpAllClasses.cs",
-    "size": 3732,
-    "sha256": "cc5129a8e438c0ae78db1f62adab4737d99faee8016a5b062168ba9e0764741d",
+    "size": 3830,
+    "sha256": "61049412ca8790c3c9ed788415431f7b3a7b569e005df576a850c2ed04032678",
     "fileName": "RankUpAllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/RankUpAllClasses.cs"
   },
