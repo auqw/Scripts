@@ -1,7 +1,7 @@
 /*
 name: RankUpEquippedClass
-description: null
-tags: null
+description: rank up current class
+tags: rank, up, class, rank class, rank up class, class rank, class points
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs

@@ -1,7 +1,7 @@
 /*
 name: RankUpAllClasses
-description: null
-tags: null
+description: rank up all classes
+tags: rank, up, class, rank class, rank up class, rank up all class, class rank, class points
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
