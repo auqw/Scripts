@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 55979,
-    "sha256": "06485bcd0064e5e21187ecd5a994da474c28abd28db52876dc2bc72515a62840",
+    "size": 56968,
+    "sha256": "3c464185a58ee944e29790a6ef1f05cd0dbb107f781fc1f77909783feeeaaa70",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 450701,
-    "sha256": "f8d0d9627631e5c7892c3d496a69b3ddc0b0d1b258139c1e794f04d6eaeba8e2",
+    "size": 452607,
+    "sha256": "0f4ec730f75d53f20450f6e8d73d5983b5ce3135a6d2f5e374cc15d5494d2c61",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -16872,7 +16872,7 @@
     ],
     "path": "Story/SunSetSaga/CoreSunSet.cs",
     "size": 3486,
-    "sha256": "09ef11dbd178d6d0217d5cffcb4b9a43c7438fd04055edc739196a70cd8cca25",
+    "sha256": "45380e18cc5e2e12736ff256d905671dcb5bc3c0291874ecb906cf35dd81be46",
     "fileName": "CoreSunSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SunSetSaga/CoreSunSet.cs"
   },
