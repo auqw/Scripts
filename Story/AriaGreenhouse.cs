@@ -88,6 +88,7 @@ public class AriaGreenhouse
         // 10186 | Gorshka Maika
         if (!Story.QuestProgression(10186))
         {
+            Bot.Quests.UpdateQuest(9607);
             Core.HuntMonsterQuest(10186, ("hakuwar", "Zakhvatchik", ClassType.Solo));
         }
 
