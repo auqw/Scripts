@@ -3640,22 +3640,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/YandereStalker.cs"
   },
   {
-    "name": "Sole Blood Blade + Empowered Version",
-    "description": "Completes Sole Blood Blade and optionally obtains the empowered version.",
-    "tags": [
-      "sole blood blade",
-      "sole bloodletter of nulgath",
-      "empowered sole bloodletter",
-      "nulgath",
-      "nation"
-    ],
-    "path": "Tools/SoleBloodBladeEmpowered.cs",
-    "size": 3048,
-    "sha256": "db72032fee024b1be28eb03edf568f32b901abe74a022d9e0a310dfec84cf135",
-    "fileName": "SoleBloodBladeEmpowered.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/SoleBloodBladeEmpowered.cs"
-  },
-  {
     "name": "Auto Zone and ttack",
     "description": "This tool will automatically move to the specified zones and attack monsters.",
     "tags": [
@@ -10645,6 +10629,22 @@
     "sha256": "9cc8e86e36ce51e33b1a9322339b92b266ec8e5e8cb512d42f65ad81fe1e6e61",
     "fileName": "CorruptedGemBlade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CorruptedGemBlade.cs"
+  },
+  {
+    "name": "Sole Blood Blade + Empowered Version",
+    "description": "Completes Sole Blood Blade and optionally obtains the empowered version.",
+    "tags": [
+      "sole blood blade",
+      "sole bloodletter of nulgath",
+      "empowered sole bloodletter",
+      "nulgath",
+      "nation"
+    ],
+    "path": "Other/Weapons/SoleBloodBladeEmpowered.cs",
+    "size": 3048,
+    "sha256": "db72032fee024b1be28eb03edf568f32b901abe74a022d9e0a310dfec84cf135",
+    "fileName": "SoleBloodBladeEmpowered.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/SoleBloodBladeEmpowered.cs"
   },
   {
     "name": "EnchantedFrozenClaymore",
