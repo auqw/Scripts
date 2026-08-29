@@ -5603,14 +5603,22 @@ public class CoreBots
     /// <summary>
     /// Old-compatible signature: forwards to the new overload with log = true so existing calls keep working.
     /// </summary>
-    public void HuntMonsterQuest(int questId, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs) => HuntMonsterQuest(questId, log: true, MapMonsterClassPairs);
+    public void HuntMonsterQuest(
+        int questId,
+        params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs
+    ) => HuntMonsterQuest(questId, log: true, MapMonsterClassPairs);
 
     /// <summary>
     /// Loads the quest, unbanks required items, adds non-temp drops, iterates requirements (using provided map/monster/class tuples) to call HuntMonster() for each, then attempts to complete the quest.
-    /// Requirements that are already satisfied are skipped and do not consume a tuple from MapMonsterClassPairs.
-    /// Repeatable (non-Once) quests that were already turned in get re-accepted instead of skipped, so farm loops keep working.
     /// </summary>
-    public void HuntMonsterQuest(int questId, bool log = true, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
+    /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="log">Whether to log each hunt action (forwarded to HuntMonster)</param>
+    /// <param name="MapMonsterClassPairs">Array of map name, monster name, and class type tuples.</param>
+    public void HuntMonsterQuest(
+        int questId,
+        bool log = true,
+        params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs
+    )
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
@@ -5622,20 +5630,6 @@ public class CoreBots
             return;
         }
 
-        if (isCompletedBefore(questId, log: false))
-        {
-            if (quest.Once)
-            {
-               DebugLogger(this,$"✅ Quest [{questId}] \"{quest.Name}\" is marked Once and already completed — nothing more to do.");
-                return;
-            }
-
-            // Repeatable quest, already turned in from a previous farm cycle —
-            // re-accept for a fresh cycle instead of treating it as "done forever."
-            DebugLogger(this,$"🔁 Quest [{questId}] \"{quest.Name}\" already turned in — re-accepting for another farm cycle.");
-            EnsureAccept(questId);
-        }
-
         var itemsToUnbank = quest
             .AcceptRequirements.Concat(quest.Requirements)
             .Select(x => x.ID)
@@ -5644,6 +5638,7 @@ public class CoreBots
 
         Unbank(itemsToUnbank);
 
+        // Add the non-temp items to the drop pickup list
         Bot.Drops.Add(
             quest
                 .AcceptRequirements.Concat(quest.Requirements)
@@ -5653,50 +5648,23 @@ public class CoreBots
                 .ToArray()
         );
 
-        List<ItemBase> missingRequirements = quest.Requirements
-            .Where(r => r != null && !CheckInventory(r.ID, r.Quantity))
-            .ToList();
-
-        DebugLogger(this,
-            $"🔎 HuntMonsterQuest[{questId}]: {quest.Requirements.Count} total requirement(s), "
-            + $"{missingRequirements.Count} missing: [{string.Join(", ", missingRequirements.Select(r => r.Name))}]"
-        );
-
-        if (MapMonsterClassPairs.Length == 0 && missingRequirements.Count > 0)
+        // If no MapMonsterClassPairs are provided, auto-generate default values
+        if (MapMonsterClassPairs.Length == 0)
         {
-            MapMonsterClassPairs = [.. missingRequirements
-        .Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))];
+            MapMonsterClassPairs = [.. quest
+                .Requirements.Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))];
         }
 
-        int pairIndex = 0;
-
-        for (int i = 0; i < quest.Requirements.Count; i++)
+        for (int i = 0; i < MapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
         {
             ItemBase requirement = quest.Requirements[i];
+            var (mapName, monsterName, classType) = MapMonsterClassPairs[i];
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
-            {
-                DebugLogger(this, $"➡️ Requirement [{i}] '{requirement.Name}' already satisfied, skipping (no tuple consumed).");
                 continue;
-            }
 
-            if (isCompletedBefore(questId, log: false) && quest.Once)
-            {
-                DebugLogger(this, $"✅ Quest [{questId}] completed mid-loop, stopping further hunts.");
-                return;
-            }
-
-            if (pairIndex >= MapMonsterClassPairs.Length)
-            {
-                DebugLogger(this, $"❌ Requirement [{i}] '{requirement.Name}' needs hunting but no MapMonsterClassPairs left (pairIndex={pairIndex}, available={MapMonsterClassPairs.Length}). Skipping.");
-                continue;
-            }
-
-            var (mapName, monsterName, classType) = MapMonsterClassPairs[pairIndex];
-            DebugLogger(this, $"🎯 Using pair[{pairIndex}] for requirement[{i}] '{requirement.Name}': map='{mapName}', monster='{monsterName}', class={classType}");
-            pairIndex++;
-
-            EquipClass(classType);
+            // Equip the class before hunting
+            EquipClass((mapName, monsterName, classType).classType);
 
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
@@ -5717,63 +5685,50 @@ public class CoreBots
 
     /// <summary>
     /// Hunts monsters based on the requirements of a specified quest and optional map and monster names for each requirement.
-    /// Skips requirements already satisfied, and stops early if the quest completes mid-farm.
     /// </summary>
     /// <param name="questId">The ID of the quest to load requirements from.</param>
     /// <param name="mapName">An optional map name for the hunt.</param>
     /// <param name="monsterName">An optional monster name for the hunt.</param>
-    public void HuntMonsterQuest(int questId, string? mapName = null, string? monsterName = null)
+    /// <param name="log">Whether to log the hunting process.</param>
+    public void HuntMonsterQuest(
+        int questId,
+        string? mapName = null,
+        string? monsterName = null
+    )
     {
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"⚠️ Quest {questId} not found");
+            Logger($"⚠️ Quest {questId} not found"); // ⚠️
             return;
         }
 
-        // Live completion check FIRST — same reasoning as the other overload:
-        // consumed turn-in items must not be treated as things to go hunt.
-        if (isCompletedBefore(questId, log: false))
-        {
-            Logger($"✅ Quest [{questId}] \"{quest.Name}\" already completed, skipping HuntMonsterQuest.");
-            return;
-        }
-
+        // Combine all requirements into one list for reusability
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
 
+        // Ensure that there are requirements to hunt
         if (allRequirements.Count == 0)
         {
-            Logger($"⚠️ Quest {questId} has no requirements.");
+            Logger($"⚠️ Quest {questId} has no requirements."); // ⚠️
             return;
         }
 
+        // Unbank the required items
         var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
-        Unbank(itemsToUnbank);
+        Unbank(itemsToUnbank); // 🏦➡️👜
 
-        Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.ID).Distinct().ToArray());
+        // Add non-temp items to the drop list
+        Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.ID).Distinct().ToArray()); // 📦🛒
 
+        // Process each requirement for hunting
         foreach (var requirement in quest.Requirements)
         {
-            // Skip anything already satisfied — including "Talk to X" turn-in
-            // items that no monster will ever drop.
-            if (CheckInventory(requirement.ID, requirement.Quantity))
-            {
-                Logger($"➡️ Requirement '{requirement.Name}' already satisfied, skipping.");
-                continue;
-            }
-
-            // Stop if the quest was completed server-side mid-loop.
-            if (isCompletedBefore(questId, log: false))
-            {
-                Logger($"✅ Quest [{questId}] completed mid-loop, stopping further hunts.");
-                return;
-            }
-
+            // Use the provided map and monster names, or fall back to default values
             string huntMapName = mapName ?? Bot.Map.Name;
             string huntMonsterName = monsterName ?? "*";
 
             if (!Bot.Quests.EnsureAccept(questId))
-                EnsureAccept(questId);
+                EnsureAccept(questId); // 📝✅
 
             HuntMonster(
                 huntMapName,
@@ -5781,12 +5736,13 @@ public class CoreBots
                 requirement.Name ?? "",
                 requirement.Quantity,
                 requirement.Temp
-            );
+            ); // ⚔️🐲💎
         }
 
+        // Ensure quest completion if possible
         if (Bot.Quests.CanCompleteFullCheck(questId))
         {
-            EnsureCompleteMulti(questId);
+            EnsureCompleteMulti(questId); // 🏁📜
         }
     }
 
