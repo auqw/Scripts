@@ -3135,7 +3135,7 @@ public class CoreFarms
             if (quantity <= 0)
                 return;
 
-            Core.KillMonster(map, cell, pad, monster, itemName, quantity);
+            Core.KillMonster(map, cell, pad, monster, itemName, quantity, isTemp: false);
             Bot.Wait.ForPickup(itemName);
         }
     }
