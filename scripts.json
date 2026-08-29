@@ -10631,6 +10631,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CorruptedGemBlade.cs"
   },
   {
+    "name": "Sole Blood Blade",
+    "description": "Completes the Sole Blood Blade quest to obtain Sole Bloodletter of Nulgath.",
+    "tags": [
+      "sole blood blade",
+      "sole bloodletter of nulgath",
+      "nulgath",
+      "nation"
+    ],
+    "path": "Other/Weapons/SoleBloodBlade.cs",
+    "size": 1172,
+    "sha256": "8e6e0edf50f6938d2a7f693f73bdba31d9646bf6722cd3d2a63397f611cd7ea3",
+    "fileName": "SoleBloodBlade.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/SoleBloodBlade.cs"
+  },
+  {
     "name": "EnchantedFrozenClaymore",
     "description": "null",
     "tags": [
