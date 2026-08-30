@@ -899,8 +899,8 @@ public class CoreStory
             if (prevQuest != null)
             {
                 // Safely gather requirements (quests may have null collections)
-                string[] prevReqs = (prevQuest.Requirements ?? Enumerable.Empty<ItemBase>())
-                    .Concat(prevQuest.AcceptRequirements ?? Enumerable.Empty<ItemBase>())
+                string[] prevReqs = (prevQuest.Requirements ?? [])
+                    .Concat(prevQuest.AcceptRequirements ?? [])
                     .Select(req => req.Name)
                     .ToArray();
 
@@ -909,13 +909,13 @@ public class CoreStory
                 {
                     Core.Logger($"Attempting recovery via re-completing previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"", "QuestProgression");
 
-                    TryComplete(prevQuest, true);
+                    Core.EnsureComplete(prevQuest.ID);
                     attempts = 0;
                     continue;
                 }
 
                 // Log missing requirements
-                string[] missingReqs = prevReqs.Where(req => !Core.CheckInventory(req)).ToArray();
+                string[] missingReqs = [.. prevReqs.Where(req => !Core.CheckInventory(req))];
                 if (missingReqs.Length > 0)
                 {
                     Bot.Log($"Missing [{string.Join(", ", missingReqs)}] to accept {questData.Name} [{questData.ID}]");
@@ -1265,10 +1265,9 @@ public class CoreStory
             if (!SearchParam.Any(x => EdittedLine.StartsWith(x)))
                 continue;
 
-            char[] digits = Line
+            char[] digits = [.. Line
                 .SkipWhile(c => !char.IsDigit(c))
-                .TakeWhile(char.IsDigit)
-                .ToArray();
+                .TakeWhile(char.IsDigit)];
 
             int QuestID = int.Parse(new string(digits));
 
