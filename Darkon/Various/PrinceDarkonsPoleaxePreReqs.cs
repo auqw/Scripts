@@ -38,7 +38,7 @@ public class PrinceDarkonsPoleaxePreReqs
         Core.SetOptions(false);
     }
 
-    public void FarmPreReqs()
+    public void FarmPreReqs(bool buyPoleaxe = false)
     {
         if (Core.CheckInventory("Prince Darkon's Poleaxe"))
             return;
@@ -54,6 +54,9 @@ public class PrinceDarkonsPoleaxePreReqs
             Farm.Gold(48888884);
             Core.BuyItem("garden", 1831, "Darkon's Instant Noodle", 22);
         } //BuyPoleaxe();
+
+        if (buyPoleaxe)
+            BuyPoleaxe();
     }
 
     private void BuyPoleaxe()
@@ -62,7 +65,7 @@ public class PrinceDarkonsPoleaxePreReqs
         {
             if (
                 !Core.CheckInventory("Algie's Bow")
-                && Core.CheckInventory("Ultra Drago Insignia", 5)
+                && Core.CheckInventory("King Drago Insignia", 5)
             )
             {
                 Core.BuyItem("ultradrago", 2066, "Algie's Bow");
@@ -70,14 +73,14 @@ public class PrinceDarkonsPoleaxePreReqs
             }
 
             if (
-                !Core.CheckInventory("Dene's Axe") && Core.CheckInventory("Ultra Drago Insignia", 5)
+                !Core.CheckInventory("Dene's Axe") && Core.CheckInventory("King Drago Insignia", 5)
             )
             {
                 Core.BuyItem("ultradrago", 2066, "Dene's Axe");
                 Bot.Wait.ForItemBuy();
             }
 
-            if (Core.CheckInventory("Ultra Drago Insignia", 10))
+            if (Core.CheckInventory("King Drago Insignia", 10))
             {
                 Core.BuyItem("ultradrago", 2066, "Prince Darkon's Poleaxe");
                 Bot.Wait.ForItemBuy();

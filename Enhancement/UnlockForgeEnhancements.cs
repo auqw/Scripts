@@ -362,8 +362,8 @@ public class UnlockForgeEnhancements
         ),
         new Option<bool>(
             "UseInsignOnArcanasConcerto",
-            "Use Insignia for Arcanas Concerto",
-            "Use your Insignia to buy the `Darkon's Debris 2 (Reconstructed) & to complete the quest.",
+            "Use Insignias for Arcana's Concerto",
+            "Use insignias to buy Darkon's Debris 2 (Reconstructed), Prince Darkon's Poleaxe, and complete the quest.",
             false
         ),
     };
@@ -798,7 +798,7 @@ public class UnlockForgeEnhancements
         }
 
         // Farm everything required for Prince Darkon's Poleaxe.
-        PDPPR.FarmPreReqs();
+        PDPPR.FarmPreReqs(Bot.Config!.Get<bool>("UseInsignOnArcanasConcerto"));
 
         // Prince Darkon's Poleaxe is an actual requirement for Arcana's Concerto.
         // Do not claim Quest 8742 is complete until we have it.
