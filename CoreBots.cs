@@ -539,7 +539,7 @@ public class CoreBots
                                     b.Servers.Logout();
                                     Logger("corebots.cs afk handler logged out");
                                 }
-                                else{Logger("afk cleared");}
+                                else { Logger("afk cleared"); }
                                 TimerRunning = false;
                             }
                         },
@@ -5600,11 +5600,7 @@ public class CoreBots
     /// <param name="questId">The ID of the quest to load requirements from.</param>
     /// <param name="log">Whether to log each hunt action (forwarded to HuntMonster)</param>
     /// <param name="MapMonsterClassPairs">Array of map name, monster name, and class type tuples.</param>
-    public void HuntMonsterQuest(
-        int questId,
-        bool log = true,
-        params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs
-    )
+    public void HuntMonsterQuest(int questId, bool log = true, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
@@ -5641,16 +5637,19 @@ public class CoreBots
                 .Requirements.Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))];
         }
 
-        for (int i = 0; i < MapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
-        {
-            ItemBase requirement = quest.Requirements[i];
-            var (mapName, monsterName, classType) = MapMonsterClassPairs[i];
+        int pairIndex = 0;
 
+        foreach (ItemBase requirement in quest.Requirements)
+        {
             if (CheckInventory(requirement.ID, requirement.Quantity))
                 continue;
 
-            // Equip the class before hunting
-            EquipClass((mapName, monsterName, classType).classType);
+            if (pairIndex >= MapMonsterClassPairs.Length)
+                break;
+
+            var (mapName, monsterName, classType) = MapMonsterClassPairs[pairIndex++];
+
+            EquipClass(classType);
 
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
@@ -5665,17 +5664,16 @@ public class CoreBots
             );
         }
 
-        if (!Bot.Quests.EnsureComplete(questId))
-            EnsureCompleteMulti(questId);
+        EnsureCompleteMulti(questId);
     }
 
     /// <summary>
-    /// Hunts monsters based on the requirements of a specified quest and optional map and monster names for each requirement.
+    /// Hunts monsters based on the requirements of a specified quest and optional map and monster names.
+    /// Already-completed requirements are skipped.
     /// </summary>
     /// <param name="questId">The ID of the quest to load requirements from.</param>
     /// <param name="mapName">An optional map name for the hunt.</param>
     /// <param name="monsterName">An optional monster name for the hunt.</param>
-    /// <param name="log">Whether to log the hunting process.</param>
     public void HuntMonsterQuest(
         int questId,
         string? mapName = null,
@@ -5685,53 +5683,55 @@ public class CoreBots
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"⚠️ Quest {questId} not found"); // ⚠️
+            Logger($"⚠️ Quest {questId} not found");
             return;
         }
 
-        // Combine all requirements into one list for reusability
         var allRequirements = quest.AcceptRequirements.Concat(quest.Requirements).ToList();
 
-        // Ensure that there are requirements to hunt
         if (allRequirements.Count == 0)
         {
-            Logger($"⚠️ Quest {questId} has no requirements."); // ⚠️
+            Logger($"⚠️ Quest {questId} has no requirements.");
             return;
         }
 
-        // Unbank the required items
-        var itemsToUnbank = allRequirements.Select(x => x.ID).Distinct().ToArray();
-        Unbank(itemsToUnbank); // 🏦➡️👜
+        // Unbank required items.
+        Unbank(allRequirements.Select(x => x.ID).Distinct().ToArray());
 
-        // Add non-temp items to the drop list
-        Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.ID).Distinct().ToArray()); // 📦🛒
+        // Add non-temp requirements to the drop list.
+        Bot.Drops.Add(
+            allRequirements
+                .Where(x => !x.Temp)
+                .Select(x => x.ID)
+                .Distinct()
+                .ToArray()
+        );
 
-        // Process each requirement for hunting
-        foreach (var requirement in quest.Requirements)
+        string huntMapName = mapName ?? Bot.Map.Name;
+        string huntMonsterName = monsterName ?? "*";
+
+        foreach (ItemBase requirement in quest.Requirements)
         {
-            // Use the provided map and monster names, or fall back to default values
-            string huntMapName = mapName ?? Bot.Map.Name;
-            string huntMonsterName = monsterName ?? "*";
+            // Don't hunt requirements that have already been obtained.
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
 
             if (!Bot.Quests.EnsureAccept(questId))
-                EnsureAccept(questId); // 📝✅
+                EnsureAccept(questId);
 
             HuntMonster(
                 huntMapName,
                 huntMonsterName,
-                requirement.Name ?? "",
+                requirement.Name ?? string.Empty,
                 requirement.Quantity,
                 requirement.Temp
-            ); // ⚔️🐲💎
+            );
         }
 
-        // Ensure quest completion if possible
         if (Bot.Quests.CanCompleteFullCheck(questId))
-        {
-            EnsureCompleteMulti(questId); // 🏁📜
-        }
+            EnsureCompleteMulti(questId);
     }
-
+    
     //Choose Variants - String
 
     /// <summary>

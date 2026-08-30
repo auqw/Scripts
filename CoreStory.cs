@@ -494,7 +494,7 @@ public class CoreStory
             {
                 if (M == null || M.HP <= 0)
                     continue;
-                while (!Bot.ShouldExit && neededItems.Count > 0 && !QuestProgression(Qid))
+                while (!Bot.ShouldExit && (neededItems.Count > 0 || !QuestProgression(Qid)))
                 {
                     bool hasTarget = Bot.Player?.HasTarget ?? false;
                     int targetHP = Bot.Player?.Target?.HP ?? 0;
@@ -899,8 +899,8 @@ public class CoreStory
             if (prevQuest != null)
             {
                 // Safely gather requirements (quests may have null collections)
-                string[] prevReqs = (prevQuest.Requirements ?? [])
-                    .Concat(prevQuest.AcceptRequirements ?? [])
+                string[] prevReqs = (prevQuest.Requirements ?? Enumerable.Empty<ItemBase>())
+                    .Concat(prevQuest.AcceptRequirements ?? Enumerable.Empty<ItemBase>())
                     .Select(req => req.Name)
                     .ToArray();
 
@@ -909,13 +909,13 @@ public class CoreStory
                 {
                     Core.Logger($"Attempting recovery via re-completing previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"", "QuestProgression");
 
-                    Core.EnsureComplete(prevQuest.ID);
+                    TryComplete(prevQuest, true);
                     attempts = 0;
                     continue;
                 }
 
                 // Log missing requirements
-                string[] missingReqs = [.. prevReqs.Where(req => !Core.CheckInventory(req))];
+                string[] missingReqs = prevReqs.Where(req => !Core.CheckInventory(req)).ToArray();
                 if (missingReqs.Length > 0)
                 {
                     Bot.Log($"Missing [{string.Join(", ", missingReqs)}] to accept {questData.Name} [{questData.ID}]");
@@ -1265,9 +1265,10 @@ public class CoreStory
             if (!SearchParam.Any(x => EdittedLine.StartsWith(x)))
                 continue;
 
-            char[] digits = [.. Line
+            char[] digits = Line
                 .SkipWhile(c => !char.IsDigit(c))
-                .TakeWhile(char.IsDigit)];
+                .TakeWhile(char.IsDigit)
+                .ToArray();
 
             int QuestID = int.Parse(new string(digits));
 
