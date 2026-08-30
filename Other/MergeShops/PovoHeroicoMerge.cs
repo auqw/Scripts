@@ -105,7 +105,7 @@ public class PovoHeroicoMerge
                 case "Símbolo da Ordem":
                 case "Símbolo do Progresso":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
+                    Core.EquipClass(ClassType.Solo);
 
                     Core.KillMonster(
                         "povoheroico",
