@@ -601,7 +601,11 @@ public class WeeklyReleaseGeneratorV2
 
             bool hasAmbiguousTarget = huntIndexes.Any(index => localDrops[index] != null
                 && IsMonsterNameAmbiguous(localDrops[index]!, usedMonsters));
-            if (hasAmbiguousTarget)
+            // KillQuest can't take a per-item map, so unresolved monsters
+            // (local == null) still need the old explicit-hunt path.
+            bool needsExplicitHunt = hasAmbiguousTarget
+                || huntIndexes.Any(index => localDrops[index] == null);
+            if (needsExplicitHunt)
             {
                 if (!accepted)
                 {
@@ -613,22 +617,51 @@ public class WeeklyReleaseGeneratorV2
                 return;
             }
 
-            lines.Add("        Core.HuntMonsterQuest(");
-            lines.Add($"            {quest.ID},");
-            for (int position = 0; position < huntIndexes.Count; position++)
+            // Every remaining requirement is resolved here, so KillQuest's array
+            // overload maps items to monsters purely by list position at runtime
+            // (matching live QuestData.Requirements order after it filters out
+            // already-owned items) — NOT the Solo/Farm sort order huntIndexes uses
+            // above. Re-sort back to original requirement order before emitting so
+            // positions line up correctly.
+            List<int> orderedIndexes = [.. huntIndexes.OrderBy(index => index)];
+            List<string> monsterNames = orderedIndexes
+                .Select(index =>
+                {
+                    DropPacketCollector.MonsterDrops local = localDrops[index]!;
+                    return inlineMonsterNames
+                        ? $"\"{Escape(local.MonsterName)}\""
+                        : $"UseableMonsters[{monsterIndexes[local.MonsterID]}]";
+                })
+                .ToList();
+
+            bool sameMonster = orderedIndexes
+                .Select(index => localDrops[index]!.MonsterID)
+                .Distinct()
+                .Count() == 1;
+
+            if (sameMonster)
             {
-                int index = huntIndexes[position];
-                ItemBase requirement = requirements[index];
-                DropPacketCollector.MonsterDrops? local = localDrops[index];
-                string tuple = local == null
-                    ? "(\"FILL_LOCATION\", \"FILL_MONSTER\", ClassType.Farm)"
-                    : inlineMonsterNames
-                        ? $"(\"{map}\", \"{Escape(local.MonsterName)}\", ClassType.{ClassType(local)})"
-                        : $"(\"{map}\", UseableMonsters[{monsterIndexes[local.MonsterID]}], ClassType.{ClassType(local)})";
-                string delimiter = position == huntIndexes.Count - 1 ? string.Empty : ",";
-                lines.Add($"            {tuple}{delimiter} // {EscapeComment(requirement.Name)} x{Math.Max(1, requirement.Quantity)}");
+                string itemSummary = string.Join(", ", orderedIndexes.Select(index =>
+                    $"{EscapeComment(requirements[index].Name)} x{Math.Max(1, requirements[index].Quantity)}"));
+                lines.Add($"        Story.KillQuest({quest.ID}, \"{map}\", {monsterNames[0]}); // {itemSummary}");
             }
-            lines.Add("        );");
+            else
+            {
+                lines.Add("        Story.KillQuest(");
+                lines.Add($"            {quest.ID},");
+                lines.Add($"            \"{map}\",");
+                lines.Add("            new[]");
+                lines.Add("            {");
+                for (int position = 0; position < orderedIndexes.Count; position++)
+                {
+                    int index = orderedIndexes[position];
+                    ItemBase requirement = requirements[index];
+                    string delimiter = position == orderedIndexes.Count - 1 ? string.Empty : ",";
+                    lines.Add($"                {monsterNames[position]}{delimiter} // {EscapeComment(requirement.Name)} x{Math.Max(1, requirement.Quantity)}");
+                }
+                lines.Add("            }");
+                lines.Add("        );");
+            }
         }
     }
 
