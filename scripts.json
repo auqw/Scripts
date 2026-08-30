@@ -22832,8 +22832,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs",
-    "size": 38109,
-    "sha256": "6add7b74b272757c2750c0e7aa39f461edd4246f9b9ba4f90f4a07e7431b57b9",
+    "size": 39712,
+    "sha256": "45721094b74a996c9358f6304a5192d49a1c7711e80297edc98e67177a9935f3",
     "fileName": "WeeklyReleaseGeneratorV2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs"
   },
