@@ -539,7 +539,7 @@ public class CoreBots
                                     b.Servers.Logout();
                                     Logger("corebots.cs afk handler logged out");
                                 }
-                                else { Logger("afk cleared"); }
+                                else{Logger("afk cleared");}
                                 TimerRunning = false;
                             }
                         },
@@ -4434,14 +4434,12 @@ public class CoreBots
     /// </summary>
     /// <param name="QuestID">The ID of the quest to check.</param>
     /// <returns>True if the quest is completed, otherwise false.</returns>
-    private int _completionLoggedQuestID = -1;
     public bool isCompletedBefore(int QuestID, bool log = true)
     {
         if (QuestID <= 0)
             return false;
 
         Quest? quest = InitializeWithRetries(() => EnsureLoad(QuestID));
-
         if (quest == null)
         {
             Logger($"❌ Failed to initialize quest {QuestID} after multiple attempts.");
@@ -4457,27 +4455,14 @@ public class CoreBots
                 Logger($"❌ Quest data for {questName} [{QuestID}] is null.");
                 return false;
             }
-
             bool complete =
                 QuestData.Slot < 0
-                || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
+                || Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot)
+                    >= QuestData.Value;
 
+            // Commented out to reduce spam
             if (log)
-            {
-                if (complete)
-                {
-                    Logger($"{questName} [{QuestID}] completion check [✔]");
-
-                    // Flush so the next time this quest is checked, it can log again.
-                    _completionLoggedQuestID = -1;
-                }
-                else if (_completionLoggedQuestID != QuestID)
-                {
-                    Logger($"{questName} [{QuestID}] completion check [❌]");
-                    _completionLoggedQuestID = QuestID;
-                }
-            }
-
+                Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
@@ -4488,16 +4473,17 @@ public class CoreBots
         catch
         {
             quest = InitializeWithRetries(() => EnsureLoad(QuestID));
-
             if (quest == null)
             {
-                Logger($"❌ Failed to reinitialize {questName} [{QuestID}] after multiple attempts.");
+                Logger(
+                    $"❌ Failed to reinitialize {questName} [{QuestID}] after multiple attempts."
+                );
                 return false;
             }
-
             return CheckCompletion(quest);
         }
     }
+
     #region Backups - from 2022
 
     /// <summary>
