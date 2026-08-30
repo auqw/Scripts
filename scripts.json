@@ -4787,6 +4787,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoAllUltrasStorys.cs"
   },
   {
+    "name": "Radiant Goddess of War PreReqs",
+    "description": "Farms the six item requirements needed to accept quest 9184, The Goddess of War. This script does not complete the quest or obtain Radiant Goddess of War.",
+    "tags": [
+      "radiant goddess of war",
+      "rgow",
+      "goddess of war",
+      "prerequisites",
+      "prereqs"
+    ],
+    "path": "ShadowsOfWar/RadiantGoddessOfWarPreReqs.cs",
+    "size": 4510,
+    "sha256": "4ff20c42ec8f00f7193a38ff36770a89e378f4cdc8ea09e59206ec04ece2c2bb",
+    "fileName": "RadiantGoddessOfWarPreReqs.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/RadiantGoddessOfWarPreReqs.cs"
+  },
+  {
     "name": "Ultra Speaker Merge PreReqs",
     "description": "Gets the prerequisites for the Ultra Speaker merge.",
     "tags": [
