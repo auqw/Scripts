@@ -814,7 +814,15 @@ public class UnlockForgeEnhancements
             if (!Core.CheckInventory("Darkon's Debris 2 (Recovered)"))
             {
                 Darkon.UnfinishedMusicalScore(22);
-                Adv.BuyItem("theworld", 2141, "Darkon's Debris 2 (Recovered)");
+                Farm.Gold(50_000);
+                Core.BuyItem("theworld", 2141, "Gold Voucher 25k", 2);
+                Core.BuyItem("theworld", 2141, "Darkon's Debris 2 (Recovered)");
+            }
+
+            if (!Core.CheckInventory("Darkon's Debris 2 (Recovered)"))
+            {
+                Core.Logger("Darkon's Debris 2 (Recovered) could not be purchased. Stopping before farming the remaining materials.");
+                return;
             }
 
             Darkon.BanditsCorrespondence(22);
