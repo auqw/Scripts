@@ -437,8 +437,8 @@ public class ArmyLR
             ArmyHandler(
                 map: "dflesson",
                 QuestIDs: [],
-                WaitForArmysyncPath: "r12",
-                AggroCell: "Right",
+                WaitForArmysyncPath: "Fluffys_Bones",
+                AggroCell: "r12",
                 checkType: CheckType.ItemID,
                 Itemname: null,
                 // Fluffy's Bones
