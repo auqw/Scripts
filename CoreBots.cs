@@ -5674,11 +5674,7 @@ public class CoreBots
     /// <param name="questId">The ID of the quest to load requirements from.</param>
     /// <param name="mapName">An optional map name for the hunt.</param>
     /// <param name="monsterName">An optional monster name for the hunt.</param>
-    public void HuntMonsterQuest(
-        int questId,
-        string? mapName = null,
-        string? monsterName = null
-    )
+    public void HuntMonsterQuest(int questId, string? mapName = null, string? monsterName = null)
     {
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
         if (quest == null)
@@ -5731,7 +5727,7 @@ public class CoreBots
         if (Bot.Quests.CanCompleteFullCheck(questId))
             EnsureCompleteMulti(questId);
     }
-    
+
     //Choose Variants - String
 
     /// <summary>
