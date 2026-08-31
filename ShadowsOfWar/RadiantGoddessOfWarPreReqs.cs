@@ -127,6 +127,7 @@ public class RadiantGoddessOfWarPreReqs
             return;
         }
 
+        Farm.ChaosMilitiaREP();
         Core.BuyItem("championdrakath", 2055, "Empowered Drakath Armor");
     }
 }
