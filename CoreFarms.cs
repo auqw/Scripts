@@ -664,8 +664,8 @@ public class CoreFarms
                 Bot.Combat.Attack("*");
                 Core.Sleep(200);
             }
-            Core.AbandonQuest(6629);
             Bot.Quests.UnregisterQuests(6629);
+            Core.AbandonQuest(6629);
         }
 
         if (Bot.Player.Level >= level && !rankUpClass)
