@@ -4797,8 +4797,8 @@
       "prereqs"
     ],
     "path": "ShadowsOfWar/RadiantGoddessOfWarPreReqs.cs",
-    "size": 4510,
-    "sha256": "4ff20c42ec8f00f7193a38ff36770a89e378f4cdc8ea09e59206ec04ece2c2bb",
+    "size": 4542,
+    "sha256": "5716c4ba3942aae83f07053095d6dded34cfc4c140d58463e02227eb09497b5a",
     "fileName": "RadiantGoddessOfWarPreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/RadiantGoddessOfWarPreReqs.cs"
   },
