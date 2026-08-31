@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 166505,
-    "sha256": "8d344ba5397626611061b16a78e81106d7dc29769e8e69a3e729d90e5e2c067a",
+    "size": 166461,
+    "sha256": "6483ad356218ae660cc831aba0b81bc050978813fa3ff12bac8e50eabc963cb4",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -4797,8 +4797,8 @@
       "prereqs"
     ],
     "path": "ShadowsOfWar/RadiantGoddessOfWarPreReqs.cs",
-    "size": 4510,
-    "sha256": "4ff20c42ec8f00f7193a38ff36770a89e378f4cdc8ea09e59206ec04ece2c2bb",
+    "size": 4542,
+    "sha256": "5716c4ba3942aae83f07053095d6dded34cfc4c140d58463e02227eb09497b5a",
     "fileName": "RadiantGoddessOfWarPreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/RadiantGoddessOfWarPreReqs.cs"
   },

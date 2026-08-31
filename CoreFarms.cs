@@ -3235,11 +3235,7 @@ public class CoreFarms
         var runTimer = new System.Diagnostics.Stopwatch();
 
         if (!ForStory)
-        {
-            foreach (int QID in new[] { 5156, 5165 })
-                if (Bot.Quests.IsUnlocked(QID))
-                    Core.RegisterQuests(QID);
-        }
+            Core.RegisterQuests(new[] { 5156, 5165 }.Where(Bot.Quests.IsUnlocked).ToArray());
 
         if (Bot.Map.Name == "deathpitbrawl")
         {
@@ -3275,6 +3271,7 @@ public class CoreFarms
         {
             runTimer.Start();
             ExecuteOneBrawlRun();
+            Core.Sleep(1500);
 
             // timer + completion reporting
             runTimer.Stop();
