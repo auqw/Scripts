@@ -447,59 +447,14 @@ public class CoreAOR
         Story.PreLoad(this);
         Core.EnsureAccept(9348);
 
-        string[] possibleSoloClasses = new[]
-        {
-        "Chrono ShadowHunter",
-        "Chrono ShadowSlayer",
-        "Chaos Avenger",
-        "Verus DoomKnight",
-        "Hollowborn Vindicator",
-        "Lich",
-        "ArchPaladin",
-        "Lord of Order",
-        "StoneCrusher",
-        "Dragon of Time",
-        "Unundead Goat",
-    };
-
-        // Build owned class lookup (inventory + bank)
-        HashSet<string> ownedClasses =
-            Bot.Inventory?.Items?.Select(i => i.Name)
-                .Concat(Bot.Bank?.Items?.Select(i => i.Name) ?? Enumerable.Empty<string>())
-                .ToHashSet()
-            ?? new();
-
-        // Priority chain:
-        // 1) BossClass
-        // 2) SoloClass
-        // 3) First owned meta solo class
-        // 4) Currently equipped class
-        string? selectedClass =
-      !string.IsNullOrWhiteSpace(Core.BossClass) ? Core.BossClass :
-      !string.IsNullOrWhiteSpace(Core.SoloClass) ? Core.SoloClass :
-      possibleSoloClasses.FirstOrDefault(ownedClasses.Contains) ??
-      Bot.Player?.CurrentClass?.Name ??
-      Bot.Player?.CurrentClass?.Name;
-
-        if (selectedClass == null)
-        {
-            Core.Logger("No suitable class found for soloing \"Voice of the Sea\". Pleaseensure you own one of the recommended classes.");
-            return;
-        }
-        Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
-
-        Adv.GearStore(EnhAfter: true);
-        Adv.SmartEnhance(selectedClass);
-
         KillThing(
-            map: "seavoice",
-            mobMapID: 1,
-            itemUsed: 78994,
-            Class: selectedClass,
-            item: "Voice in the Sea Defeated",
-            quant: 1,
-            isTemp: true
-        );
+              map: "seavoice",
+              mobMapID: 1,
+              itemUsed: 78994,
+              item: "Voice in the Sea Defeated",
+              quant: 1,
+              isTemp: true
+          );
 
         Adv.GearStore(true, EnhAfter: true);
         Core.EnsureComplete(9348);
@@ -1729,18 +1684,9 @@ public class CoreAOR
         }
     }
 
-    public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
+    public void KillThing(string map, int mobMapID, int itemUsed, string item, int quant = 1, bool isTemp = false)
     {
         string? classFromPlayer = Bot.Player.CurrentClass?.Name;
-        string? classNameToUse = Class ?? classFromPlayer;
-
-        if (string.IsNullOrWhiteSpace(classNameToUse))
-        {
-            Core.Logger("KillThing aborted: no class specified and player has no current class.");
-            return;
-        }
-
-        Core.Equip(classNameToUse);
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
