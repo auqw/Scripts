@@ -329,6 +329,7 @@ public class VerusDoomKnightClass
             "Hollowborn Vindicator",
             "Lich",
             "Void HighLord",
+            "Void Highlord (IoDA)",
             "ArchPaladin",
             "Lord of Order",
             "StoneCrusher",
