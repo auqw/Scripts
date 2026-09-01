@@ -226,18 +226,8 @@ public class VerusDoomKnightClass
             {
                 Core.Logger("InfernalArena is a **SOLO ONLY** map!");
                 Adv.GearStore(EnhAfter: true);
-                Core.UseBossClass(
-                    Core.CheckInventory(
-                        new[] { "Void Highlord", "Void Highlord (IoDA)" },
-                        any: true
-                    )
-                        ? (
-                            Core.CheckInventory("Void Highlord (IoDA)")
-                                ? "Void Highlord (IoDA)"
-                                : "Void Highlord"
-                        )
-                        : "ArchPaladin"
-                );
+                Core.UseBossClass("ArchPaladin");
+                Adv.SmartEnhance("ArchPaladin");
                 Core.JumpWait();
                 Core.Sleep();
                 Core.HuntMonster(
@@ -338,6 +328,8 @@ public class VerusDoomKnightClass
             "Verus DoomKnight",
             "Hollowborn Vindicator",
             "Lich",
+            "Void HighLord",
+            "Void Highlord (IoDA)",
             "ArchPaladin",
             "Lord of Order",
             "StoneCrusher",
