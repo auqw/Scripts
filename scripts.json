@@ -3555,8 +3555,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/InfernalArenaLW.cs",
-    "size": 29205,
-    "sha256": "604a4bf481bd53d6c1003720801b9506ddfbe4fa3fb867947b95a770253f9123",
+    "size": 32839,
+    "sha256": "d74ebeaa76e4b3c5f5ebd790a168d7b5f23d8cc16dd9c017d2f4c41d212903ad",
     "fileName": "InfernalArenaLW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/InfernalArenaLW.cs"
   },
@@ -11270,8 +11270,8 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 16281,
-    "sha256": "f4f5fd4f03a4b6c64a7b190571e38423b5ebfc4998ad88d6199221630f9894ae",
+    "size": 15534,
+    "sha256": "b85d64aa229db0f3fb3732ffeb9a02f562456d68164557756a69190422eb1fab",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
