@@ -226,12 +226,7 @@ public class VerusDoomKnightClass
             Core.KillDoomKitten("Doomkitten's Molar", 20, false);
             Adv.GearStore(true, true);
             Infernal.FarmDeadlyDuo("Deadly Duo's Decayed Denture", 10);
-
-            if (!Core.CheckInventory("Maw of the Sea", 10))
-            {
-                VoTSSolo();
-            }
-
+            KillThing(map: "seavoice", mobMapID: 1, itemUsed: 78994, item: "Maw of the Sea", quant: 10, isTemp: false);
             int energyNeeded = 0;
 
             // Calculate energy based on missing items
@@ -302,110 +297,11 @@ public class VerusDoomKnightClass
             Adv.RankUpClass("Verus DoomKnight");
     }
 
-    void VoTSSolo()
+
+    public void KillThing(string map, int mobMapID, int itemUsed, string item, int quant = 1, bool isTemp = false)
     {
-
-        // Define the possible solo classes
-        string[] PossibleSoloClasses = new[]
-        {
-            "Chrono ShadowHunter",
-            "Chrono ShadowSlayer",
-            "Chaos Avenger",
-            "Void Highlord (IoDA)",
-            "Void Highlord",
-            "Verus DoomKnight",
-            "Hollowborn Vindicator",
-            "Lich",
-            "ArchPaladin",
-            "Lord of Order",
-            "StoneCrusher",
-            "Dragon of Time",
-            "Unundead Goat",
-        };
-
-        // Find the first available class in inventory or bank
-        string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
-            Bot.Inventory.Items.Any(item => item.Name == className)
-            || Bot.Bank.Items.Any(item => item.Name == className)
-        );
-
-        if (string.IsNullOrWhiteSpace(selectedClass))
-        {
-            // Warn the user but fallback to currently equipped class
-            string? equippedClass = Bot.Player.CurrentClass?.Name;
-            Core.Logger(
-                $"No preferred solo class found in inventory or bank.\n"
-                    + $"Preferred options: ({string.Join(", ", PossibleSoloClasses)})\n"
-                    + $"Using currently equipped class: {equippedClass}. This may not be optimal.\n"
-            );
-
-            selectedClass = equippedClass;
-            if (string.IsNullOrWhiteSpace(selectedClass))
-            {
-                Core.Logger("No class is currently equipped; aborting SeaVoice.");
-                return;
-            }
-        }
-        else
-        {
-            Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
-        }
-
-        // FIX: if class is in bank, unbank it before trying to use it
-        Core.Unbank(selectedClass);
-
-        Adv.GearStore(EnhAfter: true);
-        Adv.SmartEnhance(selectedClass);
-
-        // Call the KillThing method with the specified parameters
-        KillThing(
-            map: "seavoice",
-            mobMapID: 1,
-            itemUsed: 78994,
-            Class: selectedClass,
-            item: "Maw of the Sea",
-            quant: 10,
-            isTemp: false
-        );
-
-        Adv.GearStore(true, true);
-    }
-
-  
-    public void KillThing(
-        string map,
-        int mobMapID,
-        int itemUsed,
-        string Class,
-        string item,
-        int quant = 1,
-        bool isTemp = false
-    )
-    {
-        string? classFromPlayer = Bot.Player.CurrentClass?.Name;
-
-        var itemToEnhance = Bot
-            .Inventory?.Items?.FirstOrDefault(x =>
-                x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
-            )
-            ?.Name;
-
-        // if (itemToEnhance != null)
-        //     Adv.EnhanceItem(
-        //         itemToEnhance,
-        //         EnhancementType.Lucky,
-        //         wSpecial: WeaponSpecial.Awe_Blast
-        //     );
-
-        string? classNameToUse = Class ?? classFromPlayer;
-        if (string.IsNullOrWhiteSpace(classNameToUse))
-        {
-            Core.Logger("KillThing aborted: no class specified and player has no current class.");
+        if (isTemp ? Bot.Inventory.Contains(item, quant) : Core.CheckInventory(item, quant))
             return;
-        }
-
-        // FIX: actually equip the class you selected
-        Core.Equip(classNameToUse);
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
