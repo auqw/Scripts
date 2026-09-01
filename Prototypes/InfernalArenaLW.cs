@@ -203,6 +203,73 @@ public class InfernalArenaLW
             ? useShaman ? ClassChoice.Shaman : ClassChoice.ArchPaladin
             : classChoice;
 
+    public void FarmDeadlyDuo(string item, int quantity, bool isTemp = false) =>
+        FarmBossItem(ClassChoice.ArchPaladin, "Deadly Duo", item, quantity, isTemp, "1 | 2 | 4",
+            () => { if (Bot.Player.HasTarget && Bot.Target.HasActiveAura("Eating")) UseConditionalSkill(3); });
+
+    public void FarmCervusMalus(string item, int quantity, bool isTemp = false) =>
+        FarmBossItem(ClassChoice.ArchPaladin, "Cervus Malus", item, quantity, isTemp, "3 | 1 | 4",
+            () => { if (!Bot.Self.HasActiveAura("Contrarium")) UseConditionalSkill(2); });
+
+    public void FarmKeyOfSholemoh(string item, int quantity, bool isTemp = false) =>
+        FarmBossItem(ClassChoice.ArchPaladin, "Key of Sholemoh", item, quantity, isTemp, "3 | 1 | 4",
+            () => { if (PlayerHealthBelow(0.50)) UseConditionalSkill(2); });
+
+    public void FarmAzalithsScythe(string item, int quantity, bool isTemp = false) =>
+        FarmBossItem(ClassChoice.Shaman, "Azalith's Scythe", item, quantity, isTemp, "1 | 2", () => { },
+            attackWithoutTarget: true);
+
+    public void FarmNaal(string item, int quantity, bool isTemp = false) =>
+        FarmBossItem(ClassChoice.ArchPaladin, "Na'al", item, quantity, isTemp, "1",
+            () =>
+            {
+                if (Bot.Player.HasTarget && Bot.Target.HasActiveAura("Restrained"))
+                    return;
+
+                if (Bot.Self.HasActiveAura("Veni"))
+                    UseConditionalSkill(3);
+                else if (Bot.Self.HasActiveAura("Vidi"))
+                    UseConditionalSkill(4);
+                else if (PlayerHealthBelow(0.67))
+                    UseConditionalSkill(2);
+            },
+            comboSelector: () => Bot.Player.HasTarget && Bot.Target.HasActiveAura("Restrained") ? "1 | 2" : "1");
+
+    private void FarmBossItem(ClassChoice classChoice, string monsterName, string item, int quantity,
+        bool isTemp, string initialCombo, Action mechanics, bool attackWithoutTarget = false,
+        Func<string>? comboSelector = null)
+    {
+        if (string.IsNullOrWhiteSpace(item) || quantity <= 0 || HasFarmItem(item, quantity, isTemp))
+            return;
+
+        Adv.GearStore(EnhAfter: true);
+
+        try
+        {
+            if (!isTemp)
+                Core.AddDrop(item);
+
+            Core.FarmingLogger(item, quantity);
+
+            if (!EquipClass(classChoice, out string className, logFailure: false))
+            {
+                string requiredClass = classChoice == ClassChoice.Shaman ? "Shaman" : "ArchPaladin";
+                Core.Logger($"WARNING: {requiredClass} is unavailable. Falling back to the standard farm method for {monsterName}.");
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("infernalarena", monsterName, item, quantity, isTemp: isTemp);
+                return;
+            }
+
+            PrepareLoadout(classChoice, usePotions: false, doEnhancements: true);
+            FightBoss(classChoice, className, monsterName, initialCombo, mechanics, attackWithoutTarget,
+                comboSelector, () => HasFarmItem(item, quantity, isTemp));
+        }
+        finally { Adv.GearStore(true, true); }
+    }
+
+    private bool HasFarmItem(string item, int quantity, bool isTemp) =>
+        isTemp ? Bot.TempInv.Contains(item, quantity) : Core.CheckInventory(item, quantity);
+
     private bool FightDeadlyDuo(ClassChoice classChoice, bool prepareLoadout = true) =>
         FightQuest(
             classChoice,
@@ -277,7 +344,8 @@ public class InfernalArenaLW
         Core.Logger($"Fighting {logName}.");
 
         if (!Bot.TempInv.Contains(questItem) &&
-            !FightBoss(classChoice, className, monsterName, questItem, initialCombo, mechanics, attackWithoutTarget, comboSelector))
+            !FightBoss(classChoice, className, monsterName, initialCombo, mechanics, attackWithoutTarget,
+                comboSelector, () => Bot.TempInv.Contains(questItem)))
             return false;
 
         if (!Core.EnsureComplete(questID))
@@ -290,8 +358,8 @@ public class InfernalArenaLW
     }
 
     private bool FightBoss(ClassChoice classChoice, string className, string monsterName,
-        string questItem, string initialCombo, Action mechanics, bool attackWithoutTarget,
-        Func<string>? comboSelector)
+        string initialCombo, Action mechanics, bool attackWithoutTarget,
+        Func<string>? comboSelector, Func<bool> stopCondition)
     {
         const string map = "infernalarena";
         bool previousAttackWithoutTarget = Bot.Options.AttackWithoutTarget;
@@ -315,7 +383,7 @@ public class InfernalArenaLW
             else
                 Bot.Skills.StartAdvanced(initialCombo);
 
-            while (!Bot.ShouldExit && !Bot.TempInv.Contains(questItem))
+            while (!Bot.ShouldExit && !stopCondition())
             {
                 if (!Bot.Player.Alive)
                 {
@@ -365,7 +433,7 @@ public class InfernalArenaLW
             Bot.Options.AttackWithoutTarget = previousAttackWithoutTarget;
         }
 
-        return Bot.TempInv.Contains(questItem);
+        return stopCondition();
     }
 
     private void SetAdvancedCombo(string combo, ref string activeCombo)
@@ -392,7 +460,7 @@ public class InfernalArenaLW
     private bool PlayerHealthBelow(double percentage) =>
         Bot.Player.Health < Bot.Player.MaxHealth * percentage;
 
-    private bool EquipClass(ClassChoice classChoice, out string className)
+    private bool EquipClass(ClassChoice classChoice, out string className, bool logFailure = true)
     {
         className = classChoice switch
         {
@@ -411,7 +479,8 @@ public class InfernalArenaLW
                 ClassChoice.Shaman => "Shaman",
                 _ => "ArchPaladin",
             };
-            Core.Logger($"WARNING: {missingClass} was not found.");
+            if (logFailure)
+                Core.Logger($"WARNING: {missingClass} was not found.");
             return false;
         }
 
@@ -421,19 +490,22 @@ public class InfernalArenaLW
         if (string.Equals(Bot.Player.CurrentClass?.Name, className, StringComparison.OrdinalIgnoreCase))
             return true;
 
-        Core.Logger($"WARNING: {className} could not be equipped.");
+        if (logFailure)
+            Core.Logger($"WARNING: {className} could not be equipped.");
         return false;
     }
 
-    private void PrepareLoadout(ClassChoice classChoice, bool useRevitalize = false)
+    private void PrepareLoadout(ClassChoice classChoice, bool useRevitalize = false,
+        bool? usePotions = null, bool? doEnhancements = null)
     {
-        if (Bot.Config?.Get<bool>("Setup", "DoEnhancements") ?? true)
+        if (doEnhancements ?? (Bot.Config?.Get<bool>("Setup", "DoEnhancements") ?? true))
         {
             Bot.Sleep(3000);
             ApplyEnhancements(classChoice);
         }
 
-        if (!(Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true))
+        bool shouldUsePotions = usePotions ?? (Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true);
+        if (!shouldUsePotions)
             return;
 
         PreparePotion("Fate Tonic", "Gold Voucher 500k", 4, 500_000, 10, requiredAlchemyRank: 8);
@@ -441,12 +513,12 @@ public class InfernalArenaLW
             "Gold Voucher 500k", useRevitalize ? 8 : 4, 500_000, useRevitalize ? 20 : 8);
         PreparePotion("Felicitous Philtre", "Gold Voucher 100k", 2, 100_000, 25);
 
-        ApplyPotions(useRevitalize);
+        ApplyPotions(useRevitalize, true);
     }
 
-    private void ApplyPotions(bool useRevitalize)
+    private void ApplyPotions(bool useRevitalize, bool? usePotions = null)
     {
-        if (!(Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true))
+        if (!(usePotions ?? (Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true)))
             return;
 
         UsePotion("Fate Tonic", "Fate");
