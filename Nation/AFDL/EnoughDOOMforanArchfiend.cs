@@ -108,7 +108,7 @@ public class EnoughDOOMforanArchfiend
 
         //Quest Turnin Items:
         NulgathDemandsWork.NDWQuest(new[] { "Unidentified 35" });
-        WillpowerExtraction.Unidentified34(4);
+        // WillpowerExtraction.Unidentified34(4);
         Nation.FarmBloodGem(10);
         Nation.FarmVoucher(false);
         Nation.EssenceofNulgath(100);
