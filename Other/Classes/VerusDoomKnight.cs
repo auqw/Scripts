@@ -27,6 +27,7 @@ tags: versus, verus, doomknight, vdk, class
 
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/DoomPirateStory.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs
+//cs_include Scripts/Prototypes/InfernalArenaLW.cs
 
 using System.Dynamic;
 using Newtonsoft.Json;
@@ -90,6 +91,8 @@ public class VerusDoomKnightClass
         set => _Story = value;
     }
     private static CoreStory _Story;
+    private static InfernalArenaLW Infernal { get => _Infernal ??= new(); set => _Infernal = value; }
+    private static InfernalArenaLW _Infernal;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -222,34 +225,7 @@ public class VerusDoomKnightClass
             Adv.GearStore(EnhAfter: true);
             Core.KillDoomKitten("Doomkitten's Molar", 20, false);
             Adv.GearStore(true, true);
-            if (!Core.CheckInventory("Deadly Duo's Decayed Denture", 10))
-            {
-                Core.Logger("InfernalArena is a **SOLO ONLY** map!");
-                Adv.GearStore(EnhAfter: true);
-                Core.UseBossClass(
-                    Core.CheckInventory(
-                        new[] { "Void Highlord", "Void Highlord (IoDA)" },
-                        any: true
-                    )
-                        ? (
-                            Core.CheckInventory("Void Highlord (IoDA)")
-                                ? "Void Highlord (IoDA)"
-                                : "Void Highlord"
-                        )
-                        : "ArchPaladin"
-                );
-                Core.JumpWait();
-                Core.Sleep();
-                Core.HuntMonster(
-                    "infernalarena",
-                    "Deadly Duo",
-                    "Deadly Duo's Decayed Denture",
-                    10,
-                    false
-                );
-                Core.JumpWait();
-                Adv.GearStore(true, true);
-            }
+            Infernal.FarmDeadlyDuo("Deadly Duo's Decayed Denture", 10);
 
             if (!Core.CheckInventory("Maw of the Sea", 10))
             {
@@ -335,6 +311,8 @@ public class VerusDoomKnightClass
             "Chrono ShadowHunter",
             "Chrono ShadowSlayer",
             "Chaos Avenger",
+            "Void Highlord (IoDA)",
+            "Void Highlord",
             "Verus DoomKnight",
             "Hollowborn Vindicator",
             "Lich",
