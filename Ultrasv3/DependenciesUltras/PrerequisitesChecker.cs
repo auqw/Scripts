@@ -152,13 +152,13 @@ public class PrerequisitesChecker
 
         foreach (string requiredCls in RequiredClasses)
         {
-            // Local copy so we can swap it to "Infinite Titan" below without touching the foreach iterator
+            // Local copy so we can swap it to "Infinity Titan" below without touching the foreach iterator
             string cls = requiredCls;
 
             if (cls == "StoneCrusher")
             {
                 bool hasStoneCrusher = C.CheckInventory("StoneCrusher");
-                bool hasInfiniteTitan = C.CheckInventory("Infinite Titan");
+                bool hasInfiniteTitan = C.CheckInventory("Infinity Titan");
 
                 // Neither the class nor its alternate is owned — fail as usual
                 if (!hasStoneCrusher && !hasInfiniteTitan)
@@ -169,9 +169,9 @@ public class PrerequisitesChecker
                     continue;
                 }
 
-                // SC itself isn't owned, but the Infinite Titan alternate is — check/log against that instead
+                // SC itself isn't owned, but the Infinity Titan alternate is — check/log against that instead
                 if (!hasStoneCrusher && hasInfiniteTitan)
-                    cls = "Infinite Titan";
+                    cls = "Infinity Titan";
             }
             else if (!C.CheckInventory(cls))
             {
