@@ -150,9 +150,30 @@ public class PrerequisitesChecker
         C.Logger("[PrerequisitesChecker] --- Classes ---", "Info");
         _messageLines.Add("--- Classes ---");
 
-        foreach (var cls in RequiredClasses)
+        foreach (string requiredCls in RequiredClasses)
         {
-            if (!C.CheckInventory(cls))
+            // Local copy so we can swap it to "Infinite Titan" below without touching the foreach iterator
+            string cls = requiredCls;
+
+            if (cls == "StoneCrusher")
+            {
+                bool hasStoneCrusher = C.CheckInventory("StoneCrusher");
+                bool hasInfiniteTitan = C.CheckInventory("Infinite Titan");
+
+                // Neither the class nor its alternate is owned — fail as usual
+                if (!hasStoneCrusher && !hasInfiniteTitan)
+                {
+                    C.Logger($"  ✗ {cls}: NOT OWNED", "Error");
+                    _messageLines.Add($"  ✗ {cls}: NOT OWNED — You must own this class to use and it must be rank 10");
+                    failures.Add($"Missing class: {cls}");
+                    continue;
+                }
+
+                // SC itself isn't owned, but the Infinite Titan alternate is — check/log against that instead
+                if (!hasStoneCrusher && hasInfiniteTitan)
+                    cls = "Infinite Titan";
+            }
+            else if (!C.CheckInventory(cls))
             {
                 C.Logger($"  ✗ {cls}: NOT OWNED", "Error");
                 _messageLines.Add($"  ✗ {cls}: NOT OWNED — You must own this class to use and it must be rank 10");
@@ -173,7 +194,6 @@ public class PrerequisitesChecker
                 _messageLines.Add($"  ✓ {cls}: rank 10");
             }
         }
-
         // Warrior — must be owned, any rank is fine
         if (!C.CheckInventory("Warrior"))
         {
