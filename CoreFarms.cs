@@ -2995,17 +2995,13 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation, false);
     }
 
-    public void FishingREP(
-        int rank = 10,
-        bool shouldDerp = false,
-        bool trashBait = true,
-        bool getBoosts = true
-    )
+    public void FishingREP(int rank = 10, bool shouldDerp = false, bool trashBait = true, bool getBoosts = true)
     {
-        if (FactionRank("Fishing") >= rank)
+        if (FactionRank("Fishing") >= rank && !shouldDerp)
         {
             if (trashBait)
                 Core.TrashCan("Fishing Bait", "Fishing Dynamite");
+
             return;
         }
 
@@ -3019,98 +3015,188 @@ public class CoreFarms
         int successful = 1;
         int failed = 1;
         int startingRep = FactionRep("Fishing");
-        int currentRep = FactionRep("Fishing");
+        int currentRep = startingRep;
+
+        bool hitDerp = false;
+        bool derpFound = false;
+        bool receivedCastWait = false;
+        bool receivedCatchResult = false;
+
         Core.AddDrop("Fishing Bait", "Fishing Dynamite");
         Core.EquipClass(ClassType.Farm);
-        Core.Logger($"Farming rank {rank}");
+        Core.Logger($"Farming Fishing rank {rank}");
 
         Bot.Events.ExtensionPacketReceived += FishingWaiter;
-        while (!Bot.ShouldExit && FactionRank("Fishing") < rank)
+
+        try
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
-            GetBaitandDynamite(0, 50); // Always get dynamite since we're above rank 2
-
-            Core.Join("fishing");
-            Bot.Wait.ForCellChange("Enter");
-            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
-
-            Core.Logger("Fishing With: Dynamite");
-
             while (
                 !Bot.ShouldExit
-                && Core.CheckInventory("Fishing Dynamite")
-                && FactionRank("Fishing") < rank
-                && (!shouldDerp || !Core.HasAchievement(14))
+                && (shouldDerp || FactionRank("Fishing") < rank)
             )
             {
-                Core.Sleep(1000);
-                Bot.Send.Packet("%xt%zm%FishCast%1%Dynamite%30%");
-                Core.Logger($"CatchTimer™ Delay: {waitTimer}ms");
-                Core.Sleep(waitTimer);
-                Bot.Send.Packet("%xt%zm%getFish%1%false%");
-                Core.Sleep(1000);
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
 
-                currentRep = FactionRep("Fishing");
-                if (/* ignore this check, its for when we're testing with max rep*/  rank <= 10)
+                if (
+                    shouldDerp
+                    && (Core.HasAchievement(14) || Core.HasWebBadge("Derp Moosefish"))
+                )
                 {
-                    Core.Logger(
-                        currentRep > startingRep
-                            ? $"Successful! [Dynamite Cast x{successful++}]"
-                            : $"Failed! [Dynamite Cast x{failed++}]"
-                    );
+                    derpFound = true;
+                    break;
                 }
+
+                GetBaitandDynamite(0, 50);
+
+                Core.Join("fishing");
+
+                Bot.Wait.ForCellChange("Enter");
+                Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+
+                Core.Logger("Fishing With: Dynamite");
+
+                while (
+                    !Bot.ShouldExit
+                    && Core.CheckInventory("Fishing Dynamite")
+                    && (shouldDerp || FactionRank("Fishing") < rank)
+                )
+                {
+                    hitDerp = false;
+                    receivedCastWait = false;
+                    receivedCatchResult = false;
+
+                    Core.Sleep(1000);
+
+                    Core.Logger("Casting Dynamite...");
+
+                    Bot.Send.Packet("%xt%zm%FishCast%1%Dynamite%30%");
+
+                    // Wait for the server to tell us the actual catch timer.
+                    if (!Bot.Wait.ForTrue(() => receivedCastWait, 10))
+                    {
+                        Core.Logger("Timed out waiting for castWait packet.");
+                        continue;
+                    }
+
+                    Core.Logger(
+                        $"Cast timer received: {waitTimer}ms | Derp: {hitDerp}"
+                    );
+
+                    // This is the important part:
+                    // do not cast again until the server-provided timer has elapsed.
+                    Core.Sleep(waitTimer);
+
+                    if (shouldDerp)
+                    {
+                        // Give the Derp state/packet a little extra time to settle.
+                        Core.Sleep(1000);
+                    }
+
+                    Core.Logger(
+                        $"Getting fish... Derp flag: {hitDerp.ToString().ToLowerInvariant()}"
+                    );
+
+                    Bot.Send.Packet(
+                        $"%xt%zm%getFish%1%{hitDerp.ToString().ToLowerInvariant()}%"
+                    );
+
+                    // Give CatchResult time to arrive before starting another cast.
+                    Bot.Wait.ForTrue(() => receivedCatchResult, 10);
+
+                    currentRep = FactionRep("Fishing");
+
+                    if (shouldDerp && hitDerp)
+                    {
+                        derpFound = true;
+                        Core.Logger("Derp Moosefish detected!");
+                        break;
+                    }
+
+                    if (rank <= 10)
+                    {
+                        Core.Logger(
+                            currentRep > startingRep
+                                ? $"Successful! [Dynamite Cast x{successful++}]"
+                                : $"Failed! [Dynamite Cast x{failed++}]"
+                        );
+
+                        startingRep = currentRep;
+                    }
+                }
+
+                if (derpFound)
+                    break;
             }
         }
+        finally
+        {
+            Bot.Events.ExtensionPacketReceived -= FishingWaiter;
 
-        Bot.Events.ExtensionPacketReceived -= FishingWaiter;
-        waitTimer = 0;
-        if (trashBait)
-            Core.TrashCan(new[] { "Fishing Bait", "Fishing Dynamite" });
+            if (trashBait)
+                Core.TrashCan(new[] { "Fishing Bait", "Fishing Dynamite" });
+        }
 
         void FishingWaiter(dynamic packet)
         {
-            var type = packet["params"].type;
-            var data = packet["params"].dataObj;
+            dynamic parameters = packet["params"];
 
-            if (type is not null && type == "json")
+            if (parameters is null)
+                return;
+
+            string type = parameters.type?.ToString() ?? string.Empty;
+
+            if (type != "json")
+                return;
+
+            dynamic data = parameters.dataObj;
+
+            if (data is null)
+                return;
+
+            string cmd = data.cmd?.ToString() ?? string.Empty;
+
+            switch (cmd)
             {
-                var cmd = data.cmd.ToString();
+                case "castWait":
+                    if (data.wait is not null)
+                        waitTimer = Convert.ToInt32(data.wait);
 
-                switch (cmd)
-                {
-                    case "castWait":
-                        if (data.wait is not null)
+                    hitDerp = data.derp is not null && Convert.ToBoolean(data.derp);
+                    receivedCastWait = true;
+
+                    Core.Logger(
+                        $"Derp Moosefish: {hitDerp}, CatchTimer: {waitTimer}ms"
+                    );
+
+                    break;
+
+                case "CatchResult":
+                    receivedCatchResult = true;
+
+                    if (data.catchResult is null)
+                        return;
+
+                    foreach (dynamic c in data.catchResult)
+                    {
+                        if (c is null)
+                            continue;
+
+                        string action = c["act"]?.ToString() ?? string.Empty;
+
+                        if (!string.IsNullOrEmpty(action))
+                            Core.Logger(action);
+
+                        if (c["myRep"] is not null)
                         {
-                            waitTimer = data.wait;
-                            Core.Logger(
-                                $"Derp Moosefish: {data.derp}, Set CatchTimer™: {waitTimer}ms"
-                            );
+                            int myRep = Convert.ToInt32(c["myRep"]);
+
+                            if (myRep != 0)
+                                Core.Logger($"{myRep}");
                         }
-                        break;
+                    }
 
-                    //idt this one works
-                    case "CatchResult":
-                        foreach (var c in data.catchResult)
-                        {
-                            if (c is null || (string)c["act"] == null || (int)c["myRep"] == 0)
-                                continue;
-
-                            switch ((string)c["act"])
-                            {
-                                case "Miss":
-                                case "CatchPole":
-                                    Core.Logger($"{(string)c["act"]}");
-                                    break;
-                            }
-
-                            if ((int)c["myRep"] != 0)
-                            {
-                                Core.Logger($"{(int)c["myRep"]}");
-                            }
-                        }
-                        break;
-                }
+                    break;
             }
         }
     }
