@@ -129,11 +129,7 @@ public class CoreSDKA
             return;
         }
 
-        SelectedQuest = Bot.Config!.Get<SDKAQuest>("SelectedQuest");
-
-        // Handle cases where `SelectedQuest` isnt selected (via other scripts besides the 0file)
-        if (SelectedQuest == 0 || string.IsNullOrEmpty(SelectedQuest.ToString()))
-            SelectedQuest = Core.IsMember ? SDKAQuest.APennyforYourFoughts : SDKAQuest.DarkSpiritOrbs;
+        SelectedQuest = GetSelectedQuest();
 
         Core.AddDrop(SDKAItems);
         Core.Logger("Step 1/5: Unlock Hard Core Metals");
@@ -292,12 +288,21 @@ public class CoreSDKA
         if (Core.CheckInventory("Dark Spirit Orb", quant))
             return;
 
+        SelectedQuest = GetSelectedQuest();
         Core.Logger($"Selected farming Quest: {SelectedQuest}");
 
         if (SelectedQuest == SDKAQuest.DarkSpiritOrbs)
             DSO(quant);
         else
             Penny(quant);
+    }
+
+    private SDKAQuest GetSelectedQuest()
+    {
+        SDKAQuest selectedQuest = Bot.Config?.Get<SDKAQuest>("SelectedQuest") ?? default;
+        return selectedQuest == 0
+            ? Core.IsMember ? SDKAQuest.APennyforYourFoughts : SDKAQuest.DarkSpiritOrbs
+            : selectedQuest;
     }
 
     public void Penny(int quant = 10500, bool oneTime = false)
@@ -577,7 +582,7 @@ public class CoreSDKA
                         );
                         return;
                     }
-                    DSO(6);
+                    FarmDSO(6);
                     Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                     Core.EnsureComplete(2110);
                 }
@@ -650,7 +655,7 @@ public class CoreSDKA
                     );
                         return;
                     }
-                    DSO(6);
+                    FarmDSO(6);
                     Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                     Core.EnsureComplete(2112);
                     Bot.Wait.ForPickup("Calamitous Chromium");
@@ -729,7 +734,7 @@ public class CoreSDKA
                     );
                         return;
                     }
-                    DSO(6);
+                    FarmDSO(6);
                     Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                     Core.EnsureComplete(2114);
                     Bot.Wait.ForPickup("Reprehensible Rhodium");
@@ -1014,7 +1019,7 @@ public class CoreSDKA
                     return;
                 }
 
-                DSO(6);
+                FarmDSO(6);
                 Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                 Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, isTemp: false);
             }
@@ -1023,7 +1028,7 @@ public class CoreSDKA
             // IF the gooquest isnt unlocked do the very slow method first.           
             if (!Bot.Quests.IsUnlocked(2165))
             {
-                DSO(5500);
+                FarmDSO(5500);
                 DoomMerge("Corrupt Spirit Orb", 5);
                 DoomMerge("Ominous Aura", 2);
             }
