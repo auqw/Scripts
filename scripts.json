@@ -22577,8 +22577,8 @@
       "farm"
     ],
     "path": "Evil/SDKA/DarkSpiritOrbs.cs",
-    "size": 835,
-    "sha256": "654dc1623041c2fdd0a7a438ad1f4c1e1dee90834b14b1da168ad5db2bc505a8",
+    "size": 1010,
+    "sha256": "235e2148ffb6b48af9e37409cb07d847598df63d252930a44e28647d32cad628",
     "fileName": "DarkSpiritOrbs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/DarkSpiritOrbs.cs"
   },
@@ -22626,8 +22626,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 39934,
-    "sha256": "77e5d5307fae2e19c0686afee28eee3c8ecf2bf324fa8906a015faa1e7346082",
+    "size": 39966,
+    "sha256": "9fef81c0c2bc8c271d3e16ece2bbcde393f317f1f8179802efa2da534f6272dd",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
