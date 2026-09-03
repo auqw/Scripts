@@ -2493,9 +2493,14 @@ public class CoreNation
     /// <param name="quant">Desired quantity, 100 = max stack.</param>
     /// <param name="relic">Indicates if Relic of Chaos supplies are used.</param>
     /// <param name="HydraLevel"></param>
-    public void BloodyChaos(int quant = 100, bool relic = false, int HydraLevel = 85)
+    public void BloodyChaos(int quant = 100, bool relic = false, int HydraLevel = 85, bool Endless = false)
     {
-        if (Core.CheckInventory("Blood Gem of the Archfiend", quant) || Bot.Player.Level < 80)
+        // Level requirement should apply regardless of Endless mode
+        if (Bot.Player.Level < 80)
+            return;
+
+        // Only bail early on inventory count when not farming endlessly
+        if (!Endless && Core.CheckInventory("Blood Gem of the Archfiend", quant))
             return;
 
         Core.AddDrop("Blood Gem of the Archfiend", "Hydra Scale Piece");
@@ -2506,17 +2511,13 @@ public class CoreNation
 
         Core.RegisterQuests(relic ? new[] { 7816, 2857 } : new[] { 7816 });
         Core.EquipClass(ClassType.Solo);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Blood Gem of the Archfiend", quant))
+
+        // Endless keeps looping until manually stopped; otherwise stop once quant is reached
+        while (!Bot.ShouldExit && (Endless || !Core.CheckInventory("Blood Gem of the Archfiend", quant)))
         {
             Core.KillEscherion("Escherion's Helm", isTemp: false);
             Core.KillVath("Shattered Legendary Sword of Dragon Control", isTemp: false);
-            Core.HuntMonster(
-                "hydrachallenge",
-                $"Hydra Head {HydraLevel}",
-                "Hydra Scale Piece",
-                200,
-                false
-            );
+            Core.HuntMonster("hydrachallenge", $"Hydra Head {HydraLevel}", "Hydra Scale Piece", 200, false);
         }
 
         Core.CancelRegisteredQuests();

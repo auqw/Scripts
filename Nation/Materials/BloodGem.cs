@@ -24,8 +24,9 @@ public class BloodGem
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("BloodyChaos", "Do Bloody Chaos", "Thiss will require either an army, or if you're retarded a public group.", false),
+        new Option<bool>("BloodyChaos", "Do Bloody Chaos", "This will require either an army, or if you're retarded a public group.", false),
         new Option<HydraLevel>("HydraLevel", "Hydra Lvl to kill", "", HydraLevel.Head_85),
+        new Option<bool>("Endless", "Endless", "The end is never the end is never the end is never the end"),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -40,9 +41,10 @@ public class BloodGem
 
     void SetupHydras()
     {
+        bool Endless = Bot.Config!.Get<bool>("Endless");
         int HydraLevel = (int)Bot.Config!.Get<HydraLevel>("HydraLevel");
         if (Bot.Config!.Get<bool>("BloodyChaos"))
-            Nation.BloodyChaos(100, false, HydraLevel);
+            Nation.BloodyChaos(100, false, HydraLevel, Endless);
         else
             Nation.FarmBloodGem(100, HydraLevel);
     }
