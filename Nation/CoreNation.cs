@@ -1060,7 +1060,7 @@ public class CoreNation
     }
 
 
-    public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null, bool returnPolicyDuringSupplies = false, bool VoucherItemDuring = false)
+    public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null, bool returnPolicyDuringSupplies = false, bool VoucherItemDuring = false, bool HydraChallenge = false)
     {
         #region Early exits
 
@@ -1096,7 +1096,7 @@ public class CoreNation
         else if (sellMemVoucher && Bot.Player.Gold >= 100000000)
             sellMemVoucher = false;
 
-        LogSuppliesConfig(item, quant, UltraAlteon, KeepVoucher, sellMemVoucher, AssistantDuring, returnPolicyDuringSupplies, ReturnItem);
+        LogSuppliesConfig(item, quant, UltraAlteon, HydraChallenge, KeepVoucher, sellMemVoucher, AssistantDuring, returnPolicyDuringSupplies, ReturnItem);
 
         #endregion
 
@@ -1145,14 +1145,14 @@ public class CoreNation
         #endregion
 
         if (item == null || item == "All")
-            FarmAllSupplies(UltraAlteon, KeepVoucher, AssistantDuring, ReturnItem, returnPolicyDuringSupplies);
+            FarmAllSupplies(UltraAlteon, HydraChallenge, KeepVoucher, AssistantDuring, ReturnItem, returnPolicyDuringSupplies);
         else
-            FarmSingleSupply(item, quant, UltraAlteon, KeepVoucher, AssistantDuring, ReturnItem, returnPolicyDuringSupplies, VoucherItemDuring);
+            FarmSingleSupply(item, quant, UltraAlteon, HydraChallenge, KeepVoucher, AssistantDuring, ReturnItem, returnPolicyDuringSupplies, VoucherItemDuring);
 
         Core.CancelRegisteredQuests();
     }
 
-    private void FarmAllSupplies(bool UltraAlteon, bool KeepVoucher, bool AssistantDuring, string? ReturnItem, bool returnPolicyDuringSupplies)
+    private void FarmAllSupplies(bool UltraAlteon, bool HydraChallenge, bool KeepVoucher, bool AssistantDuring, string? ReturnItem, bool returnPolicyDuringSupplies)
     {
         foreach (string thing in SuppliesRewards)
         {
@@ -1161,7 +1161,7 @@ public class CoreNation
             if (rewardItem == null)
                 continue;
 
-            if (Core.CheckInventory(CragName) || hasOBoNPet)
+            if (!UltraAlteon && !HydraChallenge && (Core.CheckInventory(CragName) || hasOBoNPet))
             {
                 BambloozevsDrudgen(rewardItem.Name, rewardItem.MaxStack, KeepVoucher, AssistantDuring, ReturnItem, true);
                 continue;
@@ -1169,7 +1169,9 @@ public class CoreNation
 
             while (!Bot.ShouldExit && !Core.CheckInventory(rewardItem.ID, rewardItem.MaxStack))
             {
-                if (UltraAlteon)
+                if (HydraChallenge)
+                    Core.KillMonster("hydrachallenge", "h90", "Left", "Hydra Head 90", "Relic of Chaos", isTemp: false, log: false);
+                else if (UltraAlteon)
                     Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false);
                 else
                     Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
@@ -1182,9 +1184,9 @@ public class CoreNation
         }
     }
 
-    private void FarmSingleSupply(string item, int quant, bool UltraAlteon, bool KeepVoucher, bool AssistantDuring, string? ReturnItem, bool returnPolicyDuringSupplies, bool VoucherItemDuring)
+    private void FarmSingleSupply(string item, int quant, bool UltraAlteon, bool HydraChallenge, bool KeepVoucher, bool AssistantDuring, string? ReturnItem, bool returnPolicyDuringSupplies, bool VoucherItemDuring)
     {
-        if (Core.CheckInventory(CragName) || hasOBoNPet)
+        if (!UltraAlteon && !HydraChallenge && (Core.CheckInventory(CragName) || hasOBoNPet))
         {
             BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             return;
@@ -1192,7 +1194,9 @@ public class CoreNation
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
-            if (UltraAlteon)
+            if (HydraChallenge)
+                Core.KillMonster("hydrachallenge", "h90", "Left", "Hydra Head 90", "Relic of Chaos", isTemp: false, log: false);
+            else if (UltraAlteon)
                 Core.KillMonster("ultraalteon", "r10", "Left", "*", isTemp: false, log: false);
             else
                 Core.KillEscherion(log: false, FromSupplies: true);
@@ -1233,13 +1237,14 @@ public class CoreNation
         }
     }
 
-    private void LogSuppliesConfig(string? item, int quant, bool ultraAlteon, bool keepVoucher, bool sellMemVoucher, bool assistantDuring, bool returnPolicyDuringSupplies, string? returnItem)
+    private void LogSuppliesConfig(string? item, int quant, bool ultraAlteon, bool hydraChallenge, bool keepVoucher, bool sellMemVoucher, bool assistantDuring, bool returnPolicyDuringSupplies, string? returnItem)
     {
         string Flag(bool v) => v ? "True" : "False";
 
         Core.Logger("[Supplies] =========================", "Supplies");
         Core.Logger($"Item      : {item ?? "All"} x{quant}", "Supplies");
         Core.Logger($"Ultra     : {Flag(ultraAlteon)}", "Supplies");
+        Core.Logger($"Hydra     : {Flag(hydraChallenge)}", "Supplies");
         Core.Logger($"Voucher K : {Flag(keepVoucher)}", "Supplies");
         Core.Logger($"Voucher S : {Flag(sellMemVoucher)}", "Supplies");
         Core.Logger($"Assist    : {Flag(assistantDuring)}", "Supplies");
