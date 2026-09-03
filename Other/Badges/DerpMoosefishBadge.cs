@@ -29,7 +29,7 @@ public class DerpMoosefishBadge
 
     public void Badge()
     {
-        if (Core.HasAchievement(14))
+        if (Core.HasAchievement(14) || Core.HasWebBadge("Derp Moosefish"))
             return;
 
         Farm.FishingREP(11, true);
