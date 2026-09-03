@@ -281,12 +281,11 @@ public class CoreNation
                             while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quantity))
                             {
                                 int mapId = mobName == "Slugfit" ? 10 : 9; // Determine the map ID based on the mob name
-                                if (
-                                    Bot.Monsters.CurrentAvailableMonsters.Any(monster =>
-                                        monster.Name == mobName
-                                    )
-                                )
+                                if (Bot.Monsters.CurrentAvailableMonsters.Any(monster =>monster.Name == mobName))
+                                    {
+                                    Core.CanWeAggro(); 
                                     Bot.Combat.Attack(mobName);
+                                    }
                                 else
                                     Core.Sleep();
                             }
@@ -356,12 +355,11 @@ public class CoreNation
                             if (!Core.CheckInventory(itemName, quantity))
                             {
                                 int mapId = mobName == "Slugfit" ? 10 : 9; // Determine the map ID based on the mob name
-                                if (
-                                    Bot.Monsters.CurrentAvailableMonsters.Any(monster =>
-                                        monster.Name == mobName
-                                    )
-                                )
-                                    Bot.Combat.Attack(mobName);
+                                if (Bot.Monsters.CurrentAvailableMonsters.Any(monster => monster.Name == mobName))            
+                                    {
+                                        Core.CanWeAggro(); 
+                                        Bot.Combat.Attack(mobName);
+                                    }
                                 else
                                     Core.Sleep();
                             }
@@ -487,6 +485,7 @@ public class CoreNation
                 Bot.Map.Jump("r12", "Left", false);
                 Bot.Wait.ForCellChange("r12");
             }
+            Core.CanWeAggro();
             Bot.Combat.Attack("*");
             Core.Sleep();
         }
