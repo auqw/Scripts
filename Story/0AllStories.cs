@@ -80,6 +80,8 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/QueenofMonsters/Extra/QueenBattle.cs
 
 //cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+//cs_include Scripts/Story/SunSetSaga/CoreSunSet.cs
+
 
 //cs_include Scripts/Story/ShadowsOfChaos/CoreSoC.cs
 
@@ -277,6 +279,14 @@ public class AllStories
         set => _DOY = value;
     }
     private static CoreDOY _DOY;
+
+    // Sunset Saga
+    private static CoreSunSet CSS
+    {
+        get => _CSS ??= new CoreSunSet();
+        set => _CSS = value;
+    }
+    private static CoreSunSet _CSS;
 
     // Elergy of Madness - Darkon
     private static CoreAstravia CoreAstravia
@@ -1795,6 +1805,10 @@ public class AllStories
 
         Yokai.Quests();
         Core.Logger($"Story: Yokai - Complete");
+
+        CSS.DoAll();
+        Core.Logger($"Sunset Saga - Complete");
+
 
         #endregion
     }
