@@ -10,6 +10,7 @@ tags: dso, a penny for your foughts, sdka, evil, quest, farm
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Options;
 
 public class DarkSpiritOrbs
 {
@@ -21,12 +22,15 @@ public class DarkSpiritOrbs
         set => _SDKA = value;
     }
     private static CoreSDKA _SDKA;
+    public string OptionsStorage = SDKA.OptionsStorage;
+    public bool DontPreconfigure = true;
+    public List<IOption> Options = SDKA.Options;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
 
-        SDKA.DSO(10500);
+        SDKA.FarmDSO(10500);
 
         Core.SetOptions(false);
     }

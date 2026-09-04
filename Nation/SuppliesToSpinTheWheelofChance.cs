@@ -51,6 +51,12 @@ public class SuppliesToSpinTheWheelofChance
             "Instead of \"Escherion\" or bamboozle, do \"Ultra Chaos Alteon\"?",
             false
         ),
+        new Option<bool>(
+            "HydraChallenge",
+            "Kill \"Hydra Head 90\" in /hydrachallenge",
+            "Farm Relic of Chaos in the level 90 Hydra room in /hydrachallenge",
+            false
+        ),
         // add option for Voucher Item: Totem of Nulgath During
         new Option<bool>(
             "VoucherItemQuestDuring",
@@ -202,7 +208,8 @@ public class SuppliesToSpinTheWheelofChance
                 Bot.Config!.Get<bool>("AssistantDuring"),
                 currentSwindlesItem,
                 returnPolicyActive,
-                Bot.Config!.Get<bool>("VoucherItemQuestDuring")
+                Bot.Config!.Get<bool>("VoucherItemQuestDuring"),
+                Bot.Config!.Get<bool>("HydraChallenge")
             );
         }
     }
