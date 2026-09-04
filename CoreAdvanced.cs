@@ -39,14 +39,14 @@ public class CoreAdvanced
     /// <summary>
     /// Auto-registers the OnEquipClass hook so EquipClass auto-enhances when CoreAdvanced is included.
     /// </summary>
-    static CoreAdvanced()
-    {
-        CoreBots.OnEquipClass += (c) =>
-        {
-            try { Instance.SmartEnhance(c); }
-            catch (Exception ex) { IScriptInterface.Instance.Log($"[Enhancement] SmartEnhance failed for {c}: {ex.Message}"); }
-        };
-    }
+    // static CoreAdvanced()
+    // {
+    //     CoreBots.OnEquipClass += (c) =>
+    //     {
+    //         try { Instance.SmartEnhance(c); }
+    //         catch (Exception ex) { IScriptInterface.Instance.Log($"[Enhancement] SmartEnhance failed for {c}: {ex.Message}"); }
+    //     };
+    // }
 
     public void ScriptMain(IScriptInterface Bot)
     {
