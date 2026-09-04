@@ -82,6 +82,7 @@ public class DageChallengeStory
         if (!Story.QuestProgression(8546))
         {
             //Power of the Undead Legion
+            Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(8546);
             Core.HuntMonster("legionarena", "Legion Fiend Rider", "Fiend Rider's Approval");
             Core.HuntMonster("frozenlair", "Lich Lord", "Lich Lord's Approval");
