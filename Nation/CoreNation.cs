@@ -1186,22 +1186,32 @@ public class CoreNation
 
     private void KillHydra()
     {
-        if (Bot.Map.Name != "hydrachallenge")
-        { 
-            Core.Join("hydrachallenge"); 
-            Bot.Wait.ForMapLoad("hydrachallenge");
-        }
+        if (!string.Equals(Bot.Map.Name, "hydrachallenge", StringComparison.OrdinalIgnoreCase))
+            Core.Join("hydrachallenge");
 
-        Core.AddDrop("Relic of Chaos");
+        int relics = Bot.Inventory.GetQuantity("Relic of Chaos");
 
-        if (Bot.Player.Cell != "h90")
+        while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Relic of Chaos") == relics)
         {
-            Core.Jump("h90", "Left");
-            Bot.Wait.ForCellChange("h90");
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (!string.Equals(Bot.Player.Cell, "h90", StringComparison.OrdinalIgnoreCase))
+            {
+                Core.Jump("h90", "Left");
+                Bot.Wait.ForCellChange("h90");
+            }
+
+            Core.CanWeAggro();
+
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack("*");
+
+            Bot.Sleep(500);
         }
-        
-        Core.CanWeAggro(); 
-        Bot.Combat.Attack("*");
     }
 
     private void FarmSingleSupply(string item, int quant, bool UltraAlteon, bool HydraChallenge, bool KeepVoucher, bool AssistantDuring, string? ReturnItem, bool returnPolicyDuringSupplies, bool VoucherItemDuring)

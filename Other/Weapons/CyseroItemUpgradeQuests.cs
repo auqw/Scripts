@@ -246,6 +246,8 @@ public class CyseroItemUpgrade
             {
                 Core.Equip(usethis.ID);
                 Core.Equip(Core.FarmGear);
+                if (usethis.Name.Equals("Yami no Ronin"))
+                    Bot.Skills.StartAdvanced("1 | 4");
             }
             else
                 Core.EquipClass(ClassType.Dodge);

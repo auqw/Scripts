@@ -128,6 +128,8 @@ public class FireChampionsArmor
         {
             Core.Equip(usethis.ID);
             Core.Equip(Core.DodgeGear);
+            if (usethis.Name.Equals("Yami no Ronin"))
+                Bot.Skills.StartAdvanced("1 | 4");
         }
         else if (!string.IsNullOrEmpty(Core.DodgeClass))
             Core.EquipClass(ClassType.Dodge);
