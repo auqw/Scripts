@@ -1170,7 +1170,7 @@ public class CoreNation
             while (!Bot.ShouldExit && !Core.CheckInventory(rewardItem.ID, rewardItem.MaxStack))
             {
                 if (HydraChallenge)
-                    Core.KillMonster("hydrachallenge", "h90", "Left", "Hydra Head 90", "Relic of Chaos", isTemp: false, log: false);
+                    KillHydra();
                 else if (UltraAlteon)
                     Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false);
                 else
@@ -1184,6 +1184,26 @@ public class CoreNation
         }
     }
 
+    private void KillHydra()
+    {
+        if (Bot.Map.Name != "hydrachallenge")
+        { 
+            Core.Join("hydrachallenge"); 
+            Bot.Wait.ForMapLoad("hydrachallenge");
+        }
+
+        Core.AddDrop("Relic of Chaos");
+
+        if (Bot.Player.Cell != "h90")
+        {
+            Core.Jump("h90", "Left");
+            Bot.Wait.ForCellChange("h90");
+        }
+        
+        Core.CanWeAggro(); 
+        Bot.Combat.Attack("*");
+    }
+
     private void FarmSingleSupply(string item, int quant, bool UltraAlteon, bool HydraChallenge, bool KeepVoucher, bool AssistantDuring, string? ReturnItem, bool returnPolicyDuringSupplies, bool VoucherItemDuring)
     {
         if (!UltraAlteon && !HydraChallenge && (Core.CheckInventory(CragName) || hasOBoNPet))
@@ -1195,7 +1215,7 @@ public class CoreNation
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             if (HydraChallenge)
-                Core.KillMonster("hydrachallenge", "h90", "Left", "Hydra Head 90", "Relic of Chaos", isTemp: false, log: false);
+                KillHydra();
             else if (UltraAlteon)
                 Core.KillMonster("ultraalteon", "r10", "Left", "*", isTemp: false, log: false);
             else
