@@ -210,8 +210,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53969,
-    "sha256": "2bf774ddf2b6891ae09984ee22dc7dcff3e8ac3ca3deb9b745841ab88ac590a7",
+    "size": 54074,
+    "sha256": "d51f7bfbe0887e06a61acf9dd1b136e8a30300e9e476bbc7b94ea1c6178238e8",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -3911,8 +3911,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 120341,
-    "sha256": "6f3372962d8138c02eed584c9cd6af2c700ec352400953e8a5c70925e1e89ab0",
+    "size": 120747,
+    "sha256": "a2c33125b439f825dd335ce4a8211ce07f7869595898641aedacc553438b0290",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -10185,8 +10185,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 5905,
-    "sha256": "a7f8879ec07529eccf823a7617ccf294c7c4816d312d6ee7e2631abecddea0f2",
+    "size": 6018,
+    "sha256": "6cfb7ce65512fa26d2dbf88f93bf4870e6a9dfc04a9aca2f1244de662fd75b2f",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
@@ -12833,8 +12833,8 @@
       "null"
     ],
     "path": "Other/Weapons/CyseroItemUpgradeQuests.cs",
-    "size": 12438,
-    "sha256": "e29ab0a05c7feacd3983519ec3284d93bc988c150bd9e2d6e1cdc4efb9cdeebc",
+    "size": 12551,
+    "sha256": "d4a01178be35d6efde0732fc53c522786a47f9534b12f418e910066c3653765c",
     "fileName": "CyseroItemUpgradeQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CyseroItemUpgradeQuests.cs"
   },
@@ -13038,8 +13038,8 @@
       "fca"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 4418,
-    "sha256": "ed83667d6098458a078b21171acb2fb5b98b94bf95140c50b62b504b8981aee9",
+    "size": 4523,
+    "sha256": "0e60319ff94b49e8de53c2496fbf552ae493b5b9a486c9056ba6ef6543c944db",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -19876,8 +19876,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 16082,
-    "sha256": "88a253557c6ed8714b1ead3289bfe0e9b35b7d83966b3310e344ed3864fb6a51",
+    "size": 16203,
+    "sha256": "5fedf9bb2727c9e2a77554f08c037bb83962101004347ee42ab23c53ee5e0f2c",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -22450,8 +22450,8 @@
       "citadel-ruins"
     ],
     "path": "Story/Nation/CitadelRuins.cs",
-    "size": 9518,
-    "sha256": "42be945237ffda78e15265fa7f57d2b2604efa0b4b49c336c02d0efbc481c2db",
+    "size": 9623,
+    "sha256": "854e9c3218d01d051285e195fadae89cb2bef8116a8735b5c3c30a1f041bd006",
     "fileName": "CitadelRuins.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/CitadelRuins.cs"
   },
@@ -24525,8 +24525,8 @@
       "null"
     ],
     "path": "Nation/Various/ArchfiendDragonEgg[Mem].cs",
-    "size": 2127,
-    "sha256": "f9e432fc7ef8b344189396398cfa7f81363da6ee4bf9176a4963edc8d67dc4d4",
+    "size": 2232,
+    "sha256": "4d242a6c61b51bc31d1aafb2995a0519bd434ec129727f21013616f56676e725",
     "fileName": "ArchfiendDragonEgg[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ArchfiendDragonEgg[Mem].cs"
   },
@@ -24650,8 +24650,8 @@
       "null"
     ],
     "path": "Nation/Various/EliteVoid.cs",
-    "size": 4356,
-    "sha256": "ea7253bdab3bb29435ea8328e29f28df84b4d5da1e654b86a0aaf4ca068eddb8",
+    "size": 4477,
+    "sha256": "005f381137a18ecf9891adfa46b4cb11807ca5e6378a62e8022c5baf0bd483ea",
     "fileName": "EliteVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/EliteVoid.cs"
   },
