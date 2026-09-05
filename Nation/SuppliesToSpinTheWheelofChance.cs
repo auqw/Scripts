@@ -17,7 +17,7 @@ public class SuppliesToSpinTheWheelofChance
     private static CoreBots Core => CoreBots.Instance;
     private static CoreNation Nation
     {
-        get => _Nation ??= new CoreNation();
+        get => _Nation ??= new();
         set => _Nation = value;
     }
     private static CoreNation _Nation;
@@ -79,31 +79,41 @@ public class SuppliesToSpinTheWheelofChance
 
     public void DoSupplies()
     {
-        // Get and normalize config options
         string? swindlesReturnItem = GetNormalizedConfigItem<SwindlesReturnItem>("SwindlesReturnItem", out bool maxSwindles);
         string? suppliesItem = GetNormalizedConfigItem<SuppliesReward>("SuppliesReward", out bool maxSupplies);
 
-        // Load required quests
-        Quest supplies = LoadQuestWithRetry(2857, "Supplies");
-        Quest swindlesReturn = LoadQuestWithRetry(7551, "Swindle's Return");
+        Quest? supplies = LoadQuestWithRetry(2857, "Supplies");
+        Quest? swindlesReturn = LoadQuestWithRetry(7551, "Swindle's Return");
 
-        // Build combined rewards list (filtered to exclude maxed items)
+        if (supplies == null || swindlesReturn == null)
+        {
+            Core.Logger("Exiting - failed to load required quests (bot stopped).");
+            return;
+        }
+
         List<ItemBase> combinedRewards = BuildCombinedRewardsList(supplies, swindlesReturn);
+        LogSuppliesConfiguration(combinedRewards, maxSupplies, maxSwindles);
 
-        // Process each reward
         ProcessRewards(combinedRewards, supplies, swindlesReturn, ref suppliesItem, ref swindlesReturnItem);
     }
 
     private string? GetNormalizedConfigItem<T>(string configKey, out bool isMaxAll) where T : Enum
     {
-        string? item = Bot.Config!.Get<T>(configKey)?.ToString()?.Replace('_', ' ');
+        string? item = Bot.Config!.Get<T>(configKey)?.ToString();
         isMaxAll = item == "All";
-        return isMaxAll ? null : item;
+        if (isMaxAll)
+            return null;
+
+        return item switch
+        {
+            "Voucher_of_Nulgath_NonMem" => "Voucher of Nulgath (non-mem)",
+            _ => item?.Replace('_', ' ')
+        };
     }
 
-    private Quest LoadQuestWithRetry(int questId, string questName)
+    private Quest? LoadQuestWithRetry(int questId, string questName)
     {
-        while (true)
+        while (!Bot.ShouldExit)
         {
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
             if (quest != null)
@@ -112,6 +122,7 @@ public class SuppliesToSpinTheWheelofChance
             Core.Logger($"Failed to load quest {questId} ({questName}). Retrying...");
             Core.Sleep();
         }
+        return null;
     }
 
     private List<ItemBase> BuildCombinedRewardsList(Quest supplies, Quest swindlesReturn)
@@ -168,7 +179,13 @@ public class SuppliesToSpinTheWheelofChance
 
             Core.FarmingLogger(item.Name, item.MaxStack);
 
-            // Determine items dynamically if set to "All"
+            // Clear out targets that have since become maxed so a new one gets picked
+            if (suppliesItem != null && Core.CheckInventory(suppliesItem, GetRewardMaxStack(supplies, suppliesItem)))
+                suppliesItem = null;
+
+            if (swindlesReturnItem != null && Core.CheckInventory(swindlesReturnItem, GetRewardMaxStack(swindlesReturn, swindlesReturnItem)))
+                swindlesReturnItem = null;
+
             swindlesReturnItem ??= GetNextNonMaxedReward(swindlesReturn, Nation.SwindlesReturnRewards);
             suppliesItem ??= GetNextNonMaxedReward(supplies, Nation.SuppliesRewards);
 
