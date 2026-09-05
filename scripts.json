@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 449949,
-    "sha256": "0b8aaba428671b361fb5700e29331a95008f2eee5c8b2d600780608e041004da",
+    "size": 451796,
+    "sha256": "3782b11e3c6dadcc83b4b34ed28ee943b92ff3be3249f35411e9c6b80a347383",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1103,6 +1103,20 @@
     "sha256": "1a4494eb1e80e209999aea75176afce09d8a9c68035792265cbbc57e6bee0f21",
     "fileName": "KPHandItemCounter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/KPHandItemCounter.cs"
+  },
+  {
+    "name": "Find Best Server Ping",
+    "description": "will spit out the  best server ( ping wise) into the logs ( diagnostics > logs )",
+    "tags": [
+      "server",
+      "ping",
+      "ultra"
+    ],
+    "path": "Tools/FindBestPing.cs",
+    "size": 540,
+    "sha256": "d988fb265c21313f24112c907b70df86b49bd254ed2e911a22be063731a04fb1",
+    "fileName": "FindBestPing.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/FindBestPing.cs"
   },
   {
     "name": "Generate Queued Script",
