@@ -59,7 +59,7 @@ public class HeartOfTheSeaStory
         Story.KillQuest(
             6517,
             "HeartOfTheSea",
-            new[] { "Boatswain Rotbelly", "Quartermaster Greenfin", "First Mate Blackfang" }
+            new[] { "First Mate Blackfang", "Quartermaster Greenfin", "Boatswain Rotbelly" }
         );
 
         // Find the Hold 6518
