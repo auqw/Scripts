@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Dynamic;
+using System.Net.Sockets;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9062,6 +9063,64 @@ public class CoreBots
             }
         }
     }
+
+    public void FindBestServer()
+    {
+        List<Server> servers = Bot.Servers.GetServers(true).AsTask().GetAwaiter().GetResult();
+
+        static long TcpPing(string host, int port = 5588, int timeoutMs = 2000)
+        {
+            try
+            {
+                using TcpClient client = new();
+                Stopwatch sw = Stopwatch.StartNew();
+                Task connectTask = client.ConnectAsync(host, port);
+                if (!connectTask.Wait(timeoutMs))
+                    return long.MaxValue;
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
+            }
+            catch
+            {
+                return long.MaxValue;
+            }
+        }
+
+        // Ping each unique host once
+        Dictionary<string, long> pingResults = new();
+        foreach (string host in servers.Select(s => s.IP).Distinct())
+            pingResults[host] = TcpPing(host);
+
+        // Pick the server with the lowest ping
+        Server? best = servers
+            .Where(s => pingResults[s.IP] != long.MaxValue)
+            .OrderBy(s => pingResults[s.IP])
+            .FirstOrDefault();
+
+        if (best != null)
+            Bot.Log($"Most optimal server: {best.Name} ({best.IP}) - {pingResults[best.IP]}ms");
+        else
+            Bot.Log("Could not determine an optimal server, all hosts failed to connect.");
+
+
+
+    }
+    static long TcpPing(string host, int[] ports, int timeoutMs = 2000)
+    {
+        foreach (int port in ports)
+        {
+            try
+            {
+                using TcpClient client = new();
+                Stopwatch sw = Stopwatch.StartNew();
+                if (client.ConnectAsync(host, port).Wait(timeoutMs))
+                    return sw.ElapsedMilliseconds;
+            }
+            catch { }
+        }
+        return long.MaxValue;
+    }
+
 
     #endregion Utility
 
