@@ -6306,8 +6306,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs",
-    "size": 39712,
-    "sha256": "45721094b74a996c9358f6304a5192d49a1c7711e80297edc98e67177a9935f3",
+    "size": 39768,
+    "sha256": "a273b75de42a07b798ef305525cfc3dbea50d15b954b2576494ec6d9df7a2dac",
     "fileName": "WeeklyReleaseGeneratorV2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs"
   },
@@ -29827,8 +29827,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs",
-    "size": 1016,
-    "sha256": "48f55729d8e1d0ab72a14c04ee55591e6faf8111525ba88d1e91db9c6b411344",
+    "size": 1009,
+    "sha256": "d601231195a1ad26e69208797a03e6804e48c1c7424403d66f7057645170939c",
     "fileName": "Generatesupportutils.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs"
   },
@@ -29839,8 +29839,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs",
-    "size": 16688,
-    "sha256": "2a4f84f2140e5e67d376f498ef2d5ee4868c4f7db0a8deae79728032b7a55767",
+    "size": 16689,
+    "sha256": "69b7ae999779fd37ca09a3133f6881da7b27033ae8f8297aaee87b6b7b2211a8",
     "fileName": "LocationSwfQuestReader.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs"
   },
@@ -29851,8 +29851,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs",
-    "size": 8032,
-    "sha256": "157cbb19ba4d5b9e256fd8a1d3ef1c5f17ab95935ad8fdfcf60b9c085fdfedbe",
+    "size": 8033,
+    "sha256": "234c94817a5c986f7bd638994d8bf86a97984c0985e855b17b2310d4d8a7531e",
     "fileName": "QuestPacketCollector.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs"
   },
@@ -29863,8 +29863,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/DropPacketCollector.cs",
-    "size": 10492,
-    "sha256": "f6ef8b3baaa3c49fb8b56220ecd8b33c5e42cfdf4b4b56242193c4ade5830f76",
+    "size": 11097,
+    "sha256": "e60333aca860e2971740f9acbd684bf34fc097f1038a1ebf15cdf74739c10b43",
     "fileName": "DropPacketCollector.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/DropPacketCollector.cs"
   },
