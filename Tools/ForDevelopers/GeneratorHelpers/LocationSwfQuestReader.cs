@@ -4,7 +4,8 @@ description: null
 tags: null
 */
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/Tools\ForDevelopers/GeneratorHelpers/Generatesupportutils.cs
+//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/GenerateSupportUtils.cs
+
 
 using System;
 using System.Collections.Generic;

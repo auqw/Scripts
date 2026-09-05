@@ -8,7 +8,7 @@ tags: developer, generator, story, quests, drops, packets, v2
 //cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/DropPacketCollector.cs
 //cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs
 //cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs
-//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs
+//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/GenerateSupportUtils.cs
 
 using System.Diagnostics;
 using System.Globalization;
@@ -25,6 +25,8 @@ public class WeeklyReleaseGeneratorV2
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
+    private static GeneratorSupportUtils GSU => new();
+
 
     public string OptionsStorage = "WeeklyReleaseGeneratorV2";
     public bool DontPreconfigure = true;

@@ -6,7 +6,7 @@ tags: null
 using Newtonsoft.Json.Linq;
 
 /// <summary>Small helpers shared by the developer generator/collector scripts.</summary>
-public static class GeneratorSupportUtils
+public class GeneratorSupportUtils
 {
     /// <summary>Finds the index of the brace that closes the one at <paramref name="openingBrace"/>.</summary>
     public static int FindClosingBrace(string source, int openingBrace)

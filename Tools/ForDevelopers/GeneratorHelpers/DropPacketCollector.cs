@@ -5,7 +5,7 @@ tags: null
 */
 
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/Generatesupportutils.cs
+//cs_include Scripts/Tools/ForDevelopers/GeneratorHelpers/GenerateSupportUtils.cs
 
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,21 @@ public sealed class DropPacketCollector
         string MonsterName,
         int MaxHP,
         IReadOnlyList<MonsterInstanceDrops> Instances
-    );
+    )
+    {
+        // Flattened views for consumers that don't care about per-cell
+        // instances (e.g. WeeklyReleaseGeneratorV2), which expect a single
+        // merged drop list and the set of MonMapIDs this monster spawns on.
+        public IReadOnlyList<int> MonMapIDs =>
+            [.. Instances.Select(instance => instance.MonMapID)];
+
+        public IReadOnlyList<DropItem> Items =>
+            [.. Instances
+                .SelectMany(instance => instance.Items)
+                .GroupBy(item => item.ID)
+                .Select(MergeDropItem)
+                .OrderBy(item => item.ID)];
+    }
 
     public void ScriptMain(IScriptInterface bot)
     {
