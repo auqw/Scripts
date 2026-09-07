@@ -9,6 +9,7 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using System.Threading.Tasks;
 
 public class Core13LoC
 {
@@ -940,7 +941,58 @@ public class Core13LoC
         }
 
         //Chaos Lord Ledgermayne
-        Story.KillQuest(847, "ledgermayne", "Ledgermayne");
+        KillLedgermayne();
+    }
+
+    private void KillLedgermayne()
+    {
+        if (Story.QuestProgression(847) || !Core.EnsureAccept(847))
+            return;
+
+        Bot.Events.ExtensionPacketReceived -= LedgermayneZoneListener;
+        Bot.Events.ExtensionPacketReceived += LedgermayneZoneListener;
+
+        try
+        {
+            Core.HuntMonster("ledgermayne", "Ledgermayne", "Ledgermayne Defeated");
+        }
+        finally
+        {
+            Bot.Events.ExtensionPacketReceived -= LedgermayneZoneListener;
+        }
+
+        Core.EnsureComplete(847);
+    }
+
+    private async void LedgermayneZoneListener(dynamic packet)
+    {
+        if (Bot.ShouldExit
+            || Bot.Player?.Alive != true
+            || !string.Equals(Bot.Map?.Name, "ledgermayne", StringComparison.OrdinalIgnoreCase)
+            || packet?["params"]?.type?.ToString() != "json")
+            return;
+
+        dynamic data = packet["params"].dataObj;
+        if (data?.cmd?.ToString() != "event")
+            return;
+
+        string? zoneSet = data?.args?.zoneSet?.ToString();
+        if (zoneSet is null)
+            return;
+
+        int x;
+        int y;
+
+        if (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase))
+            (x, y) = (292, 355);
+        else if (zoneSet.Equals("B", StringComparison.OrdinalIgnoreCase))
+            (x, y) = (750, 350);
+        else if (zoneSet.Length == 0)
+            (x, y) = (592, 250);
+        else
+            return;
+
+        await Task.Run(() => Bot.Player.WalkTo(x, y, 9));
     }
 
     public void Tibicenas()
