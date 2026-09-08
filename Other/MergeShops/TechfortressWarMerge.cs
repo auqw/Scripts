@@ -166,7 +166,8 @@ public class TechfortressWarMerge
 
                 case "Shard of An Orb":
                     Core.FarmingLogger(req.Name, quant);
-                    BLOD.BlindingLightOfDestiny();
+                    BLOD.BlindingLightOfDestiny(BLODMethod.Fewest_Hours);
+
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(7654);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))

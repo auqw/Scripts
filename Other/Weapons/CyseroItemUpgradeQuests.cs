@@ -171,7 +171,8 @@ public class CyseroItemUpgrade
         if (Core.CheckInventory("Polished Blinding Light of Destiny", toInv: false))
             return;
 
-        BLOD.BlindingLightOfDestiny();
+        BLOD.BlindingLightOfDestiny(BLODMethod.Fewest_Hours);
+
 
         Core.AddDrop("Polished Blinding Light of Destiny");
 

@@ -42,7 +42,8 @@ public class SanctifiedLightofDestiny
         if (Core.CheckInventory("Sanctified Light of Destiny"))
             return;
 
-        BLOD.BlindingLightOfDestiny();
+        BLOD.BlindingLightOfDestiny(BLODMethod.Fewest_Hours);
+
 
         Core.AddDrop("Sanctified Light of Destiny", "Pious Platinum");
         Core.EnsureAccept(8112);

@@ -116,7 +116,7 @@ public class DrakathArmorBot
         );
         Core.EnsureAccept(3882);
         Core.Logger("Getting Quest Accept Requirement: Blinding Light of Destiny");
-        BLOD.BlindingLightOfDestiny();
+        BLOD.BlindingLightOfDestiny(BLODMethod.Fewest_Hours);
         if (!Core.CheckInventory("Blinding Light of Destiny"))
         {
             Core.Logger(

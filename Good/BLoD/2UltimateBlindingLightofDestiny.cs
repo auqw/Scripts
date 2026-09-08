@@ -37,7 +37,8 @@ public class UltimateBLoD
         if (Core.CheckInventory("Ultimate Blinding Light of Destiny"))
             return;
 
-        BLOD.BlindingLightOfDestiny();
+        BLOD.BlindingLightOfDestiny(BLODMethod.Fewest_Hours);
+
 
         OverwhelmedAxe();
         ShardOfAnOrb();
@@ -98,7 +99,8 @@ public class UltimateBLoD
         if (Core.CheckInventory("Purified Undead Dragon Essence", quant))
             return;
 
-        BLOD.BlindingLightOfDestiny();
+        BLOD.BlindingLightOfDestiny(BLODMethod.Fewest_Hours);
+
         OverwhelmedAxe();
 
         Core.AddDrop("Purified Undead Dragon Essence");
