@@ -170,6 +170,23 @@ tags: member, kit, expire, legend
 //cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
 //cs_include Scripts/Other/Classes/KingsEcho.cs
 //cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
+
+//cs_include Scripts/Hollowborn/Materials/HollowSoul.cs 
+//cs_include Scripts/Legion/Revenant/CoreLR.cs
+//cs_include Scripts/Legion/InfiniteLegionDarkCaster.cs
+//cs_include Scripts/Story/Legion/SeraphicWar.cs
+//cs_include Scripts/Legion/LegionExcercise/LegionExercise3.cs
+//cs_include Scripts/Legion/LegionExcercise/LegionExercise4.cs 
+//cs_include Scripts/Other/MergeShops/YulgarsDualWieldMerge.cs
+
+
+//cs_include Scripts/Other/WeaponReflection.cs
+//cs_include Scripts/Hollowborn/HollowbornOblivionBlade.cs 
+//cs_include Scripts/Other/MergeShops/SpiritHunterMerge[Mem].cs
+//cs_include Scripts/Story/Bludrut.cs
+
+
 #endregion
 using Skua.Core.Interfaces;
 
@@ -189,12 +206,14 @@ public class MemberFarm
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
+
     private static CoreDailies Daily
     {
         get => _Daily ??= new CoreDailies();
         set => _Daily = value;
     }
     private static CoreDailies _Daily;
+
     private static CoreNation Nation
     {
         get => _Nation ??= new CoreNation();
@@ -309,6 +328,19 @@ public class MemberFarm
         set => BCM = value;
     }
     private static BonecastleTowerMerge _BCM;
+    private static UndeadLegionMerge ULM
+    {
+        get => _ULM ??= new UndeadLegionMerge();
+        set => _ULM = value;
+    }
+    private static UndeadLegionMerge _ULM;
+
+    private static YulgarsDualWieldMerge YDWM
+    {
+        get => _YDWM ??= new YulgarsDualWieldMerge();
+        set => _YDWM = value;
+    }
+    private static YulgarsDualWieldMerge _YDWM;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -689,17 +721,10 @@ public class MemberFarm
         }
         Core.ToBank("Dual Mighty Sword Of The Dragons");
 
-        //Frostbite
-        if (!Core.CheckInventory("Dual Frostbite", toInv: false))
-        {
-            if (!Core.CheckInventory("Frostbite"))
-            {
-                Adv.BuyItem("blindingsnow", 236, "Frosted Falchion");
-                Adv.BuyItem("underworld", 238, "Frostbite");
-            }
-            Adv.BuyItem("nostalgiaquest", 1311, "Dual Frostbite");
-        }
-        Core.ToBank("Dual Frostbite");
+        //Frostbite & Dual variant
+        ULM.BuyAllMerge("Frostbite");
+        YDWM.BuyAllMerge("Dual Frostbite");
+        Core.ToBank("Frostbite", "Dual Frostbite");
 
         //DragonBlade of Nulgath
         if (!Core.CheckInventory("Dual DragonBlades of Nulgath", toInv: false))
