@@ -4496,8 +4496,8 @@
       "original drakath armor"
     ],
     "path": "Chaos/DrakathsArmor.cs",
-    "size": 5087,
-    "sha256": "da01395c55e184ec07fc862d5e4c903d78c6564caa96f78a12480a558d93b30c",
+    "size": 5110,
+    "sha256": "24dce400f0be119a3785cc84716390ec219f498b8f2891fe9f60000e18eedbe2",
     "fileName": "DrakathsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/DrakathsArmor.cs"
   },
@@ -6274,8 +6274,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1179211,
-    "sha256": "8dbc5ac4d0a494de55574ed376323b8e5cc0614a751dfdb82dfbbdab2ae944dd",
+    "size": 1179235,
+    "sha256": "af46b1a5e08b948d9cc4990c3bc8b7ab0d229c2c406d476ee48c0a404c071dec",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -12847,8 +12847,8 @@
       "null"
     ],
     "path": "Other/Weapons/CyseroItemUpgradeQuests.cs",
-    "size": 12551,
-    "sha256": "d4a01178be35d6efde0732fc53c522786a47f9534b12f418e910066c3653765c",
+    "size": 12575,
+    "sha256": "04c7891a9a9df2e8a479e917ad9e06b65bb229932c1a87dcb4a50e3eb89d61aa",
     "fileName": "CyseroItemUpgradeQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CyseroItemUpgradeQuests.cs"
   },
@@ -19223,8 +19223,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TechfortressWarMerge.cs",
-    "size": 13420,
-    "sha256": "417d940d6674ff9da58e4e9bcaec76a66fdf256a32274eddbdc87f2170c8cc81",
+    "size": 13444,
+    "sha256": "8a712b643cdf20fb3ee5470febc35fb30975cac9e3eb977b3ab1dee7d7ac49b6",
     "fileName": "TechfortressWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TechfortressWarMerge.cs"
   },
@@ -19976,8 +19976,8 @@
       "good"
     ],
     "path": "Good/BLoD/1SanctifiedLightofDestiny.cs",
-    "size": 1832,
-    "sha256": "321b49dd9d04e64534b3522a4386697bdb0ecc8ed659e867c4e53c33387c8f90",
+    "size": 1856,
+    "sha256": "d87bc7a0a87e413e1ed44f6a3dafefe9497c9edf6e0b16e00a7466de314273b7",
     "fileName": "1SanctifiedLightofDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/1SanctifiedLightofDestiny.cs"
   },
@@ -20100,8 +20100,8 @@
       "good"
     ],
     "path": "Good/BLoD/2UltimateBlindingLightofDestiny.cs",
-    "size": 4629,
-    "sha256": "646797e5cf71fa81c340698a1e95a96f517fd9128471c2df789568c067265ac3",
+    "size": 4677,
+    "sha256": "ee6e4192dfae4f500a487c96c64d14111e072589411e426a3b39451d317378f4",
     "fileName": "2UltimateBlindingLightofDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/2UltimateBlindingLightofDestiny.cs"
   },
