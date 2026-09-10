@@ -2463,6 +2463,7 @@ public class CoreNation
     {
         if (!Core.CheckInventory(CragName))
         {
+            Core.Logger($"Missing {CragName} cannot continue");
             return;
         }
 
