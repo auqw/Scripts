@@ -359,6 +359,21 @@ public class CoreBLOD
         Core.AddDrop(Core.QuestRewards(quest));
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger(item, quant);
+
+        if (item == "Spirit Orb")
+        {
+            if (Bot.Quests.IsUnlocked(2082))
+            {
+                Core.AddDrop("Undead Essence");
+                Core.RegisterQuests(2082);
+            }
+            if (Bot.Quests.IsUnlocked(2083))
+            {
+                Core.AddDrop("Bone Dust");
+                Core.RegisterQuests(2083);
+            }
+        }
+
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.EnsureAccept(quest);
