@@ -863,6 +863,7 @@ public class CoreDailies
                     3,
                     isTemp: false
                 );
+                Core.Equip("Yami no Ronin");
                 Core.KillMonster(
                     "gravechallenge",
                     "r19",
