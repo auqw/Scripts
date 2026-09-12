@@ -25,13 +25,15 @@ public class FourHarbingersLW
     private static CoreStory Story { get => _story ??= new CoreStory(); set => _story = value; }
     private static CoreStory _story;
 
+    private bool _dieNow;
+
     public string OptionsStorage = "FourHarbingersLW";
     public bool DontPreconfigure = true;
     public string[] MultiOptions = { "Setup", "Farm" };
 
     public List<IOption> Setup = new()
     {
-        new Option<ClassChoice>("ClassChoice", "Choose Class", "Optimized uses Dragon of Time, ArchPaladin, Yami no Ronin, Legion Revenant\nAdditional class strategies will be added later.", ClassChoice.Optimized),
+        new Option<ClassChoice>("ClassChoice", "Choose Class", "Optimized uses Dragon of Time, ArchPaladin, Yami no Ronin, Legion Revenant, and King's Echo.\nAdditional class strategies will be added later.", ClassChoice.Optimized),
         new Option<bool>("UsePotions", "Use Potions?", "Use the specified potion setup for each implemented boss.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements?", "Apply the specified enhancement setup for each implemented boss.", true),
     };
@@ -42,7 +44,7 @@ public class FourHarbingersLW
         new Option<bool>("FarmBello", "Farm Bello?", "Repeatedly complete Intus Bello Pugna.", false),
         new Option<bool>("FarmFames", "Farm Fames?", "Repeatedly complete Intra Fames Abundantia.", false),
         new Option<bool>("FarmMors", "Farm Mors?", "Repeatedly complete Introsus Quietus Mors.", false),
-        new Option<bool>("FarmAnethyxosAbsolution", "Farm Anethyx'o's Absolution? (Not Implemented)", "Placeholder for the final farming path.", false),
+        new Option<bool>("FarmAnethyxosAbsolution", "Farm Anethyx'o's Absolution?", "Repeatedly complete Penitus Absolution.", false),
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -102,7 +104,10 @@ public class FourHarbingersLW
         if (!Core.isCompletedBefore(10853) && !FightMors())
             return;
 
-        Core.Logger("Four Harbingers test path finished after Mors. Anethyx'o's Absolution is not implemented yet.");
+        if (!Core.isCompletedBefore(10854) && !FightAnethyxosAbsolution())
+            return;
+
+        Core.Logger("Four Harbingers test path finished.");
     }
 
     private void RunFarm(string selectedFarm)
@@ -116,12 +121,6 @@ public class FourHarbingersLW
             _ => Boss.AnethyxosAbsolution,
         };
 
-        if (boss == Boss.AnethyxosAbsolution)
-        {
-            Core.Logger($"WARNING: {BossName(boss)} is only a placeholder and is not implemented yet.");
-            return;
-        }
-
         if (!EquipBossClass(boss))
             return;
 
@@ -134,7 +133,8 @@ public class FourHarbingersLW
                 Boss.Halosis => FightHalosis(prepareLoadout: false),
                 Boss.Bello => FightBello(prepareLoadout: false),
                 Boss.Fames => FightFames(prepareLoadout: false),
-                _ => FightMors(prepareLoadout: false),
+                Boss.Mors => FightMors(prepareLoadout: false),
+                _ => FightAnethyxosAbsolution(prepareLoadout: false),
             };
 
             if (!succeeded)
@@ -163,7 +163,7 @@ public class FourHarbingersLW
         Core.Logger("Fighting Halosis.");
 
         if (!Bot.TempInv.Contains("Signet of Inner Conflict") &&
-            !FightBoss(1, "r2", "Bottom", "3 | 2 | 1 | 2 | 4 | 2", true, null,
+            !FightBoss(1, "r2", "Bottom", "3 | 2 | 1 | 2 | 4 | 2", true, MaintainHonorPotion,
                 () => Bot.TempInv.Contains("Signet of Inner Conflict")))
             return false;
 
@@ -272,6 +272,37 @@ public class FourHarbingersLW
         return true;
     }
 
+    private bool FightAnethyxosAbsolution(bool prepareLoadout = true)
+    {
+        if (!EquipBossClass(Boss.AnethyxosAbsolution))
+            return false;
+
+        if (prepareLoadout)
+            PrepareLoadout(Boss.AnethyxosAbsolution);
+        else
+            ApplyPotions(Boss.AnethyxosAbsolution);
+
+        if (!Core.EnsureAccept(10854))
+        {
+            Core.Logger("WARNING: Penitus Absolution could not be accepted.");
+            return false;
+        }
+
+        Core.Logger("Fighting Anethyx'o's Absolution.");
+
+        if (!Bot.TempInv.Contains("Signet of the Broken Bond") &&
+            !FightAbsolution(() => Bot.TempInv.Contains("Signet of the Broken Bond")))
+            return false;
+
+        if (!Core.EnsureComplete(10854))
+        {
+            Core.Logger("WARNING: Penitus Absolution could not be completed.");
+            return false;
+        }
+
+        return true;
+    }
+
     private bool FightBoss(int mapID, string cell, string pad, string combo, bool waitForCooldown,
         Action? mechanics, Func<bool> stopCondition)
     {
@@ -352,6 +383,7 @@ public class FourHarbingersLW
         if (!counterAttack)
         {
             Bot.Skills.Resume();
+            MaintainHonorPotion();
             return;
         }
 
@@ -361,6 +393,87 @@ public class FourHarbingersLW
             Bot.Skills.UseSkill(3);
     }
 
+    private bool FightAbsolution(Func<bool> stopCondition)
+    {
+        _dieNow = false;
+        Bot.Events.ExtensionPacketReceived -= AbsolutionListener;
+        Bot.Events.ExtensionPacketReceived += AbsolutionListener;
+
+        try
+        {
+            return FightBoss(5, "r6", "Bottom", "3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", true, AbsolutionMechanics, stopCondition);
+        }
+        finally
+        {
+            Bot.Events.ExtensionPacketReceived -= AbsolutionListener;
+            _dieNow = false;
+        }
+    }
+
+    private void AbsolutionMechanics()
+    {
+        if (_dieNow)
+        {
+            Bot.Skills.Pause();
+            Bot.Combat.CancelAutoAttack();
+
+            if (Bot.Self.HasActiveAura("Waiting For Corvak"))
+            {
+                if (Bot.Skills.CanUseSkill(4))
+                    Bot.Skills.UseSkill(4);
+                return;
+            }
+
+            if (Bot.Skills.CanUseSkill(3))
+            {
+                Bot.Skills.UseSkill(3);
+                _dieNow = false;
+                Bot.Skills.Resume();
+            }
+            return;
+        }
+
+        if (Bot.Self.HasActiveAura("Crits Inverted"))
+        {
+            Bot.Skills.Pause();
+            Bot.Combat.CancelAutoAttack();
+            return;
+        }
+
+        Bot.Skills.Resume();
+        MaintainHonorPotion();
+    }
+
+    private void MaintainHonorPotion()
+    {
+        if ((Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true)
+            && Bot.Inventory.Contains("Potent Honor Potion")
+            && !Bot.Self.HasActiveAura("Potent Honor Malice"))
+            UsePotion("Potent Honor Potion", "Potent Honor Malice");
+    }
+
+    private void AbsolutionListener(dynamic packet)
+    {
+        if (Bot.ShouldExit
+            || !string.Equals(Bot.Map.Name, "fourharbingers", StringComparison.OrdinalIgnoreCase)
+            || packet?["params"]?.type?.ToString() != "json")
+            return;
+
+        dynamic data = packet["params"].dataObj;
+        if (data?.cmd?.ToString() != "ct" || data?.anims is null)
+            return;
+
+        foreach (dynamic anim in data.anims)
+        {
+            if (anim?.msg?.ToString() == "Die now.")
+            {
+                _dieNow = true;
+                Core.Logger("Die now detected. Preparing King's Shield.");
+                return;
+            }
+        }
+    }
+
     private bool EquipBossClass(Boss boss)
     {
         string className = boss switch
@@ -368,6 +481,7 @@ public class FourHarbingersLW
             Boss.Halosis => "Dragon of Time",
             Boss.Fames => "Yami no Ronin",
             Boss.Mors => "Legion Revenant",
+            Boss.AnethyxosAbsolution => "King's Echo",
             _ => "ArchPaladin",
         };
 
@@ -404,9 +518,9 @@ public class FourHarbingersLW
             PreparePotion("Potent Malevolence Elixir", "Gold Voucher 500k", 4, 500_000, 8);
             PreparePotion("Potent Honor Potion", "Gold Voucher 500k", 1, 500_000, 5, requiredFaction: "Good", requiredFactionRank: 10);
         }
-        else if (boss == Boss.Mors)
+        else if (boss is Boss.Mors or Boss.AnethyxosAbsolution)
         {
-            PreparePotion("Sage Tonic", "Gold Voucher 500k", 2, 500_000, 10, requiredAlchemyRank: 8);
+            PreparePotion(boss == Boss.Mors ? "Sage Tonic" : "Might Tonic", "Gold Voucher 500k", 2, 500_000, 10, requiredAlchemyRank: 8);
             PreparePotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500_000, 20);
             PreparePotion("Potent Honor Potion", "Gold Voucher 500k", 1, 500_000, 5, requiredFaction: "Good", requiredFactionRank: 10);
         }
@@ -431,9 +545,9 @@ public class FourHarbingersLW
             UsePotion("Potent Malevolence Elixir", "Potent Malevolence Elixir");
             UsePotion("Potent Honor Potion", "Potent Honor Malice");
         }
-        else if (boss == Boss.Mors)
+        else if (boss is Boss.Mors or Boss.AnethyxosAbsolution)
         {
-            UsePotion("Sage Tonic", "Sage");
+            UsePotion(boss == Boss.Mors ? "Sage Tonic" : "Might Tonic", boss == Boss.Mors ? "Sage" : "Might");
             UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
             UsePotion("Potent Honor Potion", "Potent Honor Malice");
         }
@@ -496,6 +610,26 @@ public class FourHarbingersLW
                     capeEnhancement = CapeSpecial.Absolution;
                 else
                     Core.Logger("WARNING: Absolution is not unlocked. Wizard will be used on the cape instead.");
+            }
+            else if (boss == Boss.AnethyxosAbsolution)
+            {
+                if (Adv.uElysium())
+                    weaponEnhancement = WeaponSpecial.Elysium;
+                else
+                {
+                    Core.Logger("WARNING: Elysium is not unlocked. Lucky Health Vamp will be used instead.");
+                    weaponEnhancement = WeaponSpecial.Health_Vamp;
+                }
+
+                if (Adv.uForgeHelm())
+                    helmEnhancement = HelmSpecial.Forge;
+                else
+                    Core.Logger("WARNING: Forge helm is not unlocked. Lucky will be used on the helm instead.");
+
+                if (Adv.uAbsolution())
+                    capeEnhancement = CapeSpecial.Absolution;
+                else
+                    Core.Logger("WARNING: Absolution is not unlocked. Lucky will be used on the cape instead.");
             }
             else
             {
@@ -613,7 +747,7 @@ public class FourHarbingersLW
 
             if (missingVouchers > 0)
             {
-                Bot.Shops.BuyItem(voucherName, missingVouchers);
+                Core.BuyItem("alchemyacademy", 2036, voucherName, voucherQuantity);
                 Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(voucherName) >= voucherQuantity, 20);
             }
 
@@ -696,7 +830,7 @@ public class FourHarbingersLW
         Core.Logger($"WARNING: {itemName} was skipped because {reason}. Continuing without it.");
 
     public void FarmHalosis(string item, int quantity, bool isTemp = false) =>
-        FarmBossItem(Boss.Halosis, item, quantity, isTemp, 1, "r2", "Bottom", "3 | 2 | 1 | 2 | 4 | 2", true, null);
+        FarmBossItem(Boss.Halosis, item, quantity, isTemp, 1, "r2", "Bottom", "3 | 2 | 1 | 2 | 4 | 2", true, MaintainHonorPotion);
 
     public void FarmBello(string item, int quantity, bool isTemp = false) =>
         FarmBossItem(Boss.Bello, item, quantity, isTemp, 2, "r3", "Bottom", "3 | 2 | 1", false, BelloMechanics);
@@ -706,6 +840,9 @@ public class FourHarbingersLW
 
     public void FarmMors(string item, int quantity, bool isTemp = false) =>
         FarmBossItem(Boss.Mors, item, quantity, isTemp, 4, "r5", "Bottom", "3 | 2 | 1 | 4", false, MorsMechanics);
+
+    public void FarmAnethyxosAbsolution(string item, int quantity, bool isTemp = false) =>
+        FarmBossItem(Boss.AnethyxosAbsolution, item, quantity, isTemp, 5, "r6", "Bottom", "3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", true, AbsolutionMechanics);
 
     private void FarmBossItem(Boss boss, string item, int quantity, bool isTemp, int mapID, string cell,
         string pad, string combo, bool waitForCooldown, Action? mechanics)
@@ -731,8 +868,11 @@ public class FourHarbingersLW
             }
 
             PrepareLoadout(boss, usePotions: false);
-            FightBoss(mapID, cell, pad, combo, waitForCooldown, mechanics,
-                () => HasFarmItem(item, quantity, isTemp));
+            if (boss == Boss.AnethyxosAbsolution)
+                FightAbsolution(() => HasFarmItem(item, quantity, isTemp));
+            else
+                FightBoss(mapID, cell, pad, combo, waitForCooldown, mechanics,
+                    () => HasFarmItem(item, quantity, isTemp));
         }
         finally
         {
@@ -755,16 +895,13 @@ public class FourHarbingersLW
     private bool HasFarmItem(string item, int quantity, bool isTemp) =>
         isTemp ? Bot.TempInv.Contains(item, quantity) : Core.CheckInventory(item, quantity);
 
-    // Placeholder: fill in after Anethyx'o's Absolution quest, loadout, drop, and mechanic data is supplied.
-    private bool FightAnethyxosAbsolution() => false;
-
     private string BossName(Boss boss) => boss switch
     {
         Boss.Halosis => "Halosis",
         Boss.Bello => "Bello",
         Boss.Fames => "Fames",
         Boss.Mors => "Mors",
-        _ => "Anethyx'o's Absolution",
+        _ => "Anethyx’o’s Absolution",
     };
 
     private enum Boss
