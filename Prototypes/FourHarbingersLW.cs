@@ -272,6 +272,22 @@ public class FourHarbingersLW
         return true;
     }
 
+    // Retries Resume()/Stop() a few times, since a Resume() from a Paused state
+    // needs a tick to actually register before Stop() can take effect.
+    private bool StopSkillTimer(int attempts = 3, int waitTicks = 100)
+    {
+        for (int i = 0; i < attempts; i++)
+        {
+            Bot.Skills.Resume();
+            Bot.Skills.Stop();
+
+            if (Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, waitTicks))
+                return true;
+        }
+
+        return false;
+    }
+
     private bool FightBoss(int mapID, string cell, string pad, string combo, bool waitForCooldown,
         Action? mechanics, Func<bool> stopCondition)
     {
@@ -280,19 +296,16 @@ public class FourHarbingersLW
         try
         {
             Core.Join(map, cell, pad);
-            Bot.Skills.Resume();
-            Bot.Skills.Stop();
 
-            if (!Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 100))
+            // MorsMechanics can leave skills Paused mid-attack on a target that no
+            // longer exists once the fight ends. Cancel any stale auto-attack first
+            // so Resume()/Stop() below isn't blocked trying to act on it.
+            Bot.Combat.CancelAutoAttack();
+
+            if (!StopSkillTimer())
             {
-                Bot.Skills.Resume();
-                Bot.Skills.Stop();
-
-                if (!Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 100))
-                {
-                    Core.Logger("WARNING: The previous skill timer did not stop. The fight cannot start safely. 123");
-                    return false;
-                }
+                Core.Logger("WARNING: The previous skill timer did not stop. The fight cannot start safely.");
+                return false;
             }
 
             if (waitForCooldown)
@@ -325,8 +338,8 @@ public class FourHarbingersLW
         }
         finally
         {
-            Bot.Skills.Resume();
-            Bot.Skills.Stop();
+            Bot.Combat.CancelAutoAttack();
+            StopSkillTimer();
         }
 
         return stopCondition();
