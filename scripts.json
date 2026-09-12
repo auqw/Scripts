@@ -116,8 +116,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingersLW.cs",
-    "size": 27101,
-    "sha256": "829040c791dfb4eb2abeb7a20a93edd10421007933c73759d325e38a9d142b80",
+    "size": 27597,
+    "sha256": "2e378ee92e7b570c5164eb09b826b80fc7eefb0c61e01765ff26715bdd91cfb8",
     "fileName": "FourHarbingersLW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingersLW.cs"
   },
@@ -16074,8 +16074,8 @@
       "dress"
     ],
     "path": "Other/MergeShops/BocklinTreasuryMerge.cs",
-    "size": 11072,
-    "sha256": "8c16dada999b1a23e1838c823fc64021c2e76712976d81dd4f2ad76007b83f1c",
+    "size": 11250,
+    "sha256": "0dff3be9b6b30f82acbc4ae36ebf63ffec01880ec3d66ff33d8d9fc3e6fdd66f",
     "fileName": "BocklinTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BocklinTreasuryMerge.cs"
   },

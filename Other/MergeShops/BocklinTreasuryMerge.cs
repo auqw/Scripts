@@ -186,13 +186,11 @@ public class BocklinTreasuryMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            Core.IsMember ? 10242 : 10240,
-                            false,
-                            ("bocklingrove", "Elder Necromancer", ClassType.Solo),
-                            ("bocklingrove", "Undead Garde", ClassType.Farm),
-                            ("bocklingrove", "Garde Wraith", ClassType.Farm)
-                        );
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("bocklincastle", "Undead Garde", "Undead's Flag", 9);
+                        Core.HuntMonster("bocklincastle", "Garde Wraith", "Wraith's Scream", 6);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("bocklincastle", "Elder Necromancer", "Necromancer's Coin", 1);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -204,12 +202,13 @@ public class BocklinTreasuryMerge
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            Core.IsMember ? 10255 : 10253,
-                            ("bocklincastle", "Faceless Ritualist", ClassType.Farm),
-                            ("bocklincastle", "Headless Knight", ClassType.Solo),
-                            ("bocklincastle", "Warped Revenant", ClassType.Farm)
-                        );
+                        Core.EnsureAccept(Core.IsMember ? 10255 : 10253);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("bocklincastle", "Warped Revenant", "Twisted Arms", 50);
+                        Core.HuntMonster("bocklincastle", "Faceless Ritualist", "Wreath of Aster", 25);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("bocklincastle", "Headless Knight", "Golden Anjou");
+                        Core.EnsureComplete(Core.IsMember ? 10255 : 10253);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -249,8 +248,8 @@ public class BocklinTreasuryMerge
         }
     }
 
-    public List<IOption> Select = new()
-    {
+    public List<IOption> Select =
+    [
         new Option<bool>(
             "93592",
             "Alden's Liberation Armor",
@@ -311,5 +310,5 @@ public class BocklinTreasuryMerge
             "Mode: [select] only\nShould the bot buy \"Princess Brittany's Hair\" ?",
             false
         ),
-    };
+    ];
 }
