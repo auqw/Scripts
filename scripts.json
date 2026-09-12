@@ -103,6 +103,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/UltraSpeakerMergePreReqs.cs"
   },
   {
+    "name": "Four Harbingers LW",
+    "description": "Completes the available Four Harbingers quests with custom combat behavior or repeatedly farms one selected boss.",
+    "tags": [
+      "story",
+      "quest",
+      "four harbingers",
+      "halosis",
+      "bello",
+      "fames",
+      "mors",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingersLW.cs",
+    "size": 26875,
+    "sha256": "76b8747104f988236b697d111489790e1b75d7cab1e28fb1edf8bc0525de97b3",
+    "fileName": "FourHarbingersLW.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingersLW.cs"
+  },
+  {
     "name": "Two Player PvP DoomArena",
     "description": "Player 1 challenges Player 2 to a duel, then defeats Player 2. Completes the daily quest.",
     "tags": [
