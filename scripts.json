@@ -34833,6 +34833,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Templates/Examples/BasicFunctionality/HowToUseAwhile.cs"
   },
   {
+    "name": "Ghost Ship",
+    "description": "Completes the Ghost Ship storyline after Merrow Trench.",
+    "tags": [
+      "ghost ship",
+      "story",
+      "seasonal",
+      "friday the 13th"
+    ],
+    "path": "Seasonal/Friday13th/Story/MerrowTrenchAndGhostShip/GhostShip.cs",
+    "size": 2049,
+    "sha256": "ac97e44fcb51beab15ae3c31debc2407a24d3f178dc316948f0c37d03aee9c9c",
+    "fileName": "GhostShip.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/MerrowTrenchAndGhostShip/GhostShip.cs"
+  },
+  {
+    "name": "Merrow Trench",
+    "description": "Completes the Merrow Trench storyline.",
+    "tags": [
+      "merrow trench",
+      "story",
+      "seasonal",
+      "friday the 13th"
+    ],
+    "path": "Seasonal/Friday13th/Story/MerrowTrenchAndGhostShip/MerrowTrench.cs",
+    "size": 1748,
+    "sha256": "05eee564dfcccc041d47c95c8ea541b396ccca912d84f41d8219f525da97769f",
+    "fileName": "MerrowTrench.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/MerrowTrenchAndGhostShip/MerrowTrench.cs"
+  },
+  {
     "name": "2BookOfFire",
     "description": "null",
     "tags": [
