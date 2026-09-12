@@ -290,7 +290,7 @@ public class FourHarbingersLW
 
                 if (!Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 100))
                 {
-                    Core.Logger("WARNING: The previous skill timer did not stop. The fight cannot start safely.");
+                    Core.Logger("WARNING: The previous skill timer did not stop. The fight cannot start safely. 123");
                     return false;
                 }
             }
