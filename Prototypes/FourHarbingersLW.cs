@@ -280,12 +280,19 @@ public class FourHarbingersLW
         try
         {
             Core.Join(map, cell, pad);
+            Bot.Skills.Resume();
             Bot.Skills.Stop();
 
             if (!Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 100))
             {
-                Core.Logger("WARNING: The previous skill timer did not stop. The fight cannot start safely.");
-                return false;
+                Bot.Skills.Resume();
+                Bot.Skills.Stop();
+
+                if (!Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 100))
+                {
+                    Core.Logger("WARNING: The previous skill timer did not stop. The fight cannot start safely.");
+                    return false;
+                }
             }
 
             if (waitForCooldown)
