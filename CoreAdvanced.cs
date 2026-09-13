@@ -2095,8 +2095,22 @@ public class CoreAdvanced
         WeaponSpecial wSpecial = WeaponSpecial.None
     )
     {
-        if (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
-            return;
+        EnhanceEquipped(type, cSpecial, hSpecial, wSpecial, false);
+    }
+
+    public void EnhanceEquipped(
+        EnhancementType type,
+        CapeSpecial cSpecial,
+        HelmSpecial hSpecial,
+        WeaponSpecial wSpecial,
+        bool bypassDisableAutoEnhance
+    )
+    {
+        if (!bypassDisableAutoEnhance)
+        {
+            if (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
+                return;
+        }
 
         List<InventoryItem> EquippedItems = Bot.Inventory.Items.FindAll(i =>
             i.Equipped == true && EnhanceableCatagories.Contains(i.Category)
