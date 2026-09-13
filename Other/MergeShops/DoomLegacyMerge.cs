@@ -171,7 +171,7 @@ public class DoomLegacyMerge
                     break;
 
                 case "Deadtech Booster":
-                    Core.KillMonster("stonewooddeep", "r2", "Left", req.Name, quant, isTemp: false);
+                    Core.KillMonster("stonewooddeep", "r2", "Left", "*", req.Name, quant, isTemp: false);
                     break;
 
                 case "DoomMaster":
