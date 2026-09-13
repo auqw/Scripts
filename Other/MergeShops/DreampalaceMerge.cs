@@ -124,9 +124,14 @@ public class DreampalaceMerge
                         Core.HuntMonster("DreamPalace", "Golmoth", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
+                    
+                case "Token of Water":
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("DreamPalace", "Mote of Mana", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
 
                 case "Token of Air":
-                case "Token of Water":
                 case "Token of Earth":
                 case "Token of Fire":
                     Core.EquipClass(ClassType.Farm);
