@@ -174,29 +174,25 @@ public class PirateHuntMerge
 
                 case "Mercurius' Flag":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.RegisterQuests(10398); // Mercurious
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "piratehunt",
-                            "r13",
-                            "Left",
-                            "*",
-                            "Larunda's Counterfeit Amulet",
-                            1,
-                            false
-                        );
-                        Core.KillMonster(
-                            "piratehunt",
-                            "r13",
-                            "Left",
-                            "*",
-                            "Mercurius' Funny Hat",
-                            1,
-                            false
-                        );
+                        Core.EnsureAccept(10398); // Mercurious
+                        Core.KillBossWithSecondary(map: "piratehunt", cell: "r13", pad: "Left",
+                        primaryMapID: 18,   // Captain Mercurius — killed last
+                        secondaryMapID: 17, // Dragonsworn Larunda — killed first
+                        item: "Larunda's Counterfeit Amulet",
+                        quant: 1,
+                        isTemp: false);
+
+                        Core.KillBossWithSecondary(map: "piratehunt", cell: "r13", pad: "Left",
+                        primaryMapID: 18,   // Captain Mercurius — killed last
+                        secondaryMapID: 17, // Dragonsworn Larunda — killed first
+                        item: "Mercurius' Funny Hat",
+                        quant: 1,
+                        isTemp: false);
+
+                        Core.EnsureComplete(10398);
                     }
-                    Core.EnsureComplete(10398);
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -217,49 +213,13 @@ public class PirateHuntMerge
                             Core.EnsureAccept(10388);
 
                         if (!Core.CheckInventory("Cutlass of Awe Handle"))
-                            Core.KillMonster(
-                                "seakingkurok",
-                                "r2",
-                                "Left",
-                                "Sea King Gravefang",
-                                "Cutlass of Awe Handle",
-                                1,
-                                false
-                            );
-
+                            Core.KillMonster("seakingkurok", "r2", "Left", "Sea King Gravefang", "Cutlass of Awe Handle", 1, false);
                         if (!Core.CheckInventory("Cutlass of Awe Hilt"))
-                            Core.KillMonster(
-                                "dragoncapital",
-                                "r8",
-                                "Left",
-                                "Empowered Scalebeard",
-                                "Cutlass of Awe Hilt",
-                                1,
-                                false
-                            );
-
+                            Core.KillMonster("dragoncapital", "r8", "Left", "Empowered Scalebeard", "Cutlass of Awe Hilt", 1, false);
                         if (!Core.CheckInventory("Cutlass of Awe Blade"))
-                            Core.KillMonster(
-                                "kaijuwar",
-                                "r9",
-                                "Left",
-                                "Captain Kraylox",
-                                "Cutlass of Awe Blade",
-                                1,
-                                false
-                            );
-
+                            Core.KillMonster("kaijuwar", "r9", "Left", "Captain Kraylox", "Cutlass of Awe Blade", 1, false);
                         if (!Core.CheckInventory("Awe Binding Spell"))
-                            Core.KillMonster(
-                                "blazingbeach",
-                                "r8",
-                                "Left",
-                                "Magma Blazebeard",
-                                "Awe Binding Spell",
-                                1,
-                                false
-                            );
-
+                            Core.KillMonster("blazingbeach", "r8", "Left", "Magma Blazebeard", "Awe Binding Spell", 1, false);
                         if (
                             Core.CheckInventory("Cutlass of Awe Handle")
                             && Core.CheckInventory("Cutlass of Awe Hilt")
