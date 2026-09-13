@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 174587,
-    "sha256": "832f46fe3d5501a9509cd3e87bb114a95b5f05757fe10ae01de54ce627dfe551",
+    "size": 174934,
+    "sha256": "b457c183cc12ff20e087ca1bd455df15804980c327547b2ad948334c313dda5f",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -19705,8 +19705,8 @@
       "kingsecho"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 6606,
-    "sha256": "4a92a67e60e26c995f4e023d63a9e3fe8c2d10cf636f663e67de3c19f3abc86e",
+    "size": 7130,
+    "sha256": "e08cd846511c06825baaffda34c8d22a65a13a6d49448a59c40596c103ab1cff",
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
