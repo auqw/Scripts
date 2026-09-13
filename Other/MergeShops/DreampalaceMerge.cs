@@ -132,12 +132,18 @@ public class DreampalaceMerge
                     break;
 
                 case "Token of Air":
-                case "Token of Earth":
                 case "Token of Fire":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("DreamPalace", "Mote of Power", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
+
+                case "Token of Earth":
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("DreamPalace", "Mote of Earth", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
 
                 case "Zahad's Ancient Gem":
                     Core.EquipClass(ClassType.Solo);
