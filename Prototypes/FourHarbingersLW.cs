@@ -26,6 +26,8 @@ public class FourHarbingersLW
     private static CoreStory _story;
 
     private bool _dieNow;
+    private bool _critInverted;
+    private bool _openingSkillUsed;
 
     public string OptionsStorage = "FourHarbingersLW";
     public bool DontPreconfigure = true;
@@ -152,7 +154,7 @@ public class FourHarbingersLW
         if (prepareLoadout)
             PrepareLoadout(Boss.Halosis);
         else
-            ApplyPotions(Boss.Halosis);
+            PreparePotions(Boss.Halosis);
 
         if (!Core.EnsureAccept(10850))
         {
@@ -184,7 +186,7 @@ public class FourHarbingersLW
         if (prepareLoadout)
             PrepareLoadout(Boss.Bello);
         else
-            ApplyPotions(Boss.Bello);
+            PreparePotions(Boss.Bello);
 
         if (!Core.EnsureAccept(10851))
         {
@@ -216,7 +218,7 @@ public class FourHarbingersLW
         if (prepareLoadout)
             PrepareLoadout(Boss.Fames);
         else
-            ApplyPotions(Boss.Fames);
+            PreparePotions(Boss.Fames);
 
         if (!Core.EnsureAccept(10852))
         {
@@ -227,7 +229,7 @@ public class FourHarbingersLW
         Core.Logger("Fighting Fames.");
 
         if (!Bot.TempInv.Contains("Signet of the Filled Chalice") &&
-            !FightBoss(3, "r4", "Bottom", "2 | 1", false, FamesMechanics,
+            !FightBoss(3, "r4", "Bottom", "", false, FamesMechanics,
                 () => Bot.TempInv.Contains("Signet of the Filled Chalice")))
             return false;
 
@@ -248,7 +250,7 @@ public class FourHarbingersLW
         if (prepareLoadout)
             PrepareLoadout(Boss.Mors);
         else
-            ApplyPotions(Boss.Mors);
+            PreparePotions(Boss.Mors);
 
         if (!Core.EnsureAccept(10853))
         {
@@ -280,7 +282,7 @@ public class FourHarbingersLW
         if (prepareLoadout)
             PrepareLoadout(Boss.AnethyxosAbsolution);
         else
-            ApplyPotions(Boss.AnethyxosAbsolution);
+            PreparePotions(Boss.AnethyxosAbsolution);
 
         if (!Core.EnsureAccept(10854))
         {
@@ -289,6 +291,7 @@ public class FourHarbingersLW
         }
 
         Core.Logger("Fighting Anethyx'o's Absolution.");
+        Core.Logger("ts dont work currently :skull: \n rework still in progress, u gotta manual this boss for now :D \n(it will still attempt to fight tho, but it will prolly fail)", messageBox: true);
 
         if (!Bot.TempInv.Contains("Signet of the Broken Bond") &&
             !FightAbsolution(() => Bot.TempInv.Contains("Signet of the Broken Bond")))
@@ -339,10 +342,13 @@ public class FourHarbingersLW
                 return false;
             }
 
-            if (waitForCooldown)
-                Bot.Skills.StartAdvanced(combo, 250, SkillUseMode.WaitForCooldown);
-            else
-                Bot.Skills.StartAdvanced(combo);
+            if (!string.IsNullOrWhiteSpace(combo))
+            {
+                if (waitForCooldown)
+                    Bot.Skills.StartAdvanced(combo, 250, SkillUseMode.WaitForCooldown);
+                else
+                    Bot.Skills.StartAdvanced(combo);
+            }
 
             while (!Bot.ShouldExit && !stopCondition())
             {
@@ -378,6 +384,8 @@ public class FourHarbingersLW
 
     private void BelloMechanics()
     {
+        MaintainFelicitousPhiltre();
+
         var righteousSeal = Bot.Target.GetAura("Righteous Seal");
         if (righteousSeal != null && righteousSeal.RemainingTime <= 1 && Bot.Skills.CanUseSkill(4))
             Bot.Skills.UseSkill(4);
@@ -385,8 +393,14 @@ public class FourHarbingersLW
 
     private void FamesMechanics()
     {
+        MaintainFelicitousPhiltre();
+
         if (Bot.Skills.CanUseSkill(3))
             Bot.Skills.UseSkill(3);
+        else if (Bot.Skills.CanUseSkill(2))
+            Bot.Skills.UseSkill(2);
+        else if (Bot.Skills.CanUseSkill(1))
+            Bot.Skills.UseSkill(1);
     }
 
     private void MorsMechanics()
@@ -409,26 +423,99 @@ public class FourHarbingersLW
     private bool FightAbsolution(Func<bool> stopCondition)
     {
         _dieNow = false;
-        Bot.Events.ExtensionPacketReceived -= AbsolutionListener;
-        Bot.Events.ExtensionPacketReceived += AbsolutionListener;
+        _critInverted = false;
+        _openingSkillUsed = false;
+        Bot.Flash.FlashCall -= AbsolutionFlashListener;
+        Bot.Flash.FlashCall += AbsolutionFlashListener;
 
         try
         {
-            return FightBoss(5, "r6", "Bottom", "3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", true, AbsolutionMechanics, stopCondition);
+            return FightBoss(5, "r6", "Bottom", "", false, AbsolutionMechanics, stopCondition);
         }
         finally
         {
-            Bot.Events.ExtensionPacketReceived -= AbsolutionListener;
+            Bot.Flash.FlashCall -= AbsolutionFlashListener;
             _dieNow = false;
+            _critInverted = false;
+            _openingSkillUsed = false;
         }
     }
 
     private void AbsolutionMechanics()
     {
-        if (_dieNow)
+        if (!_openingSkillUsed)
+        {
+            if (Bot.Skills.CanUseSkill(3))
+            {
+                Bot.Skills.UseSkill(3);
+                _openingSkillUsed = true;
+                Bot.Skills.StartAdvanced("1 | 2");
+            }
+            return;
+        }
+
+        if (_dieNow || _critInverted || Bot.Self.HasActiveAura("Crits Inverted"))
+        {
+            AbsolutionHalosisHandler();
+            return;
+        }
+
+        if (Bot.Target.GetAura("Counter Attack") != null || Bot.Target.GetAura("Execute") != null)
+        {
+            AbsolutionMorsHandler();
+            return;
+        }
+
+        if (Bot.Target.GetAura("Declaration") != null)
+        {
+            AbsolutionBelloHandler();
+            return;
+        }
+
+        if (Bot.Self.HasActiveAura("Starvation") || Bot.Self.HasActiveAura("Decay"))
+        {
+            AbsolutionFamesHandler();
+            return;
+        }
+
+        AbsolutionNormalHandler();
+    }
+
+    private void AbsolutionNormalHandler()
+    {
+        Bot.Skills.Resume();
+        MaintainFelicitousPhiltre();
+
+        if (Bot.Player.Mana < 24 && Bot.Skills.CanUseSkill(4))
+        {
+            Bot.Skills.Pause();
+            Bot.Skills.UseSkill(4);
+            Bot.Skills.Resume();
+        }
+        else if (Bot.Player.MaxHealth > 0
+            && Bot.Player.Health < Bot.Player.MaxHealth * 0.5
+            && Bot.Player.MaxMana > 0
+            && Bot.Player.Mana > Bot.Player.MaxMana * 0.5
+            && Bot.Skills.CanUseSkill(3))
+        {
+            Bot.Skills.Pause();
+            Bot.Skills.UseSkill(3);
+            Bot.Skills.Resume();
+        }
+    }
+
+    private void AbsolutionHalosisHandler()
+    {
+        if (_critInverted || Bot.Self.HasActiveAura("Crits Inverted"))
         {
             Bot.Skills.Pause();
             Bot.Combat.CancelAutoAttack();
+            return;
+        }
+
+        if (_dieNow)
+        {
+            Bot.Skills.Pause();
 
             if (Bot.Self.HasActiveAura("Waiting For Corvak"))
             {
@@ -446,44 +533,104 @@ public class FourHarbingersLW
             return;
         }
 
-        if (Bot.Self.HasActiveAura("Crits Inverted"))
+        Bot.Skills.Resume();
+        MaintainFelicitousPhiltre();
+
+        if (Bot.Player.Mana < 24 && Bot.Skills.CanUseSkill(4))
+        {
+            Bot.Skills.Pause();
+            Bot.Skills.UseSkill(4);
+            Bot.Skills.Resume();
+        }
+    }
+
+    private void AbsolutionBelloHandler() => AbsolutionNormalHandler();
+
+    private void AbsolutionFamesHandler() => AbsolutionNormalHandler();
+
+    private void AbsolutionMorsHandler()
+    {
+        if (Bot.Target.GetAura("Counter Attack") != null)
         {
             Bot.Skills.Pause();
             Bot.Combat.CancelAutoAttack();
             return;
         }
 
-        Bot.Skills.Resume();
-        MaintainHonorPotion();
+        AbsolutionNormalHandler();
     }
 
     private void MaintainHonorPotion()
     {
-        if ((Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true)
-            && Bot.Inventory.Contains("Potent Honor Potion")
-            && !Bot.Self.HasActiveAura("Potent Honor Malice"))
-            UsePotion("Potent Honor Potion", "Potent Honor Malice");
+        MaintainPotion("Potent Honor Potion", "Potent Honor Malice");
     }
 
-    private void AbsolutionListener(dynamic packet)
+    private void MaintainFelicitousPhiltre()
     {
-        if (Bot.ShouldExit
-            || !string.Equals(Bot.Map.Name, "fourharbingers", StringComparison.OrdinalIgnoreCase)
-            || packet?["params"]?.type?.ToString() != "json")
+        MaintainPotion("Felicitous Philtre", "Felicitous Philtre");
+    }
+
+    private void MaintainPotion(string itemName, string auraName)
+    {
+        if (!(Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true)
+            || !Bot.Player.Alive
+            || !Bot.Inventory.IsEquipped(itemName)
+            || !Bot.Skills.CanUseSkill(5))
             return;
 
-        dynamic data = packet["params"].dataObj;
-        if (data?.cmd?.ToString() != "ct" || data?.anims is null)
+        var aura = Bot.Self.GetAura(auraName);
+        if (aura != null && aura.ExpiresAt - DateTimeOffset.Now > TimeSpan.FromSeconds(5))
             return;
 
-        foreach (dynamic anim in data.anims)
+        Bot.Skills.UseSkill(5);
+    }
+
+    private void AbsolutionFlashListener(string name, object[] args)
+    {
+        try
         {
-            if (anim?.msg?.ToString() == "Die now.")
-            {
-                _dieNow = true;
-                Core.Logger("Die now detected. Preparing King's Shield.");
+            if (Bot.ShouldExit
+                || !string.Equals(Bot.Map.Name, "fourharbingers", StringComparison.OrdinalIgnoreCase)
+                || !name.Equals("packetFromServer", StringComparison.OrdinalIgnoreCase)
+                || args.Length == 0
+                || args[0] is not string rawPacket)
                 return;
+
+            dynamic packet = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(rawPacket);
+            dynamic data = packet?["b"]?["o"];
+            if (data?.cmd?.ToString() != "ct")
+                return;
+
+            if (data?.anims is not null)
+            {
+                foreach (dynamic anim in data.anims)
+                {
+                    string? message = anim?.msg?.ToString();
+                    if (message == "Die now.")
+                    {
+                        _dieNow = true;
+                        Core.Logger("Die now detected. Preparing King's Shield.");
+                    }
+                    else if (message == "Heal me.")
+                    {
+                        _critInverted = true;
+                        Core.Logger("Heal me detected. Holding attacks for Crits Inverted.");
+                    }
+                }
             }
+
+            if (data?.a is not null)
+            {
+                foreach (dynamic action in data.a)
+                {
+                    if (action?.cmd?.ToString() == "aura-"
+                        && action?.aura?.nam?.ToString() == "Crits Inverted")
+                        _critInverted = false;
+                }
+            }
+        }
+        catch
+        {
         }
     }
 
@@ -522,6 +669,11 @@ public class FourHarbingersLW
             ApplyEnhancements(boss);
         }
 
+        PreparePotions(boss);
+    }
+
+    private void PreparePotions(Boss boss)
+    {
         if (!(Bot.Config?.Get<bool>("Setup", "UsePotions") ?? true))
             return;
 
@@ -531,11 +683,17 @@ public class FourHarbingersLW
             PreparePotion("Potent Malevolence Elixir", "Gold Voucher 500k", 4, 500_000, 8);
             PreparePotion("Potent Honor Potion", "Gold Voucher 500k", 1, 500_000, 5, requiredFaction: "Good", requiredFactionRank: 10);
         }
-        else if (boss is Boss.Mors or Boss.AnethyxosAbsolution)
+        else if (boss == Boss.Mors)
         {
-            PreparePotion(boss == Boss.Mors ? "Sage Tonic" : "Might Tonic", "Gold Voucher 500k", 2, 500_000, 10, requiredAlchemyRank: 8);
+            PreparePotion("Sage Tonic", "Gold Voucher 500k", 2, 500_000, 10, requiredAlchemyRank: 8);
             PreparePotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500_000, 20);
             PreparePotion("Potent Honor Potion", "Gold Voucher 500k", 1, 500_000, 5, requiredFaction: "Good", requiredFactionRank: 10);
+        }
+        else if (boss == Boss.AnethyxosAbsolution)
+        {
+            PreparePotion("Fate Tonic", "Gold Voucher 500k", 4, 500_000, 10, requiredAlchemyRank: 8);
+            PreparePotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500_000, 20);
+            PreparePotion("Felicitous Philtre", "Gold Voucher 100k", 2, 100_000, 25);
         }
         else
         {
@@ -558,11 +716,17 @@ public class FourHarbingersLW
             UsePotion("Potent Malevolence Elixir", "Potent Malevolence Elixir");
             UsePotion("Potent Honor Potion", "Potent Honor Malice");
         }
-        else if (boss is Boss.Mors or Boss.AnethyxosAbsolution)
+        else if (boss == Boss.Mors)
         {
-            UsePotion(boss == Boss.Mors ? "Sage Tonic" : "Might Tonic", boss == Boss.Mors ? "Sage" : "Might");
+            UsePotion("Sage Tonic", "Sage");
             UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
             UsePotion("Potent Honor Potion", "Potent Honor Malice");
+        }
+        else if (boss == Boss.AnethyxosAbsolution)
+        {
+            UsePotion("Fate Tonic", "Fate");
+            UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
+            UsePotion("Felicitous Philtre", "Felicitous Philtre");
         }
         else
         {
@@ -849,13 +1013,13 @@ public class FourHarbingersLW
         FarmBossItem(Boss.Bello, item, quantity, isTemp, 2, "r3", "Bottom", "3 | 2 | 1", false, BelloMechanics);
 
     public void FarmFames(string item, int quantity, bool isTemp = false) =>
-        FarmBossItem(Boss.Fames, item, quantity, isTemp, 3, "r4", "Bottom", "2 | 1", false, FamesMechanics);
+        FarmBossItem(Boss.Fames, item, quantity, isTemp, 3, "r4", "Bottom", "", false, FamesMechanics);
 
     public void FarmMors(string item, int quantity, bool isTemp = false) =>
         FarmBossItem(Boss.Mors, item, quantity, isTemp, 4, "r5", "Bottom", "3 | 2 | 1 | 4", false, MorsMechanics);
 
     public void FarmAnethyxosAbsolution(string item, int quantity, bool isTemp = false) =>
-        FarmBossItem(Boss.AnethyxosAbsolution, item, quantity, isTemp, 5, "r6", "Bottom", "3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", true, AbsolutionMechanics);
+        FarmBossItem(Boss.AnethyxosAbsolution, item, quantity, isTemp, 5, "r6", "Bottom", "", false, AbsolutionMechanics);
 
     private void FarmBossItem(Boss boss, string item, int quantity, bool isTemp, int mapID, string cell,
         string pad, string combo, bool waitForCooldown, Action? mechanics)
