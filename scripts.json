@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 168728,
-    "sha256": "225feec187ed26ba0906e20d4767feca02db4d2ab0e1b266ebc8dc906eb614fd",
+    "size": 164744,
+    "sha256": "bc06925030b478b39211c305d750da36dc1e94431a49b1c46b0aaac231745db2",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 451796,
-    "sha256": "3782b11e3c6dadcc83b4b34ed28ee943b92ff3be3249f35411e9c6b80a347383",
+    "size": 451743,
+    "sha256": "036b91d52106687f2b967bc179ad14f03563edf8fdd215d6d42634ab4b9ef97c",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 58391,
-    "sha256": "868a550650929a448728bad1ee40ed1ba237ee6ed58818868c35ec09ee04d57b",
+    "size": 57741,
+    "sha256": "805e705bf8d24f7813f9f13f132e1dd19ab108635da5e643b13d0f3e2e429369",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -82,8 +82,8 @@
       "null"
     ],
     "path": "ShadowsOfWar/CoreSoWMats.cs",
-    "size": 6701,
-    "sha256": "94f648290abd6cbc604c571e93a561d3b5600d51dff90b425a7539a515899340",
+    "size": 6407,
+    "sha256": "b941b47ef1e1569fecec2938198a15afefa0435a7688de50ba139bc98d380945",
     "fileName": "CoreSoWMats.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/CoreSoWMats.cs"
   },
@@ -229,8 +229,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 54074,
-    "sha256": "d51f7bfbe0887e06a61acf9dd1b136e8a30300e9e476bbc7b94ea1c6178238e8",
+    "size": 53974,
+    "sha256": "e8c383c992c25f97efb6fb0866d4a354523428db827954986071201e9c807e78",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -361,8 +361,8 @@
       "khasaanda"
     ],
     "path": "Dailies/LordOfOrder.cs",
-    "size": 14871,
-    "sha256": "8bdd1ef1cdb62631582b25f24532dfda0fcf03d1046ec35314e3daecfdb89ccb",
+    "size": 13901,
+    "sha256": "2a7e4c6cdd5ae902f12845f5c425ff050712c6ad905386409c331c5dfed124c4",
     "fileName": "LordOfOrder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Dailies/LordOfOrder.cs"
   },
@@ -857,8 +857,8 @@
       "null"
     ],
     "path": "Darkon/CoreDarkon.cs",
-    "size": 17266,
-    "sha256": "3a1d9085dc1712fde35bf543a3a31718ffcd7b5bf855ca56399b1318456916c2",
+    "size": 15905,
+    "sha256": "a763b06c61fe6a032539dd844524bb1ee61e14ca69734db8acbe1534f9618678",
     "fileName": "CoreDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/CoreDarkon.cs"
   },
@@ -1178,8 +1178,8 @@
       "AC"
     ],
     "path": "Tools/TreasureChestSpam.cs",
-    "size": 7908,
-    "sha256": "8ebe2366ce4d4b8c44e2cca6627f8cb1b731344db88f5090115325d6bb6c2234",
+    "size": 7656,
+    "sha256": "89932f73ae09377733856d5e899aa9f81e46baa50e595a7ac741d19dfe385ceb",
     "fileName": "TreasureChestSpam.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/TreasureChestSpam.cs"
   },
@@ -1398,8 +1398,8 @@
       "blade"
     ],
     "path": "Evil/SepulchuresOriginalHelm.cs",
-    "size": 6817,
-    "sha256": "26d908134ca4fe1c3cb52876b7b57bdb177345f72595524eb1c120f842a04794",
+    "size": 6683,
+    "sha256": "14534a8989d41e6c20c50fc226ca1e535ff14416ab202517ab18bc761b77a121",
     "fileName": "SepulchuresOriginalHelm.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SepulchuresOriginalHelm.cs"
   },
@@ -1437,8 +1437,8 @@
       "doom"
     ],
     "path": "Evil/ShadowFallMerge.cs",
-    "size": 7489,
-    "sha256": "dab5122249749418e06324920e5847ac48db5de73ee1200a7fdb67466d3de3ea",
+    "size": 7275,
+    "sha256": "0f3d3715fc3c8682457d3560a34888c5c329225318b144c41b2bd60a268247f5",
     "fileName": "ShadowFallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/ShadowFallMerge.cs"
   },
@@ -1460,8 +1460,8 @@
       "chaotic lords"
     ],
     "path": "Evil/ADK.cs",
-    "size": 7622,
-    "sha256": "f0070472003a8ff179ab15a318067ae0cf890380ff96b3eb1daeb965f56b9887",
+    "size": 7420,
+    "sha256": "656f07d1c830debd37d40757ef38c24c103d83001bfcc593c2fd52d468007fc5",
     "fileName": "ADK.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/ADK.cs"
   },
@@ -1477,8 +1477,8 @@
       "evil"
     ],
     "path": "Evil/GravelynDoomFire.cs",
-    "size": 4769,
-    "sha256": "757edb0ef3b519ebb06de9b6c71bfe1e5eaca87e5266e9179fb16cc5c84aded0",
+    "size": 4517,
+    "sha256": "c4a8fc2921eebbe089523e6b4a3474baaf1c1c7ac4447216e42bc99a6eba51ff",
     "fileName": "GravelynDoomFire.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/GravelynDoomFire.cs"
   },
@@ -1495,8 +1495,8 @@
       "evil"
     ],
     "path": "Evil/VordredsArmor.cs",
-    "size": 9466,
-    "sha256": "4d29dbd361aa7c55bf76f557abb96dddf3f9ce683baabbce51e3139c3044e3cb",
+    "size": 8089,
+    "sha256": "002f2855667a843e2e91c2eb3d4fc8d3be8a7c46844ed543fed4d3322dd0bf5f",
     "fileName": "VordredsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/VordredsArmor.cs"
   },
@@ -1551,8 +1551,8 @@
       "drops"
     ],
     "path": "Other/EternalDragonDrops.cs",
-    "size": 2396,
-    "sha256": "17bf144ed24b605562996f9c292caf988a1e1c78ad3c941e09eb7a674a0a723c",
+    "size": 2254,
+    "sha256": "7d5c01d5a280c82d4ba79263ebf6f2bd4fdd70271919d264fe2183faac0622c0",
     "fileName": "EternalDragonDrops.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/EternalDragonDrops.cs"
   },
@@ -1567,8 +1567,8 @@
       "astravian oracle set"
     ],
     "path": "Other/AstravianOracleSet.cs",
-    "size": 2677,
-    "sha256": "11b09b519fb4149bc983fbb09b53c98f9ff80430bf64626dd8943bf596316dc2",
+    "size": 2361,
+    "sha256": "27cbbb70e7de18d634f29eec5c2eef325bc8a61c810c72f686f11806bd699653",
     "fileName": "AstravianOracleSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/AstravianOracleSet.cs"
   },
@@ -1581,8 +1581,8 @@
       "egg"
     ],
     "path": "Other/MysteriousEgg.cs",
-    "size": 2388,
-    "sha256": "3b202e2b378f5139dd2585b0577012aa9a6e6291b46060df184bc23b4049f370",
+    "size": 2306,
+    "sha256": "4b6172185564e9953e27205fb9104089ba8b8bc81a0b6d345663953f29483c77",
     "fileName": "MysteriousEgg.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MysteriousEgg.cs"
   },
@@ -1680,8 +1680,8 @@
       "twilly"
     ],
     "path": "Other/LoreBowl.cs",
-    "size": 2095,
-    "sha256": "36ed5c5c5b0fdc1f895e2678e55ee512f2c14b17ee52db1796886d2b05c41cab",
+    "size": 1937,
+    "sha256": "2a72b8adfd56c596490151bf2ac21d943ebb52c48af18a92ebee252af6c9b97f",
     "fileName": "LoreBowl.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/LoreBowl.cs"
   },
@@ -1725,8 +1725,8 @@
       "mega shadow medal"
     ],
     "path": "Other/ShadowflameWarMedal.cs",
-    "size": 2031,
-    "sha256": "7b5dece092cc930887890613643514666f4acfac141d87dfa4ccf7de782e0239",
+    "size": 1937,
+    "sha256": "edc29e5f02e59385bbdbfc859f73743226d67b9e649bf0e9cfa0bb959ec42aef",
     "fileName": "ShadowflameWarMedal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ShadowflameWarMedal.cs"
   },
@@ -1838,8 +1838,8 @@
       "rewards"
     ],
     "path": "Other/SecurityPlushiesQuestReward.cs",
-    "size": 1752,
-    "sha256": "b3baf3886aff8f05ad07816fb57e658f094f2f41ee1500e4163ef57197244436",
+    "size": 1634,
+    "sha256": "9c6fad00e1522f7d53c2f8e64c70ea8805351ad036ba12299838570fbc7ecea6",
     "fileName": "SecurityPlushiesQuestReward.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/SecurityPlushiesQuestReward.cs"
   },
@@ -1908,8 +1908,8 @@
       "one holy discovery"
     ],
     "path": "Other/SanctifiedArbiter.cs",
-    "size": 1758,
-    "sha256": "c39a3de187acc11d9582a53cd28cc8727ed0cf58d39e827700beaca7fa0ea00d",
+    "size": 1660,
+    "sha256": "0b492adcd182862c6fcc34f377ce1a6ad0146f0d08da0bc49ab0051b5a78326c",
     "fileName": "SanctifiedArbiter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/SanctifiedArbiter.cs"
   },
@@ -1921,8 +1921,8 @@
       "set"
     ],
     "path": "Other/DiabolicalWardenSet.cs",
-    "size": 1678,
-    "sha256": "d1fe79ac0a45aca6a1a0b30d9d1b8d1b24baaec3b466a1f2a661c268ebd37fea",
+    "size": 1584,
+    "sha256": "84524308ccc63745cc2e1931450dec7a6859f088bb4013d9d1bacbe99eec82b7",
     "fileName": "DiabolicalWardenSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/DiabolicalWardenSet.cs"
   },
@@ -1972,8 +1972,8 @@
       "set"
     ],
     "path": "Other/ElementalDragonSlayer.cs",
-    "size": 2802,
-    "sha256": "c5cc2d1aff886dce99ffbc6ccc75d4b25e6ae2196413013b4c5892e07130c138",
+    "size": 2526,
+    "sha256": "6789b044db88bd572b22bb6b558c755d9c446833166da751eda8aa8b15296711",
     "fileName": "ElementalDragonSlayer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ElementalDragonSlayer.cs"
   },
@@ -2196,8 +2196,8 @@
       "undead"
     ],
     "path": "Good/ArchPaladin.cs",
-    "size": 11651,
-    "sha256": "1dc1884e984ee73f6bc7bd81f6f256f9efa2534aefdfc985d0132858a9490bce",
+    "size": 11568,
+    "sha256": "2ad61e49c74bef52b6296acf7a1d5b20625a41b19cd356857e092a2e8d5990b4",
     "fileName": "ArchPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/ArchPaladin.cs"
   },
@@ -2209,8 +2209,8 @@
       "dragonheart"
     ],
     "path": "Good/SilverExaltedPaladin.cs",
-    "size": 3781,
-    "sha256": "f7d82550b678bda9a4e777bc4f837d1f30ffb51fe721e5184ad11ed3075fec1f",
+    "size": 3427,
+    "sha256": "708367668d3e59bdaf63067b8636d001d976981ec5902646ccf66750dd10ca16",
     "fileName": "SilverExaltedPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/SilverExaltedPaladin.cs"
   },
@@ -2790,8 +2790,8 @@
       "undead raxgore"
     ],
     "path": "Story/DoomVaultB.cs",
-    "size": 4996,
-    "sha256": "739d5b26d9c235003aeedbed928df94f815e45bfa0aedb22d9011f66afa7cea8",
+    "size": 4886,
+    "sha256": "217fdbe968dfb6853d21c08c67535b7d699aab42b95514ae1e186879268f7c5d",
     "fileName": "DoomVaultB.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/DoomVaultB.cs"
   },
@@ -2804,8 +2804,8 @@
       "shadow-slayer"
     ],
     "path": "Story/ShadowSlayerK.cs",
-    "size": 11016,
-    "sha256": "5dbfaba8ac597d57f6500376e8429786175709e1d84d70567915f57c6c5e5b07",
+    "size": 10592,
+    "sha256": "59ce95120a32a9659b638d571ae74f7933209b5aed212110212e3998a8a2d9f2",
     "fileName": "ShadowSlayerK.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowSlayerK.cs"
   },
@@ -2832,8 +2832,8 @@
       "battleunder"
     ],
     "path": "Story/BattleUnder.cs",
-    "size": 5472,
-    "sha256": "48e252b212db22181e720de8c8c2c0dbdc48dba99afdb30f3c76730d0fe7cb3a",
+    "size": 5268,
+    "sha256": "e8dd301c10f15117a4d625533fde7624188c59b83f2dcd15a3219a9e759d0ce8",
     "fileName": "BattleUnder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/BattleUnder.cs"
   },
@@ -2846,8 +2846,8 @@
       "shipwreck"
     ],
     "path": "Story/ShipWreck.cs",
-    "size": 4556,
-    "sha256": "c803a65c96c19d3a008306a989714005ac663f4717d734e9105aa3aa2c9d9523",
+    "size": 4320,
+    "sha256": "8d324a4d210f4911cd55c6fbdd6d85b9b3c379778824eb6bc51dfdbe91109694",
     "fileName": "ShipWreck.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShipWreck.cs"
   },
@@ -3016,8 +3016,8 @@
       "shatter-sword"
     ],
     "path": "Story/Shattersword.cs",
-    "size": 6454,
-    "sha256": "8b2114d53db4ab9502fc6c8560968d8d56f21a02dcf461561887ab3ef58dc23c",
+    "size": 4754,
+    "sha256": "a36b47f3c5922b39b7490e5ee771147e042d1e30586cac107b9801215cb2a291",
     "fileName": "Shattersword.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Shattersword.cs"
   },
@@ -3094,8 +3094,8 @@
       "thirdspell"
     ],
     "path": "Story/ThirdSpell.cs",
-    "size": 26427,
-    "sha256": "3d40f421ff20ba48fe6cb6521d388d840f2fd6c90fa15678aa2f6480da914846",
+    "size": 22641,
+    "sha256": "b2c9db51d6ad76d5d3b8c34fb250f5af921fc224275e1a38d2cf5e76a27a914c",
     "fileName": "ThirdSpell.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThirdSpell.cs"
   },
@@ -3128,8 +3128,8 @@
       "ravenloss-saga"
     ],
     "path": "Story/RavenlossSaga.cs",
-    "size": 6062,
-    "sha256": "4b45d7b0c82e66711c66a8e845a9cc917e10d858277d0f66d5b3de90a9d454a6",
+    "size": 5842,
+    "sha256": "2f427e9500c22a65c8af76491ca2bc672416efac974122acb89b3e636bd21109",
     "fileName": "RavenlossSaga.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/RavenlossSaga.cs"
   },
@@ -3199,8 +3199,8 @@
       "mazumi"
     ],
     "path": "Story/Mazumi.cs",
-    "size": 2174,
-    "sha256": "2a17a4bcb0c9bd8177dfde0863fe804c9d23c2cb372a5634c4c4349a6066cff5",
+    "size": 1970,
+    "sha256": "3204a08883ceb498b7fc5ea94f5e80b501724a15e6a2bd3e805d49e58aef418d",
     "fileName": "Mazumi.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Mazumi.cs"
   },
@@ -3227,8 +3227,8 @@
       "starsinc"
     ],
     "path": "Story/StarSinc.cs",
-    "size": 5248,
-    "sha256": "b982471e52a17550dacb7cefcf0a85dd434b8d441e26cc4150b07648083f9d27",
+    "size": 5082,
+    "sha256": "b52b0f60918458bcd51f5faab9e2175413e6183eb72d82400eec4189e1754b61",
     "fileName": "StarSinc.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/StarSinc.cs"
   },
@@ -3255,8 +3255,8 @@
       "tower-of-doom"
     ],
     "path": "Story/TowerOfDoom.cs",
-    "size": 1483,
-    "sha256": "f7734e622b8ac27507583482401dca653aebc37b9e869a8e5ce4484be4d40174",
+    "size": 1413,
+    "sha256": "fa5ded10772d237ec065fa04d9a7ed0ca21920aae5b2a98cf427c6c215cd2073",
     "fileName": "TowerOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TowerOfDoom.cs"
   },
@@ -3317,8 +3317,8 @@
       "shadow-vault"
     ],
     "path": "Story/ShadowVault.cs",
-    "size": 2891,
-    "sha256": "72d6694ff849cabbe4521ee26cf5cd08effae7106c462fa3eee8f40c6ccf6475",
+    "size": 2797,
+    "sha256": "b42134f41579ecd1c135cbff7bad8c9c44543837e8684e6a6208fe0b02acd2f2",
     "fileName": "ShadowVault.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowVault.cs"
   },
@@ -3561,8 +3561,8 @@
       "etherstorm-wastes"
     ],
     "path": "Story/EtherstormWastes.cs",
-    "size": 15784,
-    "sha256": "ca0bbf5b062e41ccd5b4e78c0efd444b8101260835c837236f165dcd9c21191c",
+    "size": 15674,
+    "sha256": "d84f56e6f686183cf33213c18e80336af2485067370f2099ff6d331488183912",
     "fileName": "EtherstormWastes.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/EtherstormWastes.cs"
   },
@@ -3619,8 +3619,8 @@
       "djinn-gate"
     ],
     "path": "Story/DjinnGate.cs",
-    "size": 7697,
-    "sha256": "4a507b26393fdc13cde48d82a6aa01b8102c18e2b0ac3f8fe828b74d732fc95e",
+    "size": 7421,
+    "sha256": "da0cbe5000d472cdd7e5dd0c20dc2eb429d6774e417d5e1ab0721661a1918b42",
     "fileName": "DjinnGate.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/DjinnGate.cs"
   },
@@ -3790,8 +3790,8 @@
       "member"
     ],
     "path": "Story/Safiria[Member].cs",
-    "size": 3888,
-    "sha256": "bbcd24d62e6528b9ac3c5a0be35dbb713837599e0361a6dcbde2acdf44b36f44",
+    "size": 3384,
+    "sha256": "d07c339fe1181df8257213a14bdd0337d66247ba86e249831247d7cd4d1ae31f",
     "fileName": "Safiria[Member].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Safiria[Member].cs"
   },
@@ -3944,8 +3944,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 120811,
-    "sha256": "a6ddfda4cd9c87e03277cb324207963599d37b00876837ccef23e0e8c0ec0870",
+    "size": 116731,
+    "sha256": "b7d4293527e1d723fcd423ec50973cc2dcb13d924ba9cc5b75f03a86ba341e44",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -3968,8 +3968,8 @@
       "null"
     ],
     "path": "Nation/TimeIsMoney.cs",
-    "size": 2313,
-    "sha256": "12cbcef54b3d4ab640778ec5bb9956f6dbd9f31e8b367000f4f71b4e8242304d",
+    "size": 2147,
+    "sha256": "dfddba38a88fd31d18ea174d764d8507a5b17a28429f5729c69ec616679fc19e",
     "fileName": "TimeIsMoney.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/TimeIsMoney.cs"
   },
@@ -4142,8 +4142,8 @@
       "null"
     ],
     "path": "Hollowborn/CoreHollowborn.cs",
-    "size": 4784,
-    "sha256": "66eecad86db2fc2abc21157701a10467e4fdcafd0188846d4ca746e8a8438002",
+    "size": 4376,
+    "sha256": "cb4390540443a5d248dfa04435fa254c9d8f1ef8edbca429cfb264ccce20de8a",
     "fileName": "CoreHollowborn.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/CoreHollowborn.cs"
   },
@@ -4160,8 +4160,8 @@
       "archfiend enchanted orbs"
     ],
     "path": "Hollowborn/HollowbornOblivionBlade.cs",
-    "size": 3827,
-    "sha256": "19e8a3c2fe78d21e94dfdda3b30592cefd1bfbc5e21a4f84511366eac550b8b6",
+    "size": 3769,
+    "sha256": "246ce6ed5e1832004ec1db5ec9102bf832b0c685aa04bb3ef44ee798b1040bbf",
     "fileName": "HollowbornOblivionBlade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornOblivionBlade.cs"
   },
@@ -4501,8 +4501,8 @@
       "locked"
     ],
     "path": "Chaos/ChampionDrakathMerge.cs",
-    "size": 19723,
-    "sha256": "26f9c0d6eee64a35ab44ef79f976deb525fb2e5bbdfadba48c18f7de799a2f09",
+    "size": 18941,
+    "sha256": "061fbae7a0c1ae64dcf5c0b77b216b778b040c22fa4d3342945f05ab56d69720",
     "fileName": "ChampionDrakathMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/ChampionDrakathMerge.cs"
   },
@@ -4515,8 +4515,8 @@
       "original drakath armor"
     ],
     "path": "Chaos/DrakathsArmor.cs",
-    "size": 5110,
-    "sha256": "24dce400f0be119a3785cc84716390ec219f498b8f2891fe9f60000e18eedbe2",
+    "size": 5008,
+    "sha256": "b599d3730a063821118265df19ce195281a5dfc4c3e28451df731f20d71c2002",
     "fileName": "DrakathsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/DrakathsArmor.cs"
   },
@@ -4560,8 +4560,8 @@
       "prerequisites"
     ],
     "path": "Chaos/ChaosAvengerPreReqs.cs",
-    "size": 7413,
-    "sha256": "61077ba8a6ba0ba3e4f67b105cb06acc3a0a1ca23a757a6c50e01d6ae95072e7",
+    "size": 7018,
+    "sha256": "7ec49477b86470f171c0973982771fc5c0b12bc298ec0284eebfdf84eab747a2",
     "fileName": "ChaosAvengerPreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/ChaosAvengerPreReqs.cs"
   },
@@ -4781,8 +4781,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 36103,
-    "sha256": "4d94fb9d9c12821b7334a141774ad6c710c130f5c15d3f9cdd19134e6b6d0327",
+    "size": 35103,
+    "sha256": "2ec800809a763f0284f291ef0525864e21ad07d83563ce9bec2670a5c718d964",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -4797,8 +4797,8 @@
       "army"
     ],
     "path": "Army/ArmyFarmVoidAuras.cs",
-    "size": 11060,
-    "sha256": "5cd92259a7de0479b0aa53ed09d6e60ab724f04539e9676f7a44ebf3b45f2699",
+    "size": 10888,
+    "sha256": "4bfbebe0e45fe87ebeb17549385d79c6224dd2a7f85273eedeba48351100c046",
     "fileName": "ArmyFarmVoidAuras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarmVoidAuras.cs"
   },
@@ -4957,8 +4957,8 @@
       "fighting"
     ],
     "path": "ShadowsOfWar/MergeShops/FireInvasionMerge.cs",
-    "size": 7347,
-    "sha256": "4374a8b2364fdba0c2fdf2d7d5ba5ef61dd5a7f3e363d9ee62f65941de84284d",
+    "size": 7015,
+    "sha256": "f17a24c692f5cf5708829ff3214cc827ffa4a97ab51edad82e174f4282efd3a4",
     "fileName": "FireInvasionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/FireInvasionMerge.cs"
   },
@@ -5002,8 +5002,8 @@
       "beginning"
     ],
     "path": "ShadowsOfWar/MergeShops/StreamwarMerge.cs",
-    "size": 8796,
-    "sha256": "033f0f3e8646f9a477fa5a29e1b5355b01fa6e9d67c0b9a4c67e8faae1c04951",
+    "size": 8630,
+    "sha256": "df40cbee8825edd2721187d576a005d08f6bbf809ea289869bb07e5c90a952d7",
     "fileName": "StreamwarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/StreamwarMerge.cs"
   },
@@ -5044,8 +5044,8 @@
       "mortal"
     ],
     "path": "ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs",
-    "size": 7898,
-    "sha256": "75803a58a68051f17488b28f3a06e92ca78c6b34df2fb475bb6615765f835f07",
+    "size": 7780,
+    "sha256": "de79a6c6115337cd36c3ce4bd8aa7dbd65ad3800406dac883f098ec1cf37a886",
     "fileName": "ShadowflameFinaleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs"
   },
@@ -6057,8 +6057,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 45567,
-    "sha256": "7535211a62ac87e2774010197785e4907920665ff09375eca96a8a5b5c82142e",
+    "size": 42721,
+    "sha256": "286183adc053e271adc6bae6ef7402300ba673c6c2b5da1323b1e429ef9e632b",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -6247,8 +6247,8 @@
       "mergeshop"
     ],
     "path": "Darkon/MergeShops/GardenMerge.cs",
-    "size": 14963,
-    "sha256": "8529c87b80ea408e3daba8890acf2ca0083640253dde6aa2bac5ceed54982524",
+    "size": 14375,
+    "sha256": "7de0aad093772611931b048e7cf89a5e0a0b4d7c8aea2cd4aa2dc2279b998884",
     "fileName": "GardenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/GardenMerge.cs"
   },
@@ -6293,8 +6293,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1179235,
-    "sha256": "af46b1a5e08b948d9cc4990c3bc8b7ab0d229c2c406d476ee48c0a404c071dec",
+    "size": 1177694,
+    "sha256": "c4993eb8b46ac3bf2ea7c9d5cd181ef8cb2ee77496d45ab434795c08bb2a1108",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -6368,8 +6368,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelperV2.cs",
-    "size": 28648,
-    "sha256": "45ed4b53fcae3594a865cc56c01f69adcfab1d8c68e47507c531432817f1123c",
+    "size": 28650,
+    "sha256": "1e0011d3e316cdb24612378f22a6a2bafea14de2e145167336cc31e1ec33cac3",
     "fileName": "MergeTemplateHelperV2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelperV2.cs"
   },
@@ -6509,8 +6509,8 @@
       "vampire lord"
     ],
     "path": "Seasonal/Mogloween/VampireLord(Class).cs",
-    "size": 2353,
-    "sha256": "efc128630cd0b8234dad90850593c033ac2e43f069f0032973af094735ca56df",
+    "size": 2101,
+    "sha256": "6d97039ab842a7e8cb807de9be013a940ad5e4869983efa6f8a45d39db3f2bf1",
     "fileName": "VampireLord(Class).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/VampireLord(Class).cs"
   },
@@ -6686,8 +6686,8 @@
       "jester"
     ],
     "path": "Seasonal/Mogloween/Dark&WitchySetAndCursedJesterSet.cs",
-    "size": 2776,
-    "sha256": "a6192169dc4a284d2fcb3751482ed16b1bfa13f35640191f5adff8641a916c85",
+    "size": 2540,
+    "sha256": "3ab99ed792d019e553871336221c6d3f983a95a5616eed91f1392e9251ec0601",
     "fileName": "Dark&WitchySetAndCursedJesterSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/Dark&WitchySetAndCursedJesterSet.cs"
   },
@@ -6911,8 +6911,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/NorthlandsMonk.cs",
-    "size": 1818,
-    "sha256": "6b34296655086edf9563289da829c01432e3bac95759fb2111b3c43df7887c7a",
+    "size": 1708,
+    "sha256": "25414bf233fd58d14f4c619b945a14bd93ae790823cddac4927bb5a8c801b417",
     "fileName": "NorthlandsMonk.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/NorthlandsMonk.cs"
   },
@@ -6960,8 +6960,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/BowJanglesMerge.cs",
-    "size": 7128,
-    "sha256": "18ec0867c6013a7a6afa9c1d1ef4fb704e2dd48ae55f7ba4bca7e02eaa596102",
+    "size": 6880,
+    "sha256": "dcd2cb2b96c6de83ee8bc293a4e23cee80c7b75035752039f77fad025a3017ec",
     "fileName": "BowJanglesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/BowJanglesMerge.cs"
   },
@@ -6986,8 +6986,8 @@
       "flail"
     ],
     "path": "Seasonal/Frostvale/SnowviewRaceMerge.cs",
-    "size": 6345,
-    "sha256": "e329d0fa1a44a84819f5bbb594ef2a79662c767c67736c4e55ae3d938ae48641",
+    "size": 5875,
+    "sha256": "e3dfaf874159db3083bc867fa4806681f5a46ee9a882309e7a38f559676e9fd9",
     "fileName": "SnowviewRaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SnowviewRaceMerge.cs"
   },
@@ -7057,8 +7057,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/SnowviewMerge.cs",
-    "size": 7022,
-    "sha256": "1713e57341616798f1e3c4372f2437ce7472203814f4fecafe7551217de2bd45",
+    "size": 6856,
+    "sha256": "3d6aeae3fbc4ec72c4f61bd4a69071c2a1c369b73920b54c3fc6bfde6a85a28d",
     "fileName": "SnowviewMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SnowviewMerge.cs"
   },
@@ -7107,8 +7107,8 @@
       "le"
     ],
     "path": "Seasonal/Frostvale/FrostvalgalaMerge.cs",
-    "size": 8692,
-    "sha256": "2f92bdbe84e2ed0c2abd37d043e107a2d5fd02886aaae02a6bd2887786fa2671",
+    "size": 8526,
+    "sha256": "343705628c2d88db015742d4f0c1e9be6171a60e7983e304772c56809224e90a",
     "fileName": "FrostvalgalaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/FrostvalgalaMerge.cs"
   },
@@ -7219,8 +7219,8 @@
       "crystals"
     ],
     "path": "Seasonal/Frostvale/FimbulTombMerge.cs",
-    "size": 7193,
-    "sha256": "2e7215eee7843712d04fd9abb93c53832f62e1df2175ef6dcb671a6b1a073ad1",
+    "size": 6751,
+    "sha256": "2565b0c30ad1278228cf486704182391846492b1704b449ffdb9088b341af916",
     "fileName": "FimbulTombMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/FimbulTombMerge.cs"
   },
@@ -7262,8 +7262,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/UnsungNecropolisMerge.cs",
-    "size": 16131,
-    "sha256": "c780907b10bf7a2043705af9eb5b8339881d112f489df93e6cfa5d204db59f2f",
+    "size": 15079,
+    "sha256": "eec8cf764a8c89a2e47dbb071567ddb16e3b5544e24a09e7bf4124f355bf2f35",
     "fileName": "UnsungNecropolisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/UnsungNecropolisMerge.cs"
   },
@@ -7350,8 +7350,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/FrozenSoulMerge.cs",
-    "size": 8258,
-    "sha256": "94a7faec9e63ffc343a9795191d5fc5aee47da6439a166810b65520c609c9919",
+    "size": 7538,
+    "sha256": "a1638331889d7f7134ffe8178e09aa19d7f3652df12ed41b79d4a95ea86de3ab",
     "fileName": "FrozenSoulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/FrozenSoulMerge.cs"
   },
@@ -7379,8 +7379,8 @@
       "snowsaga"
     ],
     "path": "Seasonal/Frostvale/SkadePassMerge.cs",
-    "size": 8631,
-    "sha256": "2eb0c9bdd752c0a6c95a7a60a2e6f7975d499c2504b9d1a3f48df6bdf0341982",
+    "size": 8465,
+    "sha256": "492d44d9b88e57a6d31fd107d6051ce1a1fbd428a8bee2f2bf9ee04542c064ab",
     "fileName": "SkadePassMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SkadePassMerge.cs"
   },
@@ -7558,8 +7558,8 @@
       "carnaval"
     ],
     "path": "Seasonal/Carnaval/DanceGuruMerge.cs",
-    "size": 6544,
-    "sha256": "0e55b121f81a97b95a77ad66e58afe1112c25d49e35ce8a6035f71eb9806f850",
+    "size": 6350,
+    "sha256": "a52d95ecbecc4f619525d4ee90c84904ef7492edd8234ab1e6562f6cf37c125a",
     "fileName": "DanceGuruMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Carnaval/DanceGuruMerge.cs"
   },
@@ -7665,8 +7665,8 @@
       "hammers"
     ],
     "path": "Seasonal/Grenwog(Easter)/GrenwogWarrensMerge.cs",
-    "size": 8838,
-    "sha256": "91d2f8ecca4c8f11c28cf26c7de9f0c2c8441589cc610e1e39a531aef6d78296",
+    "size": 7986,
+    "sha256": "2348da7d407e1d2a5eb81e62d5b2205cdf041c33c25068659c35ec4471121520",
     "fileName": "GrenwogWarrensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Grenwog(Easter)/GrenwogWarrensMerge.cs"
   },
@@ -7803,8 +7803,8 @@
       "merge"
     ],
     "path": "Seasonal/Grenwog(Easter)/EvolvedBunnyItemsMerge.cs",
-    "size": 5107,
-    "sha256": "48585f525ef07726f8fcb888e980aefcbcc45a4fa9e8821bc2df55e9a6b580b2",
+    "size": 4823,
+    "sha256": "34b05ce88767fee56da216124a58d315bc2a64ea4a0eec0bc17bf4005dcf6f3b",
     "fileName": "EvolvedBunnyItemsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Grenwog(Easter)/EvolvedBunnyItemsMerge.cs"
   },
@@ -7838,8 +7838,8 @@
       "BBA"
     ],
     "path": "Seasonal/Grenwog(Easter)/BerserkerBunnyArmor.cs",
-    "size": 1834,
-    "sha256": "c6838d9e8b69897b0b92e4bebe3a6c1ab0f5bacd01cfd2ad7da1b37d8a6e1813",
+    "size": 1724,
+    "sha256": "6244bf24eaf12d8d2270fd5f93dfb3b293934ae27851ac33fb730ed61b83088d",
     "fileName": "BerserkerBunnyArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Grenwog(Easter)/BerserkerBunnyArmor.cs"
   },
@@ -8000,8 +8000,8 @@
       "dark"
     ],
     "path": "Seasonal/FathersDay/GravelynsGiftMerge.cs",
-    "size": 5736,
-    "sha256": "1e5e2ea1543f6ed2d7ff05f73a99bbac1e2b1d33786cf3efce33aa64c844c559",
+    "size": 5535,
+    "sha256": "a95ece98fbf45355816ab0deba78a928348a75760febf94aa7ec855c49e5f602",
     "fileName": "GravelynsGiftMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/FathersDay/GravelynsGiftMerge.cs"
   },
@@ -8028,8 +8028,8 @@
       "null"
     ],
     "path": "Seasonal/FathersDay/DreadForestMerge.cs",
-    "size": 13179,
-    "sha256": "69d35e4be827be6acd4f3c9d1249e6de38e5f3e02d94e9d608e6e92d940ccc1b",
+    "size": 12351,
+    "sha256": "7973493e40d15a368327a58aed03e7381c802cf500f89dd948f2de6bf107eadb",
     "fileName": "DreadForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/FathersDay/DreadForestMerge.cs"
   },
@@ -8059,8 +8059,8 @@
       "rock bottom"
     ],
     "path": "Seasonal/SummerBreak/ForTheCraterGoodQuest.cs",
-    "size": 2973,
-    "sha256": "3ccf90bedbc5b016a83db303b0a6d42771bdddf277c753aff7b522cb873187c3",
+    "size": 2879,
+    "sha256": "e689c29b1e30769af299ad1469066f8234b094925f9c54104696b59dbd5bd791",
     "fileName": "ForTheCraterGoodQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/SummerBreak/ForTheCraterGoodQuest.cs"
   },
@@ -8140,8 +8140,8 @@
       "enlightened"
     ],
     "path": "Seasonal/SummerBreak/AdeptisPslamsMerge.cs",
-    "size": 6752,
-    "sha256": "44923524be7a6e7e6a7e5500efcdc11f5e49ac9d2ea3930510dddb1c19c1b1d1",
+    "size": 6586,
+    "sha256": "acfcae9aa5653c8d552c52fe479742336b5d80e98f7a28d3878c59db0ca226da",
     "fileName": "AdeptisPslamsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/SummerBreak/AdeptisPslamsMerge.cs"
   },
@@ -8299,8 +8299,8 @@
       "oaths"
     ],
     "path": "Seasonal/SummerBreak/LavarockMerge.cs",
-    "size": 5413,
-    "sha256": "a30fda04038a3cbf73f34509cc60f72c75074acff23203c191b4a8684e7c316a",
+    "size": 5199,
+    "sha256": "527ccaa6cab8d943cd9a6edb811d13a435988b3074011ef7e0f4dc25bad05b43",
     "fileName": "LavarockMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/SummerBreak/LavarockMerge.cs"
   },
@@ -8315,8 +8315,8 @@
       "big"
     ],
     "path": "Seasonal/SummerBreak/CraterHouseMerge.cs",
-    "size": 3937,
-    "sha256": "968e5ea4ee9fbba76cc24c7fb06b67acd82c98cdf6e4dbf2ffa416431f4e6a16",
+    "size": 3771,
+    "sha256": "36b230cfad27fb5f3cbcf904b05d4d90ec5b29e5a00817efc8adb06a48888d0c",
     "fileName": "CraterHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/SummerBreak/CraterHouseMerge.cs"
   },
@@ -8346,8 +8346,8 @@
       "summer-break"
     ],
     "path": "Seasonal/SummerBreak/BlazingBeachMerge.cs",
-    "size": 7191,
-    "sha256": "77c736894a63291ffbc91f9a0a49d4fe07d0a64ad9d539894bfc9c89f1759794",
+    "size": 6525,
+    "sha256": "5e35f436c657a8672a0b8d377068526d521d1244a336e199040840dc63a22567",
     "fileName": "BlazingBeachMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/SummerBreak/BlazingBeachMerge.cs"
   },
@@ -8391,8 +8391,8 @@
       "null"
     ],
     "path": "Seasonal/NewYear/CoreNewYear.cs",
-    "size": 9816,
-    "sha256": "66ff0e57a9d22187864f8f8e7dc03b7391ae005e8f56e4849adf882224494ec3",
+    "size": 9706,
+    "sha256": "e017f7158b091e09ed2f3fdf4079195088ffd293f0ed27fd69e6112ca570b321",
     "fileName": "CoreNewYear.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/NewYear/CoreNewYear.cs"
   },
@@ -8504,8 +8504,8 @@
       "wings"
     ],
     "path": "Seasonal/NewYear/ArchiveofTimeMerge.cs",
-    "size": 6799,
-    "sha256": "b37d477aa9f88b680a512b5de1024e66cb2977fb9e480f345134a7fec04de6df",
+    "size": 6135,
+    "sha256": "88bcff83bc16cb060dfcfb845e072d7d53a977ca66fc90f7fbb8550545c7d236",
     "fileName": "ArchiveofTimeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/NewYear/ArchiveofTimeMerge.cs"
   },
@@ -8548,8 +8548,8 @@
       "greatswords"
     ],
     "path": "Seasonal/Eclipse/leZardManMerge.cs",
-    "size": 10675,
-    "sha256": "387b46519e7d61727d73841b8d99667007c8bac14c0eea7e420d1c4965ab9f1d",
+    "size": 10093,
+    "sha256": "7cbc203e6d3f0d23d1314e8842353c9a2b35a006c540972ea39f81cd71e36f07",
     "fileName": "leZardManMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Eclipse/leZardManMerge.cs"
   },
@@ -8565,8 +8565,8 @@
       "merge"
     ],
     "path": "Seasonal/AprilFools/MeateorShardMerge.cs",
-    "size": 10059,
-    "sha256": "0783ffa1a0f12485c34f28498b27566ac3245afeefaaa06b3227a3584e6f0451",
+    "size": 9893,
+    "sha256": "37c7cffa10e17a172d580284893e88b13ebb860ec491ac4b9f1f0d35c2d8d79c",
     "fileName": "MeateorShardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/MeateorShardMerge.cs"
   },
@@ -8593,8 +8593,8 @@
       "april-fools"
     ],
     "path": "Seasonal/AprilFools/Mmmm,Meaty(or)(MeatyShard).cs",
-    "size": 2090,
-    "sha256": "efae53bcacf949e2de39c7cc5e18a96af5c12f806c20088fdb94cf759d4d52ae",
+    "size": 1870,
+    "sha256": "990cad69cb798f2b9fe2fdf9e5dc757091ed000b5e00222d88226303d9223a0a",
     "fileName": "Mmmm,Meaty(or)(MeatyShard).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/Mmmm,Meaty(or)(MeatyShard).cs"
   },
@@ -8727,8 +8727,8 @@
       "signature"
     ],
     "path": "Seasonal/AprilFools/YesMaamsMerge.cs",
-    "size": 8601,
-    "sha256": "c0dd90ea4be2f29e51c8af6a34423e2d401c1c9a5b58a0801f1b35fe5326f04d",
+    "size": 8269,
+    "sha256": "35b38477cda5cc518b2509249337e5355e6f83d710597d7a8f1a023b8ad89e6d",
     "fileName": "YesMaamsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/YesMaamsMerge.cs"
   },
@@ -8833,8 +8833,8 @@
       "pickle face"
     ],
     "path": "Seasonal/AprilFools/TheGreenWeaponSnack.cs",
-    "size": 2633,
-    "sha256": "963e600462f825923bff2cc5dbf8eb70ce302eea5662327a1883320a942a35c1",
+    "size": 2099,
+    "sha256": "ef27b64f18ac02e62b2e18dda796e729842024bb81a1c87e788f97b97b60dfab",
     "fileName": "TheGreenWeaponSnack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/TheGreenWeaponSnack.cs"
   },
@@ -8891,8 +8891,8 @@
       "suns"
     ],
     "path": "Seasonal/StarFestival/ShorinzanMerge.cs",
-    "size": 10656,
-    "sha256": "7fbfc3952ce70b83a0d7bfd70c67cbc109d7d57f2ca02daa5cf5b4f09bc82839",
+    "size": 9518,
+    "sha256": "691879d0fe955e60aa4c7d35751f15bee151281a27ac0b9fab70c2478105597b",
     "fileName": "ShorinzanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StarFestival/ShorinzanMerge.cs"
   },
@@ -8923,8 +8923,8 @@
       "star-festival"
     ],
     "path": "Seasonal/StarFestival/StarFestival.cs",
-    "size": 6481,
-    "sha256": "b621054db33666712ab2763e0f9e8c5d969b1fe6ab3d9728833240d943a971e1",
+    "size": 6403,
+    "sha256": "7fe033a715a93decbdb02f33ec9a3c7d494f993c963c70e6ec1fd1f2f5770b05",
     "fileName": "StarFestival.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StarFestival/StarFestival.cs"
   },
@@ -9076,8 +9076,8 @@
       "trainer"
     ],
     "path": "Seasonal/BackToSchool/ExtraCreditMerge.cs",
-    "size": 14821,
-    "sha256": "a3945d78c256c6d39cdc53a3b28f316e94835f4669ceb1c78704d3ce5b8612f3",
+    "size": 14655,
+    "sha256": "c94967eacbcb38b8c231d9d41f07deb754753a8997fe35180993f59e1a16902b",
     "fileName": "ExtraCreditMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BackToSchool/ExtraCreditMerge.cs"
   },
@@ -9304,8 +9304,8 @@
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 32281,
-    "sha256": "35f0fc28ccbc81f8b3470baa00c9f88008720edcfe4a77637e31f8d8c8563511",
+    "size": 32011,
+    "sha256": "a7c43be8cb415fd091f1bb21ee11bdc741e0d364be5e67b2a93c02b9e1752026",
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -9318,8 +9318,8 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/BirthdayFeastQuestRewards.cs",
-    "size": 8780,
-    "sha256": "0b3d75a34ecc3b3f8dad9ab3189469324a59c029c412bf43d738a7da7e9f6111",
+    "size": 8236,
+    "sha256": "8792aebfe5d767698955b0e0dda2094d68768a0f6b85c15f8701e5110b1b82ff",
     "fileName": "BirthdayFeastQuestRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/BirthdayFeastQuestRewards.cs"
   },
@@ -9504,8 +9504,8 @@
       "merge shop"
     ],
     "path": "Seasonal/AkibaNewYear/YokaiNewYearMerge.cs",
-    "size": 23037,
-    "sha256": "97e7aab4565eec56aebcdffb163a00b9a35d8f59243bcb39af61cf56bc989c17",
+    "size": 22815,
+    "sha256": "bd5b27d512bf9fa50a81fae2a1db6fd4c8d9871dd9894eea9e019133802826cf",
     "fileName": "YokaiNewYearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YokaiNewYearMerge.cs"
   },
@@ -9573,8 +9573,8 @@
       "story"
     ],
     "path": "Seasonal/AkibaNewYear/LadyLua.cs",
-    "size": 3330,
-    "sha256": "192b01f0128c5d56d884e71d9064fb7afaf500f6df2f703b637a4fc74f6be572",
+    "size": 3158,
+    "sha256": "81491035d5d37cd0685e65601e04d63e19e52cde7db6c034c3eb93c7af98b854",
     "fileName": "LadyLua.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/LadyLua.cs"
   },
@@ -9609,8 +9609,8 @@
       "fortune"
     ],
     "path": "Seasonal/AkibaNewYear/DescendantsDesignMerge.cs",
-    "size": 11388,
-    "sha256": "8faf3393752a6cd4e5c78ba09fc855fc3674df466e248d4f07c6566ebdb1779a",
+    "size": 10558,
+    "sha256": "f9f074de423d3906933a99f8afb2f332ab236a981d9db657a81185fe07de61c5",
     "fileName": "DescendantsDesignMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/DescendantsDesignMerge.cs"
   },
@@ -9625,8 +9625,8 @@
       "merge-shop"
     ],
     "path": "Seasonal/AkibaNewYear/EtokounMerge.cs",
-    "size": 10488,
-    "sha256": "58d83a80d6c817dc8b1dfc232e579002099d3d40283b95180c4f1d3fd38faa50",
+    "size": 10072,
+    "sha256": "b1565d8700c30e16603f79bfe03251a7041dbdae915412b6a5945a5537f5d073",
     "fileName": "EtokounMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/EtokounMerge.cs"
   },
@@ -9644,8 +9644,8 @@
       "yue huang"
     ],
     "path": "Seasonal/AkibaNewYear/YokaiHunt.cs",
-    "size": 6769,
-    "sha256": "6d1f1ca97d6e2d0569aa18b5db31e5d72ac5bea6cfc5077f0db74cbc65ed4ad3",
+    "size": 6643,
+    "sha256": "daa5ae5825f148bcbe027c57c1c8d910b9af6ad697b07e6091a4a70886496642",
     "fileName": "YokaiHunt.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YokaiHunt.cs"
   },
@@ -9748,8 +9748,8 @@
       "lengjin"
     ],
     "path": "Seasonal/AkibaNewYear/Parades.cs",
-    "size": 4938,
-    "sha256": "c48563c9b288a053c5f2f762ae535136d12f580fdfd10614dd1bb5658203bd9d",
+    "size": 4536,
+    "sha256": "30e6f43f4e462500d1d6bd90b4a31336abd9ee5aa7a9a5494afc1ad3b6d6c2b6",
     "fileName": "Parades.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/Parades.cs"
   },
@@ -9867,8 +9867,8 @@
       "bow"
     ],
     "path": "Seasonal/LuckyDay/LuckyDayShamrockFairMerge.cs",
-    "size": 19225,
-    "sha256": "68c4752c0b7aa0f0d48fd1e1d90d7df5066b0295fe9cb3521711621f34fee709",
+    "size": 19011,
+    "sha256": "b18248794aa8b286325ed61bae2afb381930e449814033be27b15b18c87553a5",
     "fileName": "LuckyDayShamrockFairMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/LuckyDay/LuckyDayShamrockFairMerge.cs"
   },
@@ -10072,8 +10072,8 @@
       "member"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/AvastBadge[mem].cs",
-    "size": 8139,
-    "sha256": "3fcd236190388b86136333e154d449ba9ac84c29c52028f5c0f17d7cf995a6e9",
+    "size": 7489,
+    "sha256": "9d5fb234524834aad59d7ca4d93c90e537f64e103394c7fadf29b1ecd775d6fb",
     "fileName": "AvastBadge[mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/AvastBadge[mem].cs"
   },
@@ -10218,8 +10218,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 6018,
-    "sha256": "6cfb7ce65512fa26d2dbf88f93bf4870e6a9dfc04a9aca2f1244de662fd75b2f",
+    "size": 5154,
+    "sha256": "92a9cfc8344b316f01ab9f43a28b61706f614918ad6264e54b25156812a3f94c",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
@@ -10298,8 +10298,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CetoleonWarStory.cs",
-    "size": 8459,
-    "sha256": "9d26a9cdbc1f8daced425520267054231e066ebdd4c2fdc5a99d0e1eb2bd08a5",
+    "size": 8105,
+    "sha256": "8dad78d245128269e78ba7aec71bb5b781a33b6f31f290560547bb1aa7128cb9",
     "fileName": "CetoleonWarStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CetoleonWarStory.cs"
   },
@@ -10351,8 +10351,8 @@
       "dusk"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/GravelynsUndeadDoomParrot.cs",
-    "size": 1878,
-    "sha256": "6ae34998648c4ea282b078a31e5c0e2b54ba917996abe801a25d280c10c418b4",
+    "size": 1774,
+    "sha256": "5a2c78d661492da688f39b84373a261240069c5956955a5b640b94fd0b8cb9f2",
     "fileName": "GravelynsUndeadDoomParrot.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/GravelynsUndeadDoomParrot.cs"
   },
@@ -10515,8 +10515,8 @@
       "heros heart day"
     ],
     "path": "Seasonal/HerosHeartDay/LoveLockedMerge.cs",
-    "size": 4897,
-    "sha256": "9af22a9d8f46708780a22d480aabecabcaa3bc7f3487b81c71ea5cc391605324",
+    "size": 4731,
+    "sha256": "57bb9eeec7b9b936081dbd42f05ca8c79774a0b0b40cdc90b8c05ee1b47d4c05",
     "fileName": "LoveLockedMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/LoveLockedMerge.cs"
   },
@@ -10531,8 +10531,8 @@
       "heros heart day"
     ],
     "path": "Seasonal/HerosHeartDay/WubblesMerge.cs",
-    "size": 6423,
-    "sha256": "16c20ad64b15663bf43c438d6e6a5fa7c9c8f2058965d48ffbca198124d063d3",
+    "size": 6035,
+    "sha256": "4b9e3a389cd19228487ae239f5617a709e003d9ceca89adf3a2b18042650b983",
     "fileName": "WubblesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/WubblesMerge.cs"
   },
@@ -10658,8 +10658,8 @@
       "seasonal"
     ],
     "path": "Seasonal/HerosHeartDay/BeleensGiftsMerge.cs",
-    "size": 9789,
-    "sha256": "db127539052d3c47f341453fd7f175b5d75543b94dd4b9829b779b4104723416",
+    "size": 8459,
+    "sha256": "c9ffe03b07213d38aba4eab3fe89dbc47221319bde0494566b8842869ff16062",
     "fileName": "BeleensGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/BeleensGiftsMerge.cs"
   },
@@ -10708,8 +10708,8 @@
       "beleen"
     ],
     "path": "Seasonal/HerosHeartDay/GemsofLoveMerge.cs",
-    "size": 10962,
-    "sha256": "81626d797afa305c9a5511d38ec6493cd333e9fa460e4493d76e70b1b245989d",
+    "size": 10686,
+    "sha256": "9c1c5770ceec7e5ab88d83e9a2cebb342112239afe69cb8f8b746ec33794d8b0",
     "fileName": "GemsofLoveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/GemsofLoveMerge.cs"
   },
@@ -10757,8 +10757,8 @@
       "espelho"
     ],
     "path": "Seasonal/HerosHeartDay/YguasuFallsMerge.cs",
-    "size": 9201,
-    "sha256": "8615542209bfb7d00f31ef84bddcc7ab31115ede32b7ea927e0b357ae6668e47",
+    "size": 8757,
+    "sha256": "369eb59c6a4f7f40a4f44147d8cb5ce9cdc3cfdfe8927f87e5c03d191fc18457",
     "fileName": "YguasuFallsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/YguasuFallsMerge.cs"
   },
@@ -10878,8 +10878,8 @@
       "cherub"
     ],
     "path": "Seasonal/HerosHeartDay/BigDaddysWardrobeMerge.cs",
-    "size": 8478,
-    "sha256": "48272dfd8330bc2ab7e503ab09c455fd019c791fe276f377359ad7533bf6a614",
+    "size": 8146,
+    "sha256": "e47ea4f2d90262cd298526b6bdc93c9d731ae4b1131e8aa4ffeedcd1dd53f9db",
     "fileName": "BigDaddysWardrobeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/BigDaddysWardrobeMerge.cs"
   },
@@ -10994,8 +10994,8 @@
       "seasonal"
     ],
     "path": "Seasonal/AqwBirthday/20thAnniversary.cs",
-    "size": 7625,
-    "sha256": "1c04967a0fb1eaf07f14137cb067263c56f8ebbecc299efca2a89ff7ae2fdcab",
+    "size": 7405,
+    "sha256": "dfbc86fb9e4b035f3dda241de96db6d65215bc20ebf0e0749c968b130542bec2",
     "fileName": "20thAnniversary.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/20thAnniversary.cs"
   },
@@ -11026,8 +11026,8 @@
       "aqw-anniversary"
     ],
     "path": "Seasonal/AqwBirthday/AspiringNecromancerMerge.cs",
-    "size": 8159,
-    "sha256": "b0e871dd965033161abad0ac357af424c4f79f47c814c76b4d369d109b8dcdc1",
+    "size": 7937,
+    "sha256": "7df8956f51b46e2854d8b174c787758d252fd34f7137658e0dd153129d9d9aac",
     "fileName": "AspiringNecromancerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/AspiringNecromancerMerge.cs"
   },
@@ -11123,8 +11123,8 @@
       "euphoria"
     ],
     "path": "Seasonal/AqwBirthday/17thBirthdayCastlePartyMerge.cs",
-    "size": 16370,
-    "sha256": "29db67bbc71a3eb4e3abf3ce2edef8205abd26a931b97021ca3995631a20be5f",
+    "size": 15896,
+    "sha256": "b189e86396f964dec9d08ce10dc0698f289a2e189892c7e47ef791f66d6bbb38",
     "fileName": "17thBirthdayCastlePartyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/17thBirthdayCastlePartyMerge.cs"
   },
@@ -11151,8 +11151,8 @@
       "seasonal"
     ],
     "path": "Seasonal/AqwBirthday/AspiringNecromancer.cs",
-    "size": 2775,
-    "sha256": "8401e093f26bb0d41932bb344591518199921f67f4d2c38963c0917e81398dfa",
+    "size": 2681,
+    "sha256": "ed21a977254676fbc6364fe65513b9a46976a7a02ea2fd3142e73284fb5b6aef",
     "fileName": "AspiringNecromancer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/AspiringNecromancer.cs"
   },
@@ -11165,8 +11165,8 @@
       "aqw-anniverasary"
     ],
     "path": "Seasonal/AqwBirthday/BeleensPartyPresentsMerge.cs",
-    "size": 12043,
-    "sha256": "176ef74d5425fdd05bad0732c399a188bf6b55d3aaa4cd3101f2e1df7cb5b26c",
+    "size": 11933,
+    "sha256": "044d9cca9e71ab533815394be60e7efd82936e6f315ba63676a08ade6d283329",
     "fileName": "BeleensPartyPresentsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/BeleensPartyPresentsMerge.cs"
   },
@@ -11179,8 +11179,8 @@
       "aqw-anniversary"
     ],
     "path": "Seasonal/AqwBirthday/SweatBirthdayTreatsRewards.cs",
-    "size": 2166,
-    "sha256": "46e8772d6a5a6b0c37ac2aebb5aaa6bd5814a4aac40078dfcfcbd1a89cbe5212",
+    "size": 2056,
+    "sha256": "0aa5e804d383c259d5ac3ff14b896a0f80726ab3687c98dab14e399061573409",
     "fileName": "SweatBirthdayTreatsRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/SweatBirthdayTreatsRewards.cs"
   },
@@ -11288,8 +11288,8 @@
       "may-the-4th"
     ],
     "path": "Seasonal/MayThe4th/MurderMoonStory.cs",
-    "size": 4765,
-    "sha256": "70cb2ff41b4f9ee524a7b7e0e59794eafec3ae49ef279094fc5d2f9d592fc204",
+    "size": 4639,
+    "sha256": "8904b4a9101ce2fefbef924ad31e8f8ec0f35caa547487fc8a6c0b69e3e3e906",
     "fileName": "MurderMoonStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/MurderMoonStory.cs"
   },
@@ -11340,8 +11340,8 @@
       "glst"
     ],
     "path": "Seasonal/MayThe4th/GL24KsLootMerge.cs",
-    "size": 9787,
-    "sha256": "e187ad34da1a8038eb64f2e04cfde76f57ca01ba7bbd4a55c276148e25c5d8b8",
+    "size": 9399,
+    "sha256": "3a3aded68a6b39cce853d95712d73bd3ee9245158d19e60959f3740966a6ca6b",
     "fileName": "GL24KsLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/GL24KsLootMerge.cs"
   },
@@ -11381,8 +11381,8 @@
       "hideout"
     ],
     "path": "Seasonal/MayThe4th/TwiggusGearMerge.cs",
-    "size": 10817,
-    "sha256": "a6b4f290937acd605845d9b038a4bc80702aa8fc72ebe44c96a0c3b5da6cdcea",
+    "size": 10069,
+    "sha256": "0bc95fbcd3505cc9b1ab2b045de1490d8b157b01ecc2830ffe0626f3745a26a8",
     "fileName": "TwiggusGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/TwiggusGearMerge.cs"
   },
@@ -11398,8 +11398,8 @@
       "may-the-4th"
     ],
     "path": "Seasonal/MayThe4th/MurderMoonMerge.cs",
-    "size": 14472,
-    "sha256": "2f57c00074aee32c392f42774e7033b0b80dd3cd3c3f8456266b33a40ad54db8",
+    "size": 13752,
+    "sha256": "43159a1eae094e7e4a5dd22a147fb2172b5cc006f8ca159cab4a831461b8976d",
     "fileName": "MurderMoonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/MurderMoonMerge.cs"
   },
@@ -11441,8 +11441,8 @@
       "double"
     ],
     "path": "Seasonal/MayThe4th/ZodasMerge.cs",
-    "size": 13106,
-    "sha256": "0479060409fa4cf6ffefb72990bc3b13aeb5569e605a096673b81a25c779d92a",
+    "size": 12608,
+    "sha256": "30a6da2a10571770d25c496a9c9b3f829e5a0aa9a9043a8bb9620333ba5ad396",
     "fileName": "ZodasMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/ZodasMerge.cs"
   },
@@ -11501,8 +11501,8 @@
       "consular"
     ],
     "path": "Seasonal/MayThe4th/AE25sLootMerge.cs",
-    "size": 6478,
-    "sha256": "4eb04ff8a54f901a3dc48dfecb74851d8b9f6f1e2fac7d47ec57fdf1a54643d4",
+    "size": 6264,
+    "sha256": "c5f9dcf318d12cce162220e7022dd1199de8a52f247421fdea1f023568581831",
     "fileName": "AE25sLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/AE25sLootMerge.cs"
   },
@@ -11632,8 +11632,8 @@
       "fans"
     ],
     "path": "Seasonal/IndonesianDay/RoyalWentiraMerge.cs",
-    "size": 9104,
-    "sha256": "df886df368954f711e48c8d7aee4eb0e55fd6a3524c1a91e10e667958b45936e",
+    "size": 8938,
+    "sha256": "bc5b93d02d5e694eebfa5616d5d02f3bca6cb601404a680db659723bfd8c6e4f",
     "fileName": "RoyalWentiraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/IndonesianDay/RoyalWentiraMerge.cs"
   },
@@ -11914,8 +11914,8 @@
       "ebilmegamall"
     ],
     "path": "Seasonal/BlackFriday/EbilMegaMallStory.cs",
-    "size": 3393,
-    "sha256": "df9b13bbc5447c294c9eaa014551abf45b14de6a16ac73f55207e5a657f15e17",
+    "size": 3299,
+    "sha256": "389930cf970f1cbeec92d401b740fe65e957323d8380921c0fd51307de55b95c",
     "fileName": "EbilMegaMallStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallStory.cs"
   },
@@ -11928,8 +11928,8 @@
       "seasonal"
     ],
     "path": "Seasonal/BlackFriday/TechnocasterMerge.cs",
-    "size": 7553,
-    "sha256": "3808f3879daf53d9179c5c2b203d89728c9b67bd71a4e7f2e97733778bdd673e",
+    "size": 7249,
+    "sha256": "ea7ecfd0ea7d6d341624e1b74d0cc771d31e2dedcbd0e602e2bde8e42258f30a",
     "fileName": "TechnocasterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/TechnocasterMerge.cs"
   },
@@ -11952,8 +11952,8 @@
       "bow"
     ],
     "path": "Seasonal/BlackFriday/HiddenDuatMerge.cs",
-    "size": 7064,
-    "sha256": "7a8eaad6e099260a5e584abca7ea5f83073ed33fba1e22c3e71dca8a704516aa",
+    "size": 6622,
+    "sha256": "a63a7c817bd752c554b2d802e610fcce1458143ad20c946751a151a9797e4867",
     "fileName": "HiddenDuatMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/HiddenDuatMerge.cs"
   },
@@ -11983,8 +11983,8 @@
       "seasonal"
     ],
     "path": "Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs",
-    "size": 6478,
-    "sha256": "a3e600b6d5ed60e093e0693050e94f0e24db06f84a1718c4252380b05eba505a",
+    "size": 6066,
+    "sha256": "06df61090dbcc7204ec736e1641ac6aae17b759ef252389665ff9060efba3075",
     "fileName": "ShadowDragonShinobiMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs"
   },
@@ -12022,8 +12022,8 @@
       "loyal"
     ],
     "path": "Seasonal/BlackFriday/ShadowDuatMerge.cs",
-    "size": 8694,
-    "sha256": "9ee5836a87927df2c31d5661a57a31f94b473454e3bc0a4778b1882a22d31a12",
+    "size": 8528,
+    "sha256": "2b807300fb704f1b78be48cb98929ff000d34a1df16520a352b791101e67aaa2",
     "fileName": "ShadowDuatMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowDuatMerge.cs"
   },
@@ -12103,8 +12103,8 @@
       "achievement"
     ],
     "path": "Seasonal/BlackFriday/EbilMegaMallMerge.cs",
-    "size": 18485,
-    "sha256": "6b02d1df22a2129bde0c612376bd6a73799fb97f0e267e8142683eee5b8fc299",
+    "size": 18319,
+    "sha256": "6ebe12200543effc099e5be2061b3e11e6a334d3482028160a764a3d1fd4cfeb",
     "fileName": "EbilMegaMallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallMerge.cs"
   },
@@ -12152,8 +12152,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 39966,
-    "sha256": "9fef81c0c2bc8c271d3e16ece2bbcde393f317f1f8179802efa2da534f6272dd",
+    "size": 39989,
+    "sha256": "63ec18e84888f20d19c4c0be4c6d3589d798fe5fc03c26a2c59edaeca1e1892b",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -12271,8 +12271,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 24119,
-    "sha256": "1167e0aa32f1fcc0e269f04fa714fe48d5b18fa7cd7b3411f35818b7927f1b34",
+    "size": 23559,
+    "sha256": "f8037b7e6411f7aaa6ec2d207303a82ea31a8e03d1928f52b9ae29fec32f5e2f",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
@@ -12294,8 +12294,8 @@
       "fifty one"
     ],
     "path": "Other/Various/SinoftheUnderworld(NoInsignia).cs",
-    "size": 7384,
-    "sha256": "64a2d38064c08e2a52772d4556036818cd654e8e9d0227e568294ad538157653",
+    "size": 7128,
+    "sha256": "658888b876d3db34f5d817a91fe2a2b4f887ed53347a73d582cdafd50bb310d9",
     "fileName": "SinoftheUnderworld(NoInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/SinoftheUnderworld(NoInsignia).cs"
   },
@@ -12614,8 +12614,8 @@
       "set"
     ],
     "path": "Other/Pets/SerpentineLarvae.cs",
-    "size": 2996,
-    "sha256": "6d0683ae42ffb11f1249611350e3dec6fc8561518fddec63adb733e78cec8898",
+    "size": 2532,
+    "sha256": "ef4dc6aab90b71fb18e5bb3e4ff9b6e961b357ae17f25498c632f30ddaafc0e0",
     "fileName": "SerpentineLarvae.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Pets/SerpentineLarvae.cs"
   },
@@ -12690,8 +12690,8 @@
       "null"
     ],
     "path": "Other/Weapons/EnchantedRodofGreasedLightning.cs",
-    "size": 770,
-    "sha256": "e039e5ea1763bb406642ef301971fa079c82299bf00ef8d60968a8abb79c6ceb",
+    "size": 712,
+    "sha256": "d03fcc46ea3e0625bcfbb44345af4875d11780db2f2ee776d6b8d0c8a7ecfe8c",
     "fileName": "EnchantedRodofGreasedLightning.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/EnchantedRodofGreasedLightning.cs"
   },
@@ -12702,8 +12702,8 @@
       "null"
     ],
     "path": "Other/Weapons/FortitudeAndHubris.cs",
-    "size": 4457,
-    "sha256": "f94a9935b67fc527030dd8bca0fe7970892729a1ab624394e000d969af17ee9d",
+    "size": 4253,
+    "sha256": "89a6540a20ad6088fed12cc362d6a49c3374fccfff79c345ef468dcfe5be0457",
     "fileName": "FortitudeAndHubris.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/FortitudeAndHubris.cs"
   },
@@ -12743,8 +12743,8 @@
       "paladin"
     ],
     "path": "Other/Weapons/ShadowReaperOfDoom.cs",
-    "size": 1483,
-    "sha256": "c4cc38b7d2f1d3c77454686d051461c8d6415b04f0f932618fbba0fc2eb426bc",
+    "size": 1401,
+    "sha256": "20e8c24ea596e65b0f405334103adb03bea86654b86e2d413dd49a78f855a071",
     "fileName": "ShadowReaperOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/ShadowReaperOfDoom.cs"
   },
@@ -12779,8 +12779,8 @@
       "null"
     ],
     "path": "Other/Weapons/BurningBlade.cs",
-    "size": 821,
-    "sha256": "b8f81f521867b6b8d830e6963f21cfa4cc78dce9975239273deaff17112c84d6",
+    "size": 727,
+    "sha256": "cd1106d3fe50d8af740467e7a542d1ffde2734d1c31fab00a2fef04b32dbb74d",
     "fileName": "BurningBlade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/BurningBlade.cs"
   },
@@ -12803,8 +12803,8 @@
       "null"
     ],
     "path": "Other/Weapons/VoidAvengerScythe.cs",
-    "size": 6572,
-    "sha256": "ac3fac73b4ad2a7a82edf489d4e14d8aba88241e6fef44dd688c0ab5b2a50e67",
+    "size": 6456,
+    "sha256": "d4e7225fa977aed1c8ee90e29a631e365e47a82bd05557b359079f0018c2c857",
     "fileName": "VoidAvengerScythe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/VoidAvengerScythe.cs"
   },
@@ -12815,8 +12815,8 @@
       "null"
     ],
     "path": "Other/Weapons/ExaltedApotheosisPreReqs.cs",
-    "size": 8378,
-    "sha256": "220839db1f136e20221afb9b06e77cc397f70cb6f6e002b80378f21e0ee776d4",
+    "size": 7346,
+    "sha256": "6da9eee934a6d89198f6fcee259157ca11c395f3a0351ea9bd0feb22fc5ba87d",
     "fileName": "ExaltedApotheosisPreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/ExaltedApotheosisPreReqs.cs"
   },
@@ -12827,8 +12827,8 @@
       "null"
     ],
     "path": "Other/Weapons/PinkBladeofDestruction.cs",
-    "size": 2814,
-    "sha256": "661d4b00056ba94409d1952a9872e62842559c1aaba617246da9da47bdab4a6e",
+    "size": 2626,
+    "sha256": "e5290218478216954e9b28e5e013e54ce864a8604743f69a3b288301f9d7adf8",
     "fileName": "PinkBladeofDestruction.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/PinkBladeofDestruction.cs"
   },
@@ -12866,8 +12866,8 @@
       "null"
     ],
     "path": "Other/Weapons/CyseroItemUpgradeQuests.cs",
-    "size": 12575,
-    "sha256": "04c7891a9a9df2e8a479e917ad9e06b65bb229932c1a87dcb4a50e3eb89d61aa",
+    "size": 12261,
+    "sha256": "40a5f7d9f7aa093a4896bf666f25c1ee75aa064a0d1f1da90d1ba8d28f6ac308",
     "fileName": "CyseroItemUpgradeQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CyseroItemUpgradeQuests.cs"
   },
@@ -12902,8 +12902,8 @@
       "null"
     ],
     "path": "Other/Weapons/ChaorrupterUnlocked.cs",
-    "size": 2483,
-    "sha256": "51e5007924aaa6d7f49217307c6bd40d451495d5d073ab755e5d1fb44269435e",
+    "size": 1915,
+    "sha256": "14eda8134888d9e3e02e398516a215457a155536f79a3b1a6b425cb973211b96",
     "fileName": "ChaorrupterUnlocked.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/ChaorrupterUnlocked.cs"
   },
@@ -13150,8 +13150,8 @@
       "the point sword"
     ],
     "path": "Other/TreasureHunts/DarkScroll.cs",
-    "size": 3520,
-    "sha256": "59647a02e40459b4b06e648540fbd5900d0943cdd77a80cddc770e2385898f88",
+    "size": 3426,
+    "sha256": "b24c5c5294e5114f662a3440477598ea99dbaa007c45e1d411c0a98d0f054203",
     "fileName": "DarkScroll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/TreasureHunts/DarkScroll.cs"
   },
@@ -13200,8 +13200,8 @@
       "null"
     ],
     "path": "Other/OnePercentDrops/LowDRArmors.cs",
-    "size": 3723,
-    "sha256": "911f300142870ff6682ff463de63a0f1343e2cc1a37ea55331c96794f7122b30",
+    "size": 3489,
+    "sha256": "2061487b5bf55281aeb60362dcebbdba390c5e43fcc1697f9d68832b284ace3e",
     "fileName": "LowDRArmors.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/OnePercentDrops/LowDRArmors.cs"
   },
@@ -13212,8 +13212,8 @@
       "null"
     ],
     "path": "Other/OnePercentDrops/LowDRHelmets.cs",
-    "size": 4564,
-    "sha256": "004479684dbcae5e5651ffc26739f1a90ccae20e20ed5f6cfa39dd542bf52478",
+    "size": 4408,
+    "sha256": "9e08e57ecafef019fd7ca2f68f8503872ef6525fe8fb39acbf12309030f4f9b8",
     "fileName": "LowDRHelmets.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/OnePercentDrops/LowDRHelmets.cs"
   },
@@ -13238,8 +13238,8 @@
       "drop-rate"
     ],
     "path": "Other/OnePercentDrops/LowDRCapes.cs",
-    "size": 4055,
-    "sha256": "087c35dfe754aa82fd933455deea216211253752b21f2ef7111ad4a5bb032f76",
+    "size": 3899,
+    "sha256": "2ffc92773de725ad6d9eba4b7b660b27ff760c74abaa0f7c6ce2a55beb8acf84",
     "fileName": "LowDRCapes.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/OnePercentDrops/LowDRCapes.cs"
   },
@@ -13250,8 +13250,8 @@
       "null"
     ],
     "path": "Other/OnePercentDrops/LowDRWeapons.cs",
-    "size": 9093,
-    "sha256": "699c51148b88d546d5204553416ed746afc0a9bff5d62d45552f2dc37279e881",
+    "size": 8281,
+    "sha256": "4a195372507b1f8c510a50becbe41bf3cac5bd55e24d68bd9f6432d7c3055523",
     "fileName": "LowDRWeapons.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/OnePercentDrops/LowDRWeapons.cs"
   },
@@ -13408,8 +13408,8 @@
       "null"
     ],
     "path": "Other/Badges/ConZombieSlayer.cs",
-    "size": 3202,
-    "sha256": "3cd3d5b6a1436f840add25cd4d1bdaa56f32d7c0bb6b80dfefa42d37c96a5146",
+    "size": 3046,
+    "sha256": "9eb8bc093193757be2e962e5d36a3b52059bf822200288b30c9b687cc5604fd5",
     "fileName": "ConZombieSlayer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/ConZombieSlayer.cs"
   },
@@ -13596,8 +13596,8 @@
       "null"
     ],
     "path": "Other/Badges/SkyPirateSlayerBadge.cs",
-    "size": 1535,
-    "sha256": "00206fb76255445a0f56f360645a25225eaf7491ded19a02e6b4463e2b1ca302",
+    "size": 1441,
+    "sha256": "39d824ca4ab51d9aa706d56085ac2fc4f1b1054a35c953fbc438b67c8ff581e2",
     "fileName": "SkyPirateSlayerBadge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/SkyPirateSlayerBadge.cs"
   },
@@ -13772,8 +13772,8 @@
       "zodiac"
     ],
     "path": "Other/ZodiacQuests/VerdantVirgoRewards.cs",
-    "size": 1923,
-    "sha256": "1022001978ee11a33e6013587f3d9d02b35bdc02134215f4fcd2dd17c8d379c1",
+    "size": 1647,
+    "sha256": "c14a51a1a7e22c50b9cf1c672faa4dbe6342ca7fadeb92ab196eb26f3b862626",
     "fileName": "VerdantVirgoRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ZodiacQuests/VerdantVirgoRewards.cs"
   },
@@ -13807,8 +13807,8 @@
       "zodiac"
     ],
     "path": "Other/ZodiacQuests/AriesChrysomallusRewards.cs",
-    "size": 2177,
-    "sha256": "c7c6454f31f4701e96f332829f72a2899bb8df733d31b57fd19914e87ab92c16",
+    "size": 1963,
+    "sha256": "f23bfba8d3cef2f65706cf27ea06bc89a7fe437ffb1d2d3c6e481cceacc41aa6",
     "fileName": "AriesChrysomallusRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ZodiacQuests/AriesChrysomallusRewards.cs"
   },
@@ -13826,8 +13826,8 @@
       "zodiac"
     ],
     "path": "Other/ZodiacQuests/HarmonicSavantRewards.cs",
-    "size": 1967,
-    "sha256": "d66e790cf851b41a32ca7648bc610050e9d878700d82a5af7ca18fc967604bfd",
+    "size": 1829,
+    "sha256": "80cba526055163530a490357ceec7d3cfccc5c5ad923da4938609dba884945de",
     "fileName": "HarmonicSavantRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ZodiacQuests/HarmonicSavantRewards.cs"
   },
@@ -13844,8 +13844,8 @@
       "zodiac"
     ],
     "path": "Other/ZodiacQuests/LeonineRegaliaRewards.cs",
-    "size": 1961,
-    "sha256": "9353f3503164df911317840956f255cbe87ae72b8a68572256317e89b45e6bc2",
+    "size": 1685,
+    "sha256": "0e57eee08ef2bd7aaf39a991c55f4519511d75844bb9ae2eeafdbbe915b17c4c",
     "fileName": "LeonineRegaliaRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ZodiacQuests/LeonineRegaliaRewards.cs"
   },
@@ -13862,8 +13862,8 @@
       "zodiac"
     ],
     "path": "Other/ZodiacQuests/PiscesVenarisMaterRewards.cs",
-    "size": 2092,
-    "sha256": "4f5c11ecba7196b538d067e65f3d6fe9a1dc1a4503f21a939a00f5c75afa3cbc",
+    "size": 1736,
+    "sha256": "f3af5a86269dc640887b319d80db727f8c56c06f2952028eef22d0d757371dfa",
     "fileName": "PiscesVenarisMaterRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/ZodiacQuests/PiscesVenarisMaterRewards.cs"
   },
@@ -13877,8 +13877,8 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 34947,
-    "sha256": "3f923f6c8f05c4cbacfe8590eb9f63de7b2e48777f626da5e16ebc6db494e76b",
+    "size": 34613,
+    "sha256": "31f9f3a35c6bb75b4e1e419ac847af59e11ed968b5d766ba018882f03009bf65",
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -13946,8 +13946,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CelestialRealmMerge.cs",
-    "size": 11869,
-    "sha256": "3003fe42b3f93f015942cd123fa5d0a7de892cae34831dc919bfa9f769390135",
+    "size": 11427,
+    "sha256": "d90a4f044048c66780d08ef827d6c98b0e44a2e986f2e3ec05c51612b4041daf",
     "fileName": "CelestialRealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CelestialRealmMerge.cs"
   },
@@ -13958,8 +13958,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowSlayerKMerge.cs",
-    "size": 13614,
-    "sha256": "5e429d524d3a6435ce124ae9860759a20e7d67df329a8d541453e72c8bd68254",
+    "size": 12764,
+    "sha256": "a068716e54a8cd7a387a5cde489a27744bcf8b965a5abd8689a9fbbf0ac893dc",
     "fileName": "ShadowSlayerKMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ShadowSlayerKMerge.cs"
   },
@@ -13985,8 +13985,8 @@
       "stone"
     ],
     "path": "Other/MergeShops/AshfallCampMerge.cs",
-    "size": 12652,
-    "sha256": "5d0faab3ad60bb7b8505c6ede2bd6b341340a07c26a46e7329c3c69b0ecedda6",
+    "size": 11850,
+    "sha256": "e8847fcaff9b09d3b0d1430d783a02118363889892eee94b1da1d6cd42778113",
     "fileName": "AshfallCampMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AshfallCampMerge.cs"
   },
@@ -14028,8 +14028,8 @@
       "elements"
     ],
     "path": "Other/MergeShops/FableForestMergeShop[Mem].cs",
-    "size": 10852,
-    "sha256": "35bd96535263379d2ea80565c635df9d46f28f2c6eefe2b3cc8efda471c324ec",
+    "size": 10520,
+    "sha256": "9ba9ab97fc0df47059691da077930e9eab652ca046d7d91c316e8ba6279bac30",
     "fileName": "FableForestMergeShop[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FableForestMergeShop[Mem].cs"
   },
@@ -14138,8 +14138,8 @@
       "amp"
     ],
     "path": "Other/MergeShops/ThelimaJewelersMerge.cs",
-    "size": 13992,
-    "sha256": "60ccef31e411a915238ce06772f686f4611056585bfbcdb749560e85556498df",
+    "size": 13826,
+    "sha256": "10e0c10df4abeba6f5629c909bc47f537c9307fdc5457c5639866ea4a326d37e",
     "fileName": "ThelimaJewelersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ThelimaJewelersMerge.cs"
   },
@@ -14234,8 +14234,8 @@
       "visor"
     ],
     "path": "Other/MergeShops/StarsincMerge.cs",
-    "size": 9331,
-    "sha256": "19c50bdac5e95924388c221e154a23e354229471aebe206c78c1ef8774cf1b0f",
+    "size": 8695,
+    "sha256": "2b59dbccee1b476f81ab5b1fd371e0a4f54dcd0159364576319cd1f57f9209e8",
     "fileName": "StarsincMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/StarsincMerge.cs"
   },
@@ -14298,8 +14298,8 @@
       "horned"
     ],
     "path": "Other/MergeShops/DradensMerge.cs",
-    "size": 7538,
-    "sha256": "29261c9ad0ff600adaae73c5ae11c3cca54ece3b59736db32f1f92257eb9a18f",
+    "size": 6624,
+    "sha256": "fb7ec3a08f32024a327b953202194d33d684856825ba6eb792acf050cab4c59f",
     "fileName": "DradensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DradensMerge.cs"
   },
@@ -14379,8 +14379,8 @@
       "greatswords"
     ],
     "path": "Other/MergeShops/ColdThunderMerge.cs",
-    "size": 9959,
-    "sha256": "3e41d2cc663929763fa29b7295fbd53c5a75dbed8c8b5c2ca78c2dd60b2bf815",
+    "size": 9817,
+    "sha256": "80fd5b4f6669da2ac12b59f0f881ff3603ab769ac9c3db74ab98a48e7dd85386",
     "fileName": "ColdThunderMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ColdThunderMerge.cs"
   },
@@ -14427,8 +14427,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ChronoMerge.cs",
-    "size": 9509,
-    "sha256": "22d3bb27fe39270ca0b16862a4e09b86e3346dc1002ea5ed14c7a527aa06159f",
+    "size": 9343,
+    "sha256": "1fc01c16d89bc7cb75fa2a84e922220d305de594b426d71ad98f97445026e46c",
     "fileName": "ChronoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ChronoMerge.cs"
   },
@@ -14439,8 +14439,8 @@
       "null"
     ],
     "path": "Other/MergeShops/FirePlaneWarMerge.cs",
-    "size": 11230,
-    "sha256": "5afe091b048d6ee2c05ad9c1730028e714be2cd928a449d38ab8e9b7da182fc6",
+    "size": 10150,
+    "sha256": "272af4d5996a7ef39963fb9a7f0f55b3ac6cbb173ce9d7fb62e651a78cb4949d",
     "fileName": "FirePlaneWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FirePlaneWarMerge.cs"
   },
@@ -14485,8 +14485,8 @@
       "horns"
     ],
     "path": "Other/MergeShops/InfernalArenaMerge.cs",
-    "size": 13054,
-    "sha256": "8068c1fe4247bf12dd3d6891687657cb4b80379dd1d27a214eb609110e5cd303",
+    "size": 12058,
+    "sha256": "dad0094405fb98b85b7e586543e3725f8158155a98f6d13a0ad079887a8aa567",
     "fileName": "InfernalArenaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InfernalArenaMerge.cs"
   },
@@ -14524,8 +14524,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CharonsPurgeMerge.cs",
-    "size": 9287,
-    "sha256": "0fc4a978c92277dba9b60d1ef8335512a597bd6026d0cd5b00884afc178f1a60",
+    "size": 9149,
+    "sha256": "0add0c8b3bb64c87a392fe5d40ff03125e311b8f749df96b539b407b1cf83c47",
     "fileName": "CharonsPurgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CharonsPurgeMerge.cs"
   },
@@ -14545,8 +14545,8 @@
       "paradise"
     ],
     "path": "Other/MergeShops/FrozenQueenMerge.cs",
-    "size": 4906,
-    "sha256": "c46fb763a30fa9c448056527ba9946b942dbb30461c7a2e408e304dc6b6e672e",
+    "size": 4692,
+    "sha256": "3e2440a7d4c21739aff86f8df2e2d0274697f47f5680ed4e748d20bb43b651a7",
     "fileName": "FrozenQueenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FrozenQueenMerge.cs"
   },
@@ -14557,8 +14557,8 @@
       "null"
     ],
     "path": "Other/MergeShops/EctocaveMerge.cs",
-    "size": 7693,
-    "sha256": "e6acd79f7a2508bc9e2e14baf97b459046e5f33abff5788d2c6509fadba5dbee",
+    "size": 7527,
+    "sha256": "24bd7372e1a3481d7605b3a7d940c260e2115fac4d92afc2b7dc7ea48db2f94d",
     "fileName": "EctocaveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/EctocaveMerge.cs"
   },
@@ -14569,8 +14569,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CelestialChallengerMerge.cs",
-    "size": 5239,
-    "sha256": "51ca591f060837338aa3db8df36709753c4ce8a5fc3c3a6283b6d2cce4de88f4",
+    "size": 4907,
+    "sha256": "fd4ae0a1756ed2cffe4f773ade0a031043d80180de37bec47c2ca107e9451753",
     "fileName": "CelestialChallengerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CelestialChallengerMerge.cs"
   },
@@ -14625,8 +14625,8 @@
       "null"
     ],
     "path": "Other/MergeShops/NightmareCarnaxMerge.cs",
-    "size": 11697,
-    "sha256": "c097085a220a36d4823374003a1b374c0bc301be9a5c4c5078794fb62f68d846",
+    "size": 11507,
+    "sha256": "8aa920478800c50ca05d0b0214917929a46bfaaa056296d3842914b70f2bbc73",
     "fileName": "NightmareCarnaxMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NightmareCarnaxMerge.cs"
   },
@@ -14637,8 +14637,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TachyonMerge.cs",
-    "size": 8381,
-    "sha256": "0e000645b8e141a8e766920779b8927aa8d03a22d9bd1f84e9f6e3b231d767ce",
+    "size": 7773,
+    "sha256": "b71bd0a73ce0342504806728e0be0d436985c4aacb7ba2304ffcbf9e81224fc3",
     "fileName": "TachyonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TachyonMerge.cs"
   },
@@ -14701,8 +14701,8 @@
       "zorbak"
     ],
     "path": "Other/MergeShops/LightMerge.cs",
-    "size": 12347,
-    "sha256": "0c07123a6abae2ec13dc51460e22853a3a7ddbb495f9fdf3a35421d1d6cb26d4",
+    "size": 12153,
+    "sha256": "a7e3ab8ed27b63df6515dd45195929b41be6e75aca5656adb68a4c0ade83bb2e",
     "fileName": "LightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LightMerge.cs"
   },
@@ -14743,8 +14743,8 @@
       "null"
     ],
     "path": "Other/MergeShops/DarkbloodWarMerge.cs",
-    "size": 6362,
-    "sha256": "5c0f33a8816d9dbefbae1d9e897d8fccd7d9efd7bc010a34c99e068260cfa208",
+    "size": 6168,
+    "sha256": "761a3a427583ca4d8d97f8d875388e6ac2cad8615e861d7c9cf3a8f796018257",
     "fileName": "DarkbloodWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DarkbloodWarMerge.cs"
   },
@@ -14787,8 +14787,8 @@
       "bow"
     ],
     "path": "Other/MergeShops/CrulonsWeddingMerge.cs",
-    "size": 9116,
-    "sha256": "239a6b4f6667722d32809f69c2acafaccd994f48f94bbd1de196e9c9b8e4ce5b",
+    "size": 8978,
+    "sha256": "c5100f2da236456fdcc86ea53e7f3e0a5cd94e8afbe3a04c444866a9de9092f3",
     "fileName": "CrulonsWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CrulonsWeddingMerge.cs"
   },
@@ -14822,8 +14822,8 @@
       "banes"
     ],
     "path": "Other/MergeShops/MoltenForgeMerge.cs",
-    "size": 6555,
-    "sha256": "97fcf203dd7e1870dc68fe7d817ed901d38759bae8cd36f224549234329884ca",
+    "size": 6167,
+    "sha256": "0f34fcf824a5f5e793865c790bb8d44423ea2563094719911097f3a7f0de3f25",
     "fileName": "MoltenForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MoltenForgeMerge.cs"
   },
@@ -14902,8 +14902,8 @@
       "reavers"
     ],
     "path": "Other/MergeShops/CelestialSpoilsMerge.cs",
-    "size": 12137,
-    "sha256": "571409f681dbe35e39a2e7204c937013b6dbbf486b7210dc47e35a435308769c",
+    "size": 11473,
+    "sha256": "dd153c636c8baad0c061b7c3f3dd12267280c5454fe2d2830a430531f889801e",
     "fileName": "CelestialSpoilsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CelestialSpoilsMerge.cs"
   },
@@ -14914,8 +14914,8 @@
       "null"
     ],
     "path": "Other/MergeShops/DreadspaceReplicatorMerge.cs",
-    "size": 12250,
-    "sha256": "bf2f814705b154019215fa0f8550b8cfcb07d1fc9fb35f98a7d78633a7cf25c4",
+    "size": 11974,
+    "sha256": "1e2dfba569a1b7d3d2b8efbb8381499cad4f7992dbcbfc045cd90d60d324ef66",
     "fileName": "DreadspaceReplicatorMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DreadspaceReplicatorMerge.cs"
   },
@@ -14954,8 +14954,8 @@
       "arrow"
     ],
     "path": "Other/MergeShops/DeimosDenRewardsMerge.cs",
-    "size": 8130,
-    "sha256": "bb4cb836c4516a709b7e5dbfc60c69b53c18b94e118d51d0ce5d1c93f50c5ce6",
+    "size": 7964,
+    "sha256": "8756849d9ad503284ffa26b90d07bdca9ed2f50dd6fc1dc87103527e268fb7e8",
     "fileName": "DeimosDenRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DeimosDenRewardsMerge.cs"
   },
@@ -15042,8 +15042,8 @@
       "twintails"
     ],
     "path": "Other/MergeShops/QueensBattleMerge.cs",
-    "size": 11709,
-    "sha256": "2f296921b9f976685409edd447d9687982713442384a9b6040fca37d2d60e916",
+    "size": 11405,
+    "sha256": "768c41b516d94b1ec7d6d35189bdf2450c307b421b5db75bbd2b55de0aa9fd5b",
     "fileName": "QueensBattleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/QueensBattleMerge.cs"
   },
@@ -15075,8 +15075,8 @@
       "reavers"
     ],
     "path": "Other/MergeShops/NovaShrineGiftsMerge.cs",
-    "size": 14497,
-    "sha256": "4c2a51a1a1ab028b125d33c5c51068aaf01cc98721557c88362a97752ddd1e8b",
+    "size": 14061,
+    "sha256": "90cd6757e02074cb7177381fb016de0dcb5307b55cb3f7e6a55e46741509c0dc",
     "fileName": "NovaShrineGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NovaShrineGiftsMerge.cs"
   },
@@ -15087,8 +15087,8 @@
       "null"
     ],
     "path": "Other/MergeShops/FireandIceMerge.cs",
-    "size": 8213,
-    "sha256": "54f5cd5b67424c41f8e78505e299cd5222a007b97b1fe0d73781c8f411102afe",
+    "size": 8099,
+    "sha256": "f4e86542828e0e98e514798a2b91d97cd0ec363765552a3cddaf61d9120da4f6",
     "fileName": "FireandIceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FireandIceMerge.cs"
   },
@@ -15099,8 +15099,8 @@
       "null"
     ],
     "path": "Other/MergeShops/DruidMerge.cs",
-    "size": 8062,
-    "sha256": "a0f468bb248db126e4091d888de8c38c582c44a99f094e842a53ca50dbad3739",
+    "size": 7924,
+    "sha256": "222c028b1af28d903dcec0622da94495d81ed16bd6554d58828961c91a9b4c8c",
     "fileName": "DruidMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DruidMerge.cs"
   },
@@ -15176,8 +15176,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ByrodaxMerge.cs",
-    "size": 5269,
-    "sha256": "1801bffee52fce8d0392a094bd1aafcdb50addb2229fb00169aacdb844039929",
+    "size": 4923,
+    "sha256": "7be1d178eba3da3fa4979954bd466b33e3b33d3b35d28c5722d8bd183043439d",
     "fileName": "ByrodaxMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ByrodaxMerge.cs"
   },
@@ -15214,8 +15214,8 @@
       "dirk"
     ],
     "path": "Other/MergeShops/TwilightZoneMerge.cs",
-    "size": 8554,
-    "sha256": "c70baccd269ff1762bbf6ce7b83788304dec100af74a930047013dc0458818b5",
+    "size": 7640,
+    "sha256": "6e423038e5839cfa4ef7a19362341f58006808fe6df29823bbde36c4afb771eb",
     "fileName": "TwilightZoneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TwilightZoneMerge.cs"
   },
@@ -15272,8 +15272,8 @@
       "shattered"
     ],
     "path": "Other/MergeShops/LiaTaraHillLootMerge.cs",
-    "size": 7118,
-    "sha256": "8a0334aef736fc04170d8119256e9f9d19b115879bd78038ff996314dcfc2170",
+    "size": 6268,
+    "sha256": "482db607576c5a6fb62ce9a09d5ed375dc8e5bf3bffa14cd433799380b8653cf",
     "fileName": "LiaTaraHillLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LiaTaraHillLootMerge.cs"
   },
@@ -15354,8 +15354,8 @@
       "zorbaks"
     ],
     "path": "Other/MergeShops/StarswordMerge[Upholder].cs",
-    "size": 15891,
-    "sha256": "77e423def13c148d95636d484bd21521a7eb51071c51d4ecb6915c0f083eced7",
+    "size": 15725,
+    "sha256": "475fdfbccba7a2f34387259d4ee0f123c8229099e1b4df5eb82a56c945925367",
     "fileName": "StarswordMerge[Upholder].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/StarswordMerge[Upholder].cs"
   },
@@ -15398,8 +15398,8 @@
       "toxic"
     ],
     "path": "Other/MergeShops/ElfhameMerge.cs",
-    "size": 6607,
-    "sha256": "dd7a1c1d7408ac089829a1ad953b4e277007689e2df02fd5f72e27a08200c4ee",
+    "size": 6004,
+    "sha256": "045a2aa31630c041a8775fea72bedaf53771724796e363bf8e1514af8bb8c664",
     "fileName": "ElfhameMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ElfhameMerge.cs"
   },
@@ -15426,8 +15426,8 @@
       "enchanted"
     ],
     "path": "Other/MergeShops/AiwassBlessingsMerge.cs",
-    "size": 10331,
-    "sha256": "7c8f4a2394d3db8414710d157d2791c634da8b1057680a336ad195fda64c341c",
+    "size": 9721,
+    "sha256": "5c04a8df119013f3cd11d5b1947829f2ea63373bcd66cdc73dd9cd389ca0ae49",
     "fileName": "AiwassBlessingsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AiwassBlessingsMerge.cs"
   },
@@ -15531,8 +15531,8 @@
       "intenso"
     ],
     "path": "Other/MergeShops/BadmoonMerge.cs",
-    "size": 11068,
-    "sha256": "1f8cdb7d02c92830bd2aefc6865fe13cb92c0a50db6a16a90588166008d6af58",
+    "size": 10902,
+    "sha256": "1feb1243b7176979e3ecd7d185c981d4e9847f4502870813ed28936ed374aeba",
     "fileName": "BadmoonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BadmoonMerge.cs"
   },
@@ -15543,8 +15543,8 @@
       "null"
     ],
     "path": "Other/MergeShops/FiendPastMerge.cs",
-    "size": 7173,
-    "sha256": "343e6f74e06ae71570547cbbba688776e29da33c74f491b30a4429cf2fca2758",
+    "size": 7030,
+    "sha256": "40d09997bbc29a9fe8ce65c520e29b60981edcf7f18f58956624c641eef9b582",
     "fileName": "FiendPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FiendPastMerge.cs"
   },
@@ -15561,8 +15561,8 @@
       "tail"
     ],
     "path": "Other/MergeShops/RabbitMerge.cs",
-    "size": 4630,
-    "sha256": "25c884a6ac9120852e5d32f71e332525445d21cc72737e0a654fe60207ff81ff",
+    "size": 4429,
+    "sha256": "008244e53dbfdae92b204227c4e06db44d22cfdc81bd3847ef320896ea72818b",
     "fileName": "RabbitMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/RabbitMerge.cs"
   },
@@ -15575,8 +15575,8 @@
       "battleodium"
     ],
     "path": "Other/MergeShops/FriendshipMerge.cs",
-    "size": 9214,
-    "sha256": "513ba5564963e9ec263445a347175f2129c7f3603b82e9afbdf486f77c08a381",
+    "size": 8714,
+    "sha256": "8ea937359804b0311c75bb0ed4d0db87c55b20e1a0129dd5555fe853eed99eef",
     "fileName": "FriendshipMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FriendshipMerge.cs"
   },
@@ -15765,8 +15765,8 @@
       "battlepet"
     ],
     "path": "Other/MergeShops/ExaltiaMerge.cs",
-    "size": 11783,
-    "sha256": "5af7423f1bd5c4921fd594a75a9cbb3ea03f6e49603fe91800214d8e32d360d5",
+    "size": 11569,
+    "sha256": "3261eb748440e7b32098f9585f9967aa825e5b8e191bab44407a5d3546b8c91d",
     "fileName": "ExaltiaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ExaltiaMerge.cs"
   },
@@ -15811,8 +15811,8 @@
       "stage"
     ],
     "path": "Other/MergeShops/MonaghanGorgeMerge.cs",
-    "size": 7766,
-    "sha256": "b5348b23c9e11b37acdf25cf4f1a08a25c154f225bee71c2cd006e1fd66573fd",
+    "size": 7600,
+    "sha256": "15c00b245ff51788ea592797433d2dd5294080cb58999161f7956301bf6d0847",
     "fileName": "MonaghanGorgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MonaghanGorgeMerge.cs"
   },
@@ -15847,8 +15847,8 @@
       "hook"
     ],
     "path": "Other/MergeShops/SeaviewSouvenirsMerge.cs",
-    "size": 7906,
-    "sha256": "98f3f0b08b89a00614d7a06e041d456c1affd9f82d6befd88beba1670ee2e171",
+    "size": 7222,
+    "sha256": "0665a09d1e0e0a8617de74daa5e88cfeaf3feb20818c2b3a9eea14bc69942eb0",
     "fileName": "SeaviewSouvenirsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaviewSouvenirsMerge.cs"
   },
@@ -15859,8 +15859,8 @@
       "null"
     ],
     "path": "Other/MergeShops/SuperDeathMerge.cs",
-    "size": 8259,
-    "sha256": "c13e809a533ff28e383b5bf574cc58fe08f0aa058afc0f61ebb9ba0839ec296e",
+    "size": 8121,
+    "sha256": "9867c70a18fb9914ef32aa06e89927160e691d7133894690000434769bcb7d52",
     "fileName": "SuperDeathMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SuperDeathMerge.cs"
   },
@@ -15883,8 +15883,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BeleensMerge.cs",
-    "size": 26504,
-    "sha256": "a9e8f982991d82807da396601cabc5f3793f2dfaa4cf797e8dddf6801dcc03bc",
+    "size": 25418,
+    "sha256": "46f3af09bfa5440deb6a3b73ca447b93dc979c9c58cc19553cf86a1f732990b9",
     "fileName": "BeleensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BeleensMerge.cs"
   },
@@ -15912,8 +15912,8 @@
       "craft"
     ],
     "path": "Other/MergeShops/CastleGaherisMerge.cs",
-    "size": 8077,
-    "sha256": "e1e33132a8c77974546a484f09d3a76019a663aeebbfa524ce2839c8cd4e91cc",
+    "size": 7275,
+    "sha256": "4280955e91ad174a4779b092bb618e9c749204455d22b33dd4971523d7ec7fb5",
     "fileName": "CastleGaherisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CastleGaherisMerge.cs"
   },
@@ -15924,8 +15924,8 @@
       "null"
     ],
     "path": "Other/MergeShops/OriginulMerge.cs",
-    "size": 9453,
-    "sha256": "92112cbe5dd3a9262c440d2b6dfaf3f180cbf292f66b829e64749ee89dfd44ce",
+    "size": 9259,
+    "sha256": "e36ceed07f2fb0a1c78337099ad8dd199354c5d04d166723d04df7e5b718923a",
     "fileName": "OriginulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/OriginulMerge.cs"
   },
@@ -15961,8 +15961,8 @@
       "armblades"
     ],
     "path": "Other/MergeShops/CrocriverMerge.cs",
-    "size": 11734,
-    "sha256": "c612e0cd9b02ce1f2684ecdf2579cb6714aa6faa38fdca28a2cac92522562cb5",
+    "size": 11568,
+    "sha256": "3812ee0fb007bcc8fcf16697dabfe139bc200c46d02d9f238691d92042be4a4a",
     "fileName": "CrocriverMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CrocriverMerge.cs"
   },
@@ -15990,8 +15990,8 @@
       "tanks"
     ],
     "path": "Other/MergeShops/NaoiseGraveLootMerge.cs",
-    "size": 7154,
-    "sha256": "b494cfefcb7e8b099b934b0696349df98c5558369be448d740d5fb6b68383379",
+    "size": 7016,
+    "sha256": "8d6110c42bf0571511592569e55fe50de438cb670ca8f444def2db2ece7e685c",
     "fileName": "NaoiseGraveLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NaoiseGraveLootMerge.cs"
   },
@@ -16013,8 +16013,8 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 15307,
-    "sha256": "f54739520c428604be505e7a4147a543154dd20e6227b7b92f7945b6a2409faf",
+    "size": 13785,
+    "sha256": "a1946e2703303fab050f38fd7059a248d66e68231d839acd85b21eef7a50d1de",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
@@ -16025,8 +16025,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ShipWreckMerge[non-ac].cs",
-    "size": 8456,
-    "sha256": "d222403f7a997ccc267a9c7c7e2f741975ed8634b8e8a96c13df99dba78d8f4d",
+    "size": 8313,
+    "sha256": "5c4834909c755df21999dfd4683cf0275a6b651d7641f43cdf935a6b3791b405",
     "fileName": "ShipWreckMerge[non-ac].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ShipWreckMerge[non-ac].cs"
   },
@@ -16037,8 +16037,8 @@
       "null"
     ],
     "path": "Other/MergeShops/IceDungeonMerge.cs",
-    "size": 11305,
-    "sha256": "4456f76d3a948c2a73de99844a8c11bf11efeea7ef53f58c39bd918f44e2a97e",
+    "size": 10615,
+    "sha256": "1d877716e693af72fe0932e278a9ec45a07764caaeb2fa9a2a23e1ae5d062431",
     "fileName": "IceDungeonMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/IceDungeonMerge.cs"
   },
@@ -16049,8 +16049,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ChaosWarMerge.cs",
-    "size": 6317,
-    "sha256": "4f1fa722b94e5cd177ed862b8bf27e4f27f6d1e26dce7d82d7e80b7251e95dd7",
+    "size": 5817,
+    "sha256": "065e36485573bfcb70142b7debda7ff94171502ec277f9749caaa6cd44459bda",
     "fileName": "ChaosWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ChaosWarMerge.cs"
   },
@@ -16074,8 +16074,8 @@
       "dress"
     ],
     "path": "Other/MergeShops/BocklinTreasuryMerge.cs",
-    "size": 11052,
-    "sha256": "13b080cb2d060127d274463a4c642fa9d54d549ad6ed2c5b9fd41898d2e373f6",
+    "size": 10772,
+    "sha256": "a0859c4ab75a47fba41eaa79a83f7a99b48bab30f41bf7bbbc9d52d5883b10fa",
     "fileName": "BocklinTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BocklinTreasuryMerge.cs"
   },
@@ -16156,8 +16156,8 @@
       "legion"
     ],
     "path": "Other/MergeShops/DoomMerge.cs",
-    "size": 12539,
-    "sha256": "ae74af4215a344c236a07b0520de769b44a7164e7c81f47da6b5a93b3b7ce46a",
+    "size": 12349,
+    "sha256": "46ad342ddca8e5a43490a4cb635a8d86bf4a3849ccb3d9fdf1eecaf2f497db2f",
     "fileName": "DoomMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DoomMerge.cs"
   },
@@ -16168,8 +16168,8 @@
       "null"
     ],
     "path": "Other/MergeShops/PaladinTreasureHunterMerge.cs",
-    "size": 10642,
-    "sha256": "f401123bc95e6057dcfc43cee4232f05f952a4d1a4319aa289f43461baf081cb",
+    "size": 10366,
+    "sha256": "d615ecb49175aa0ff8a60035312266c658c0ded9dadf966200a9650d8c7eea20",
     "fileName": "PaladinTreasureHunterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/PaladinTreasureHunterMerge.cs"
   },
@@ -16326,8 +16326,8 @@
       "shield"
     ],
     "path": "Other/MergeShops/VictorsRewardMerge.cs",
-    "size": 19709,
-    "sha256": "1eac1142a67c89ab664ed3529b81fac418bcf8a7a2f340f1a6d0f1567e17eef7",
+    "size": 19235,
+    "sha256": "84164cfc25728e2db35dac2f8ea4da97d487079339fbf10a23f9dc1165fe5e7e",
     "fileName": "VictorsRewardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/VictorsRewardMerge.cs"
   },
@@ -16353,8 +16353,8 @@
       "guardian"
     ],
     "path": "Other/MergeShops/LoughshineLootMerge.cs",
-    "size": 8703,
-    "sha256": "61396f353ff35bb940cae26b3c28aba0447b8b183c63f29b1e517cd283b43bbc",
+    "size": 8039,
+    "sha256": "86663b4fabcd359ffddd0a64524562b8cc11ed97b4d1ce82315f264efa529dcc",
     "fileName": "LoughshineLootMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LoughshineLootMerge.cs"
   },
@@ -16384,8 +16384,8 @@
       "banner"
     ],
     "path": "Other/MergeShops/YokaiPortalMerge.cs",
-    "size": 13586,
-    "sha256": "a8ceae52cac6827ffafccf20bf75ad377e0bef633dae067b0b3d3b956c29362d",
+    "size": 12784,
+    "sha256": "dcab6a6a47f6ff200e0caab14731d9207dc9ea2a5226318753513bf12aeba8e9",
     "fileName": "YokaiPortalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/YokaiPortalMerge.cs"
   },
@@ -16535,8 +16535,8 @@
       "water"
     ],
     "path": "Other/MergeShops/EtherstormEvilMerge.cs",
-    "size": 7861,
-    "sha256": "8fc5d1c92ce3a9d5d363c85f8338ba63418995c89839237b2e2e223febdf1683",
+    "size": 6029,
+    "sha256": "859cb0d80f7d529da542c64a435696a38a74a98e00bd26b8aed40597d7b861b7",
     "fileName": "EtherstormEvilMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/EtherstormEvilMerge.cs"
   },
@@ -16547,8 +16547,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CruxShadowsMerge.cs",
-    "size": 7526,
-    "sha256": "2a294b3cc6d603cd7d560360209daa9884cbd237776056672001b6d405a1b88c",
+    "size": 7368,
+    "sha256": "ac5587b8d4cd36579a0b95c1773177a2853ca66bd2641299be3579a31a708d43",
     "fileName": "CruxShadowsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CruxShadowsMerge.cs"
   },
@@ -16566,8 +16566,8 @@
       "crusher"
     ],
     "path": "Other/MergeShops/BloodTitanMerge[mem].cs",
-    "size": 6722,
-    "sha256": "cd63fa368e37eb426fafb3e87e4eda573d31dbc0e7c61db7ba973c5e1d5ed5df",
+    "size": 5640,
+    "sha256": "791b016ef5ba9a5c7c1398d41c57967000042ee3c80a7076e99bab577f863e7b",
     "fileName": "BloodTitanMerge[mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BloodTitanMerge[mem].cs"
   },
@@ -16583,8 +16583,8 @@
       "tail"
     ],
     "path": "Other/MergeShops/FoxMerge[MEM].cs",
-    "size": 4707,
-    "sha256": "1fb892017f93451ae8f39badfce1418813d553b266a97662b6311f22b59b6dcc",
+    "size": 4506,
+    "sha256": "89d32aa99fd979b73acc679066c10548ef8c3c425cc156a5f3fde89502a452f7",
     "fileName": "FoxMerge[MEM].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FoxMerge[MEM].cs"
   },
@@ -16595,8 +16595,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BrightForestMerge.cs",
-    "size": 7232,
-    "sha256": "e656b00406758a2d024c6ab4ef1fbd2164048d748ceac18ae8cafeef61f8c390",
+    "size": 6928,
+    "sha256": "e0becd6c6bd4453374155723af3b4ff7cad9a240470a4cf2aaa75f334632fb27",
     "fileName": "BrightForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BrightForestMerge.cs"
   },
@@ -16620,8 +16620,8 @@
       "bright"
     ],
     "path": "Other/MergeShops/SpoilsofLightMerge.cs",
-    "size": 7666,
-    "sha256": "114ef37f3d3b659b1993890ed54f7adaf067d36bfd20a63470ed1b1ae959c4e0",
+    "size": 7468,
+    "sha256": "269d3bf4bf7746a7dc118df4ff18f99d924a9b235b5ca1c68e6c2c813eb66e61",
     "fileName": "SpoilsofLightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
@@ -16643,8 +16643,8 @@
       "armaments"
     ],
     "path": "Other/MergeShops/HarleysMerge.cs",
-    "size": 9173,
-    "sha256": "1809496d76017d113735d4dae98a8822ede76531da9132cf3e08eeccdbcdacf2",
+    "size": 9007,
+    "sha256": "306cf9f38fe0e084c966196e43cfa0088a2eea7ec536dead0eafecf75cc5bb5b",
     "fileName": "HarleysMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/HarleysMerge.cs"
   },
@@ -16655,8 +16655,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TerranesMerge.cs",
-    "size": 8355,
-    "sha256": "803086b80b918469df36025a5c753da8a5b2ba886b90c55224d9decb590e3c65",
+    "size": 8217,
+    "sha256": "8f23de54e18ee08f47b761c77b89f46c70861f1c52c5599a57eedb5fc9854e44",
     "fileName": "TerranesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TerranesMerge.cs"
   },
@@ -16667,8 +16667,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CelestialChampMerge.cs",
-    "size": 9597,
-    "sha256": "e34be80434c170b87c69c2eda44d199e0babd672d71b863cc1de95b4e5270091",
+    "size": 9313,
+    "sha256": "a81cbe98dfc39ca14235a934bb271bf30df523e450151a0a57d6b9e4f429332f",
     "fileName": "CelestialChampMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CelestialChampMerge.cs"
   },
@@ -16679,8 +16679,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TowerofWindsMerge.cs",
-    "size": 11003,
-    "sha256": "bc8874c26a6dd9076b1ab6b7d0cbf518c9b57fbbf5f6cc519aac7bc0020a17c5",
+    "size": 10719,
+    "sha256": "05cecb53932528a0fab9e8b6c612ae5cb86d62c5869ac5b5767babf44b06592c",
     "fileName": "TowerofWindsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TowerofWindsMerge.cs"
   },
@@ -16906,8 +16906,8 @@
       "deep"
     ],
     "path": "Other/MergeShops/SeaBaseHouseMerge.cs",
-    "size": 17363,
-    "sha256": "8197e02cda29afba0ae359c353b8f370bdaecf68b4138218920eec287ec1a125",
+    "size": 15481,
+    "sha256": "5ac18bd69f2893e9b53dbcbae7ebf96c288eb3be9044ce09d5f56222a03f928d",
     "fileName": "SeaBaseHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaBaseHouseMerge.cs"
   },
@@ -16938,8 +16938,8 @@
       "bow"
     ],
     "path": "Other/MergeShops/MidnightZoneMerge.cs",
-    "size": 6955,
-    "sha256": "88213ab75567921cad4e1cfca86c3c1194d74ebf85851189c9df465e2a190116",
+    "size": 6623,
+    "sha256": "d3469fc8f523fc3814581611c3a1f40704bfc24e07d88319f0c5389bf68033f9",
     "fileName": "MidnightZoneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MidnightZoneMerge.cs"
   },
@@ -16950,8 +16950,8 @@
       "null"
     ],
     "path": "Other/MergeShops/EternalChaosMerge.cs",
-    "size": 9271,
-    "sha256": "c8b98d4efa5864be35831df81036c10d010f4042fe193d75063b99b29c466c61",
+    "size": 9105,
+    "sha256": "ce339ba36eca2bd397cda2ff0f5d7d62c43d8855be788e6a83412fa4c9d3aa9b",
     "fileName": "EternalChaosMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/EternalChaosMerge.cs"
   },
@@ -16982,8 +16982,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BloodMoonVampireMerge.cs",
-    "size": 6106,
-    "sha256": "69fb05f9679285dcf3338b85914516d6e5270e849c4eec7dc650a3dc472aa6e0",
+    "size": 5830,
+    "sha256": "65cf9c5bb2f1e3fad866cf5cd62c8bfa9a7e00cc9672951bb092d89e1177fb15",
     "fileName": "BloodMoonVampireMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BloodMoonVampireMerge.cs"
   },
@@ -17013,8 +17013,8 @@
       "powerfist"
     ],
     "path": "Other/MergeShops/TitanAttackGearMerge.cs",
-    "size": 10046,
-    "sha256": "f905d2209448ed8c5d635663405673f6716cb7a6805fd77861de6ecbe84b9eb9",
+    "size": 9430,
+    "sha256": "c6c4ac7121c1ce8f9f99eaaa12223f3e9ab8bf5c6bf403e5ca3cf345b568e628",
     "fileName": "TitanAttackGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TitanAttackGearMerge.cs"
   },
@@ -17047,8 +17047,8 @@
       "streams"
     ],
     "path": "Other/MergeShops/AbyssalZoneMerge.cs",
-    "size": 8191,
-    "sha256": "19432a591906522626bc769eda54fc4c4578dc69af9588aa65815c6b0afdcb70",
+    "size": 7555,
+    "sha256": "c6cd90e182ecb9d5362663bb78e5383fa370967bc8da12dfa2cff81aa3f98bf5",
     "fileName": "AbyssalZoneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AbyssalZoneMerge.cs"
   },
@@ -17143,8 +17143,8 @@
       "streams"
     ],
     "path": "Other/MergeShops/TrenchObserveMerge.cs",
-    "size": 7524,
-    "sha256": "5f4e20c02784b6ce4267efaa5150680e836af82a2990bda4fe9ed6288cebe15a",
+    "size": 7054,
+    "sha256": "83da9af4a94ca46b8e9cba5286bd60189bb4ae672494a1bca91777e5f425ec71",
     "fileName": "TrenchObserveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TrenchObserveMerge.cs"
   },
@@ -17188,8 +17188,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowFirePlaneMerge.cs",
-    "size": 6436,
-    "sha256": "d52e7c8f4a61689975df587f1835f871afa1eb636bc9ed35f625e0bf485de537",
+    "size": 6298,
+    "sha256": "e4a9a7c449427c0f3c544b00a70ace1d630a884583c51f18ece1a2494bf7456c",
     "fileName": "ShadowFirePlaneMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ShadowFirePlaneMerge.cs"
   },
@@ -17231,8 +17231,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CraggleRockMerge.cs",
-    "size": 11939,
-    "sha256": "50a22fbe22b1986b3d2dd83e815a9c4b9393cbcb7dc8066bed37e3aeb9a6059b",
+    "size": 11357,
+    "sha256": "d3e09fca3440aa2edef589d70176e643cea576ec08f9972f235f96e0bbbc4157",
     "fileName": "CraggleRockMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CraggleRockMerge.cs"
   },
@@ -17448,8 +17448,8 @@
       "glasses"
     ],
     "path": "Other/MergeShops/UndineCommissaryMerge.cs",
-    "size": 6757,
-    "sha256": "c6c5daa3d96a5c35a5e44abc599a4d5e0466fe564ffacb33b8365ff597a5b0e0",
+    "size": 6270,
+    "sha256": "b70b487efd7e3750b7b5ea8ebd54a25cad96e65d15470d56940a1955b10c49a6",
     "fileName": "UndineCommissaryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/UndineCommissaryMerge.cs"
   },
@@ -17517,8 +17517,8 @@
       "rhapsody"
     ],
     "path": "Other/MergeShops/CastleWhistlerSpoilsMerge.cs",
-    "size": 7255,
-    "sha256": "95b685d1818bbd6491db9e7c5e4f6098b4e375221ea438d9ca039c04eb1718c5",
+    "size": 7089,
+    "sha256": "26757ccf508b6355643bce8e7940e63594371b35788d57d97f486a7bfa7c2b68",
     "fileName": "CastleWhistlerSpoilsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CastleWhistlerSpoilsMerge.cs"
   },
@@ -17545,8 +17545,8 @@
       "bank"
     ],
     "path": "Other/MergeShops/FireWarMerge.cs",
-    "size": 7621,
-    "sha256": "02411d39d8c63a787ab5279e3ffbe90d8e0cab152f936e29e71b83d10129d1b5",
+    "size": 7427,
+    "sha256": "f394d6a6d0aee21b339552ec4203ba4f3c5966a73731e56905664cec7f95fd21",
     "fileName": "FireWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FireWarMerge.cs"
   },
@@ -17573,8 +17573,8 @@
       "wrap"
     ],
     "path": "Other/MergeShops/CyseroMerge.cs",
-    "size": 5135,
-    "sha256": "e0c5bdbff0c59f4138ec13302304968f511932931c54a6648352c3bab89e1f08",
+    "size": 4733,
+    "sha256": "edf907607b31318c635bbf1cf3fc5f19fa7d491cb8cc7b6aff9fa36cfa35c1d0",
     "fileName": "CyseroMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CyseroMerge.cs"
   },
@@ -17585,8 +17585,8 @@
       "null"
     ],
     "path": "Other/MergeShops/DragonSoulShinobiMerge.cs",
-    "size": 7723,
-    "sha256": "92c0a180600623f4c00f41521154bd44f454d5cb40806978f22136f2fa10b58c",
+    "size": 7557,
+    "sha256": "2af6a711311d3ef6790398e808bf1d9228976e2c69f9e13466327f104c4efb9a",
     "fileName": "DragonSoulShinobiMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DragonSoulShinobiMerge.cs"
   },
@@ -17613,8 +17613,8 @@
       "paladin"
     ],
     "path": "Other/MergeShops/SeraphicWarChestMerge.cs",
-    "size": 6748,
-    "sha256": "48a2a0f7d138fdae672f6aee729eb940c361b6cc0b37ba61598ed7930e01186d",
+    "size": 6582,
+    "sha256": "ae95f99a4922edd8c21ce238a29ae984ae588e1f1cc085bcb7167269f40a5ee4",
     "fileName": "SeraphicWarChestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeraphicWarChestMerge.cs"
   },
@@ -17625,8 +17625,8 @@
       "null"
     ],
     "path": "Other/MergeShops/StormCacheMerge.cs",
-    "size": 5356,
-    "sha256": "20a3d55c691468bcd42ee39ab69248e622fea65de968f5641a25392d87f67172",
+    "size": 5218,
+    "sha256": "b5e62238832a279cf6d23c1b8d6cb9ad06fd05660fdcff024ac5f96902dd473c",
     "fileName": "StormCacheMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/StormCacheMerge.cs"
   },
@@ -17666,8 +17666,8 @@
       "fangs"
     ],
     "path": "Other/MergeShops/HakuVillageMerge.cs",
-    "size": 10819,
-    "sha256": "b4b742422453ef164141eb01640eae3417c9fe4c12dfe9c94d920369312168ce",
+    "size": 9849,
+    "sha256": "3f05bbf7b0e71295d93b91cd0c729e5f5ca95761f9a1c61fdb39ec4d0d29d537",
     "fileName": "HakuVillageMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/HakuVillageMerge.cs"
   },
@@ -17722,8 +17722,8 @@
       "grotto"
     ],
     "path": "Other/MergeShops/PortalsMerge.cs",
-    "size": 14952,
-    "sha256": "c48a5bb6d8131e7bd35aa4591efeb9c67dc37128216919e8e717cbaece7a6d56",
+    "size": 13980,
+    "sha256": "ec7269419fef0ed9a873aa0256a29b14c7d147927f92cc6a29a90ce63d0fb4a8",
     "fileName": "PortalsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/PortalsMerge.cs"
   },
@@ -17747,8 +17747,8 @@
       ""
     ],
     "path": "Other/MergeShops/ChaosLabMerge.cs",
-    "size": 5670,
-    "sha256": "c018c40776479f253051d49d0ee7b7816f9edcefae1ffaccc48dbaed28cc3039",
+    "size": 5349,
+    "sha256": "299bdfb40624c04119d398907a9f46f0c00acff096562cdf08f45585f0991e3c",
     "fileName": "ChaosLabMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ChaosLabMerge.cs"
   },
@@ -17769,8 +17769,8 @@
       "noble"
     ],
     "path": "Other/MergeShops/LordGranvillesMerge.cs",
-    "size": 4554,
-    "sha256": "9eb95fa7570933857dd6b3595d83d1903abcec04b60d3ac3a65da58595920dd1",
+    "size": 4340,
+    "sha256": "b5d39dc9f72adf2ac04738cd918f92683a54f3921f7a9d1a9cb0f23fd3a798ea",
     "fileName": "LordGranvillesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LordGranvillesMerge.cs"
   },
@@ -17804,8 +17804,8 @@
       "kris"
     ],
     "path": "Other/MergeShops/BocklinArmoryMerge.cs",
-    "size": 12525,
-    "sha256": "c77a67cf6d10ea7f086da318771520813dfe37f052b019bf0ef860c3b7e7416f",
+    "size": 12027,
+    "sha256": "7eb444cdbb5997a4e7fdd876f5a47daa7422a1adf4607248d541a77609e7b771",
     "fileName": "BocklinArmoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BocklinArmoryMerge.cs"
   },
@@ -17864,8 +17864,8 @@
       "null"
     ],
     "path": "Other/MergeShops/MazeMerge.cs",
-    "size": 4456,
-    "sha256": "5f9471c9d5a6df25c3defc576f555c606e3682391b4469e2890f12769f62c70c",
+    "size": 4314,
+    "sha256": "ae1066c1b2dc51a17729b32ee7835720fd48e3188d4f259eba02e3b2e68c16e4",
     "fileName": "MazeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MazeMerge.cs"
   },
@@ -17903,8 +17903,8 @@
       "null"
     ],
     "path": "Other/MergeShops/3LittleWolvesHousesMerge.cs",
-    "size": 10962,
-    "sha256": "c7c531d9673dbe4ad19ea6d2662aa0b9e7a7f1058ce42990f7797b5458a75cbb",
+    "size": 10394,
+    "sha256": "8d8d8d12c15e8f64b4494e9fdc523f7c3b7d1d7492ac3aa5ccebc5458d442fdf",
     "fileName": "3LittleWolvesHousesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/3LittleWolvesHousesMerge.cs"
   },
@@ -17995,8 +17995,8 @@
       "fans"
     ],
     "path": "Other/MergeShops/YokaiRealmMerge.cs",
-    "size": 6478,
-    "sha256": "180b692d2e72ca245f733b49a3acb20fe06e66b4b598e1646c8deabb15702381",
+    "size": 6312,
+    "sha256": "98a4dc093c7adb3a60d9fbfb0fe5b62fb3cc92fd643961426fa6802d4c7d1037",
     "fileName": "YokaiRealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/YokaiRealmMerge.cs"
   },
@@ -18015,8 +18015,8 @@
       "golden"
     ],
     "path": "Other/MergeShops/BonecastleTowerMerge.cs",
-    "size": 11402,
-    "sha256": "563b73ff8be09e3210957e511da53cf1c1433b160a2c30f9cf3e5933cbe87ecb",
+    "size": 11260,
+    "sha256": "10e684abfe850bbac266082158a85c78e2d22f08857de1169d5599b9c780663e",
     "fileName": "BonecastleTowerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BonecastleTowerMerge.cs"
   },
@@ -18027,8 +18027,8 @@
       "null"
     ],
     "path": "Other/MergeShops/SynderesMerge.cs",
-    "size": 5676,
-    "sha256": "a0ec47c304be7f7412e1fab51b1cddeefdb29171b840424745ac6fc31eafa3c0",
+    "size": 5538,
+    "sha256": "deed658196713788146501893afd1beaaba73ea7cbf3468cc535521f0a6db033",
     "fileName": "SynderesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SynderesMerge.cs"
   },
@@ -18065,8 +18065,8 @@
       "pet"
     ],
     "path": "Other/MergeShops/BloodMoonLycanMerge.cs",
-    "size": 6141,
-    "sha256": "961ca610cb006ba4df2006b2c2667b10b084df083fa3e4d3ec84ab4b8f78d9c3",
+    "size": 5865,
+    "sha256": "801ab430f3c50691437ea5c8ce7775050db43e179ef64a52dca9d06ac7f8e521",
     "fileName": "BloodMoonLycanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BloodMoonLycanMerge.cs"
   },
@@ -18264,8 +18264,8 @@
       "katanas"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldMerge.cs",
-    "size": 57353,
-    "sha256": "29bc9793f16b20635ce9b6a8ad483631b9037776b82687d6c237c6d909d95cb6",
+    "size": 55825,
+    "sha256": "80c0cbb359fd2c8f77f8162c8098ecdbb4ec38fff50a650372dc1a9bb784f508",
     "fileName": "YulgarsDualWieldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/YulgarsDualWieldMerge.cs"
   },
@@ -18276,8 +18276,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BloodWarLycanMerge.cs",
-    "size": 6435,
-    "sha256": "070996b6a7064efbdf9c132858804315ee4e2c1a103679b78828a7000bf9652c",
+    "size": 5771,
+    "sha256": "ef93d2f73c09d15e71954bbb446ea516ad91350e1c611acbc978184392bb59fc",
     "fileName": "BloodWarLycanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BloodWarLycanMerge.cs"
   },
@@ -18314,8 +18314,8 @@
       "null"
     ],
     "path": "Other/MergeShops/VokunMerge.cs",
-    "size": 7103,
-    "sha256": "94fc13d8d6dc2cc24517f005c2d680d32e84f6b8ce454414cba97fb3c1565270",
+    "size": 6533,
+    "sha256": "2394b1f0e99cf49e11e05caca6ebda49949d5b508ff7b35980a1fde7832713da",
     "fileName": "VokunMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/VokunMerge.cs"
   },
@@ -18365,8 +18365,8 @@
       "corps"
     ],
     "path": "Other/MergeShops/TitanStrikeGearMerge.cs",
-    "size": 15968,
-    "sha256": "a5561fbe6829324b04230c7f9bb75cc9e9c1eddada979e0bb4ac5c9aafb87d97",
+    "size": 13342,
+    "sha256": "f71da424a68094ab5ea7710b168a1bcb833068652948932383c8da469fa16757",
     "fileName": "TitanStrikeGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TitanStrikeGearMerge.cs"
   },
@@ -18417,8 +18417,8 @@
       "hatchling"
     ],
     "path": "Other/MergeShops/FellBeastMerge.cs",
-    "size": 5689,
-    "sha256": "92b2c8086f5d77bd9c428876ade575a60fe020c8c9912965cea6ecb4a527baa7",
+    "size": 5466,
+    "sha256": "1e79420e6a3cc44cb6e35c618fa4e722f680bb883e2a58203a228b808921941f",
     "fileName": "FellBeastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FellBeastMerge.cs"
   },
@@ -18429,8 +18429,8 @@
       "null"
     ],
     "path": "Other/MergeShops/GooseMerge.cs",
-    "size": 5344,
-    "sha256": "9b23ac672d8ef632334e28321fac959b74f7e61f8c08856390667c4fefe93584",
+    "size": 5178,
+    "sha256": "a854a2f6d52deccde79233eb45446eb179b56ef45632a4d7e6a9f3af57fa8077",
     "fileName": "GooseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/GooseMerge.cs"
   },
@@ -18498,8 +18498,8 @@
       "aquitaine"
     ],
     "path": "Other/MergeShops/BocklinGroveMerge.cs",
-    "size": 7966,
-    "sha256": "85a478f2f82eb09b845edd3ce457ec46c02465da23ed3b7abc32feb4c30937cd",
+    "size": 7634,
+    "sha256": "9e2128fb61bdf4b37fa8400d9c4805159db8e8a48da26efc46aed27b7cbdf28d",
     "fileName": "BocklinGroveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BocklinGroveMerge.cs"
   },
@@ -18532,8 +18532,8 @@
       "dominion"
     ],
     "path": "Other/MergeShops/InfernalCelestialFinaleMerge.cs",
-    "size": 6814,
-    "sha256": "b5aed06543897a2c29780eb66d8c1d88b030a6ec6ae42ba61f7b67b6b9813c0a",
+    "size": 6482,
+    "sha256": "a2e39b6b99f3478753edd18f934d904e45e9bcd19f9d8b3a2ab02ed0ec5fdaee",
     "fileName": "InfernalCelestialFinaleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InfernalCelestialFinaleMerge.cs"
   },
@@ -18581,8 +18581,8 @@
       "null"
     ],
     "path": "Other/MergeShops/DoomLegacyMerge.cs",
-    "size": 14217,
-    "sha256": "b58cf5dda35a0e4fe927294e85edf20c5fb8d7a15ebf3dc7be7ccd89b63bbf2a",
+    "size": 13323,
+    "sha256": "07b53124498301e2b55a1e3993f06a0424e9264fff9d0a6fe2e042b56ae974fa",
     "fileName": "DoomLegacyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DoomLegacyMerge.cs"
   },
@@ -18629,8 +18629,8 @@
       "null"
     ],
     "path": "Other/MergeShops/CommitedMerge.cs",
-    "size": 5403,
-    "sha256": "c092c3f87915b524f573eb0682db18e951141073b054da8390dc1f25a8ed61ac",
+    "size": 5213,
+    "sha256": "d04150766c9198f572d234beaf1e44cf59e289825da4a043cd7d84878980818a",
     "fileName": "CommitedMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CommitedMerge.cs"
   },
@@ -18641,8 +18641,8 @@
       "null"
     ],
     "path": "Other/MergeShops/DeepTunnelMerge.cs",
-    "size": 9128,
-    "sha256": "7ab330daebafd7c013d9e2bc61e8669392e5630cbe3ac31b8d9060c86635c596",
+    "size": 8906,
+    "sha256": "59a5908047288b4f51f7d2923c84334ac8229d478bd45317ec08a171746c41a3",
     "fileName": "DeepTunnelMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DeepTunnelMerge.cs"
   },
@@ -18691,8 +18691,8 @@
       "aranx"
     ],
     "path": "Other/MergeShops/CelestialPastMerge.cs",
-    "size": 5066,
-    "sha256": "8e17cf980447e3c4ec96663a6332a8c57d7007379c5021c25c912eb7ffc0f31d",
+    "size": 4734,
+    "sha256": "7a95779535aa82bf78b9be9afd367ce2e63ffce2a076a2236fa722fd08d12d09",
     "fileName": "CelestialPastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CelestialPastMerge.cs"
   },
@@ -18720,8 +18720,8 @@
       "honored"
     ],
     "path": "Other/MergeShops/DwarfholdMerge.cs",
-    "size": 7684,
-    "sha256": "0e74a0a46acc76bc48ad50a8752ba9e11373d00fe5efd6b258e4ee27aa5412fd",
+    "size": 7518,
+    "sha256": "ef3b5c7c4872a6522e0d8325c0c43c88d4f399676540ac3effee4a0fa8be3090",
     "fileName": "DwarfholdMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DwarfholdMerge.cs"
   },
@@ -18755,8 +18755,8 @@
       "hand"
     ],
     "path": "Other/MergeShops/SkyeEmissarysMerge.cs",
-    "size": 11304,
-    "sha256": "dcc39d6494abefb4b36bd9ba7ce4e1e3879666ef044ccb5030f530846571d506",
+    "size": 10584,
+    "sha256": "236c95b484e4ea884ec9445f5e1a3e9d1b296fbd392a557a48cdea02d61fc393",
     "fileName": "SkyeEmissarysMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SkyeEmissarysMerge.cs"
   },
@@ -18789,8 +18789,8 @@
       "accoutrements"
     ],
     "path": "Other/MergeShops/TerminaTempleMerge.cs",
-    "size": 9367,
-    "sha256": "308c31611fd622e5ead5d2ea8fc5fd0a7c35bb1a943b913662b967038e5a0f3c",
+    "size": 9201,
+    "sha256": "2e02c47a3631e9de914ae4c9ccb196442cde0b545b190fb272462aa74068af93",
     "fileName": "TerminaTempleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TerminaTempleMerge.cs"
   },
@@ -18822,8 +18822,8 @@
       "conquerer"
     ],
     "path": "Other/MergeShops/EtherstormGoodMerge.cs",
-    "size": 8021,
-    "sha256": "c7cd09f51d8bb9e9940a230cb7b3e04d0dfee2606a7786a792e32fa46137137c",
+    "size": 6189,
+    "sha256": "2dfae3a7526b4e10353f72238ca3afb730e4fe7a1c8a1446bee8ba4ffd42ee66",
     "fileName": "EtherstormGoodMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/EtherstormGoodMerge.cs"
   },
@@ -18999,8 +18999,8 @@
       "gaheris"
     ],
     "path": "Other/MergeShops/FelixsGildedGearMerge.cs",
-    "size": 7527,
-    "sha256": "0f830fad63e587ad1838dea6be21acee54801a7e219a5ff0b3b48530e7695eae",
+    "size": 6675,
+    "sha256": "b7240c70697bf6a40b7298e1471406d2cd8ff554e9bd8e06592ca55636537f15",
     "fileName": "FelixsGildedGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FelixsGildedGearMerge.cs"
   },
@@ -19034,8 +19034,8 @@
       "mystical"
     ],
     "path": "Other/MergeShops/HydraMerge.cs",
-    "size": 10854,
-    "sha256": "62b1bd2f2a7575ed91c0c999e4ba5c16fb2efe5309f00b986fe2987df99d3497",
+    "size": 10522,
+    "sha256": "7573f17b3926b9a21802689e7424074989b5fff1288e4046d0e0c5b86c534d3c",
     "fileName": "HydraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/HydraMerge.cs"
   },
@@ -19046,8 +19046,8 @@
       "null"
     ],
     "path": "Other/MergeShops/EaglesReachArmoryMerge.cs",
-    "size": 12136,
-    "sha256": "a22f806840de75dc4e12eb15f16aa06f8040eef7f2bdd3b0a14800ec5236bc28",
+    "size": 10972,
+    "sha256": "a8e926884de84ff8e62f848f42dcda5f741deade8f4c57fb56c57284a9d53a8b",
     "fileName": "EaglesReachArmoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/EaglesReachArmoryMerge.cs"
   },
@@ -19078,8 +19078,8 @@
       "wreath"
     ],
     "path": "Other/MergeShops/YulgarsUndineMerge.cs",
-    "size": 7077,
-    "sha256": "1bb7d200422e716eb8794fc1e4e09330d78730359a89c3cab13292b030f1fd4f",
+    "size": 6904,
+    "sha256": "090dde644a381850f7fcbf34ad3568868c57eef4d1b73dd1cb0d665e7d7433fd",
     "fileName": "YulgarsUndineMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/YulgarsUndineMerge.cs"
   },
@@ -19091,8 +19091,8 @@
       "mergeshop"
     ],
     "path": "Other/MergeShops/Adam1a1Merge.cs",
-    "size": 13842,
-    "sha256": "ba5ba163e6f6f7c6a3822d1743ebc622c0a4457f481f86e02993c23d78d25877",
+    "size": 13704,
+    "sha256": "8359c7c81ace6a73d13319570ab63e4107a4fa36e25334922f31c80877d636ac",
     "fileName": "Adam1a1Merge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/Adam1a1Merge.cs"
   },
@@ -19120,8 +19120,8 @@
       "minions"
     ],
     "path": "Other/MergeShops/SidhesDevoteeMerge.cs",
-    "size": 7312,
-    "sha256": "a2003803322fca52e9658f026ae1aca6b9f2877907eaec8eb3baf9a929f29243",
+    "size": 7174,
+    "sha256": "815cb428222f6ffb8638449b1456397f12e814de91760e35b15a40d11776775a",
     "fileName": "SidhesDevoteeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SidhesDevoteeMerge.cs"
   },
@@ -19149,8 +19149,8 @@
       "solace"
     ],
     "path": "Other/MergeShops/MagnisMerge.cs",
-    "size": 14991,
-    "sha256": "a8729521e93863b8cbbc1116b2f3f4db1f9804c3f4a4cf131d1bdf564540bcf3",
+    "size": 14853,
+    "sha256": "98228b602408c1b930fc8e5065daac2f1f22f7cf0fc0fe44c524658645781c14",
     "fileName": "MagnisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MagnisMerge.cs"
   },
@@ -19206,8 +19206,8 @@
       "long"
     ],
     "path": "Other/MergeShops/GrimGiftMerge.cs",
-    "size": 11363,
-    "sha256": "7ffd175da80fe80353e21e21fe0480eeda0a22141535834e0cb3f2334952f80e",
+    "size": 11149,
+    "sha256": "ae31da1062881e6b2dccde9f08d6a1deef6eb87bb217cdf35133b25243af43b7",
     "fileName": "GrimGiftMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/GrimGiftMerge.cs"
   },
@@ -19230,8 +19230,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BrightshadowMerge.cs",
-    "size": 11675,
-    "sha256": "2cad0c72601d91339d7172d21c48f8ea5dd0941f8fd2d643b3fcefc92e498f20",
+    "size": 11343,
+    "sha256": "f261a107079c57faa77902731062b3da1c39fccee214252a8535b8aa3284999a",
     "fileName": "BrightshadowMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BrightshadowMerge.cs"
   },
@@ -19242,8 +19242,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TechfortressWarMerge.cs",
-    "size": 13444,
-    "sha256": "8a712b643cdf20fb3ee5470febc35fb30975cac9e3eb977b3ab1dee7d7ac49b6",
+    "size": 12272,
+    "sha256": "9c05746b5c7164088efd35a2608b6de3b80b5af9a9f332270a7c2c01c4603f38",
     "fileName": "TechfortressWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TechfortressWarMerge.cs"
   },
@@ -19289,8 +19289,8 @@
       "armament"
     ],
     "path": "Other/MergeShops/PanopticonGearMerge.cs",
-    "size": 5872,
-    "sha256": "aa87b8b5bff32944e29cb25ec78a6346aa72a923b5f594263c0b8cc96052b196",
+    "size": 5706,
+    "sha256": "c80dd6ecb3e87d341176306010d9900ae864d38ff06bbe0c117f057a42fbc9cd",
     "fileName": "PanopticonGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/PanopticonGearMerge.cs"
   },
@@ -19367,8 +19367,8 @@
       "bob"
     ],
     "path": "Other/MergeShops/CarcossaCanteenMerge.cs",
-    "size": 10551,
-    "sha256": "c06285c5392604c1c031ba75a2db56608b92852afda0bea48ddb3e1146e14a3c",
+    "size": 10385,
+    "sha256": "69239e3f3c0aa7f82544bb4270b6bb2822ee4d6eca30d6b7bafa9cf0a2500894",
     "fileName": "CarcossaCanteenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CarcossaCanteenMerge.cs"
   },
@@ -19438,8 +19438,8 @@
       "wings"
     ],
     "path": "Other/MergeShops/OwlMerge.cs",
-    "size": 4595,
-    "sha256": "c94a54f46898c832a5589904073cd9eb5a573e093658269a3cc6f5918a7552c8",
+    "size": 4394,
+    "sha256": "7e3a0f96caa8842908cf939c5fcf2bfed4b63ae120afc2cb2dd01bd94471a586",
     "fileName": "OwlMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/OwlMerge.cs"
   },
@@ -19489,8 +19489,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TrygveMerge.cs",
-    "size": 9000,
-    "sha256": "baf2dc866b91ec5396f152cafc979ccf0d3f528d6f812b7d04d2cf1b80037ea9",
+    "size": 8668,
+    "sha256": "3ced529873e5346c65d9c0ec1db91c4d9b742df3f2eef780870a8d5a6535cf3f",
     "fileName": "TrygveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TrygveMerge.cs"
   },
@@ -19517,8 +19517,8 @@
       "mysteries"
     ],
     "path": "Other/MergeShops/InfernalParadiseMerge.cs",
-    "size": 12192,
-    "sha256": "f690037d33bc51ccb908be49fbac116a19eefda072c6dcddbdfe6877744f8914",
+    "size": 10982,
+    "sha256": "3b69ab3c828bcb386e4a5e3eca357b07e1146a8846131d6e5f1d351afdae80da",
     "fileName": "InfernalParadiseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InfernalParadiseMerge.cs"
   },
@@ -19559,8 +19559,8 @@
       "null"
     ],
     "path": "Other/Classes/FrostSpiritReaver.cs",
-    "size": 12576,
-    "sha256": "c572c5f4c6ac110fa5ff4ee4f14e81448a178d6ba8894655f6980c0eb7f66648",
+    "size": 11094,
+    "sha256": "7c611f6c3c97ccf693a455d147e8e72d03c900f4e9cdc3ac3b9d9d624a8d3d1a",
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
   },
@@ -19593,8 +19593,8 @@
       "captain stratos"
     ],
     "path": "Other/Classes/SkyChargedGrenadier[9yMem].cs",
-    "size": 2544,
-    "sha256": "8c87423d7d92044dd4b9e2a04cc3f9de367dc1e5f1102df103db06c929d27271",
+    "size": 2466,
+    "sha256": "0ed0d51826564144cadf39372e25b36b9eba5357da585ef207b5d3924039b2ce",
     "fileName": "SkyChargedGrenadier[9yMem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/SkyChargedGrenadier[9yMem].cs"
   },
@@ -19647,8 +19647,8 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 12526,
-    "sha256": "91cb6d1cb341984a034e507adeabf651a14d8ab8463d85cdaccf24f342d5e567",
+    "size": 12088,
+    "sha256": "d662211ebef293fd2c403f3600e93afd8606214a3e1426c3f44aca8422e31961",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -19705,8 +19705,8 @@
       "kingsecho"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 8878,
-    "sha256": "ef90375138b5059c70b3a5911b6075bcef658d64f5d97fe809336810f106c72d",
+    "size": 6606,
+    "sha256": "4a92a67e60e26c995f4e023d63a9e3fe8c2d10cf636f663e67de3c19f3abc86e",
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
@@ -19764,8 +19764,8 @@
       "null"
     ],
     "path": "Other/Classes/LegionDoomKnight[Mem].cs",
-    "size": 1637,
-    "sha256": "9e5d08057fb2402c603da84bd2ec7268c665208d66b5dd8950c5ce94894286c3",
+    "size": 1567,
+    "sha256": "61f9b4713948834cfdcc3f2b644fd70526991e4a1044ba8741256af20346e387",
     "fileName": "LegionDoomKnight[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/LegionDoomKnight[Mem].cs"
   },
@@ -19776,8 +19776,8 @@
       "null"
     ],
     "path": "Other/Classes/Necromancer.cs",
-    "size": 1492,
-    "sha256": "8353e7dcde63be50cf1b141b822f2553708c6abb4656ee3293d5f59ddfc0248a",
+    "size": 1398,
+    "sha256": "9b970c9dbf3b2832c43e5860c58d8d8be3bdc530496d8c61ebc280842f12c434",
     "fileName": "Necromancer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Necromancer.cs"
   },
@@ -19897,8 +19897,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 16203,
-    "sha256": "5fedf9bb2727c9e2a77554f08c037bb83962101004347ee42ab23c53ee5e0f2c",
+    "size": 15945,
+    "sha256": "450952bb58e456cfc76ce78d34ae8bfde62a1b707e412e6f237145930aed9fed",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -19923,8 +19923,8 @@
       "class"
     ],
     "path": "Other/Classes/MartialArtist.cs",
-    "size": 4984,
-    "sha256": "8553477dfb8fae7e6a469a66e6070cd1367e5b1732b413b7adbb29689287a7ff",
+    "size": 4702,
+    "sha256": "45b1419ee2c13cf660060ca2122c9bf1b200b55c1e5f13a64e7ca13547dd1e73",
     "fileName": "MartialArtist.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/MartialArtist.cs"
   },
@@ -19954,8 +19954,8 @@
       "garden"
     ],
     "path": "Other/Classes/ArcanaInvoker[Non-Insignia].cs",
-    "size": 9770,
-    "sha256": "d19deef3b73618d777fbf114b85a7fef158fb7fe50f34a4ac7b4ab1e6d2ac00a",
+    "size": 9644,
+    "sha256": "d3442260c003404505e1de0a69ea4224fe3c646de568b865333acc040e9e4705",
     "fileName": "ArcanaInvoker[Non-Insignia].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArcanaInvoker[Non-Insignia].cs"
   },
@@ -20098,8 +20098,8 @@
       "null"
     ],
     "path": "Good/BLoD/CoreBLOD.cs",
-    "size": 27863,
-    "sha256": "8a557dbde36c09aad37a1c08a292da0a6702cc30b444314a40f0e88c08ef9e08",
+    "size": 27127,
+    "sha256": "d8f82e4850b86e0721b5447c8d51dba7a8fc07a08615773432f0293260e568f9",
     "fileName": "CoreBLOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/CoreBLOD.cs"
   },
@@ -20119,8 +20119,8 @@
       "good"
     ],
     "path": "Good/BLoD/2UltimateBlindingLightofDestiny.cs",
-    "size": 4677,
-    "sha256": "ee6e4192dfae4f500a487c96c64d14111e072589411e426a3b39451d317378f4",
+    "size": 4299,
+    "sha256": "f57db0fa9d39977c407c871102b56bcbce07c73247c56d1a9160d0bd5b11305a",
     "fileName": "2UltimateBlindingLightofDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/2UltimateBlindingLightofDestiny.cs"
   },
@@ -20135,8 +20135,8 @@
       "gear"
     ],
     "path": "Good/GearOfAwe/Awescended.cs",
-    "size": 13269,
-    "sha256": "0112a593890777382964b3af5ee1ef2accd1e7f05ed35c51cb2645183ef8147b",
+    "size": 12527,
+    "sha256": "dbe79588e407e8dbebe4c42eae16ecd30627c05f61a511ac9ed5e51e180f9a34",
     "fileName": "Awescended.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/Awescended.cs"
   },
@@ -20155,8 +20155,8 @@
       "unlocking the chest"
     ],
     "path": "Good/GearOfAwe/ClassicBladeOfAwe.cs",
-    "size": 2831,
-    "sha256": "d2cb8d9f4d1b60b572e331f8a979d940fc307010619446e53bf4555820346c55",
+    "size": 2753,
+    "sha256": "eaecf017b7ca9fb429beaacb419fa3f72b56f611e0c5512820b050d1f1cbd40f",
     "fileName": "ClassicBladeOfAwe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/ClassicBladeOfAwe.cs"
   },
@@ -20167,8 +20167,8 @@
       "null"
     ],
     "path": "Good/GearOfAwe/CoreAwe.cs",
-    "size": 2628,
-    "sha256": "dfe25cca9c1b5798d596cde5ad4e70adfe9fc2fc81ddd6ab64a11d351cfa110e",
+    "size": 2470,
+    "sha256": "fca4e0f8dd7bdda4e099a0e616d96061fcd88649bfddaa4024934f3e6c769eb4",
     "fileName": "CoreAwe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/CoreAwe.cs"
   },
@@ -20240,8 +20240,8 @@
       "enchanted"
     ],
     "path": "Good/GearOfAwe/AweMerge.cs",
-    "size": 9459,
-    "sha256": "084af8ebdd2956feb6eaa252721dee6e461d169b8713fbee2e0929776bf2d427",
+    "size": 9293,
+    "sha256": "e625ba103772367fe400edaf0d1f03ce93260144fcf4de60c97aed5026c9d762",
     "fileName": "AweMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/AweMerge.cs"
   },
@@ -20428,8 +20428,8 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 36171,
-    "sha256": "393e18fd731f585dd5e0aebc4b1d550520e2482dce47f2320edba5fc0b078ac9",
+    "size": 35197,
+    "sha256": "149d585215b45912c5284fa499355ff457019d8ced26433b259c3b6834eacc48",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
@@ -20485,8 +20485,8 @@
       "null"
     ],
     "path": "Story/ShadowsOfChaos/CoreSoC.cs",
-    "size": 12853,
-    "sha256": "2c5149736199b976e13f6ecc08c994be370d7aed960c71d6ccce8fba7d779e30",
+    "size": 12743,
+    "sha256": "96a7d7260e086561f630cfea12fbee99f228a4ed687979821a749233ffca6ca7",
     "fileName": "CoreSoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowsOfChaos/CoreSoC.cs"
   },
@@ -20921,8 +20921,8 @@
       "null"
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
-    "size": 38266,
-    "sha256": "cee559d58713e2082c13d58b142c6ffc2f5a0e264e707ab85d4e807e929e4cf4",
+    "size": 37716,
+    "sha256": "d9b9ddb71af3d21d38bd9681b2939d2d2032f551010365b7ef5f3848532de433",
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
@@ -21224,8 +21224,8 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 16436,
-    "sha256": "5e92a6680a2f657aa18ec8f6cd3f5aae0da6482a5398df65d0137969fdb671ef",
+    "size": 16200,
+    "sha256": "851062e2974d5ac84b461b1489bec39a26f97c3b64e24c846c6f6b75f728eead",
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
@@ -21426,8 +21426,8 @@
       "null"
     ],
     "path": "Story/Doomwood/CoreDoomwood.cs",
-    "size": 31295,
-    "sha256": "fca4b657c4c01e3c3bcc27a933eeadedb3bec1c10ba4c0ddbf25bfaacc906a12",
+    "size": 30965,
+    "sha256": "69a5cc7aa91576e998b5346f08c1b3a53fec2c007c3a2734fda27d4eda6398a4",
     "fileName": "CoreDoomwood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Doomwood/CoreDoomwood.cs"
   },
@@ -21759,8 +21759,8 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 85825,
-    "sha256": "2917bb6d8a727d418ffadca843b52195d6f81a26ac21cebd5886c889b3c0d007",
+    "size": 84917,
+    "sha256": "885034821b2e89395891ed8dcfb8dccc61ab0eacc4095818476c9a1223797bed",
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
@@ -21997,8 +21997,8 @@
       "null"
     ],
     "path": "Story/IsleOfFotia/CoreIsleOfFotia.cs",
-    "size": 10020,
-    "sha256": "b505918486b8dcfb7593ff87a44dd2e751b9ef3218716fde7faf054a2de8467d",
+    "size": 9824,
+    "sha256": "0aba9eb119b3527bc13769a0d4f2ca76044ad0e18a917529fc2c9c8f74a8027a",
     "fileName": "CoreIsleOfFotia.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/IsleOfFotia/CoreIsleOfFotia.cs"
   },
@@ -22274,8 +22274,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48990,
-    "sha256": "4594807ca102bb5f3335a59e8dc681e93de64c1ee00e25025c43e9e4ace5a0d3",
+    "size": 48762,
+    "sha256": "fba346b7ee2674cda0d9e3424611780432eecfa020fd2e0384f7382716ae70d2",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
@@ -22363,8 +22363,8 @@
       "fiendshard"
     ],
     "path": "Story/Nation/Fiendshard.cs",
-    "size": 3673,
-    "sha256": "e86c4dc1f09043da24396eb8143798c491dac91e26aabd2cd2a40c52e623d33a",
+    "size": 3563,
+    "sha256": "d4f073630c9bef6ac5ba30e44dac9d01372402af1ff94380181aecc914123a68",
     "fileName": "Fiendshard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/Fiendshard.cs"
   },
@@ -22378,8 +22378,8 @@
       "nation"
     ],
     "path": "Story/Nation/Tercessuinotlim.cs",
-    "size": 4282,
-    "sha256": "6c3cc0ecdbe782764238cfa7ea27f54efc47d39245a043249c69df5bf7fc7cd5",
+    "size": 4172,
+    "sha256": "9ed8054571621642898d26019f2b0ecd923c1ab67109aaa2ca333718590cecea",
     "fileName": "Tercessuinotlim.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/Tercessuinotlim.cs"
   },
@@ -22534,8 +22534,8 @@
       "shadowblast arena"
     ],
     "path": "Story/Nation/ShadowBlastArena.cs",
-    "size": 4915,
-    "sha256": "02eba868be04672eed060b5ab64e8956a8036590ef14154ebaa7081075ee0106",
+    "size": 4821,
+    "sha256": "bde28aabfbd9e71077a472227c5d1cc94ed85a3d72e9e38b5729340ce1d96a8f",
     "fileName": "ShadowBlastArena.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/ShadowBlastArena.cs"
   },
@@ -23398,8 +23398,8 @@
       "dark-war-legion-and-nation"
     ],
     "path": "Story/Legion/DarkWarLegionandNation.cs",
-    "size": 7472,
-    "sha256": "9c2402bcce188c32fdc36ad0640a349f5349f4369be816933baac986e96d5918",
+    "size": 7142,
+    "sha256": "fadc882128f3bca94418feb478b6567ae9f1949f23617a36f0c8e3f75d392f09",
     "fileName": "DarkWarLegionandNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/DarkWarLegionandNation.cs"
   },
@@ -23462,8 +23462,8 @@
       "birthday"
     ],
     "path": "Story/Legion/DageRecruit.cs",
-    "size": 5842,
-    "sha256": "c88797d897c83724ba1bc12bd09f4d5dd32ae3b47ebb9cec315ad6c11bbb49af",
+    "size": 5402,
+    "sha256": "0a1210430e82872572f8e282238f8fcee5d1d85861de35ab430a5d08734e528d",
     "fileName": "DageRecruit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/DageRecruit.cs"
   },
@@ -23540,8 +23540,8 @@
       "atlasfalls"
     ],
     "path": "Story/Legion/AtlasFalls.cs",
-    "size": 5500,
-    "sha256": "02189813ea2225270a7ecec412ed8924de97bd5059671571600dd1620f228f24",
+    "size": 5202,
+    "sha256": "20ad7ddbde107b4247dd2ee9533029f1e78be6b805fd8461670f4d366935cc08",
     "fileName": "AtlasFalls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/AtlasFalls.cs"
   },
@@ -23821,8 +23821,8 @@
       "null"
     ],
     "path": "Story/Summer2015AdventureMap/CoreSummer.cs",
-    "size": 28724,
-    "sha256": "0652c7d762834472f2858b686885316da32c9b275564efc0c03e8617c2988917",
+    "size": 26038,
+    "sha256": "bf9a75b9aabc86f5d750db978c1514774c5f9f5d7e4468110b8a08e44654a868",
     "fileName": "CoreSummer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Summer2015AdventureMap/CoreSummer.cs"
   },
@@ -24043,8 +24043,8 @@
       "null"
     ],
     "path": "Story/ElegyofMadness(Darkon)/CoreAstravia.cs",
-    "size": 16261,
-    "sha256": "03ae2fa92893162c092cce62fe0a1f249f52404f343c2b3050fa9a0105bf6ba7",
+    "size": 16041,
+    "sha256": "29ec486f151bf2ef99593c0c1090d57a20ec8be955194ae1c7d744ee52762fe2",
     "fileName": "CoreAstravia.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ElegyofMadness(Darkon)/CoreAstravia.cs"
   },
@@ -24393,8 +24393,8 @@
       "null"
     ],
     "path": "Nation/Various/PurifiedClaymoreOfDestiny.cs",
-    "size": 1073,
-    "sha256": "2c45f2a434170e9f58bc5ed0164dd116d8ca0a0708466acbe7fc04b636715b5b",
+    "size": 1015,
+    "sha256": "72ffdf3951c5a693ae306504c09b50d6106d19c4ef43f4128f4eaca69c8a4a15",
     "fileName": "PurifiedClaymoreOfDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/PurifiedClaymoreOfDestiny.cs"
   },
@@ -24546,8 +24546,8 @@
       "null"
     ],
     "path": "Nation/Various/ArchfiendDragonEgg[Mem].cs",
-    "size": 2232,
-    "sha256": "4d242a6c61b51bc31d1aafb2995a0519bd434ec129727f21013616f56676e725",
+    "size": 2174,
+    "sha256": "b11133831e72a2f086a76cd95cc7c61899510c3a72814ed73034ee72fb9a8041",
     "fileName": "ArchfiendDragonEgg[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ArchfiendDragonEgg[Mem].cs"
   },
@@ -24606,8 +24606,8 @@
       "null"
     ],
     "path": "Nation/Various/ShadowLegacyofNulgath.cs",
-    "size": 1616,
-    "sha256": "1f4894f02baf156e73c80a120a07f20015688cd0ccfd4cc08390b52a77194522",
+    "size": 1522,
+    "sha256": "5eb76545f4d79856b130925d99847106e0aaf8f91005b0413bd4a3762ddbe3e3",
     "fileName": "ShadowLegacyofNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ShadowLegacyofNulgath.cs"
   },
@@ -24647,8 +24647,8 @@
       "null"
     ],
     "path": "Nation/Various/TarosManslayer.cs",
-    "size": 2393,
-    "sha256": "ab5f5107345a6b1daafe753ecf63beed141d01be8fcc9915235cba2a172d4b83",
+    "size": 2315,
+    "sha256": "fe7480aeeec99e1e85bbccdb87089187d8856720747a22bb3d16e23ad512695e",
     "fileName": "TarosManslayer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/TarosManslayer.cs"
   },
@@ -24708,8 +24708,8 @@
       "nulgath gifts"
     ],
     "path": "Nation/Various/MawOfTheVoid.cs",
-    "size": 3870,
-    "sha256": "2230b66d0d183ea21413bbca37f098b6f1f62f623b1b7bad5e56f448d4b9c7b9",
+    "size": 3752,
+    "sha256": "d69d83317390755128b36f5b556173f58bd9de435093f125a9f4a1cbeb59f04f",
     "fileName": "MawOfTheVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/MawOfTheVoid.cs"
   },
@@ -24748,8 +24748,8 @@
       "null"
     ],
     "path": "Nation/Various/TendurrrTheAssistantQuests.cs",
-    "size": 3925,
-    "sha256": "a6e0a10779caf008da89972c95c5bd9497a048606e79cbd19cf07fc9f569ac48",
+    "size": 3815,
+    "sha256": "4f98aa7deda44772b5b0670612fc71cb9a66b6c98a8f4559e34903ffeac3f852",
     "fileName": "TendurrrTheAssistantQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/TendurrrTheAssistantQuests.cs"
   },
@@ -24789,8 +24789,8 @@
       "null"
     ],
     "path": "Nation/Various/ProofOfRecruitmentQuest.cs",
-    "size": 17170,
-    "sha256": "444d155f3f6bf49ed1a8e5df070b55cea25a2752243c161d2b40df1391a08348",
+    "size": 14864,
+    "sha256": "6bc97c9162187986f474cf725ad6892f9986507657d6ced3f4e1e07ef814de4f",
     "fileName": "ProofOfRecruitmentQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ProofOfRecruitmentQuest.cs"
   },
@@ -24813,8 +24813,8 @@
       "null"
     ],
     "path": "Nation/Various/TheGameofGemstones(Gold[Members]).cs",
-    "size": 2114,
-    "sha256": "6e9e8e661b27cb4e473c145eed66f0ff4da3dcbb72645c4b6b204b4545c6f525",
+    "size": 1894,
+    "sha256": "82b3f3354c2dd69dc20ccb8b66886bf157e0aed0e0822d5478bafee7a10da329",
     "fileName": "TheGameofGemstones(Gold[Members]).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/TheGameofGemstones(Gold[Members]).cs"
   },
@@ -24886,8 +24886,8 @@
       "poisonous deal"
     ],
     "path": "Nation/Various/TaintedClaymore.cs",
-    "size": 1901,
-    "sha256": "7042ed513383013f285ddf37b9c457041e6fa087df6d6b886baf0b66d72d859a",
+    "size": 1843,
+    "sha256": "8cbd33512dc8ddf68872aa4ee2037a4b2612b85549af7c5bc1c82884dc202f34",
     "fileName": "TaintedClaymore.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/TaintedClaymore.cs"
   },
@@ -24922,8 +24922,8 @@
       "null"
     ],
     "path": "Nation/Various/AssistingOblivionBlade.cs",
-    "size": 2198,
-    "sha256": "8f7254bd4e967f4bd886ab76e77d7e66ddf5cbac181b1a1dffa7e27bdfed02a0",
+    "size": 2088,
+    "sha256": "74ef80a0ad670ac1c15526af228b27a66ded8c1d6e7e8bdd76a83512d9d79829",
     "fileName": "AssistingOblivionBlade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/AssistingOblivionBlade.cs"
   },
@@ -24940,8 +24940,8 @@
       "bhamud"
     ],
     "path": "Nation/Various/ImageOfNulgath.cs",
-    "size": 4808,
-    "sha256": "33962bc1ee4051ff791b62b46825f44e4fe574cae25e75d4f16922f2522bbf6f",
+    "size": 4652,
+    "sha256": "d25778c3cfe60b73b69f06bbb14a1ab141ed67ac0a15a5a34668fbed763df272",
     "fileName": "ImageOfNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ImageOfNulgath.cs"
   },
@@ -24984,8 +24984,8 @@
       "null"
     ],
     "path": "Nation/VHL/CoreVHL.cs",
-    "size": 9709,
-    "sha256": "dc2d26fbd55f110c1f634934848e59a7d24a23bc044767eff7bcf11d928a6828",
+    "size": 9599,
+    "sha256": "8ce271db48c168307965ab612cebc8a376c0ae838cc21db172ba38c51e6da66a",
     "fileName": "CoreVHL.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/VHL/CoreVHL.cs"
   },
@@ -25110,8 +25110,8 @@
       "null"
     ],
     "path": "Nation/EvolvedOrb/EvovledHexOrbItems[Mem].cs",
-    "size": 4322,
-    "sha256": "34821343c8eb413a61c55c0bf2762b1171c26b6234153f7532c4fe096307eb96",
+    "size": 4264,
+    "sha256": "262d84aa214238fe50ee07380c574769538552e844f614cf470c816209ff7b43",
     "fileName": "EvovledHexOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/EvovledHexOrbItems[Mem].cs"
   },
@@ -25382,8 +25382,8 @@
       "null"
     ],
     "path": "Nation/OblivionBlade(RareandNot)/CoreOblivionBladeofNulgath.cs",
-    "size": 8126,
-    "sha256": "ba0349b1cbfb5b7a5b679fcb4f0f470fb8110cb874c80b8f96d58d8ecd4a6f49",
+    "size": 8000,
+    "sha256": "fbc94535348984193ff95d700628be1a79a8cef1030e40bbeaa264385fc52ca4",
     "fileName": "CoreOblivionBladeofNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/OblivionBlade(RareandNot)/CoreOblivionBladeofNulgath.cs"
   },
@@ -25539,8 +25539,8 @@
       "unstable"
     ],
     "path": "Nation/MergeShops/VoidRefugeMerge.cs",
-    "size": 17689,
-    "sha256": "9a800120f3ce700ab541c7d04364a5ca1d761b29daa22d92df68b89cb512e0a9",
+    "size": 16931,
+    "sha256": "71481904b0c9934692214b7435f8f78e64cd0deb2639e976cd940231ae0f34a5",
     "fileName": "VoidRefugeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/VoidRefugeMerge.cs"
   },
@@ -25556,8 +25556,8 @@
       "enchanted nulgath nation house"
     ],
     "path": "Nation/MergeShops/DirtlickersMerge.cs",
-    "size": 12880,
-    "sha256": "b2f19599334b3e5f16762b3a921244f3256b2f2b5700f7c0ee007c21e98522dc",
+    "size": 12738,
+    "sha256": "a2a238de27da48b9a24585e8369db9cf3441cde01a629228495c48952524ce93",
     "fileName": "DirtlickersMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/DirtlickersMerge.cs"
   },
@@ -25593,8 +25593,8 @@
       "shard"
     ],
     "path": "Nation/MergeShops/VoidChasmMerge.cs",
-    "size": 10887,
-    "sha256": "868b805fb992923636db97b3e5680a843367095d20e6d357e36438956e6f20ec",
+    "size": 10361,
+    "sha256": "3fa1e9f12c95ef87d3655081e2351a49019bf83ee94df54720fe01cf9aa1b460",
     "fileName": "VoidChasmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/VoidChasmMerge.cs"
   },
@@ -25657,8 +25657,8 @@
       "horn"
     ],
     "path": "Nation/MergeShops/FiendishLoreMasterMerge.cs",
-    "size": 11323,
-    "sha256": "f71f6f891599da0f515dccd33fada7d70e14a39cb682049d1f4f88c3acaa593a",
+    "size": 11157,
+    "sha256": "bd13cd8511d2ba1d52fa43cc1cb690403326f012fcb2ddb8755190f087d931a6",
     "fileName": "FiendishLoreMasterMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/FiendishLoreMasterMerge.cs"
   },
@@ -25685,8 +25685,8 @@
       "empowered voidstone"
     ],
     "path": "Nation/MergeShops/CragsGemMerge.cs",
-    "size": 12300,
-    "sha256": "3753e7209d3dbde9747b547aac015bbe04b88e1ccc5c7b9fae47db02b31c1b37",
+    "size": 11664,
+    "sha256": "80b6a924f69c9109d688ffcd2ffe2f8927e0c75d2e18528628f2cd04717c6521",
     "fileName": "CragsGemMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/CragsGemMerge.cs"
   },
@@ -25703,8 +25703,8 @@
       "exalted"
     ],
     "path": "Nation/MergeShops/ShadowscytheMerge.cs",
-    "size": 7626,
-    "sha256": "e7d483573ea667960bfb34cb8c61d651c8d4c0487b4f424c5d095635c2730e7f",
+    "size": 6542,
+    "sha256": "a41672b478068f39f6c1fb413bce6d9eb9d2f11a0525c082634b24913141dfe2",
     "fileName": "ShadowscytheMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/ShadowscytheMerge.cs"
   },
@@ -25746,8 +25746,8 @@
       "armet"
     ],
     "path": "Nation/MergeShops/OblivionTundraMerge.cs",
-    "size": 14094,
-    "sha256": "37994d867c56d7b4a2ef919307d6e1ec096c9fa229ed7dd968ac98d5219fa415",
+    "size": 13762,
+    "sha256": "ab6692c6f898569874767f5c208ed8740dd7cc466c60b368a4158a13b40689e7",
     "fileName": "OblivionTundraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/OblivionTundraMerge.cs"
   },
@@ -25823,8 +25823,8 @@
       "arachnomancer"
     ],
     "path": "Nation/MergeShops/NulgathDiamondMerge.cs",
-    "size": 22433,
-    "sha256": "1caaafc19298b18df2c646470c6f5e21880049c7fba24942523adf1220b9c07b",
+    "size": 22197,
+    "sha256": "d802736b346aef3feabb79322efcda9f416a6f3e4b5a9387a510a987908b2df2",
     "fileName": "NulgathDiamondMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/NulgathDiamondMerge.cs"
   },
@@ -25853,8 +25853,8 @@
       "contract"
     ],
     "path": "Nation/MergeShops/DeleuzeTundraMerge.cs",
-    "size": 7280,
-    "sha256": "0c2fd12e132b9a979e74b82ce01065bc2fbc150d64fdda16b00ec64b244062b0",
+    "size": 6536,
+    "sha256": "fc511f032b188a993048af20137cb151434da1faccb1c3118bdf5c1d1217b603",
     "fileName": "DeleuzeTundraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/DeleuzeTundraMerge.cs"
   },
@@ -26049,8 +26049,8 @@
       "farm"
     ],
     "path": "Hollowborn/Materials/GraceOrb.cs",
-    "size": 1572,
-    "sha256": "276b664e708599c470c9094e2e6c792c04165d113c7bc0ed48da477e45a448e4",
+    "size": 1478,
+    "sha256": "43f9f371ba013e5b09b948ede68e3b573af50db4fd7d7d5eb643ccca21db694e",
     "fileName": "GraceOrb.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/Materials/GraceOrb.cs"
   },
@@ -26124,8 +26124,8 @@
       "inserthere"
     ],
     "path": "Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs",
-    "size": 8660,
-    "sha256": "49ae8eaa2c3f9c1c437adad59823d50a9e5b83f035b22d4d1bbeeec8f39bb53d",
+    "size": 8578,
+    "sha256": "9c7d95ea64b68d302c75a64e8a809d804983e30d8b695cae871a121238a53354",
     "fileName": "CoreHollowbornPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs"
   },
@@ -26192,8 +26192,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs",
-    "size": 9640,
-    "sha256": "741ce091a4cdb7737ad056e77ee3da55d41b4f23a01bc1a22a0d5dd2d1834577",
+    "size": 9116,
+    "sha256": "988546391d65fb503cf023ad59be63f991eb2178ee1cc9ce5fcd7c3c3e6f7331",
     "fileName": "CoreHollowbornDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs"
   },
@@ -26335,8 +26335,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs",
-    "size": 37893,
-    "sha256": "e3883ac46f01074c0d66762d4fc430f48ef818829cf82c295df83dfd4673d1ed",
+    "size": 36999,
+    "sha256": "e53d6e4fe28cb7b4616c55be749f24b06edb2c8f8a539b38025a6a3a27da1ded",
     "fileName": "CoreHollowbornChaosEnvoy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs"
   },
@@ -26572,8 +26572,8 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/ShadowrealmMerge.cs",
-    "size": 23229,
-    "sha256": "6e69cee58b850326e4589207ff7d92f00e8081aaecb5732bbf0512cedbb9b09a",
+    "size": 22563,
+    "sha256": "e3f8dd25ea6944c7e6d212f27aeb673af1054e63e8d926ee4062be05b662163a",
     "fileName": "ShadowrealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/ShadowrealmMerge.cs"
   },
@@ -26624,8 +26624,8 @@
       "thorn"
     ],
     "path": "Hollowborn/MergeShops/ShadowslayerDMerge.cs",
-    "size": 15087,
-    "sha256": "18e1f1b8f4e059cae7f2ce1b5ce9c06fa367a624996564592fefc1ca8b311c11",
+    "size": 14945,
+    "sha256": "c45b00d1f3c60565c8a51ee2f92b6609183ba07baab12c0157539a46339202e1",
     "fileName": "ShadowslayerDMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/ShadowslayerDMerge.cs"
   },
@@ -26673,8 +26673,8 @@
       "ordo"
     ],
     "path": "Hollowborn/MergeShops/HBJudgementMerge.cs",
-    "size": 9229,
-    "sha256": "cc5e16975dac72b31e8f7c1e585110453151a3ecc6cc40593139a829d323a5c7",
+    "size": 9035,
+    "sha256": "cd326d6fa388f1797bbe3d6a4ba759b5710b55c55987f31e741666d478a70212",
     "fileName": "HBJudgementMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/HBJudgementMerge.cs"
   },
@@ -26704,8 +26704,8 @@
       "armet"
     ],
     "path": "Hollowborn/MergeShops/ViciMerge.cs",
-    "size": 9525,
-    "sha256": "5c96f4ef6183c7ff4b154020144b50f6e3ba19cf0249b61898a0f9222c0259f9",
+    "size": 9359,
+    "sha256": "13e0f66af127ee447ae9d756e013b23e58cdb379f6e65e56a02dd293f5015377",
     "fileName": "ViciMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/ViciMerge.cs"
   },
@@ -26761,8 +26761,8 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/DawnFortressMerge.cs",
-    "size": 15093,
-    "sha256": "ae6fa760d9c0e089d67ba934b6b9e3dd242e43b6bb9b4551fef9ffa8bc82b3d9",
+    "size": 13745,
+    "sha256": "042bfaf104808f9acf8f1bbc61037237b857e7dc21ccb2add5e5e7545410f0f1",
     "fileName": "DawnFortressMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/DawnFortressMerge.cs"
   },
@@ -26788,8 +26788,8 @@
       "burning"
     ],
     "path": "Hollowborn/MergeShops/HollowbornMerge.cs",
-    "size": 10576,
-    "sha256": "a3d2c00bcb570a94bb32d243bbe656417b07766ba83a011f6cc278eedd183b95",
+    "size": 10382,
+    "sha256": "5a6f19195a323e0f43d1293408e9846ac107cec6817ba057083bc628c702702b",
     "fileName": "HollowbornMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/HollowbornMerge.cs"
   },
@@ -26817,8 +26817,8 @@
       "katanas"
     ],
     "path": "Hollowborn/MergeShops/EddensTreasuresMerge.cs",
-    "size": 8475,
-    "sha256": "1441eeba9dfbe10bc6717245dff89bd3db535af64017cd31763284d1e196af3b",
+    "size": 8309,
+    "sha256": "ec5d83f38c9cef120bd87c010c5cf630080cffdcc5137406d912e0b4cf576adf",
     "fileName": "EddensTreasuresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/EddensTreasuresMerge.cs"
   },
@@ -26861,8 +26861,8 @@
       "eye"
     ],
     "path": "Hollowborn/MergeShops/ArkariesMerge.cs",
-    "size": 12185,
-    "sha256": "6a4cea5ca7eea8cc0eb578768ca066ea2e372951084405dc9fdf31cffbe12ecb",
+    "size": 11409,
+    "sha256": "4d865b674e0eb70cd39b39b2491c59ff41586aa6cefaa5c8889a67b7479f83ff",
     "fileName": "ArkariesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/ArkariesMerge.cs"
   },
@@ -26891,8 +26891,8 @@
       "battlegear"
     ],
     "path": "Hollowborn/MergeShops/HollowbornLabMerge.cs",
-    "size": 8565,
-    "sha256": "e91ca81369fb7a1d37a5c55abbc0aaacbf16712ce9a8fe1efb9360c74849fdd3",
+    "size": 8343,
+    "sha256": "88dc595816500f618d75fedbcc596548b173450d396fed86baf59c99f6b0211d",
     "fileName": "HollowbornLabMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/HollowbornLabMerge.cs"
   },
@@ -26927,8 +26927,8 @@
       "grimoires"
     ],
     "path": "Hollowborn/MergeShops/DawnsanctumMerge.cs",
-    "size": 20350,
-    "sha256": "aae8b11496a7d2b69eb18369bd0dd1eca47db0c6dcb2d7927fe504a743f555b7",
+    "size": 19240,
+    "sha256": "1391fc49fcd4c6bb5505aa7af5de5fffb12c98d95bd6733c74545cda79491b0d",
     "fileName": "DawnsanctumMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/DawnsanctumMerge.cs"
   },
@@ -26964,8 +26964,8 @@
       "chosen"
     ],
     "path": "Hollowborn/MergeShops/GramielsMerge.cs",
-    "size": 12910,
-    "sha256": "028008c818bd29e8af3ac4a0968202fdf98e0adbe48d2814365765bdecddf360",
+    "size": 12270,
+    "sha256": "8a7cb26bbaaf657a97035dbb8d542f62eed038c53b6149253c8a7482544c559f",
     "fileName": "GramielsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/GramielsMerge.cs"
   },
@@ -28095,8 +28095,8 @@
       "loyal"
     ],
     "path": "Legion/Various/LegionCastleQuest.cs",
-    "size": 1581,
-    "sha256": "539a29704e1ae62c9ee98e101821793ad8354da70becaac394bf13a79b93d166",
+    "size": 1329,
+    "sha256": "01fb37166b99faf1fa0ac16203cd3b4ed0b94e910f87431db7d8e4c795e73ac6",
     "fileName": "LegionCastleQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/LegionCastleQuest.cs"
   },
@@ -28119,8 +28119,8 @@
       "null"
     ],
     "path": "Legion/Various/WorthyOfTheBlade.cs",
-    "size": 2282,
-    "sha256": "d8a61e5a95eaaa401b58862759de32932d23ad802d96c4d2a7a8e086e350b68a",
+    "size": 2148,
+    "sha256": "b06998c63e4ca11add17a01407072cf5bf5998081f3c5d6597930b2218a9fcca",
     "fileName": "WorthyOfTheBlade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/WorthyOfTheBlade.cs"
   },
@@ -28131,8 +28131,8 @@
       "null"
     ],
     "path": "Legion/Various/LegionOverfiendBlade.cs",
-    "size": 3322,
-    "sha256": "04be001afd0b34e0cd66dc9d197ab4fc01ac2e5cab365411e4038c3fda06e906",
+    "size": 3204,
+    "sha256": "5cfb8cb8bcc68d1fe23c9416095de29ff035bc0432c6be32ca2e3a629f583d83",
     "fileName": "LegionOverfiendBlade.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/LegionOverfiendBlade.cs"
   },
@@ -28152,8 +28152,8 @@
       ""
     ],
     "path": "Legion/Various/HatefulGoliaths.cs",
-    "size": 3818,
-    "sha256": "6dec43ff0ee8575d2990a704e6f7f06f46cfd6450ce8428f0f18289297ffd684",
+    "size": 3678,
+    "sha256": "098cd1efabc03807060574f88aa3f4d3e89abb30d6e9ff94ba49190f4a75cb83",
     "fileName": "HatefulGoliaths.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/HatefulGoliaths.cs"
   },
@@ -28234,8 +28234,8 @@
       "armaments"
     ],
     "path": "Legion/Various/DarkHandMerge.cs",
-    "size": 13001,
-    "sha256": "45968ae21691870246683a14637bb709e7bc6f546f8c335b37134e20fdeccf8d",
+    "size": 12511,
+    "sha256": "331e1eeceacf18cc6130c5152f952b323589b6155e9540d0eb8216dcc4dd2166",
     "fileName": "DarkHandMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/DarkHandMerge.cs"
   },
@@ -28276,8 +28276,8 @@
       "nsod"
     ],
     "path": "Legion/Various/NecroticBladeoftheUnderworld.cs",
-    "size": 6384,
-    "sha256": "3c646291c61f1ccacf9890d89a3488dad8fecdb922d334aef527105fb460bfdf",
+    "size": 6290,
+    "sha256": "acb2f0b541f4cd62875816f597ba2046a213889d18b63b5388af75e14a92e094",
     "fileName": "NecroticBladeoftheUnderworld.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/NecroticBladeoftheUnderworld.cs"
   },
@@ -28301,8 +28301,8 @@
       "exanima"
     ],
     "path": "Legion/Various/DageChallengeMerge.cs",
-    "size": 9566,
-    "sha256": "c519396c688775cc7b2c22be2e0b32cf5f57e72b055f2e2b92e0ddd034dee72e",
+    "size": 9456,
+    "sha256": "5b11c04ed7e9b566effe6f19190837b13eb493e1ef1f479c47c1066e8d868a55",
     "fileName": "DageChallengeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/DageChallengeMerge.cs"
   },
@@ -28389,8 +28389,8 @@
       "null"
     ],
     "path": "Legion/Revenant/CoreLR.cs",
-    "size": 9657,
-    "sha256": "988d482a73c25cefd8e6a812fd5d2285c344a9bef2e463b33780d9c278276ecf",
+    "size": 8633,
+    "sha256": "502806739f5be698dd7189bbbb185c62ff8618cb9d2a6584bda4663cd8d6e5fa",
     "fileName": "CoreLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Revenant/CoreLR.cs"
   },
@@ -28421,8 +28421,8 @@
       "null"
     ],
     "path": "Legion/YamiNoRonin/CoreYnR.cs",
-    "size": 9199,
-    "sha256": "ddd8ef92c8f78b2529c072a7b322ffea92614e75f439b74029149cf0f1fed2c8",
+    "size": 8727,
+    "sha256": "5bbaf28094f5eea9cf25d654c3dd047b25c6ac7212129799d8f2e8612bf1107d",
     "fileName": "CoreYnR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/YamiNoRonin/CoreYnR.cs"
   },
@@ -28877,8 +28877,8 @@
       "legendary golden death blade"
     ],
     "path": "Legion/LegionExcercise/LegionExercise1.cs",
-    "size": 4203,
-    "sha256": "d0c410dc1be06ca868d916b0d1dc5b15c48622fdda6dce703ba6323037972212",
+    "size": 3529,
+    "sha256": "252d976af66cb00a3ddc376890c887d295673f5bb7502a9ab6d1280d976725e9",
     "fileName": "LegionExercise1.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionExcercise/LegionExercise1.cs"
   },
@@ -28934,8 +28934,8 @@
       "undead champion"
     ],
     "path": "Legion/LegionExcercise/LegionExercise2.cs",
-    "size": 3285,
-    "sha256": "df4de65f9a7a51198ec71d22311a4dfe0ea048a38d9439e4fcb5bfcc637338a3",
+    "size": 3081,
+    "sha256": "e833c95962bdce345b112464d40bfe2271f1533b41eec7a69e01341f97995250",
     "fileName": "LegionExercise2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionExcercise/LegionExercise2.cs"
   },
@@ -28996,8 +28996,8 @@
       "eclipses"
     ],
     "path": "Legion/MergeShops/AtlasFallsGearMerge.cs",
-    "size": 15591,
-    "sha256": "16992e413a19a56963bb166678f8232754e7a8053261b698eb399f6f41dcc488",
+    "size": 15235,
+    "sha256": "8cc114ed07d0037aebbf02532243a7b63c249566db4f2f28ebccc9725a53bf25",
     "fileName": "AtlasFallsGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/AtlasFallsGearMerge.cs"
   },
@@ -29038,8 +29038,8 @@
       "veil"
     ],
     "path": "Legion/MergeShops/AtlasDowryTreasuryMerge.cs",
-    "size": 10118,
-    "sha256": "eda30ad97bd085f31bba8f140657c538d424651052929eb420b2baefaaf97da0",
+    "size": 9786,
+    "sha256": "ec482ffcbd9fac17dfa630472b7f06897722e076ffe2737a50fdbc5cadf48e22",
     "fileName": "AtlasDowryTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/AtlasDowryTreasuryMerge.cs"
   },
@@ -29075,8 +29075,8 @@
       "mini"
     ],
     "path": "Legion/MergeShops/LichKingsBountyMerge.cs",
-    "size": 7816,
-    "sha256": "5df6083f24af297a0ba1d7feedc2c0a7b13e6a7c6ce0e84cad28aa306a6117ee",
+    "size": 7484,
+    "sha256": "973478996d61d709d3cc195450ee3cc8fbb4bd7b5928337ee7dcf039142e4b89",
     "fileName": "LichKingsBountyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/LichKingsBountyMerge.cs"
   },
@@ -29266,8 +29266,8 @@
       "dançarinos"
     ],
     "path": "Legion/MergeShops/DarkHuntMerge.cs",
-    "size": 5795,
-    "sha256": "5ed93aeab9a58b672098ab0fed25cf9ad0210c61404ea7b0699a38ddbc51f310",
+    "size": 5415,
+    "sha256": "f7862bb8e98d59c4179dce967d836627690bd1fd5e708709fde4668d9c2bac60",
     "fileName": "DarkHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/DarkHuntMerge.cs"
   },
@@ -29292,8 +29292,8 @@
       "underworld"
     ],
     "path": "Legion/MergeShops/ForgottenTombsMerge.cs",
-    "size": 6827,
-    "sha256": "399d0e804883719b8700f6b0e924b85b778972ae015f52a300ac690b63099b52",
+    "size": 6423,
+    "sha256": "1fbcb947efd99799396ac1464248ac77a1c095bc45d64fcc54c29181f79d324a",
     "fileName": "ForgottenTombsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/ForgottenTombsMerge.cs"
   },
@@ -29355,8 +29355,8 @@
       "birthday"
     ],
     "path": "Legion/MergeShops/DageRecruitMerge.cs",
-    "size": 15060,
-    "sha256": "e7a69817f0b1fb03e9a7d9eb5677f2360f0f4b5882e8bc62ec984e3d92afc100",
+    "size": 14922,
+    "sha256": "e2cf520e2ed890a3d4a37787aa23bc1f2d88d9ceff78fe5b4defad9d27b59a5d",
     "fileName": "DageRecruitMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/DageRecruitMerge.cs"
   },
@@ -29390,8 +29390,8 @@
       "candelabra"
     ],
     "path": "Legion/MergeShops/AtlasWarTrophiesMerge.cs",
-    "size": 11173,
-    "sha256": "e6159ea7a34078af808f30dd1024c8a4e5f6bc36b0e35f3e7e8c1910bd1fea67",
+    "size": 10509,
+    "sha256": "d0ab6970c47bca8bfc14b547361929ef7becb40929cacc115b3aaa02f9577d90",
     "fileName": "AtlasWarTrophiesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/AtlasWarTrophiesMerge.cs"
   },
@@ -29429,8 +29429,8 @@
       "null"
     ],
     "path": "Legion/MergeShops/LegionPyromancerMerge.cs",
-    "size": 9526,
-    "sha256": "ebc89bfd50bdb6bb7eecfb920d93bc4dada7e83f96763c23d9e0dd2b748cc6d5",
+    "size": 9274,
+    "sha256": "a543d3f1c8e95ba7f5f65ea3eb52e2762dca545e60778c33290ff7fdcb848ce0",
     "fileName": "LegionPyromancerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/LegionPyromancerMerge.cs"
   },
@@ -29500,8 +29500,8 @@
       "keraunos"
     ],
     "path": "Legion/MergeShops/SoulForgeMerge.cs",
-    "size": 8936,
-    "sha256": "97350264e6cbd533036c212ce8487839f6f1174012b95ddf8cc19837bd82e780",
+    "size": 8770,
+    "sha256": "c360cd277dcd617619e811f6cdea7aa02000d6d28ae403e7093b204dd1846902",
     "fileName": "SoulForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/SoulForgeMerge.cs"
   },
@@ -29896,8 +29896,8 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/GearSets/HeadlessHorsemanGear.cs",
-    "size": 6898,
-    "sha256": "a8b39c7eafc55312a39e2f219400912a0fba8dc621a8710cca8c7cf254c2f556",
+    "size": 5764,
+    "sha256": "2069b17c5d895c615deb95bc3b8fa6438c660b2797a2709a46c218320291d71a",
     "fileName": "HeadlessHorsemanGear.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/GearSets/HeadlessHorsemanGear.cs"
   },
@@ -29943,8 +29943,8 @@
       "claws"
     ],
     "path": "Seasonal/Mogloween/MergeShops/AlnswickCastleMerge.cs",
-    "size": 10846,
-    "sha256": "48ba6c45cbd2944e686fcdddb31684d6c15f7533fb4e44519e13bf778e8384c1",
+    "size": 10708,
+    "sha256": "47c02340709374c51a2380ca49d22ae2a39b6b982a7bcb57dc157ffc6e7229b2",
     "fileName": "AlnswickCastleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/AlnswickCastleMerge.cs"
   },
@@ -30094,8 +30094,8 @@
       "merge"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs",
-    "size": 20341,
-    "sha256": "0d79f0d3d4ed7f9b43fc8bc067746558d02c7c0e2b650a7c8b9ba6b48fe1283e",
+    "size": 20151,
+    "sha256": "d1c327e382046d39dd7d5cbc0b6065ef5a2b44b59dd27d6edd699037b3458339",
     "fileName": "MogloweenSeasonalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs"
   },
@@ -30110,8 +30110,8 @@
       "lord"
     ],
     "path": "Seasonal/Mogloween/MergeShops/VampireLordMerge.cs",
-    "size": 5640,
-    "sha256": "d87fdfaa999e06cae1504f003fefec20be97761ef71b3ab9a26cd224198db209",
+    "size": 5252,
+    "sha256": "175e67bae53b450a414a8637af4840e008a754e4a7e3885c80764256b9e39e81",
     "fileName": "VampireLordMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/VampireLordMerge.cs"
   },
@@ -30138,8 +30138,8 @@
       "wrath"
     ],
     "path": "Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs",
-    "size": 7274,
-    "sha256": "1b703964eb4676f28fa45046af45834268e44fff4004f19fc7323c07f051ccf0",
+    "size": 6804,
+    "sha256": "ac793824717b0263b45fe57ba07ec5d33481228e9a8cd8f9491fc5c9e3e7e42e",
     "fileName": "UngourdlyGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs"
   },
@@ -30874,8 +30874,8 @@
       "beetle general"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/BeetleQuests.cs",
-    "size": 7094,
-    "sha256": "4fccee713741d18476e2bdecf03dc3ac4723895b54d7c7094f4deb882efc780a",
+    "size": 6878,
+    "sha256": "16ff7dee655bcb4defde9d813cf0b007d1923f36d4ca7151a645917b9f019192",
     "fileName": "BeetleQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/BeetleQuests.cs"
   },
@@ -30913,8 +30913,8 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs",
-    "size": 12723,
-    "sha256": "3a12f9cde9649f1f484f3d81c79176de12cafd315c4cd62e3f28198b94188223",
+    "size": 12253,
+    "sha256": "5921e6ce55cc622ec716a9c7cf049ceb4eb7511cc13f813e8f46fad515398ccf",
     "fileName": "TempleSiegeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs"
   },
@@ -30930,8 +30930,8 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs",
-    "size": 8778,
-    "sha256": "c0ecd48d7aa6eb467d0463d900c8de94a74577b934b4d453d231fb8e9131eb19",
+    "size": 8640,
+    "sha256": "4dbb57a96881dcfd01f23227a06da2182931e5d5b91224c75a4b02547af68936",
     "fileName": "TempleDelveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs"
   },
@@ -30946,8 +30946,8 @@
       "little science experiment"
     ],
     "path": "Seasonal/StaffBirthdays/Bido/ToxicOblivionBladeofAlchemy.cs",
-    "size": 2858,
-    "sha256": "99eba30b7d642912cc10588055d5e116bf726d802281e2ffcbf7f3e14254cf4d",
+    "size": 2780,
+    "sha256": "af6be05537606aa70fd9ba302cdecd43cd4e1edb58933a3f5e50eb115cd7d48c",
     "fileName": "ToxicOblivionBladeofAlchemy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Bido/ToxicOblivionBladeofAlchemy.cs"
   },
@@ -30993,8 +30993,8 @@
       "lance"
     ],
     "path": "Seasonal/StaffBirthdays/Bido/BidoBirthdayMerge.cs",
-    "size": 13497,
-    "sha256": "9497ea25c7feafa28bcc1e4d4a883356f21b6d01b1cd7d666adb01b40c089f23",
+    "size": 13387,
+    "sha256": "83406981761a30f926479584909c239f2fe02d6023e51787e84d3b00aaf679e5",
     "fileName": "BidoBirthdayMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Bido/BidoBirthdayMerge.cs"
   },
@@ -31009,8 +31009,8 @@
       "another science experiment"
     ],
     "path": "Seasonal/StaffBirthdays/Bido/ToxicBloodBlade[Mem].cs",
-    "size": 2843,
-    "sha256": "fc99e53ce7ca278cabbc0fef49638a2f3fc54ccf17ce038fbe36be3848f865c9",
+    "size": 2765,
+    "sha256": "933c4e99ffe11afe343bd4653b72ad8512a96a743b45e98321df78e543ad8375",
     "fileName": "ToxicBloodBlade[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Bido/ToxicBloodBlade[Mem].cs"
   },
@@ -31049,8 +31049,8 @@
       "ninja"
     ],
     "path": "Seasonal/StaffBirthdays/Beleen/BeleensDyeMerge.cs",
-    "size": 8594,
-    "sha256": "894c3b22dd13822b7c7ab3df6903e06b1ec918287092498234e16f5531311dbc",
+    "size": 8452,
+    "sha256": "6ba386abdfc5fc3809f67872f7b8e4a402cfeb26054244b62ee6c8f00a28d257",
     "fileName": "BeleensDyeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/Beleen/BeleensDyeMerge.cs"
   },
@@ -31132,8 +31132,8 @@
       "gem"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/AbyssalMerge.cs",
-    "size": 11614,
-    "sha256": "3f3d014096ea09aeb4ebf22569fd927e7c0332d486e3bfbbef5454a33c63c3e3",
+    "size": 11282,
+    "sha256": "4702410d64c4812e4f57cc2b2bab69989534820e031e27fb83f1560c0faa81f1",
     "fileName": "AbyssalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/AbyssalMerge.cs"
   },
@@ -31151,8 +31151,8 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkWarNationMerge.cs",
-    "size": 10404,
-    "sha256": "a0a03792a23c51adc268f409ebcf7855366099d657704c2c197c7f6f7b7147f4",
+    "size": 10266,
+    "sha256": "24460ec01a93cb93577de9af252353078643bd7bf377dd46599246a61a26a6a4",
     "fileName": "DarkWarNationMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkWarNationMerge.cs"
   },
@@ -31189,8 +31189,8 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/FortressDelveMerge.cs",
-    "size": 8873,
-    "sha256": "c13ce4f347a0d045d248b5d59a17cd8c57a537706a93af0810fd492c5462f06c",
+    "size": 8541,
+    "sha256": "fd60cad664129d5cfe1586622507bb579814b8548a53c3226f7bb2f93337bb64",
     "fileName": "FortressDelveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/FortressDelveMerge.cs"
   },
@@ -31307,8 +31307,8 @@
       "spear"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/LegionBarracksMerge.cs",
-    "size": 8988,
-    "sha256": "bf0ad82ecebb02376774e0865b3ce1ecb0fa780e53e902f260ecd6b9369ec45c",
+    "size": 8462,
+    "sha256": "93f4362c4360c4091e81018d5200f9d5e6316de5fbe790eac179ffab106264cd",
     "fileName": "LegionBarracksMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/LegionBarracksMerge.cs"
   },
@@ -31355,8 +31355,8 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DagesBirthdayMerge.cs",
-    "size": 7957,
-    "sha256": "64e8970ec97fde3a697d084170ffa0487a4660a87ccf79099d70672c845a8f05",
+    "size": 7703,
+    "sha256": "e5f35c3666213e21751dc5892d2141585ab3ca83e81dd319f0193f4556197c28",
     "fileName": "DagesBirthdayMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DagesBirthdayMerge.cs"
   },
@@ -31499,8 +31499,8 @@
       "hands"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkBirthdayTokenMerge.cs",
-    "size": 23836,
-    "sha256": "86a4178253079a6dee6959854fe0295a3ee80b4172ef94277a5b6a2873cbf970",
+    "size": 23582,
+    "sha256": "708f46e70d2d4f15e1ef664e8412a8971582413401fc753143e64f9849d62cc6",
     "fileName": "DarkBirthdayTokenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkBirthdayTokenMerge.cs"
   },
@@ -31621,8 +31621,8 @@
       "staff birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/ShakazsMerge.cs",
-    "size": 8188,
-    "sha256": "7c2fb5118d8ebe3fccf43b96a435f17aeea0c993b82653a544dbf6763edc5027",
+    "size": 7576,
+    "sha256": "bf1348e78f0524d7e346bfb7a90d878cdd08f364961144fafe491c1aff77c728",
     "fileName": "ShakazsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/ShakazsMerge.cs"
   },
@@ -31660,8 +31660,8 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DarkWarLegionMerge.cs",
-    "size": 8706,
-    "sha256": "ac1862a8fa60b1e2fb8677765d1910b98c43d401825b5ecf2664b7ffb8c81ac9",
+    "size": 8512,
+    "sha256": "7510014f181a7a64ad3a015e3cfb39400576eb4e9a6d8ba78ac0d17ddb226e51",
     "fileName": "DarkWarLegionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkWarLegionMerge.cs"
   },
@@ -31673,8 +31673,8 @@
       "legion token"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/FutureWarMerge.cs",
-    "size": 8798,
-    "sha256": "7fb57bc608e075ee381fdf4551092fe53df6484f4f20c9dcb075d71b9e84edd2",
+    "size": 8656,
+    "sha256": "e8311367349ad76de3059402543144b707610d02b60ee20bb2026c2223d45cea",
     "fileName": "FutureWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/FutureWarMerge.cs"
   },
@@ -31740,8 +31740,8 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/DageWar50Merge.cs",
-    "size": 4050,
-    "sha256": "714ee53388d3ae6df348fe016874a656d946868a1982b8881c726bc1227d028b",
+    "size": 3908,
+    "sha256": "9cc80985b2271e6747973b7b0a98fbcdb953449e1577a3bd579eb118bf139dca",
     "fileName": "DageWar50Merge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DageWar50Merge.cs"
   },
@@ -31914,8 +31914,8 @@
       "scarf"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/MoglinFeastMerge.cs",
-    "size": 9604,
-    "sha256": "6f1795b6624afe1674a9b7c0beefeb9f0efe0d732cac6209acc25c9dfe23d600",
+    "size": 9058,
+    "sha256": "825a858e0a83333947b52a95ed77c18ca5c2537f167036a34f8c5d3c02888244",
     "fileName": "MoglinFeastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/MoglinFeastMerge.cs"
   },
@@ -31928,8 +31928,8 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/NightmareHarvestWarMerge.cs",
-    "size": 8533,
-    "sha256": "3d5377c4a528f77f72cab7fb5aa35fce9a1a6fbea79bad5a2132b05a66f816ca",
+    "size": 8395,
+    "sha256": "0ff3268b2944729ad0bd7c1694463ffaf95734679a4c685c713f58d3354770b5",
     "fileName": "NightmareHarvestWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestWarMerge.cs"
   },
@@ -31942,8 +31942,8 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/EbilCorpHQMerge.cs",
-    "size": 10130,
-    "sha256": "10e8881059db7cf9e0d3b5b1c4e2834396d301b639cfbf9c6f8647b9e7541c4e",
+    "size": 9992,
+    "sha256": "8900189490268a47322b94089f6bfd1e20765048d229e71a4592e27c475b8e7f",
     "fileName": "EbilCorpHQMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/EbilCorpHQMerge.cs"
   },
@@ -31956,8 +31956,8 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/HarvestMerge.cs",
-    "size": 15793,
-    "sha256": "67908cc7ed6df4d877c98b520add402f97ea97e59e891910cbeb0135d03371f3",
+    "size": 15007,
+    "sha256": "7b117a4a262604c6dd8c51f844e6f1e42fbcea0e32445b423fce2b8472599249",
     "fileName": "HarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestMerge.cs"
   },
@@ -31985,8 +31985,8 @@
       "friend"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/AutumnMerge.cs",
-    "size": 6263,
-    "sha256": "e56cac45c719c556613122e1ced3e0f53e3209c5e843a147cf5c3a11da9f99a9",
+    "size": 6097,
+    "sha256": "5cbee65d5b8cda2299b15c143479331b641aed32528c92cccc88e48b6fcb53cf",
     "fileName": "AutumnMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/AutumnMerge.cs"
   },
@@ -32029,8 +32029,8 @@
       "bow"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/ManaHarvestMerge.cs",
-    "size": 6461,
-    "sha256": "9cc61a1927e9747ec470d14e43d48baae9a5e543f6a219afce7354d662231b4c",
+    "size": 6295,
+    "sha256": "8436f86b233faf64e708fc91bcaa0f6ae9119f4f2fd591b100ce49f5c437f05b",
     "fileName": "ManaHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/ManaHarvestMerge.cs"
   },
@@ -32074,8 +32074,8 @@
       "pet"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs",
-    "size": 8613,
-    "sha256": "bb5b6a87a4ce58dba7f3b68a6a2c60360cfd532c934bcc68499ce39783b60c11",
+    "size": 7893,
+    "sha256": "edcb268c4ac8ab973a37eb28a0b4254ef6a6953aa2b4df61500c8d010471c007",
     "fileName": "RobinasHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
   },
@@ -32114,8 +32114,8 @@
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs",
-    "size": 8144,
-    "sha256": "c32ea01eccb9074b2274b380c56194e447ca471d1010e15de8acd6418fd9d1ba",
+    "size": 8006,
+    "sha256": "a981f503fda673ae1830d9c2474bfd1247ff9e63cba6754d89f33fc22b9c5b56",
     "fileName": "NightmareHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs"
   },
@@ -32224,8 +32224,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DragonCapitalMerge.cs",
-    "size": 14095,
-    "sha256": "36df78bfaf79eeeb77e1243e555a48cfdd8036317a0c98a69f416e60868bbe0b",
+    "size": 13839,
+    "sha256": "7fc3d5c10f0f519d47878c99c20c066f05818b1ce696743e94ef1f26e77dd40f",
     "fileName": "DragonCapitalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DragonCapitalMerge.cs"
   },
@@ -32333,8 +32333,8 @@
       "rapier"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/YokaiPirateTreasuresMerge.cs",
-    "size": 9987,
-    "sha256": "d76483aed5f04679919a96da57648e6ae24a10a03b3190ca48872507d019d457",
+    "size": 9427,
+    "sha256": "58ceb849c9ca9f4c574b2ea00d0a5087d68e73d680df2ae40a77c0ba155b56b7",
     "fileName": "YokaiPirateTreasuresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/YokaiPirateTreasuresMerge.cs"
   },
@@ -32378,8 +32378,8 @@
       "battlepet"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/YokaiTreasureMerge.cs",
-    "size": 10800,
-    "sha256": "58b5c24e81097f79ecfea54378002683c1b254a44a1315995e8770c9ee08d98d",
+    "size": 9832,
+    "sha256": "1bd481624c107e756e23a9b776e10480025ed6a0e285ca6fce25d799e29ad92d",
     "fileName": "YokaiTreasureMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/YokaiTreasureMerge.cs"
   },
@@ -32439,8 +32439,8 @@
       "awe"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/PirateHuntMerge.cs",
-    "size": 14152,
-    "sha256": "b64c24576bd86756d6ecd335555fc1ff91f051c0825cdad3d2286915d19f8ae7",
+    "size": 13116,
+    "sha256": "8e0ec46135015a2e19fd2ae04836fad634559e4cc205578dd1b600bfbf1ffa7a",
     "fileName": "PirateHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/PirateHuntMerge.cs"
   },
@@ -32476,8 +32476,8 @@
       "platinum"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs",
-    "size": 12639,
-    "sha256": "dbe118c8da78e57c67917c4980a0e1efe59aad21546cac1706369b6e9a3f7b58",
+    "size": 12355,
+    "sha256": "5690f58c4755418386eb413619889b1723fc1f4f4e5b5eb5c301d01f18f29d36",
     "fileName": "BlazeBeardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs"
   },
@@ -32633,8 +32633,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/LowTideMerge.cs",
-    "size": 9214,
-    "sha256": "68fa2a1609714d1625875bd95d9039e20f447cd87b39a24768bf53f233d11735",
+    "size": 9076,
+    "sha256": "6ff8f3b0312723f17147cf747a047c609002b3b8f79012d114b6d011e2ca6136",
     "fileName": "LowTideMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/LowTideMerge.cs"
   },
@@ -32726,8 +32726,8 @@
       "mortal"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/GreenGuardPirateRewardsMerge.cs",
-    "size": 9945,
-    "sha256": "53fc2d58a683d4ece3d72f110a3da57f49f3b844d7086f584f3dcba4e2399b00",
+    "size": 9779,
+    "sha256": "bd31cb852cd0991d01a7040931c27b3e5f0ce196c2d47fd64625dfcf62420c7c",
     "fileName": "GreenGuardPirateRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/GreenGuardPirateRewardsMerge.cs"
   },
@@ -33028,8 +33028,8 @@
       "null"
     ],
     "path": "Seasonal/Friday13th/Story/CoreFriday13th.cs",
-    "size": 36463,
-    "sha256": "951328176b8437580c8a0d8792a3d789ec958a3c3fd7ccbc9cf7faab15a8e89d",
+    "size": 36015,
+    "sha256": "b1d8b3132c8e3989b0aefc9e255cf40084b1cd9aeff8bc3bc56124b2ae1a97d6",
     "fileName": "CoreFriday13th.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/CoreFriday13th.cs"
   },
@@ -33098,8 +33098,8 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/LoreTrekMerge.cs",
-    "size": 8371,
-    "sha256": "d42af2f5c18812b73bb2c6d96e6dc33714644514a6ede652e342e278a68db102",
+    "size": 7595,
+    "sha256": "956f93ed41351d498cb9ba80a327a940309618a23568382543172c000fc6dcef",
     "fileName": "LoreTrekMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/LoreTrekMerge.cs"
   },
@@ -33139,8 +33139,8 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/GonnaGetchaMerge.cs",
-    "size": 6337,
-    "sha256": "dc07997d1d88f9855e809832d3fabce1cb6d3925848fa2f40e78032f52f2b5a7",
+    "size": 6005,
+    "sha256": "d72b8301eefcce0507d49cbbcd92587925283bf56ea4561c53f18f0958329b4c",
     "fileName": "GonnaGetchaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/GonnaGetchaMerge.cs"
   },
@@ -33153,8 +33153,8 @@
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/OdditiesMerge.cs",
-    "size": 9536,
-    "sha256": "269f43649e10e0a945691b6f65a6bc7edc1e726b242c71c6f029d22a87cf3527",
+    "size": 9120,
+    "sha256": "e6b6f0aacfef763b3a172c7fe2d9b749f70e3041d8efce62d5d149728c5073c9",
     "fileName": "OdditiesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/OdditiesMerge.cs"
   },
@@ -33220,8 +33220,8 @@
       "nail"
     ],
     "path": "Seasonal/Friday13th/MergeShops/FabyosSpookyMerge.cs",
-    "size": 7377,
-    "sha256": "f89d026c52ac84e4ba10854614e236742755026d5bc7dfc079ce13e74a8d0894",
+    "size": 6933,
+    "sha256": "3854463634d567ba6e17ca0cf201d91e73f7856f634d35c83d17210c3a0ac1e8",
     "fileName": "FabyosSpookyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/FabyosSpookyMerge.cs"
   },
@@ -33788,8 +33788,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 28545,
-    "sha256": "36ccad065122617797115b94e9ec680e58b3823b3f7d27694f745a8270781924",
+    "size": 28189,
+    "sha256": "d607b914ac62f6616dc46ced77238ecf06112577ef716de66d2d45cbb5975873",
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
@@ -34069,8 +34069,8 @@
       "extra"
     ],
     "path": "Story/QueenofMonsters/Extra/QueenBattle.cs",
-    "size": 4024,
-    "sha256": "6e4eeb978314c61a4f423e05580bedd198de4a42d3df536a42f672df0108c078",
+    "size": 3462,
+    "sha256": "b57561626eee6f683e512cb02e5bf0edbfefbefd04ed26e457b9bb367ee8faa2",
     "fileName": "QueenBattle.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/QueenBattle.cs"
   },
@@ -34138,8 +34138,8 @@
       "brightoak"
     ],
     "path": "Story/QueenofMonsters/Extra/BrightOak.cs",
-    "size": 15101,
-    "sha256": "b34f106cc4d7196c51a7721415e0d320d45595463aeb5ed5eeccbe18d9863235",
+    "size": 14771,
+    "sha256": "c0602d09d30fa24aa8149f0dd6a690fb89ff38f245c55d593bdca5c1fda9f987",
     "fileName": "BrightOak.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/BrightOak.cs"
   },
@@ -34206,8 +34206,8 @@
       "extra"
     ],
     "path": "Story/QueenofMonsters/Extra/LivingDungeon.cs",
-    "size": 7819,
-    "sha256": "383c238ed6ff86a9f328565dc2eae836b1cd426f4c678070be3ecf1a5786e6ca",
+    "size": 7147,
+    "sha256": "cdded2f643badcabf5f94e6e737d5971544fe764660e6310ab3cb56a4a4daa75",
     "fileName": "LivingDungeon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/LivingDungeon.cs"
   },
@@ -34595,8 +34595,8 @@
       "null"
     ],
     "path": "Story/Legion/DageTheEvilIsland/CoreDageTheEvilIsland.cs",
-    "size": 12282,
-    "sha256": "2949871d681f0f6a50ce2c0d8d462f2ab795445ca377449ce0ec9533904ef847",
+    "size": 12030,
+    "sha256": "4aab864acaa6dd4faa911ce7d6c9f4f565479de5cfe14c0fc2dd2ff4aabee232",
     "fileName": "CoreDageTheEvilIsland.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/DageTheEvilIsland/CoreDageTheEvilIsland.cs"
   },
