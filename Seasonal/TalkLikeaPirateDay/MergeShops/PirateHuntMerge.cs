@@ -108,15 +108,7 @@ public class PirateHuntMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10390); // Bumbling Bellamy
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "piratehunt",
-                            "r5",
-                            "Left",
-                            "Captain Bellamy",
-                            "Bellamy's Greasy Beard",
-                            1,
-                            false
-                        );
+                        Core.KillMonster("piratehunt", "r5", "Left", "Captain Bellamy", "Bellamy's Greasy Beard", 1, false);
                     Core.EnsureComplete(10390);
                     Core.CancelRegisteredQuests();
                     break;
@@ -125,15 +117,7 @@ public class PirateHuntMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10392); // From the Top
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "piratehunt",
-                            "r7",
-                            "Left",
-                            "Captain Verich",
-                            "Captain Verich's Tricorn",
-                            1,
-                            false
-                        );
+                        Core.KillMonster("piratehunt", "r7", "Left", "Captain Verich", "Captain Verich's Tricorn", 1, false);
                     Core.EnsureComplete(10392);
                     Core.CancelRegisteredQuests();
                     break;
@@ -142,15 +126,7 @@ public class PirateHuntMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10394); // Subversive Sailor
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "piratehunt",
-                            "r9",
-                            "Left",
-                            "Captain Chamfer",
-                            "Captain Chamfer's Mods",
-                            1,
-                            false
-                        );
+                        Core.KillMonster("piratehunt", "r9", "Left", "Captain Chamfer", "Captain Chamfer's Mods", 1, false);
                     Core.EnsureComplete(10394);
                     Core.CancelRegisteredQuests();
                     break;
@@ -159,15 +135,7 @@ public class PirateHuntMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10396); // Salty Spirit
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "piratehunt",
-                            "r11",
-                            "Left",
-                            "Captain Haines",
-                            "Captain Haines' Soul",
-                            1,
-                            false
-                        );
+                        Core.KillMonster("piratehunt", "r11", "Left", "Captain Haines", "Captain Haines' Soul", 1, false);
                     Core.EnsureComplete(10396);
                     Core.CancelRegisteredQuests();
                     break;
@@ -177,19 +145,13 @@ public class PirateHuntMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(10398); // Mercurious
-                        Core.KillBossWithSecondary(map: "piratehunt", cell: "r13", pad: "Left",
-                        primaryMapID: 18,   // Captain Mercurius — killed last
+                        Core.KillBossWithSecondary(map: "piratehunt", cell: "r13", pad: "Left", primaryMapID: 18, // Captain Mercurius — killed last
                         secondaryMapID: 17, // Dragonsworn Larunda — killed first
-                        item: "Larunda's Counterfeit Amulet",
-                        quant: 1,
-                        isTemp: false);
+                        item: "Larunda's Counterfeit Amulet", quant: 1, isTemp: false);
 
-                        Core.KillBossWithSecondary(map: "piratehunt", cell: "r13", pad: "Left",
-                        primaryMapID: 18,   // Captain Mercurius — killed last
+                        Core.KillBossWithSecondary(map: "piratehunt", cell: "r13", pad: "Left", primaryMapID: 18, // Captain Mercurius — killed last
                         secondaryMapID: 17, // Dragonsworn Larunda — killed first
-                        item: "Mercurius' Funny Hat",
-                        quant: 1,
-                        isTemp: false);
+                        item: "Mercurius' Funny Hat", quant: 1, isTemp: false);
 
                         Core.EnsureComplete(10398);
                     }

@@ -111,24 +111,12 @@ public class CelestialChampion
                 // Add how to get items here
                 case "Champion Sash":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "celestialarenad",
-                        "Aranx",
-                        "Champion Sash",
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("celestialarenad", "Aranx", "Champion Sash", quant, isTemp: false);
                     break;
 
                 case "Lumin Badge":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "celestialarenac",
-                        "Undead Raxgore Construct",
-                        "Lumin Badge",
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("celestialarenac", "Undead Raxgore Construct", "Lumin Badge", quant, isTemp: false);
                     break;
             }
         }

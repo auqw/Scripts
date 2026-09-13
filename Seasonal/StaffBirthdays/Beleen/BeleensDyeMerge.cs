@@ -153,13 +153,7 @@ public class BeleensDyeMerge
 
                 case "Chainsaw Katana":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "darkoviahorde",
-                        "Zombie Dragon",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("darkoviahorde", "Zombie Dragon", req.Name, quant, isTemp: false);
                     break;
 
                 case "Unarmed":

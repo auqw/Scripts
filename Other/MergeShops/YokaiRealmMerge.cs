@@ -98,13 +98,7 @@ public class YokaiRealmMerge
                     Core.RegisterQuests(9690);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "yokairealm",
-                            "Mikoto Kukol'nyy",
-                            "Mikoto's Red String",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("yokairealm", "Mikoto Kukol'nyy", "Mikoto's Red String", 3, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

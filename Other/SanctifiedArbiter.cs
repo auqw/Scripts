@@ -48,12 +48,7 @@ public class SanctifiedArbiter
 
                 Core.EquipClass(ClassType.Farm);
                 Farm.BattleUnderB("Bone Dust", 500);
-                Core.HuntMonster(
-                    "Doomwood",
-                    "Doomwood Ectomancer",
-                    "Raw Essence of the Undead",
-                    10
-                );
+                Core.HuntMonster("Doomwood", "Doomwood Ectomancer", "Raw Essence of the Undead", 10);
 
                 Core.EnsureCompleteChoose(8114, new[] { Rewards[i] });
             }

@@ -148,12 +148,7 @@ public class TachyonMerge
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "tachyon",
-                            "Svelgr the Devourer",
-                            "Svelgr the Devourer Defeated",
-                            log: false
-                        );
+                        Core.HuntMonster("tachyon", "Svelgr the Devourer", "Svelgr the Devourer Defeated", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -165,26 +160,9 @@ public class TachyonMerge
                     Core.RegisterQuests(5085);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "tachyon",
-                            "Svelgr the Devourer",
-                            "Svelgr Fang",
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "portalwar",
-                            "Chronorysa",
-                            "Sands of Time",
-                            6,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "portalmaze",
-                            "Time Wraith",
-                            "Wraith Wisp",
-                            12,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("tachyon", "Svelgr the Devourer", "Svelgr Fang", isTemp: false);
+                        Core.HuntMonster("portalwar", "Chronorysa", "Sands of Time", 6, isTemp: false);
+                        Core.HuntMonster("portalmaze", "Time Wraith", "Wraith Wisp", 12, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -124,13 +124,7 @@ public class ShadowSlayerKMerge
                     Core.RegisterQuests(8263);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "cellar",
-                            "GreenRat",
-                            "Green Mystery Meat",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("cellar", "GreenRat", "Green Mystery Meat", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -142,13 +136,7 @@ public class ShadowSlayerKMerge
                     Core.RegisterQuests(8264);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "safiria",
-                            "Blood Maggot",
-                            "Bundle of Rice",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("safiria", "Blood Maggot", "Bundle of Rice", 3, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -160,15 +148,7 @@ public class ShadowSlayerKMerge
                     Core.RegisterQuests(8265);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "odokuro",
-                            "Boss",
-                            "Right",
-                            "O-dokuro",
-                            "Bone Hurt Juice",
-                            5,
-                            log: false
-                        );
+                        Core.KillMonster("odokuro", "Boss", "Right", "O-dokuro", "Bone Hurt Juice", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -179,12 +159,7 @@ public class ShadowSlayerKMerge
                     if (!Core.CheckInventory("Chibi Eldritch Yume"))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "chaosbeast",
-                            "Kathool",
-                            "Chibi Eldritch Yume",
-                            isTemp: false
-                        );
+                        Core.HuntMonster("chaosbeast", "Kathool", "Chibi Eldritch Yume", isTemp: false);
                     }
                     Core.RegisterQuests(8266);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -195,12 +170,7 @@ public class ShadowSlayerKMerge
                             Core.EnsureAccept(1075);
 
                             Core.EquipClass(ClassType.Farm);
-                            Core.HuntMonster(
-                                "doomwood",
-                                "Doomwood Ectomancer",
-                                "Dried Wasabi Powder",
-                                4
-                            );
+                            Core.HuntMonster("doomwood", "Doomwood Ectomancer", "Dried Wasabi Powder", 4);
                             Core.GetMapItem(428, 1, "lightguard");
                             Core.Join("lightguard");
 

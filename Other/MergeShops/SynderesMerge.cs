@@ -98,12 +98,7 @@ public class SynderesMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Synderes Souvenirs Shop 4247
-                        Core.HuntMonster(
-                            "enemyforest",
-                            "Evil Elemental",
-                            "Forest Denizen Slain",
-                            5
-                        );
+                        Core.HuntMonster("enemyforest", "Evil Elemental", "Forest Denizen Slain", 5);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

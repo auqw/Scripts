@@ -115,20 +115,9 @@ public class SeaVoiceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "trenchobserve",
-                            "Lady Noelle",
-                            "Noelle's Brooch",
-                            log: false
-                        );
+                        Core.HuntMonster("trenchobserve", "Lady Noelle", "Noelle's Brooch", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "trenchobserve",
-                            "Sea Spirit",
-                            "Green Sea Jelly",
-                            2,
-                            log: false
-                        );
+                        Core.HuntMonster("trenchobserve", "Sea Spirit", "Green Sea Jelly", 2, log: false);
                         Core.HuntMonster("trenchobserve", "Necro Adipocere", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -141,20 +130,8 @@ public class SeaVoiceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "midnightzone",
-                            "Shadow Viscera",
-                            "Fleshy Shadows",
-                            8,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "midnightzone",
-                            "Venerated Wraith",
-                            "Wraith Memento",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("midnightzone", "Shadow Viscera", "Fleshy Shadows", 8, log: false);
+                        Core.HuntMonster("midnightzone", "Venerated Wraith", "Wraith Memento", 8, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("midnightzone", "Sparagmos", "Memory Card", log: false);
                         Bot.Wait.ForPickup(req.Name);
@@ -168,20 +145,9 @@ public class SeaVoiceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "abyssalzone",
-                            "The Ashray",
-                            "Ashray Artifacts",
-                            log: false
-                        );
+                        Core.HuntMonster("abyssalzone", "The Ashray", "Ashray Artifacts", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "abyssalzone",
-                            "Necro Adipocere",
-                            "Adipocere Antler",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("abyssalzone", "Necro Adipocere", "Adipocere Antler", 3, log: false);
                         Core.HuntMonster("abyssalzone", "Foam Scavenger");
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -194,30 +160,9 @@ public class SeaVoiceMerge
                     Core.RegisterQuests(9269);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Leviathan",
-                            "Leviathan Tentacle",
-                            1,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Decay Spirit",
-                            "Decay Essence",
-                            8,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Ice Guardian",
-                            "Tarnished Icicle",
-                            8,
-                            true,
-                            false
-                        );
+                        Core.HuntMonster("twilightzone", "Leviathan", "Leviathan Tentacle", 1, true, false);
+                        Core.HuntMonster("twilightzone", "Decay Spirit", "Decay Essence", 8, true, false);
+                        Core.HuntMonster("twilightzone", "Ice Guardian", "Tarnished Icicle", 8, true, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

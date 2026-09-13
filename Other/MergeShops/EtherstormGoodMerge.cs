@@ -101,38 +101,10 @@ public class EtherstormGoodMerge
                         Core.RegisterQuests(1716, 1717);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Emu",
-                                "Twisted Emu Feather",
-                                6,
-                                true,
-                                false
-                            );
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Pelican",
-                                "Twisted Pelican Feather",
-                                6,
-                                true,
-                                false
-                            );
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Hummingbird",
-                                "Twisted Hummingbird Feather",
-                                6,
-                                true,
-                                false
-                            );
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Phoenix",
-                                "Twisted Phoenix Feather",
-                                6,
-                                true,
-                                false
-                            );
+                            Core.HuntMonster("etherwargood", "Tainted Emu", "Twisted Emu Feather", 6, true, false);
+                            Core.HuntMonster("etherwargood", "Tainted Pelican", "Twisted Pelican Feather", 6, true, false);
+                            Core.HuntMonster("etherwargood", "Tainted Hummingbird", "Twisted Hummingbird Feather", 6, true, false);
+                            Core.HuntMonster("etherwargood", "Tainted Phoenix", "Twisted Phoenix Feather", 6, true, false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -143,38 +115,10 @@ public class EtherstormGoodMerge
                         Core.RegisterQuests(1717);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Emu",
-                                "Twisted Emu Feather",
-                                3,
-                                true,
-                                false
-                            );
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Pelican",
-                                "Twisted Pelican Feather",
-                                3,
-                                true,
-                                false
-                            );
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Hummingbird",
-                                "Twisted Hummingbird Feather",
-                                3,
-                                true,
-                                false
-                            );
-                            Core.HuntMonster(
-                                "etherwargood",
-                                "Tainted Phoenix",
-                                "Twisted Phoenix Feather",
-                                3,
-                                true,
-                                false
-                            );
+                            Core.HuntMonster("etherwargood", "Tainted Emu", "Twisted Emu Feather", 3, true, false);
+                            Core.HuntMonster("etherwargood", "Tainted Pelican", "Twisted Pelican Feather", 3, true, false);
+                            Core.HuntMonster("etherwargood", "Tainted Hummingbird", "Twisted Hummingbird Feather", 3, true, false);
+                            Core.HuntMonster("etherwargood", "Tainted Phoenix", "Twisted Phoenix Feather", 3, true, false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();

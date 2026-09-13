@@ -115,15 +115,7 @@ public class DeepTunnelMerge
                     Core.RegisterQuests(8095);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "transformation",
-                            "Enter",
-                            "Spawn",
-                            "*",
-                            "Queen's Follower Slain",
-                            100,
-                            false
-                        );
+                        Core.KillMonster("transformation", "Enter", "Spawn", "*", "Queen's Follower Slain", 100, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

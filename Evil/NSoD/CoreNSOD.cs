@@ -189,14 +189,7 @@ public class CoreNSOD
             Core.Logger(
                 "Flibbitiestgibbet is a very tough monster, I hope you brought your army/butler/friends!"
             );
-            Core.KillMonster(
-                "voidflibbi",
-                "Enter",
-                "Spawn",
-                "Flibbitiestgibbet",
-                "Void Essentia",
-                isTemp: false
-            );
+            Core.KillMonster("voidflibbi", "Enter", "Spawn", "Flibbitiestgibbet", "Void Essentia", isTemp: false);
         }
 
         Core.Logger("NBOD: Step #4: Buy NBoD");
@@ -307,13 +300,7 @@ public class CoreNSOD
             Core.EnsureAccept(4432);
 
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "timespace",
-                "Astral Ephemerite",
-                "Astral Ephemerite Essence",
-                Essencequant,
-                false
-            );
+            Core.HuntMonster("timespace", "Astral Ephemerite", "Astral Ephemerite Essence", Essencequant, false);
 
             HuntMonsterBatch(
                 Essencequant,
@@ -605,14 +592,7 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster(
-            "bosschallenge",
-            "Colossal Primarch",
-            "Primarch's Hilt",
-            quant,
-            false,
-            publicRoom: true
-        );
+        Core.HuntMonster("bosschallenge", "Colossal Primarch", "Primarch's Hilt", quant, false, publicRoom: true);
         Bot.Wait.ForPickup("Primarch's Hilt");
     }
 
@@ -632,21 +612,8 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "mqlesson",
-            "Dragonoid",
-            "Dragonoid of Hours",
-            isTemp: false,
-            publicRoom: true
-        );
-        Core.HuntMonster(
-            "timespace",
-            "Chaos Lord Iadoa",
-            "Chaorrupted Hourglass",
-            quant,
-            false,
-            publicRoom: true
-        );
+        Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false, publicRoom: true);
+        Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chaorrupted Hourglass", quant, false, publicRoom: true);
         Bot.Wait.ForPickup("Chaorrupted Hourglass");
     }
 
@@ -656,14 +623,7 @@ public class CoreNSOD
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "epicvordred",
-            "Ultra Vordred",
-            "(Necro) Scroll of Dark Arts",
-            quant,
-            false,
-            publicRoom: true
-        );
+        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", quant, false, publicRoom: true);
         Bot.Wait.ForPickup("(Necro) Scroll of Dark Arts");
     }
 

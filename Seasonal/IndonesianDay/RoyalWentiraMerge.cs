@@ -101,13 +101,7 @@ public class RoyalWentiraMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "wentira",
-                            "Pesugihan Boar",
-                            "Boar Leather",
-                            6,
-                            log: false
-                        );
+                        Core.HuntMonster("wentira", "Pesugihan Boar", "Boar Leather", 6, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("wentira", "Kabasaran Waranei", log: false);
                         Bot.Wait.ForPickup(req.Name);

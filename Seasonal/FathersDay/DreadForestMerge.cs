@@ -124,12 +124,7 @@ public class DreadForestMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dreadforest",
-                            "Treacherous Bandit",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("dreadforest", "Treacherous Bandit", req.Name, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -140,12 +135,7 @@ public class DreadForestMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dreadforest",
-                            "Treacherous Bandit",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("dreadforest", "Treacherous Bandit", req.Name, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -156,12 +146,7 @@ public class DreadForestMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dreadforest",
-                            "Treacherous Bandit",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("dreadforest", "Treacherous Bandit", req.Name, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -172,12 +157,7 @@ public class DreadForestMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            $"dreadforest",
-                            "Noble’s Servant",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster($"dreadforest", "Noble’s Servant", req.Name, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -189,12 +169,7 @@ public class DreadForestMerge
                     Core.RegisterQuests(8722);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dreadforest",
-                            "Taxidermied Servant",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("dreadforest", "Taxidermied Servant", req.Name, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -218,12 +193,7 @@ public class DreadForestMerge
                     Core.RegisterQuests(8722);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dreadforest",
-                            "Reignolds' Knight",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("dreadforest", "Reignolds' Knight", req.Name, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

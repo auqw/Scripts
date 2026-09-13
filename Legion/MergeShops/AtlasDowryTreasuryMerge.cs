@@ -121,14 +121,7 @@ public class AtlasDowryTreasuryMerge
                 case "Atlas Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "atlaskingdom",
-                        "Atlas Light Magus",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("atlaskingdom", "Atlas Light Magus", req.Name, quant, false, false);
                     break;
 
                 case "Coelho's Tome":
@@ -144,13 +137,7 @@ public class AtlasDowryTreasuryMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //QuarterMaster’s Supplies 5898
-                        Core.HuntMonster(
-                            "ashfallcamp",
-                            "Lava Dragoblin",
-                            "Supply Chest",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("ashfallcamp", "Lava Dragoblin", "Supply Chest", 8, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -89,20 +89,8 @@ public class VokunMerge
                         Core.RegisterQuests(3760);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "battleundera",
-                                "Undead Berserker",
-                                "Warrior Claymore Blade",
-                                isTemp: false,
-                                log: false
-                            );
-                            Core.HuntMonster(
-                                "maul",
-                                "SlimeSkull",
-                                "Dark Crown Axe",
-                                isTemp: false,
-                                log: false
-                            );
+                            Core.HuntMonster("battleundera", "Undead Berserker", "Warrior Claymore Blade", isTemp: false, log: false);
+                            Core.HuntMonster("maul", "SlimeSkull", "Dark Crown Axe", isTemp: false, log: false);
                             Farm.BattleUnderB("Undead Energy", 50);
                             Bot.Wait.ForPickup(req.Name);
                         }
@@ -112,13 +100,7 @@ public class VokunMerge
                         Core.RegisterQuests(3763);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "graveyard",
-                                "Big Jack Sprat",
-                                "Bone Axe",
-                                isTemp: false,
-                                log: false
-                            );
+                            Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false, log: false);
                             if (Core.HeroAlignment != 2)
                                 Core.ChangeAlignment(Alignment.Evil);
                             Core.BuyItem("shadowfall", 47, "Helm of the Dark Lord");

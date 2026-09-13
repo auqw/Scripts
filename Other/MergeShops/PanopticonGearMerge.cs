@@ -103,13 +103,7 @@ public class PanopticonGearMerge
                     Core.RegisterQuests(9730); //C:\The Depths are a Harsh Mistress (9730)
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "trenchobserve",
-                            "Sea Spirit",
-                            "Squishy Organic Thingy",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("trenchobserve", "Sea Spirit", "Squishy Organic Thingy", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

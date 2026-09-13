@@ -62,14 +62,7 @@ public class DarkWarLegionandNation
         if (!Story.QuestProgression(8557))
         {
             Core.EnsureAccept(8557);
-            Core.KillMonster(
-                "dagerecruit",
-                "Enter",
-                "Spawn",
-                "Dreadfiend",
-                "Fiend Energy Collected",
-                4
-            );
+            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Fiend Energy Collected", 4);
             Story.MapItemQuest(8557, "dagerecruit", 9883, 4);
         }
 
@@ -77,14 +70,7 @@ public class DarkWarLegionandNation
         if (!Story.QuestProgression(8558))
         {
             Core.EnsureAccept(8558);
-            Core.KillMonster(
-                "dagerecruit",
-                "Enter",
-                "Spawn",
-                "Dreadfiend",
-                "Dreadfiend Defeated",
-                6
-            );
+            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
             Core.EnsureComplete(8558);
         }
 
@@ -190,14 +176,7 @@ public class DarkWarLegionandNation
         if (!Story.QuestProgression(8576))
         {
             Core.EnsureAccept(8576);
-            Core.KillMonster(
-                "dagerecruit",
-                "Enter",
-                "Spawn",
-                "Dreadfiend",
-                "Dreadfiend Defeated",
-                6
-            );
+            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
             Core.HuntMonster("dagerecruit", "Dark Makai", "Dark Makai Defeated", 6);
             Core.HuntMonster("dagerecruit", "Bloodfiend ", "Bloodfiend Defeated", 6);
             Core.HuntMonster("dagerecruit", "Infernal Fiend", "Infernal Fiend Defeated", 6);

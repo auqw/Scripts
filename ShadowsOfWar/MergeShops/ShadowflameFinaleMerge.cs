@@ -135,12 +135,7 @@ public class ShadowflameFinaleMerge
                 case "ShadowFlame Rogue's Locks":
                 case "ShadowFlame Rogue's Mortal Locks":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "ruinedcrown",
-                        "Mana-Burdened Minion",
-                        req.Name,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("ruinedcrown", "Mana-Burdened Minion", req.Name, isTemp: false);
                     break;
             }
         }

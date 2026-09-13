@@ -178,14 +178,7 @@ public class AnniversaryofDoom
         if (!Story.QuestProgression(8895))
         {
             Core.EnsureAccept(8895);
-            Core.KillMonster(
-                "spacepwny",
-                "r2",
-                "Left",
-                "Thoroughdred",
-                "Thoroughdred Defeated",
-                10
-            );
+            Core.KillMonster("spacepwny", "r2", "Left", "Thoroughdred", "Thoroughdred Defeated", 10);
             Core.EnsureComplete(8895);
         }
 
@@ -193,14 +186,7 @@ public class AnniversaryofDoom
         if (!Story.QuestProgression(8896))
         {
             Core.EnsureAccept(8896);
-            Core.KillMonster(
-                "spacepwny",
-                "r2",
-                "Left",
-                "NecroPrancer",
-                "NecroPrancer Defeated",
-                10
-            );
+            Core.KillMonster("spacepwny", "r2", "Left", "NecroPrancer", "NecroPrancer Defeated", 10);
             Core.EnsureComplete(8896);
         }
 

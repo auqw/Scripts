@@ -148,27 +148,13 @@ public class AtlasWarTrophiesMerge
                 case "Atlas Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "atlaspromenade",
-                        "Atlas Light Magus",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("atlaspromenade", "Atlas Light Magus", req.Name, quant, false, false);
                     break;
 
                 case "Atlas Axis Blade":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "atlaspromenade",
-                        "Atlas Knight",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("atlaspromenade", "Atlas Knight", req.Name, quant, false, false);
                     break;
 
                 case "Legion Token":
@@ -191,28 +177,14 @@ public class AtlasWarTrophiesMerge
                 case "Underworld Ritualist Aeterna Adornment Horns":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "atlaspromenade",
-                        "Usurper Lord Slaine",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("atlaspromenade", "Usurper Lord Slaine", req.Name, quant, false, false);
                     break;
 
                 case "Pale Corpse Wax Candelabras":
                 case "Pale Corpse Wax Candelabra":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "atlaspromenade",
-                        "Twisted Warrior",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("atlaspromenade", "Twisted Warrior", req.Name, quant, false, false);
                     break;
             }
         }

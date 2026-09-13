@@ -574,12 +574,7 @@ public class MemberFarm
             if (!Core.CheckInventory("Boom Went The Dynamite"))
             {
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster(
-                    "banished",
-                    "Desterrat Moya",
-                    "Boom Went The Dynamite",
-                    isTemp: false
-                );
+                Core.HuntMonster("banished", "Desterrat Moya", "Boom Went The Dynamite", isTemp: false);
             }
             Adv.BuyItem("nostalgiaquest", 1311, "Dual Boom Went The Dynamite");
         }
@@ -632,12 +627,7 @@ public class MemberFarm
                 {
                     Core.EnsureAccept(554);
                     Nation.FarmUni13(1);
-                    Core.HuntMonster(
-                        "underworld",
-                        "Undead Legend",
-                        "Undead Legend Rune",
-                        log: false
-                    );
+                    Core.HuntMonster("underworld", "Undead Legend", "Undead Legend Rune", log: false);
                     Core.EnsureCompleteChoose(554, new[] { "Godly Golden Dragon Axe" });
                 }
                 Nation.FarmDiamondofNulgath(10);
@@ -709,12 +699,7 @@ public class MemberFarm
                     Core.HuntMonster("wind", "Cellot", "Cellot's Death Scale", isTemp: false);
                     Core.HuntMonster("fire", "Zellare", "Zellare's Death Scale", isTemp: false);
                     Core.HuntMonster("water", "Udaroth", "Udaroth's Death Scale", isTemp: false);
-                    Core.HuntMonster(
-                        "dragonplane",
-                        "Moganth",
-                        "Moganth's Death Scale",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("dragonplane", "Moganth", "Moganth's Death Scale", isTemp: false);
                 }
             }
             Adv.BuyItem("nostalgiaquest", 1311, "Dual Mighty Sword Of The Dragons");

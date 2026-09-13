@@ -122,14 +122,7 @@ public class FireWarMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("firewar", "Fire Dragon", "Fire Dragon Slain", 3);
-                        Core.KillMonster(
-                            "firewar",
-                            "r8",
-                            "Left",
-                            "Inferno Dragon",
-                            "Inferno Dragon Slain",
-                            2
-                        );
+                        Core.KillMonster("firewar", "r8", "Left", "Inferno Dragon", "Inferno Dragon Slain", 2);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

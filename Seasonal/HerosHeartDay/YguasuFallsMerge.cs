@@ -106,24 +106,8 @@ public class YguasuFallsMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "yguasu",
-                            "r3",
-                            "Left",
-                            "*",
-                            "Giggling Mask",
-                            10,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "yguasu",
-                            "r4",
-                            "Left",
-                            "*",
-                            "Wolfman Talisman",
-                            10,
-                            log: false
-                        );
+                        Core.KillMonster("yguasu", "r3", "Left", "*", "Giggling Mask", 10, log: false);
+                        Core.KillMonster("yguasu", "r4", "Left", "*", "Wolfman Talisman", 10, log: false);
 
                         Core.EquipClass(ClassType.Solo);
                         Core.KillMonster("yguasu", "r5", "Left", "*", "M'Boi's Throat", log: false);

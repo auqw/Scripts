@@ -78,14 +78,7 @@ public class Fiendshard_Story
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7895);
             Core.KillMonster("fiendshard", "r2", "Left", "Rogue Fiend", "Rogue Fiend Defeated", 5);
-            Core.KillMonster(
-                "fiendshard",
-                "r5",
-                "Left",
-                "Paladin Fiend",
-                "Paladin Fiend Defeated",
-                5
-            );
+            Core.KillMonster("fiendshard", "r5", "Left", "Paladin Fiend", "Paladin Fiend Defeated", 5);
             Core.HuntMonster("fiendshard", "Void Knight", "Void Knight Defeated", 3);
             Story.MapItemQuest(7895, "Fiendshard", 7984);
         }

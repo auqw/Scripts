@@ -88,31 +88,13 @@ public class ChaosWarMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "chaoswar",
-                            "r2",
-                            "Spawn",
-                            "*",
-                            req.Name,
-                            quant,
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("chaoswar", "r2", "Spawn", "*", req.Name, quant, isTemp: false, log: false);
                     break;
                 case "Chaos Tentacle":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "chaoswar",
-                            "r13",
-                            "Left",
-                            "*",
-                            req.Name,
-                            quant,
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("chaoswar", "r13", "Left", "*", req.Name, quant, isTemp: false, log: false);
                     break;
             }
         }

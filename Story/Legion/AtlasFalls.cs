@@ -115,15 +115,7 @@ public class AtlasFalls
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(10132);
-            Core.KillMonster(
-                "atlasfalls",
-                "r7",
-                "Right",
-                UseableMonsters[5],
-                "Elite's Skull",
-                8,
-                publicRoom: true
-            );
+            Core.KillMonster("atlasfalls", "r7", "Right", UseableMonsters[5], "Elite's Skull", 8, publicRoom: true);
             Story.MapItemQuest(10132, "atlasfalls", 14289);
         }
 
@@ -138,13 +130,7 @@ public class AtlasFalls
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(10134);
-            Core.HuntMonster(
-                "atlasfalls",
-                UseableMonsters[7],
-                "Soul Condemned",
-                21,
-                publicRoom: true
-            );
+            Core.HuntMonster("atlasfalls", UseableMonsters[7], "Soul Condemned", 21, publicRoom: true);
             Story.MapItemQuest(10134, "atlasfalls", 14290, 4);
         }
 
@@ -153,12 +139,7 @@ public class AtlasFalls
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(10135);
-            Core.HuntMonster(
-                "atlasfalls",
-                UseableMonsters[8],
-                "Arethusa's Crown",
-                publicRoom: true
-            );
+            Core.HuntMonster("atlasfalls", UseableMonsters[8], "Arethusa's Crown", publicRoom: true);
             Story.MapItemQuest(10135, "atlasfalls", 14291);
         }
 

@@ -183,12 +183,7 @@ public class GemsofLoveMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7373);
-                        Core.HuntMonster(
-                            "castleofglass",
-                            "Chihuly",
-                            "Cerise Box Found",
-                            log: false
-                        );
+                        Core.HuntMonster("castleofglass", "Chihuly", "Cerise Box Found", log: false);
                         Core.EnsureComplete(7373, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -201,12 +196,7 @@ public class GemsofLoveMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7374);
-                        Core.HuntMonster(
-                            "beleensdream",
-                            "Heart Elemental",
-                            "Ruby Box Found",
-                            log: false
-                        );
+                        Core.HuntMonster("beleensdream", "Heart Elemental", "Ruby Box Found", log: false);
                         Core.EnsureComplete(7374, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }

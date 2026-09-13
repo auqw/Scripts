@@ -147,102 +147,39 @@ public class TitanStrikeGearMerge
                 case "Titan Paladin":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        100,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 100, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        40,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 40, false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan XL":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        100,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 100, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        40,
-                        false
-                    );
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Vindicator Titan",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 40, false);
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Vindicator Titan", isTemp: false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan's Axes":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        50,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 50, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        20,
-                        false
-                    );
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Vindicator Titan's Axe",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 20, false);
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Vindicator Titan's Axe", isTemp: false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Titan Paladin's Blades":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        50,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 50, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        20,
-                        false
-                    );
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Paladin",
-                        "Titan Paladin's Blade",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 20, false);
+                    Core.HuntMonster("titanattack", "Titanic Paladin", "Titan Paladin's Blade", isTemp: false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
@@ -254,42 +191,18 @@ public class TitanStrikeGearMerge
                 case "Titan Paladin's Helm":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        25,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        10,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan's Helm":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        25,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        10,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
@@ -301,42 +214,18 @@ public class TitanStrikeGearMerge
                 case "Titan Paladin's Cloak":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        25,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        10,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan's Cloak":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Chaorrupted Bandit",
-                        "AntiTitan Supplies",
-                        25,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        "Titanic Fluid",
-                        10,
-                        false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 

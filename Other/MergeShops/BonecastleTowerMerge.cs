@@ -155,13 +155,7 @@ public class BonecastleTowerMerge
                     Core.RegisterQuests(5010);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "towersilver",
-                        "Bloody Scary",
-                        req.Name,
-                        req.Quantity,
-                        isTemp: req.Temp
-                    );
+                    Core.HuntMonster("towersilver", "Bloody Scary", req.Name, req.Quantity, isTemp: req.Temp);
                     break;
 
                 case "DeathKnight Lord Gauntlets":

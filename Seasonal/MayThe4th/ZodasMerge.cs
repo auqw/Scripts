@@ -109,13 +109,7 @@ public class ZodasMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Z.AssembledSword();
-                        Core.HuntMonster(
-                            "greed",
-                            "Goregold",
-                            "Goregold Resisted",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("greed", "Goregold", "Goregold Resisted", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -141,13 +135,7 @@ public class ZodasMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Z.AssembledSword();
-                        Core.HuntMonster(
-                            "murdermoon",
-                            "Fifth Sepulchure",
-                            "Fifth Sepulchure Defeated",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("murdermoon", "Fifth Sepulchure", "Fifth Sepulchure Defeated", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -161,13 +149,7 @@ public class ZodasMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Z.AssembledSword();
-                        Core.HuntMonster(
-                            "ledgermayne",
-                            "Ledgermayne",
-                            "Ledgermayne Defeated",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("ledgermayne", "Ledgermayne", "Ledgermayne Defeated", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

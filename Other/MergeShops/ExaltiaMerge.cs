@@ -109,16 +109,7 @@ public class ExaltiaMerge
                 case "Exalted Node":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "timeinn",
-                        "r3",
-                        "Bottom",
-                        "*",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.KillMonster("timeinn", "r3", "Bottom", "*", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Exalted Relic Piece":

@@ -78,12 +78,7 @@ public class ToxicBloodBlade
         while (!Bot.ShouldExit && !Core.CheckInventory("Bido's Appreciation", 50))
         {
             Core.EnsureAccept(6980);
-            Core.HuntMonster(
-                "well",
-                "Gell Oh No",
-                "Piece of Gell Oh No Perfectly Slushied",
-                log: false
-            );
+            Core.HuntMonster("well", "Gell Oh No", "Piece of Gell Oh No Perfectly Slushied", log: false);
             Core.HuntMonster("ashfallcamp", "Smoldur", "Smoldur's Shedded Scales", 4, log: false);
             Core.EnsureComplete(6980);
             Bot.Wait.ForPickup("Bido's Appreciation");

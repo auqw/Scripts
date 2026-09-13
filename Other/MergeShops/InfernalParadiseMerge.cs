@@ -122,40 +122,19 @@ public class InfernalParadiseMerge
                 case "Golden Scale":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "goldenarena",
-                        "Blessed Dragon",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("goldenarena", "Blessed Dragon", req.Name, quant, false, false);
                     break;
 
                 case "Golden Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "goldenarena",
-                        "Blessed Inquisitor",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("goldenarena", "Blessed Inquisitor", req.Name, quant, false, false);
                     break;
 
                 case "Golden Wing":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "goldenarena",
-                        "Blessed Gladius",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("goldenarena", "Blessed Gladius", req.Name, quant, false, false);
                     break;
 
                 case "Golden Rune":
@@ -187,40 +166,19 @@ public class InfernalParadiseMerge
                 case "Infernal Mage's Incantation":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "infernalparadise",
-                        "Infernal Mage",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalparadise", "Infernal Mage", req.Name, quant, false, false);
                     break;
 
                 case "Malxas' Shed Feather":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "infernalparadise",
-                        "Infernal Malxas",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalparadise", "Infernal Malxas", req.Name, quant, false, false);
                     break;
 
                 case "Infernal Token":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "Celestialrealm",
-                        "Fallen Knight",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("Celestialrealm", "Fallen Knight", req.Name, quant, false, false);
                     break;
 
                 case "Champion Sash":
@@ -232,16 +190,7 @@ public class InfernalParadiseMerge
                 case "Celestial Quintessence":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "celestialpast",
-                        "r2",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("celestialpast", "r2", "Left", "*", req.Name, quant, false, false);
                     break;
 
                 case "Infernalis Penna":

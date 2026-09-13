@@ -110,27 +110,13 @@ public class InfernalCelestialFinaleMerge
                 case "Arthelyn's Oculus":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "infernaldianoia",
-                        "Fallen Arthelyn",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernaldianoia", "Fallen Arthelyn", req.Name, quant, false, false);
                     break;
 
                 case "Life Spirit":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "infernaldianoia",
-                        "Avatar of Life",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernaldianoia", "Avatar of Life", req.Name, quant, false, false);
                     break;
             }
         }

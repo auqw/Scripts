@@ -148,12 +148,7 @@ public class BocklinTreasuryMerge
                     Core.RegisterQuests(Core.IsMember ? 10267 : 10266);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
-                        Core.HuntMonster(
-                            "bocklinsanctum",
-                            "Thronekeeper",
-                            "Black Armorial Fleur",
-                            log: false
-                        );
+                        Core.HuntMonster("bocklinsanctum", "Thronekeeper", "Black Armorial Fleur", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -172,13 +167,7 @@ public class BocklinTreasuryMerge
                 case "King Alteon's Armor Fragment":
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(93763);
-                    Core.HuntMonster(
-                        "alteonfight",
-                        "King Alteon",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.HuntMonster("alteonfight", "King Alteon", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 

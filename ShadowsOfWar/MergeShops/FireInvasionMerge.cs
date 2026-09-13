@@ -99,20 +99,8 @@ public class FireInvasionMerge
                     Core.RegisterQuests(8192);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "fireinvasion",
-                            "Living Shadowflame",
-                            "ShadowFlame Tag",
-                            15,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "fireinvasion",
-                            "Shadefire Cavalry",
-                            "Corrupted Badge",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("fireinvasion", "Living Shadowflame", "ShadowFlame Tag", 15, log: false);
+                        Core.HuntMonster("fireinvasion", "Shadefire Cavalry", "Corrupted Badge", 3, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

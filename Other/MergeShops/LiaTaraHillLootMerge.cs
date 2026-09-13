@@ -104,16 +104,7 @@ public class LiaTaraHillLootMerge
 
                 case "Salvaged Skye Armament":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.KillMonster(
-                        "castleeblana",
-                        "r2",
-                        "Left",
-                        "Skye Warrior",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.KillMonster("castleeblana", "r2", "Left", "Skye Warrior", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Golden Catalyst":
@@ -122,27 +113,10 @@ public class LiaTaraHillLootMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "liatarahill",
-                            "Undead Garde",
-                            "Garde's Brooch",
-                            9,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "liatarahill",
-                            "Garde Wraith",
-                            "Ghost Blossoms",
-                            9,
-                            log: false
-                        );
+                        Core.HuntMonster("liatarahill", "Undead Garde", "Garde's Brooch", 9, log: false);
+                        Core.HuntMonster("liatarahill", "Garde Wraith", "Ghost Blossoms", 9, log: false);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "liatarahill",
-                            "Warden Illaria",
-                            "Illaria's Amulet",
-                            log: false
-                        );
+                        Core.HuntMonster("liatarahill", "Warden Illaria", "Illaria's Amulet", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -152,14 +126,7 @@ public class LiaTaraHillLootMerge
                 case "Drained Skye Obelisk":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "liatarahill",
-                        "Warden Illaria",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("liatarahill", "Warden Illaria", req.Name, quant, req.Temp, false);
                     break;
             }
         }

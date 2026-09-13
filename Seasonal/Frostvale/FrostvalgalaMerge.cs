@@ -139,14 +139,7 @@ public class FrostvalgalaMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "frostvalgala",
-                        "Unsung Queen",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("frostvalgala", "Unsung Queen", req.Name, quant, req.Temp, false);
                     break;
                 #endregion
             }

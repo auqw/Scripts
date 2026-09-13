@@ -134,13 +134,7 @@ public class SinoftheSinoftheUnderworldNoInsignia
             while (!Bot.ShouldExit && !Core.CheckInventory("Undead Champion Blade"))
             {
                 Core.EnsureAccept(821);
-                Core.HuntMonster(
-                    "lair",
-                    "Water Draconian",
-                    "Flawless DracoHorn",
-                    40,
-                    isTemp: false
-                );
+                Core.HuntMonster("lair", "Water Draconian", "Flawless DracoHorn", 40, isTemp: false);
                 Core.HuntMonster("lair", "Golden Draconian", "Golden DracoHeart");
                 Core.HuntMonster("lair", "Dark Draconian", "Dark DracoHeart");
                 Core.HuntMonster("lair", "Bronze Draconian", "Mammoth DracoHeart");
@@ -158,14 +152,7 @@ public class SinoftheSinoftheUnderworldNoInsignia
             while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Corrupted Dragon Slayer" }))
             {
                 Core.EquipClass(ClassType.Farm);
-                Core.KillMonster(
-                    "doomhaven",
-                    "r4",
-                    "Down",
-                    "Skeletal Ice Mage",
-                    "Frostbit Skull",
-                    15
-                );
+                Core.KillMonster("doomhaven", "r4", "Down", "Skeletal Ice Mage", "Frostbit Skull", 15);
                 Core.HuntMonster("Marsh2", "Lesser Shadow Serpent", "Potent Viper's Blood");
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);

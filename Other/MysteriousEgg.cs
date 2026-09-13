@@ -47,14 +47,7 @@ public class MysteriousEgg
         Core.EnsureAccept(6171);
 
         Core.KillMonster("pride", "r13", "Left", "Valsarian", "Key of Pride", isTemp: false);
-        Core.KillMonster(
-            "gluttony",
-            "Enter2",
-            "Top",
-            "Deflated Glutus",
-            "Key of Gluttony",
-            isTemp: false
-        );
+        Core.KillMonster("gluttony", "Enter2", "Top", "Deflated Glutus", "Key of Gluttony", isTemp: false);
         Core.KillMonster("greed", "r16", "Left", "Goregold", "Key of Greed", isTemp: false);
 
         if (!Core.CheckInventory("Key of Sloth"))

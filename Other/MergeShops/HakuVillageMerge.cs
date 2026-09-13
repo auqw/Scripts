@@ -101,34 +101,11 @@ public class HakuVillageMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "hakuvillage",
-                            "r3",
-                            "Left",
-                            "*",
-                            "Enchanted Chime",
-                            8,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "hakuvillage",
-                            "r4",
-                            "Left",
-                            "*",
-                            "Pale Scale",
-                            8,
-                            log: false
-                        );
+                        Core.KillMonster("hakuvillage", "r3", "Left", "*", "Enchanted Chime", 8, log: false);
+                        Core.KillMonster("hakuvillage", "r4", "Left", "*", "Pale Scale", 8, log: false);
 
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "hakuvillage",
-                            "r5",
-                            "Left",
-                            "*",
-                            "Wind Blade",
-                            log: false
-                        );
+                        Core.KillMonster("hakuvillage", "r5", "Left", "*", "Wind Blade", log: false);
                     }
                     Core.CancelRegisteredQuests();
                     break;
@@ -140,13 +117,7 @@ public class HakuVillageMerge
                     Core.RegisterQuests(9690);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "yokairealm",
-                            "Mikoto Kukol'nyy",
-                            "Mikoto's Red String",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("yokairealm", "Mikoto Kukol'nyy", "Mikoto's Red String", 3, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -155,14 +126,7 @@ public class HakuVillageMerge
                 case "Yokai Realm Moss":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "yokairealm",
-                        "Snake Shikigami",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("yokairealm", "Snake Shikigami", req.Name, quant, false, false);
                     break;
             }
         }

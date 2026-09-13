@@ -99,23 +99,8 @@ public class EtokounMerge
                     Core.RegisterQuests(7942);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "yokaihunt",
-                            "r3",
-                            "Left",
-                            "Golden Ox Guard",
-                            "Ox Meat",
-                            8,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "yokaihunt",
-                            "r6",
-                            "Left",
-                            "Ox Yokai Spirit",
-                            "Holographic Ox Meat",
-                            log: false
-                        );
+                        Core.KillMonster("yokaihunt", "r3", "Left", "Golden Ox Guard", "Ox Meat", 8, log: false);
+                        Core.KillMonster("yokaihunt", "r6", "Left", "Ox Yokai Spirit", "Holographic Ox Meat", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

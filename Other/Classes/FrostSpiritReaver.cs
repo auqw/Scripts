@@ -84,12 +84,7 @@ public class FrostSpiritReaver
             if (!Core.CheckInventory("Favored of Kyanos"))
             {
                 Core.Logger("Farming the requirements to buy \"Favored of Kyanos\"");
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Shade of Kyanos",
-                    "Warrior of Kyanos",
-                    isTemp: false
-                );
+                Core.HuntMonster("icedungeon", "Shade of Kyanos", "Warrior of Kyanos", isTemp: false);
                 Tokens(25, 15, 10, 5);
 
                 Adv.BuyItem("icedungeon", 1948, "Favored of Kyanos");
@@ -214,41 +209,13 @@ public class FrostSpiritReaver
         while (!Bot.ShouldExit && !Core.CheckInventory(59216, quant))
         {
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "cryowar",
-                "Super-Charged Karok",
-                "Glacial Crystal",
-                100,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("cryowar", "Super-Charged Karok", "Glacial Crystal", 100, isTemp: false, log: false);
             Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster(
-                "frozenlair",
-                "Legion Lich Lord",
-                "Necrotic Orb",
-                2,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Necrotic Orb", 2, isTemp: false, log: false);
 
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "frozenlair",
-                "Frozen Legionnaire",
-                "Ice Spike",
-                20,
-                isTemp: false,
-                log: false
-            );
-            Core.HuntMonster(
-                "frozenlair",
-                "Frozen Legionnaire",
-                "Ice Splinter",
-                20,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("frozenlair", "Frozen Legionnaire", "Ice Spike", 20, isTemp: false, log: false);
+            Core.HuntMonster("frozenlair", "Frozen Legionnaire", "Ice Splinter", 20, isTemp: false, log: false);
         }
         Bot.Wait.ForPickup("Glaceran Attunement");
         Core.CancelRegisteredQuests();
@@ -267,27 +234,9 @@ public class FrostSpiritReaver
             Core.RegisterQuests(7840, 7838);
             while (!Bot.ShouldExit && !Core.CheckInventory("Icy Token I", Token1))
             {
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Frosted Banshee",
-                    "Frosted Banshee Defeated",
-                    10,
-                    log: false
-                );
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Frozen Undead",
-                    "Frozen Undead Defeated",
-                    10,
-                    log: false
-                );
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Ice Symbiote",
-                    "Ice Symbiote Defeated",
-                    10,
-                    log: false
-                );
+                Core.HuntMonster("icedungeon", "Frosted Banshee", "Frosted Banshee Defeated", 10, log: false);
+                Core.HuntMonster("icedungeon", "Frozen Undead", "Frozen Undead Defeated", 10, log: false);
+                Core.HuntMonster("icedungeon", "Ice Symbiote", "Ice Symbiote Defeated", 10, log: false);
             }
             Core.CancelRegisteredQuests();
         }
@@ -301,27 +250,9 @@ public class FrostSpiritReaver
             Core.RegisterQuests(7839);
             while (!Bot.ShouldExit && !Core.CheckInventory("Icy Token II", Token2))
             {
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Spirit of Ice",
-                    "Spirit of Ice Defeated",
-                    10,
-                    log: false
-                );
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Ice Crystal",
-                    "Ice Crystal Defeated",
-                    10,
-                    log: false
-                );
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Frigid Spirit",
-                    "Frigid Spirit Defeated",
-                    10,
-                    log: false
-                );
+                Core.HuntMonster("icedungeon", "Spirit of Ice", "Spirit of Ice Defeated", 10, log: false);
+                Core.HuntMonster("icedungeon", "Ice Crystal", "Ice Crystal Defeated", 10, log: false);
+                Core.HuntMonster("icedungeon", "Frigid Spirit", "Frigid Spirit Defeated", 10, log: false);
 
                 Bot.Wait.ForPickup("Icy Token II");
             }
@@ -338,20 +269,8 @@ public class FrostSpiritReaver
             while (!Bot.ShouldExit && !Core.CheckInventory("Icy Token III", Token3))
             {
                 Core.HuntMonster("icedungeon", "Living Ice", "Living Ice Defeated", 5, log: false);
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Crystallized Elemental",
-                    "Crystallized Elemental Defeated",
-                    5,
-                    log: false
-                );
-                Core.HuntMonster(
-                    "icedungeon",
-                    "Frozen Demon",
-                    "Frozen Demon Defeated",
-                    5,
-                    log: false
-                );
+                Core.HuntMonster("icedungeon", "Crystallized Elemental", "Crystallized Elemental Defeated", 5, log: false);
+                Core.HuntMonster("icedungeon", "Frozen Demon", "Frozen Demon Defeated", 5, log: false);
 
                 Bot.Wait.ForPickup("Icy Token III");
             }

@@ -136,11 +136,7 @@ public class DarkHandMerge
                         Core.RegisterQuests(6742);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "legionarena",
-                                "Legion Fiend Rider",
-                                "Undead Rider Defeated"
-                            );
+                            Core.HuntMonster("legionarena", "Legion Fiend Rider", "Undead Rider Defeated");
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }
@@ -151,14 +147,7 @@ public class DarkHandMerge
                         Core.RegisterQuests(6741);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.KillMonster(
-                                "legionarena",
-                                "r4",
-                                "Left",
-                                "*",
-                                "Legion's Finest Defeated",
-                                8
-                            );
+                            Core.KillMonster("legionarena", "r4", "Left", "*", "Legion's Finest Defeated", 8);
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }
@@ -171,13 +160,7 @@ public class DarkHandMerge
 
                 case "Essence of Blade Master":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "underworld",
-                        "Blade Master",
-                        "Essence of Blade Master",
-                        quant,
-                        false
-                    );
+                    Core.HuntMonster("underworld", "Blade Master", "Essence of Blade Master", quant, false);
                     break;
 
                 case "Primarch's Trophy":

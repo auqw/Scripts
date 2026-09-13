@@ -114,14 +114,7 @@ public class BattleUnder
         if (!Story.QuestProgression(2211))
         {
             Core.EnsureAccept(2211);
-            Core.KillMonster(
-                "battleunderd",
-                "Enter",
-                "Spawn",
-                "Shivering Bones",
-                "Shivering Bone",
-                10
-            );
+            Core.KillMonster("battleunderd", "Enter", "Spawn", "Shivering Bones", "Shivering Bone", 10);
             Core.EnsureComplete(2211);
         }
 
@@ -142,13 +135,7 @@ public class BattleUnder
         if (!Story.QuestProgression(2214))
         {
             Core.EnsureAccept(2214);
-            Core.KillMonster(
-                "battleunderd",
-                "r5",
-                "Left",
-                "Glacial Horror",
-                "Glacial Horror Slain"
-            );
+            Core.KillMonster("battleunderd", "r5", "Left", "Glacial Horror", "Glacial Horror Slain");
             Core.GetMapItem(1287, 4, "battleunderd");
             Core.EnsureComplete(2214);
         }

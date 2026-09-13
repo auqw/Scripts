@@ -113,12 +113,7 @@ public class ShadowFirePlaneMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Catching Fire 8145
-                        Core.HuntMonster(
-                            "shadowfireplane",
-                            "Living Shadowflame",
-                            "Shadefire Essence",
-                            20
-                        );
+                        Core.HuntMonster("shadowfireplane", "Living Shadowflame", "Shadefire Essence", 20);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

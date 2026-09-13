@@ -76,56 +76,13 @@ public class LegionExercise1
         )
         {
             Core.EnsureAccept(821);
-            Core.HuntMonster(
-                "lair",
-                "Water Draconian",
-                "Flawless DracoHorn",
-                40,
-                isTemp: false,
-                publicRoom: false
-            );
-            Core.HuntMonster(
-                "lair",
-                "Golden Draconian",
-                "Golden DracoHeart",
-                isTemp: true,
-                publicRoom: false
-            );
-            Core.HuntMonster(
-                "lair",
-                "Dark Draconian",
-                "Dark DracoHeart",
-                isTemp: true,
-                publicRoom: false
-            );
-            Core.HuntMonster(
-                "lair",
-                "Bronze Draconian",
-                "Mammoth DracoHeart",
-                isTemp: true,
-                publicRoom: false
-            );
-            Core.HuntMonster(
-                "lair",
-                "Water Draconian",
-                "Water DracoHeart",
-                isTemp: true,
-                publicRoom: false
-            );
-            Core.HuntMonster(
-                "lair",
-                "Venom Draconian",
-                "Venom DracoHeart",
-                isTemp: true,
-                publicRoom: false
-            );
-            Core.HuntMonster(
-                "lair",
-                "Purple Draconian",
-                "Iron DracoHeart",
-                isTemp: true,
-                publicRoom: false
-            );
+            Core.HuntMonster("lair", "Water Draconian", "Flawless DracoHorn", 40, isTemp: false, publicRoom: false);
+            Core.HuntMonster("lair", "Golden Draconian", "Golden DracoHeart", isTemp: true, publicRoom: false);
+            Core.HuntMonster("lair", "Dark Draconian", "Dark DracoHeart", isTemp: true, publicRoom: false);
+            Core.HuntMonster("lair", "Bronze Draconian", "Mammoth DracoHeart", isTemp: true, publicRoom: false);
+            Core.HuntMonster("lair", "Water Draconian", "Water DracoHeart", isTemp: true, publicRoom: false);
+            Core.HuntMonster("lair", "Venom Draconian", "Venom DracoHeart", isTemp: true, publicRoom: false);
+            Core.HuntMonster("lair", "Purple Draconian", "Iron DracoHeart", isTemp: true, publicRoom: false);
             Core.EnsureComplete(821);
             Core.Logger($"Finished Quest {i++} Times");
         }

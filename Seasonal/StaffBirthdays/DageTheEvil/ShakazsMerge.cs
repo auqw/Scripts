@@ -108,26 +108,9 @@ public class ShakazsMerge
                     Core.RegisterQuests(9144);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "siegefortress",
-                            "Shadow Traitor",
-                            "Traitorous Specimen",
-                            8,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "siegefortress",
-                            "Enslaved Elemental",
-                            "Elemental Rune",
-                            8,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "siegefortress",
-                            "Enslaved Astero",
-                            "Colossal Light Rune",
-                            log: false
-                        );
+                        Core.HuntMonster("siegefortress", "Shadow Traitor", "Traitorous Specimen", 8, log: false);
+                        Core.HuntMonster("siegefortress", "Enslaved Elemental", "Elemental Rune", 8, log: false);
+                        Core.HuntMonster("siegefortress", "Enslaved Astero", "Colossal Light Rune", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -138,13 +121,7 @@ public class ShakazsMerge
                 case "Abyssal Frost Samurai Spirit":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "Siege Fortress",
-                        "Dage The Evil",
-                        req.Name,
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("Siege Fortress", "Dage The Evil", req.Name, isTemp: false, log: false);
                     break;
             }
         }

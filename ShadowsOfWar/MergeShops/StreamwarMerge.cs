@@ -130,13 +130,7 @@ public class StreamwarMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "Streamwar",
-                            "Second Speaker",
-                            req.Name,
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("Streamwar", "Second Speaker", req.Name, isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

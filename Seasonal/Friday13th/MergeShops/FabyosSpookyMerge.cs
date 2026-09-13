@@ -100,15 +100,7 @@ public class FabyosSpookyMerge
                     Core.RegisterQuests(8676);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "oddities",
-                            "r3",
-                            "Left",
-                            "*",
-                            "Cursed Cloth Roll",
-                            13,
-                            log: false
-                        );
+                        Core.KillMonster("oddities", "r3", "Left", "*", "Cursed Cloth Roll", 13, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -120,15 +112,7 @@ public class FabyosSpookyMerge
                     Core.RegisterQuests(8677);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "oddities",
-                            "r9",
-                            "Left",
-                            "*",
-                            "Freaky Fripperies",
-                            13,
-                            log: false
-                        );
+                        Core.KillMonster("oddities", "r9", "Left", "*", "Freaky Fripperies", 13, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

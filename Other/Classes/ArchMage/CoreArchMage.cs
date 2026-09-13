@@ -315,15 +315,7 @@ public class CoreArchMage
         Core.HuntMonster("mafic", "Living Fire", "Emblazoned Basalt", 200, false);
 
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster(
-            "underlair",
-            "r6",
-            "Left",
-            "Void Draconian",
-            "Dense Dragon Crystal",
-            200,
-            false
-        );
+        Core.KillMonster("underlair", "r6", "Left", "Void Draconian", "Dense Dragon Crystal", 200, false);
 
         Core.EnsureComplete(8914);
         Bot.Wait.ForPickup("Book of Fire");
@@ -393,12 +385,7 @@ public class CoreArchMage
         Scroll.BuyScroll(Scrolls.Eclipse, 50);
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "streamwar",
-            "Second Speaker",
-            "A Fragment of the Beginning",
-            isTemp: false
-        );
+        Core.HuntMonster("streamwar", "Second Speaker", "A Fragment of the Beginning", isTemp: false);
         // Core.HuntMonster("fireavatar", "Avatar Tyndarius", "Everlight Flame", isTemp: false); //1% Drop Rate
         Core.EnsureComplete(8916);
         Bot.Wait.ForPickup("Book of Aether");
@@ -524,14 +511,7 @@ public class CoreArchMage
             Core.KillMonster("fiendshard", "r9", "Left", 15, "Infernal Ether", isTemp: false);
             Core.HuntMonster("celestialarenad", "Aranx", "Celestial Ether", isTemp: false);
             Core.HuntMonster("eternalchaos", "Eternal Drakath", "Chaotic Ether", isTemp: false);
-            Core.KillMonster(
-                "shadowattack",
-                "Boss",
-                "Left",
-                "Death",
-                "Mortal Ether",
-                isTemp: false
-            );
+            Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Mortal Ether", isTemp: false);
             Core.HuntMonster("gaiazor", "Gaiazor", "Vital Ether", isTemp: false);
             Core.EnsureComplete(8910);
             Bot.Wait.ForPickup("Prismatic Ether");
@@ -564,13 +544,7 @@ public class CoreArchMage
             );
             Core.Sleep(2500);
             Core.KillMonster("skytower", "r13", "Bottom", "*", "Sky Locus", isTemp: false);
-            Core.HuntMonster(
-                "elemental",
-                "Mana Golem",
-                "Prime Locus Attunement",
-                30,
-                isTemp: false
-            );
+            Core.HuntMonster("elemental", "Mana Golem", "Prime Locus Attunement", 30, isTemp: false);
             Core.HuntMonster("ectocave", "Ektorax", "Earth Locus", isTemp: false);
             Core.HuntMonster("drakonnan", "Drakonnan", "Fire Locus", isTemp: false);
 

@@ -98,14 +98,7 @@ public class FandH
         {
             Core.EnsureAccept(6604);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "doomwood",
-                "r6a",
-                "Right",
-                "Doomwood Ectomancer",
-                "Hubris's Final Blade Shard",
-                isTemp: false
-            );
+            Core.KillMonster("doomwood", "r6a", "Right", "Doomwood Ectomancer", "Hubris's Final Blade Shard", isTemp: false);
             Core.Sleep(2500);
             Core.EquipClass(ClassType.Solo);
             Core.KillTrigoras("Hubris' Handle", isTemp: true);
@@ -122,13 +115,7 @@ public class FandH
             Core.HuntMonster("iceplane", "Enfield", "Fortitude's Handle");
             Bot.Quests.UpdateQuest(4616);
             Core.HuntMonster("mummies", "Mummy", "Fortitude's Blade Shards", 100, isTemp: false);
-            Core.HuntMonster(
-                "banished",
-                "Desterrat Moya",
-                "Fortitude's Magic Essence",
-                50,
-                isTemp: false
-            );
+            Core.HuntMonster("banished", "Desterrat Moya", "Fortitude's Magic Essence", 50, isTemp: false);
             Core.EnsureComplete(6605);
             Bot.Wait.ForPickup("Fortitude");
         }

@@ -253,13 +253,7 @@ public class DirtlickersMerge
                     break;
 
                 case "Hadean Onyx of Nulgath":
-                    Core.HuntMonster(
-                        "tercessuinotlim",
-                        "Shadow of Nulgath",
-                        req.Name,
-                        quant,
-                        false
-                    );
+                    Core.HuntMonster("tercessuinotlim", "Shadow of Nulgath", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 

@@ -96,14 +96,7 @@ public class HBJudgementMerge
                     Core.RegisterQuests(8418);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "hbchallenge",
-                            "r3",
-                            "Right",
-                            "Judge's Minion",
-                            "Judge's Minion Judged",
-                            12
-                        );
+                        Core.KillMonster("hbchallenge", "r3", "Right", "Judge's Minion", "Judge's Minion Judged", 12);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

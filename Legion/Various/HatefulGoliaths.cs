@@ -88,20 +88,8 @@ public class HatefulGoliaths
         FD.DoStory();
         Core.EnsureAccept(9170);
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster(
-            "fortressdelve",
-            "Enlightened Shadow",
-            "Shadowscythe Bone Shard",
-            10,
-            log: false
-        );
-        Core.HuntMonster(
-            "fortressdelve",
-            "Delirious Elemental",
-            "Elemental Residue",
-            10,
-            log: false
-        );
+        Core.HuntMonster("fortressdelve", "Enlightened Shadow", "Shadowscythe Bone Shard", 10, log: false);
+        Core.HuntMonster("fortressdelve", "Delirious Elemental", "Elemental Residue", 10, log: false);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("fortressdelve", "Astero", "Glass Wing", log: false);
         Core.EnsureComplete(9170);

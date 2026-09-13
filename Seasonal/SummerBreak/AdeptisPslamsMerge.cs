@@ -130,14 +130,7 @@ public class AdeptisPslamsMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(94014);
-                    Core.HuntMonster(
-                        "sunkencity",
-                        "Nereid Princess",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("sunkencity", "Nereid Princess", req.Name, quant, req.Temp, false);
                     break;
 
                 #endregion

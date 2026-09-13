@@ -102,20 +102,8 @@ public class DescendantsDesignMerge
                     Core.RegisterQuests(9094);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "guardiantree",
-                            "Blossoming Treeant",
-                            "Fresh Blossoms",
-                            8,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "guardiantree",
-                            "Seed Spitter",
-                            "Fresh Seeds",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("guardiantree", "Blossoming Treeant", "Fresh Blossoms", 8, log: false);
+                        Core.HuntMonster("guardiantree", "Seed Spitter", "Fresh Seeds", 8, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -127,14 +115,7 @@ public class DescendantsDesignMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(9097);
-                        Core.KillMonster(
-                            "yokaihunt",
-                            "r6a",
-                            "Left",
-                            "*",
-                            "Etokoun Wrangled",
-                            log: false
-                        );
+                        Core.KillMonster("yokaihunt", "r6a", "Left", "*", "Etokoun Wrangled", log: false);
                         Core.EnsureComplete(9097);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -146,19 +127,8 @@ public class DescendantsDesignMerge
                     Core.RegisterQuests(9572);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "shipwreck",
-                            "Gilded Merdraconian",
-                            "Merdraconian Coins",
-                            15,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "shipwreck",
-                            "Lobthulhu",
-                            "Lobthulu's Gold Bar",
-                            log: false
-                        );
+                        Core.HuntMonster("shipwreck", "Gilded Merdraconian", "Merdraconian Coins", 15, log: false);
+                        Core.HuntMonster("shipwreck", "Lobthulhu", "Lobthulu's Gold Bar", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

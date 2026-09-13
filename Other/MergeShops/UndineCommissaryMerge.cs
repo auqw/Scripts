@@ -104,26 +104,9 @@ public class UndineCommissaryMerge
                     Core.RegisterQuests(9252);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "sunlightzone",
-                            "Marine Snow",
-                            "Marine Sample",
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "sunlightzone",
-                            "Infernal Illusion",
-                            "Infernal Sample",
-                            10,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "sunlightzone",
-                            "Seraphic Illusion",
-                            "Seraphic Sample",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("sunlightzone", "Marine Snow", "Marine Sample", log: false);
+                        Core.HuntMonster("sunlightzone", "Infernal Illusion", "Infernal Sample", 10, log: false);
+                        Core.HuntMonster("sunlightzone", "Seraphic Illusion", "Seraphic Sample", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

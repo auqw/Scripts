@@ -390,14 +390,7 @@ public class EtherStormWastes
         {
             Core.EnsureAccept(3504);
             Core.KillMonster("wanders", "r5", "Left", "Lotus Spider", "Lotus Petal", 5);
-            Core.KillMonster(
-                "wanders",
-                "r2",
-                "Down",
-                "Kalestri Worshiper",
-                "Talisman of Renewal",
-                5
-            );
+            Core.KillMonster("wanders", "r2", "Down", "Kalestri Worshiper", "Talisman of Renewal", 5);
             Core.EnsureComplete(3504);
         }
 

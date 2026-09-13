@@ -42,14 +42,7 @@ public class TheGameofGemstones
 
         Nation.FarmUni13(1);
         if (!Core.CheckInventory("Tendurrr The Assistant"))
-            Core.KillMonster(
-                "tercessuinotlim",
-                "m2",
-                "Left",
-                "*",
-                "Tendurrr The Assistant",
-                isTemp: false
-            );
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Tendurrr The Assistant", isTemp: false);
 
         Bot.Quests.UpdateQuest(597);
         Core.RegisterQuests(5815);
@@ -57,14 +50,7 @@ public class TheGameofGemstones
         {
             Nation.ApprovalAndFavor(1, 0);
             Core.HuntMonster("Lavarun", "Mega Tyndarius", "Archfiend's Amber", isTemp: false);
-            Core.KillMonster(
-                "Catacombs",
-                "Boss2",
-                "Left",
-                "Dr. De'Sawed",
-                "Phantasmia's Charoite",
-                isTemp: false
-            );
+            Core.KillMonster("Catacombs", "Boss2", "Left", "Dr. De'Sawed", "Phantasmia's Charoite", isTemp: false);
             Farm.BludrutBrawlBoss("Yoshino's Citrine", 1);
             Core.HuntMonster("Wolfwing", "Wolfwing", "Tendou's Moonstone", isTemp: false);
             Core.HuntMonsterMapID("baconcatyou", 1, "Asuka's Ruby", isTemp: false);

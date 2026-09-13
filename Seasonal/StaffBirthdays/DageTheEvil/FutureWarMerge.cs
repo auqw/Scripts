@@ -112,13 +112,7 @@ public class FutureWarMerge
                 case "ProtoSoul Gem":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "futurewar",
-                        "SF3017 Paragonator",
-                        req.Name,
-                        quant,
-                        log: false
-                    );
+                    Core.HuntMonster("futurewar", "SF3017 Paragonator", req.Name, quant, log: false);
                     break;
             }
         }

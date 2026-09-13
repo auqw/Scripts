@@ -108,14 +108,7 @@ public class BigDaddysWardrobeMerge
                 case "Heart-Shaped Gem":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "tunneloflove",
-                        "Love Knight",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("tunneloflove", "Love Knight", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Lovely Laurel":
@@ -141,14 +134,7 @@ public class BigDaddysWardrobeMerge
                 case "Moth-Spun Silk":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "tunneloflove",
-                        "Rosey Moth",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("tunneloflove", "Rosey Moth", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Pink Diamond":

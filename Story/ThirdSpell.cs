@@ -100,12 +100,7 @@ public class ThirdSpell
                         break;
 
                     case 4475: //Post-Elemental Apocalypse
-                        Core.HuntMonster(
-                            "thirdspell",
-                            "Mana Phoenix",
-                            "Mana Plane Monster Defeated",
-                            12
-                        );
+                        Core.HuntMonster("thirdspell", "Mana Phoenix", "Mana Plane Monster Defeated", 12);
                         break;
 
                     case 4476: //Phoenix’s First Birthday
@@ -141,11 +136,7 @@ public class ThirdSpell
                         break;
 
                     case 4484: //The Art of Persuasion
-                        Core.HuntMonster(
-                            "thirdspell",
-                            "Great Solar Elemental",
-                            "Great Solar Elemental Defeated"
-                        );
+                        Core.HuntMonster("thirdspell", "Great Solar Elemental", "Great Solar Elemental Defeated");
                         break;
 
                     case 4485: //Frozen Mana
@@ -153,11 +144,7 @@ public class ThirdSpell
                         break;
 
                     case 4486: //Angry Elements
-                        Core.HuntMonster(
-                            "thirdspell",
-                            "Great Solar Elemental",
-                            "Great Solar Elemental Defeated Again"
-                        );
+                        Core.HuntMonster("thirdspell", "Great Solar Elemental", "Great Solar Elemental Defeated Again");
                         break;
 
                     case 4487: //The Sunspots, They Are Changing!
@@ -165,26 +152,12 @@ public class ThirdSpell
                         break;
 
                     case 4488: //I Enjoy Being a Soul
-                        Core.KillMonster(
-                            "thirdspell",
-                            "r12",
-                            "Left",
-                            "Living Fire",
-                            "Sun Monster Ember",
-                            15
-                        );
+                        Core.KillMonster("thirdspell", "r12", "Left", "Living Fire", "Sun Monster Ember", 15);
                         break;
 
                     case 4489: //Burning Like Me!
                         Core.HuntMonster("thirdspell", "Sun Flare", "Sun Flare Defeated", 10);
-                        Core.KillMonster(
-                            "thirdspell",
-                            "r12",
-                            "Left",
-                            "Living Fire",
-                            "Living Fire Defeated",
-                            5
-                        );
+                        Core.KillMonster("thirdspell", "r12", "Left", "Living Fire", "Living Fire Defeated", 5);
                         break;
 
                     case 4490: //Assault With a Deadly Shadow
@@ -192,11 +165,7 @@ public class ThirdSpell
                         break;
 
                     case 4491: // 4491|Mother Knows The Sun
-                        Core.HuntMonster(
-                            "thirdspell",
-                            "Solar Incarnation ",
-                            "Heart of the Sun Received"
-                        );
+                        Core.HuntMonster("thirdspell", "Solar Incarnation ", "Heart of the Sun Received");
                         break;
 
                     case 4492: // 4492|Selfishness
@@ -319,12 +288,7 @@ public class ThirdSpell
                                                                                 Core.EnsureAccept(
                                                                                     4474
                                                                                 );
-                                                                                Core.HuntMonster(
-                                                                                    "doomwood",
-                                                                                    "Doomwood Treeant",
-                                                                                    "Braaaainz",
-                                                                                    10
-                                                                                );
+                                                                                Core.HuntMonster("doomwood", "Doomwood Treeant", "Braaaainz", 10);
                                                                                 Core.EnsureComplete(
                                                                                     4474
                                                                                 );
@@ -336,12 +300,7 @@ public class ThirdSpell
                                                                                 "Token: Mana Token II"
                                                                             );
                                                                             Core.EnsureAccept(4475);
-                                                                            Core.HuntMonster(
-                                                                                "thirdspell",
-                                                                                "Mana Phoenix",
-                                                                                "Mana Plane Monster Defeated",
-                                                                                12
-                                                                            );
+                                                                            Core.HuntMonster("thirdspell", "Mana Phoenix", "Mana Plane Monster Defeated", 12);
                                                                             Core.EnsureComplete(
                                                                                 4475
                                                                             );
@@ -353,12 +312,7 @@ public class ThirdSpell
                                                                             "Token: Mana Token III"
                                                                         );
                                                                         Core.EnsureAccept(4476);
-                                                                        Core.HuntMonster(
-                                                                            "thirdspell",
-                                                                            "Mana Phoenix",
-                                                                            "Proxy Eggs",
-                                                                            8
-                                                                        );
+                                                                        Core.HuntMonster("thirdspell", "Mana Phoenix", "Proxy Eggs", 8);
                                                                         Core.EnsureComplete(4476);
                                                                         Bot.Wait.ForPickup(
                                                                             "Mana Token II"
@@ -380,23 +334,13 @@ public class ThirdSpell
                                                                 }
                                                                 Core.Logger("Token: Mana Token V");
                                                                 Core.EnsureAccept(4478);
-                                                                Core.HuntMonster(
-                                                                    "thirdspell",
-                                                                    "Mana Phoenix",
-                                                                    "Elemental Pathway Cleared",
-                                                                    20
-                                                                );
+                                                                Core.HuntMonster("thirdspell", "Mana Phoenix", "Elemental Pathway Cleared", 20);
                                                                 Core.EnsureComplete(4478);
                                                                 Bot.Wait.ForPickup("Mana Token IV");
                                                             }
                                                             Core.Logger("Token: Mana Token VI");
                                                             Core.EnsureAccept(4479);
-                                                            Core.HuntMonster(
-                                                                "thirdspell",
-                                                                "Mana Phoenix",
-                                                                "Green Eye",
-                                                                5
-                                                            );
+                                                            Core.HuntMonster("thirdspell", "Mana Phoenix", "Green Eye", 5);
                                                             Core.EnsureComplete(4479);
                                                             Bot.Wait.ForPickup("Mana Token V");
                                                         }
@@ -414,11 +358,7 @@ public class ThirdSpell
                                                 }
                                                 Core.Logger("Token: Mana Token IX");
                                                 Core.EnsureAccept(4482);
-                                                Core.HuntMonster(
-                                                    "thirdspell",
-                                                    "Mana Phoenix",
-                                                    "Abducted Mana Phoenix"
-                                                );
+                                                Core.HuntMonster("thirdspell", "Mana Phoenix", "Abducted Mana Phoenix");
                                                 Core.EnsureComplete(4482);
                                                 Bot.Wait.ForPickup("Mana Token VIII");
                                             }
@@ -430,32 +370,19 @@ public class ThirdSpell
                                         }
                                         Core.Logger("Token: Mana Token XI");
                                         Core.EnsureAccept(4484);
-                                        Core.HuntMonster(
-                                            "thirdspell",
-                                            "Great Solar Elemental",
-                                            "Great Solar Elemental Defeated"
-                                        );
+                                        Core.HuntMonster("thirdspell", "Great Solar Elemental", "Great Solar Elemental Defeated");
                                         Core.EnsureComplete(4484);
                                         Bot.Wait.ForPickup("Mana Token X");
                                     }
                                     Core.Logger("Token: Sun Token I");
                                     Core.EnsureAccept(4485);
-                                    Core.HuntMonster(
-                                        "thirdspell",
-                                        "Mana Phoenix",
-                                        "Mana Phoenix Egg",
-                                        7
-                                    );
+                                    Core.HuntMonster("thirdspell", "Mana Phoenix", "Mana Phoenix Egg", 7);
                                     Core.EnsureComplete(4485);
                                     Bot.Wait.ForPickup("Mana Token XI");
                                 }
                                 Core.Logger("Token: Sun Token II");
                                 Core.EnsureAccept(4486);
-                                Core.HuntMonster(
-                                    "thirdspell",
-                                    "Great Solar Elemental",
-                                    "Great Solar Elemental Defeated Again"
-                                );
+                                Core.HuntMonster("thirdspell", "Great Solar Elemental", "Great Solar Elemental Defeated Again");
                                 Core.EnsureComplete(4486);
                                 Bot.Wait.ForPickup("Sun Token I");
                             }
@@ -468,14 +395,7 @@ public class ThirdSpell
                         Core.Logger("Token: Sun Token IV");
                         Core.EquipClass(ClassType.Solo);
                         Core.EnsureAccept(4488);
-                        Core.KillMonster(
-                            "thirdspell",
-                            "r12",
-                            "Left",
-                            "Living Fire",
-                            "Sun Monster Ember",
-                            15
-                        );
+                        Core.KillMonster("thirdspell", "r12", "Left", "Living Fire", "Sun Monster Ember", 15);
                         Core.EnsureComplete(4488);
                         Bot.Wait.ForPickup("Sun Token III");
                     }
@@ -484,14 +404,7 @@ public class ThirdSpell
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("thirdspell", "Sun Flare", "Sun Flare Defeated", 10);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "thirdspell",
-                        "r12",
-                        "Left",
-                        "Living Fire",
-                        "Living Fire Defeated",
-                        5
-                    );
+                    Core.KillMonster("thirdspell", "r12", "Left", "Living Fire", "Living Fire Defeated", 5);
                     Core.EnsureComplete(4489);
                     Bot.Wait.ForPickup("Sun Token IV");
                 }

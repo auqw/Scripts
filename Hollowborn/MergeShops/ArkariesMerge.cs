@@ -99,24 +99,8 @@ public class ArkariesMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
-                        Core.KillMonster(
-                            "shadowrealm",
-                            "r2",
-                            "Left",
-                            "Gargrowl",
-                            "Darkseed",
-                            8,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "shadowrealm",
-                            "r2",
-                            "Left",
-                            "Shadow Guardian",
-                            "Shadow Medallion",
-                            5,
-                            log: false
-                        );
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
                         Core.EnsureComplete(7553);
                         Core.EnsureComplete(7555);
                     }
@@ -127,14 +111,7 @@ public class ArkariesMerge
                 case "Obsidian Hollowborn Dragon Statue":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "hbchallenge",
-                        "Nameless Dragonlord",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("hbchallenge", "Nameless Dragonlord", req.Name, quant, req.Temp, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -164,14 +141,7 @@ public class ArkariesMerge
                 case "Hollowborn DragonBerserker Helm":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "hbchallenge",
-                        "Nameless Dragonlord",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("hbchallenge", "Nameless Dragonlord", req.Name, quant, req.Temp, false);
                     break;
             }
         }

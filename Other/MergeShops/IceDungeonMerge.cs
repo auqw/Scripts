@@ -124,18 +124,8 @@ public class IceDungeonMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Basic Ingredients 7838
-                        Core.HuntMonster(
-                            "icedungeon",
-                            "Frosted Banshee",
-                            "Frosted Banshee Defeated",
-                            10
-                        );
-                        Core.HuntMonster(
-                            "icedungeon",
-                            "Frozen Undead",
-                            "Frozen Undead Defeated",
-                            10
-                        );
+                        Core.HuntMonster("icedungeon", "Frosted Banshee", "Frosted Banshee Defeated", 10);
+                        Core.HuntMonster("icedungeon", "Frozen Undead", "Frozen Undead Defeated", 10);
                         Core.HuntMonster("icedungeon", "Ice Symbiote", "Ice Symbiote Defeated", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -150,19 +140,9 @@ public class IceDungeonMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Cool Flavor 7839
-                        Core.HuntMonster(
-                            "icedungeon",
-                            "Spirit of Ice",
-                            "Spirit of Ice Defeated",
-                            10
-                        );
+                        Core.HuntMonster("icedungeon", "Spirit of Ice", "Spirit of Ice Defeated", 10);
                         Core.HuntMonster("icedungeon", "Ice Crystal", "Ice Crystal Defeated", 10);
-                        Core.HuntMonster(
-                            "icedungeon",
-                            "Frigid Spirit",
-                            "Frigid Spirit Defeated",
-                            10
-                        );
+                        Core.HuntMonster("icedungeon", "Frigid Spirit", "Frigid Spirit Defeated", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -177,12 +157,7 @@ public class IceDungeonMerge
                     {
                         //Chilled to Perfection 7840
                         Core.HuntMonster("icedungeon", "Living Ice", "Living Ice Defeated", 5);
-                        Core.HuntMonster(
-                            "icedungeon",
-                            "Crystallized Elemental",
-                            "Crystallized Elemental Defeated",
-                            5
-                        );
+                        Core.HuntMonster("icedungeon", "Crystallized Elemental", "Crystallized Elemental Defeated", 5);
                         Core.HuntMonster("icedungeon", "Frozen Demon", "Frozen Demon Defeated", 5);
                         Bot.Wait.ForPickup(req.Name);
                     }

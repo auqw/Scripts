@@ -116,13 +116,7 @@ public class FiendishLoreMasterMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Room for Improvement 8475
-                        Core.KillMonster(
-                            "Tercessuinotlim",
-                            "Boss2",
-                            "Right",
-                            "Nulgath",
-                            "Archfiend Analysis"
-                        );
+                        Core.KillMonster("Tercessuinotlim", "Boss2", "Right", "Nulgath", "Archfiend Analysis");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

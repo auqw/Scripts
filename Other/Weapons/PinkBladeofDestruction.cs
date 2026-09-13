@@ -70,21 +70,9 @@ public class PinkBladeOfDestruciton
         {
             Core.EnsureAccept(7616);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "techdungeon",
-                "Kalron the Cryptborg",
-                "Immutable Dedication",
-                7,
-                log: false
-            );
+            Core.HuntMonster("techdungeon", "Kalron the Cryptborg", "Immutable Dedication", 7, log: false);
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "techdungeon",
-                "DoomBorg Guard",
-                "Paladin Armor Scraps",
-                30,
-                log: false
-            );
+            Core.HuntMonster("techdungeon", "DoomBorg Guard", "Paladin Armor Scraps", 30, log: false);
             Core.EnsureComplete(7616);
         }
 

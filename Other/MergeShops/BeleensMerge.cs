@@ -192,12 +192,7 @@ public class BeleensMerge
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
                             //Dyeing for Gemstones [Membership] 1491
-                            Core.HuntMonster(
-                                "DarkoviaForest",
-                                "Lich Of The Stone",
-                                "Garnet Gem",
-                                2
-                            );
+                            Core.HuntMonster("DarkoviaForest", "Lich Of The Stone", "Garnet Gem", 2);
                             Core.HuntMonster("Cornelis", "Gargoyle", "Spinel Gem", 6);
                         }
                         Core.CancelRegisteredQuests();
@@ -209,14 +204,7 @@ public class BeleensMerge
                         {
                             //Flowers for the Pink Gal 1489
                             Core.HuntMonster("Sandsea", "Cactus Creeper", "Fandango Flower", 5);
-                            Core.KillMonster(
-                                "wanders",
-                                "r5",
-                                "Left",
-                                "Lotus Spider",
-                                "Lotus Flower",
-                                4
-                            );
+                            Core.KillMonster("wanders", "r5", "Left", "Lotus Spider", "Lotus Flower", 4);
                         }
                         Core.CancelRegisteredQuests();
                     }
@@ -390,18 +378,9 @@ public class BeleensMerge
                         {
                             Core.EnsureAccept(2951);
                             //Legion Armored Daimyo [Member] 2951
-                            Core.HuntMonster(
-                                "Ruins",
-                                "Dark Elemental",
-                                "Souls of the Destroyed",
-                                15
-                            );
+                            Core.HuntMonster("Ruins", "Dark Elemental", "Souls of the Destroyed", 15);
                             Core.HuntMonster("bludrut4", "Shadow Serpent", "Shadow Essence", 4);
-                            Core.HuntMonster(
-                                "GreenguardWest",
-                                "Black Knight",
-                                "Black Metal Armor"
-                            );
+                            Core.HuntMonster("GreenguardWest", "Black Knight", "Black Metal Armor");
                             Core.EnsureComplete(2951, req.ID);
                         }
                     }
@@ -416,13 +395,7 @@ public class BeleensMerge
                 case "Red Rose":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "BattleWedding",
-                            "EbilCorp Ninja",
-                            "Love Token",
-                            10,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("BattleWedding", "EbilCorp Ninja", "Love Token", 10, isTemp: false);
                     Adv.BuyItem("ArtixWedding", 788, req.Name);
                     break;
 
@@ -452,12 +425,7 @@ public class BeleensMerge
                 case "Slithering Hunter's Hat + Locks":
                 case "Slayer's Wooden Pistol":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "DarkoviaForest",
-                        "Lich of the Stone",
-                        req.Name,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("DarkoviaForest", "Lich of the Stone", req.Name, isTemp: false);
                     break;
 
                 case "Slithering Hunter's Knife":
@@ -465,12 +433,7 @@ public class BeleensMerge
                     if (Core.IsMember)
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "DarkoviaForest",
-                            "Lich of the Stone",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("DarkoviaForest", "Lich of the Stone", req.Name, isTemp: false);
                     }
                     else
                         Core.Logger($"\"{req.Name}\" requires Membership to obtain");

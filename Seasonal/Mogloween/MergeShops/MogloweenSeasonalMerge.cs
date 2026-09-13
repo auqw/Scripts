@@ -128,15 +128,7 @@ public class MogloweenSeasonalMerge
                 case "Candy Corn":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "candycorn",
-                        "r2",
-                        "Right",
-                        "*",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.KillMonster("candycorn", "r2", "Right", "*", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 

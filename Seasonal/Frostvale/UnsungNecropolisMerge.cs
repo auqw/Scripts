@@ -136,14 +136,7 @@ public class UnsungNecropolisMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "unsungnecropolis",
-                        "Unsung Knight",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("unsungnecropolis", "Unsung Knight", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Unsung Warden Hair":
@@ -165,14 +158,7 @@ public class UnsungNecropolisMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "unsungnecropolis",
-                        "The Unsung",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("unsungnecropolis", "The Unsung", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Non-Melt Ice":
@@ -217,14 +203,7 @@ public class UnsungNecropolisMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "unsungnecropolis",
-                        "Dracolich Sole",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("unsungnecropolis", "Dracolich Sole", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Azureblood Battleaxe":
@@ -238,14 +217,7 @@ public class UnsungNecropolisMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "unsungnecropolis",
-                        "Dracolich Blain",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("unsungnecropolis", "Dracolich Blain", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Whistler Bullion":
@@ -272,23 +244,9 @@ public class UnsungNecropolisMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     if (Core.isSeasonalMapActive("wentira"))
-                        Core.HuntMonster(
-                            "wentira",
-                            "Pesugihan Boar",
-                            req.Name,
-                            quant,
-                            false,
-                            false
-                        );
+                        Core.HuntMonster("wentira", "Pesugihan Boar", req.Name, quant, false, false);
                     else
-                        Core.HuntMonster(
-                            "frostvalgala",
-                            "Vaughn Knight",
-                            req.Name,
-                            quant,
-                            false,
-                            false
-                        );
+                        Core.HuntMonster("frostvalgala", "Vaughn Knight", req.Name, quant, false, false);
                     break;
 
                 case "Gleaming Ore":

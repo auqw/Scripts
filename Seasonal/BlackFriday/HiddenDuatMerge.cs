@@ -100,25 +100,9 @@ public class HiddenDuatMerge
                     Core.RegisterQuests(9965);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "hiddenduat",
-                            "Anubian Overseer",
-                            "Duanmutef Glyph",
-                            6,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "hiddenduat",
-                            "Pharaoh Neith",
-                            "Neith's Uraeus",
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "hiddenduat",
-                            "Umbral Chaos",
-                            "Apophis' Violet Favor",
-                            log: false
-                        );
+                        Core.HuntMonster("hiddenduat", "Anubian Overseer", "Duanmutef Glyph", 6, log: false);
+                        Core.HuntMonster("hiddenduat", "Pharaoh Neith", "Neith's Uraeus", log: false);
+                        Core.HuntMonster("hiddenduat", "Umbral Chaos", "Apophis' Violet Favor", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

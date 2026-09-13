@@ -83,11 +83,7 @@ public class GravelynDoomFire
                 // Check for "Burning Passion Flame"
                 if (!Core.CheckInventory("Burning Passion Flame"))
                 {
-                    Core.HuntMonster(
-                        "shadowstrike",
-                        "Sepulchuroth",
-                        "Sepulchuroth's Undying Flame"
-                    );
+                    Core.HuntMonster("shadowstrike", "Sepulchuroth", "Sepulchuroth's Undying Flame");
                     Core.EnsureComplete(5459);
                     Bot.Wait.ForPickup("Burning Passion Flame");
                 }
@@ -101,15 +97,7 @@ public class GravelynDoomFire
                 }
 
                 // Kill monsters for "Empowered Essence"
-                Core.KillMonster(
-                    "shadowrealmpast",
-                    "Enter",
-                    "Spawn",
-                    "*",
-                    "Empowered Essence",
-                    13,
-                    isTemp: false
-                );
+                Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 13, isTemp: false);
 
                 // Ensure completion of the main quest
                 if (

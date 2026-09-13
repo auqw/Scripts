@@ -102,13 +102,7 @@ public class FrozenSoulMerge
                     Core.RegisterQuests(7262);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "frozensoul",
-                            "Frozen Minion",
-                            "Shard of Ice",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("frozensoul", "Frozen Minion", "Shard of Ice", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -122,12 +116,7 @@ public class FrozenSoulMerge
                     Core.RegisterQuests(7263);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "frozensoul",
-                            "Jack Frost",
-                            "Jack's Frosted Heart",
-                            log: false
-                        );
+                        Core.HuntMonster("frozensoul", "Jack Frost", "Jack's Frosted Heart", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -141,14 +130,7 @@ public class FrozenSoulMerge
                     Core.RegisterQuests(7264);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "frozensoul",
-                            "r4",
-                            "Left",
-                            "*",
-                            "Queen's Frozen Soul",
-                            log: false
-                        );
+                        Core.KillMonster("frozensoul", "r4", "Left", "*", "Queen's Frozen Soul", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -160,15 +142,7 @@ public class FrozenSoulMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "frozensoul",
-                            "r4",
-                            "Left",
-                            "*",
-                            req.Name,
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("frozensoul", "r4", "Left", "*", req.Name, isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

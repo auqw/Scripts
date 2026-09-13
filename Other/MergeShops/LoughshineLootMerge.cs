@@ -107,14 +107,7 @@ public class LoughshineLootMerge
                 case "Salvaged Skye Armament":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "castleeblana",
-                        "Skye Warrior",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("castleeblana", "Skye Warrior", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Speirling Dagger":
@@ -123,14 +116,7 @@ public class LoughshineLootMerge
                 case "Skye Executor's Cloak":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "loughshine",
-                        "Skye Executor",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("loughshine", "Skye Executor", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Solid Gold Alloy":
@@ -139,20 +125,8 @@ public class LoughshineLootMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "loughshine",
-                            "Scorched Elder Yew",
-                            "Yew Root",
-                            100,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "loughshine",
-                            "Energy Elemental",
-                            "Ion Particles",
-                            60,
-                            log: false
-                        );
+                        Core.HuntMonster("loughshine", "Scorched Elder Yew", "Yew Root", 100, log: false);
+                        Core.HuntMonster("loughshine", "Energy Elemental", "Ion Particles", 60, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("loughshine", "Warden Iseul", "Gold Pendant", log: false);
                         Bot.Wait.ForPickup(req.Name);

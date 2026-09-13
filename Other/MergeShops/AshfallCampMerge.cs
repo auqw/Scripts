@@ -111,13 +111,7 @@ public class AshfallCampMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //QuarterMaster’s Supplies 5898
-                        Core.HuntMonster(
-                            "ashfallcamp",
-                            "Lava Dragoblin",
-                            "Supply Chest",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("ashfallcamp", "Lava Dragoblin", "Supply Chest", 8, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -130,12 +124,7 @@ public class AshfallCampMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(40375, quant))
                     {
                         //Blackrawk Magebane 5893
-                        Core.HuntMonster(
-                            "ashfallcamp",
-                            "Blackrawk",
-                            "Blackrawk Defeated",
-                            log: false
-                        );
+                        Core.HuntMonster("ashfallcamp", "Blackrawk", "Blackrawk Defeated", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -158,13 +147,7 @@ public class AshfallCampMerge
                     Core.RegisterQuests(5899);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "ashfallcamp",
-                            "Sulphur Dracolich",
-                            "Sulphur Crystal",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("ashfallcamp", "Sulphur Dracolich", "Sulphur Crystal", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -178,20 +161,8 @@ public class AshfallCampMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
                         Core.EnsureAccept(5900);
-                        Core.HuntMonster(
-                            "ashfallcamp",
-                            "Draconian Guard",
-                            "Iron Lump",
-                            5,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "ashfallcamp",
-                            "Draconian Guard",
-                            "Bile Drops",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("ashfallcamp", "Draconian Guard", "Iron Lump", 5, log: false);
+                        Core.HuntMonster("ashfallcamp", "Draconian Guard", "Bile Drops", 3, log: false);
                         Core.EnsureComplete(5900, req.ID);
                         Core.Logger($"Quest completed x{i++} times: [5900] \"Ingots and Outguts\"");
                         Bot.Wait.ForPickup(req.Name);

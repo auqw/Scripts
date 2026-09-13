@@ -138,13 +138,7 @@ public class TrygveMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "trygve",
-                            "Vindicator Recruit",
-                            req.Name,
-                            quant,
-                            isTemp: req.Temp
-                        );
+                        Core.HuntMonster("trygve", "Vindicator Recruit", req.Name, quant, isTemp: req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -156,13 +150,7 @@ public class TrygveMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "trygve",
-                            "Vindicator Soldier",
-                            req.Name,
-                            quant,
-                            isTemp: req.Temp
-                        );
+                        Core.HuntMonster("trygve", "Vindicator Soldier", req.Name, quant, isTemp: req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

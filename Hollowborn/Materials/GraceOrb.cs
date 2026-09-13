@@ -43,13 +43,7 @@ public class GraceOrb
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Grace Orb", orbQuant))
         {
-            Core.HuntMonster(
-                "neofortress",
-                "Vindicator Recruit",
-                "Grace Extracted",
-                20,
-                log: false
-            );
+            Core.HuntMonster("neofortress", "Vindicator Recruit", "Grace Extracted", 20, log: false);
             Bot.Wait.ForPickup("Grace Orb");
         }
 

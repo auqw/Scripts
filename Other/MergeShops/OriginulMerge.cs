@@ -104,14 +104,7 @@ public class OriginulMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "originul",
-                            "r5",
-                            "Right",
-                            "*",
-                            "Essence of The Citadel",
-                            30
-                        );
+                        Core.KillMonster("originul", "r5", "Right", "*", "Essence of The Citadel", 30);
 
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("originul", "Fiend Champion", "Champion's Essence");

@@ -106,14 +106,7 @@ public class DawnFortressMerge
                     Core.RegisterQuests(9291);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "neofortress",
-                            "Vindicator Recruit",
-                            "Grace Extracted",
-                            20,
-                            false,
-                            false
-                        );
+                        Core.HuntMonster("neofortress", "Vindicator Recruit", "Grace Extracted", 20, false, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -136,37 +129,19 @@ public class DawnFortressMerge
                     break;
 
                 case "Vindicator Soldier's Hair":
-                    Core.HuntMonster(
-                        "neofortress",
-                        "Vindicator Soldier",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.HuntMonster("neofortress", "Vindicator Soldier", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Vindicator Scout's Bow":
-                    Core.HuntMonster(
-                        "neofortress",
-                        "Vindicator Recruit",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.HuntMonster("neofortress", "Vindicator Recruit", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Blessed Sigil of Vindication":
                 case "Hammer of Vindication":
                 case "Hammers of Vindication":
-                    Core.HuntMonster(
-                        "neofortress",
-                        "Vindicator General",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -176,24 +151,8 @@ public class DawnFortressMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
-                        Core.KillMonster(
-                            "shadowrealm",
-                            "r2",
-                            "Left",
-                            "Gargrowl",
-                            "Darkseed",
-                            8,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "shadowrealm",
-                            "r2",
-                            "Left",
-                            "Shadow Guardian",
-                            "Shadow Medallion",
-                            5,
-                            log: false
-                        );
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
                         Core.EnsureComplete(7553);
                         Core.EnsureComplete(7555);
                     }
@@ -206,25 +165,13 @@ public class DawnFortressMerge
                     break;
 
                 case "Gilded Scout's Quiver":
-                    Core.HuntMonster(
-                        "neofortress",
-                        "Vindicator Recruit",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.HuntMonster("neofortress", "Vindicator Recruit", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Blessed Rune of Vindication":
                 case "Battlegear of Vindication":
-                    Core.HuntMonster(
-                        "neofortress",
-                        "Vindicator General",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

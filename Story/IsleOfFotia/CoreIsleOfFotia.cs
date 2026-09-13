@@ -65,15 +65,7 @@ public class CoreIsleOfFotia
         if (!Story.QuestProgression(2948))
         {
             Core.EnsureAccept(2948);
-            Core.KillMonster(
-                "evilwarnul",
-                "r2",
-                "Down",
-                "*",
-                "Archfiend's Favor",
-                50,
-                isTemp: false
-            );
+            Core.KillMonster("evilwarnul", "r2", "Down", "*", "Archfiend's Favor", 50, isTemp: false);
             Core.EnsureComplete(2948);
         }
 
@@ -307,13 +299,7 @@ public class CoreIsleOfFotia
 
         Core.AddDrop("Compass Stone");
         Core.EnsureAccept(4251);
-        Core.KillMonster(
-            "DageFortress",
-            "r2",
-            "Bottom",
-            "Scorned Knight",
-            "Compass Stone Piece Found"
-        );
+        Core.KillMonster("DageFortress", "r2", "Bottom", "Scorned Knight", "Compass Stone Piece Found");
         Core.GetMapItem(3405, 4, "DageFortress");
         Core.EnsureComplete(4251);
     }

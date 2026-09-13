@@ -60,14 +60,7 @@ public class AvastBadge
             Core.EnsureAccept(2389);
             if (!Core.CheckInventory(27)) //Barbed Horror
                 Core.BuyItem("digitalyulgar", 16, "Barbed Horror");
-            Core.KillMonster(
-                "watchtower",
-                "Frame6",
-                "Left",
-                "Chaos Sp-Eye",
-                "Chaos Sp-eye Eyeball",
-                5
-            );
+            Core.KillMonster("watchtower", "Frame6", "Left", "Chaos Sp-Eye", "Chaos Sp-eye Eyeball", 5);
             Core.KillMonster("willowcreek", "Storage", "Left", "Speyeder", "Speyeder Eyeball", 5);
             Core.EnsureComplete(2389);
         }
@@ -139,12 +132,7 @@ public class AvastBadge
             Core.EnsureAccept(2393);
             Core.HuntMonster("natatorium", "Anglerfish", "Natatorium Kelp Bread", 2);
             Core.HuntMonster("cloister", "Acornent", "Acornet Butter", 6);
-            Core.HuntMonster(
-                "battleunderc",
-                "Purple Crystalized Jellyfish",
-                "Crystalized Jelly-fish",
-                6
-            );
+            Core.HuntMonster("battleunderc", "Purple Crystalized Jellyfish", "Crystalized Jelly-fish", 6);
             Core.EnsureComplete(2393);
         }
 
@@ -176,15 +164,7 @@ public class AvastBadge
 
             Core.Logger("Pre-Fishing XP(This is Required)");
             Core.EnsureAccept(1682);
-            Core.KillMonster(
-                "greenguardwest",
-                "West4",
-                "Right",
-                "Slime",
-                "Faith's Fi'shtick",
-                1,
-                log: false
-            );
+            Core.KillMonster("greenguardwest", "West4", "Right", "Slime", "Faith's Fi'shtick", 1, log: false);
             Core.EnsureComplete(1682);
 
             Core.RegisterQuests(1682);
@@ -194,16 +174,7 @@ public class AvastBadge
                 && FishingBaitQuant != 0
                 && !Core.CheckInventory("Fishing Bait", FishingBaitQuant)
             )
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West3",
-                    "Right",
-                    "Frogzard",
-                    "Fishing Bait",
-                    FishingBaitQuant,
-                    isTemp: false,
-                    log: false
-                );
+                Core.KillMonster("greenguardwest", "West3", "Right", "Frogzard", "Fishing Bait", FishingBaitQuant, isTemp: false, log: false);
 
             Core.FarmingLogger("Fishing Dynamite", FishingDynamiteQuant);
             while (
@@ -211,15 +182,7 @@ public class AvastBadge
                 && FishingDynamiteQuant != 0
                 && !Core.CheckInventory("Fishing Dynamite", FishingDynamiteQuant)
             )
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West4",
-                    "Right",
-                    "Slime",
-                    "Faith's Fi'shtick",
-                    1,
-                    log: false
-                );
+                Core.KillMonster("greenguardwest", "West4", "Right", "Slime", "Faith's Fi'shtick", 1, log: false);
 
             Core.CancelRegisteredQuests();
             Core.Logger("Returing to Fishing Map");

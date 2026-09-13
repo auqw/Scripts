@@ -89,16 +89,7 @@ public class LavarockMerge
                 case "Volcanic Fragment":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "lavarockbay",
-                        "r2",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("lavarockbay", "r2", "Left", "*", req.Name, quant, false, false);
                     break;
             }
         }

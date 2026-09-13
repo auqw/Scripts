@@ -122,71 +122,21 @@ public class KingsEcho
 
                         Core.EnsureAccept(10440);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "queenbattle",
-                            "Queen of Monsters",
-                            "Calcified Tear",
-                            60,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "dreadhaven",
-                            "Slugwrath",
-                            "Whispers of Chaos",
-                            40,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "ultradrakath",
-                            "Champion of Chaos",
-                            "Trace of Chaos",
-                            13,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("queenbattle", "Queen of Monsters", "Calcified Tear", 60, isTemp: false);
+                        Core.HuntMonster("dreadhaven", "Slugwrath", "Whispers of Chaos", 40, isTemp: false);
+                        Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false);
                         Core.EnsureComplete(10440);
                         break;
 
                     case "Royal Dragon Sword": // 10442 | The Path of the King
                         Core.EnsureAccept(10442);
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "chaoswar",
-                            "r9",
-                            "Left",
-                            "*",
-                            "Endured Against Chaos",
-                            113,
-                            isTemp: false
-                        );
+                        Core.KillMonster("chaoswar", "r9", "Left", "*", "Endured Against Chaos", 113, isTemp: false);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "falcontower",
-                            "Sepulchure",
-                            "Endured Against a Fallen Friend",
-                            100,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "naoisegrave",
-                            "Volgritian",
-                            "Endured Against the Great Dragon",
-                            70,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            Core.IsMember ? "shattersword" : "infernalarena",
-                            Core.IsMember ? "Graveclaw the Defiler" : "Destructive Defiler",
-                            "Endured Against the Defiler",
-                            100,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "ebondungeon",
-                            "Dethrix",
-                            "Endured Against the Monster King",
-                            90,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("falcontower", "Sepulchure", "Endured Against a Fallen Friend", 100, isTemp: false);
+                        Core.HuntMonster("naoisegrave", "Volgritian", "Endured Against the Great Dragon", 70, isTemp: false);
+                        Core.HuntMonster(Core.IsMember ? "shattersword" : "infernalarena", Core.IsMember ? "Graveclaw the Defiler" : "Destructive Defiler", "Endured Against the Defiler", 100, isTemp: false);
+                        Core.HuntMonster("ebondungeon", "Dethrix", "Endured Against the Monster King", 90, isTemp: false);
                         Core.EnsureComplete(10442);
                         break;
 
@@ -194,43 +144,11 @@ public class KingsEcho
                         Core.EnsureAccept(10441);
                         Farm.Voucher("Gold Voucher 500k", 100);
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "thelimacity",
-                            "r5",
-                            "Center",
-                            "*",
-                            "Dwarven Gold",
-                            30,
-                            isTemp: false
-                        );
-                        Core.KillMonster(
-                            "liatarahill",
-                            "r9",
-                            "Left",
-                            "*",
-                            "Skye Gold",
-                            50,
-                            isTemp: false
-                        );
-                        Core.KillMonster(
-                            "atlaskingdom",
-                            "r2",
-                            "Left",
-                            "*",
-                            "Atlas Gold",
-                            75,
-                            isTemp: false
-                        ); // Temporary solution, needs to be replaced by a farmable alternative rather than a boss.
+                        Core.KillMonster("thelimacity", "r5", "Center", "*", "Dwarven Gold", 30, isTemp: false);
+                        Core.KillMonster("liatarahill", "r9", "Left", "*", "Skye Gold", 50, isTemp: false);
+                        Core.KillMonster("atlaskingdom", "r2", "Left", "*", "Atlas Gold", 75, isTemp: false); // Temporary solution, needs to be replaced by a farmable alternative rather than a boss.
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "camlan",
-                            "r9",
-                            "Left",
-                            "*",
-                            "Camlan Gold",
-                            120,
-                            isTemp: false
-                        );
+                        Core.KillMonster("camlan", "r9", "Left", "*", "Camlan Gold", 120, isTemp: false);
                         Core.EnsureComplete(10441);
                         break;
 

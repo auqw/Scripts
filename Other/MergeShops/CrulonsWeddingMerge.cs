@@ -133,12 +133,7 @@ public class CrulonsWeddingMerge
                     Core.RegisterQuests(9849);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "towerofmirrors",
-                            UseableMonsters[2],
-                            "Silver Tincture",
-                            10
-                        );
+                        Core.HuntMonster("towerofmirrors", UseableMonsters[2], "Silver Tincture", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

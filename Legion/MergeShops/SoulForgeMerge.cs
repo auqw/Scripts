@@ -144,13 +144,7 @@ public class SoulForgeMerge
                     Core.RegisterQuests(2743);
                     while (!Core.CheckInventory(req.Name, req.Quantity))
                     {
-                        Core.HuntMonster(
-                            "ShadowFallInvasion",
-                            "Bone Creeper",
-                            "Shards of a Soul",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("ShadowFallInvasion", "Bone Creeper", "Shards of a Soul", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

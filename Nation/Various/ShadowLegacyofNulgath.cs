@@ -44,15 +44,7 @@ public class ShadowLegacyofNulgath
         Nation.ApprovalAndFavor(100, 0);
         Nation.Supplies("Voucher of Nulgath (non-mem)");
         Nation.EssenceofNulgath(100);
-        Core.KillMonster(
-            "tercessuinotlim",
-            "m4",
-            "Right",
-            "Shadow of Nulgath",
-            "Hadean Onyx of Nulgath",
-            1,
-            false
-        );
+        Core.KillMonster("tercessuinotlim", "m4", "Right", "Shadow of Nulgath", "Hadean Onyx of Nulgath", 1, false);
         Core.HuntMonster("Citadel", "Burning Witch", "Letter from Asuka and Tendou", isTemp: false);
         Farm.Gold(3000000);
         Core.BuyItem("archportal", 1211, "Shadow Legacy of Nulgath");

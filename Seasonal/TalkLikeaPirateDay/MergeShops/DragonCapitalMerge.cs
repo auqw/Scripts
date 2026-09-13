@@ -123,12 +123,7 @@ public class DragonCapitalMerge
                     Core.RegisterQuests(8288);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dragoncapital",
-                            "Titan Leech",
-                            "Titan Leftovers Defeated",
-                            6
-                        );
+                        Core.HuntMonster("dragoncapital", "Titan Leech", "Titan Leftovers Defeated", 6);
                     }
                     Core.CancelRegisteredQuests();
                     break;
@@ -149,12 +144,7 @@ public class DragonCapitalMerge
                 case "Regal Pirate's Wheel":
                 case "Regal Pirate's Cape + Wheel":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "dragoncapital",
-                        "Empowered Scalebeard",
-                        req.Name,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("dragoncapital", "Empowered Scalebeard", req.Name, isTemp: false);
                     break;
             }
         }

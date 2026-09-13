@@ -97,14 +97,7 @@ public class AutumnMerge
                 case "Gold Flake":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "blightharvest",
-                        "Tantalocust",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("blightharvest", "Tantalocust", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Gnarled Wood":

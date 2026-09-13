@@ -99,14 +99,7 @@ public class GravelynsGiftMerge
                     Core.RegisterQuests(6948);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "nursery",
-                            "Flesh Golem",
-                            "Treasure Found",
-                            10,
-                            true,
-                            false
-                        );
+                        Core.HuntMonster("nursery", "Flesh Golem", "Treasure Found", 10, true, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -104,12 +104,7 @@ public class MawOfTheVoid
                 {
                     // Burglinster's Revenge 7522
                     Core.EnsureAccept(7522);
-                    Core.HuntMonster(
-                        "borgars",
-                        "Burglinster",
-                        "Burglinster Cured",
-                        log: !LoggedBefore
-                    );
+                    Core.HuntMonster("borgars", "Burglinster", "Burglinster Cured", log: !LoggedBefore);
                     Core.EnsureComplete(7522);
                     Bot.Wait.ForPickup("Burger Buns");
                     LoggedBefore = true;

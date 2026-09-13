@@ -67,15 +67,7 @@ public class LoreBowl
         {
             Core.FarmingLogger(item, 1);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, toInv: false))
-                Core.KillMonster(
-                    "punt",
-                    "Enter",
-                    "Spawn",
-                    "Undead Defender",
-                    item,
-                    isTemp: false,
-                    log: false
-                );
+                Core.KillMonster("punt", "Enter", "Spawn", "Undead Defender", item, isTemp: false, log: false);
             Core.ToBank(LoreBowlItems);
         }
     }

@@ -45,13 +45,7 @@ public class SecurityPlushiesQuestRewards
             Core.RegisterQuests(QuestID);
             Core.FarmingLogger(Reward.Name, 1);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
-                Core.HuntMonster(
-                    "midnightzone",
-                    "Vowed ShadowSlayer",
-                    "Nightmare-Resistant Thread",
-                    10,
-                    log: false
-                );
+                Core.HuntMonster("midnightzone", "Vowed ShadowSlayer", "Nightmare-Resistant Thread", 10, log: false);
             Core.CancelRegisteredQuests();
 
             Core.JumpWait();

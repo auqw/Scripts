@@ -411,14 +411,7 @@ public class CoreSoW
         if (!Story.QuestProgression(6998))
         {
             Core.EnsureAccept(6998);
-            Core.KillMonster(
-                "shadowgrove",
-                "r9",
-                "Left",
-                "Mutant Shadow Dragon",
-                "Mutant Dragon Oil",
-                3
-            );
+            Core.KillMonster("shadowgrove", "r9", "Left", "Mutant Shadow Dragon", "Mutant Dragon Oil", 3);
             Core.EnsureComplete(6998);
         }
 
@@ -772,22 +765,8 @@ public class CoreSoW
             Core.Join("shadowfireplane", "r6", "Left"); // for incase u start here
             Core.EnsureAccept(8140);
             Core.GetMapItem(8543);
-            Core.KillMonster(
-                "shadowfireplane",
-                "r6",
-                "Left",
-                "Shadow Wing",
-                "Shadow Flamewing Defeated",
-                2
-            );
-            Core.KillMonster(
-                "shadowfireplane",
-                "r6",
-                "Left",
-                "Shadowfire Summoner",
-                "Shadowfire Summoner Defeated",
-                1
-            );
+            Core.KillMonster("shadowfireplane", "r6", "Left", "Shadow Wing", "Shadow Flamewing Defeated", 2);
+            Core.KillMonster("shadowfireplane", "r6", "Left", "Shadowfire Summoner", "Shadowfire Summoner Defeated", 1);
             Core.EnsureComplete(8140);
         }
 
@@ -831,14 +810,7 @@ public class CoreSoW
         if (!Story.QuestProgression(8185))
         {
             Core.EnsureAccept(8185);
-            Core.KillMonster(
-                "fireinvasion",
-                "r8",
-                "Top",
-                "Shadefire Elemental",
-                "Elemental Slain",
-                7
-            );
+            Core.KillMonster("fireinvasion", "r8", "Top", "Shadefire Elemental", "Elemental Slain", 7);
             Core.KillMonster("fireinvasion", "r7", "Top", "Shadowfire Tiger", "Tiger Slain", 7);
             Core.EnsureComplete(8185);
         }
@@ -938,14 +910,7 @@ public class CoreSoW
         if (!Story.QuestProgression(8242))
         {
             Core.EnsureAccept(8242);
-            Core.KillMonster(
-                "fireavatar",
-                "r7",
-                "Left",
-                "Living Shadowflame",
-                "Power Restored",
-                10
-            );
+            Core.KillMonster("fireavatar", "r7", "Left", "Living Shadowflame", "Power Restored", 10);
             Core.EnsureComplete(8242);
         }
 

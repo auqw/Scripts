@@ -173,14 +173,7 @@ public class CoreHollowbornPaladin
             Core.BuyItem("darkthronehub", 1308, "Exalted Paladin Seal");
         }
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "timevoid",
-            "Unending Avatar",
-            "Condensed Mana",
-            1,
-            false,
-            publicRoom: true
-        );
+        Core.HuntMonster("timevoid", "Unending Avatar", "Condensed Mana", 1, false, publicRoom: true);
         HB.HumanSoul(200);
         Core.EnsureComplete(7557);
     }

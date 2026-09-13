@@ -135,14 +135,7 @@ public class SeraphicWarChestMerge
                 case "Seraphic Paladin Wings":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "seraphicwardage",
-                        "Supercharged Laken",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("seraphicwardage", "Supercharged Laken", req.Name, quant, false, false);
                     break;
             }
         }

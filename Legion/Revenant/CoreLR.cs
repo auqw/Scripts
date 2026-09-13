@@ -162,28 +162,11 @@ public class CoreLR
             Core.EnsureAccept(6897);
 
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster(
-                "judgement",
-                "r10a",
-                "Left",
-                "Ultra Aeacus",
-                "Aeacus Empowered",
-                50,
-                false,
-                publicRoom: Core.PublicDifficult
-            );
+            Core.KillMonster("judgement", "r10a", "Left", "Ultra Aeacus", "Aeacus Empowered", 50, false, publicRoom: Core.PublicDifficult);
 
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("revenant", "r2", "Left", "*", "Tethered Soul", 300, false);
-            Core.KillMonster(
-                "shadowrealmpast",
-                "Enter",
-                "Spawn",
-                "*",
-                "Darkened Essence",
-                500,
-                false
-            );
+            Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Darkened Essence", 500, false);
             Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Contract", 1000, false);
 
             Core.EnsureComplete(6897);
@@ -227,66 +210,18 @@ public class CoreLR
         )
         {
             Core.EnsureAccept(6898);
-            Core.KillMonster(
-                "mummies",
-                "Enter",
-                "Spawn",
-                "*",
-                "Ancient Cohort Conquered",
-                400,
-                false
-            );
+            Core.KillMonster("mummies", "Enter", "Spawn", "*", "Ancient Cohort Conquered", 400, false);
             Core.KillMonster("doomvault", "r1", "Right", "*", "Grim Cohort Conquered", 400, false);
 
             Core.KillMonster("wrath", "r5", "Left", "*", "Pirate Cohort Conquered", 400, false);
             Core.KillMonster("doomwar", "r6", "Left", "*", "Battleon Cohort Conquered", 400, false);
-            Core.KillMonster(
-                "overworld",
-                "Enter",
-                "Spawn",
-                "*",
-                "Mirror Cohort Conquered",
-                400,
-                false
-            );
-            Core.KillMonster(
-                "deathpits",
-                "r1",
-                "Left",
-                "*",
-                "Darkblood Cohort Conquered",
-                400,
-                false
-            );
+            Core.KillMonster("overworld", "Enter", "Spawn", "*", "Mirror Cohort Conquered", 400, false);
+            Core.KillMonster("deathpits", "r1", "Left", "*", "Darkblood Cohort Conquered", 400, false);
             Core.KillMonster("maxius", "r2", "Left", "*", "Vampire Cohort Conquered", 400, false);
-            Core.KillMonster(
-                "curseshore",
-                "Enter",
-                "Spawn",
-                "*",
-                "Spirit Cohort Conquered",
-                400,
-                false
-            );
+            Core.KillMonster("curseshore", "Enter", "Spawn", "*", "Spirit Cohort Conquered", 400, false);
 
-            Core.KillMonster(
-                "dragonbone",
-                "Enter",
-                "Spawn",
-                "*",
-                "Dragon Cohort Conquered",
-                400,
-                false
-            );
-            Core.KillMonster(
-                "doomwood",
-                "r6",
-                "Right",
-                "*",
-                "Doomwood Cohort Conquered",
-                400,
-                false
-            );
+            Core.KillMonster("dragonbone", "Enter", "Spawn", "*", "Dragon Cohort Conquered", 400, false);
+            Core.KillMonster("doomwood", "r6", "Right", "*", "Doomwood Cohort Conquered", 400, false);
 
             Core.EnsureComplete(6898);
             Bot.Wait.ForPickup("Conquest Wreath");

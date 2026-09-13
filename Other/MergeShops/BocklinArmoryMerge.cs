@@ -156,14 +156,7 @@ public class BocklinArmoryMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "bocklincastle",
-                        "Garde Wraith",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("bocklincastle", "Garde Wraith", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Chiral Valley Knight":
@@ -183,14 +176,7 @@ public class BocklinArmoryMerge
                 case "Gem of Anjou":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "bocklingrove",
-                        "Elder Necromancer",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("bocklingrove", "Elder Necromancer", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Forbidden EarthVessel Harpoon":
@@ -205,14 +191,7 @@ public class BocklinArmoryMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "bocklincastle",
-                        "Headless Knight",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("bocklincastle", "Headless Knight", req.Name, quant, req.Temp, false);
                     break;
             }
         }

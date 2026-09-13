@@ -279,13 +279,7 @@ public class CoreLegion
         if (!Bot.Quests.IsDailyComplete(3394))
         {
             Core.EnsureAccept(3394);
-            Core.HuntMonster(
-                "chaosboss",
-                "Ultra Chaos Warlord",
-                "Chaorrupted Dark Fire",
-                20,
-                isTemp: false
-            );
+            Core.HuntMonster("chaosboss", "Ultra Chaos Warlord", "Chaorrupted Dark Fire", 20, isTemp: false);
             Core.EnsureComplete(3394);
         }
 
@@ -407,15 +401,7 @@ public class CoreLegion
         Core.AddDrop("Legion Token", "Legion Token Pile");
         Core.RegisterQuests(4704, 4703);
         Core.ConfigureAggro();
-        Core.KillMonster(
-            "brightfortress",
-            "r3",
-            "Right",
-            "*",
-            "Legion Token",
-            quant,
-            isTemp: false
-        );
+        Core.KillMonster("brightfortress", "r3", "Right", "*", "Legion Token", quant, isTemp: false);
         Core.ConfigureAggro(false);
         Core.CancelRegisteredQuests();
     }
@@ -590,23 +576,8 @@ public class CoreLegion
         Core.RegisterQuests(6822, 6742, 6743);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
-            Core.KillMonster(
-                "legionarena",
-                "r2",
-                "Left",
-                "*",
-                "Challenger Slain",
-                12,
-                publicRoom: Core.PrivateRooms
-            );
-            Core.KillMonster(
-                "legionarena",
-                "Boss",
-                "Left",
-                "Legion Fiend Rider",
-                "Legion Fiend Rider Slain",
-                publicRoom: Core.PrivateRooms
-            );
+            Core.KillMonster("legionarena", "r2", "Left", "*", "Challenger Slain", 12, publicRoom: Core.PrivateRooms);
+            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider", "Legion Fiend Rider Slain", publicRoom: Core.PrivateRooms);
         }
         Core.CancelRegisteredQuests();
     }
@@ -633,34 +604,10 @@ public class CoreLegion
         Core.RegisterQuests(4896);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
-            Core.HuntMonster(
-                "dragonheart",
-                "Granite Dracolich",
-                "Granite Dracolich Soul",
-                4,
-                isTemp: false
-            );
-            Core.HuntMonster(
-                "dragonheart",
-                "Tempest Dracolich",
-                "Tempest Dracolich Soul",
-                4,
-                isTemp: false
-            );
-            Core.HuntMonster(
-                "dragonheart",
-                "Inferno Dracolich",
-                "Inferno Dracolich Soul",
-                4,
-                isTemp: false
-            );
-            Core.HuntMonster(
-                "dragonheart",
-                "Deluge Dracolich",
-                "Deluge Dracolich Soul",
-                4,
-                isTemp: false
-            );
+            Core.HuntMonster("dragonheart", "Granite Dracolich", "Granite Dracolich Soul", 4, isTemp: false);
+            Core.HuntMonster("dragonheart", "Tempest Dracolich", "Tempest Dracolich Soul", 4, isTemp: false);
+            Core.HuntMonster("dragonheart", "Inferno Dracolich", "Inferno Dracolich Soul", 4, isTemp: false);
+            Core.HuntMonster("dragonheart", "Deluge Dracolich", "Deluge Dracolich Soul", 4, isTemp: false);
         }
         Core.CancelRegisteredQuests();
     }
@@ -800,13 +747,7 @@ public class CoreLegion
         if (!Story.QuestProgression(791))
         {
             Core.EnsureAccept(791);
-            Core.HuntMonster(
-                "battleunderb",
-                "Undead Champion",
-                "Ravaged Champion Soul",
-                80,
-                isTemp: false
-            );
+            Core.HuntMonster("battleunderb", "Undead Champion", "Ravaged Champion Soul", 80, isTemp: false);
             Core.EnsureComplete(791);
         }
 
@@ -843,16 +784,7 @@ public class CoreLegion
             Bot.Quests.UpdateQuest(1542);
 
         Core.RegisterQuests(2742);
-        Core.KillMonster(
-            Core.IsMember ? "hydra" : "firestorm",
-            Core.IsMember ? "Rune2" : "r8",
-            Core.IsMember ? "Right" : "Left",
-            Core.IsMember ? "Fire Imp" : "Firestorm Hatchling",
-            "Obsidian Rock",
-            quant,
-            log: false,
-            isTemp: false
-        );
+        Core.KillMonster(Core.IsMember ? "hydra" : "firestorm", Core.IsMember ? "Rune2" : "r8", Core.IsMember ? "Right" : "Left", Core.IsMember ? "Fire Imp" : "Firestorm Hatchling", "Obsidian Rock", quant, log: false, isTemp: false);
 
         Bot.Wait.ForPickup("Obsidian Rock");
         Core.CancelRegisteredQuests();

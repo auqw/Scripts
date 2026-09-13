@@ -70,13 +70,7 @@ public class EternalDragonDrops
         if (!Bot.Config!.Get<bool>("CanSolo"))
             while (!Bot.ShouldExit && !Core.CheckInventory(NonMemDrops))
                 foreach (string item in NonMemDrops)
-                    Core.HuntMonster(
-                        "deadlines",
-                        "Eternal Dragon",
-                        item,
-                        isTemp: false,
-                        publicRoom: true
-                    );
+                    Core.HuntMonster("deadlines", "Eternal Dragon", item, isTemp: false, publicRoom: true);
         else
             while (!Bot.ShouldExit && !Core.CheckInventory(NonMemDrops))
                 foreach (string item in NonMemDrops)

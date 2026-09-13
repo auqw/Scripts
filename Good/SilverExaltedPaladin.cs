@@ -46,27 +46,9 @@ public class SEP
                 Core.KillMonster("dragonheart", "r5", "Left", "*", "Ancient Paladin Chest 2");
                 Core.KillMonster("dragonheart", "r7", "Left", "*", "Ancient Paladin Chest 3");
                 Core.KillMonster("dragonheart", "r9", "Left", "*", "Ancient Paladin Chest 4");
-                Core.KillMonster(
-                    "dragonheart",
-                    "r10",
-                    "Left",
-                    "Tempest Dracolich",
-                    "Ancient Paladin Chest 5"
-                );
-                Core.KillMonster(
-                    "dragonheart",
-                    "r11",
-                    "Left",
-                    "Granite Dracolich",
-                    "Ancient Paladin Chest 6"
-                );
-                Core.KillMonster(
-                    "dragonheart",
-                    "r12",
-                    "Left",
-                    "Avatar of Desolich",
-                    "Ancient Paladin Chest 7"
-                );
+                Core.KillMonster("dragonheart", "r10", "Left", "Tempest Dracolich", "Ancient Paladin Chest 5");
+                Core.KillMonster("dragonheart", "r11", "Left", "Granite Dracolich", "Ancient Paladin Chest 6");
+                Core.KillMonster("dragonheart", "r12", "Left", "Avatar of Desolich", "Ancient Paladin Chest 7");
                 Core.EnsureComplete(7580);
             }
 

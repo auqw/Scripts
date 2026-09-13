@@ -155,16 +155,7 @@ public class LuckyDayShamrockFairMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(1758);
-                    Core.KillMonster(
-                        "rainbow",
-                        "Well",
-                        "Left",
-                        "Rainbow Rat",
-                        req.Name,
-                        quant,
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.KillMonster("rainbow", "Well", "Left", "Rainbow Rat", req.Name, quant, isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;

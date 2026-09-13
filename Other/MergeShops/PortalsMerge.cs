@@ -130,14 +130,7 @@ public class PortalsMerge
                     Core.FarmingLogger("Golden Shadow Breaker", quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(857);
-                    Core.HuntMonster(
-                        "citadel",
-                        "Grand Inquisitor",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("citadel", "Grand Inquisitor", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Banana":
@@ -201,14 +194,7 @@ public class PortalsMerge
                     Core.FarmingLogger("Chaos King Crown", quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(20671);
-                    Core.HuntMonster(
-                        "swordhavenfalls",
-                        "Chaos Lord Alteon",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Tainted Soul":
@@ -252,27 +238,14 @@ public class PortalsMerge
                     break;
 
                 case "Hydra Scale Piece":
-                    Core.HuntMonster(
-                        "hydrachallenge",
-                        "Hydra Head 25",
-                        req.Name,
-                        quant,
-                        isTemp: false,
-                        true
-                    );
+                    Core.HuntMonster("hydrachallenge", "Hydra Head 25", req.Name, quant, isTemp: false, true);
 
                     break;
 
                 case "Mana Golem's Core":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "elemental",
-                        "Mana Golem",
-                        "Mana Golem's Core",
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("elemental", "Mana Golem", "Mana Golem's Core", isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -280,20 +253,8 @@ public class PortalsMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "CelestialPast",
-                            "Blessed Bear",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "CelestialPast",
-                            "Blessed Deer",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("CelestialPast", "Blessed Bear", req.Name, quant, isTemp: false);
+                        Core.HuntMonster("CelestialPast", "Blessed Deer", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

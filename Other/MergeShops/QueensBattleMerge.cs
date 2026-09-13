@@ -124,12 +124,7 @@ public class QueensBattleMerge
                     Core.RegisterQuests(8362);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "queenbattle",
-                            "Proto Chaos Champion",
-                            "Proto Chaos Champion Redefeated",
-                            log: false
-                        );
+                        Core.HuntMonster("queenbattle", "Proto Chaos Champion", "Proto Chaos Champion Redefeated", log: false);
                         Core.HuntMonster("queenbattle", "Queen of Monsters", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -157,14 +152,7 @@ public class QueensBattleMerge
                 case "7th Hero of Balance Morph":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "queenbattle",
-                        "Queen of Monsters",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("queenbattle", "Queen of Monsters", req.Name, quant, false, false);
                     break;
             }
         }

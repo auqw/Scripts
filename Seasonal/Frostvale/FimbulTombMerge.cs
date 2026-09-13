@@ -101,21 +101,10 @@ public class FimbulTombMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "glacetomb",
-                            "Kriomein",
-                            "Valedictorian Speech",
-                            log: false
-                        );
+                        Core.HuntMonster("glacetomb", "Kriomein", "Valedictorian Speech", log: false);
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("glacetomb", "Draugr", "Frozen Marrow", 8, log: false);
-                        Core.HuntMonster(
-                            "glacetomb",
-                            "Snow Fairy",
-                            "Crystalline Wings",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("glacetomb", "Snow Fairy", "Crystalline Wings", 8, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -127,12 +116,7 @@ public class FimbulTombMerge
                     Core.RegisterQuests(9519);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "fimbultomb",
-                            "Fimbulventr Witch",
-                            "Ice Crown",
-                            log: false
-                        );
+                        Core.HuntMonster("fimbultomb", "Fimbulventr Witch", "Ice Crown", log: false);
                         Core.HuntMonster("fimbultomb", "Daselm", "Daselm's Thesis", log: false);
                         Core.HuntMonster("fimbultomb", "Peter", "Peter's Recc Letter", log: false);
                         Bot.Wait.ForPickup(req.Name);

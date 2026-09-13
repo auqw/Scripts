@@ -126,17 +126,8 @@ public class BlazeBeardMerge
                         else
                         {
                             //Pirate Caster Hunting 4530
-                            Core.HuntMonster(
-                                "ManaCannon",
-                                "Pirate Caster",
-                                "Pirate Caster Beaten",
-                                10
-                            );
-                            Core.HuntMonster(
-                                "ManaCannon",
-                                "Pirate Caster",
-                                "Pirate Caster Research Clue "
-                            );
+                            Core.HuntMonster("ManaCannon", "Pirate Caster", "Pirate Caster Beaten", 10);
+                            Core.HuntMonster("ManaCannon", "Pirate Caster", "Pirate Caster Research Clue ");
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }

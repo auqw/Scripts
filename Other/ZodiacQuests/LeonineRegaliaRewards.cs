@@ -43,22 +43,8 @@ public class LeonineRegalia
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name))
             {
                 Core.EnsureAccept(9196);
-                Core.HuntMonster(
-                    "onslaughttower",
-                    "Golden Caster",
-                    "Burning Star Shard",
-                    25,
-                    false,
-                    false
-                );
-                Core.HuntMonster(
-                    "onslaughttower",
-                    "Maximillian Lionfang",
-                    "Regal Star Shard",
-                    1,
-                    false,
-                    false
-                );
+                Core.HuntMonster("onslaughttower", "Golden Caster", "Burning Star Shard", 25, false, false);
+                Core.HuntMonster("onslaughttower", "Maximillian Lionfang", "Regal Star Shard", 1, false, false);
                 Core.EnsureComplete(9196, Reward.ID);
                 Core.ToBank(Reward.ID);
             }

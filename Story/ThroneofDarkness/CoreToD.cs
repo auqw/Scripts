@@ -146,14 +146,7 @@ public class CoreToD
         if (!Story.QuestProgression(4981))
         {
             Core.EnsureAccept(4981);
-            Core.KillMonster(
-                "bonecastle",
-                "r8",
-                "Left",
-                "Skeletal Warrior",
-                "Undead Humerus Bones",
-                5
-            );
+            Core.KillMonster("bonecastle", "r8", "Left", "Skeletal Warrior", "Undead Humerus Bones", 5);
             Core.EnsureComplete(4981);
         }
 
@@ -675,13 +668,7 @@ public class CoreToD
             if (!Story.QuestProgression(5131))
             {
                 Core.EnsureAccept(5131);
-                Core.HuntMonster(
-                    "baconcatlair",
-                    "Robo Shark",
-                    "Wheel of Bacon Token",
-                    5,
-                    isTemp: false
-                );
+                Core.HuntMonster("baconcatlair", "Robo Shark", "Wheel of Bacon Token", 5, isTemp: false);
                 Core.EnsureComplete(5131);
             }
         }

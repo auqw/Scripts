@@ -121,42 +121,16 @@ public class ExaltedApotheosisPreReqs
                             switch (req.Name)
                             {
                                 case "Exalted Node":
-                                    Core.KillMonster(
-                                        "timeinn",
-                                        "r3",
-                                        "Bottom",
-                                        "*",
-                                        "Exalted Node",
-                                        req.Quantity,
-                                        req.Temp
-                                    );
+                                    Core.KillMonster("timeinn", "r3", "Bottom", "*", "Exalted Node", req.Quantity, req.Temp);
                                     break;
                                 case "Exalted Artillery Shard":
-                                    Core.HuntMonster(
-                                        "timeinn",
-                                        "The Engineer",
-                                        req.Name,
-                                        req.Quantity,
-                                        req.Temp
-                                    );
+                                    Core.HuntMonster("timeinn", "The Engineer", req.Name, req.Quantity, req.Temp);
                                     break;
                                 case "Exalted Relic Piece":
-                                    Core.HuntMonster(
-                                        "timeinn",
-                                        "The Warden",
-                                        req.Name,
-                                        req.Quantity,
-                                        req.Temp
-                                    );
+                                    Core.HuntMonster("timeinn", "The Warden", req.Name, req.Quantity, req.Temp);
                                     break;
                                 case "Exalted Forgemetal":
-                                    Core.HuntMonster(
-                                        "timeinn",
-                                        "Ezrajal",
-                                        req.Name,
-                                        req.Quantity,
-                                        req.Temp
-                                    );
+                                    Core.HuntMonster("timeinn", "Ezrajal", req.Name, req.Quantity, req.Temp);
                                     break;
                                 default:
                                     missingMaterials[req.Name] =

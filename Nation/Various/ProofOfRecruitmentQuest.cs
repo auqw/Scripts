@@ -109,12 +109,7 @@ public class ProofOFRecruitmentQuest
                                                         {
                                                             //Dirtlicker's Test 4751 [ArchToken I]
                                                             Core.EnsureAccept(4751);
-                                                            Core.HuntMonster(
-                                                                "ArchPortal",
-                                                                "Skull Warrior",
-                                                                "Monsters Slain",
-                                                                8
-                                                            );
+                                                            Core.HuntMonster("ArchPortal", "Skull Warrior", "Monsters Slain", 8);
                                                             Core.EnsureComplete(4751);
                                                         }
                                                         //Souls for the Nation 4752 [ArchToken II]
@@ -139,50 +134,21 @@ public class ProofOFRecruitmentQuest
                                                 }
                                                 //Legion Scum 4754 [ArchToken IV]
                                                 Core.EnsureAccept(4754);
-                                                Core.HuntMonster(
-                                                    "ArchPortal",
-                                                    "Legion Spy",
-                                                    "Defeated Legion Spies",
-                                                    8
-                                                );
+                                                Core.HuntMonster("ArchPortal", "Legion Spy", "Defeated Legion Spies", 8);
                                                 Core.EnsureComplete(4754);
                                             }
                                             //Traitors 4755 [ArchToken V]
                                             Core.EnsureAccept(4755);
-                                            Core.HuntMonster(
-                                                "citadel",
-                                                "Death's Head",
-                                                "Death's Head Head"
-                                            );
-                                            Core.HuntMonster(
-                                                "EvilWarDage ",
-                                                "Infernalfiend",
-                                                "Infernal Fiend Head"
-                                            );
-                                            Core.HuntMonster(
-                                                "EvilWarNul",
-                                                "Nulgath's Redemption",
-                                                "Nulgath's Redemption Head"
-                                            );
+                                            Core.HuntMonster("citadel", "Death's Head", "Death's Head Head");
+                                            Core.HuntMonster("EvilWarDage ", "Infernalfiend", "Infernal Fiend Head");
+                                            Core.HuntMonster("EvilWarNul", "Nulgath's Redemption", "Nulgath's Redemption Head");
                                             Core.EnsureComplete(4755);
                                         }
                                         //The Evil War 4756 [ArchToken VI]
                                         Core.EnsureAccept(4756);
-                                        Core.HuntMonster(
-                                            "EvilWarNul",
-                                            "Blade Master",
-                                            "Blade Master's Blood"
-                                        );
-                                        Core.HuntMonster(
-                                            "EvilWarNul",
-                                            "Undead Legend",
-                                            "Legion's Crown"
-                                        );
-                                        Core.HuntMonster(
-                                            "EvilWarNul",
-                                            "Laken",
-                                            "Saber of the Traveler"
-                                        );
+                                        Core.HuntMonster("EvilWarNul", "Blade Master", "Blade Master's Blood");
+                                        Core.HuntMonster("EvilWarNul", "Undead Legend", "Legion's Crown");
+                                        Core.HuntMonster("EvilWarNul", "Laken", "Saber of the Traveler");
                                         Core.EnsureComplete(4756);
                                     }
                                     //Eye Spy 4757 [ArchToken VII]
@@ -193,18 +159,8 @@ public class ProofOFRecruitmentQuest
                                 }
                                 //Souls of the Legion 4758 [ArchToken VIII]
                                 Core.EnsureAccept(4758);
-                                Core.HuntMonster(
-                                    "ArchPortal",
-                                    "Skull Warrior",
-                                    "Dusty Bone Marrow",
-                                    5
-                                );
-                                Core.HuntMonster(
-                                    "ArchPortal",
-                                    "Legion Guard",
-                                    "Mummified Gray Matter",
-                                    5
-                                );
+                                Core.HuntMonster("ArchPortal", "Skull Warrior", "Dusty Bone Marrow", 5);
+                                Core.HuntMonster("ArchPortal", "Legion Guard", "Mummified Gray Matter", 5);
                                 Core.EnsureComplete(4758);
                             }
                             //Put the Lime in the Coconut 4759 [ArchToken IX]
@@ -223,11 +179,7 @@ public class ProofOFRecruitmentQuest
                     }
                     //Protect the Portal! 4761 [ArchToken XI]
                     Core.EnsureAccept(4761);
-                    Core.HuntMonster(
-                        "ArchPortal",
-                        "High Legion Inquisitor",
-                        "High Legion Inquisitor Defeated"
-                    );
+                    Core.HuntMonster("ArchPortal", "High Legion Inquisitor", "High Legion Inquisitor Defeated");
                     Core.EnsureComplete(4761);
                 }
 
@@ -294,11 +246,7 @@ public class ProofOFRecruitmentQuest
                     Core.EnsureAccept(4755);
                     Core.HuntMonster("citadel", "Death's Head", "Death's Head Head");
                     Core.HuntMonster("EvilWarDage", "Infernalfiend", "Infernal Fiend Head");
-                    Core.HuntMonster(
-                        "EvilWarNul",
-                        "Nulgath's Redemption",
-                        "Nulgath's Redemption Head"
-                    );
+                    Core.HuntMonster("EvilWarNul", "Nulgath's Redemption", "Nulgath's Redemption Head");
                     Core.EnsureComplete(4755);
                     Bot.Wait.ForPickup("ArchToken V");
                     break;
@@ -354,11 +302,7 @@ public class ProofOFRecruitmentQuest
                 case 4761:
                     // Protect the Portal! [ArchToken XI]
                     Core.EnsureAccept(4761);
-                    Core.HuntMonster(
-                        "ArchPortal",
-                        "High Legion Inquisitor",
-                        "High Legion Inquisitor Defeated"
-                    );
+                    Core.HuntMonster("ArchPortal", "High Legion Inquisitor", "High Legion Inquisitor Defeated");
                     Core.EnsureComplete(4761);
                     Bot.Wait.ForPickup("ArchToken XI");
                     break;

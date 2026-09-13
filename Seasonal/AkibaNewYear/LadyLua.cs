@@ -50,12 +50,7 @@ public class LadyLua
             Core.HuntMonster("mobius", "Chaos Sp-Eye", "Chaos Eyeball", 5, log: false);
             Core.HuntMonster("ebonslate", "Sp-Eye", "Evil Eyeball", 5, log: false);
             Core.HuntMonster("deathgazer", "Deathgazer", "Deadly Eyeball", 2, log: false);
-            Core.HuntMonster(
-                "battlewedding",
-                "Jimmy the Eye Heart",
-                "Heartbreaking Eyeball",
-                log: false
-            );
+            Core.HuntMonster("battlewedding", "Jimmy the Eye Heart", "Heartbreaking Eyeball", log: false);
             Core.EnsureComplete(8500);
         }
 
@@ -71,13 +66,7 @@ public class LadyLua
             Core.HuntMonster("creatures", "White Tiger", "Bright as a White Tiger", 4, log: false);
             Core.HuntMonster("phoenixrise", "Cinderclaw", "Superior to Cinderclaw", 2, log: false);
             Core.HuntMonster("fireplanewar", "ShadowClaw", "Overshadowed Shadowclaw", log: false);
-            Core.HuntMonster(
-                "phoenixrise",
-                "Firestorm Tiger",
-                "Blazed Through Underlings",
-                12,
-                log: false
-            );
+            Core.HuntMonster("phoenixrise", "Firestorm Tiger", "Blazed Through Underlings", 12, log: false);
             Core.EnsureComplete(8502);
         }
 

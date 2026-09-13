@@ -60,14 +60,7 @@ public class RavenlossSaga
         {
             Core.EnsureAccept(3429);
             Core.GetMapItem(2578, 1, "WeaverWar");
-            Core.KillMonster(
-                "WeaverWar",
-                "s1",
-                "Spawn",
-                "Weaver Queen's Hound",
-                "Weaver Hounds Slain",
-                6
-            );
+            Core.KillMonster("WeaverWar", "s1", "Spawn", "Weaver Queen's Hound", "Weaver Hounds Slain", 6);
             Core.EnsureComplete(3429);
         }
 
@@ -94,14 +87,7 @@ public class RavenlossSaga
         {
             Core.EnsureAccept(3432);
             Core.GetMapItem(2581, 1, "WeaverWar");
-            Core.KillMonster(
-                "WeaverWar",
-                "do1",
-                "Spawn",
-                "Weaver Queen's Hound",
-                "Weaver Hound Slain",
-                6
-            );
+            Core.KillMonster("WeaverWar", "do1", "Spawn", "Weaver Queen's Hound", "Weaver Hound Slain", 6);
             Core.EnsureComplete(3432);
         }
 

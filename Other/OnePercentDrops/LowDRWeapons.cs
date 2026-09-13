@@ -53,14 +53,7 @@ public class LowDRWeapons
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Adas_Overcharged_Scythe
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.KillMonster(
-                "laken",
-                "r12",
-                "Left",
-                "Ada",
-                "Ada's Overcharged Scythe",
-                isTemp: false
-            );
+            Core.KillMonster("laken", "r12", "Left", "Ada", "Ada's Overcharged Scythe", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Amethyst_Pickaxe
@@ -78,45 +71,25 @@ public class LowDRWeapons
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_of_the_Void_Daggers
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "voidbattle",
-                "Jir'abin Challenge",
-                "Blood of the Void Daggers",
-                isTemp: false
-            );
+            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Blood of the Void Daggers", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_of_the_Void_Blade
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "voidbattle",
-                "Jir'abin Challenge",
-                "Blood of the Void Blade",
-                isTemp: false
-            );
+            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Blood of the Void Blade", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Purified_Void_Blade
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "voidbattle",
-                "Jir'abin Challenge",
-                "Purified Void Blade",
-                isTemp: false
-            );
+            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Purified Void Blade", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Purified_Void_Daggers
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "voidbattle",
-                "Jir'abin Challenge",
-                "Purified Void Daggers",
-                isTemp: false
-            );
+            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Purified Void Daggers", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Burning_Blade
@@ -152,34 +125,19 @@ public class LowDRWeapons
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Underworldly_Dark_Wand
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "legionarena",
-                "Exalted Legion Champion",
-                "Underworldly Dark Wand",
-                isTemp: false
-            );
+            Core.HuntMonster("legionarena", "Exalted Legion Champion", "Underworldly Dark Wand", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Legion_Chain_Whip
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "legionarena",
-                "Exalted Legion Champion",
-                "Legion Chain Whip",
-                isTemp: false
-            );
+            Core.HuntMonster("legionarena", "Exalted Legion Champion", "Legion Chain Whip", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_Scythe_Of_Destruction
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "infernalspire",
-                "Helzekiel",
-                "Blood Scythe Of Destruction",
-                isTemp: false
-            );
+            Core.HuntMonster("infernalspire", "Helzekiel", "Blood Scythe Of Destruction", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Sanctified_Guardian_Blade
@@ -209,23 +167,13 @@ public class LowDRWeapons
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Duel_Swords_of_Vindication
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "xancave",
-                "Shurpu Ring Guardian",
-                "Duel Swords of Vindication",
-                isTemp: false
-            );
+            Core.HuntMonster("xancave", "Shurpu Ring Guardian", "Duel Swords of Vindication", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Apocryphal_Blade_Of_The_Truth
             || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
         )
-            Core.HuntMonster(
-                "banished",
-                "Desterrat Moya",
-                "Apocryphal Blade Of The Truth",
-                isTemp: false
-            );
+            Core.HuntMonster("banished", "Desterrat Moya", "Apocryphal Blade Of The Truth", isTemp: false);
 
         if (
             Bot.Config.Get<Weapons>("Weapons") == Weapons.Evolved_Agony_Chain

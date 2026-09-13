@@ -101,13 +101,7 @@ public class CelestialChallengerMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "celestialarenad",
-                            "Queen of Hope",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("celestialarenad", "Queen of Hope", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -116,13 +110,7 @@ public class CelestialChallengerMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "CelestialArenaC",
-                            "War Construct",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("CelestialArenaC", "War Construct", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

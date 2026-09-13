@@ -108,27 +108,10 @@ public class YokaiPortalMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "yokaiportal",
-                            "Kitsune Spirits",
-                            "Kitsune Spirit Incense",
-                            15,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "yokaiportal",
-                            "Puppeted Dragonling",
-                            "Draconic Red String",
-                            15,
-                            log: false
-                        );
+                        Core.HuntMonster("yokaiportal", "Kitsune Spirits", "Kitsune Spirit Incense", 15, log: false);
+                        Core.HuntMonster("yokaiportal", "Puppeted Dragonling", "Draconic Red String", 15, log: false);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "yokaiportal",
-                            "Kitsune Kukol'nyy",
-                            "Lord Kitsune's Red String",
-                            log: false
-                        );
+                        Core.HuntMonster("yokaiportal", "Kitsune Kukol'nyy", "Lord Kitsune's Red String", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -144,27 +127,13 @@ public class YokaiPortalMerge
                 case "Kitsune's Ruby":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "yokaiportal",
-                        "Kitsune Kukol'nyy",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("yokaiportal", "Kitsune Kukol'nyy", req.Name, quant, false, false);
                     break;
 
                 case "Admiral Zheng's Jade":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "yokaitreasure",
-                        "Admiral Zheng",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("yokaitreasure", "Admiral Zheng", req.Name, quant, false, false);
                     break;
             }
         }

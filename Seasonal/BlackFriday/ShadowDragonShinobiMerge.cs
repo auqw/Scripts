@@ -105,14 +105,7 @@ public class ShadowDragonShinobiMerge
                         Core.RegisterQuests(7924);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "shadowfortress",
-                                "1st Head of Orochi",
-                                "Perfect Orochi Scales",
-                                10,
-                                false,
-                                false
-                            );
+                            Core.HuntMonster("shadowfortress", "1st Head of Orochi", "Perfect Orochi Scales", 10, false, false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -123,13 +116,7 @@ public class ShadowDragonShinobiMerge
                         Core.RegisterQuests(7815);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "blackfridaywar",
-                                "Deal Bot 2.0",
-                                "EbilCorp Bots Battled",
-                                20,
-                                log: false
-                            );
+                            Core.HuntMonster("blackfridaywar", "Deal Bot 2.0", "EbilCorp Bots Battled", 20, log: false);
                             Core.HuntMonsterMapID(
                                 "blackfridaywar",
                                 3,

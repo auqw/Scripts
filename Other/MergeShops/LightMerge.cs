@@ -184,14 +184,7 @@ public class LightMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(5132);
-                        Core.KillMonster(
-                            "castleundead",
-                            "Enter",
-                            "Left",
-                            "Skeletal Warrior",
-                            "Undead Head",
-                            10
-                        );
+                        Core.KillMonster("castleundead", "Enter", "Left", "Skeletal Warrior", "Undead Head", 10);
                         Core.EnsureComplete(5132, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }

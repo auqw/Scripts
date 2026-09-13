@@ -48,12 +48,7 @@ public class ArchfiendDragonEgg
 
         Core.EnsureAccept(7296);
         Core.BuyItem("Airstorm", 357, "Breath of Life");
-        Core.HuntMonster(
-            "queenspire",
-            "Fire Guardian Dragon",
-            "Fire Guardian Dragon Soul",
-            isTemp: false
-        );
+        Core.HuntMonster("queenspire", "Fire Guardian Dragon", "Fire Guardian Dragon Soul", isTemp: false);
         HB.FreshSouls(1, 10);
         //why the fuck was the class buffed!?
         InventoryItem? usethis = Bot

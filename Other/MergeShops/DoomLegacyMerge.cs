@@ -114,20 +114,10 @@ public class DoomLegacyMerge
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("thorngarde", "CryptHacker", "Deadtech Power Core", 7);
                         Core.HuntMonster("thorngarde", "CryptHacker", "CryptHacker Circuitry", 15);
-                        Core.HuntMonster(
-                            "thorngarde",
-                            "NecroMech",
-                            "NecroMech Targeting Systems",
-                            5
-                        );
+                        Core.HuntMonster("thorngarde", "NecroMech", "NecroMech Targeting Systems", 5);
 
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "thorngarde",
-                            "Zyrus the BioKnight",
-                            "BioKnight Engine",
-                            3
-                        );
+                        Core.HuntMonster("thorngarde", "Zyrus the BioKnight", "BioKnight Engine", 3);
 
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -158,13 +148,7 @@ public class DoomLegacyMerge
                 case "Cryptborg Torpedo":
                 case "Cryptborg Blade":
                 case "Cryptborg Helm":
-                    Core.HuntMonster(
-                        "techdungeon",
-                        "Kalron the Cryptborg",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("techdungeon", "Kalron the Cryptborg", req.Name, quant, isTemp: false);
                     break;
 
                 case "Zealous Badge":
@@ -173,21 +157,9 @@ public class DoomLegacyMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "techdungeon",
-                            "Kalron the Cryptborg",
-                            "Immutable Dedication",
-                            7,
-                            log: false
-                        );
+                        Core.HuntMonster("techdungeon", "Kalron the Cryptborg", "Immutable Dedication", 7, log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "techdungeon",
-                            "DoomBorg Guard",
-                            "Paladin Armor Scraps",
-                            30,
-                            log: false
-                        );
+                        Core.HuntMonster("techdungeon", "DoomBorg Guard", "Paladin Armor Scraps", 30, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -199,13 +171,7 @@ public class DoomLegacyMerge
                     break;
 
                 case "Deadtech Booster":
-                    Core.HuntMonster(
-                        "stonewood",
-                        "Doomwood Treeant",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("stonewood", "Doomwood Treeant", req.Name, quant, isTemp: false);
                     break;
 
                 case "DoomMaster":

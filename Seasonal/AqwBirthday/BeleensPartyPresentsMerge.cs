@@ -117,11 +117,7 @@ public class BeleensPartyPresentsMerge
                     if (req.Name == "Platinum Leaf")
                         Core.RegisterQuests(8925);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "yulgarparty",
-                            "Treasure Pile",
-                            "Twilly's Treasure Defeated"
-                        );
+                        Core.HuntMonster("yulgarparty", "Treasure Pile", "Twilly's Treasure Defeated");
                     Core.CancelRegisteredQuests();
                     break;
             }

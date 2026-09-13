@@ -91,12 +91,7 @@ public class TechnocasterMerge
                     Core.RegisterQuests(7236);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "technospace",
-                            "Technocaster Rogue",
-                            "Energy Core",
-                            log: false
-                        );
+                        Core.HuntMonster("technospace", "Technocaster Rogue", "Energy Core", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -108,13 +103,7 @@ public class TechnocasterMerge
                     Core.RegisterQuests(7235);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "technospace",
-                            "Technowolf",
-                            "Seraphic Steel",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("technospace", "Technowolf", "Seraphic Steel", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -161,13 +161,7 @@ public class ThreeLittleWolvesHousesMerge
                 case "Mana Golem's Core":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "elemental",
-                        "Mana Golem",
-                        "Mana Golem's Core",
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("elemental", "Mana Golem", "Mana Golem's Core", isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -181,13 +175,7 @@ public class ThreeLittleWolvesHousesMerge
                 case "Falcontower Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "falconreach",
-                        "Dragon Drakath",
-                        "Falcontower Blueprint",
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("falconreach", "Dragon Drakath", "Falcontower Blueprint", isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
@@ -196,13 +184,7 @@ public class ThreeLittleWolvesHousesMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
 
-                    Core.HuntMonster(
-                        "citadel",
-                        "Belrot the Fiend",
-                        "Citadel Caverns Blueprint",
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("citadel", "Belrot the Fiend", "Citadel Caverns Blueprint", isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -227,13 +209,7 @@ public class ThreeLittleWolvesHousesMerge
                 case "Clubhouse Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "clubhouse",
-                        "Riddlelord's Golem",
-                        "Clubhouse Blueprint",
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("clubhouse", "Riddlelord's Golem", "Clubhouse Blueprint", isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

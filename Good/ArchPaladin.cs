@@ -221,12 +221,7 @@ public class ArchPaladin
                 Core.SellItem("Mystic Shards", all: true);
             }
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "onslaughttower",
-                "Golden Caster",
-                "Holy Magic Attunement",
-                isTemp: false
-            );
+            Core.HuntMonster("onslaughttower", "Golden Caster", "Holy Magic Attunement", isTemp: false);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("palace", "Pettivox", "Ring of Mana Transposition", isTemp: false);
             Core.EnsureComplete(5469);

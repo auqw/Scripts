@@ -48,13 +48,7 @@ public class ShadowVault
         {
             Core.EnsureAccept(6784);
             Core.GetMapItem(6311, 1, "ShadowVault");
-            Core.KillMonster(
-                "shadowvault",
-                "r3a",
-                "Left",
-                "Shadowscythe Guard",
-                "Shadowscythe Guard Slain"
-            );
+            Core.KillMonster("shadowvault", "r3a", "Left", "Shadowscythe Guard", "Shadowscythe Guard Slain");
             Story.KillQuest(6784, "ShadowVault", "Shadowscythe Guard");
             Core.EnsureComplete(6784);
         }

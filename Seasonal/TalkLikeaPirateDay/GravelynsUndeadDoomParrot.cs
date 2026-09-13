@@ -38,19 +38,10 @@ public class UndeadDoomParrot
         Core.AddDrop(Core.QuestRewards(10425));
 
         // Drink Shipment Found!
-        Core.HuntMonster(
-            "piratewar",
-            "Blazing Commander",
-            Core.QuestRequirements<string>(10425)[2]
-        );
+        Core.HuntMonster("piratewar", "Blazing Commander", Core.QuestRequirements<string>(10425)[2]);
 
         // Doomknight Commander Defeated
-        Core.HuntMonster(
-            "piratewar",
-            "Doomknight Commander",
-            Core.QuestRequirements<string>(10425)[0],
-            10
-        );
+        Core.HuntMonster("piratewar", "Doomknight Commander", Core.QuestRequirements<string>(10425)[0], 10);
 
         // Shard of Ice
         Adv.BuyItem("pirates", 724, Core.QuestRequirements<string>(10425)[1]);

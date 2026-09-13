@@ -141,27 +141,10 @@ public class TempleSiegeMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "templesiege",
-                            "Doomed Oblivion",
-                            "Oblivion's Gem",
-                            log: false
-                        );
+                        Core.HuntMonster("templesiege", "Doomed Oblivion", "Oblivion's Gem", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "templesiege",
-                            "Doomed Beast",
-                            "Dark Remnants",
-                            7,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "templesiege",
-                            "Overdriven Paladin",
-                            "Paladin Armament",
-                            7,
-                            log: false
-                        );
+                        Core.HuntMonster("templesiege", "Doomed Beast", "Dark Remnants", 7, log: false);
+                        Core.HuntMonster("templesiege", "Overdriven Paladin", "Paladin Armament", 7, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

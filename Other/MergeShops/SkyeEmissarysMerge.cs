@@ -99,15 +99,7 @@ public class SkyeEmissarysMerge
                     Core.RegisterQuests(9718);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "ashray",
-                            "Enter",
-                            "Spawn",
-                            "*",
-                            "Deepsea Pearls",
-                            10,
-                            log: false
-                        );
+                        Core.KillMonster("ashray", "Enter", "Spawn", "*", "Deepsea Pearls", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -119,13 +111,7 @@ public class SkyeEmissarysMerge
                     Core.RegisterQuests(9715);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "midnightzone",
-                            "Shadow Viscera",
-                            "Viscera Sample",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("midnightzone", "Shadow Viscera", "Viscera Sample", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -139,27 +125,13 @@ public class SkyeEmissarysMerge
                 case "Tattered Court Mage Robe":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "balemorale",
-                        "Chaos Crystal",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("balemorale", "Chaos Crystal", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Victoria's Fletching":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "balemorale",
-                        "Queen Victoria",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("balemorale", "Queen Victoria", req.Name, quant, req.Temp, false);
                     break;
             }
         }

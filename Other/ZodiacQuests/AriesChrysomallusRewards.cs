@@ -54,16 +54,7 @@ public class AriesChrysomallusRewards
                 {
                     //Aries Chrysomallus
                     Core.EnsureAccept(9192);
-                    Core.KillMonster(
-                        "Kolyaban",
-                        "r2",
-                        "Left",
-                        "*",
-                        "Darkblood Starshard",
-                        20,
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.KillMonster("Kolyaban", "r2", "Left", "*", "Darkblood Starshard", 20, isTemp: false, log: false);
                     Core.EnsureComplete(9192, Reward.ID);
                 }
             }

@@ -26,15 +26,7 @@ public class BurningBlade
             return;
 
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster(
-            "lostruinswar",
-            "r7",
-            "Left",
-            "Diabolical Warlord",
-            "Burning Blade",
-            isTemp: false,
-            publicRoom: true
-        );
+        Core.KillMonster("lostruinswar", "r7", "Left", "Diabolical Warlord", "Burning Blade", isTemp: false, publicRoom: true);
         Bot.Wait.ForPickup("Burning Blade");
     }
 }

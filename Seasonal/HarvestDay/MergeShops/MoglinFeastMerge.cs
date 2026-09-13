@@ -136,14 +136,7 @@ public class MoglinFeastMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "moglinfeast",
-                        "Pumpkin Mimic",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("moglinfeast", "Pumpkin Mimic", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Fae Dust":
@@ -156,16 +149,7 @@ public class MoglinFeastMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.KillMonster(
-                        "moglinfeast",
-                        "r7",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.KillMonster("moglinfeast", "r7", "Left", "*", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Fall Fae Assassin Morph":
@@ -179,14 +163,7 @@ public class MoglinFeastMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "moglinfeast",
-                        "Fall Fae Queen",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("moglinfeast", "Fall Fae Queen", req.Name, quant, req.Temp, false);
                     break;
                 #endregion
             }

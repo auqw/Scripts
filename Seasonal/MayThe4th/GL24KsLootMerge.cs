@@ -118,15 +118,7 @@ public class GL24KsLootMerge
                     Core.RegisterQuests(9703);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "twigguhunt",
-                            "r2",
-                            "Down",
-                            "*",
-                            "Broken Droid Part",
-                            300,
-                            log: false
-                        );
+                        Core.KillMonster("twigguhunt", "r2", "Down", "*", "Broken Droid Part", 300, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -148,14 +140,7 @@ public class GL24KsLootMerge
                 case "GL-1ST Pronged Spears":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "twigguhunt",
-                        "Bodyguard Droid",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("twigguhunt", "Bodyguard Droid", req.Name, quant, false, false);
                     break;
 
                 case "GL-1ST Salvage Axe":

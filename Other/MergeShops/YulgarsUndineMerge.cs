@@ -110,14 +110,7 @@ public class YulgarsUndineMerge
                 case "Undine Visitor Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "sunlightzone",
-                        "Astravian Illusion",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("sunlightzone", "Astravian Illusion", req.Name, quant, false, false);
                     break;
             }
         }

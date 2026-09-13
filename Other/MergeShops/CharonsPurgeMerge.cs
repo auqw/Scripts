@@ -155,12 +155,7 @@ public class CharonsPurgeMerge
                     Core.RegisterQuests(2743);
                     while (!Core.CheckInventory("Solidified Soul", 50))
                     {
-                        Core.HuntMonster(
-                            "ShadowFallInvasion",
-                            "Bone Creeper",
-                            "Shards of a Soul",
-                            10
-                        );
+                        Core.HuntMonster("ShadowFallInvasion", "Bone Creeper", "Shards of a Soul", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

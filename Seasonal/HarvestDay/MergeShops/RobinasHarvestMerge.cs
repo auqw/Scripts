@@ -111,30 +111,10 @@ public class RobinasHarvestMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "blightharvest",
-                            "r5",
-                            "Left",
-                            "Tantalocust",
-                            "Mealy Bug Legs",
-                            6
-                        );
-                        Core.KillMonster(
-                            "blightharvest",
-                            "r7",
-                            "Left",
-                            "Fear Gorta",
-                            "Hunger Grass",
-                            6
-                        );
+                        Core.KillMonster("blightharvest", "r5", "Left", "Tantalocust", "Mealy Bug Legs", 6);
+                        Core.KillMonster("blightharvest", "r7", "Left", "Fear Gorta", "Hunger Grass", 6);
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "blightharvest",
-                            "r10",
-                            "Left",
-                            "Famine",
-                            "Famine's Spice Flakes"
-                        );
+                        Core.KillMonster("blightharvest", "r10", "Left", "Famine", "Famine's Spice Flakes");
                         Core.Logger("This item is not setup yet");
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -148,14 +128,7 @@ public class RobinasHarvestMerge
                 case "Cranberry Shoulder Imp":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "blightharvest",
-                        "r5",
-                        "Left",
-                        "*",
-                        req.Name,
-                        isTemp: req.Temp
-                    );
+                    Core.KillMonster("blightharvest", "r5", "Left", "*", req.Name, isTemp: req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

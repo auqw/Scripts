@@ -102,27 +102,13 @@ public class LichKingsBountyMerge
                 case "Ice Splinter":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "frozenlair",
-                        "Frozen Legionnaire",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("frozenlair", "Frozen Legionnaire", req.Name, quant, false, false);
                     break;
 
                 case "Sapphire Orb":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Dodge);
-                    Core.HuntMonster(
-                        "frozenlair",
-                        "Legion Lich Lord",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("frozenlair", "Legion Lich Lord", req.Name, quant, false, false);
                     Core.EquipClass(ClassType.Solo);
                     break;
 

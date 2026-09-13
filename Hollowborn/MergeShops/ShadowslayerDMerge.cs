@@ -147,13 +147,7 @@ public class ShadowslayerDMerge
 
                 case "Noble Hollowborn Vampire Wings":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "hbchallenge",
-                        "Hollowborn Vampire",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("hbchallenge", "Hollowborn Vampire", req.Name, quant, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

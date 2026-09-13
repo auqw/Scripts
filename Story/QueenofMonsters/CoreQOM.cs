@@ -176,22 +176,8 @@ public class CoreQOM
         {
             Core.EnsureAccept(5377);
             Core.KillMonster("infernalspire", "r7", "Left", "Dungeon Fiend", "Infernal Key", 6);
-            Core.KillMonster(
-                "infernalspire",
-                "r7",
-                "Left",
-                "Dungeon Fiend",
-                "Dungeon Fiend Slain",
-                6
-            );
-            Core.KillMonster(
-                "infernalspire",
-                "r7",
-                "Left",
-                "Infernal Hound",
-                "Infernal Hound Slain",
-                6
-            );
+            Core.KillMonster("infernalspire", "r7", "Left", "Dungeon Fiend", "Dungeon Fiend Slain", 6);
+            Core.KillMonster("infernalspire", "r7", "Left", "Infernal Hound", "Infernal Hound Slain", 6);
             Core.EnsureComplete(5377);
         }
 
@@ -210,14 +196,7 @@ public class CoreQOM
         {
             Core.EnsureAccept(5381);
             Core.KillMonster("infernalspire", "r13", "Left", "Fallen Knight", "Override Code");
-            Core.KillMonster(
-                "infernalspire",
-                "r13",
-                "Left",
-                "Fallen Knight",
-                "Fallen Knight Slain",
-                6
-            );
+            Core.KillMonster("infernalspire", "r13", "Left", "Fallen Knight", "Fallen Knight Slain", 6);
             Core.HuntMonster("infernalspire", "Infernal Imp", "Infernal Imp Slain", 6);
             Core.EnsureComplete(5381);
         }
@@ -421,12 +400,7 @@ public class CoreQOM
         {
             Core.EnsureAccept(5552);
             Core.HuntMonster("shadowfallinvasion", "Nethermage", "Nethermage Slain", 4);
-            Core.HuntMonster(
-                "shadowfallinvasion",
-                "Diabolical Scryer",
-                "Diabolical Scryer Slain",
-                4
-            );
+            Core.HuntMonster("shadowfallinvasion", "Diabolical Scryer", "Diabolical Scryer Slain", 4);
             Core.HuntMonster("shadowfallinvasion", "Fallen Knight", "Fallen Knight Slain", 4);
             Core.EnsureComplete(5552);
         }
@@ -461,22 +435,8 @@ public class CoreQOM
         if (!Story.QuestProgression(5575))
         {
             Core.EnsureAccept(5575);
-            Core.KillMonster(
-                "safiriainvasion",
-                "r4",
-                "Left",
-                "Fallen Knight",
-                "Fallen Knight's Armor",
-                5
-            );
-            Core.KillMonster(
-                "safiriainvasion",
-                "r4",
-                "Left",
-                "Infernal Knight",
-                "Infernal Knight's Armor",
-                5
-            );
+            Core.KillMonster("safiriainvasion", "r4", "Left", "Fallen Knight", "Fallen Knight's Armor", 5);
+            Core.KillMonster("safiriainvasion", "r4", "Left", "Infernal Knight", "Infernal Knight's Armor", 5);
             Core.EnsureComplete(5575);
         }
 
@@ -491,22 +451,8 @@ public class CoreQOM
         {
             Core.EnsureAccept(5578);
             Core.KillMonster("DoomPally", "r3", "Right", "*", "Doomwood Invaders Fought", 4);
-            Core.KillMonster(
-                "DarkoviaInvasion",
-                "Enter",
-                "Spawn",
-                "*",
-                "Darkovia Invaders Fought",
-                4
-            );
-            Core.KillMonster(
-                "shadowfallinvasion",
-                "r4",
-                "Left",
-                "*",
-                "Shadowfall Invaders Fought",
-                4
-            );
+            Core.KillMonster("DarkoviaInvasion", "Enter", "Spawn", "*", "Darkovia Invaders Fought", 4);
+            Core.KillMonster("shadowfallinvasion", "r4", "Left", "*", "Shadowfall Invaders Fought", 4);
             Core.EnsureComplete(5578);
         }
 
@@ -1100,15 +1046,7 @@ public class CoreQOM
         {
             Core.EnsureAccept(8107);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "downbelow",
-                "Enter",
-                "Spawn",
-                "Earthwyrm",
-                "Anka's Followers Slain",
-                1000,
-                false
-            );
+            Core.KillMonster("downbelow", "Enter", "Spawn", "Earthwyrm", "Anka's Followers Slain", 1000, false);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("downbelow", "Anka", "Soul of Vengeance", 25, false);
             Core.EnsureComplete(8107);

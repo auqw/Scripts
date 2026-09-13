@@ -97,16 +97,7 @@ public class SeaviewSouvenirsMerge
                 case "Treasure Chest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "finalbattle",
-                        "r2",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("finalbattle", "r2", "Left", "*", req.Name, quant, false, false);
                     break;
 
                 case "Sur-gion Token":
@@ -115,26 +106,9 @@ public class SeaviewSouvenirsMerge
                     Core.RegisterQuests(9235);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "ashray",
-                            "Kitefin Shark Bait",
-                            "Shark Fin",
-                            7,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "ashray",
-                            "Ashray Fisherman",
-                            "Ashray Blood Sample",
-                            7,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "ashray",
-                            "Seafoam Elemental",
-                            "Seafoam Bubbles",
-                            log: false
-                        );
+                        Core.HuntMonster("ashray", "Kitefin Shark Bait", "Shark Fin", 7, log: false);
+                        Core.HuntMonster("ashray", "Ashray Fisherman", "Ashray Blood Sample", 7, log: false);
+                        Core.HuntMonster("ashray", "Seafoam Elemental", "Seafoam Bubbles", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

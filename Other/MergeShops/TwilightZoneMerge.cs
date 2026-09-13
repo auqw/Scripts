@@ -99,14 +99,7 @@ public class TwilightZoneMerge
                 case "Undine Visitor Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "sunlightzone",
-                        "Astravian Illusion",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("sunlightzone", "Astravian Illusion", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -116,30 +109,9 @@ public class TwilightZoneMerge
                     Core.RegisterQuests(9269);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Leviathan",
-                            "Leviathan Tentacle",
-                            1,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Decay Spirit",
-                            "Decay Essence",
-                            8,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Ice Guardian",
-                            "Tarnished Icicle",
-                            8,
-                            true,
-                            false
-                        );
+                        Core.HuntMonster("twilightzone", "Leviathan", "Leviathan Tentacle", 1, true, false);
+                        Core.HuntMonster("twilightzone", "Decay Spirit", "Decay Essence", 8, true, false);
+                        Core.HuntMonster("twilightzone", "Ice Guardian", "Tarnished Icicle", 8, true, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -149,14 +121,7 @@ public class TwilightZoneMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.Logger("Better to use alts to farm it faster.");
-                    Core.HuntMonster(
-                        "twilightzone",
-                        "Leviathan",
-                        "Leviathan Scale",
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("twilightzone", "Leviathan", "Leviathan Scale", quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

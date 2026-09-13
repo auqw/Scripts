@@ -317,13 +317,7 @@ public class CoreFarms
                 Core.Logger("Doing swordhavenundead \"Undead Giant\" Quest till level 20");
                 Core.RegisterQuests(178);
                 while (!Bot.ShouldExit && Bot.Player.Level < 20)
-                    Core.KillMonster(
-                        "swordhavenundead",
-                        "Gates",
-                        "Left",
-                        "Undead Giant",
-                        log: false
-                    );
+                    Core.KillMonster("swordhavenundead", "Gates", "Left", "Undead Giant", log: false);
                 Core.CancelRegisteredQuests();
             }
 
@@ -1290,13 +1284,7 @@ public class CoreFarms
             if (!Core.isCompletedBefore(2082))
             {
                 Core.EnsureAccept(2082);
-                Core.HuntMonster(
-                    "battleunderb",
-                    "Skeleton Warrior",
-                    "Undead Essence",
-                    25,
-                    isTemp: false
-                );
+                Core.HuntMonster("battleunderb", "Skeleton Warrior", "Undead Essence", 25, isTemp: false);
                 Core.EnsureComplete(2082);
             }
 
@@ -1304,13 +1292,7 @@ public class CoreFarms
             if (!Core.isCompletedBefore(2083))
             {
                 Core.EnsureAccept(2083);
-                Core.HuntMonster(
-                    "battleunderb",
-                    "Skeleton Warrior",
-                    "Bone Dust",
-                    40,
-                    isTemp: false
-                );
+                Core.HuntMonster("battleunderb", "Skeleton Warrior", "Bone Dust", 40, isTemp: false);
                 Core.EnsureComplete(2083);
             }
 
@@ -1478,21 +1460,9 @@ public class CoreFarms
         Core.RegisterQuests(4900, 4910, 4914); //Kick Some Can 4900, The Best You Can Buy 4910, Testing My Metal 4914
         while (!Bot.ShouldExit && FactionRank("Aegis") < rank)
         {
-            Core.HuntMonster(
-                "skytower",
-                "Seraphic Assassin",
-                "Seraphic Assassin Dueled",
-                10,
-                log: false
-            );
+            Core.HuntMonster("skytower", "Seraphic Assassin", "Seraphic Assassin Dueled", 10, log: false);
             Core.HuntMonster("skytower", "Virtuous Warrior", "Warriors Dueled", 10, log: false);
-            Core.HuntMonster(
-                "skytower",
-                "Seraphic Assassin",
-                "Assassins Handed To Them",
-                6,
-                log: false
-            );
+            Core.HuntMonster("skytower", "Seraphic Assassin", "Assassins Handed To Them", 6, log: false);
             Core.HuntMonster("skytower", "Virtuous Warrior", "Warrior Butt Beaten", 6, log: false);
         }
         Core.CancelRegisteredQuests();
@@ -2057,13 +2027,7 @@ public class CoreFarms
         while (!Bot.ShouldExit && FactionRank("BeastMaster") < 4)
         {
             Core.EnsureAccept(3755);
-            Core.HuntMonster(
-                "bamboo",
-                "Tanuki",
-                "Secret Scroll of Beast Commanding",
-                7,
-                log: false
-            );
+            Core.HuntMonster("bamboo", "Tanuki", "Secret Scroll of Beast Commanding", 7, log: false);
             Core.HuntMonster("pines", "Pine Troll", "Troll's Treatise on Beasts", log: false);
             Core.EnsureComplete(3755);
         }
@@ -2082,20 +2046,8 @@ public class CoreFarms
         while (!Bot.ShouldExit && FactionRank("BeastMaster") < rank)
         {
             Core.EnsureAccept(3757);
-            Core.HuntMonster(
-                "pyramid",
-                "Golden Scarab",
-                "Gleaming Gems of Containment",
-                16,
-                log: false
-            );
-            Core.HuntMonster(
-                "dreamnexus",
-                "Solar Phoenix",
-                "Bright Binding of Submission",
-                16,
-                log: false
-            );
+            Core.HuntMonster("pyramid", "Golden Scarab", "Gleaming Gems of Containment", 16, log: false);
+            Core.HuntMonster("dreamnexus", "Solar Phoenix", "Bright Binding of Submission", 16, log: false);
             Core.EnsureComplete(3757);
         }
 
@@ -2188,29 +2140,9 @@ public class CoreFarms
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank && !UseGold)
         {
             // Core.EnsureAccept(8736);
-            Core.HuntMonster(
-                "hydrachallenge",
-                "Hydra Head 25",
-                "Hydra Scale Piece",
-                75,
-                isTemp: false,
-                log: false
-            );
-            Core.HuntMonster(
-                "maul",
-                "Creature Creation",
-                "Creature Shard",
-                isTemp: false,
-                log: false
-            );
-            Core.HuntMonster(
-                "towerofdoom",
-                "Dread Klunk",
-                "Monster Trophy",
-                15,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("hydrachallenge", "Hydra Head 25", "Hydra Scale Piece", 75, isTemp: false, log: false);
+            Core.HuntMonster("maul", "Creature Creation", "Creature Shard", isTemp: false, log: false);
+            Core.HuntMonster("towerofdoom", "Dread Klunk", "Monster Trophy", 15, isTemp: false, log: false);
             // Core.EnsureComplete(8736);
         }
         Core.CancelRegisteredQuests();
@@ -2476,24 +2408,8 @@ public class CoreFarms
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
             // Core.EnsureAccept(2204); //Do the 'do 2204
-            Core.KillMonster(
-                "thespan",
-                "r6",
-                "Left",
-                "Moglin Ghost",
-                "Tin of Ghost Dust",
-                2,
-                log: false
-            );
-            Core.KillMonster(
-                "thespan",
-                "r4",
-                "Left",
-                "Minx Fairy",
-                "8 oz Fairy Glitter",
-                3,
-                log: false
-            );
+            Core.KillMonster("thespan", "r6", "Left", "Moglin Ghost", "Tin of Ghost Dust", 2, log: false);
+            Core.KillMonster("thespan", "r4", "Left", "Minx Fairy", "8 oz Fairy Glitter", 3, log: false);
             Core.KillMonster("thespan", "r4", "Left", "Tog", "Tog Fang", 4, log: false);
             // Core.EnsureComplete(2204); //Do the 'do 2204
         }
@@ -2752,15 +2668,7 @@ public class CoreFarms
                 Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 320, 321 }); //Warm and Furry 320, Shell Shock 321
             Core.KillMonster("pines", "Enter", "Right", "Pine Grizzly", "Bear Skin", 5, log: false);
-            Core.KillMonster(
-                "pines",
-                "Enter",
-                "Right",
-                "Red Shell Turtle",
-                "Red Turtle Shell",
-                5,
-                log: false
-            );
+            Core.KillMonster("pines", "Enter", "Right", "Red Shell Turtle", "Red Turtle Shell", 5, log: false);
             Core.EnsureComplete(new[] { 320, 321 }); //Warm and Furry 320, Shell Shock 321
         }
         // Core.CancelRegisteredQuests();
@@ -3698,27 +3606,9 @@ public class CoreFarms
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
             Core.EnsureAccept(1265);
-            Core.HuntMonster(
-                "bloodtuskwar",
-                "Chaotic Lemurphant",
-                "Chaorrupted Eye",
-                3,
-                log: false
-            );
-            Core.HuntMonster(
-                "bloodtuskwar",
-                "Chaotic Horcboar",
-                "Chaorrupted Tentacle",
-                5,
-                log: false
-            );
-            Core.HuntMonster(
-                "bloodtuskwar",
-                "Chaotic Chinchilizard",
-                "Chaorrupted Tusk",
-                5,
-                log: false
-            );
+            Core.HuntMonster("bloodtuskwar", "Chaotic Lemurphant", "Chaorrupted Eye", 3, log: false);
+            Core.HuntMonster("bloodtuskwar", "Chaotic Horcboar", "Chaorrupted Tentacle", 5, log: false);
+            Core.HuntMonster("bloodtuskwar", "Chaotic Chinchilizard", "Chaorrupted Tusk", 5, log: false);
             Core.EnsureComplete(1265);
         }
         // Core.CancelRegisteredQuests();
@@ -3749,12 +3639,7 @@ public class CoreFarms
                 while (!Bot.ShouldExit && FactionRank("Loremaster") < 3)
                 {
                     Core.HuntMonster("wardwarf", "Drow Assassin", "Poisoned Dagger", 4, log: false);
-                    Core.HuntMonster(
-                        "wardwarf",
-                        "D'wain Jonsen",
-                        "Scroll: Opportunity's Strike",
-                        log: false
-                    );
+                    Core.HuntMonster("wardwarf", "D'wain Jonsen", "Scroll: Opportunity's Strike", log: false);
                     Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
                     Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
                     Bot.Wait.ForQuestAccept(7505);
@@ -3862,14 +3747,7 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.KillMonster(
-                "dreadfire",
-                "r10",
-                "Left",
-                "Living Brimstone",
-                "Living Brimstone Defeated",
-                log: false
-            );
+            Core.KillMonster("dreadfire", "r10", "Left", "Living Brimstone", "Living Brimstone Defeated", log: false);
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -3889,24 +3767,8 @@ public class CoreFarms
         if (!Core.isCompletedBefore(5850))
         {
             Core.Logger("Unlocking farming quest.");
-            Core.KillMonster(
-                "pilgrimage",
-                "r5",
-                "Left",
-                "SpiderWing",
-                "Spiderwing Captured",
-                4,
-                log: false
-            );
-            Core.KillMonster(
-                "pilgrimage",
-                "r5",
-                "Left",
-                "Urstrix",
-                "Urstrix Captured",
-                4,
-                log: false
-            );
+            Core.KillMonster("pilgrimage", "r5", "Left", "SpiderWing", "Spiderwing Captured", 4, log: false);
+            Core.KillMonster("pilgrimage", "r5", "Left", "Urstrix", "Urstrix Captured", 4, log: false);
         }
 
         Core.SavedState(true, "pilgrimage");
@@ -3914,33 +3776,9 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.KillMonster(
-                "pilgrimage",
-                "r5",
-                "Left",
-                "SpiderWing",
-                "Spiderwing Captured",
-                4,
-                log: false
-            );
-            Core.KillMonster(
-                "pilgrimage",
-                "r5",
-                "Left",
-                "Urstrix",
-                "Urstrix Captured",
-                4,
-                log: false
-            );
-            Core.KillMonster(
-                "pilgrimage",
-                "r5",
-                "Left",
-                "Ravenous Parasite",
-                "Ravenous Parasites Slain",
-                7,
-                log: false
-            );
+            Core.KillMonster("pilgrimage", "r5", "Left", "SpiderWing", "Spiderwing Captured", 4, log: false);
+            Core.KillMonster("pilgrimage", "r5", "Left", "Urstrix", "Urstrix Captured", 4, log: false);
+            Core.KillMonster("pilgrimage", "r5", "Left", "Ravenous Parasite", "Ravenous Parasites Slain", 7, log: false);
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -4066,14 +3904,7 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.KillMonster(
-                "greenguardwest",
-                "West7",
-                "Down",
-                "Mogzard",
-                "Mogzard Captured",
-                log: false
-            );
+            Core.KillMonster("greenguardwest", "West7", "Down", "Mogzard", "Mogzard Captured", log: false);
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -4100,13 +3931,7 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.HuntMonster(
-                "twilightedge",
-                "ChaosWeaver Mage",
-                "ChaosWeaver Slain",
-                10,
-                log: false
-            );
+            Core.HuntMonster("twilightedge", "ChaosWeaver Mage", "ChaosWeaver Slain", 10, log: false);
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -4202,13 +4027,7 @@ public class CoreFarms
                 Core.ExecuteSaveState();
             Core.EnsureAccept(2260);
             Core.GetMapItem(1920, 1, "dragonrune");
-            Core.HuntMonster(
-                "castleundead",
-                "Skeletal Warrior",
-                "Arcane Parchment",
-                13,
-                log: false
-            );
+            Core.HuntMonster("castleundead", "Skeletal Warrior", "Arcane Parchment", 13, log: false);
             Core.EnsureComplete(2260);
         }
 
@@ -4361,27 +4180,9 @@ public class CoreFarms
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
             Core.EnsureAccept(1263);
-            Core.HuntMonster(
-                "bloodtuskwar",
-                "Chaotic Lemurphant",
-                "Chaorrupted Eye",
-                3,
-                log: false
-            );
-            Core.HuntMonster(
-                "bloodtuskwar",
-                "Chaotic Horcboar",
-                "Chaorrupted Tentacle",
-                5,
-                log: false
-            );
-            Core.HuntMonster(
-                "bloodtuskwar",
-                "Chaotic Chinchilizard",
-                "Chaorrupted Tusk",
-                5,
-                log: false
-            );
+            Core.HuntMonster("bloodtuskwar", "Chaotic Lemurphant", "Chaorrupted Eye", 3, log: false);
+            Core.HuntMonster("bloodtuskwar", "Chaotic Horcboar", "Chaorrupted Tentacle", 5, log: false);
+            Core.HuntMonster("bloodtuskwar", "Chaotic Chinchilizard", "Chaorrupted Tusk", 5, log: false);
             Core.EnsureComplete(1263);
         }
         // Core.CancelRegisteredQuests();
@@ -4446,13 +4247,7 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Yew Mountains") < rank)
         {
-            Core.KillMonster(
-                !Core.IsMember ? "thelimacity" : "dwarfhold",
-                !Core.IsMember ? "r6" : "New1",
-                !Core.IsMember ? "Left" : "Right",
-                !Core.IsMember ? "*" : "Gemrald",
-                log: false
-            );
+            Core.KillMonster(!Core.IsMember ? "thelimacity" : "dwarfhold", !Core.IsMember ? "r6" : "New1", !Core.IsMember ? "Left" : "Right", !Core.IsMember ? "*" : "Gemrald", log: false);
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -4513,15 +4308,7 @@ public class CoreFarms
             {
                 if (Core.CheckSaveState())
                     Core.ExecuteSaveState();
-                Core.KillMonster(
-                    "collectorlab",
-                    "r2",
-                    "Left",
-                    "*",
-                    "Super-Fan Swag Token C",
-                    200,
-                    isTemp: false
-                );
+                Core.KillMonster("collectorlab", "r2", "Left", "*", "Super-Fan Swag Token C", 200, isTemp: false);
                 Bot.Wait.ForPickup("Super-Fan Swag Token C");
             }
             else
@@ -4529,15 +4316,7 @@ public class CoreFarms
                 if (Core.CheckSaveState())
                     Core.ExecuteSaveState();
                 // Farm Token D from Terrarium
-                Core.KillMonster(
-                    "terrarium",
-                    "Enter",
-                    "Spawn",
-                    "*",
-                    "Super-Fan Swag Token D",
-                    500,
-                    isTemp: false
-                );
+                Core.KillMonster("terrarium", "Enter", "Spawn", "*", "Super-Fan Swag Token D", 500, isTemp: false);
                 Bot.Wait.ForPickup("Super-Fan Swag Token D");
             }
 
@@ -4753,35 +4532,15 @@ public class CoreFarms
         {
             Core.Logger("Unlocking farm quest.");
             Core.EnsureAccept(183);
-            Core.KillMonster(
-                "portalundead",
-                "Enter",
-                "Left",
-                "Skeletal Fire Mage",
-                "Defeated Fire Mage",
-                4,
-                log: false
-            );
+            Core.KillMonster("portalundead", "Enter", "Left", "Skeletal Fire Mage", "Defeated Fire Mage", 4, log: false);
             Core.EnsureComplete(183);
 
             Core.EnsureAccept(176);
-            Core.HuntMonster(
-                "swordhavenundead",
-                "Skeletal Soldier",
-                "Slain Skeletal Soldier",
-                5,
-                log: false
-            );
+            Core.HuntMonster("swordhavenundead", "Skeletal Soldier", "Slain Skeletal Soldier", 5, log: false);
             Core.EnsureComplete(176);
 
             Core.EnsureAccept(177);
-            Core.HuntMonster(
-                "swordhavenundead",
-                "Skeletal Ice Mage",
-                "Frozen Bonehead",
-                6,
-                log: false
-            );
+            Core.HuntMonster("swordhavenundead", "Skeletal Ice Mage", "Frozen Bonehead", 6, log: false);
             Core.EnsureComplete(177);
         }
     }

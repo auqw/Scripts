@@ -142,13 +142,7 @@ public class TowerofWindsMerge
                 case "Metal Pieces":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
-                    Core.HuntMonster(
-                        "frozentower",
-                        "Polar Elemental",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("frozentower", "Polar Elemental", req.Name, quant, isTemp: false);
                     break;
 
                 case "Flame of Courage":
@@ -168,13 +162,7 @@ public class TowerofWindsMerge
                 case "Karok's Glaceran Gem":
                     Core.EnsureAccept(3955);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "northstar",
-                        "Karok The Fallen",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("northstar", "Karok The Fallen", req.Name, quant, isTemp: false);
                     break;
 
                 case "Mercury":

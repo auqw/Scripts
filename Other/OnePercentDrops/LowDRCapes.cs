@@ -91,12 +91,7 @@ public class LowDRCapes
                 && !Core.CheckInventory("ShadowScythe Warlock's Demonic Flames")
         )
         {
-            Core.HuntMonster(
-                "innershadows",
-                "Krahen",
-                "ShadowScythe Warlock's Demonic Flames",
-                isTemp: false
-            );
+            Core.HuntMonster("innershadows", "Krahen", "ShadowScythe Warlock's Demonic Flames", isTemp: false);
         }
 
         if (
@@ -104,12 +99,7 @@ public class LowDRCapes
             || capeConfig == Capes.All && !Core.CheckInventory("ShadowScythe Warlock's Flames")
         )
         {
-            Core.HuntMonster(
-                "innershadows",
-                "Krahen",
-                "ShadowScythe Warlock's Flames",
-                isTemp: false
-            );
+            Core.HuntMonster("innershadows", "Krahen", "ShadowScythe Warlock's Flames", isTemp: false);
         }
 
         if (

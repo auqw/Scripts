@@ -157,14 +157,7 @@ public class ThelimaJewelersMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "thelimacity",
-                        "Maleno Elemental",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("thelimacity", "Maleno Elemental", req.Name, quant, false, false);
                     break;
 
                 case "Drow Silver":

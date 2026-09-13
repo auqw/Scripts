@@ -73,12 +73,7 @@ public class ShipWreck
 
                 case 4419: // Clearing the Cargo hold 4419
                     Core.HuntMonster("shipwreck", "Cursed Pirate", "Pirate Interrogated", 4);
-                    Core.HuntMonster(
-                        "shipwreck",
-                        "Gilded Crystal Undead",
-                        "Captured Crystal Crew",
-                        8
-                    );
+                    Core.HuntMonster("shipwreck", "Gilded Crystal Undead", "Captured Crystal Crew", 8);
                     break;
 
                 case 4420: // Au-Dacity to Attack 4420
@@ -98,12 +93,7 @@ public class ShipWreck
                     break;
 
                 case 4424: // Taking Sides 4424
-                    Core.HuntMonster(
-                        "shipwreck",
-                        "Gilded Merdraconian",
-                        "Powerfully Persuaded Merdraconian",
-                        11
-                    );
+                    Core.HuntMonster("shipwreck", "Gilded Merdraconian", "Powerfully Persuaded Merdraconian", 11);
                     break;
 
                 case 4425: // Crystallized Crew 4425

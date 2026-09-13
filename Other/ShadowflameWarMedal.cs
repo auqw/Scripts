@@ -57,13 +57,7 @@ public class ShadowflameWarMedal
         while (!Bot.ShouldExit && !Core.CheckInventory("ShadowFlame War Medal", quant))
         {
             Core.HuntMonster("chaosamulet", "Shadowflame Warrior", "Shadow Medal", 5, log: false);
-            Core.HuntMonster(
-                "chaosamulet",
-                "Shadowflame Warrior",
-                "Mega Shadow Medal",
-                3,
-                log: false
-            );
+            Core.HuntMonster("chaosamulet", "Shadowflame Warrior", "Mega Shadow Medal", 3, log: false);
             Bot.Wait.ForPickup("ShadowFlame War Medal");
         }
         Core.CancelRegisteredQuests();

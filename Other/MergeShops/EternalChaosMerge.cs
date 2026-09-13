@@ -90,13 +90,7 @@ public class EternalChaosMerge
                     Core.RegisterQuests(8456);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "eternalchaos",
-                            "Chaos Time Fairy",
-                            "Preserved Chaos Fairy Wing",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("eternalchaos", "Chaos Time Fairy", "Preserved Chaos Fairy Wing", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

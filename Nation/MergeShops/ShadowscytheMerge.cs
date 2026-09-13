@@ -103,49 +103,16 @@ public class ShadowscytheMerge
                         if (!Core.CheckInventory("Defeated Makai", 25))
                         {
                             Core.EquipClass(ClassType.Farm);
-                            Core.KillMonster(
-                                "tercessuinotlim",
-                                "m2",
-                                "Left",
-                                "*",
-                                "Defeated Makai",
-                                25,
-                                false
-                            );
+                            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 25, false);
                             Core.JumpWait();
                             Core.Join("aqlesson");
                         }
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "aqlesson",
-                            "Frame9",
-                            "Right",
-                            "Carnax",
-                            "Carnax Eye",
-                            publicRoom: true
-                        );
-                        Core.HuntMonster(
-                            "deepchaos",
-                            "Kathool",
-                            "Kathool Tentacle",
-                            publicRoom: true
-                        );
-                        Core.KillMonster(
-                            "dflesson",
-                            "r12",
-                            "Right",
-                            29,
-                            33257,
-                            isTemp: true,
-                            publicRoom: true
-                        );
+                        Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);
+                        Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
+                        Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
                         Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
-                        Core.HuntMonster(
-                            "bloodtitan",
-                            "Blood Titan",
-                            "Blood Titan's Blade",
-                            publicRoom: true
-                        );
+                        Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
 
                         Bot.Wait.ForQuestComplete(4737);
                         Bot.Wait.ForPickup(req.Name);
@@ -160,12 +127,7 @@ public class ShadowscytheMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("shadowblast", "Carnage", "Shadow Seal", 25, isTemp: false);
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Legion Fenrir",
-                            "Gem of Superiority",
-                            isTemp: false
-                        );
+                        Core.HuntMonster("shadowblast", "Legion Fenrir", "Gem of Superiority", isTemp: false);
                         Bot.Wait.ForQuestComplete(4750);
                         Bot.Wait.ForPickup(req.Name);
                     }

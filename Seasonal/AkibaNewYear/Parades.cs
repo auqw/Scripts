@@ -68,13 +68,7 @@ public class Parades
                     break;
                 // Un-decorate Yokai 4831
                 case 4831:
-                    Core.HuntMonster(
-                        "parades",
-                        "Paper Lantern",
-                        "Paper Lantern Destroyed",
-                        6,
-                        log: false
-                    );
+                    Core.HuntMonster("parades", "Paper Lantern", "Paper Lantern Destroyed", 6, log: false);
                     Core.GetMapItem(4232, 5, "parades");
                     break;
                 // Naughty Fairies 4832
@@ -106,13 +100,7 @@ public class Parades
                 // I'm Not That Stupid 4837
                 case 4837:
                     Core.GetMapItem(4229, 8, "parades");
-                    Core.HuntMonster(
-                        "parades",
-                        "Carnaval Mask",
-                        "Carnaval Mask Destroyed",
-                        6,
-                        log: false
-                    );
+                    Core.HuntMonster("parades", "Carnaval Mask", "Carnaval Mask Destroyed", 6, log: false);
                     break;
                 // Why Did It Have To Be Snakes 4838
                 case 4838:
@@ -129,12 +117,7 @@ public class Parades
                     break;
                 // One Last Thing 4841
                 case 4841:
-                    Core.HuntMonster(
-                        "hachiko",
-                        "Ninja Nopperabo",
-                        "Scroll of Summoning",
-                        log: false
-                    );
+                    Core.HuntMonster("hachiko", "Ninja Nopperabo", "Scroll of Summoning", log: false);
                     break;
                 // Defeat the Oni 4842
                 case 4842:

@@ -108,13 +108,7 @@ public class ColdThunderMerge
                 case "Electrifying Zilla Tail":
                 case "Electrifying Zilla Bag":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "castlegaheris",
-                        "Energy Elemental",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("castlegaheris", "Energy Elemental", req.Name, quant, req.Temp);
                     break;
             }
         }

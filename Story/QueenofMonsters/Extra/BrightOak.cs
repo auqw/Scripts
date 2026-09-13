@@ -270,30 +270,9 @@ public class BrightOak
         if (!Story.QuestProgression(4698))
         {
             Core.EnsureAccept(4698);
-            Core.KillMonster(
-                "Darkheart",
-                "Enter",
-                "Spawn",
-                "Tainted Earth",
-                "Tainted Earth Removed",
-                8
-            );
-            Core.KillMonster(
-                "Darkheart",
-                "r2",
-                "Left",
-                "Toxic Grove Spider",
-                "Toxic Grove Spider Dispatched",
-                5
-            );
-            Core.KillMonster(
-                "Darkheart",
-                "Enter",
-                "Spawn",
-                "Mutated Leech",
-                "Mutated Leech Slain",
-                6
-            );
+            Core.KillMonster("Darkheart", "Enter", "Spawn", "Tainted Earth", "Tainted Earth Removed", 8);
+            Core.KillMonster("Darkheart", "r2", "Left", "Toxic Grove Spider", "Toxic Grove Spider Dispatched", 5);
+            Core.KillMonster("Darkheart", "Enter", "Spawn", "Mutated Leech", "Mutated Leech Slain", 6);
             Core.EnsureComplete(4698);
         }
 

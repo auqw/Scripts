@@ -69,27 +69,9 @@ public class YeeaaahhBabbyyThaaatsWhatImTalkingAbout
         while (!Bot.ShouldExit && !Core.CheckInventory(FocussedArray))
         {
             Core.HuntMonster("Mverse", "Major Mushroom", "Dark Caster Card", 1, isTemp: true);
-            Core.HuntMonster(
-                "Mverse",
-                "Major Mushroom",
-                "Green-Eyes Red Dragon Card",
-                1,
-                isTemp: true
-            );
-            Core.HuntMonster(
-                "Mverse",
-                "Major Mushroom",
-                "Mirror Realm's Force Card",
-                1,
-                isTemp: true
-            );
-            Core.HuntMonster(
-                "Mverse",
-                "Major Mushroom",
-                "Drakath The Outlawed One Card",
-                1,
-                isTemp: true
-            );
+            Core.HuntMonster("Mverse", "Major Mushroom", "Green-Eyes Red Dragon Card", 1, isTemp: true);
+            Core.HuntMonster("Mverse", "Major Mushroom", "Mirror Realm's Force Card", 1, isTemp: true);
+            Core.HuntMonster("Mverse", "Major Mushroom", "Drakath The Outlawed One Card", 1, isTemp: true);
         }
         Core.CancelRegisteredQuests();
     }

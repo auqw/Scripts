@@ -128,14 +128,7 @@ public class BocklinGroveMerge
                 case "Vaughn Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "bocklingrove",
-                        "Garde Wraith",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("bocklingrove", "Garde Wraith", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Golden Anjou Helm":
@@ -143,14 +136,7 @@ public class BocklinGroveMerge
                 case "Sheathed Aquitaine":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "bocklingrove",
-                        "Elder Necromancer",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("bocklingrove", "Elder Necromancer", req.Name, quant, req.Temp, false);
                     break;
             }
         }

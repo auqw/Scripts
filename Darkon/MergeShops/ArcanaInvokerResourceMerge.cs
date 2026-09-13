@@ -386,39 +386,15 @@ public class ArcanaInvokerResourceMerge
 
                 case "Nightlocke War Staff":
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "aqw3d",
-                        "r13",
-                        "Left",
-                        "Nightlocke Staff",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.KillMonster("aqw3d", "r13", "Left", "Nightlocke Staff", req.Name, quant, req.Temp);
                     break;
 
                 case "Calamitous Warlic's Tome":
-                    Core.KillMonster(
-                        "ruinedcrown",
-                        "r10",
-                        "Left",
-                        "Calamitous Warlic",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.KillMonster("ruinedcrown", "r10", "Left", "Calamitous Warlic", req.Name, quant, req.Temp);
                     break;
 
                 case "Dishpan Cleric Costume":
-                    Core.KillMonster(
-                        "cleric",
-                        "Frame3",
-                        "Left",
-                        "Chaos Dragon",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.KillMonster("cleric", "Frame3", "Left", "Chaos Dragon", req.Name, quant, req.Temp);
                     break;
 
                 case "Chaotic Healer":
@@ -432,15 +408,7 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Amia's Cult Secret":
-                    Core.KillMonster(
-                        "fotia",
-                        "r6",
-                        "Left",
-                        "Amia the Cult Leader",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.KillMonster("fotia", "r6", "Left", "Amia the Cult Leader", req.Name, quant, req.Temp);
                     break;
 
                 case "Queen's Sage Scythe":
@@ -454,13 +422,7 @@ public class ArcanaInvokerResourceMerge
                 case "Fragment of the Queen":
                     Core.EquipClass(ClassType.Solo);
                     Bot.Quests.UpdateQuest(8094);
-                    Core.HuntMonster(
-                        "transformation",
-                        "Queen of Monsters",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("transformation", "Queen of Monsters", req.Name, quant, req.Temp);
                     break;
 
                 case "Empress' Finger's Ring":
@@ -567,13 +529,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "SMU Brutalcorn's Horn":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "ultrabrutalcorn",
-                        "SMU BrutalCorn",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("ultrabrutalcorn", "SMU BrutalCorn", req.Name, quant, req.Temp);
                     break;
 
                 case "Ouroboros Scale":
@@ -631,13 +587,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "ArchFiend DragonKnight's Scale":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "underlair",
-                        "ArchFiend DragonKnight",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("underlair", "ArchFiend DragonKnight", req.Name, quant, req.Temp);
                     break;
 
                 case "Fa's Gamer Fuel":
@@ -672,12 +622,7 @@ public class ArcanaInvokerResourceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Adv.BuyItem("onsen", 1926, "Gachapon Coin", Log: false);
-                        Core.HuntMonster(
-                            "yokaigrave",
-                            "Skello Kitty",
-                            "Skello Kitty Bone",
-                            log: false
-                        );
+                        Core.HuntMonster("yokaigrave", "Skello Kitty", "Skello Kitty Bone", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -725,13 +670,7 @@ public class ArcanaInvokerResourceMerge
                 case "Chained Rune Bonebreaker":
                 case "Chained Rune Bonebreakers":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "archportal",
-                        "High Legion Inquisitor",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("archportal", "High Legion Inquisitor", req.Name, quant, req.Temp);
                     break;
 
                 case "Noble Sacrifice":
@@ -751,15 +690,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "Death's Oversight":
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "shadowattack",
-                        "Boss",
-                        "Left",
-                        "Death",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.KillMonster("shadowattack", "Boss", "Left", "Death", req.Name, quant, req.Temp);
                     break;
 
                 case "Death Pit Arena Medal":
@@ -786,12 +717,7 @@ public class ArcanaInvokerResourceMerge
                     Core.RegisterQuests(5405);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "sandsea",
-                            "Oasis Monkey",
-                            "Pally Luwak Beans",
-                            log: false
-                        );
+                        Core.HuntMonster("sandsea", "Oasis Monkey", "Pally Luwak Beans", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -822,20 +748,8 @@ public class ArcanaInvokerResourceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "voidrefuge",
-                            "Paladin Ascendant",
-                            "Sussurating Helm",
-                            3,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "voidrefuge",
-                            "Nation Outrider",
-                            "Scarred Coin",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("voidrefuge", "Paladin Ascendant", "Sussurating Helm", 3, log: false);
+                        Core.HuntMonster("voidrefuge", "Nation Outrider", "Scarred Coin", 8, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("voidrefuge", "Carnage", "Carnage's Ichor", log: false);
                         Bot.Wait.ForPickup(req.Name);
@@ -861,20 +775,8 @@ public class ArcanaInvokerResourceMerge
                     Core.RegisterQuests(3317);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "fableforest",
-                            "Earth Elemental",
-                            "Earth Aura",
-                            5,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "fableforest",
-                            "Undead Satyr",
-                            "Satyr Hoof",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("fableforest", "Earth Elemental", "Earth Aura", 5, log: false);
+                        Core.HuntMonster("fableforest", "Undead Satyr", "Satyr Hoof", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -965,22 +867,8 @@ public class ArcanaInvokerResourceMerge
 
                         // Equip farming class for the rest
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "sunlightzone",
-                            "r9",
-                            "left",
-                            "*",
-                            "seraphic sample",
-                            seraphicQty
-                        );
-                        Core.KillMonster(
-                            "sunlightzone",
-                            "r8",
-                            "left",
-                            "*",
-                            "infernal sample",
-                            infernalQty
-                        );
+                        Core.KillMonster("sunlightzone", "r9", "left", "*", "seraphic sample", seraphicQty);
+                        Core.KillMonster("sunlightzone", "r8", "left", "*", "infernal sample", infernalQty);
                         Core.EnsureCompleteMulti(9252);
                         Bot.Wait.ForPickup(req.Name);
 

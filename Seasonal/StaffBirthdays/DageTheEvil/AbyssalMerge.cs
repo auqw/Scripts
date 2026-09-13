@@ -99,14 +99,7 @@ public class AbyssalMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(7392);
-                    Core.HuntMonster(
-                        "abysslair",
-                        "Devourer of Souls",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("abysslair", "Devourer of Souls", req.Name, quant, false, false);
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -114,14 +107,7 @@ public class AbyssalMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7391);
-                    Core.HuntMonster(
-                        "abysslair",
-                        "Abyssal Underbeast",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("abysslair", "Abyssal Underbeast", req.Name, quant, false, false);
                     Core.CancelRegisteredQuests();
                     break;
 

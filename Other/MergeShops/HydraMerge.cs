@@ -92,14 +92,7 @@ public class HydraMerge
         #endregion
 
                 case "Hydra Scale Piece":
-                    Core.HuntMonster(
-                        "hydrachallenge",
-                        "Hydra Head 25",
-                        req.Name,
-                        quant,
-                        isTemp: false,
-                        true
-                    );
+                    Core.HuntMonster("hydrachallenge", "Hydra Head 25", req.Name, quant, isTemp: false, true);
 
                     break;
 
@@ -110,14 +103,7 @@ public class HydraMerge
                 case "Enchanted Pearl":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "hydrachallenge",
-                        "Hydra Head 90",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("hydrachallenge", "Hydra Head 90", req.Name, quant, req.Temp, false);
                     break;
             }
         }

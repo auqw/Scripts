@@ -89,69 +89,21 @@ public class CelestialPirateCommander
             Core.EnsureAccept(7713);
             Core.EquipClass(ClassType.Dodge);
 
-            Core.HuntMonster(
-                "frozenlair",
-                "Legion Lich Lord",
-                "Sapphire Orb",
-                5,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 5, false, publicRoom: true);
 
             Core.EquipClass(ClassType.Solo);
 
-            Core.HuntMonster(
-                "lostruinswar",
-                "Diabolical Warlord",
-                "Rumors of the Celestial Commander",
-                5,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Rumors of the Celestial Commander", 5, false, publicRoom: true);
 
-            Core.HuntMonster(
-                "iceplane",
-                "Animus of Ice",
-                "Starlit Journal Page 1 Scraps",
-                10,
-                false
-            );
+            Core.HuntMonster("iceplane", "Animus of Ice", "Starlit Journal Page 1 Scraps", 10, false);
 
-            Core.HuntMonster(
-                "ivoliss",
-                "Ivoliss",
-                "Starlit Journal Page 2 Scraps",
-                10,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("ivoliss", "Ivoliss", "Starlit Journal Page 2 Scraps", 10, false, publicRoom: true);
 
-            Core.HuntMonster(
-                "voidnightbane",
-                "Nightbane",
-                "Starlit Journal Page 3 Scraps",
-                10,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("voidnightbane", "Nightbane", "Starlit Journal Page 3 Scraps", 10, false, publicRoom: true);
 
-            Core.HuntMonster(
-                "extinction",
-                "Ultra SN.O.W.",
-                "Starlit Journal Page 4 Scraps",
-                10,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("extinction", "Ultra SN.O.W.", "Starlit Journal Page 4 Scraps", 10, false, publicRoom: true);
 
-            Core.HuntMonster(
-                "starsinc",
-                "Empowered Prime",
-                "Map of the Celestial Seas",
-                1,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("starsinc", "Empowered Prime", "Map of the Celestial Seas", 1, false, publicRoom: true);
 
             //why the fuck was the class buffed!?
             InventoryItem? usethis = Bot
@@ -169,14 +121,7 @@ public class CelestialPirateCommander
             else
                 Core.EquipClass(ClassType.Dodge);
 
-            Core.HuntMonster(
-                "underlair",
-                "ArchFiend DragonLord",
-                "Coffer of the Stars",
-                1,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("underlair", "ArchFiend DragonLord", "Coffer of the Stars", 1, false, publicRoom: true);
 
             Core.EquipClass(ClassType.Solo);
 

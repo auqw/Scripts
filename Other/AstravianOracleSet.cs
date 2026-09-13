@@ -50,15 +50,7 @@ public class AstravianOracleSet
             while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, quant))
             {
                 Core.EnsureAccept(questID);
-                Core.KillMonster(
-                    "eridani",
-                    "r6",
-                    "Left",
-                    "*",
-                    "Extinguished Shard",
-                    15,
-                    log: false
-                );
+                Core.KillMonster("eridani", "r6", "Left", "*", "Extinguished Shard", 15, log: false);
                 Core.EnsureComplete(questID, item.ID);
             }
             Core.ToBank(item.ID);
@@ -79,15 +71,7 @@ public class AstravianOracleSet
             while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, quant))
             {
                 Core.EnsureAccept(questID);
-                Core.KillMonster(
-                    "astravia",
-                    "r6",
-                    "Top",
-                    "*",
-                    "Broken Astravia Shards",
-                    15,
-                    log: false
-                );
+                Core.KillMonster("astravia", "r6", "Top", "*", "Broken Astravia Shards", 15, log: false);
                 Core.EnsureComplete(questID, item.ID);
             }
             Core.ToBank(item.ID);

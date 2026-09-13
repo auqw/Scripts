@@ -101,12 +101,7 @@ public class CruxShadowsMerge
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
                             //ULTRA Pumpkinseed Farming Quest 4617 [Member]
-                            Core.HuntMonster(
-                                "CruxShip",
-                                "Apephryx",
-                                "Otherworld Sigil",
-                                isTemp: false
-                            );
+                            Core.HuntMonster("CruxShip", "Apephryx", "Otherworld Sigil", isTemp: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();

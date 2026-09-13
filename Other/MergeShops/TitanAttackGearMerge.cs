@@ -106,28 +106,14 @@ public class TitanAttackGearMerge
 
                 case "AntiTitan Supplies":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "titanattack",
-                        "r9",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.KillMonster("titanattack", "r9", "Left", "*", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Golden Sun Seal":
                 case "Titan Paladin's Blade":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Paladin",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Paladin", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -135,25 +121,13 @@ public class TitanAttackGearMerge
                 case "Vindicator Titan's Axe":
                 case "Titanic Fluid":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Titanic Vindicator",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("titanattack", "Titanic Vindicator", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Holy Wasabi Jar":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "titanattack",
-                        "Supply Caravan",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("titanattack", "Supply Caravan", req.Name, quant, isTemp: false);
                     break;
 
                 case "Holy Hand Grenade":

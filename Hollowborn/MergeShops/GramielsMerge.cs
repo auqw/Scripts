@@ -156,14 +156,7 @@ public class GramielsMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "neofortress",
-                        "Vindicator General",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("neofortress", "Vindicator General", req.Name, quant, false, false);
                     break;
 
                 case "Tower's Trisagion":
@@ -176,14 +169,7 @@ public class GramielsMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "neotower",
-                        "Vindicator Assassin",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("neotower", "Vindicator Assassin", req.Name, quant, false, false);
                     break;
 
                 case "Sanctum's Salvation":
@@ -199,14 +185,7 @@ public class GramielsMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "dawnsanctum",
-                        "Grandmaster Gramiel",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("dawnsanctum", "Grandmaster Gramiel", req.Name, quant, false, false);
                     break;
 
                 case "Gramiel the Graceful's Insignia":
@@ -229,13 +208,7 @@ public class GramielsMerge
                 case "Gramiel's Emblem":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "dawnsanctum",
-                        "Celestial Gramiel",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("dawnsanctum", "Celestial Gramiel", req.Name, quant, isTemp: false);
                     break;
                 #endregion
             }

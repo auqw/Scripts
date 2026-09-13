@@ -71,12 +71,7 @@ public class ClassicBladeOfAwe
         if (!Bot.Quests.IsUnlocked(9704))
         {
             Core.EnsureAccept(8757); // Awe Enhancements At Home
-            Core.HuntMonster(
-                "banished",
-                "Desterrat Moya",
-                "Apocryphal Blade Of The Truth",
-                isTemp: false
-            );
+            Core.HuntMonster("banished", "Desterrat Moya", "Apocryphal Blade Of The Truth", isTemp: false);
             Core.EnsureComplete(8757);
         }
         Core.EnsureAccept(9704); // Mysterious Chest

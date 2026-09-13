@@ -846,32 +846,10 @@ public class CoreDailies
                     Core.CancelRegisteredQuests();
                 }
                 else
-                    Core.HuntMonster(
-                        "chaoskraken",
-                        "Chaos Kraken",
-                        "Kraken Doubloon",
-                        13,
-                        isTemp: false,
-                        publicRoom: true
-                    );
-                Core.KillMonster(
-                    "ancienttrigoras",
-                    "r2a",
-                    "Left",
-                    "Ancient Trigoras",
-                    "Ancient Trigora's Horns",
-                    3,
-                    isTemp: false
-                );
+                    Core.HuntMonster("chaoskraken", "Chaos Kraken", "Kraken Doubloon", 13, isTemp: false, publicRoom: true);
+                Core.KillMonster("ancienttrigoras", "r2a", "Left", "Ancient Trigoras", "Ancient Trigora's Horns", 3, isTemp: false);
                 Core.Equip("Yami no Ronin");
-                Core.KillMonster(
-                    "gravechallenge",
-                    "r19",
-                    "Left",
-                    "Graveclaw the Destroyer",
-                    "Graveclaw's Broken Axe",
-                    isTemp: false
-                );
+                Core.KillMonster("gravechallenge", "r19", "Left", "Graveclaw the Destroyer", "Graveclaw's Broken Axe", isTemp: false);
                 Core.EnsureComplete(8652);
                 Bot.Wait.ForPickup("Void Aura");
             }
@@ -881,23 +859,11 @@ public class CoreDailies
         {
             Core.EnsureAccept(8653);
             Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster(
-                "icewing",
-                "Warlord Icewing",
-                "Glacial Pinion",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("icewing", "Warlord Icewing", "Glacial Pinion", isTemp: false, publicRoom: true);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("hydrachallenge", "Hydra Head 90", "Hydra Eyeball", 3, isTemp: false);
             Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster(
-                "voidflibbi",
-                "Flibbitiestgibbet",
-                "Flibbitigiblets",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("voidflibbi", "Flibbitiestgibbet", "Flibbitigiblets", isTemp: false, publicRoom: true);
             Core.EnsureComplete(8653);
             Bot.Wait.ForPickup("Void Aura");
         }

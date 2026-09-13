@@ -93,20 +93,8 @@ public class BeleensGiftsMerge
                         Core.RegisterQuests(7355);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "canalshore",
-                                "Fishwing",
-                                "Fishwing Defeated",
-                                6,
-                                log: false
-                            );
-                            Core.HuntMonster(
-                                "canalshore",
-                                "MerSiren",
-                                "MerSiren Defeated",
-                                8,
-                                log: false
-                            );
+                            Core.HuntMonster("canalshore", "Fishwing", "Fishwing Defeated", 6, log: false);
+                            Core.HuntMonster("canalshore", "MerSiren", "MerSiren Defeated", 8, log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }
@@ -115,13 +103,7 @@ public class BeleensGiftsMerge
                         Core.RegisterQuests(7351);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "canalshore",
-                                "Water Elemental",
-                                "Water Elemental Defeated",
-                                5,
-                                log: false
-                            );
+                            Core.HuntMonster("canalshore", "Water Elemental", "Water Elemental Defeated", 5, log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }
@@ -136,20 +118,8 @@ public class BeleensGiftsMerge
                         Core.RegisterQuests(7355);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "canalshore",
-                                "Fishwing",
-                                "Fishwing Defeated",
-                                6,
-                                log: false
-                            );
-                            Core.HuntMonster(
-                                "canalshore",
-                                "MerSiren",
-                                "MerSiren Defeated",
-                                8,
-                                log: false
-                            );
+                            Core.HuntMonster("canalshore", "Fishwing", "Fishwing Defeated", 6, log: false);
+                            Core.HuntMonster("canalshore", "MerSiren", "MerSiren Defeated", 8, log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }
@@ -158,20 +128,8 @@ public class BeleensGiftsMerge
                         Core.RegisterQuests(7350);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "canalshore",
-                                "Trapped Snack",
-                                "Civilian Rescued",
-                                4,
-                                log: false
-                            );
-                            Core.HuntMonster(
-                                "canalshore",
-                                "MerSiren",
-                                "MerSiren Defeated",
-                                5,
-                                log: false
-                            );
+                            Core.HuntMonster("canalshore", "Trapped Snack", "Civilian Rescued", 4, log: false);
+                            Core.HuntMonster("canalshore", "MerSiren", "MerSiren Defeated", 5, log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                     }

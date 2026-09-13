@@ -100,12 +100,7 @@ public class SidhesDevoteeMerge
                     Core.RegisterQuests(9746);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "castleeblana",
-                            "Leanan Sidhe",
-                            "Glassy Wings",
-                            log: false
-                        );
+                        Core.HuntMonster("castleeblana", "Leanan Sidhe", "Glassy Wings", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

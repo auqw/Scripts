@@ -57,12 +57,7 @@ public class LowDRArmors
             || armorConfig == Armors.All && !Core.CheckInventory("Dark FrostSpawn Mage")
         )
         {
-            Core.HuntMonster(
-                "northstar",
-                "Karok The Fallen",
-                "Dark FrostSpawn Mage",
-                isTemp: false
-            );
+            Core.HuntMonster("northstar", "Karok The Fallen", "Dark FrostSpawn Mage", isTemp: false);
         }
 
         if (
@@ -78,12 +73,7 @@ public class LowDRArmors
             || armorConfig == Armors.All && !Core.CheckInventory("Alteon's Royal Armor")
         )
         {
-            Core.HuntMonster(
-                "swordhavenfalls",
-                "Chaos Lord Alteon",
-                "Alteon's Royal Armor",
-                isTemp: false
-            );
+            Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", "Alteon's Royal Armor", isTemp: false);
         }
 
         if (
@@ -91,12 +81,7 @@ public class LowDRArmors
             || armorConfig == Armors.All && !Core.CheckInventory("Dracolich Destroyer")
         )
         {
-            Core.HuntMonster(
-                "dragonheart",
-                "Avatar of Desolich",
-                "Dracolich Destroyer",
-                isTemp: false
-            );
+            Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer", isTemp: false);
         }
 
         if (

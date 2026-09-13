@@ -168,12 +168,7 @@ public class Adam1a1Merge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "shadowfallwar",
-                            "Skeletal Fire Mage",
-                            "EctoBlade",
-                            isTemp: false
-                        );
+                        Core.HuntMonster("shadowfallwar", "Skeletal Fire Mage", "EctoBlade", isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

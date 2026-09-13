@@ -156,14 +156,7 @@ public class BadmoonMerge
                 case "Zealous Claymore":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "techdungeon",
-                        "Kalron the Cryptborg",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("techdungeon", "Kalron the Cryptborg", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Zealous Censer":

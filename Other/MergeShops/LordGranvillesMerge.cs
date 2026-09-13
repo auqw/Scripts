@@ -86,16 +86,7 @@ public class LordGranvillesMerge
                 case "Balemorale Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "balemorale",
-                        "r2",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("balemorale", "r2", "Left", "*", req.Name, quant, false, false);
                     break;
             }
         }

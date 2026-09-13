@@ -110,14 +110,7 @@ public class ShadowDuatMerge
                 case "Metamophosis Maw's Knight Morph":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "shadowduat",
-                        "DoomKnight Dryden",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("shadowduat", "DoomKnight Dryden", req.Name, quant, req.Temp, false);
                     break;
             }
         }

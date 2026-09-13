@@ -128,15 +128,7 @@ public class TreasureChestSpam
             amount = currentAC / 200;
 
         amount = amount > maxKeys ? maxKeys : amount;
-        Core.KillMonster(
-            "swordhavenundead",
-            "Left",
-            "Right",
-            "*",
-            "Treasure Chest",
-            amount > 250 ? 250 : amount,
-            false
-        );
+        Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", amount > 250 ? 250 : amount, false);
 
         Core.Join("battleon");
 
@@ -160,15 +152,7 @@ public class TreasureChestSpam
         for (int i = 0; i < amount; i++)
         {
             if (!Core.CheckInventory("Treasure Chest", 1))
-                Core.KillMonster(
-                    "swordhavenundead",
-                    "Left",
-                    "Right",
-                    "*",
-                    "Treasure Chest",
-                    (amount - i) > 250 ? 250 : (amount - i),
-                    false
-                );
+                Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", (amount - i) > 250 ? 250 : (amount - i), false);
 
             if (Bot.Map.Name != "battleon")
                 Core.Join("battleon");

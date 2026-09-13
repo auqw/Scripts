@@ -96,16 +96,7 @@ public class FellBeastMerge
                 case "Dungeon Token":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "darkdungeon",
-                        "r9",
-                        "Left",
-                        "Cockatrice",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("darkdungeon", "r9", "Left", "Cockatrice", req.Name, quant, false, false);
                     break;
             }
         }

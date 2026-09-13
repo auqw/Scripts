@@ -94,14 +94,7 @@ public class GooseMerge
                 case "Cysero's Cookie":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "goose",
-                        "Queen's Sage",
-                        "Cysero's Cookie",
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("goose", "Queen's Sage", "Cysero's Cookie", quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

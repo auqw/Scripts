@@ -122,14 +122,7 @@ public class DeimosDenRewardsMerge
                 case "Death Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "legionarena",
-                        "Legion Fiend Rider",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("legionarena", "Legion Fiend Rider", req.Name, quant, false, false);
                     break;
             }
         }

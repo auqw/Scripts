@@ -135,12 +135,7 @@ public class DageRecruitMerge
                         Core.HuntMonster("dagerecruit", "Dark Makai", "Dark Makai Defeated", 6);
                         Core.HuntMonster("dagerecruit", "Dreadfiend", "Dreadfiend Defeated", 6);
                         Core.HuntMonster("dagerecruit", "Bloodfiend", "Bloodfiend Defeated", 6);
-                        Core.HuntMonster(
-                            "dagerecruit",
-                            "Infernal Fiend",
-                            "Infernal Fiend Defeated",
-                            6
-                        );
+                        Core.HuntMonster("dagerecruit", "Infernal Fiend", "Infernal Fiend Defeated", 6);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

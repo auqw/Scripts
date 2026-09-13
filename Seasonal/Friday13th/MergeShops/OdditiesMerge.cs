@@ -96,15 +96,7 @@ public class OdditiesMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "oddities",
-                            "Enter",
-                            "Spawn",
-                            "*",
-                            "Chipped Wood",
-                            7,
-                            log: false
-                        );
+                        Core.KillMonster("oddities", "Enter", "Spawn", "*", "Chipped Wood", 7, log: false);
                         Core.KillMonster("oddities", "r6", "Left", "*", "Fuzz Tuff", 7, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("oddities", "Cursed Spirit", "Doll Eyes", 7, log: false);
@@ -119,14 +111,7 @@ public class OdditiesMerge
                     Core.RegisterQuests(8674);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "oddities",
-                            "r6",
-                            "Left",
-                            "*",
-                            "Frankensteined Teddy",
-                            log: false
-                        );
+                        Core.KillMonster("oddities", "r6", "Left", "*", "Frankensteined Teddy", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -155,13 +155,7 @@ public class CoreBLOD
         if (!Story.QuestProgression(2082))
         {
             Core.EnsureAccept(2082);
-            Core.HuntMonster(
-                "battleunderb",
-                "Skeleton Warrior",
-                "Undead Essence",
-                25,
-                isTemp: false
-            );
+            Core.HuntMonster("battleunderb", "Skeleton Warrior", "Undead Essence", 25, isTemp: false);
             Core.EnsureComplete(2082);
         }
 
@@ -517,58 +511,20 @@ public class CoreBLOD
         {
             Core.EnsureAccept(2163);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "dragonplane",
-                "r2",
-                "Right",
-                "Earth Elemental",
-                "Great Ornate Warhammer",
-                1,
-                false,
-                false
-            );
+            Core.KillMonster("dragonplane", "r2", "Right", "Earth Elemental", "Great Ornate Warhammer", 1, false, false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster(
-                "greendragon",
-                "Boss",
-                "Left",
-                "Greenguard Dragon",
-                "Greenguard Dragon Hide",
-                3,
-                log: false
-            );
+            Core.KillMonster("greendragon", "Boss", "Left", "Greenguard Dragon", "Greenguard Dragon Hide", 3, log: false);
             Core.KillMonster("sandcastle", "r7", "Left", "Chaos Sphinx", "Gold Brush", log: false);
-            Core.KillMonster(
-                "crashsite",
-                "Boss",
-                "Left",
-                "ProtoSartorium",
-                "Non-abrasive Power Powder",
-                log: false
-            );
+            Core.KillMonster("crashsite", "Boss", "Left", "ProtoSartorium", "Non-abrasive Power Powder", log: false);
 
             //ensure we're not aggroed in crashsite by the robots in boss cell
             Core.JumpWait();
 
             Core.KillKitsune("No. 1337 Blade Oil", log: false);
-            Core.KillMonster(
-                "citadel",
-                "m14",
-                "Left",
-                "Grand Inquisitor",
-                "Blinding Lacquer Finish",
-                log: false
-            );
+            Core.KillMonster("citadel", "m14", "Left", "Grand Inquisitor", "Blinding Lacquer Finish", log: false);
             Core.HuntMonster("djinn", "Harpy", "Suede Travel Case", log: false);
-            Core.KillMonster(
-                "roc",
-                "Enter",
-                "Spawn",
-                "Rock Roc",
-                "Sharp Stone Sharpener",
-                log: false
-            );
+            Core.KillMonster("roc", "Enter", "Spawn", "Rock Roc", "Sharp Stone Sharpener", log: false);
             Core.EnsureComplete(2163);
 
             Bot.Wait.ForPickup(item);

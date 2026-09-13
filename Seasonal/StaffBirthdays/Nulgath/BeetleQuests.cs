@@ -144,12 +144,7 @@ public class BeetleQuests
                 Core.EnsureAccept(9078);
                 Nation.FarmTotemofNulgath(1);
                 Core.EquipClass(ClassType.Farm);
-                Core.HuntMonster(
-                    "dragonchallenge",
-                    "Chaos Dragon",
-                    "Baby Chaos Dragon",
-                    isTemp: false
-                );
+                Core.HuntMonster("dragonchallenge", "Chaos Dragon", "Baby Chaos Dragon", isTemp: false);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("thevoid", "Reaper", "Reaper's Soul", isTemp: false);
                 Core.EnsureComplete(9078, rewardItem.ID);
@@ -167,12 +162,7 @@ public class BeetleQuests
                     Core.EnsureAccept(9078);
                     Nation.FarmTotemofNulgath(1);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "dragonchallenge",
-                        "Chaos Dragon",
-                        "Baby Chaos Dragon",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("dragonchallenge", "Chaos Dragon", "Baby Chaos Dragon", isTemp: false);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("thevoid", "Reaper", "Reaper's Soul", isTemp: false);
                     Core.EnsureComplete(9078, item.ID);

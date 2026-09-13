@@ -99,14 +99,7 @@ public class EaglesReachArmoryMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battlegrounda",
-                            "r2",
-                            "Left",
-                            "*",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("battlegrounda", "r2", "Left", "*", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -117,14 +110,7 @@ public class EaglesReachArmoryMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battlegroundb",
-                            "r2",
-                            "Left",
-                            "*",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("battlegroundb", "r2", "Left", "*", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -135,14 +121,7 @@ public class EaglesReachArmoryMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battlegroundc",
-                            "r2",
-                            "Left",
-                            "*",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("battlegroundc", "r2", "Left", "*", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -153,14 +132,7 @@ public class EaglesReachArmoryMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battlegroundd",
-                            "r2",
-                            "Left",
-                            "*",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("battlegroundd", "r2", "Left", "*", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -171,14 +143,7 @@ public class EaglesReachArmoryMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battlegrounde",
-                            "r2",
-                            "Left",
-                            "*",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("battlegrounde", "r2", "Left", "*", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -189,14 +154,7 @@ public class EaglesReachArmoryMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battlegroundf",
-                            "r2",
-                            "Left",
-                            "*",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.KillMonster("battlegroundf", "r2", "Left", "*", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

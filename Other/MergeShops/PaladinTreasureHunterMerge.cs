@@ -130,13 +130,7 @@ public class PaladinTreasureHunterMerge
                     Core.RegisterQuests(7587);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "shadowvault",
-                            "Shadowstryke",
-                            "Alloy Materials",
-                            quant,
-                            false
-                        );
+                        Core.HuntMonster("shadowvault", "Shadowstryke", "Alloy Materials", quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -149,11 +143,7 @@ public class PaladinTreasureHunterMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7582);
-                        Core.HuntMonster(
-                            "frozentower",
-                            "FrostDeep Dweller",
-                            "Paladin Helmet Wings"
-                        );
+                        Core.HuntMonster("frozentower", "FrostDeep Dweller", "Paladin Helmet Wings");
                         Core.EnsureComplete(7582, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }

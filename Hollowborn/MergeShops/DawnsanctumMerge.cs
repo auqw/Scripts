@@ -156,13 +156,7 @@ public class DawnsanctumMerge
                 case "Gramiel's Shattered Enoch":
                 case "Gramiel's Shattered Enochs":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "dawnsanctum",
-                        "Celestial Gramiel",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("dawnsanctum", "Celestial Gramiel", req.Name, quant, isTemp: false);
                     break;
 
                 case "Hollow Soul":
@@ -173,27 +167,12 @@ public class DawnsanctumMerge
                 case "Draconian Vindication Axe":
                 case "Draconian Vindication Axes":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "dawnsanctum",
-                        "r7",
-                        "Left",
-                        "Vindicator Draconian",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.KillMonster("dawnsanctum", "r7", "Left", "Vindicator Draconian", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Hollowborn Draconian Morph":
-                    Core.KillMonster(
-                        "dawnsanctum",
-                        "r8",
-                        "Left",
-                        "Hollowborn Draconian",
-                        req.Name,
-                        isTemp: false
-                    );
+                    Core.KillMonster("dawnsanctum", "r8", "Left", "Hollowborn Draconian", req.Name, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -207,30 +186,15 @@ public class DawnsanctumMerge
                     {
                         case "Dawn Vindicator Helm":
                         case "Dawn Vindicator Soldier":
-                            Core.HuntMonster(
-                                "trygve",
-                                "Vindicator Recruit",
-                                req.Name,
-                                isTemp: false
-                            );
+                            Core.HuntMonster("trygve", "Vindicator Recruit", req.Name, isTemp: false);
                             break;
 
                         case "Dawn Vindicator Sword":
-                            Core.HuntMonster(
-                                "trygve",
-                                "Vindicator Soldier",
-                                req.Name,
-                                isTemp: false
-                            );
+                            Core.HuntMonster("trygve", "Vindicator Soldier", req.Name, isTemp: false);
                             break;
 
                         case "Dawn Vindicator Swords":
-                            Core.HuntMonster(
-                                "trygve",
-                                "Vindicator Recruit",
-                                req.Name,
-                                isTemp: false
-                            );
+                            Core.HuntMonster("trygve", "Vindicator Recruit", req.Name, isTemp: false);
                             break;
                     }
                     break;
@@ -356,14 +320,7 @@ public class DawnsanctumMerge
             Core.RegisterQuests(9291);
             while (!Bot.ShouldExit && !Core.CheckInventory("Grace Orb", quant))
             {
-                Core.HuntMonster(
-                    "neofortress",
-                    "Vindicator Recruit",
-                    "Grace Extracted",
-                    20,
-                    false,
-                    false
-                );
+                Core.HuntMonster("neofortress", "Vindicator Recruit", "Grace Extracted", 20, false, false);
                 Bot.Wait.ForPickup("Grace Orb");
             }
             Core.CancelRegisteredQuests();

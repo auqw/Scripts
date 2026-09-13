@@ -146,42 +146,22 @@ public class LivingDungeon
                                 {
                                     Core.Logger("Wooden Ring not found, finding it for you");
                                     Core.EnsureAccept(4377);
-                                    Core.HuntMonster(
-                                        "livingdungeon",
-                                        "Root of Evil",
-                                        "Wooden Ring Piece",
-                                        5
-                                    );
+                                    Core.HuntMonster("livingdungeon", "Root of Evil", "Wooden Ring Piece", 5);
                                     Core.EnsureComplete(4377);
                                     Bot.Wait.ForPickup("Wooden Ring");
                                     Core.Sleep(1000);
                                 }
-                                Core.HuntMonster(
-                                    "livingdungeon",
-                                    "Evil Plant Horror",
-                                    "Evil Plant Horror Leaf",
-                                    6
-                                );
+                                Core.HuntMonster("livingdungeon", "Evil Plant Horror", "Evil Plant Horror Leaf", 6);
                                 Core.EnsureComplete(4378);
                                 Bot.Wait.ForPickup("Salad!");
                                 Core.Sleep(1000);
                             }
-                            Core.HuntMonster(
-                                "livingdungeon",
-                                "Weeping Widowmaker",
-                                "Widowmaker deboned",
-                                5
-                            );
+                            Core.HuntMonster("livingdungeon", "Weeping Widowmaker", "Widowmaker deboned", 5);
                             Core.EnsureComplete(4379);
                             Bot.Wait.ForPickup("Weeping Widowmaker Bone");
                             Core.Sleep(1000);
                         }
-                        Core.HuntMonster(
-                            "livingdungeon",
-                            "Chia Warrior",
-                            "Chia Warrior defeated",
-                            3
-                        );
+                        Core.HuntMonster("livingdungeon", "Chia Warrior", "Chia Warrior defeated", 3);
                         Core.EnsureComplete(4380);
                         Bot.Wait.ForPickup("Chia in a pot!");
                         Core.Sleep(1000);

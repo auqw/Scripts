@@ -110,16 +110,7 @@ public class AE25sLootMerge
                 case "Droid Scrap":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "twigguhunt",
-                        "r2",
-                        "Down",
-                        "*",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.KillMonster("twigguhunt", "r2", "Down", "*", req.Name, quant, req.Temp, false);
                     break;
             }
         }

@@ -107,12 +107,7 @@ public class StormCacheMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(4246);
-                        Core.HuntMonster(
-                            "thunderfang",
-                            "Storm Draconian",
-                            "Storm Draconian Defeated",
-                            8
-                        );
+                        Core.HuntMonster("thunderfang", "Storm Draconian", "Storm Draconian Defeated", 8);
                         Core.EnsureComplete(4246);
                         Bot.Wait.ForPickup(req.Name);
                     }

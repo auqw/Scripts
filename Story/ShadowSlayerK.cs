@@ -121,28 +121,11 @@ public class ShadowSlayerK
         if (!Story.QuestProgression(8832))
         {
             Core.EnsureAccept(8832);
-            Core.HuntMonster(
-                "dragonchallenge",
-                "Greenguard Dragon",
-                "Greenguard Dragon Ribs",
-                log: false
-            );
+            Core.HuntMonster("dragonchallenge", "Greenguard Dragon", "Greenguard Dragon Ribs", log: false);
             Core.HuntMonster("battlefowl", "ChickenCow", "Chickencow Wings", log: false);
             Core.HuntMonster("pirates", "Shark Bait", "Shark Bait Fillet", log: false);
-            Core.KillMonster(
-                "greenguardwest",
-                "West12",
-                "Up",
-                "Big Bad Boar",
-                "Big Bad Boar Sausage",
-                log: false
-            );
-            Core.HuntMonster(
-                "trunk",
-                "GreenGuard Basilisk",
-                "GreenGuard Basilisk Tail",
-                log: false
-            );
+            Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Big Bad Boar Sausage", log: false);
+            Core.HuntMonster("trunk", "GreenGuard Basilisk", "GreenGuard Basilisk Tail", log: false);
             Core.HuntMonster("Well", "Gell Oh No", "Gell Oh No Jello", log: false);
             Core.HuntMonster("deathgazer", "Deathgazer", "Deathgazer Takoyaki", log: false);
             Core.HuntMonster("river", "Kuro", "Kuro Geso Karaage", log: false);
@@ -223,15 +206,7 @@ public class ShadowSlayerK
             Core.RegisterQuests(8264);
             while (!Bot.ShouldExit && !Core.CheckInventory("Grain Ration", 2))
             {
-                Core.KillMonster(
-                    "castletunnels",
-                    "r5",
-                    "Left",
-                    "Blood Maggot",
-                    "Bundle of Rice",
-                    3,
-                    log: false
-                );
+                Core.KillMonster("castletunnels", "r5", "Left", "Blood Maggot", "Bundle of Rice", 3, log: false);
                 Bot.Wait.ForPickup("Grain Ration");
             }
             Core.CancelRegisteredQuests();

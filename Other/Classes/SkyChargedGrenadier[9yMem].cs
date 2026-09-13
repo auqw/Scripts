@@ -71,12 +71,7 @@ public class SkyChargedGrenadier
         Core.RegisterQuests(6934);
         while (!Bot.ShouldExit && !Core.CheckInventory("Charged Grenade", 50))
         {
-            Core.HuntMonster(
-                "skycharged",
-                "Sky Pirate Draconian",
-                "Sky Pirate Draconian Chased Off",
-                10
-            );
+            Core.HuntMonster("skycharged", "Sky Pirate Draconian", "Sky Pirate Draconian Chased Off", 10);
             Bot.Wait.ForPickup("Charged Grenade");
         }
 

@@ -217,16 +217,7 @@ public class NovaShrineGiftsMerge
                 case "Star Piece":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "starfield",
-                        "r3",
-                        "bottom",
-                        "*",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        log: false
-                    );
+                    Core.KillMonster("starfield", "r3", "bottom", "*", req.Name, quant, req.Temp, log: false);
                     break;
 
                 case "Ascended Light of Destiny":
@@ -300,15 +291,7 @@ public class NovaShrineGiftsMerge
                     Core.RegisterQuests(9802);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "novashrine",
-                            "r2",
-                            "left",
-                            "Nova Empyrean",
-                            req.Name,
-                            quant,
-                            req.Temp
-                        );
+                        Core.KillMonster("novashrine", "r2", "left", "Nova Empyrean", req.Name, quant, req.Temp);
                     }
                     Core.CancelRegisteredQuests();
                     break;

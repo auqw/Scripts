@@ -182,35 +182,14 @@ public class CoreNation
             Core.HuntMonster("faerie", "Aracara", "Aracara's Fang", isTemp: false, log: false);
             Core.HuntMonster("hydra", "Hydra Head", "Hydra Scale", isTemp: false, log: false);
             Core.KillVath("Strand of Vath's Hair", 1, isTemp: false);
-            Core.HuntMonster(
-                "yokaiwar",
-                "O-dokuro's Head",
-                "O-dokuro's Tooth",
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("yokaiwar", "O-dokuro's Head", "O-dokuro's Tooth", isTemp: false, log: false);
             Core.KillEscherion("Escherion's Chain", publicRoom: true);
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "tercessuinotlim",
-                "m2",
-                "Left",
-                "*",
-                "Defeated Makai",
-                50,
-                false,
-                log: false
-            );
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 50, false, log: false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "djinn",
-                "Tibicenas",
-                "Tibicenas' Chain",
-                publicRoom: true,
-                log: false
-            );
+            Core.HuntMonster("djinn", "Tibicenas", "Tibicenas' Chain", publicRoom: true, log: false);
             Bot.Wait.ForPickup("Dark Crystal Shard");
         }
         Core.CancelRegisteredQuests();
@@ -293,33 +272,9 @@ public class CoreNation
                         }
                     }
 
-                    Core.KillMonster(
-                        "tercessuinotlim",
-                        "m2",
-                        "Top",
-                        "Dark Makai",
-                        "Makai Fang",
-                        10,
-                        log: false
-                    );
-                    Core.KillMonster(
-                        "hydra",
-                        "Rune2",
-                        "Left",
-                        "Fire Imp",
-                        "Imp Flame",
-                        6,
-                        log: false
-                    );
-                    Core.KillMonster(
-                        "greenguardwest",
-                        "West12",
-                        "Up",
-                        "Big Bad Boar",
-                        "Wereboar Tusk",
-                        4,
-                        log: false
-                    );
+                    Core.KillMonster("tercessuinotlim", "m2", "Top", "Dark Makai", "Makai Fang", 10, log: false);
+                    Core.KillMonster("hydra", "Rune2", "Left", "Fire Imp", "Imp Flame", 6, log: false);
+                    Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Tusk", 4, log: false);
                 }
             }
             Core.Logger("all items quant maxed");
@@ -372,25 +327,9 @@ public class CoreNation
                     }
                 }
 
-                Core.KillMonster(
-                    "tercessuinotlim",
-                    "m2",
-                    "Top",
-                    "Dark Makai",
-                    "Makai Fang",
-                    5,
-                    log: false
-                );
+                Core.KillMonster("tercessuinotlim", "m2", "Top", "Dark Makai", "Makai Fang", 5, log: false);
                 Core.KillMonster("hydra", "Rune2", "Left", "Fire Imp", "Imp Flame", 3, log: false);
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West12",
-                    "Up",
-                    "Big Bad Boar",
-                    "Wereboar Tusk",
-                    2,
-                    log: false
-                );
+                Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Tusk", 2, log: false);
             }
             Core.Logger($"{item} is now maxed");
             Core.CancelRegisteredQuests();
@@ -419,21 +358,8 @@ public class CoreNation
                 Core.EnsureAccept(2221);
             else
                 Core.EnsureAccept(2219);
-            Core.HuntMonster(
-                "evilwarnul",
-                "Blade Master",
-                "Legion Blade",
-                isTemp: false,
-                log: false
-            );
-            Core.HuntMonster(
-                "evilwarnul",
-                "Blade Master",
-                "Dessicated Heart",
-                20,
-                false,
-                log: false
-            );
+            Core.HuntMonster("evilwarnul", "Blade Master", "Legion Blade", isTemp: false, log: false);
+            Core.HuntMonster("evilwarnul", "Blade Master", "Dessicated Heart", 20, false, log: false);
             Core.HuntMonster("underworld", "Skull Warrior", "Legion Helm", 5, log: false);
             Core.HuntMonster("underworld", "Skull Warrior", "Undead Skull", 3, log: false);
             Core.HuntMonster("underworld", "Skull Warrior", "Legion Champion Medal", 5, log: false);
@@ -555,25 +481,8 @@ public class CoreNation
         while (!Bot.ShouldExit && !Core.CheckInventory("Tainted Gem", quant))
         {
             Core.EnsureAccept(questId);
-            Core.KillMonster(
-                "boxes",
-                "Fort2",
-                "Left",
-                "*",
-                "Cubes",
-                cubeKillCount,
-                false,
-                log: false
-            );
-            Core.KillMonster(
-                "mountfrost",
-                "War",
-                "Left",
-                "Snow Golem",
-                "Ice Cubes",
-                snowGolemKillCount,
-                log: false
-            );
+            Core.KillMonster("boxes", "Fort2", "Left", "*", "Cubes", cubeKillCount, false, log: false);
+            Core.KillMonster("mountfrost", "War", "Left", "Snow Golem", "Ice Cubes", snowGolemKillCount, log: false);
             Core.EnsureComplete(questId);
 
             Bot.Wait.ForPickup("Tainted Gem");
@@ -735,21 +644,8 @@ public class CoreNation
         Core.RegisterQuests(4748);
         while (!Bot.ShouldExit && !Core.CheckInventory("Emblem of Nulgath", quant))
         {
-            Core.HuntMonster(
-                "shadowblast",
-                "Shadowrise Guard",
-                "Gem of Domination",
-                isTemp: false,
-                log: false
-            );
-            Core.HuntMonster(
-                "shadowblast",
-                "Legion Fenrir",
-                "Fiend Seal",
-                25,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("shadowblast", "Shadowrise Guard", "Gem of Domination", isTemp: false, log: false);
+            Core.HuntMonster("shadowblast", "Legion Fenrir", "Fiend Seal", 25, isTemp: false, log: false);
         }
     }
 
@@ -786,54 +682,24 @@ public class CoreNation
                     // The Nation Needs YOU!
                     case "Nation Round 1 Medal":
                         Core.EnsureAccept(4744);
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Legion AirStrike",
-                            "Legion Rookie Defeated",
-                            5
-                        );
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Shadowrise Guard",
-                            "Shadowscythe Rookie Defeated",
-                            5
-                        );
+                        Core.HuntMonster("shadowblast", "Legion AirStrike", "Legion Rookie Defeated", 5);
+                        Core.HuntMonster("shadowblast", "Shadowrise Guard", "Shadowscythe Rookie Defeated", 5);
                         Core.EnsureComplete(4744);
                         break;
 
                     // Show Me More, Nation-Noob
                     case "Nation Round 2 Medal":
                         Core.EnsureAccept(4745);
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Legion Fenrir",
-                            "Legion Veteran Defeated",
-                            7
-                        );
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Doombringer",
-                            "Shadowscythe Veteran Defeated",
-                            7
-                        );
+                        Core.HuntMonster("shadowblast", "Legion Fenrir", "Legion Veteran Defeated", 7);
+                        Core.HuntMonster("shadowblast", "Doombringer", "Shadowscythe Veteran Defeated", 7);
                         Core.EnsureComplete(4745);
                         break;
 
                     // For the Nation!
                     case "Nation Round 3 Medal":
                         Core.EnsureAccept(4746);
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Legion Cannon",
-                            "Legion Elite Defeated",
-                            10
-                        );
-                        Core.HuntMonster(
-                            "shadowblast",
-                            "Draconic Doomknight",
-                            "Shadowscythe Elite Defeated",
-                            10
-                        );
+                        Core.HuntMonster("shadowblast", "Legion Cannon", "Legion Elite Defeated", 10);
+                        Core.HuntMonster("shadowblast", "Draconic Doomknight", "Shadowscythe Elite Defeated", 10);
                         Core.EnsureComplete(4746);
                         break;
 
@@ -908,15 +774,7 @@ public class CoreNation
 
         Core.AddDrop("Essence of Nulgath");
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "tercessuinotlim",
-            "m2",
-            "Left",
-            "Dark Makai",
-            "Essence of Nulgath",
-            quant,
-            false
-        );
+        Core.KillMonster("tercessuinotlim", "m2", "Left", "Dark Makai", "Essence of Nulgath", quant, false);
         Core.JumpWait();
     }
 
@@ -1938,13 +1796,7 @@ public class CoreNation
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5);
                     Core.HuntMonster("hydra", "Fire Imp", "Imp Flame", 3, log: false);
-                    Core.HuntMonster(
-                        "battleunderc",
-                        "Crystalized Jellyfish",
-                        "Aquamarine of Nulgath",
-                        3,
-                        false
-                    );
+                    Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false);
                     Core.EnsureComplete(questId);
                 }
             }
@@ -1965,13 +1817,7 @@ public class CoreNation
                 Core.EquipClass(ClassType.Farm);
                 Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5);
                 Core.HuntMonster("hydra", "Fire Imp", "Imp Flame", 3, log: false);
-                Core.HuntMonster(
-                    "battleunderc",
-                    "Crystalized Jellyfish",
-                    "Aquamarine of Nulgath",
-                    3,
-                    false
-                );
+                Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false);
                 Core.EnsureComplete(Core.CheckInventory(38275) ? 5662 : 5659);
             }
         }
@@ -2440,12 +2286,7 @@ public class CoreNation
             else
             {
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster(
-                    "tercessuinotlim",
-                    "Taro Blademaster",
-                    "Taro's Manslayer",
-                    isTemp: false
-                );
+                Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
             }
             Core.EnsureComplete(726);
             Bot.Wait.ForQuestComplete(726);
@@ -2513,12 +2354,7 @@ public class CoreNation
         Farm.GoodREP(8);
 
         Core.EnsureAccept(548);
-        Core.HuntMonster(
-            "battleundera",
-            "Undead Berserker",
-            "Warrior Claymore Blade",
-            isTemp: false
-        );
+        Core.HuntMonster("battleundera", "Undead Berserker", "Warrior Claymore Blade", isTemp: false);
         Core.EnsureComplete(548);
     }
 
@@ -2661,28 +2497,12 @@ public class CoreNation
 
             if (!Core.CheckInventory("Tendurrr The Assistant"))
             {
-                Core.KillMonster(
-                    "tercessuinotlim",
-                    "m2",
-                    "Left",
-                    "*",
-                    "Tendurrr The Assistant",
-                    isTemp: false,
-                    log: false
-                );
+                Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Tendurrr The Assistant", isTemp: false, log: false);
                 Core.JumpWait();
             }
 
             Core.KillMonster("blindingsnow", "r17", "Left", "*", "Fragment of Chaos", 80, false);
-            Core.KillMonster(
-                "evilwarnul",
-                "r13",
-                "Left",
-                "Legion Fenrir",
-                "Broken Betrayal Blade",
-                8,
-                false
-            );
+            Core.KillMonster("evilwarnul", "r13", "Left", "Legion Fenrir", "Broken Betrayal Blade", 8, false);
             Core.EnsureComplete(3743);
             Bot.Wait.ForQuestComplete(3743);
 
@@ -2771,13 +2591,7 @@ public class CoreNation
             EssenceofNulgath(100);
             FarmTotemofNulgath(1);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "ShadowfallWar",
-                "Bonemuncher",
-                "Ultimate Darkness Gem",
-                5,
-                isTemp: false
-            );
+            Core.HuntMonster("ShadowfallWar", "Bonemuncher", "Ultimate Darkness Gem", 5, isTemp: false);
             Core.EnsureComplete(demandingApprovalQuest);
             Bot.Wait.ForPickup("Gemstone Receipt of Nulgath");
         }
@@ -2801,24 +2615,8 @@ public class CoreNation
             int unluckyExplorerCount = Core.IsMember ? 8 : 10;
             int spacetimeAnomalyCount = Core.IsMember ? 5 : 7;
 
-            Core.KillMonster(
-                "crashruins",
-                "r2",
-                "Left",
-                "Unlucky Explorer",
-                "Ancient Treasure",
-                unluckyExplorerCount,
-                log: false
-            );
-            Core.KillMonster(
-                "crashruins",
-                "r2",
-                "Left",
-                "Spacetime Anomaly",
-                "Pieces of Future Tech",
-                spacetimeAnomalyCount,
-                log: false
-            );
+            Core.KillMonster("crashruins", "r2", "Left", "Unlucky Explorer", "Ancient Treasure", unluckyExplorerCount, log: false);
+            Core.KillMonster("crashruins", "r2", "Left", "Spacetime Anomaly", "Pieces of Future Tech", spacetimeAnomalyCount, log: false);
             Core.HuntMonster("crashruins", "Cluckmoo Idol", "Idol Heart", log: false);
         }
 
@@ -3064,14 +2862,7 @@ public class CoreNation
             return;
 
         // Required items
-        Core.KillMonster(
-            "tercessuinotlim",
-            "m4",
-            "Right",
-            "Shadow of Nulgath",
-            "Hadean Onyx of Nulgath",
-            isTemp: false
-        );
+        Core.KillMonster("tercessuinotlim", "m4", "Right", "Shadow of Nulgath", "Hadean Onyx of Nulgath", isTemp: false);
         GemStoneReceiptOfNulgath(1);
         Supplies("Unidentified 5");
 
@@ -3150,14 +2941,7 @@ public class CoreNation
             while (!Bot.ShouldExit && Core.CheckInventory(Uni(13)))
             {
                 Core.EnsureAccept(554);
-                Core.KillMonster(
-                    "underworld",
-                    "r2",
-                    "up",
-                    "Undead Legend",
-                    "Undead Legend Rune",
-                    log: false
-                );
+                Core.KillMonster("underworld", "r2", "up", "Undead Legend", "Undead Legend Rune", log: false);
                 Core.EnsureComplete(554);
             }
         }

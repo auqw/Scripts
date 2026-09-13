@@ -61,13 +61,7 @@ public class ForTheCraterGood
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1176);
-            Core.HuntMonster(
-                "moonyardb",
-                "Robo Guard",
-                "Ultimate Security Bot Defeated",
-                600,
-                false
-            );
+            Core.HuntMonster("moonyardb", "Robo Guard", "Ultimate Security Bot Defeated", 600, false);
             Bot.Quests.UnregisterQuests(1176);
         }
 

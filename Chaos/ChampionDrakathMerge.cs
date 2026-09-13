@@ -196,12 +196,7 @@ public class ChampionDrakathMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
                     Bot.Quests.UpdateQuest(2814);
-                    Core.HuntMonster(
-                        "stormtemple",
-                        "Chaos Lord Lionfang",
-                        req.Name, quant,
-                        req.Temp, false
-                    );
+                    Core.HuntMonster("stormtemple", "Chaos Lord Lionfang", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Chaos Shogun Armor":
@@ -261,14 +256,7 @@ public class ChampionDrakathMerge
                 case "Blade of Chaos":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "ultradrakath",
-                        "Champion of Chaos",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("ultradrakath", "Champion of Chaos", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -316,28 +304,14 @@ public class ChampionDrakathMerge
                 case "Ledgermayne":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "ledgermayne",
-                        "Ledgermayne",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("ledgermayne", "Ledgermayne", req.Name, quant, req.Temp, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Discordia Rose of Chaos":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "palooza",
-                        "Chaos Lord Discordia",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("palooza", "Chaos Lord Discordia", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -357,14 +331,7 @@ public class ChampionDrakathMerge
                 case "Chaos Rose":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "palooza",
-                        "Chaos Lord Discordia",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("palooza", "Chaos Lord Discordia", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

@@ -101,17 +101,8 @@ public class BowJanglesMerge
                     Core.RegisterQuests(7829);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "goldenruins",
-                            "Golden Warrior",
-                            "Golden Warriors Trashed",
-                            6
-                        );
-                        Core.HuntMonster(
-                            "goldenruins",
-                            "Maximillian Lionfang",
-                            "Lionfang Thrown Out"
-                        );
+                        Core.HuntMonster("goldenruins", "Golden Warrior", "Golden Warriors Trashed", 6);
+                        Core.HuntMonster("goldenruins", "Maximillian Lionfang", "Lionfang Thrown Out");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

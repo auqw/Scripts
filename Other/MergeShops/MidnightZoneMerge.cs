@@ -97,14 +97,7 @@ public class MidnightZoneMerge
                 case "Undine Base Scrip":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "sunlightzone",
-                        "Infernal Illusion",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("sunlightzone", "Infernal Illusion", req.Name, quant, false, false);
                     break;
 
                 case "Water Elf Pearl":
@@ -115,13 +108,7 @@ public class MidnightZoneMerge
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("midnightzone", "Sparagmos", "Memory Card", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "midnightzone",
-                            "Shadow Viscera",
-                            "Fleshy Shadows",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("midnightzone", "Shadow Viscera", "Fleshy Shadows", 8, log: false);
                         Core.HuntMonster("midnightzone", "Venerated Wraith", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }

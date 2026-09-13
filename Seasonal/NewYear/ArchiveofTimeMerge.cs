@@ -97,14 +97,7 @@ public class ArchiveofTimeMerge
                 case "Aegis Armor":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "cathedral",
-                        "Skeletal Warrior",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("cathedral", "Skeletal Warrior", req.Name, quant, false, false);
                     break;
 
                 case "Aegis Robe":
@@ -116,27 +109,13 @@ public class ArchiveofTimeMerge
                 case "Aegis Ward":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "cathedral",
-                        "Pactagonal Knight",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("cathedral", "Pactagonal Knight", req.Name, quant, false, false);
                     break;
 
                 case "Blessed Metal":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "cathedral",
-                        "Corrupted Sentry",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("cathedral", "Corrupted Sentry", req.Name, quant, false, false);
                     break;
 
                 case "Golden Faceplate":
@@ -154,14 +133,7 @@ public class ArchiveofTimeMerge
                 case "Time Key":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "cathedral",
-                        "Incarnation of Time",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("cathedral", "Incarnation of Time", req.Name, quant, false, false);
                     break;
             }
         }

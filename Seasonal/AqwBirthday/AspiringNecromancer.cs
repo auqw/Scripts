@@ -42,13 +42,7 @@ public class AspiringNecromancer
         //I Want to Be The Very Best Necromancer 7751
         Core.RegisterQuests(7751);
         while (!Bot.ShouldExit && !Core.CheckInventory(Quest1Rewards, toInv: false))
-            Core.HuntMonster(
-                "BattleunderA",
-                "Skeletal Warrior",
-                "Skeleton Captured",
-                10,
-                log: false
-            );
+            Core.HuntMonster("BattleunderA", "Skeletal Warrior", "Skeleton Captured", 10, log: false);
         Core.JumpWait();
         Core.CancelRegisteredQuests();
         Core.ToBank(AllRewards);

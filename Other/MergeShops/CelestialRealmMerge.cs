@@ -105,13 +105,7 @@ public class CelestialRealmMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "Celestialrealm",
-                            "Fallen Knight",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("Celestialrealm", "Fallen Knight", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -123,11 +117,7 @@ public class CelestialRealmMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Defeat the Diabolical Warlord! 4508
-                        Core.HuntMonster(
-                            "lostruinswar",
-                            "Diabolical Warlord",
-                            "Diabolical Warlord Defeated!"
-                        );
+                        Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Diabolical Warlord Defeated!");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -137,13 +127,7 @@ public class CelestialRealmMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "lostruinswar",
-                            "Diabolical Warlord",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("lostruinswar", "Diabolical Warlord", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

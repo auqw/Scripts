@@ -167,15 +167,7 @@ public class DoomMerge
 
                     // Equip the farming class and start killing monsters
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "dwarfhold",
-                        "r2",
-                        "Left",
-                        "Chaos Drow",
-                        req.Name,
-                        quant,
-                        false
-                    );
+                    Core.KillMonster("dwarfhold", "r2", "Left", "Chaos Drow", req.Name, quant, false);
                     break;
 
                 case "Undead Energy":

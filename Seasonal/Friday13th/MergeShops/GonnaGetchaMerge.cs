@@ -93,20 +93,8 @@ public class GonnaGetchaMerge
                     Core.RegisterQuests(6269);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "gonnagetcha",
-                            "Vengeful Ghost",
-                            "Ghost Gone",
-                            2,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "gonnagetcha",
-                            "Shrade Cultist",
-                            "Cultist Cleared",
-                            6,
-                            log: false
-                        );
+                        Core.HuntMonster("gonnagetcha", "Vengeful Ghost", "Ghost Gone", 2, log: false);
+                        Core.HuntMonster("gonnagetcha", "Shrade Cultist", "Cultist Cleared", 6, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

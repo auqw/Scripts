@@ -59,14 +59,7 @@ public class CoreAstravia
         if (!Story.QuestProgression(7770))
         {
             Core.EnsureAccept(7770);
-            Core.KillMonster(
-                "eridani",
-                "Enter",
-                "Spawn",
-                "Maggot-Like Creature",
-                "Dress Scraps",
-                5
-            );
+            Core.KillMonster("eridani", "Enter", "Spawn", "Maggot-Like Creature", "Dress Scraps", 5);
             Core.EnsureComplete(7770);
         }
 
@@ -74,14 +67,7 @@ public class CoreAstravia
         if (!Story.QuestProgression(7771))
         {
             Core.EnsureAccept(7771);
-            Core.KillMonster(
-                "eridani",
-                "r10",
-                "Right",
-                "Rat-Like Creature",
-                "Rats Exterminated",
-                5
-            );
+            Core.KillMonster("eridani", "r10", "Right", "Rat-Like Creature", "Rats Exterminated", 5);
             Core.EnsureComplete(7771);
         }
 

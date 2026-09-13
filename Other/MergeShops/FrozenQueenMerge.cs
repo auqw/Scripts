@@ -95,16 +95,7 @@ public class FrozenQueenMerge
 
                 case "Ice Vapor":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.KillMonster(
-                        "lair",
-                        "Enter",
-                        "Spawn",
-                        "*",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.KillMonster("lair", "Enter", "Spawn", "*", req.Name, quant, req.Temp, false);
                     break;
             }
         }

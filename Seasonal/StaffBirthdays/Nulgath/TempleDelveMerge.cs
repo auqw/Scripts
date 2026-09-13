@@ -119,12 +119,7 @@ public class TempleDelveMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "templedelve",
-                            "Delirious Elemental",
-                            "Elemental Study",
-                            6
-                        );
+                        Core.HuntMonster("templedelve", "Delirious Elemental", "Elemental Study", 6);
                         Core.HuntMonster("templedelve", "Infested Nation", "Infestation Study", 6);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("templedelve", "Doomed Fiend", "Fiend Worm");

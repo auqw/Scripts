@@ -148,13 +148,7 @@ public class DragonOfTime
             Core.EnsureAccept(7717);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "dragonchallenge",
-                "Desoloth the Final",
-                "Desoloth's Destructive Aura",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("dragonchallenge", "Desoloth the Final", "Desoloth's Destructive Aura", isTemp: false, publicRoom: true);
 
             Bot.Quests.UpdateQuest(899);
             Core.HuntMonster("blindingsnow", "Nythera", "Nythera's Patience", isTemp: false);
@@ -204,13 +198,7 @@ public class DragonOfTime
             Core.EnsureAccept(7719);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "cathedral",
-                "Incarnation of Time",
-                "Time Loop Broken",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("cathedral", "Incarnation of Time", "Time Loop Broken", isTemp: false, publicRoom: true);
 
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("portalwar", "r4", "Right", "*", "Anomaly Silenced", 100, false);
@@ -427,13 +415,7 @@ public class DragonOfTime
         Core.EnsureAccept(7719);
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "cathedral",
-            "Incarnation of Time",
-            "Time Loop Broken",
-            isTemp: false,
-            publicRoom: true
-        );
+        Core.HuntMonster("cathedral", "Incarnation of Time", "Time Loop Broken", isTemp: false, publicRoom: true);
 
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster("portalwar", "r4", "Right", "*", "Anomaly Silenced", 100, false);

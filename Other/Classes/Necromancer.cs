@@ -47,15 +47,7 @@ public class Necromancer
         Farm.DoomWoodREP();
         Core.BuyItem("lightguard", 277, "NUE Necronomicon");
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster(
-            "maul",
-            "r3",
-            "Down",
-            "Creature Creation",
-            "Creature Shard",
-            isTemp: false,
-            publicRoom: true
-        );
+        Core.KillMonster("maul", "r3", "Down", "Creature Creation", "Creature Shard", isTemp: false, publicRoom: true);
         Core.BuyItem("necrotower", 285, "Necromancer");
 
         if (rankUpClass)

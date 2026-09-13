@@ -120,15 +120,7 @@ public class CragsGemMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7279);
-                        Core.KillMonster(
-                            "kingcoal",
-                            "r1",
-                            "Left",
-                            "*",
-                            "Frozen Coal",
-                            10,
-                            log: false
-                        );
+                        Core.KillMonster("kingcoal", "r1", "Left", "*", "Frozen Coal", 10, log: false);
                         Core.EnsureComplete(7279);
                         Bot.Wait.ForPickup("Ice Diamond");
                     }
@@ -177,25 +169,10 @@ public class CragsGemMerge
                     Core.RegisterQuests(7291);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "earthstorm",
-                            "Diamond Golem",
-                            "Chip of Diamond",
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "earthstorm",
-                            "Emerald Golem",
-                            "Chip of Emerald",
-                            log: false
-                        );
+                        Core.HuntMonster("earthstorm", "Diamond Golem", "Chip of Diamond", log: false);
+                        Core.HuntMonster("earthstorm", "Emerald Golem", "Chip of Emerald", log: false);
                         Core.HuntMonster("earthstorm", "Ruby Golem", "Chip of Ruby", log: false);
-                        Core.HuntMonster(
-                            "earthstorm",
-                            "Sapphire Golem",
-                            "Chip of Sapphire",
-                            log: false
-                        );
+                        Core.HuntMonster("earthstorm", "Sapphire Golem", "Chip of Sapphire", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

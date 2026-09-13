@@ -72,24 +72,11 @@ public class LegionExercise2
         {
             Core.EnsureAccept(822);
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "darkoviagrave",
-                "Skeletal Fire Mage",
-                "Charred Skull",
-                20,
-                isTemp: false,
-                publicRoom: false
-            );
+            Core.HuntMonster("darkoviagrave", "Skeletal Fire Mage", "Charred Skull", 20, isTemp: false, publicRoom: false);
             Core.HuntMonster("mudluk", "Tiger Leech", "Intact Tiger Leech Hide", publicRoom: false);
             Core.Sleep(2500);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "sewer",
-                "Grumble",
-                "Grumble's Curse",
-                isTemp: false,
-                publicRoom: false
-            );
+            Core.HuntMonster("sewer", "Grumble", "Grumble's Curse", isTemp: false, publicRoom: false);
             Core.EnsureComplete(822);
             Core.Logger($"Finished Quest {i++} Times");
         }

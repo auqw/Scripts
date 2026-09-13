@@ -138,12 +138,7 @@ public class MagnisMerge
                     Core.RegisterQuests(10332);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "dwarfhold",
-                            "Chaotic Draconian",
-                            "Draconian Chaos Ether",
-                            8
-                        );
+                        Core.HuntMonster("dwarfhold", "Chaotic Draconian", "Draconian Chaos Ether", 8);
                         Core.HuntMonster("dwarfhold", "Chaos Drow", "Drow Chaos Ether", 8);
                         Bot.Wait.ForPickup(req.Name);
                     }

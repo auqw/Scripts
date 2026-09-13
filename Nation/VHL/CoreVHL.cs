@@ -118,14 +118,7 @@ public class CoreVHL
         {
             Core.EnsureAccept(5660);
 
-            Core.KillMonster(
-                "tercessuinotlim",
-                "m4",
-                "Right",
-                "Shadow of Nulgath",
-                "Hadean Onyx of Nulgath",
-                isTemp: false
-            );
+            Core.KillMonster("tercessuinotlim", "m4", "Right", "Shadow of Nulgath", "Hadean Onyx of Nulgath", isTemp: false);
             if (
                 !Core.CheckInventory(
                     "Elders' Blood",

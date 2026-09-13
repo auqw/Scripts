@@ -149,15 +149,7 @@ public class NightmareCarnaxMerge
 
                 case "Perfect Orochi Scales":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "shadowfortress",
-                        "r12",
-                        "Bottom",
-                        "*",
-                        req.Name,
-                        quant,
-                        false
-                    );
+                    Core.KillMonster("shadowfortress", "r12", "Bottom", "*", req.Name, quant, false);
                     break;
 
                 case "Energized Aura":

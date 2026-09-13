@@ -117,13 +117,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "castleparty",
-                        "Legion Partycrasher",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("castleparty", "Legion Partycrasher", req.Name, quant, req.Temp);
                     break;
 
                 case "Gold Voucher 25k":
@@ -169,14 +163,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "castleparty",
-                        "Kathool's Gift",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("castleparty", "Kathool's Gift", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Flux Sigil":
@@ -189,14 +176,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "castleparty",
-                        "Drakath's Gift",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("castleparty", "Drakath's Gift", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Darkness Rune":

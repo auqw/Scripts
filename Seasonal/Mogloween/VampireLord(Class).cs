@@ -51,24 +51,8 @@ public class VampireLord
             Core.EnsureAccept(Core.IsMember ? 6060 : 6059);
 
             //farm 33x turn-in quants
-            Core.KillMonster(
-                "bloodmoon",
-                "r12a",
-                "Left",
-                "Black Unicorn",
-                "Black Blood Vial",
-                99,
-                isTemp: false
-            );
-            Core.KillMonster(
-                "bloodmoon",
-                "r4a",
-                "Left",
-                "Lycan Guard",
-                "Moon Stone",
-                33,
-                isTemp: false
-            );
+            Core.KillMonster("bloodmoon", "r12a", "Left", "Black Unicorn", "Black Blood Vial", 99, isTemp: false);
+            Core.KillMonster("bloodmoon", "r4a", "Left", "Lycan Guard", "Moon Stone", 33, isTemp: false);
 
             //turning x33
             Core.EnsureCompleteMulti(Core.IsMember ? 6060 : 6059);

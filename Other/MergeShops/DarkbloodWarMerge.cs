@@ -106,14 +106,7 @@ public class DarkbloodWarMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.KillMonster("kolyaban", "r2", "Left", "*", "Acolyte's Medallion", 4);
-                        Core.KillMonster(
-                            "kolyaban",
-                            "r2",
-                            "Left",
-                            "*",
-                            "Acolyte's Mega Medallion",
-                            2
-                        );
+                        Core.KillMonster("kolyaban", "r2", "Left", "*", "Acolyte's Mega Medallion", 2);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

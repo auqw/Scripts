@@ -54,36 +54,9 @@ public class TheGreenWeaponSnack
             Core.RegisterQuests(QuestID);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
             {
-                Core.KillMonster(
-                    "gardenquest",
-                    "r2",
-                    "Right",
-                    "Overconfident Radish",
-                    "Spices",
-                    10,
-                    false,
-                    false
-                );
-                Core.KillMonster(
-                    "gardenquest",
-                    "r3",
-                    "Right",
-                    "Silly Karrot",
-                    "Salt + Sugar",
-                    10,
-                    false,
-                    false
-                );
-                Core.KillMonster(
-                    "gardenquest",
-                    "r7",
-                    "Right",
-                    "Vegetable Prince",
-                    "Cucumber",
-                    10,
-                    false,
-                    false
-                );
+                Core.KillMonster("gardenquest", "r2", "Right", "Overconfident Radish", "Spices", 10, false, false);
+                Core.KillMonster("gardenquest", "r3", "Right", "Silly Karrot", "Salt + Sugar", 10, false, false);
+                Core.KillMonster("gardenquest", "r7", "Right", "Vegetable Prince", "Cucumber", 10, false, false);
             }
             Core.CancelRegisteredQuests();
             Core.JumpWait();

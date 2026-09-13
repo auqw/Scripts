@@ -153,15 +153,7 @@ public class ArcanaInvoker
         {
             Core.EnsureAccept(9693);
             // ItemBase[] reqs = Core.EnsureLoad(9693).Requirements.ToArray();
-            Core.KillMonster(
-                "oaklore",
-                "r1",
-                "Spawn",
-                "Undead Infantry",
-                "0 - The Fool's Humble Beginnings",
-                1,
-                false
-            );
+            Core.KillMonster("oaklore", "r1", "Spawn", "Undead Infantry", "0 - The Fool's Humble Beginnings", 1, false);
             foreach (
                 ItemBase req in Core.EnsureLoad(9693)
                     .Requirements.Where(x => x.Name != "0 - The Fool's Humble Beginnings")

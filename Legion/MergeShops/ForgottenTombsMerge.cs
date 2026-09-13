@@ -75,16 +75,7 @@ public class ForgottenTombsMerge
                 case "Ancient Sigil":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4196, 4197);
-                    Core.KillMonster(
-                        "legioncrypt",
-                        "r3",
-                        "Top",
-                        "*",
-                        req.Name,
-                        quant,
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.KillMonster("legioncrypt", "r3", "Top", "*", req.Name, quant, isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
@@ -108,13 +99,7 @@ public class ForgottenTombsMerge
                                 break;
 
                             Core.EquipClass(kvp.Value.Item2);
-                            Core.KillMonster(
-                                "legioncrypt",
-                                kvp.Key != "Brutus" ? "r3" : "r9",
-                                kvp.Key != "Brutus" ? "Top" : "Bottom",
-                                kvp.Key != "Brutus" ? "*" : kvp.Key,
-                                kvp.Value.Item1
-                            );
+                            Core.KillMonster("legioncrypt", kvp.Key != "Brutus" ? "r3" : "r9", kvp.Key != "Brutus" ? "Top" : "Bottom", kvp.Key != "Brutus" ? "*" : kvp.Key, kvp.Value.Item1);
                             Bot.Wait.ForPickup(kvp.Value.Item1);
                         }
                         Core.EnsureComplete(9664);

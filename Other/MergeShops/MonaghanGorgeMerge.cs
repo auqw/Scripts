@@ -124,14 +124,7 @@ public class MonaghanGorgeMerge
                 case "Trickster's Hidden Grin":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "monaghangorge",
-                        "Trickster Duartaine",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("monaghangorge", "Trickster Duartaine", req.Name, quant, req.Temp, false);
                     break;
             }
         }

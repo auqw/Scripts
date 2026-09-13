@@ -110,38 +110,10 @@ public class LoreTrekMerge
                     Core.RegisterQuests(5067);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "wormhole",
-                            "r5",
-                            "Left",
-                            "Blue Trobbolier",
-                            "Blue Trobbolier Fluff",
-                            4
-                        );
-                        Core.KillMonster(
-                            "wormhole",
-                            "r8",
-                            "Left",
-                            "Purple Trobbolier",
-                            "Purple Trobbolier Fluff",
-                            4
-                        );
-                        Core.KillMonster(
-                            "wormhole",
-                            "r8",
-                            "Left",
-                            "Green Trobbolier",
-                            "Green Trobbolier Fluff",
-                            4
-                        );
-                        Core.KillMonster(
-                            "wormhole",
-                            "r5",
-                            "Left",
-                            "Red Trobbolier",
-                            "Red Trobbolier Fluff",
-                            4
-                        );
+                        Core.KillMonster("wormhole", "r5", "Left", "Blue Trobbolier", "Blue Trobbolier Fluff", 4);
+                        Core.KillMonster("wormhole", "r8", "Left", "Purple Trobbolier", "Purple Trobbolier Fluff", 4);
+                        Core.KillMonster("wormhole", "r8", "Left", "Green Trobbolier", "Green Trobbolier Fluff", 4);
+                        Core.KillMonster("wormhole", "r5", "Left", "Red Trobbolier", "Red Trobbolier Fluff", 4);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

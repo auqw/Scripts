@@ -131,13 +131,7 @@ public class TechfortressWarMerge
 
                 case "Unicorn Essence":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "undergroundlabb",
-                        "Ultra Brutalcorn",
-                        "Unicorn Essence",
-                        quant,
-                        false
-                    );
+                    Core.HuntMonster("undergroundlabb", "Ultra Brutalcorn", "Unicorn Essence", quant, false);
                     break;
 
                 case "Silver":
@@ -176,24 +170,8 @@ public class TechfortressWarMerge
                         while (!Bot.ShouldExit && !Core.CheckInventory(55903, 10))
                             Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false);
                             
-                        Core.KillMonster(
-                            "dflesson",
-                            "r3",
-                            "Right",
-                            "Fire Elemental",
-                            "Fire Elemental's Bracer",
-                            5,
-                            isTemp: false
-                        );
-                        Core.KillMonster(
-                            "dflesson",
-                            "r6",
-                            "Right",
-                            "Tog",
-                            "Tog Claw",
-                            5,
-                            isTemp: false
-                        );
+                        Core.KillMonster("dflesson", "r3", "Right", "Fire Elemental", "Fire Elemental's Bracer", 5, isTemp: false);
+                        Core.KillMonster("dflesson", "r6", "Right", "Tog", "Tog Claw", 5, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -213,34 +191,14 @@ public class TechfortressWarMerge
                                 Core.HuntMonster("earthstorm", "Diamond Golem", "Chip of Diamond");
                                 Core.HuntMonster("earthstorm", "Emerald Golem", "Chip of Emerald");
                                 Core.HuntMonster("earthstorm", "Ruby Golem", "Chip of Ruby");
-                                Core.HuntMonster(
-                                    "earthstorm",
-                                    "Sapphire Golem",
-                                    "Chip of Sapphire"
-                                );
+                                Core.HuntMonster("earthstorm", "Sapphire Golem", "Chip of Sapphire");
 
                                 Bot.Wait.ForPickup("Rainbow Moonstone");
                             }
                         }
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "doomwood",
-                            "r10",
-                            "Right",
-                            "Undead Paladin",
-                            "Purification Orb",
-                            10,
-                            isTemp: false
-                        );
-                        Core.KillMonster(
-                            "desolich",
-                            "r3",
-                            "Left",
-                            "Desolich",
-                            "Desolich's Dark Horn",
-                            3,
-                            isTemp: false
-                        );
+                        Core.KillMonster("doomwood", "r10", "Right", "Undead Paladin", "Purification Orb", 10, isTemp: false);
+                        Core.KillMonster("desolich", "r3", "Left", "Desolich", "Desolich's Dark Horn", 3, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

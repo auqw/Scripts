@@ -73,12 +73,7 @@ public class TaintedClaymore
         Farm.EvilREP(8);
 
         Core.EnsureAccept(121);
-        Core.HuntMonster(
-            "battleundera",
-            "Undead Berserker",
-            "Warrior Claymore Blade",
-            isTemp: false
-        );
+        Core.HuntMonster("battleundera", "Undead Berserker", "Warrior Claymore Blade", isTemp: false);
         Core.EnsureComplete(121);
     }
 }

@@ -117,14 +117,7 @@ public class StarSinc
 
                 case 4405: // Chaos Fragments
                     Core.Logger("Nova Badge 6");
-                    Core.KillMonster(
-                        "watchtower",
-                        "Frame2",
-                        "Left",
-                        "Chaos Spider",
-                        "Chaos Fragment",
-                        10
-                    );
+                    Core.KillMonster("watchtower", "Frame2", "Left", "Chaos Spider", "Chaos Fragment", 10);
                     break;
 
                 case 4406: // Kill Them All

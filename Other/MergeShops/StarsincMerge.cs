@@ -115,11 +115,7 @@ public class StarsincMerge
                     Core.RegisterQuests(4289);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dreadspace",
-                            "Undead Space Marine",
-                            "Golden Spork of Justice"
-                        );
+                        Core.HuntMonster("dreadspace", "Undead Space Marine", "Golden Spork of Justice");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -137,13 +133,7 @@ public class StarsincMerge
                     Core.RegisterQuests(4413);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "starsinc",
-                            "Living Star",
-                            "Living Star Defeated",
-                            30,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("starsinc", "Living Star", "Living Star Defeated", 30, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -157,13 +147,7 @@ public class StarsincMerge
                         Core.EnsureAccept(4414);
                         Farm.BattleUnderB("Bone Dust", 15);
                         Farm.BludrutBrawlBoss(quant: 5);
-                        Core.HuntMonster(
-                            "starsinc",
-                            "Living Star",
-                            "Living Star Essence",
-                            100,
-                            false
-                        );
+                        Core.HuntMonster("starsinc", "Living Star", "Living Star Essence", 100, false);
                         Core.EnsureComplete(4414);
 
                         Bot.Wait.ForPickup(req.Name);
@@ -176,14 +160,7 @@ public class StarsincMerge
                     Core.RegisterQuests(4415);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "starsinc",
-                            "Empowered Prime",
-                            "Empowered Primed Defeated",
-                            10,
-                            false,
-                            log: false
-                        );
+                        Core.HuntMonster("starsinc", "Empowered Prime", "Empowered Primed Defeated", 10, false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

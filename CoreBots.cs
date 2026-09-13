@@ -5161,14 +5161,7 @@ public class CoreBots
         Bot.Options.AggroMonsters = prevAggro;
     }
 
-    public void KillBossWithSecondary(
-        string map, string cell, string pad,
-        int primaryMapID,
-        int secondaryMapID,
-        string? item = null,
-        int quant = 1,
-        bool isTemp = false,
-        bool log = true)
+    public void KillBossWithSecondary(string map, string cell, string pad, int primaryMapID, int secondaryMapID, string? item = null, int quant = 1, bool isTemp = false, bool log = true)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
@@ -9097,7 +9090,7 @@ public class CoreBots
             .OrderBy(s => pingResults[s.IP])
             .FirstOrDefault();
 
-        if (best != null)
+        if (best is not null)
             Bot.Log($"Most optimal server: {best.Name} ({best.IP}) - {pingResults[best.IP]}ms");
         else
             Bot.Log("Could not determine an optimal server, all hosts failed to connect.");

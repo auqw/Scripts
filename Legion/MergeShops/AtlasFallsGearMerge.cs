@@ -133,15 +133,7 @@ public class AtlasFallsGearMerge
                 case "Arethusa's Black Steel":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "atlasfalls",
-                        "Princess Arethusa",
-                        req.Name,
-                        quant,
-                        false,
-                        false,
-                        true
-                    );
+                    Core.HuntMonster("atlasfalls", "Princess Arethusa", req.Name, quant, false, false, true);
                     break;
 
                 case "Sundered Soul of Atlas":
@@ -153,14 +145,7 @@ public class AtlasFallsGearMerge
                 case "Atlas Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "atlaskingdom",
-                        "Atlas Light Magus",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("atlaskingdom", "Atlas Light Magus", req.Name, quant, false, false);
                     break;
 
                 case "Legion Token":

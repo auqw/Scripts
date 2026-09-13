@@ -140,13 +140,7 @@ public class CastleWhistlerSpoilsMerge
 
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "castlewhistler",
-                            "King of the Dark",
-                            req.Name,
-                            quant,
-                            req.Temp
-                        );
+                        Core.HuntMonster("castlewhistler", "King of the Dark", req.Name, quant, req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
 

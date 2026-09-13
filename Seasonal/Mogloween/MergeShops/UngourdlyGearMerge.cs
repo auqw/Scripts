@@ -114,26 +114,9 @@ public class UngourdlyGearMerge
                     Core.RegisterQuests(Core.IsMember ? 10457 : 10454);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "eldritchbattletown",
-                            "Kathool Kultist",
-                            "Tier 2 Kathool Member Card",
-                            6,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "eldritchbattletown",
-                            "Dzeza Cultist",
-                            "Tier 2 Dzeza Member Card",
-                            6,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "eldritchbattletown",
-                            "Harvest Acromegalia",
-                            "Gourd Twinning",
-                            isTemp: false
-                        );
+                        Core.HuntMonster("eldritchbattletown", "Kathool Kultist", "Tier 2 Kathool Member Card", 6, isTemp: false);
+                        Core.HuntMonster("eldritchbattletown", "Dzeza Cultist", "Tier 2 Dzeza Member Card", 6, isTemp: false);
+                        Core.HuntMonster("eldritchbattletown", "Harvest Acromegalia", "Gourd Twinning", isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

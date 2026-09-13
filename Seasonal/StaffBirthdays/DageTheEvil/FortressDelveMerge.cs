@@ -101,20 +101,8 @@ public class FortressDelveMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "fortressdelve",
-                            "Enlightened Shadow",
-                            "Shadowscythe Bone Shard",
-                            10,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "fortressdelve",
-                            "Delirious Elemental",
-                            "Elemental Residue",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("fortressdelve", "Enlightened Shadow", "Shadowscythe Bone Shard", 10, log: false);
+                        Core.HuntMonster("fortressdelve", "Delirious Elemental", "Elemental Residue", 10, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("fortressdelve", "Astero", "Glass Wing", log: false);
                         Bot.Wait.ForPickup(req.Name);

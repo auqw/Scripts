@@ -107,13 +107,7 @@ public class StarswordMerge
                     {
                         //Gather Energy Beans 4549
                         Core.GetMapItem(3760, 4, "DragonRoad");
-                        Core.HuntMonster(
-                            "DragonRoad",
-                            "Desert Wolf Bandit",
-                            "Energy Bean",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("DragonRoad", "Desert Wolf Bandit", "Energy Bean", 3, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

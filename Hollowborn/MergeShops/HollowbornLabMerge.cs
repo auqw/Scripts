@@ -90,15 +90,7 @@ public class HollowbornLabMerge
                     Core.RegisterQuests(8996); //Hazardous Hybrid 8996
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "hbchallenge",
-                            "r5",
-                            "Left",
-                            "Chaoroot Compound",
-                            "Inert Charoot",
-                            8,
-                            isTemp: false
-                        );
+                        Core.KillMonster("hbchallenge", "r5", "Left", "Chaoroot Compound", "Inert Charoot", 8, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

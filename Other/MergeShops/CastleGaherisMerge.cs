@@ -111,27 +111,10 @@ public class CastleGaherisMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "castlegaheris",
-                            "Glacial Crystal",
-                            "Glacial Memory",
-                            30,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "castlegaheris",
-                            "Elemental Hybrid",
-                            "Hybrid Residue",
-                            9,
-                            log: false
-                        );
+                        Core.HuntMonster("castlegaheris", "Glacial Crystal", "Glacial Memory", 30, log: false);
+                        Core.HuntMonster("castlegaheris", "Elemental Hybrid", "Hybrid Residue", 9, log: false);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "castlegaheris",
-                            "Thundersnow Storm",
-                            "Thundersnow Sigh",
-                            log: false
-                        );
+                        Core.HuntMonster("castlegaheris", "Thundersnow Storm", "Thundersnow Sigh", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -144,28 +127,14 @@ public class CastleGaherisMerge
                 case "Grimoire of Abra-Melin":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "castlegaheris",
-                        "Thundersnow Storm",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("castlegaheris", "Thundersnow Storm", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Delicate Snowflake Rapier":
                 case "Delicate Snowflake Rapiers":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "castlegaheris",
-                        "Glacial Crystal",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("castlegaheris", "Glacial Crystal", req.Name, quant, req.Temp, false);
                     break;
             }
         }

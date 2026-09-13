@@ -175,13 +175,7 @@ public class ArmyFarmVoidAuras
                     }
                     else
                     {
-                        Core.HuntMonster(
-                            stage.map,
-                            stage.monsterName!,
-                            stage.essence,
-                            essenceQuant,
-                            false
-                        );
+                        Core.HuntMonster(stage.map, stage.monsterName!, stage.essence, essenceQuant, false);
                     }
                 }
                 else if (stage.monsterID.HasValue)

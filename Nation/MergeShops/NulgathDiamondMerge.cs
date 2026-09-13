@@ -175,12 +175,7 @@ public class NulgathDiamondMerge
 
                 case "Blade of Holy Might":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "northlands",
-                        "Aisha's Drake",
-                        "Blade of Holy Might",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("northlands", "Aisha's Drake", "Blade of Holy Might", isTemp: false);
                     break;
 
                 case "Blood Gem of the Archfiend":
@@ -214,12 +209,7 @@ public class NulgathDiamondMerge
 
                 case "Staff of Imp Fire":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "bludrut2",
-                        "Fire Elemental",
-                        "Staff of Imp Fire",
-                        isTemp: false
-                    );
+                    Core.HuntMonster("bludrut2", "Fire Elemental", "Staff of Imp Fire", isTemp: false);
                     break;
 
                 case "Cool Head":

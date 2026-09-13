@@ -103,24 +103,8 @@ public class FirePlaneWarMerge
                     Core.RegisterQuests(8125, 8126);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.KillMonster(
-                            "fireplanewar",
-                            "r5",
-                            "Right",
-                            "*",
-                            "War Medal",
-                            5,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "fireplanewar",
-                            "r5",
-                            "Right",
-                            "*",
-                            "Mega War Medal",
-                            3,
-                            log: false
-                        );
+                        Core.KillMonster("fireplanewar", "r5", "Right", "*", "War Medal", 5, log: false);
+                        Core.KillMonster("fireplanewar", "r5", "Right", "*", "Mega War Medal", 3, log: false);
                         Bot.Wait.ForPickup(req.ID);
                     }
                     Core.CancelRegisteredQuests();
@@ -132,12 +116,7 @@ public class FirePlaneWarMerge
                     Core.RegisterQuests(8131);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "fireplanewar",
-                            "ShadowClaw",
-                            "ShadowClaw Defeated",
-                            log: false
-                        );
+                        Core.HuntMonster("fireplanewar", "ShadowClaw", "ShadowClaw Defeated", log: false);
                         Bot.Wait.ForPickup(req.ID);
                     }
                     Core.CancelRegisteredQuests();
@@ -148,13 +127,7 @@ public class FirePlaneWarMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "fireplanewar",
-                            "ShadowFlame Phedra",
-                            req.Name,
-                            quant,
-                            log: false
-                        );
+                        Core.HuntMonster("fireplanewar", "ShadowFlame Phedra", req.Name, quant, log: false);
                         Bot.Wait.ForPickup(req.ID);
                     }
                     break;
@@ -174,13 +147,7 @@ public class FirePlaneWarMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "fireplanewar",
-                            "Shadowflame Soldier",
-                            req.Name,
-                            quant,
-                            log: false
-                        );
+                        Core.HuntMonster("fireplanewar", "Shadowflame Soldier", req.Name, quant, log: false);
                         Bot.Wait.ForPickup(req.ID);
                     }
                     break;
@@ -200,13 +167,7 @@ public class FirePlaneWarMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster(
-                            "fireplanewar",
-                            "Shadefire Onslaught",
-                            req.Name,
-                            quant,
-                            log: false
-                        );
+                        Core.HuntMonster("fireplanewar", "Shadefire Onslaught", req.Name, quant, log: false);
                         Bot.Wait.ForPickup(req.ID);
                     }
                     break;

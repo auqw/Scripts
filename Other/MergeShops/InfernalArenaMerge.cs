@@ -136,66 +136,31 @@ public class InfernalArenaMerge
                                 ? "Legion DoomKnight"
                                 : "Classic Legion DoomKnight"
                         );
-                    Core.HuntMonster(
-                        "infernalarena",
-                        "Cervus Malus",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalarena", "Cervus Malus", req.Name, quant, false, false);
                     break;
 
                 case "Infernal Krampus' Claw":
                 case "Infernal Emblem":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "infernalarena",
-                        "Infernal Krampus",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalarena", "Infernal Krampus", req.Name, quant, false, false);
                     break;
 
                 case "Axe of the Infernal Defiler":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "infernalarena",
-                        "Destructive Defiler",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalarena", "Destructive Defiler", req.Name, quant, false, false);
                     break;
 
                 case "Infernal Incantation":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseBossClass("Dragon of Time");
-                    Core.HuntMonster(
-                        "infernalarena",
-                        "Key of Sholemoh",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalarena", "Key of Sholemoh", req.Name, quant, false, false);
                     break;
 
                 case "Scythe Shard":
                     Core.UseDodgeClass("Lord of Order");
-                    Core.HuntMonster(
-                        "infernalarena",
-                        "Azalith's Scythe",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalarena", "Azalith's Scythe", req.Name, quant, false, false);
                     break;
 
                 case "Duo's Dinner":
@@ -207,14 +172,7 @@ public class InfernalArenaMerge
                 case "Infernal Badge":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "infernalarena",
-                        "Infernal Mage",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("infernalarena", "Infernal Mage", req.Name, quant, false, false);
                     break;
             }
         }

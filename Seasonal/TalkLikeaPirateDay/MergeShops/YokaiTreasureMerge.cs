@@ -111,27 +111,10 @@ public class YokaiTreasureMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "yokaitreasure",
-                            "Admiral Zheng",
-                            "Shapeshifting Pearl",
-                            log: false
-                        );
+                        Core.HuntMonster("yokaitreasure", "Admiral Zheng", "Shapeshifting Pearl", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "yokaitreasure",
-                            "Needle Mouth",
-                            "Condemned Brand",
-                            4,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "yokaitreasure",
-                            "Imperial Warrior",
-                            "Imperial Seal",
-                            4,
-                            log: false
-                        );
+                        Core.HuntMonster("yokaitreasure", "Needle Mouth", "Condemned Brand", 4, log: false);
+                        Core.HuntMonster("yokaitreasure", "Imperial Warrior", "Imperial Seal", 4, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -140,28 +123,14 @@ public class YokaiTreasureMerge
                 case "Mercury Phial":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "yokaitreasure",
-                        "Needle Mouth",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("yokaitreasure", "Needle Mouth", req.Name, quant, false, false);
                     break;
 
                 case "Tengu Typhoon Cutlass":
                 case "Moonlit Steel Rapier":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "yokaitreasure",
-                        "Admiral Zheng",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("yokaitreasure", "Admiral Zheng", req.Name, quant, false, false);
                     break;
 
                 case "Stealthy Sea Hair":
@@ -171,14 +140,7 @@ public class YokaiTreasureMerge
                 case "Iron Flight Cutlass":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "yokaitreasure",
-                        "Imperial Warrior",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("yokaitreasure", "Imperial Warrior", req.Name, quant, false, false);
                     break;
             }
         }

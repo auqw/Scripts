@@ -91,13 +91,7 @@ public class EbilMegaMall
         if (!Story.QuestProgression(10506))
         {
             Core.EnsureAccept(10506);
-            Core.KillMonster(
-                "ebilmegamall",
-                "r6",
-                "Left",
-                "*",
-                Core.QuestRequirements<string>(10506)[0]
-            );
+            Core.KillMonster("ebilmegamall", "r6", "Left", "*", Core.QuestRequirements<string>(10506)[0]);
             Core.EnsureComplete(10506);
         }
 

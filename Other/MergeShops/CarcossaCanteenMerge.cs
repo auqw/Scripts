@@ -148,14 +148,7 @@ public class CarcossaCanteenMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "thelimacity",
-                        "Noelle Knight",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("thelimacity", "Noelle Knight", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Stars of Capella":

@@ -331,12 +331,7 @@ public class YulgarsDualWieldMerge
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(5405);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "sandsea",
-                            "Oasis Monkey",
-                            "Pally Luwak Beans",
-                            log: false
-                        );
+                        Core.HuntMonster("sandsea", "Oasis Monkey", "Pally Luwak Beans", log: false);
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -447,14 +442,7 @@ public class YulgarsDualWieldMerge
                 case "Blood Axe Of Destruction":
                     Core.EquipClass(ClassType.Farm);
                     if (!Core.CheckInventory(req.Name))
-                        Core.KillMonster(
-                            "infernalspire",
-                            "r2",
-                            "Left",
-                            "*",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.KillMonster("infernalspire", "r2", "Left", "*", req.Name, isTemp: false);
                     break;
 
                 case "PainSaw of Eidolon":
@@ -476,13 +464,7 @@ public class YulgarsDualWieldMerge
                     while (!Bot.ShouldExit && (!Core.CheckInventory(req.Name)))
                     {
                         Core.KillMonster("marsh2", "End", "Left", 72, "Soul Scythe", 1, false);
-                        Core.KillMonster(
-                            "marsh2",
-                            "End",
-                            "Left",
-                            "Lesser Shadow Serpent",
-                            "Potent Viper's Blood"
-                        );
+                        Core.KillMonster("marsh2", "End", "Left", "Lesser Shadow Serpent", "Potent Viper's Blood");
                         Core.HuntMonster("battleundera", "Skeletal Ice Mage", "Frostbit Skull", 15);
                     }
                     if (Core.CheckInventory("Judgement Scythe"))
@@ -574,12 +556,7 @@ public class YulgarsDualWieldMerge
                     }
                     Core.EnsureAccept(554);
                     Nation.FarmUni13(1);
-                    Core.HuntMonster(
-                        "underworld",
-                        "Undead Legend",
-                        "Undead Legend Rune",
-                        log: false
-                    );
+                    Core.HuntMonster("underworld", "Undead Legend", "Undead Legend Rune", log: false);
                     Core.EnsureCompleteChoose(554, new[] { "Ddog Sea Serpent Sword" });
                     break;
 
@@ -618,12 +595,7 @@ public class YulgarsDualWieldMerge
                     {
                         Core.EnsureAccept(554);
                         Nation.FarmUni13(1);
-                        Core.HuntMonster(
-                            "underworld",
-                            "Undead Legend",
-                            "Undead Legend Rune",
-                            log: false
-                        );
+                        Core.HuntMonster("underworld", "Undead Legend", "Undead Legend Rune", log: false);
                         Core.EnsureCompleteChoose(554, new[] { "Godly Golden Dragon Axe" });
                     }
                     Nation.FarmDiamondofNulgath(10);
@@ -696,14 +668,7 @@ public class YulgarsDualWieldMerge
                 case "Cruel Axe of Midnight":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
-                        Core.KillMonster(
-                            "greenguardwest",
-                            "BKWest15",
-                            "Down",
-                            "Black Knight",
-                            req.Name,
-                            isTemp: false
-                        );
+                        Core.KillMonster("greenguardwest", "BKWest15", "Down", "Black Knight", req.Name, isTemp: false);
                     break;
 
                 case "Platinum Axe of Destiny":
@@ -797,18 +762,8 @@ public class YulgarsDualWieldMerge
                     {
                         Core.HuntMonster("wind", "Cellot", "Cellot's Death Scale", isTemp: false);
                         Core.HuntMonster("fire", "Zellare", "Zellare's Death Scale", isTemp: false);
-                        Core.HuntMonster(
-                            "water",
-                            "Udaroth",
-                            "Udaroth's Death Scale",
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "dragonplane",
-                            "Moganth",
-                            "Moganth's Death Scale",
-                            isTemp: false
-                        );
+                        Core.HuntMonster("water", "Udaroth", "Udaroth's Death Scale", isTemp: false);
+                        Core.HuntMonster("dragonplane", "Moganth", "Moganth's Death Scale", isTemp: false);
                     }
                     break;
 
@@ -884,12 +839,7 @@ public class YulgarsDualWieldMerge
                     Core.RegisterQuests(5528);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "nostalgiaquest",
-                            "Zardman Grunt",
-                            "Enchanted Rubber Ducky",
-                            log: false
-                        );
+                        Core.HuntMonster("nostalgiaquest", "Zardman Grunt", "Enchanted Rubber Ducky", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -946,14 +896,7 @@ public class YulgarsDualWieldMerge
                 case "Shadowworn":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "shadowrealmpast",
-                        "Shadow Lord",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("shadowrealmpast", "Shadow Lord", req.Name, quant, false, false);
                     break;
 
                 case "Hollowborn Oblivion Blade":

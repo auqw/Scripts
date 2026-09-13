@@ -113,13 +113,7 @@ public class EddensTreasuresMerge
                     Core.RegisterQuests(9795);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "greed",
-                            "Ice Crystal",
-                            "Frozen Diamond Found",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("greed", "Ice Crystal", "Frozen Diamond Found", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

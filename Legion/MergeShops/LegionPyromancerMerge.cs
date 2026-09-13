@@ -120,13 +120,7 @@ public class LegionPyromancerMerge
 
                 case "Flaming Skull":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "underworld",
-                        "Frozen Pyromancer",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("underworld", "Frozen Pyromancer", req.Name, quant, isTemp: false);
                     break;
 
                 case "Darkness Shard":
@@ -161,11 +155,7 @@ public class LegionPyromancerMerge
                     Core.RegisterQuests(6977);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "underworld",
-                            "Frozen Pyromancer",
-                            "Pyromancer Soul Shard"
-                        );
+                        Core.HuntMonster("underworld", "Frozen Pyromancer", "Pyromancer Soul Shard");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -61,20 +61,8 @@ public class DarkWitchyAndCurstedJester
                 Core.EnsureAccept(8375);
 
                 Core.EquipClass(ClassType.Farm);
-                Core.HuntMonster(
-                    "necrocarnival",
-                    "Mooch Treeant",
-                    "Cherry Lemonade",
-                    10,
-                    log: false
-                );
-                Core.HuntMonster(
-                    "necrocarnival",
-                    "Gummy Tapeworm",
-                    "Crunchy Fried Clusters",
-                    5,
-                    log: false
-                );
+                Core.HuntMonster("necrocarnival", "Mooch Treeant", "Cherry Lemonade", 10, log: false);
+                Core.HuntMonster("necrocarnival", "Gummy Tapeworm", "Crunchy Fried Clusters", 5, log: false);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("necrocarnival", "Deva", "Felt Patch", log: false);
 

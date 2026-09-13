@@ -99,13 +99,7 @@ public class DwarfholdMerge
                     Core.RegisterQuests(9237);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "dwarfhold",
-                            "Chaos Drow",
-                            "Broken Drow Blade",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("dwarfhold", "Chaos Drow", "Broken Drow Blade", 5, log: false);
                         Core.HuntMonster("dwarfhold", "Chaotic Draconian", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }

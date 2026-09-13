@@ -297,14 +297,7 @@ public class CoreDoomwood
         if (!Story.QuestProgression(1128))
         {
             Core.EnsureAccept(1128);
-            Core.KillMonster(
-                "temple",
-                "r2",
-                "Up",
-                "Doomwood Bonemuncher",
-                "Masticated Mandible",
-                2
-            );
+            Core.KillMonster("temple", "r2", "Up", "Doomwood Bonemuncher", "Masticated Mandible", 2);
             Core.KillMonster("temple", "r7", "Up", "Sanguine Souleater", "Freed Soul", 4);
             Core.EnsureComplete(1128);
         }
@@ -771,14 +764,7 @@ public class CoreDoomwood
         if (!Story.QuestProgression(7627))
         {
             Core.EnsureAccept(7627);
-            Core.KillMonster(
-                "stonewooddeep",
-                "r3",
-                "Right",
-                "Doomwood Treeant",
-                "Area Cleared",
-                10
-            );
+            Core.KillMonster("stonewooddeep", "r3", "Right", "Doomwood Treeant", "Area Cleared", 10);
             Core.GetMapItem(7531, 6, "stonewooddeep");
             Core.EnsureComplete(7627);
             Core.Jump("r2");
@@ -792,14 +778,7 @@ public class CoreDoomwood
             // Core.Logger("Updatin the map because dummys are dumb");
             // Core.Join("whitemap");
             Core.EnsureAccept(7628);
-            Core.KillMonster(
-                "stonewooddeep",
-                "r3",
-                "Left",
-                "Target Dummy",
-                "Target Dummy Slain",
-                6
-            );
+            Core.KillMonster("stonewooddeep", "r3", "Left", "Target Dummy", "Target Dummy Slain", 6);
             Core.EnsureComplete(7628);
         }
 

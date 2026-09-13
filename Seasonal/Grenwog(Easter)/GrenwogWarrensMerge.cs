@@ -115,73 +115,37 @@ public class GrenwogWarrensMerge
 
                 case "Rubber Egg":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "grenwogwarren",
-                        UseableMonsters[0],
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("grenwogwarren", UseableMonsters[0], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Sugary Egg":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "grenwogwarren",
-                        UseableMonsters[1],
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("grenwogwarren", UseableMonsters[1], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Scaly Egg":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "grenwogwarren",
-                        UseableMonsters[2],
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("grenwogwarren", UseableMonsters[2], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Aged Egg":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "grenwogwarren",
-                        UseableMonsters[3],
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("grenwogwarren", UseableMonsters[3], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Liquid Egg":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "grenwogwarren",
-                        UseableMonsters[4],
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("grenwogwarren", UseableMonsters[4], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Cabdury Egg":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "grenwogwarren",
-                        UseableMonsters[5],
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("grenwogwarren", UseableMonsters[5], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

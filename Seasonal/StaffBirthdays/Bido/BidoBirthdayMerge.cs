@@ -122,11 +122,7 @@ public class BidoBirthdayMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(6980);
-                        Core.HuntMonster(
-                            "well",
-                            "Gell Oh No",
-                            "Piece of Gell Oh No Perfectly Slushied"
-                        );
+                        Core.HuntMonster("well", "Gell Oh No", "Piece of Gell Oh No Perfectly Slushied");
                         Core.HuntMonster("ashfallcamp", "Smoldur", "Smoldur's Shedded Scales", 4);
                         Core.EnsureComplete(6980);
                     }

@@ -87,13 +87,7 @@ public class DageWar50Merge
                 case "UnDeath Core":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "futurewardage",
-                        "SF3017 Paragonator",
-                        req.Name,
-                        quant,
-                        log: false
-                    );
+                    Core.HuntMonster("futurewardage", "SF3017 Paragonator", req.Name, quant, log: false);
                     break;
             }
         }

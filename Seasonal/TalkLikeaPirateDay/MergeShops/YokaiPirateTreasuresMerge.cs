@@ -114,20 +114,10 @@ public class YokaiPirateTreasuresMerge
                     {
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("yokaipirate", "Lord Brentan", "Gold Leaf Brooch");
-                        Core.HuntMonster(
-                            "yokaipirate",
-                            "Neverglades  Knight",
-                            "Knight's Emblem",
-                            7
-                        );
+                        Core.HuntMonster("yokaipirate", "Neverglades  Knight", "Knight's Emblem", 7);
 
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "yokaipirate",
-                            "Disguised Pirate",
-                            "Yokai Pirate's Piece",
-                            7
-                        );
+                        Core.HuntMonster("yokaipirate", "Disguised Pirate", "Yokai Pirate's Piece", 7);
                     }
                     Core.CancelRegisteredQuests();
                     break;
@@ -135,13 +125,7 @@ public class YokaiPirateTreasuresMerge
                 case "Yokai Gunpowder":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "yokaipirate",
-                        "Serpent Warrior Monster",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("yokaipirate", "Serpent Warrior Monster", req.Name, quant, req.Temp);
                     break;
 
                 case "Maurader's Mane":
@@ -159,13 +143,7 @@ public class YokaiPirateTreasuresMerge
                 case "Swashbuckler's Rapier":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "yokaipirate",
-                        "Neverglades  Knight",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.HuntMonster("yokaipirate", "Neverglades  Knight", req.Name, quant, req.Temp);
                     break;
             }
         }

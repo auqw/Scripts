@@ -98,14 +98,7 @@ public class WubblesMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "wubblevania",
-                            "Charmed Alina",
-                            req.Name,
-                            quant,
-                            false,
-                            false
-                        );
+                        Core.HuntMonster("wubblevania", "Charmed Alina", req.Name, quant, false, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -116,14 +109,7 @@ public class WubblesMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "wubblevania",
-                            "Mr. Wubbles",
-                            req.Name,
-                            quant,
-                            false,
-                            false
-                        );
+                        Core.HuntMonster("wubblevania", "Mr. Wubbles", req.Name, quant, false, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

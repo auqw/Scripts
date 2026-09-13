@@ -99,13 +99,7 @@ public class CrocriverMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("dreampalace", "Golmoth", "Hieroglyph Ruby", log: false);
-                        Core.HuntMonster(
-                            "dreampalace",
-                            "Flaming Harpy",
-                            "Flame Glyph",
-                            6,
-                            log: false
-                        );
+                        Core.HuntMonster("dreampalace", "Flaming Harpy", "Flame Glyph", 6, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

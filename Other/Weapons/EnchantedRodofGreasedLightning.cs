@@ -22,12 +22,7 @@ public class EnchantedRodofGreasedLightning
     {
         Core.SetOptions();
 
-        Core.HuntMonster(
-            "crashruins",
-            "CluckMoo Idol",
-            "Enchanted Rod of Greased Lightning",
-            isTemp: false
-        );
+        Core.HuntMonster("crashruins", "CluckMoo Idol", "Enchanted Rod of Greased Lightning", isTemp: false);
 
         Core.SetOptions(false);
     }

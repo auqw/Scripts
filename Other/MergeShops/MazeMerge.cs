@@ -93,13 +93,7 @@ public class MazeMerge
 
                 case "Mehensi Fang":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "whitehole",
-                        "Mehensi Serpent",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("whitehole", "Mehensi Serpent", req.Name, quant, isTemp: false);
                     break;
             }
         }

@@ -140,14 +140,7 @@ public class DoomVaultB
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(3004);
-            Core.KillMonster(
-                "doomvaultb",
-                "r26",
-                "Left",
-                "Undead Raxgore",
-                "Raxgore Slain",
-                publicRoom: false
-            );
+            Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Raxgore Slain", publicRoom: false);
             Core.EnsureComplete(3004);
         }
     }

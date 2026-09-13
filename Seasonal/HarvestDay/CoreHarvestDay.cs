@@ -699,13 +699,7 @@ public class CoreHarvestDay
             Core.EnsureAccept(8973);
             Core.HuntMonster("birdswithharms", "Birdbarian", "Birdbarian Weapon", 1, log: false);
             Core.HuntMonster("birdswithharms", "Fencing Finch", "Finch Weapon", 1, log: false);
-            Core.HuntMonster(
-                "birdswithharms",
-                "Unsettling Sparrow",
-                "Sparrow Weapon",
-                1,
-                log: false
-            );
+            Core.HuntMonster("birdswithharms", "Unsettling Sparrow", "Sparrow Weapon", 1, log: false);
             Core.HuntMonster("birdswithharms", "Robber Ducky", "Ducky Weapon", 1, log: false);
             Core.EnsureComplete(8973);
         }
@@ -722,13 +716,7 @@ public class CoreHarvestDay
             Core.EnsureAccept(8976);
             Core.HuntMonster("birdswithharms", "Birdbarian", "Birdbarian Feather", 1, log: false);
             Core.HuntMonster("birdswithharms", "Fencing Finch", "Finch Feather", 1, log: false);
-            Core.HuntMonster(
-                "birdswithharms",
-                "Unsettling Sparrow",
-                "Sparrow Feather",
-                1,
-                log: false
-            );
+            Core.HuntMonster("birdswithharms", "Unsettling Sparrow", "Sparrow Feather", 1, log: false);
             Core.HuntMonster("birdswithharms", "Robber Ducky", "Ducky Feather", 1, log: false);
             Core.HuntMonster("birdswithharms", "Swole Swan", "Swan Feather", 1, log: false);
             Core.EnsureComplete(8976);
@@ -773,14 +761,7 @@ public class CoreHarvestDay
         // 8992 No Egrets Badge
         Core.EquipClass(ClassType.Farm);
         Core.EnsureAccept(8992);
-        Core.HuntMonster(
-            "birdswithharms",
-            "Unsettling Sparrow",
-            "Ruffled Feather",
-            1000,
-            isTemp: false,
-            log: false
-        );
+        Core.HuntMonster("birdswithharms", "Unsettling Sparrow", "Ruffled Feather", 1000, isTemp: false, log: false);
         Core.EnsureComplete(8992);
     }
 

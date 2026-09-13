@@ -288,7 +288,7 @@ public class MergeTemplateHelperV2
             return new GeneratedCase(
                 ingredient.Name,
                 $@"                    Core.EquipClass(ClassType.{MonsterClass(monster)});
-                    Core.HuntMonster(""{context.Map}"", ""{Escape(monster.MonsterName)}"", req.Name, quant, req.Temp);
+                    Core.HuntMonster("", {context.Map}"", ""{Escape(monster.MonsterName)}"", req.Name, quant, req.Temp);
                     break;",
                 FromCaseStorage: false
             );

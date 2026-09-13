@@ -410,14 +410,7 @@ public class CoreSoC
         if (!Story.QuestProgression(7764))
         {
             Core.EnsureAccept(7764);
-            Core.KillMonster(
-                "BrightForestPast",
-                "r8",
-                "Left",
-                "Twisted Treeant",
-                "Twisted Treeant Slain",
-                10
-            );
+            Core.KillMonster("BrightForestPast", "r8", "Left", "Twisted Treeant", "Twisted Treeant Slain", 10);
             Core.EnsureComplete(7764);
         }
 

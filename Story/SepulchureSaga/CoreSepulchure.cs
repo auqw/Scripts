@@ -71,13 +71,7 @@ public class CoreSepulchure
             {
                 Core.EnsureAccept(dothis.ID);
                 foreach (ItemBase Item in dothis.Requirements)
-                    Core.HuntMonster(
-                        "scarsgarde",
-                        "Garde Watch",
-                        Item.Name,
-                        Item.Quantity,
-                        Item.Temp
-                    );
+                    Core.HuntMonster("scarsgarde", "Garde Watch", Item.Name, Item.Quantity, Item.Temp);
                 Core.EnsureComplete(dothis.ID);
             }
             else
@@ -231,13 +225,7 @@ public class CoreSepulchure
             Core.KillMonster("valleyofdoom", "r7", "Left", "Doom Scythe", "Doomscythe Destroyed");
             Core.KillMonster("valleyofdoom", "r7", "Left", "Doom Axe", "Doomaxe Destroyed");
             Core.KillMonster("valleyofdoom", "r8", "Left", "Doom Blade", "Doom Blade Destroyed");
-            Core.KillMonster(
-                "valleyofdoom",
-                "r8",
-                "Left",
-                "Doom Knight Armor",
-                "Doom Knight Armor Destroyed"
-            );
+            Core.KillMonster("valleyofdoom", "r8", "Left", "Doom Knight Armor", "Doom Knight Armor Destroyed");
             Core.EnsureComplete(6363);
         }
 

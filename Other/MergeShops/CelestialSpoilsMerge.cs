@@ -117,27 +117,9 @@ public class CelestialSpoilsMerge
                     {
                         //Celestial Spoils: Djinn Warrior 6275
                         Core.HuntMonster("DjinnGuard", "Air Spirit", "Air Essence", 3, log: false);
-                        Core.HuntMonster(
-                            "DjinnGuard",
-                            "Water Spirit",
-                            "Water Essence",
-                            3,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "DjinnGuard",
-                            "Earth Spirit",
-                            "Earth Essence",
-                            3,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "DjinnGuard",
-                            "Fire Spirit",
-                            "Fire Essence",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("DjinnGuard", "Water Spirit", "Water Essence", 3, log: false);
+                        Core.HuntMonster("DjinnGuard", "Earth Spirit", "Earth Essence", 3, log: false);
+                        Core.HuntMonster("DjinnGuard", "Fire Spirit", "Fire Essence", 3, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -148,13 +130,7 @@ public class CelestialSpoilsMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "DjinnGuard",
-                            "Image of Crulon",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("DjinnGuard", "Image of Crulon", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

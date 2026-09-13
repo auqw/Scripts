@@ -116,26 +116,9 @@ public class SeaBaseHouseMerge
                     Core.RegisterQuests(9252);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "sunlightzone",
-                            "Marine Snow",
-                            "Marine Sample",
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "sunlightzone",
-                            "Infernal Illusion",
-                            "Infernal Sample",
-                            10,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "sunlightzone",
-                            "Seraphic Illusion",
-                            "Seraphic Sample",
-                            10,
-                            log: false
-                        );
+                        Core.HuntMonster("sunlightzone", "Marine Snow", "Marine Sample", log: false);
+                        Core.HuntMonster("sunlightzone", "Infernal Illusion", "Infernal Sample", 10, log: false);
+                        Core.HuntMonster("sunlightzone", "Seraphic Illusion", "Seraphic Sample", 10, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -143,14 +126,7 @@ public class SeaBaseHouseMerge
 
                 case "Undine Visitor Badge":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.HuntMonster(
-                        "sunlightzone",
-                        "Astravian Illusion",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("sunlightzone", "Astravian Illusion", req.Name, quant, false, false);
                     break;
 
                 case "Undine Base Scrip":
@@ -163,30 +139,9 @@ public class SeaBaseHouseMerge
                     Core.RegisterQuests(9269);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Leviathan",
-                            "Leviathan Tentacle",
-                            1,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Decay Spirit",
-                            "Decay Essence",
-                            8,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "twilightzone",
-                            "Ice Guardian",
-                            "Tarnished Icicle",
-                            8,
-                            true,
-                            false
-                        );
+                        Core.HuntMonster("twilightzone", "Leviathan", "Leviathan Tentacle", 1, true, false);
+                        Core.HuntMonster("twilightzone", "Decay Spirit", "Decay Essence", 8, true, false);
+                        Core.HuntMonster("twilightzone", "Ice Guardian", "Tarnished Icicle", 8, true, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -196,14 +151,7 @@ public class SeaBaseHouseMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.Logger("Better to use alts to farm it faster.");
-                    Core.HuntMonster(
-                        "twilightzone",
-                        "Leviathan",
-                        "Leviathan Scale",
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("twilightzone", "Leviathan", "Leviathan Scale", quant, false, false);
                     break;
 
                 case "Water Elf Pearl":
@@ -212,20 +160,8 @@ public class SeaBaseHouseMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "midnightzone",
-                            "Shadow Viscera",
-                            "Fleshy Shadows",
-                            8,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "midnightzone",
-                            "Venerated Wraith",
-                            "Wraith Memento",
-                            8,
-                            log: false
-                        );
+                        Core.HuntMonster("midnightzone", "Shadow Viscera", "Fleshy Shadows", 8, log: false);
+                        Core.HuntMonster("midnightzone", "Venerated Wraith", "Wraith Memento", 8, log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("midnightzone", "Sparagmos", "Memory Card", log: false);
                         Bot.Wait.ForPickup(req.Name);
@@ -245,14 +181,7 @@ public class SeaBaseHouseMerge
                 case "Experimentation Chair":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "midnightzone",
-                        "Undead Prisoner",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("midnightzone", "Undead Prisoner", req.Name, quant, false, false);
                     break;
 
                 case "Ascending Kathool Tentacle":

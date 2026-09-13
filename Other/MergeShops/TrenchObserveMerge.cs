@@ -118,14 +118,7 @@ public class TrenchObserveMerge
                 case "Undine Base Scrip":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "sunlightzone",
-                        "Infernal Illusion",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("sunlightzone", "Infernal Illusion", req.Name, quant, false, false);
                     break;
 
                 case "Dark Elf Pearl":
@@ -134,20 +127,9 @@ public class TrenchObserveMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "trenchobserve",
-                            "Lady Noelle",
-                            "Noelle's Brooch",
-                            log: false
-                        );
+                        Core.HuntMonster("trenchobserve", "Lady Noelle", "Noelle's Brooch", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "trenchobserve",
-                            "Sea Spirit",
-                            "Green Sea Jelly",
-                            2,
-                            log: false
-                        );
+                        Core.HuntMonster("trenchobserve", "Sea Spirit", "Green Sea Jelly", 2, log: false);
                         Core.HuntMonster("trenchobserve", "Necro Adipocere", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }

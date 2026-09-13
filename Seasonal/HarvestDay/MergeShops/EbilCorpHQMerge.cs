@@ -102,12 +102,7 @@ public class EbilHQMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(8408);
-                        Core.HuntMonster(
-                            "ebilcorphq",
-                            "Master Chairman",
-                            "Master Chairman Destroyed (again)",
-                            10
-                        );
+                        Core.HuntMonster("ebilcorphq", "Master Chairman", "Master Chairman Destroyed (again)", 10);
                         Core.EnsureCompleteMulti(8408);
                     }
                     //Core.CancelRegisteredQuests();

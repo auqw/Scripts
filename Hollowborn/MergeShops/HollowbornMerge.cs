@@ -125,14 +125,7 @@ public class HollowbornMerge
                     Core.RegisterQuests(7548);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "hbchallenge",
-                            "Enter",
-                            "Spawn",
-                            "Hollowborn Tamer",
-                            "Hollowborn Tamer Defeated",
-                            5
-                        );
+                        Core.KillMonster("hbchallenge", "Enter", "Spawn", "Hollowborn Tamer", "Hollowborn Tamer Defeated", 5);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

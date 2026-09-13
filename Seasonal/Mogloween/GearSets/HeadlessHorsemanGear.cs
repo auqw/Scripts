@@ -80,20 +80,9 @@ public class HeadlessHorsemanGear
                     case 9457:
                         Core.Logger("Get Required Quest item");
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "crescentmoon",
-                            "Royce",
-                            "Oversoul's Headless Horseman",
-                            isTemp: false
-                        );
+                        Core.HuntMonster("crescentmoon", "Royce", "Oversoul's Headless Horseman", isTemp: false);
                         Core.EnsureAccept(QuestID);
-                        Core.HuntMonster(
-                            "crescentmoon",
-                            "Royce",
-                            "Royce's Direclaw",
-                            10,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("crescentmoon", "Royce", "Royce's Direclaw", 10, isTemp: false);
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("pie", "Myst Yaga", "Yaga Staff", 15);
                         Core.HuntMonster("twigsarcade", "Spirit Residue", "Spirit Residue", 15);
@@ -104,20 +93,8 @@ public class HeadlessHorsemanGear
                     case 9458:
                         // The Horseman’s Cape 9458
                         Core.EnsureAccept(QuestID);
-                        Core.KillMonster(
-                            "mogloween",
-                            "Pit1",
-                            "Center",
-                            "Blister",
-                            "Torn Cloth",
-                            10
-                        );
-                        Core.HuntMonster(
-                            "necrocarnival",
-                            "ZaZOOOL",
-                            "Shadow of Screams",
-                            isTemp: false
-                        );
+                        Core.KillMonster("mogloween", "Pit1", "Center", "Blister", "Torn Cloth", 10);
+                        Core.HuntMonster("necrocarnival", "ZaZOOOL", "Shadow of Screams", isTemp: false);
                         Core.HuntMonster("candycorn", "Malik-EYE ", "Knife", 1);
                         Core.EnsureComplete(QuestID);
                         break;
@@ -154,27 +131,9 @@ public class HeadlessHorsemanGear
                         Core.EnsureAccept(QuestID);
                         MogloweenMerge.BuyAllMerge("Sinister PumpKing Blade");
                         Core.HuntMonster("necronaut", "necronaut", "Aged Metal", 5, isTemp: false);
-                        Core.HuntMonster(
-                            "mogloweengrave",
-                            "Zombie Terror",
-                            "Oversoul Essence",
-                            15,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "cask",
-                            "Nitre Golem",
-                            "Potassium Nitrate",
-                            10,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "that",
-                            "Congealed Fear",
-                            "Fear Essence",
-                            15,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("mogloweengrave", "Zombie Terror", "Oversoul Essence", 15, isTemp: false);
+                        Core.HuntMonster("cask", "Nitre Golem", "Potassium Nitrate", 10, isTemp: false);
+                        Core.HuntMonster("that", "Congealed Fear", "Fear Essence", 15, isTemp: false);
                         Core.EnsureComplete(QuestID);
                         break;
                 }

@@ -99,14 +99,7 @@ public class AbyssalZoneMerge
                 case "Undine Base Scrip":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "abyssalzone",
-                        "Kitefin Shark Bait",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("abyssalzone", "Kitefin Shark Bait", req.Name, quant, false, false);
                     break;
 
                 case "Water Elf Antler":
@@ -115,20 +108,9 @@ public class AbyssalZoneMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "abyssalzone",
-                            "The Ashray",
-                            "Ashray Artifacts",
-                            log: false
-                        );
+                        Core.HuntMonster("abyssalzone", "The Ashray", "Ashray Artifacts", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "abyssalzone",
-                            "Necro Adipocere",
-                            "Adipocere Antler",
-                            3,
-                            log: false
-                        );
+                        Core.HuntMonster("abyssalzone", "Necro Adipocere", "Adipocere Antler", 3, log: false);
                         Core.HuntMonster("abyssalzone", "Foam Scavenger");
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -138,14 +120,7 @@ public class AbyssalZoneMerge
                 case "Waves of Tumult":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "abyssalzone",
-                        "Blighted Water",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("abyssalzone", "Blighted Water", req.Name, quant, false, false);
                     break;
             }
         }

@@ -155,15 +155,7 @@ public class CoreHollowbornDoomKnight
             Core.EnsureAccept(8413);
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "shadowrealmpast",
-                "Enter",
-                "Spawn",
-                "*",
-                "Empowered Essence",
-                10,
-                false
-            );
+            Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 10, false);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("shadowrealmpast", "Shadow Lord", "Shadowworn", 1, false);
             Farm.Gold(100000);
@@ -200,25 +192,9 @@ public class CoreHollowbornDoomKnight
             Core.HuntMonster("lumafortress", "Corrupted Luma", "Worshipper of Doom", 1, false);
             Bot.Quests.UpdateQuest(3008);
             if (Core.IsMember)
-                Core.HuntMonster(
-                    "ultravoid",
-                    "Ultra Kathool",
-                    "Ingredients?",
-                    10,
-                    false,
-                    log: false
-                );
+                Core.HuntMonster("ultravoid", "Ultra Kathool", "Ingredients?", 10, false, log: false);
             else
-                Core.KillMonster(
-                    "doomvault",
-                    "r5",
-                    "Left",
-                    "Binky",
-                    "Ingredients?",
-                    10,
-                    false,
-                    log: false
-                );
+                Core.KillMonster("doomvault", "r5", "Left", "Binky", "Ingredients?", 10, false, log: false);
 
             Core.EnsureComplete(8414);
         }
@@ -254,14 +230,7 @@ public class CoreHollowbornDoomKnight
         }
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "epicvordred",
-            "Ultra Vordred",
-            "(Necro) Scroll of Dark Arts",
-            1,
-            false,
-            publicRoom: true
-        );
+        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 1, false, publicRoom: true);
         Bot.Quests.UpdateQuest(3008);
         Core.SetAchievement(18);
         Bot.Quests.UpdateQuest(3004);

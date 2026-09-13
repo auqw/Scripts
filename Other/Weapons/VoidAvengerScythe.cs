@@ -123,23 +123,13 @@ public class VoidAvengerScythe
         Core.HuntMonster("void", "Void Dragon", "Heart of the Void", isTemp: false);
         // The Scythe of Eternal Rest -
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "sepulchure",
-            "Dark Sepulchure",
-            "The Scythe of Eternal Rest",
-            isTemp: false
-        );
+        Core.HuntMonster("sepulchure", "Dark Sepulchure", "The Scythe of Eternal Rest", isTemp: false);
         // Nulgath's Approval -
         Core.EquipClass(ClassType.Farm);
         Nation.ApprovalAndFavor(1000, 0);
         // Dracolich Destroyer Scythe -
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "dragonheart",
-            "Avatar of Desolich",
-            "Dracolich Destroyer Scythe",
-            isTemp: false
-        );
+        Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer Scythe", isTemp: false);
         // Void Aura -
         NSoD.VoidAuras(150);
         // Letter from Asuka and Tendou -

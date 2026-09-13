@@ -96,14 +96,7 @@ public class CraterHouseMerge
                 case "Cursed Pirate Note":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "shipwreck",
-                        "Cursed Pirate",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("shipwreck", "Cursed Pirate", req.Name, quant, req.Temp, false);
                     break;
             }
         }

@@ -169,18 +169,8 @@ public class ArchDoomKnight
         Core.HuntMonster("djinn", "Tibicenas", "Tibicenas", isTemp: false);
         Core.HuntMonster("dreamnexus", "Khasaanda", "Soul of Chaos Armor", isTemp: false);
         Bot.Quests.UpdateQuest(2814);
-        Core.HuntMonster(
-            "stormtemple",
-            "Chaos Lord Lionfang",
-            "Chaos Lionfang Armor",
-            isTemp: false
-        );
-        Core.HuntMonster(
-            "swordhavenfalls",
-            "Chaos Lord Alteon",
-            "Shorn Chaos King Crown",
-            isTemp: false
-        );
+        Core.HuntMonster("stormtemple", "Chaos Lord Lionfang", "Chaos Lionfang Armor", isTemp: false);
+        Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", "Shorn Chaos King Crown", isTemp: false);
         Core.KillXiang("Xiang Chaos");
 
         //Drakath's Sword (Free Player)
@@ -215,13 +205,7 @@ public class ArchDoomKnight
         Core.EnsureAccept(6798);
 
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster(
-            "shadowfallwar",
-            "Skeletal Fire Mage",
-            "Ultimate Darkness Gem",
-            50,
-            isTemp: false
-        );
+        Core.HuntMonster("shadowfallwar", "Skeletal Fire Mage", "Ultimate Darkness Gem", 50, isTemp: false);
         Farm.BattleUnderB("Undead Energy", 2000);
 
         Core.EquipClass(ClassType.Solo);

@@ -126,14 +126,7 @@ public class SkadePassMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "skadespass",
-                        "Permafrost Dragon",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("skadespass", "Permafrost Dragon", req.Name, quant, req.Temp, false);
                     break;
                 #endregion
             }

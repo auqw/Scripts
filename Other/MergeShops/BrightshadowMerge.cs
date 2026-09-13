@@ -138,13 +138,7 @@ public class BrightshadowMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "brightshadow",
-                            "Gravelyn the Good",
-                            req.Name,
-                            quant,
-                            false
-                        );
+                        Core.HuntMonster("brightshadow", "Gravelyn the Good", req.Name, quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -167,13 +161,7 @@ public class BrightshadowMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "chaosamulet",
-                            "Shadowflame Warrior",
-                            req.Name,
-                            quant,
-                            false
-                        );
+                        Core.HuntMonster("chaosamulet", "Shadowflame Warrior", req.Name, quant, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

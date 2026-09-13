@@ -82,11 +82,7 @@ public class ShadowBlastArena
                     break;
 
                 case 4736: // Gravelyn Likes Your Style 4736
-                    Core.HuntMonster(
-                        "shadowblast",
-                        "Shadow Destroyer",
-                        "Shadowscythe Destroyer Vanquished"
-                    );
+                    Core.HuntMonster("shadowblast", "Shadow Destroyer", "Shadowscythe Destroyer Vanquished");
                     break;
             }
         }

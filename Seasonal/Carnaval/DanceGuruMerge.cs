@@ -111,14 +111,7 @@ public class DanceGuruMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "danceguru",
-                            "Carnaval Harpy",
-                            req.Name,
-                            quant,
-                            false,
-                            false
-                        );
+                        Core.HuntMonster("danceguru", "Carnaval Harpy", req.Name, quant, false, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

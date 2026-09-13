@@ -555,12 +555,7 @@ public class CoreFriday13th
             {
                 case 4648: // Shadowy Reconnaissance 4648
                     Core.HuntMonster("Battledoom", "Shadow Slime", "Shadow Slime Defeated", 5);
-                    Core.HuntMonster(
-                        "Battledoom",
-                        "Shadow Flying Eye",
-                        "Shadow Eyeball Defeated",
-                        3
-                    );
+                    Core.HuntMonster("Battledoom", "Shadow Flying Eye", "Shadow Eyeball Defeated", 3);
                     break;
 
                 case 4649: // Slippery Shadows 4649
@@ -573,21 +568,12 @@ public class CoreFriday13th
 
                 case 4651: // Necro-Polished 4651
                     Core.GetMapItem(3976, 1, "necropolis");
-                    Core.HuntMonster(
-                        "Battledoom",
-                        "Shadow Skelly",
-                        "Shadow Skeletons Defeated",
-                        13
-                    );
+                    Core.HuntMonster("Battledoom", "Shadow Skelly", "Shadow Skeletons Defeated", 13);
                     break;
 
                 case 4652: // Cavernous Chaos 4652
                     Core.HuntMonster("NecroCavern", "Shadow Imp", "Mirror Fragment Found");
-                    Core.HuntMonster(
-                        "NecroCavern",
-                        "ShadowStone Elemental",
-                        "Mirror Fragment Located"
-                    );
+                    Core.HuntMonster("NecroCavern", "ShadowStone Elemental", "Mirror Fragment Located");
                     break;
 
                 case 4653: // Mirror, Mirror, Off the Wall 4653
@@ -607,12 +593,7 @@ public class CoreFriday13th
                 case 4656: // Hunt for Shadowglass Shards 4656
                     Core.HuntMonster("Battledoom", "Shadow Skelly", "Shadow Skeleton Defeated", 5);
                     Core.HuntMonster("Battledoom", "Shadow Slime", "Shadow Slime Defeated", 5);
-                    Core.HuntMonster(
-                        "Battledoom",
-                        "Shadow Flying Eye",
-                        "Shadow Eyeball Defeated",
-                        5
-                    );
+                    Core.HuntMonster("Battledoom", "Shadow Flying Eye", "Shadow Eyeball Defeated", 5);
                     Core.HuntMonster("Battledoom", "Shadow Beast", "Shadow Beast Defeated", 5);
                     break;
             }

@@ -102,25 +102,12 @@ public class ChaosLabMerge
 
                 case "Chaorrupted Hamster":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "chaoslab",
-                        "Chaotic Server Hamster",
-                        req.Name,
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("chaoslab", "Chaotic Server Hamster", req.Name, isTemp: false, log: false);
                     break;
 
                 case "Crystallized Chaos":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "chaoslab",
-                        "Chaorrupted Moglin",
-                        req.Name,
-                        quant,
-                        isTemp: false,
-                        log: false
-                    );
+                    Core.HuntMonster("chaoslab", "Chaorrupted Moglin", req.Name, quant, isTemp: false, log: false);
                     break;
 
                 case "Daimyo":

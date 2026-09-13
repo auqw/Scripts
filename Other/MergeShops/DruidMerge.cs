@@ -97,12 +97,7 @@ public class DruidMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("arcangrove", "Gorillaphant", "Gorillaphant Tusk", 6);
-                        Core.HuntMonster(
-                            "arcangrove",
-                            "Seed Spitter",
-                            "Spool of Arcane Thread",
-                            10
-                        );
+                        Core.HuntMonster("arcangrove", "Seed Spitter", "Spool of Arcane Thread", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

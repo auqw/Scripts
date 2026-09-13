@@ -130,23 +130,13 @@ public class VerusDoomKnightClass
             Farm.Experience(50);
             Core.EnsureAccept(9412);
             Core.HuntMonsterMapID("necrodungeon", 47, "The Mask of the Skulls", isTemp: false);
-            Core.HuntMonster(
-                "lumafortress",
-                "Corrupted Luma",
-                "Doom Worshipper's Blade Of Doom",
-                isTemp: false
-            );
+            Core.HuntMonster("lumafortress", "Corrupted Luma", "Doom Worshipper's Blade Of Doom", isTemp: false);
             Core.Logger(
                 " \"Empress' ShadowCloak\" 's Droprate is fairly low... so dont complain if it takes \"hours\" according to reddit... "
             );
             Core.HuntMonster("innershadows", "Krahen", "Empress' ShadowCloak", isTemp: false);
             Bot.Quests.UpdateQuest(7646);
-            Core.HuntMonster(
-                "techfortress",
-                "MechaVortrix",
-                "Cybernetic Doom Blade",
-                isTemp: false
-            );
+            Core.HuntMonster("techfortress", "MechaVortrix", "Cybernetic Doom Blade", isTemp: false);
             Core.GhostItem(55823, "Kyger", 1, false, ItemCategory.Pet, "Time for training!", 1);
             Bot.Quests.UpdateQuest(7650);
             Core.HuntMonsterMapID("stonewooddeep", 16, "Asherion Armor", isTemp: false);
@@ -159,21 +149,9 @@ public class VerusDoomKnightClass
             Farm.Experience(60);
             Core.EnsureAccept(9413);
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "brightshadow",
-                "Shadowflame Paladin",
-                "Shadowflame Spike",
-                150,
-                false
-            );
+            Core.HuntMonster("brightshadow", "Shadowflame Paladin", "Shadowflame Spike", 150, false);
             Core.HuntMonster("fiendshard", "Paladin Fiend", "Light Fiend Horn", 150, false);
-            Core.HuntMonster(
-                "legionarena",
-                "Dark Legion Paladin",
-                "Underworld Soul Glow",
-                50,
-                false
-            );
+            Core.HuntMonster("legionarena", "Dark Legion Paladin", "Underworld Soul Glow", 50, false);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("noxustower", "General Goldhammer", "Gold Hammer Chip", isTemp: false);
             Core.HuntMonster("chaoslab", "Chaos Artix", "Shimmering Tentacle", 20, false);
@@ -281,13 +259,7 @@ public class VerusDoomKnightClass
 
             Core.HuntMonster("etherwardes", "Earth Dragon Warrior", "Dragon Skin", 1000000, false);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "necrocavern",
-                "Chaos Vordred",
-                "PaladinSlayer's Skull",
-                100000,
-                false
-            );
+            Core.HuntMonster("necrocavern", "Chaos Vordred", "PaladinSlayer's Skull", 100000, false);
             Core.EnsureComplete(9419);
         }
 

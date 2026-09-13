@@ -127,13 +127,7 @@ public class EctocaveMerge
                     Core.RegisterQuests(3873);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "ectocave",
-                            "Ichor Draconian",
-                            "Uncut Ichor Gem",
-                            50,
-                            req.Temp
-                        );
+                        Core.HuntMonster("ectocave", "Ichor Draconian", "Uncut Ichor Gem", 50, req.Temp);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

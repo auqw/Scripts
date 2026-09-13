@@ -306,13 +306,7 @@ public class CyseroItemUpgrade
             Farm.BattleUnderB("Bone Dust", 25);
             Core.HuntMonster("Bloodtusk ", "Crystal-Rock", "Polished Rocks", 3);
             Core.HuntMonster("Bloodtusk ", "Crystal-Rock", "Precious Gemstone", 3);
-            Core.HuntMonster(
-                "DarkFortress",
-                "Wilhelm",
-                "Ultra Shifting Plane Gem",
-                15,
-                isTemp: false
-            );
+            Core.HuntMonster("DarkFortress", "Wilhelm", "Ultra Shifting Plane Gem", 15, isTemp: false);
 
             Core.EnsureComplete(7067);
             Bot.Wait.ForPickup("Polished Manslayer");
@@ -335,15 +329,7 @@ public class CyseroItemUpgrade
 
             DS.GetShard(1);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "shadowfallwar",
-                "Garden1",
-                "Bottom",
-                "Bonemuncher",
-                "Ultimate Darkness Gem",
-                50,
-                isTemp: false
-            );
+            Core.KillMonster("shadowfallwar", "Garden1", "Bottom", "Bonemuncher", "Ultimate Darkness Gem", 50, isTemp: false);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("frozenlair", "Lich Lord", "Necrotic Orb", 100, isTemp: false);
             Core.HuntMonster("underworld", "Frozen Pyromancer", "Flaming Skull", 50, isTemp: false);
@@ -367,15 +353,7 @@ public class CyseroItemUpgrade
 
         DS.GetShard(1);
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "shadowfallwar",
-            "Garden1",
-            "Bottom",
-            "Bonemuncher",
-            "Ultimate Darkness Gem",
-            75,
-            isTemp: false
-        );
+        Core.KillMonster("shadowfallwar", "Garden1", "Bottom", "Bonemuncher", "Ultimate Darkness Gem", 75, isTemp: false);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("frozenlair", "Lich Lord", "Necrotic Orb", 150, isTemp: false);
         Core.HuntMonster("underworld", "Frozen Pyromancer", "Flaming Skull", 100, isTemp: false);

@@ -165,14 +165,7 @@ public class Awescended
             if (!Story.QuestProgression(8036))
             {
                 Core.EnsureAccept(8036);
-                Core.KillMonster(
-                    "deathsrealm",
-                    "Frame3",
-                    "Down",
-                    "Undead Mage",
-                    "Enchanted Manuscript",
-                    8
-                );
+                Core.KillMonster("deathsrealm", "Frame3", "Down", "Undead Mage", "Enchanted Manuscript", 8);
                 Core.EquipCached();
 
                 Core.KillMonster("citadel", "m14", "Left", "Grand Inquisitor", "Rite of Renewal");
@@ -186,14 +179,7 @@ public class Awescended
             {
                 Core.EnsureAccept(8037);
                 Core.Join("thunderfang", "r2", "Left");
-                Core.KillMonster(
-                    "thunderfang",
-                    "r2",
-                    "Left",
-                    "Energy Elemental",
-                    "Supercharged Gem",
-                    8
-                );
+                Core.KillMonster("thunderfang", "r2", "Left", "Energy Elemental", "Supercharged Gem", 8);
                 Core.HuntMonster("lab", "Frank", "Lightning Capacitor", 5);
                 Core.KillMonster("boxes", "Boss", "Center", "Sneeviltron", "Wooden Control Panel");
                 Core.KillMonster("mqlesson", "Boss", "Left", "Dragonoid", "Dragonoid Core");
@@ -204,23 +190,9 @@ public class Awescended
             if (!Story.QuestProgression(8038))
             {
                 Core.EnsureAccept(8038);
-                Core.KillMonster(
-                    "yokaiwar",
-                    "Boss",
-                    "Left",
-                    "O-dokuro's Head",
-                    "O-dokuro's Tooth",
-                    isTemp: false
-                );
+                Core.KillMonster("yokaiwar", "Boss", "Left", "O-dokuro's Head", "O-dokuro's Tooth", isTemp: false);
                 Core.KillMonster("wardwarf", "r4", "Left", "D'wain Jonsen", "D'wain Jonsen's Stinger");
-                Core.KillMonster(
-                    "mythsongwar",
-                    "War2",
-                    "Left",
-                    "*",
-                    "Music Pirate's Instrument of War",
-                    6
-                );
+                Core.KillMonster("mythsongwar", "War2", "Left", "*", "Music Pirate's Instrument of War", 6);
                 Bot.Quests.UpdateQuest(1170);
                 Core.KillMonster("shadowfallwar", "Inside", "Right", "Noxus", "Noxus' Necromancy Robe");
                 Core.EnsureComplete(8038);
@@ -256,15 +228,7 @@ public class Awescended
                 if (!Core.CheckInventory("Vaden's Helm"))
                 {
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "bonecastlec",
-                        "r25",
-                        "Bottom",
-                        "Vaden",
-                        "Vaden Helm Token",
-                        333,
-                        false
-                    );
+                    Core.KillMonster("bonecastlec", "r25", "Bottom", "Vaden", "Vaden Helm Token", 333, false);
                     while (!Core.CheckInventory("Vaden's Helm"))
                     {
                         Core.BuyItem("bonecastlec", 1242, "Vaden's Helm", shopItemID: 3740);

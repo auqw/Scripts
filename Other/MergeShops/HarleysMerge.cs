@@ -137,14 +137,7 @@ public class HarleysMerge
                     }
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10177);
-                    Core.KillMonster(
-                        "trainers",
-                        "r3",
-                        "Left",
-                        "Warlord Harley",
-                        req.Name,
-                        req.Quantity
-                    );
+                    Core.KillMonster("trainers", "r3", "Left", "Warlord Harley", req.Name, req.Quantity);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;

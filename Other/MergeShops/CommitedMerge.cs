@@ -115,15 +115,7 @@ public class CommitedMerge
 
                 case "De'Sawed's Stinger":
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster(
-                        "catacombs",
-                        "Boss2",
-                        "Left",
-                        "Dr. De'Sawed",
-                        req.Name,
-                        quant,
-                        false
-                    );
+                    Core.KillMonster("catacombs", "Boss2", "Left", "Dr. De'Sawed", req.Name, quant, false);
                     break;
             }
         }

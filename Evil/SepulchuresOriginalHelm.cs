@@ -187,15 +187,7 @@ public class SepulchuresOriginalHelm
             }
 
             // Kill monsters for "Empowered Essence"
-            Core.KillMonster(
-                "shadowrealmpast",
-                "Enter",
-                "Spawn",
-                "*",
-                "Empowered Essence",
-                13,
-                isTemp: false
-            );
+            Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 13, isTemp: false);
 
             Core.EnsureComplete(5461);
             Bot.Wait.ForPickup(37033);

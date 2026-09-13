@@ -328,12 +328,7 @@ public class CoreHollowbornChaosEnvoy
             Core.EnsureAcceptmultiple(new[] { 7158, 8998 });
             Core.HuntMonster("lagunabeach", "Heart of Chaos", "Chaos Pirate Crew", isTemp: false);
             Core.HuntMonster("backroom", "Book Wyrm", "Maledictus Magum", isTemp: false);
-            Core.HuntMonster(
-                "wardwarf",
-                "Chaotic Draconian",
-                "Chaotic Draconian Wings",
-                isTemp: false
-            );
+            Core.HuntMonster("wardwarf", "Chaotic Draconian", "Chaotic Draconian Wings", isTemp: false);
             Core.KillMonster("blindingsnow", "r5", "Spawn", "*", "Shard of Chaos", 100, isTemp: false);
             Core.HuntMonster("chaosboss", "Ultra Chaos Warlord", "Chaotic War Essence", 15, false);
             Adv.BuyItem("crownsreach", 1383, "Chaotic Knight Helm");
@@ -444,29 +439,14 @@ public class CoreHollowbornChaosEnvoy
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("hydra", "Hydra Head", "Hydra Armor", isTemp: false);
             Core.HuntMonster("roc", "Rock Roc", "Mini Rock Roc", isTemp: false);
-            Core.KillMonster(
-                "odokuro",
-                "Boss",
-                "Right",
-                "O-dokuro",
-                "O-dokuro on Your Back",
-                isTemp: false
-            );
+            Core.KillMonster("odokuro", "Boss", "Right", "O-dokuro", "O-dokuro on Your Back", isTemp: false);
             Core.HuntMonster("chaoscave", "DracoWerePyre", "Burning Dragon Mace", isTemp: false);
             Core.HuntMonster("palooza", "Pony Gary Yellow", "Mini Pony Gary Yellow", isTemp: false);
             Core.HuntMonster("elemental", "Mana Golem", "Mana Golem", isTemp: false);
             Core.KillEscherion("Relic of Chaos", 13);
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "mountdoomskull",
-                "b1",
-                "Left",
-                "*",
-                "Fragment of Mount Doomskull",
-                1000,
-                isTemp: false
-            );
+            Core.KillMonster("mountdoomskull", "b1", "Left", "*", "Fragment of Mount Doomskull", 1000, isTemp: false);
 
             // Handle quest completion
             if (completeOnce)
@@ -694,12 +674,7 @@ public class CoreHollowbornChaosEnvoy
         if (!Core.CheckInventory("Supreme Arcane Staff of Chaos"))
         {
             Core.Logger("Hunting for Supreme Arcane Staff of Chaos.");
-            Core.HuntMonster(
-                "ledgermayne",
-                "Ledgermayne",
-                "The Supreme Arcane Staff",
-                isTemp: false
-            ); // Can buyback
+            Core.HuntMonster("ledgermayne", "Ledgermayne", "The Supreme Arcane Staff", isTemp: false); // Can buyback
             Adv.BuyItem("deepforest", 1999, "Supreme Arcane Staff of Chaos");
         }
 
@@ -712,29 +687,10 @@ public class CoreHollowbornChaosEnvoy
             Core.HuntMonster("chaoscrypt", "Chaorrupted Knight", "Chaos Gem", 200, isTemp: false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "chaoslab",
-                "Chaos Artix",
-                "Chaorrupted Light of Destiny",
-                isTemp: false
-            );
+            Core.HuntMonster("chaoslab", "Chaos Artix", "Chaorrupted Light of Destiny", isTemp: false);
             Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false);
-            Core.HuntMonster(
-                "timespace",
-                "Chaos Lord Iadoa",
-                "Chaorrupted Hourglass",
-                30,
-                isTemp: false,
-                publicRoom: true
-            );
-            Core.HuntMonster(
-                "chaoskraken",
-                "Chaos Kraken",
-                "Chaotic Invertebrae",
-                20,
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chaorrupted Hourglass", 30, isTemp: false, publicRoom: true);
+            Core.HuntMonster("chaoskraken", "Chaos Kraken", "Chaotic Invertebrae", 20, isTemp: false, publicRoom: true);
 
             Core.BuyItem("downbelow", 2004, "Chaos PuppetMaster");
 
@@ -826,13 +782,7 @@ public class CoreHollowbornChaosEnvoy
 
             // Collect Chaos War Medals
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "mountdoomskull",
-                "Chaos Spider",
-                "Chaos War Medal",
-                1000,
-                isTemp: false
-            );
+            Core.HuntMonster("mountdoomskull", "Chaos Spider", "Chaos War Medal", 1000, isTemp: false);
 
             // Defeat Prince Drakath
             Core.EquipClass(ClassType.Solo);
@@ -951,14 +901,7 @@ public class CoreHollowbornChaosEnvoy
             Core.EnsureAccept(9003);
 
             // Farm for the required item
-            Core.HuntMonster(
-                "ultradrakath",
-                "Champion of Chaos",
-                "Trace of Chaos",
-                13,
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false, publicRoom: true);
 
             if (completeOnce)
             {

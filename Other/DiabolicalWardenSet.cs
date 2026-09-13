@@ -55,13 +55,7 @@ public class DiabolicalWarden
                 continue;
             }
             Core.FarmingLogger(Reward, 1);
-            Core.HuntMonster(
-                "brokenwoods",
-                "Eldritch Amalgamation",
-                Reward,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("brokenwoods", "Eldritch Amalgamation", Reward, isTemp: false, log: false);
             Core.ToBank(Reward);
         }
     }

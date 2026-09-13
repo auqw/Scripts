@@ -103,12 +103,7 @@ public class FiendPastMerge
                     Core.RegisterQuests(8495);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "fiendpast",
-                            "Proto-Legion Knight",
-                            "Legionnaire Defeated",
-                            10
-                        );
+                        Core.HuntMonster("fiendpast", "Proto-Legion Knight", "Legionnaire Defeated", 10);
                     }
                     Core.CancelRegisteredQuests();
                     break;

@@ -106,14 +106,7 @@ public class MeateorShardMerge
                 case "Cutie Cow Pet":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "meateortown",
-                        "Giant ChickenCow",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("meateortown", "Giant ChickenCow", req.Name, quant, false, false);
                     break;
 
                 case "ChickenCow Teeth":

@@ -103,13 +103,7 @@ public class SnowviewMerge
                     {
                         Core.HuntMonster("snowview", "Vaderix", "Alien Mandible", log: false);
                         Core.HuntMonster("snowview", "Tundra Steed", "Horse Hair", 7, log: false);
-                        Core.HuntMonster(
-                            "snowview",
-                            "Mountain Owl",
-                            "Tinder Feathers",
-                            7,
-                            log: false
-                        );
+                        Core.HuntMonster("snowview", "Mountain Owl", "Tinder Feathers", 7, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

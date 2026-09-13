@@ -84,15 +84,7 @@ public class CoreOblivionBladeofNulgath
                 log: false
             );
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "elemental",
-                "r3",
-                "Down",
-                "*",
-                "Charged Mana Energy for Nulgath",
-                5,
-                log: false
-            );
+            Core.KillMonster("elemental", "r3", "Down", "*", "Charged Mana Energy for Nulgath", 5, log: false);
             Bot.Wait.ForPickup(item);
             if (Bot.Inventory.IsMaxStack(item))
                 Core.Logger("Max Stack Hit.");

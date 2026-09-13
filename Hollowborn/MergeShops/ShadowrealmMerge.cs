@@ -143,24 +143,8 @@ public class ShadowrealmMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
-                        Core.KillMonster(
-                            "shadowrealm",
-                            "r2",
-                            "Left",
-                            "Gargrowl",
-                            "Darkseed",
-                            8,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "shadowrealm",
-                            "r2",
-                            "Left",
-                            "Shadow Guardian",
-                            "Shadow Medallion",
-                            5,
-                            log: false
-                        );
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
+                        Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
                         Core.EnsureComplete(7553);
                         Core.EnsureComplete(7555);
                     }
@@ -178,15 +162,7 @@ public class ShadowrealmMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster(
-                            "shadowattack",
-                            "Boss",
-                            "Left",
-                            "Death",
-                            req.Name,
-                            quant,
-                            false
-                        );
+                        Core.KillMonster("shadowattack", "Boss", "Left", "Death", req.Name, quant, false);
                     break;
 
                 case "Death's Scythe":

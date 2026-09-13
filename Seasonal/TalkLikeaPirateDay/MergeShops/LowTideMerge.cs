@@ -120,12 +120,7 @@ public class LowTideMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "lowtide",
-                            "Exiled General Miel",
-                            "Gem Encrusted Medal",
-                            3
-                        );
+                        Core.HuntMonster("lowtide", "Exiled General Miel", "Gem Encrusted Medal", 3);
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("lowtide", "Spectral Jellyfish", "Spindley Tentacles", 30);
                         Core.HuntMonster("lowtide", "Ghostly Eel", "Eel Fangs", 30);

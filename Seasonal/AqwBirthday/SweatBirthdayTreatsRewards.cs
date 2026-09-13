@@ -49,14 +49,7 @@ public class SweatBirthdayTreatsRewards
             Core.EnsureAccept(8906);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "birthday",
-                "Twilly Pinata",
-                "Pinata Candy",
-                100,
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("birthday", "Twilly Pinata", "Pinata Candy", 100, isTemp: false, log: false);
 
             Core.EnsureComplete(8906);
             i++;

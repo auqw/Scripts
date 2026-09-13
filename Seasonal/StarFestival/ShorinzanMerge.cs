@@ -101,35 +101,11 @@ public class ShorinzanMerge
                     Core.RegisterQuests(8753);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "Tercessuinotlim",
-                            "Tainted Elemental",
-                            "Tainted Essence Collected",
-                            10
-                        );
-                        Core.KillMonster(
-                            "tercessuinotlim",
-                            "m2",
-                            "Left",
-                            "*",
-                            "Makai Essence Collected",
-                            20
-                        );
-                        Core.HuntMonster(
-                            "necrodungeon",
-                            "SlimeSkull",
-                            "Necropolis Soul Collected",
-                            15
-                        );
+                        Core.HuntMonster("Tercessuinotlim", "Tainted Elemental", "Tainted Essence Collected", 10);
+                        Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Essence Collected", 20);
+                        Core.HuntMonster("necrodungeon", "SlimeSkull", "Necropolis Soul Collected", 15);
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "necrodungeon",
-                            "r22",
-                            "Down",
-                            "*",
-                            "Dracolich Soul Collected",
-                            15
-                        );
+                        Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Soul Collected", 15);
                         Core.HuntMonster("necrodungeon", "Doom Overlord", "Doom Power Catalyst", 2);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -142,14 +118,7 @@ public class ShorinzanMerge
                     Core.RegisterQuests(8751);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            $"battleunderb",
-                            "Enter",
-                            "Spawn",
-                            "*",
-                            "Bundle O' Bones",
-                            30
-                        );
+                        Core.KillMonster($"battleunderb", "Enter", "Spawn", "*", "Bundle O' Bones", 30);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonsterMapID($"Odokuro", 1, "Odokuro's Occipital");
                         Core.HuntMonster($"bonecastle", "Vaden", "Vaden's Other Arm");
@@ -174,12 +143,7 @@ public class ShorinzanMerge
                         }
                         Core.HuntMonster("brightoak", "Bright Treeant", "Brightest Branch", 6);
                         Core.HuntMonster("farm", "Treeant", "Treant Leaf");
-                        Core.HuntMonster(
-                            "guardiantree",
-                            "Blossoming Treeant",
-                            "Beautiful Blossom",
-                            6
-                        );
+                        Core.HuntMonster("guardiantree", "Blossoming Treeant", "Beautiful Blossom", 6);
                         Core.HuntMonster("NibbleOn", "Mean Old Treeant", "Bitter Bark", 8);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -194,13 +158,7 @@ public class ShorinzanMerge
 
                 case "Hashihime's Heart":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "yokaistarriver",
-                        "Uji No Hashihime",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("yokaistarriver", "Uji No Hashihime", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

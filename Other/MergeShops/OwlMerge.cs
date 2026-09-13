@@ -99,14 +99,7 @@ public class OwlMerge
                     Core.RegisterQuests(4645);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "rivensylth",
-                            "Rivensylth Spider",
-                            req.Name,
-                            quant,
-                            true,
-                            false
-                        );
+                        Core.HuntMonster("rivensylth", "Rivensylth Spider", req.Name, quant, true, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

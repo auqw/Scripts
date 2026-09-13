@@ -100,12 +100,7 @@ public class BloodMoonLycanMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("bloodwarlycan", "Blood Guardian", "Vampire Medal", 5);
-                        Core.HuntMonster(
-                            "bloodwarlycan",
-                            "Blood Guardian",
-                            "Mega Vampire Medal",
-                            3
-                        );
+                        Core.HuntMonster("bloodwarlycan", "Blood Guardian", "Mega Vampire Medal", 3);
                     }
                     Core.CancelRegisteredQuests();
                     break;
@@ -117,12 +112,7 @@ public class BloodMoonLycanMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("bloodwarvamp", "Lunar Blazebinder", "Lycan Medal", 5);
-                        Core.HuntMonster(
-                            "bloodwarvamp",
-                            "Lunar Blazebinder",
-                            "Mega Lycan Medal",
-                            3
-                        );
+                        Core.HuntMonster("bloodwarvamp", "Lunar Blazebinder", "Mega Lycan Medal", 3);
                     }
                     Core.CancelRegisteredQuests();
                     break;

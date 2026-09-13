@@ -162,11 +162,7 @@ public class DageChallengeMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(8546);
-                        Core.HuntMonster(
-                            "legionarena",
-                            "legion fiend rider",
-                            "Fiend Rider's Approval"
-                        );
+                        Core.HuntMonster("legionarena", "legion fiend rider", "Fiend Rider's Approval");
                         Core.HuntMonster("frozenlair", "lich lord", "Lich Lord's Approval");
                         Core.HuntMonster("dagefortress", "Grrrberus", "Grrrberus's Grr Grrr");
                         Core.EnsureComplete(8546);

@@ -82,20 +82,8 @@ public class CelestialPastMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "CelestialPast",
-                            "Blessed Bear",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
-                        Core.HuntMonster(
-                            "CelestialPast",
-                            "Blessed Deer",
-                            req.Name,
-                            quant,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("CelestialPast", "Blessed Bear", req.Name, quant, isTemp: false);
+                        Core.HuntMonster("CelestialPast", "Blessed Deer", req.Name, quant, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

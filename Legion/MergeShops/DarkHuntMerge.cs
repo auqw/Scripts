@@ -103,30 +103,14 @@ public class DarkHuntMerge
                 case "Ultra Shifting Plane Gem":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "darkfortress",
-                        "r3",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("darkfortress", "r3", "Left", "*", req.Name, quant, false, false);
                     break;
 
                 case "Cocar dos Dançarinos":
                 case "Dançarinos da Legião":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "darkfortress",
-                        "Dage the Evil",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("darkfortress", "Dage the Evil", req.Name, quant, false, false);
                     break;
 
                 case "Dage's Favor":

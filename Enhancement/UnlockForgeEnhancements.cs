@@ -1391,15 +1391,7 @@ public class UnlockForgeEnhancements
         Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "Towerofdoom10",
-            "r8",
-            "Left",
-            "*",
-            "Ethereal Essence",
-            250,
-            isTemp: false
-        );
+        Core.KillMonster("Towerofdoom10", "r8", "Left", "*", "Ethereal Essence", 250, isTemp: false);
 
         Core.EnsureComplete(8825);
         if (Bot.Config!.Get<bool>("SellQuestClass"))

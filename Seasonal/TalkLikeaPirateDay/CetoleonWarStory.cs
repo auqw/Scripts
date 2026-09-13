@@ -154,13 +154,7 @@ public class CetoleonWarStory
             Core.EquipClass(ClassType.Farm);
             Core.RegisterQuests(6523, 6524);
             while (!Bot.ShouldExit && (!Core.CheckInventory(GrislyFangLoot, toInv: false)))
-                Core.HuntMonster(
-                    "CetoleonWar",
-                    "Grislyfang Wrecker",
-                    "Grislyfang Doubloon",
-                    5,
-                    log: false
-                );
+                Core.HuntMonster("CetoleonWar", "Grislyfang Wrecker", "Grislyfang Doubloon", 5, log: false);
             Core.CancelRegisteredQuests();
             Core.ToBank(GrislyFangLoot);
         }
@@ -188,13 +182,7 @@ public class CetoleonWarStory
             Core.EquipClass(ClassType.Farm);
             Core.RegisterQuests(6525);
             while (!Bot.ShouldExit && (!Core.CheckInventory(EngineersLoot, toInv: false)))
-                Core.HuntMonster(
-                    "CetoleonWar",
-                    "Grislyfang Engineer",
-                    "Engineers Slain",
-                    3,
-                    log: false
-                );
+                Core.HuntMonster("CetoleonWar", "Grislyfang Engineer", "Engineers Slain", 3, log: false);
             Core.CancelRegisteredQuests();
             Core.ToBank(EngineersLoot);
         }
@@ -206,13 +194,7 @@ public class CetoleonWarStory
             Core.EquipClass(ClassType.Farm);
             Core.RegisterQuests(6526);
             while (!Bot.ShouldExit && (!Core.CheckInventory(GunPowderLoot, toInv: false)))
-                Core.HuntMonster(
-                    "CetoleonWar",
-                    "Grislyfang Musketeer",
-                    "Grislyfang Gunpowder",
-                    5,
-                    log: false
-                );
+                Core.HuntMonster("CetoleonWar", "Grislyfang Musketeer", "Grislyfang Gunpowder", 5, log: false);
             Core.CancelRegisteredQuests();
             Core.ToBank(GunPowderLoot);
         }

@@ -102,21 +102,9 @@ public class YesMaamsMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "ebilart",
-                            "Ebil AI Blender",
-                            "AI Learning Algorithm",
-                            1643631,
-                            log: false
-                        );
+                        Core.HuntMonster("ebilart", "Ebil AI Blender", "AI Learning Algorithm", 1643631, log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "ebilart",
-                            "UNUNSkellingdens",
-                            "Blurry Teeth",
-                            94543,
-                            log: false
-                        );
+                        Core.HuntMonster("ebilart", "UNUNSkellingdens", "Blurry Teeth", 94543, log: false);
                         Core.HuntMonster("ebilart", "Fish", "Wet Sashimi", 64731, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }

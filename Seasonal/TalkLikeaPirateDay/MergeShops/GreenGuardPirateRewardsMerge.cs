@@ -142,14 +142,7 @@ public class GreenGuardPirateRewardsMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "piratealliance",
-                        "Phantom Jaws",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("piratealliance", "Phantom Jaws", req.Name, quant, req.Temp, false);
                     break;
                 #endregion
             }

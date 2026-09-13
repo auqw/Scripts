@@ -72,12 +72,7 @@ public class HollowbornOblivionBlade
         }
         Nation.ApprovalAndFavor(0, 1000);
         Nation.FarmBloodGem(50);
-        Core.HuntMonster(
-            "lostruinswar",
-            "Diabolical Warlord",
-            "Diabolical Minion's Seed",
-            isTemp: false
-        );
+        Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Diabolical Minion's Seed", isTemp: false);
         if (!Core.CheckInventory("4th Dimension Gem"))
         {
             Core.EnsureAccept(5163);

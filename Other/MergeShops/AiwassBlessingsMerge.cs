@@ -119,31 +119,9 @@ public class AiwassBlessingsMerge
                     Core.RegisterQuests(questID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "sanctuaryaiwass",
-                            "r9",
-                            "Top",
-                            "*",
-                            "Sal Alembroth",
-                            1,
-                            false
-                        );
-                        Core.KillMonster(
-                            "sanctuaryaiwass",
-                            "r9",
-                            "Top",
-                            "*",
-                            "Milk of Sulfur",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Aeon Dream",
-                            1,
-                            false
-                        );
+                        Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Sal Alembroth", 1, false);
+                        Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Milk of Sulfur", 1, false);
+                        Core.HuntMonster("sanctuaryaiwass", "Anima Animus Aiwass", "Aeon Dream", 1, false);
                     }
                     Core.CancelRegisteredQuests();
                     break;

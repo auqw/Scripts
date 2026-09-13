@@ -445,34 +445,10 @@ public class Core13LoC
         if (!Story.QuestProgression(405))
         {
             Core.EnsureAccept(405);
-            Core.KillMonster(
-                "hachiko",
-                "Tiger",
-                "Center",
-                "Samurai Nopperabo",
-                "Rat-Ox-Tiger Piece"
-            );
-            Core.KillMonster(
-                "hachiko",
-                "Snake",
-                "Center",
-                "Ninja Nopperabo",
-                "Rabbit-Dragon-Snake piece"
-            );
-            Core.KillMonster(
-                "hachiko",
-                "Horse",
-                "Center",
-                "Samurai Nopperabo",
-                "Horse-Sheep-Monkey piece"
-            );
-            Core.KillMonster(
-                "hachiko",
-                "Pig",
-                "Center",
-                "Ninja Nopperabo",
-                "Rooster-Dog-Pig Piece"
-            );
+            Core.KillMonster("hachiko", "Tiger", "Center", "Samurai Nopperabo", "Rat-Ox-Tiger Piece");
+            Core.KillMonster("hachiko", "Snake", "Center", "Ninja Nopperabo", "Rabbit-Dragon-Snake piece");
+            Core.KillMonster("hachiko", "Horse", "Center", "Samurai Nopperabo", "Horse-Sheep-Monkey piece");
+            Core.KillMonster("hachiko", "Pig", "Center", "Ninja Nopperabo", "Rooster-Dog-Pig Piece");
             Core.EnsureComplete(405);
         }
 
@@ -588,13 +564,7 @@ public class Core13LoC
             Core.HuntMonster("greenguardeast", "Wolf", "Wolf Documentation");
             Core.HuntMonster("greenguardwest", "Slime", "Slime Documentation");
             Core.HuntMonster("greenguardwest", "Frogzard", "Frogzard Documentation");
-            Core.KillMonster(
-                "greenguardwest",
-                "West12",
-                "Up",
-                "Big Bad Boar",
-                "Wereboar Documentation"
-            );
+            Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Documentation");
             Core.EnsureComplete(515);
             Bot.Wait.ForPickup("Red's Big Wolf Slaying Axe");
             Core.EnsureComplete(514);
@@ -1018,21 +988,8 @@ public class Core13LoC
         if (!Story.QuestProgression(934))
         {
             Core.EnsureAccept(934);
-            Core.KillMonster(
-                "sandport",
-                "r6",
-                "Left",
-                "Sell-Sword Leader",
-                "Sell-Sword Leader Defeated"
-            );
-            Core.KillMonster(
-                "sandport",
-                "r5",
-                "Left",
-                "Horc Sell-Sword",
-                "Horc Sell-Swords Defeated",
-                3
-            );
+            Core.KillMonster("sandport", "r6", "Left", "Sell-Sword Leader", "Sell-Sword Leader Defeated");
+            Core.KillMonster("sandport", "r5", "Left", "Horc Sell-Sword", "Horc Sell-Swords Defeated", 3);
             Core.EnsureComplete(934);
         }
 
@@ -1335,14 +1292,7 @@ public class Core13LoC
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1473);
-            Core.KillMonster(
-                "dreamnexus",
-                "r17a",
-                "Up",
-                "Khasaanda",
-                "Khasaanda Defeated!",
-                publicRoom: false
-            );
+            Core.KillMonster("dreamnexus", "r17a", "Up", "Khasaanda", "Khasaanda Defeated!", publicRoom: false);
             Core.EnsureComplete(1473);
             Bot.Wait.ForQuestComplete(1473);
         }
@@ -1602,11 +1552,7 @@ public class Core13LoC
         {
             Core.EnsureAccept(2243);
             Core.HuntMonster("timelibrary", "Shadowscythe", "Shadowscythe Combat Strategy", 7);
-            Core.HuntMonster(
-                "timelibrary",
-                "Training Globe",
-                "Galactic Hypertron Engines: A Primer"
-            );
+            Core.HuntMonster("timelibrary", "Training Globe", "Galactic Hypertron Engines: A Primer");
             Story.MapItemQuest(2243, "timelibrary", 1367);
         }
 
@@ -2406,11 +2352,7 @@ public class Core13LoC
         if (!Story.QuestProgression(3789))
         {
             Core.EnsureAccept(3789);
-            Core.HuntMonster(
-                "newfinale",
-                "Chaorrupted Lycan Hunter",
-                "Chaorrupted Lycan Hunter Defeated"
-            );
+            Core.HuntMonster("newfinale", "Chaorrupted Lycan Hunter", "Chaorrupted Lycan Hunter Defeated");
             Core.EnsureAccept(3789);
         }
 

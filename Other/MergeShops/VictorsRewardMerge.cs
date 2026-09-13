@@ -107,12 +107,7 @@ public class VictorsRewardMerge
                         Core.RegisterQuests(svlQuests.ToArray());
                         for (int i = 0; i < svlQuests.Count; i++)
                         {
-                            Core.HuntMonster(
-                                "coliseum",
-                                "Devoted Cultist",
-                                "Level 25 Boss Defeated",
-                                log: false
-                            );
+                            Core.HuntMonster("coliseum", "Devoted Cultist", "Level 25 Boss Defeated", log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -140,12 +135,7 @@ public class VictorsRewardMerge
                         Core.RegisterQuests(gvlQuests.ToArray());
                         for (int i = 0; i < gvlQuests.Count; i++)
                         {
-                            Core.HuntMonster(
-                                "coliseum",
-                                "Incubus",
-                                "Level 50 Boss Defeated",
-                                log: false
-                            );
+                            Core.HuntMonster("coliseum", "Incubus", "Level 50 Boss Defeated", log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -174,12 +164,7 @@ public class VictorsRewardMerge
                         Core.EquipClass(ClassType.Solo);
                         for (int i = 0; i < pvlQuests.Count; i++)
                         {
-                            Core.HuntMonster(
-                                "coliseum",
-                                "The HeartBreaker",
-                                "Level 75 Boss Defeated",
-                                log: false
-                            );
+                            Core.HuntMonster("coliseum", "The HeartBreaker", "Level 75 Boss Defeated", log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();

@@ -96,13 +96,7 @@ public class CraggleRockMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "wanders",
-                            "r2",
-                            "Down",
-                            "Kalestri Worshiper",
-                            "Star of the Sandsea"
-                        );
+                        Core.KillMonster("wanders", "r2", "Down", "Kalestri Worshiper", "Star of the Sandsea");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -116,15 +110,7 @@ public class CraggleRockMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7279);
-                        Core.KillMonster(
-                            "kingcoal",
-                            "r1",
-                            "Left",
-                            "*",
-                            "Frozen Coal",
-                            10,
-                            log: false
-                        );
+                        Core.KillMonster("kingcoal", "r1", "Left", "*", "Frozen Coal", 10, log: false);
                         Core.EnsureComplete(7279);
                         Bot.Wait.ForPickup("Ice Diamond");
                     }
@@ -162,14 +148,7 @@ public class CraggleRockMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "battleunderc",
-                            "Enter",
-                            "Spawn",
-                            "*",
-                            "Fluorite Shard",
-                            10
-                        );
+                        Core.KillMonster("battleunderc", "Enter", "Spawn", "*", "Fluorite Shard", 10);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

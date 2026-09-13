@@ -127,14 +127,7 @@ public class ChaosAvengerClass
 
         Monster? kys = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && (x.MapID == 1));
         if (kys != null)
-            Core.KillMonster(
-                "chaoslord",
-                "r2",
-                "Left",
-                kys.MapID == 0 ? 1 : kys.MapID,
-                "Fragment of the Dragon",
-                isTemp: false
-            );
+            Core.KillMonster("chaoslord", "r2", "Left", kys.MapID == 0 ? 1 : kys.MapID, "Fragment of the Dragon", isTemp: false);
         else
         {
             Core.Logger("No monster found");
@@ -148,13 +141,7 @@ public class ChaosAvengerClass
             return;
 
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster(
-            "mountdoomskull",
-            "Chaorrupted Rogue",
-            "Fragment of Mount Doomskull",
-            1300,
-            isTemp: false
-        );
+        Core.HuntMonster("mountdoomskull", "Chaorrupted Rogue", "Fragment of Mount Doomskull", 1300, isTemp: false);
     }
 
     public void FragmentsoftheLordsA()
@@ -181,13 +168,7 @@ public class ChaosAvengerClass
         Core.HuntMonster("palooza", "Discordia", "Discordia Armor", isTemp: false);
 
         //Ledgermayne (Armor)
-        Core.HuntMonster(
-            "Ledgermayne",
-            "Ledgermayne",
-            "Ledgermayne",
-            isTemp: !Ledgermayne,
-            publicRoom: Ledgermayne
-        );
+        Core.HuntMonster("Ledgermayne", "Ledgermayne", "Ledgermayne", isTemp: !Ledgermayne, publicRoom: Ledgermayne);
 
         Core.BuyItem("championdrakath", 2055, "Fragments of the Lords A");
     }
@@ -211,20 +192,10 @@ public class ChaosAvengerClass
 
         //Chaos Lionfang Armor
         Bot.Quests.UpdateQuest(2814);
-        Core.HuntMonster(
-            "stormtemple",
-            "Chaos Lord Lionfang",
-            "Chaos Lionfang Armor",
-            isTemp: false
-        );
+        Core.HuntMonster("stormtemple", "Chaos Lord Lionfang", "Chaos Lionfang Armor", isTemp: false);
 
         //Chaos Lord Alteon (Armor)
-        Core.HuntMonster(
-            "swordhavenfalls",
-            "Chaos Lord Alteon",
-            "Chaos Lord Alteon",
-            isTemp: false
-        );
+        Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", "Chaos Lord Alteon", isTemp: false);
 
         //Xiang Chaos
         Adv.GearStore(EnhAfter: true);

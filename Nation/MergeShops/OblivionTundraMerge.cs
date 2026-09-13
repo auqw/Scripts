@@ -198,14 +198,7 @@ public class OblivionTundraMerge
                 case "Withered Archfiend's Essence":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "obliviontundra",
-                        UseableMonsters[2],
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("obliviontundra", UseableMonsters[2], req.Name, quant, req.Temp, false);
                     break;
 
                 case "ArchFiend Healer Staff":
@@ -233,14 +226,7 @@ public class OblivionTundraMerge
                 case "ArchFiend Mage's Wand":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(
-                        "enemyforest",
-                        "Evil Elemental",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("enemyforest", "Evil Elemental", req.Name, quant, req.Temp, false);
                     break;
             }
         }

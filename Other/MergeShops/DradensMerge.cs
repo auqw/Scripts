@@ -91,27 +91,9 @@ public class DradensMerge
                         Core.RegisterQuests(4214);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "phoenixrise",
-                                "Firestorm Tiger",
-                                "Tigerskin",
-                                5,
-                                log: false
-                            );
-                            Core.HuntMonster(
-                                "phoenixrise",
-                                "Infernal Goblin",
-                                "Strips of Goblin Leather",
-                                3,
-                                log: false
-                            );
-                            Core.HuntMonster(
-                                "phoenixrise",
-                                "Lava Troll",
-                                "Lava Globule",
-                                4,
-                                log: false
-                            );
+                            Core.HuntMonster("phoenixrise", "Firestorm Tiger", "Tigerskin", 5, log: false);
+                            Core.HuntMonster("phoenixrise", "Infernal Goblin", "Strips of Goblin Leather", 3, log: false);
+                            Core.HuntMonster("phoenixrise", "Lava Troll", "Lava Globule", 4, log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -123,19 +105,9 @@ public class DradensMerge
                         Core.RegisterQuests(4215);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster(
-                                "phoenixrise",
-                                "Cinderclaw",
-                                "Minotiger Horn",
-                                log: false
-                            );
+                            Core.HuntMonster("phoenixrise", "Cinderclaw", "Minotiger Horn", log: false);
                             Core.HuntMonster("phoenixrise", "Gargrowl", "Stone Shard", log: false);
-                            Core.HuntMonster(
-                                "phoenixrise",
-                                "Pyrric Ursus",
-                                "Crystal Pommel",
-                                log: false
-                            );
+                            Core.HuntMonster("phoenixrise", "Pyrric Ursus", "Crystal Pommel", log: false);
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();

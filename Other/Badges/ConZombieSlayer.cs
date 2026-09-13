@@ -50,18 +50,8 @@ public class ConZombieSlayer
             Core.HuntMonster("battlecon", "Cosplay Zombie", "Water Bottle", log: false);
             Core.HuntMonster("battlecon", "Cosplay Zombie", "Hoopy Frood brand Towel", log: false);
             Core.HuntMonster("battlecon", "Cosplay Zombie", "Event Schedule", log: false);
-            Core.HuntMonster(
-                "battlecon",
-                "Cosplay Zombie",
-                "Xtra-Strength Energy Potion",
-                log: false
-            );
-            Core.HuntMonster(
-                "battlecon",
-                "Cosplay Zombie",
-                "Anti-Con Rot Sanitation Device",
-                log: false
-            );
+            Core.HuntMonster("battlecon", "Cosplay Zombie", "Xtra-Strength Energy Potion", log: false);
+            Core.HuntMonster("battlecon", "Cosplay Zombie", "Anti-Con Rot Sanitation Device", log: false);
             Core.EnsureComplete(3136);
         }
 

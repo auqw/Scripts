@@ -144,15 +144,7 @@ public class CoreYnR
         }
         FlameForgedMetal(13);
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster(
-            "doomvaultb",
-            "r26",
-            "Left",
-            "Undead Raxgore",
-            "Weapon Imprint",
-            15,
-            false
-        );
+        Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Weapon Imprint", 15, false);
 
         Core.EnsureComplete(7444);
     }
@@ -195,36 +187,12 @@ public class CoreYnR
             Core.EnsureAccept(7410);
             Core.Logger("Using Non-Legion variant for the Blademaster Sword Scroll");
             Core.EquipClass(ClassType.Dodge);
-            Core.KillMonster(
-                "frozenlair",
-                "r3",
-                "Left",
-                "Legion Lich Lord",
-                "Sapphire Orb",
-                26,
-                false,
-                publicRoom: true
-            );
+            Core.KillMonster("frozenlair", "r3", "Left", "Legion Lich Lord", "Sapphire Orb", 26, false, publicRoom: true);
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster(
-                "Judgement",
-                "r10a",
-                "Spawn",
-                "Ultra Aeacus",
-                "Aeacus Empowered",
-                100,
-                false,
-                publicRoom: true
-            );
+            Core.KillMonster("Judgement", "r10a", "Spawn", "Ultra Aeacus", "Aeacus Empowered", 100, false, publicRoom: true);
             Core.HuntMonster("darkally", "Underfiend", "Traitor's Tract", 250, false);
             Core.HuntMonster("shadowsong", "Oh'Garr", "Ogre Titan's Resonance", 250, false);
-            Core.HuntMonster(
-                "shadowgrove",
-                "Titan Shadow Dragonlord",
-                "Shadow Dragonlord's Shroud",
-                250,
-                false
-            );
+            Core.HuntMonster("shadowgrove", "Titan Shadow Dragonlord", "Shadow Dragonlord's Shroud", 250, false);
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("evilwardage", "Blade Master", "Discipline", isTemp: false);
             Legion.DagePvP(400, 50, 1000);

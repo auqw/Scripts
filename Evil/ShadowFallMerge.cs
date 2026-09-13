@@ -106,16 +106,7 @@ public class ShadowFallMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.KillMonster(
-                        "shadowfallwar",
-                        "Garden2",
-                        "Left",
-                        "*",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.KillMonster("shadowfallwar", "Garden2", "Left", "*", req.Name, quant, false, false);
                     break;
                 #endregion
             }

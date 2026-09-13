@@ -132,13 +132,7 @@ public class ExtraCreditMerge
                     Core.RegisterQuests(8791);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "extracredit",
-                            "Grade A Bully",
-                            "Bully Defeated",
-                            5,
-                            log: false
-                        );
+                        Core.HuntMonster("extracredit", "Grade A Bully", "Bully Defeated", 5, log: false);
                         Core.HuntMonster("extracredit", "Meanest Girl", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }

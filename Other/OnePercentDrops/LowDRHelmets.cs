@@ -66,12 +66,7 @@ public class LowDRHelmets
             || helmetConfig == Helmets.All && !Core.CheckInventory("Dracolich Destroyer Mask")
         )
         {
-            Core.HuntMonster(
-                "dragonheart",
-                "Avatar of Desolich",
-                "Dracolich Destroyer Mask",
-                isTemp: false
-            );
+            Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer Mask", isTemp: false);
         }
 
         if (
@@ -104,12 +99,7 @@ public class LowDRHelmets
                 && !Core.CheckInventory("Monster Queen's Malicious Morph")
         )
         {
-            Core.HuntMonster(
-                "deadlines",
-                "Eternal Dragon",
-                "Monster Queen's Malicious Morph",
-                isTemp: false
-            );
+            Core.HuntMonster("deadlines", "Eternal Dragon", "Monster Queen's Malicious Morph", isTemp: false);
         }
 
         if (

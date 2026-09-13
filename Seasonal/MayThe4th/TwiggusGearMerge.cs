@@ -102,12 +102,7 @@ public class TwiggusGearMerge
                     Core.RegisterQuests(9223);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "murdermoon",
-                            "Tempest Soldier",
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("murdermoon", "Tempest Soldier", isTemp: false, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -116,14 +111,7 @@ public class TwiggusGearMerge
                 case "Astravian Enforcer Crescent Halo":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "murdermoon",
-                        "Fifth Sepulchure",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("murdermoon", "Fifth Sepulchure", req.Name, quant, false, false);
                     break;
 
                 case "Large Hoverpram Shard":
@@ -139,15 +127,7 @@ public class TwiggusGearMerge
                     Core.RegisterQuests(8065);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "murdermoon",
-                            "r2",
-                            "Left",
-                            "Tempest Soldier",
-                            "Tempest Soldier Badge",
-                            5,
-                            log: false
-                        );
+                        Core.KillMonster("murdermoon", "r2", "Left", "Tempest Soldier", "Tempest Soldier Badge", 5, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -159,15 +139,7 @@ public class TwiggusGearMerge
                     Core.RegisterQuests(9703);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "twigguhunt",
-                            "r2",
-                            "Down",
-                            "*",
-                            "Broken Droid Part",
-                            300,
-                            log: false
-                        );
+                        Core.KillMonster("twigguhunt", "r2", "Down", "*", "Broken Droid Part", 300, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

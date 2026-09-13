@@ -119,12 +119,7 @@ public class ShipWreckMerge
                     Core.RegisterQuests(4430);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "shipwreck",
-                            "Gilded Crystal Undead",
-                            "Crystal Crew Shards",
-                            8
-                        );
+                        Core.HuntMonster("shipwreck", "Gilded Crystal Undead", "Crystal Crew Shards", 8);
                         Core.HuntMonster("shipwreck", "Captain Nubar", "Pirate Pistols", 8);
                         Bot.Wait.ForPickup(req.Name);
                     }

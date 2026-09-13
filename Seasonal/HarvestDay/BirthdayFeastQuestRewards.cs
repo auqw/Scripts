@@ -128,20 +128,8 @@ public class BirthdayFeastQuestRewards
                 Core.FarmingLogger(Reward.Name, 1);
                 while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name, toInv: false))
                 {
-                    Core.HuntMonster(
-                        "celestialrealm",
-                        "Celestial Bird of Paradise",
-                        "Celestial Artifact",
-                        6,
-                        log: false
-                    );
-                    Core.HuntMonster(
-                        "celestialrealm",
-                        "Infernal Imp",
-                        "Infernal Artifact",
-                        6,
-                        log: false
-                    );
+                    Core.HuntMonster("celestialrealm", "Celestial Bird of Paradise", "Celestial Artifact", 6, log: false);
+                    Core.HuntMonster("celestialrealm", "Infernal Imp", "Infernal Artifact", 6, log: false);
 
                     i++;
 
@@ -251,19 +239,8 @@ public class BirthdayFeastQuestRewards
                 Core.FarmingLogger(Reward.Name, 1);
                 while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name, toInv: false))
                 {
-                    Core.HuntMonster(
-                        "byrodax",
-                        "Mutated Critter",
-                        "Picture of Mutated Critter",
-                        3,
-                        log: false
-                    );
-                    Core.HuntMonster(
-                        "byrodax",
-                        "Byro-Dax Monstrosity",
-                        "Picture of Byro-Dax Monstrosity",
-                        log: false
-                    );
+                    Core.HuntMonster("byrodax", "Mutated Critter", "Picture of Mutated Critter", 3, log: false);
+                    Core.HuntMonster("byrodax", "Byro-Dax Monstrosity", "Picture of Byro-Dax Monstrosity", log: false);
                     i++;
 
                     if (i % 5 == 0)

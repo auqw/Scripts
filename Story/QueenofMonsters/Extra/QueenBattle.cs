@@ -61,30 +61,10 @@ public class QueenBattle
         {
             Core.EnsureAccept(8354);
             Core.HuntMonster("queenbattle", "Extriki Shade", "Extriki Shade Banished", log: false);
-            Core.HuntMonster(
-                "queenbattle",
-                "Kolyaban Shade",
-                "Kolyaban Shade Banished",
-                log: false
-            );
-            Core.HuntMonster(
-                "queenbattle",
-                "Horothotep Shade",
-                "Horothotep Shade Banished",
-                log: false
-            );
-            Core.HuntMonster(
-                "queenbattle",
-                "Sa-Laatan Shade",
-                "Sa-Laatan Shade Banished",
-                log: false
-            );
-            Core.HuntMonster(
-                $"queenbattle",
-                "Grou'luu Shade",
-                "Grou'luu Shade Banished",
-                log: false
-            );
+            Core.HuntMonster("queenbattle", "Kolyaban Shade", "Kolyaban Shade Banished", log: false);
+            Core.HuntMonster("queenbattle", "Horothotep Shade", "Horothotep Shade Banished", log: false);
+            Core.HuntMonster("queenbattle", "Sa-Laatan Shade", "Sa-Laatan Shade Banished", log: false);
+            Core.HuntMonster($"queenbattle", "Grou'luu Shade", "Grou'luu Shade Banished", log: false);
             Core.EnsureComplete(8354);
         }
 
@@ -98,13 +78,7 @@ public class QueenBattle
         if (!Story.QuestProgression(8357))
         {
             Core.EnsureAccept(8357);
-            Core.HuntMonster(
-                "queenbattle",
-                "Chaos General",
-                "Potent Chaotic Energy",
-                12,
-                log: false
-            );
+            Core.HuntMonster("queenbattle", "Chaos General", "Potent Chaotic Energy", 12, log: false);
             Story.MapItemQuest(8357, "queenbattle", 9205);
         }
 
@@ -118,12 +92,7 @@ public class QueenBattle
         if (!Story.QuestProgression(8360))
         {
             Core.EnsureAccept(8360);
-            Core.HuntMonster(
-                "queenbattle",
-                "Proto Chaos Champion",
-                "Proto Chaos Champion Defeated",
-                log: false
-            );
+            Core.HuntMonster("queenbattle", "Proto Chaos Champion", "Proto Chaos Champion Defeated", log: false);
             Core.EnsureComplete(8360);
         }
 
@@ -131,12 +100,7 @@ public class QueenBattle
         if (!Story.QuestProgression(8361))
         {
             Core.EnsureAccept(8361);
-            Core.HuntMonster(
-                "queenbattle",
-                "Queen of Monsters",
-                "Queen of Monsters Sealed",
-                log: false
-            );
+            Core.HuntMonster("queenbattle", "Queen of Monsters", "Queen of Monsters Sealed", log: false);
             Core.EnsureComplete(8361);
         }
     }

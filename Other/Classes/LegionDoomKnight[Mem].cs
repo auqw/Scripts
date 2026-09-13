@@ -52,13 +52,7 @@ public class LegionDoomKnight
             SDKA.DoAll();
 
         Core.RegisterQuests(4099);
-        Core.HuntMonster(
-            "sepulchure",
-            "Dark Sepulchure",
-            "Dark Sepulchure's Badge",
-            100,
-            isTemp: false
-        );
+        Core.HuntMonster("sepulchure", "Dark Sepulchure", "Dark Sepulchure's Badge", 100, isTemp: false);
         Core.CancelRegisteredQuests();
 
         Core.BuyItem("battleon", 1106, 38742);

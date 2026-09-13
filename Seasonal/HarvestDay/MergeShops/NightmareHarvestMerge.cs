@@ -102,12 +102,7 @@ public class NightmareHarvestMerge
                     {
                         Core.HuntMonster("memetnightmare", "Fire Cyclone", "Cyclones Subdued", 8);
                         Core.HuntMonster("memetnightmare", "Burning Ember", "Embers Smothered", 8);
-                        Core.HuntMonster(
-                            "memetnightmare",
-                            "Cannibal Mermaid",
-                            "Mermaids Dispersed",
-                            8
-                        );
+                        Core.HuntMonster("memetnightmare", "Cannibal Mermaid", "Mermaids Dispersed", 8);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

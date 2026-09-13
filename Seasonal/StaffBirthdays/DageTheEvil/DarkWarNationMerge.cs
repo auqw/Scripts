@@ -123,12 +123,7 @@ public class DarkWarNationMerge
                     Core.RegisterQuests(8581);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "darkwarnation",
-                            "Legion Dread Knight",
-                            "Legion's Dread",
-                            5
-                        );
+                        Core.HuntMonster("darkwarnation", "Legion Dread Knight", "Legion's Dread", 5);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

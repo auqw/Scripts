@@ -58,12 +58,7 @@ public class TarosManslayer
         if (ManslayerOnly)
         {
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "tercessuinotlim",
-                "Taro Blademaster",
-                "Taro's Manslayer",
-                isTemp: false
-            );
+            Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
         }
         else
         {

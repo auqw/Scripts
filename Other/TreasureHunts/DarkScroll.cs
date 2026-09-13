@@ -64,13 +64,7 @@ public class DarkScroll
 
             //Burning Seal
             Core.Logger($"Step 5 Burning Seal");
-            Core.HuntMonster(
-                "phoenixrise",
-                "Cinderclaw",
-                "Burning Seal",
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("phoenixrise", "Cinderclaw", "Burning Seal", isTemp: false, log: false);
 
             //Blazing Catalyst
             Core.Logger($"Step 6 Blazing Catalyst");

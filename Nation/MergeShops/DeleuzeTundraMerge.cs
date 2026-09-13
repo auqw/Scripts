@@ -101,30 +101,10 @@ public class DeleuzeTundraMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster(
-                            "deleuzetundra",
-                            "r4",
-                            "Left",
-                            "Oblivion Magus",
-                            "Honeycomb Flesh",
-                            8
-                        );
-                        Core.KillMonster(
-                            "deleuzetundra",
-                            "Enter",
-                            "Spawn",
-                            "Empty Creature",
-                            "Empty Carcass",
-                            8
-                        );
+                        Core.KillMonster("deleuzetundra", "r4", "Left", "Oblivion Magus", "Honeycomb Flesh", 8);
+                        Core.KillMonster("deleuzetundra", "Enter", "Spawn", "Empty Creature", "Empty Carcass", 8);
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster(
-                            "deleuzetundra",
-                            "r5",
-                            "Left",
-                            "Oblivion's Herald",
-                            "Obsidian Bone Shard"
-                        );
+                        Core.KillMonster("deleuzetundra", "r5", "Left", "Oblivion's Herald", "Obsidian Bone Shard");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -132,15 +112,7 @@ public class DeleuzeTundraMerge
 
                 case "Outrider's Broken Blade":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster(
-                        "deleuzetundra",
-                        "r2",
-                        "Left",
-                        "Nation Outrider",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
+                    Core.KillMonster("deleuzetundra", "r2", "Left", "Nation Outrider", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;

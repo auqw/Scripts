@@ -114,12 +114,7 @@ public class TerranesMerge
                     Core.RegisterQuests(6287);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "guardiantree",
-                            "Blossoming Treeant",
-                            "Treeant Blossom Nectar",
-                            3
-                        );
+                        Core.HuntMonster("guardiantree", "Blossoming Treeant", "Treeant Blossom Nectar", 3);
                         Core.HuntMonster("guardiantree", "Myconid", "Myconid Spore", 3);
                         Core.HuntMonster("guardiantree", "Corrupted Zard", "Corrupted Zard", 3);
                         Bot.Wait.ForPickup(req.Name);

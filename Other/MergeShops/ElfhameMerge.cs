@@ -101,30 +101,9 @@ public class ElfhameMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("elfhame", "Blighted Deer", "Deer Horn", 2, true, false);
-                        Core.HuntMonster(
-                            "elfhame",
-                            "Wolfrider",
-                            "Elfhame Wolf Pelt",
-                            2,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "elfhame",
-                            "Ruin Dweller",
-                            "Ruin Dweller Remains",
-                            3,
-                            true,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "elfhame",
-                            "Ratawampus",
-                            "Ratawampus Tail",
-                            2,
-                            true,
-                            false
-                        );
+                        Core.HuntMonster("elfhame", "Wolfrider", "Elfhame Wolf Pelt", 2, true, false);
+                        Core.HuntMonster("elfhame", "Ruin Dweller", "Ruin Dweller Remains", 3, true, false);
+                        Core.HuntMonster("elfhame", "Ratawampus", "Ratawampus Tail", 2, true, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

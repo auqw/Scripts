@@ -114,35 +114,17 @@ public class HarvestMerge
 
                 case "Goredon's Zard Sauce":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "feastboss",
-                        "Goredon Rampage",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("feastboss", "Goredon Rampage", req.Name, quant, isTemp: false);
                     break;
 
                 case "Harvest Golem Parfait":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "feastwarevil",
-                        "Harvest Golem",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("feastwarevil", "Harvest Golem", req.Name, quant, isTemp: false);
                     break;
 
                 case "Ultra Turdrakogiblet":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "killerkitchen",
-                        "Ultra Turdrakolich",
-                        req.Name,
-                        quant,
-                        isTemp: false
-                    );
+                    Core.HuntMonster("killerkitchen", "Ultra Turdrakolich", req.Name, quant, isTemp: false);
                     break;
 
                 case "Wretched Rider Meat":
@@ -166,14 +148,7 @@ public class HarvestMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "birdswithharms",
-                            "Rawrgobble",
-                            req.Name,
-                            quant,
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("birdswithharms", "Rawrgobble", req.Name, quant, isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -200,13 +175,7 @@ public class HarvestMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "ebilmech",
-                            "Ebil Mech Dragon",
-                            req.Name,
-                            isTemp: false,
-                            log: false
-                        );
+                        Core.HuntMonster("ebilmech", "Ebil Mech Dragon", req.Name, isTemp: false, log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }

@@ -119,25 +119,9 @@ public class GardenMerge
                             EnoughPeople = Bot.Map.CellPlayers?.Count >= 3;
 
                             if (!EnoughPeople && Core.IsMember)
-                                Core.HuntMonster(
-                                    "ultravoid",
-                                    "Ultra Kathool",
-                                    "Ingredients?",
-                                    22,
-                                    false,
-                                    publicRoom: true
-                                );
+                                Core.HuntMonster("ultravoid", "Ultra Kathool", "Ingredients?", 22, false, publicRoom: true);
                             else
-                                Core.KillMonster(
-                                    "doomvault",
-                                    "r5",
-                                    "Left",
-                                    "Binky",
-                                    "Ingredients?",
-                                    22,
-                                    false,
-                                    publicRoom: true
-                                );
+                                Core.KillMonster("doomvault", "r5", "Left", "Binky", "Ingredients?", 22, false, publicRoom: true);
 
                             Bot.Wait.ForPickup("Darkon's Receipt");
                         }

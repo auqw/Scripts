@@ -98,27 +98,10 @@ public class SnowviewRaceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "snowviewrace",
-                            "Aurora Vaderix",
-                            "Aurora Wing",
-                            log: false
-                        );
+                        Core.HuntMonster("snowviewrace", "Aurora Vaderix", "Aurora Wing", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "snowviewrace",
-                            "Bandit Fletcher",
-                            "Bandit Leader Bounty",
-                            3,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "snowviewrace",
-                            "Juvenile Vaderix",
-                            "Vaderix Drumstick",
-                            7,
-                            log: false
-                        );
+                        Core.HuntMonster("snowviewrace", "Bandit Fletcher", "Bandit Leader Bounty", 3, log: false);
+                        Core.HuntMonster("snowviewrace", "Juvenile Vaderix", "Vaderix Drumstick", 7, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

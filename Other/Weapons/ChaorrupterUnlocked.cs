@@ -43,51 +43,15 @@ public class ChaorrupterUnlocked
         if (Core.IsMember)
         {
             Core.Logger("Farming Chaorrupter Unlocked (Legend)");
-            Core.KillMonster(
-                "chaoswar",
-                "r2",
-                "Spawn",
-                "*",
-                "Chaos Eye",
-                100,
-                isTemp: false,
-                log: false
-            );
-            Core.KillMonster(
-                "chaoswar",
-                "r13",
-                "Left",
-                "*",
-                "Chaos Tentacle",
-                100,
-                isTemp: false,
-                log: false
-            );
+            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Eye", 100, isTemp: false, log: false);
+            Core.KillMonster("chaoswar", "r13", "Left", "*", "Chaos Tentacle", 100, isTemp: false, log: false);
             Core.BuyItem("chaoswar", 642, 17873, 1, 10987);
         }
         else
         {
             Core.Logger("Farming Chaorrupter Unlocked (Free Player)");
-            Core.KillMonster(
-                "chaoswar",
-                "r2",
-                "Spawn",
-                "*",
-                "Chaos Eye",
-                250,
-                isTemp: false,
-                log: false
-            );
-            Core.KillMonster(
-                "chaoswar",
-                "r13",
-                "Left",
-                "*",
-                "Chaos Tentacle",
-                250,
-                isTemp: false,
-                log: false
-            );
+            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Eye", 250, isTemp: false, log: false);
+            Core.KillMonster("chaoswar", "r13", "Left", "*", "Chaos Tentacle", 250, isTemp: false, log: false);
             Core.BuyItem("chaoswar", 642, 17932, 1, 10986);
         }
         Adv.EnhanceItem("Chaorrupter Unlocked", EnhancementType.Lucky);

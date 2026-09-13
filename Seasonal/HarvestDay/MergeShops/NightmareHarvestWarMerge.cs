@@ -112,12 +112,7 @@ public class NightmareHarvestWarMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("nightmarewar", "Zombie Cicada", "Murderbug Medal", 5);
-                        Core.HuntMonster(
-                            "nightmarewar",
-                            "Zombie Cicada",
-                            "Mega Murderbug Medal",
-                            3
-                        );
+                        Core.HuntMonster("nightmarewar", "Zombie Cicada", "Mega Murderbug Medal", 3);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

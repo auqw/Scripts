@@ -89,13 +89,7 @@ public class LoveLockedMerge
                     Core.RegisterQuests(4814);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "lovelockdown",
-                            "Sweeter Fish",
-                            "Sweeter Fish Swished",
-                            6,
-                            log: false
-                        );
+                        Core.HuntMonster("lovelockdown", "Sweeter Fish", "Sweeter Fish Swished", 6, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

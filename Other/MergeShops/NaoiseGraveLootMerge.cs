@@ -106,12 +106,7 @@ public class NaoiseGraveLootMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "naoisegrave",
-                            "Bone Dragonling",
-                            "Dragonling Soul",
-                            log: false
-                        );
+                        Core.HuntMonster("naoisegrave", "Bone Dragonling", "Dragonling Soul", log: false);
                         Core.HuntMonster("naoisegrave", "Ice Guardian", "Cryostone", log: false);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("naoisegrave", "Volgritian", "Gold Chain", log: false);

@@ -242,14 +242,7 @@ public class CoreNewYear
         if (!Story.QuestProgression(7271))
         {
             Core.EnsureAccept(7271);
-            Core.KillMonster(
-                "chronophoenix",
-                "r5",
-                "Left",
-                "Phoenix Fire",
-                "Fire Extinguished",
-                10
-            );
+            Core.KillMonster("chronophoenix", "r5", "Left", "Phoenix Fire", "Fire Extinguished", 10);
             Core.EnsureComplete(7271);
         }
 

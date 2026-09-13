@@ -107,27 +107,9 @@ public class CoreDarkon
             }
 
             if (!EnoughPeople && Core.IsMember)
-                Core.HuntMonster(
-                    "ultravoid",
-                    "Ultra Kathool",
-                    "Ingredients?",
-                    22,
-                    false,
-                    publicRoom: true,
-                    log: false
-                );
+                Core.HuntMonster("ultravoid", "Ultra Kathool", "Ingredients?", 22, false, publicRoom: true, log: false);
             else
-                Core.KillMonster(
-                    "doomvault",
-                    "r5",
-                    "Left",
-                    "Binky",
-                    "Ingredients?",
-                    22,
-                    false,
-                    publicRoom: true,
-                    log: false
-                );
+                Core.KillMonster("doomvault", "r5", "Left", "Binky", "Ingredients?", 22, false, publicRoom: true, log: false);
 
             Bot.Wait.ForPickup("Darkon's Receipt");
         }
@@ -152,14 +134,7 @@ public class CoreDarkon
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
         {
             Adv.GearStore(EnhAfter: true);
-            Core.HuntMonster(
-                "tercessuinotlim",
-                "Nulgath",
-                "Nulgath's mask",
-                1,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("tercessuinotlim", "Nulgath", "Nulgath's mask", 1, false, publicRoom: true);
             Bot.Wait.ForPickup("Darkon's Receipt");
         }
         Adv.GearStore(true, EnhAfter: true);
@@ -185,16 +160,7 @@ public class CoreDarkon
         {
             Core.HuntMonster("eridani", "Wolf-Like Creature", "Tooth", 28, false, log: false);
             Bot.Options.AttackWithoutTarget = true;
-            Core.KillMonster(
-                "eridani",
-                "r4",
-                "Left",
-                "Creature 15",
-                "Wisdom Tooth",
-                4,
-                false,
-                log: false
-            );
+            Core.KillMonster("eridani", "r4", "Left", "Creature 15", "Wisdom Tooth", 4, false, log: false);
             Bot.Options.AttackWithoutTarget = false;
             Bot.Wait.ForPickup("Teeth");
         }
@@ -302,24 +268,8 @@ public class CoreDarkon
         while (!Bot.ShouldExit && !Core.CheckInventory("Bandit's Correspondence", Quantity))
         {
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "eridanipast",
-                "r3",
-                "Left",
-                "Dog",
-                "Dogs Confiscated",
-                12,
-                log: false
-            );
-            Core.KillMonster(
-                "eridanipast",
-                "r9",
-                "Left",
-                "Bandit",
-                "Bandit Contraband",
-                12,
-                log: false
-            );
+            Core.KillMonster("eridanipast", "r3", "Left", "Dog", "Dogs Confiscated", 12, log: false);
+            Core.KillMonster("eridanipast", "r9", "Left", "Bandit", "Bandit Contraband", 12, log: false);
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonsterMapID("eridanipast", 19, "Seraphic Sparred", log: false);
@@ -351,13 +301,7 @@ public class CoreDarkon
             Core.HuntMonster("astraviapast", "Titania", "Titania's Rematch Won", log: false);
             Core.HuntMonster("astraviapast", "Aurola", "Aurola's Rematch Won", log: false);
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster(
-                "astraviapast",
-                "Astravian Soldier",
-                "Soldiers Trained",
-                8,
-                log: false
-            );
+            Core.HuntMonster("astraviapast", "Astravian Soldier", "Soldiers Trained", 8, log: false);
             Bot.Wait.ForPickup("Suki's Prestige");
         }
         Core.CancelRegisteredQuests();
@@ -383,32 +327,11 @@ public class CoreDarkon
         {
             Core.JumpWait();
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "firstobservatory",
-                "r7",
-                "Left",
-                "Ancient Creature",
-                "Creature Samples",
-                6,
-                log: false
-            );
-            Core.KillMonster(
-                "firstobservatory",
-                "r6",
-                "Left",
-                "Ancient Turret",
-                "Turret Pieces",
-                12,
-                log: false
-            );
+            Core.KillMonster("firstobservatory", "r7", "Left", "Ancient Creature", "Creature Samples", 6, log: false);
+            Core.KillMonster("firstobservatory", "r6", "Left", "Ancient Turret", "Turret Pieces", 12, log: false);
             Core.JumpWait();
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                $"firstobservatory",
-                "Empress’ Finger",
-                "Alprecha Observed",
-                log: false
-            );
+            Core.HuntMonster($"firstobservatory", "Empress’ Finger", "Alprecha Observed", log: false);
             Bot.Wait.ForPickup("Ancient Remnant");
         }
         Core.CancelRegisteredQuests();

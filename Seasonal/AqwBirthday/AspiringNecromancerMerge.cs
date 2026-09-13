@@ -122,15 +122,7 @@ public class AspiringNecromancerMerge
                     Core.RegisterQuests(7752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "doomwood",
-                            "r8",
-                            "Left",
-                            "*",
-                            "Bones Collected",
-                            15,
-                            log: false
-                        );
+                        Core.KillMonster("doomwood", "r8", "Left", "*", "Bones Collected", 15, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

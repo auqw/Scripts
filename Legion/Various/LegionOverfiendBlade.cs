@@ -48,13 +48,7 @@ public class LegionBlade
             {
                 Core.EnsureAccept(questID);
                 Core.HuntMonster("styx", "Sullen Soul", "Sullen Soul Received", quant1, log: false);
-                Core.HuntMonster(
-                    "styx",
-                    "Wrathful Soul",
-                    "Wrathful Soul Taken",
-                    quant2,
-                    log: false
-                );
+                Core.HuntMonster("styx", "Wrathful Soul", "Wrathful Soul Taken", quant2, log: false);
                 Core.EnsureComplete(questID);
             }
             Core.Logger($"{RewardOption.Name} Obtainted.");

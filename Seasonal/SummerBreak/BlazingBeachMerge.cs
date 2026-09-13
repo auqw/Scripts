@@ -108,33 +108,9 @@ public class BlazingBeachMerge
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "blazingbeach",
-                            "r5",
-                            "Right",
-                            "Red-Hot Raider",
-                            "Raider Repelled",
-                            10,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "blazingbeach",
-                            "r2",
-                            "Right",
-                            "Scalding Shooter",
-                            "Sharpshooter Shooed",
-                            8,
-                            log: false
-                        );
-                        Core.KillMonster(
-                            "blazingbeach",
-                            "r2",
-                            "Right",
-                            "Burning Bombadier",
-                            "Bomber Bye-Byed",
-                            6,
-                            log: false
-                        );
+                        Core.KillMonster("blazingbeach", "r5", "Right", "Red-Hot Raider", "Raider Repelled", 10, log: false);
+                        Core.KillMonster("blazingbeach", "r2", "Right", "Scalding Shooter", "Sharpshooter Shooed", 8, log: false);
+                        Core.KillMonster("blazingbeach", "r2", "Right", "Burning Bombadier", "Bomber Bye-Byed", 6, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

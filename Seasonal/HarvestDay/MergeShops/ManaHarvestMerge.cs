@@ -114,14 +114,7 @@ public class ManaHarvestMerge
                 case "Glossy Chestnut Locks":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(
-                        "manaharvest",
-                        CHD.UMManaHarvest[7],
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
+                    Core.HuntMonster("manaharvest", CHD.UMManaHarvest[7], req.Name, quant, req.Temp, false);
                     break;
             }
         }

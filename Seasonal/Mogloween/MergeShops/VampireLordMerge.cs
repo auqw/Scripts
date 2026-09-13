@@ -100,22 +100,8 @@ public class VampireLordMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory("Blood Moon Token", quant))
                     {
                         Core.EnsureAccept(Core.IsMember ? 6060 : 6059);
-                        Core.KillMonster(
-                            "bloodmoon",
-                            "r12a",
-                            "Left",
-                            "Black Unicorn",
-                            "Black Blood Vial",
-                            isTemp: false
-                        );
-                        Core.KillMonster(
-                            "bloodmoon",
-                            "r4a",
-                            "Left",
-                            "Lycan Guard",
-                            "Moon Stone",
-                            isTemp: false
-                        );
+                        Core.KillMonster("bloodmoon", "r12a", "Left", "Black Unicorn", "Black Blood Vial", isTemp: false);
+                        Core.KillMonster("bloodmoon", "r4a", "Left", "Lycan Guard", "Moon Stone", isTemp: false);
                         Core.EnsureComplete(Core.IsMember ? 6060 : 6059);
                         Bot.Wait.ForPickup("Blood Moon Token");
                     }
