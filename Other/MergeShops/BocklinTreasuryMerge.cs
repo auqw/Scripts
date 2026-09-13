@@ -186,11 +186,13 @@ public class BocklinTreasuryMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.EnsureAccept(Core.IsMember ? 10242 : 10240);
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("bocklincastle", "Undead Garde", "Undead's Flag", 9);
                         Core.HuntMonster("bocklincastle", "Garde Wraith", "Wraith's Scream", 6);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("bocklincastle", "Elder Necromancer", "Necromancer's Coin", 1);
+                        Core.EnsureComplete(Core.IsMember ? 10242 : 10240);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -217,29 +219,14 @@ public class BocklinTreasuryMerge
                 case "Scion's Regalia":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(93762);
-                    Core.HuntMonster(
-                        "bocklinsanctum",
-                        "Tarnished Scion",
-                        req.Name,
-                        req.Quantity,
-                        req.Temp
-                    );
-                    Bot.Wait.ForPickup(req.Name);
+                    Core.HuntMonster("bocklinsanctum", "Tarnished Scion", req.Name, req.Quantity, req.Temp); Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Vaughn Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "bocklincastle",
-                        "Garde Wraith",
-                        req.Name,
-                        quant,
-                        req.Temp,
-                        false
-                    );
-                    break;
+                    Core.HuntMonster("bocklincastle", "Garde Wraith", req.Name, quant, req.Temp, false); break;
 
                 case "Gold Voucher 100k":
                     Farm.Voucher(req.Name, req.Quantity);
