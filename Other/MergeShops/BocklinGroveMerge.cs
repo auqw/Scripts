@@ -105,15 +105,15 @@ public class BocklinGroveMerge
 
                 case "Enthralling Gem Shard":
                     Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                   while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            Core.IsMember ? 10242 : 10240,
-                            false,
-                            ("bocklingrove", "Elder Necromancer", ClassType.Solo),
-                            ("bocklingrove", "Undead Garde", ClassType.Farm),
-                            ("bocklingrove", "Garde Wraith", ClassType.Farm)
-                        );
+                        Core.EnsureAccept(Core.IsMember ? 10242 : 10240);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("bocklingrove", "Undead Garde", "Undead's Flag", 9);
+                        Core.HuntMonster("bocklingrove", "Garde Wraith", "Wraith's Scream", 6);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("bocklingrove", "Elder Necromancer", "Necromancer's Coin", 1);
+                        Core.EnsureComplete(Core.IsMember ? 10242 : 10240);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

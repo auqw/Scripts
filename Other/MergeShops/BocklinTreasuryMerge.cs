@@ -177,10 +177,10 @@ public class BocklinTreasuryMerge
                     {
                         Core.EnsureAccept(Core.IsMember ? 10242 : 10240);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("bocklincastle", "Undead Garde", "Undead's Flag", 9);
-                        Core.HuntMonster("bocklincastle", "Garde Wraith", "Wraith's Scream", 6);
+                        Core.HuntMonster("bocklingrove", "Undead Garde", "Undead's Flag", 9);
+                        Core.HuntMonster("bocklingrove", "Garde Wraith", "Wraith's Scream", 6);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("bocklincastle", "Elder Necromancer", "Necromancer's Coin", 1);
+                        Core.HuntMonster("bocklingrove", "Elder Necromancer", "Necromancer's Coin", 1);
                         Core.EnsureComplete(Core.IsMember ? 10242 : 10240);
                         Bot.Wait.ForPickup(req.Name);
                     }
