@@ -20,6 +20,7 @@ public class Halosis
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
         new Option<bool>("FarmHalosis", "Farm Halosis?", "Farm Halosis repeatedly.", false),
+        CoreBots.Instance.SkipOptions,
     };
 
     private IScriptInterface Bot = IScriptInterface.Instance;
@@ -114,6 +115,18 @@ public class Halosis
                 if (!Bot.Player.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    if (Bot.Player.Alive)
+                    {
+                        _dieNowDetected = false;
+                        _dieNowDetectedAt = DateTimeOffset.MinValue;
+                        _skillOneReserved = false;
+                        _autoAttackCancelled = false;
+                        if (GetSelectedClass() == "Dragon of Time")
+                            Bot.Skills.StartAdvanced("3 | 2 | 1 | 2 | 4 | 2", 250, SkillUseMode.WaitForCooldown);
+                        else
+                            Bot.Skills.StartAdvanced("3 | 4 | 2 | 1");
+                        Bot.Skills.Resume();
+                    }
                     continue;
                 }
 

@@ -20,6 +20,7 @@ public class Fame
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
         new Option<bool>("FarmFame", "Farm Fame?", "Farm Fame repeatedly.", false),
+        CoreBots.Instance.SkipOptions,
     };
 
     private IScriptInterface Bot = IScriptInterface.Instance;

@@ -20,6 +20,7 @@ public class Bello
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
         new Option<bool>("FarmBello", "Farm Bello?", "Farm Bello repeatedly.", false),
+        CoreBots.Instance.SkipOptions,
     };
 
     private IScriptInterface Bot = IScriptInterface.Instance;

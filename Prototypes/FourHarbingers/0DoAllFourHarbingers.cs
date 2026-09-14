@@ -23,6 +23,7 @@ public class DoAllFourHarbingers
         new Option<bool>("UsePotions", "Use Potions", "Use the optimized potions during each fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the optimized enhancements before each fight.", true),
         new Option<bool>("FarmBosses", "Farm Bosses?", "Boss farming is available in the individual boss scripts.", false),
+        CoreBots.Instance.SkipOptions,
     };
 
     private IScriptInterface Bot = IScriptInterface.Instance;

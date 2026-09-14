@@ -22,6 +22,7 @@ public class AnethyxosAbsolution
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
         new Option<bool>("FarmAnethyxosAbsolution", "Farm Anethyx'o's Absolution?", "Farm Anethyx'o's Absolution repeatedly.", false),
+        CoreBots.Instance.SkipOptions,
     };
 
     private IScriptInterface Bot = IScriptInterface.Instance;
@@ -111,6 +112,14 @@ public class AnethyxosAbsolution
                 if (!Bot.Player.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    if (Bot.Player.Alive)
+                    {
+                        _dieNow = false;
+                        _dieNowDetectedAt = DateTimeOffset.MinValue;
+                        _lowHealthSkills = false;
+                        StartNormalSkills();
+                        Bot.Skills.Resume();
+                    }
                     continue;
                 }
 
