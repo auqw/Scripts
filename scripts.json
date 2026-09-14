@@ -5068,7 +5068,7 @@
   },
   {
     "name": "Anethyx'o's Absolution",
-    "description": "null",
+    "description": "Defeat Anethyx'o's Absolution using King's Echo or Chaos Avenger",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5080,8 +5080,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/AnethyxosAbsolution.cs",
-    "size": 21287,
-    "sha256": "54facf479ee0059ed070d2d276e40469f48540e2325dee948c918d82279476fc",
+    "size": 21885,
+    "sha256": "809fc37f82771474df4e9f262efd49ae2e361beb2bb184cfc947a693c48d5360",
     "fileName": "AnethyxosAbsolution.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/AnethyxosAbsolution.cs"
   },
@@ -5098,14 +5098,14 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Mors.cs",
-    "size": 18082,
-    "sha256": "7782c1cce45a75c9002de4cf7372888684f6e6495789873d511350fbb0300e52",
+    "size": 18141,
+    "sha256": "c9b08d1550fbdc1bd3dbbce68675ecd85a8111c92338ddd660db0b4b9aab96e1",
     "fileName": "Mors.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Mors.cs"
   },
   {
     "name": "Fame",
-    "description": "null",
+    "description": "Defeat Fame using Yami no Ronin or Verus DoomKnight",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5116,14 +5116,14 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Fame.cs",
-    "size": 15147,
-    "sha256": "f1100bc6be3b292129f8e8dc550899612598976b5f999cfecafc027eaea9eb85",
+    "size": 15194,
+    "sha256": "71eca9ae20444d32d3d90c394b291e35a613d3b3c3d9962a6e87d1d7852a1d00",
     "fileName": "Fame.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Fame.cs"
   },
   {
     "name": "Halosis",
-    "description": "null",
+    "description": "Defeat Halosis using Dragon of Time or Chaos Avenger",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5134,14 +5134,14 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Halosis.cs",
-    "size": 21837,
-    "sha256": "314afd8fe908ebeb1054478c2d6aa3320bb9037841d7c2a517bcbb5088815cf0",
+    "size": 22552,
+    "sha256": "6ce730803a3caeae508db9242125d10f6983f47ff599c325e35521fd4f4ca18a",
     "fileName": "Halosis.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Halosis.cs"
   },
   {
     "name": "Bello",
-    "description": "null",
+    "description": "Defeat Bello using ArchPaladin or Chaos Avenger",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5152,8 +5152,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Bello.cs",
-    "size": 15060,
-    "sha256": "e766e03617abc5f7863407e3825bc1fb1d21131d1c5d5f8224a978de996e16bd",
+    "size": 15103,
+    "sha256": "93507fddb7204f26696d024f829c1337aa7691f56d4c8fccadd60f960cddc135",
     "fileName": "Bello.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Bello.cs"
   },
