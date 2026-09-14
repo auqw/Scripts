@@ -335,7 +335,6 @@ public class AnethyxosAbsolution
                 _dieNow = true;
                 _dieNowDetectedAt = DateTimeOffset.UtcNow;
                 Bot.Skills.Pause();
-                Bot.Combat.CancelAutoAttack();
                 Core.Logger("Die now detected. Preparing the defensive skill.");
                 return;
             }
