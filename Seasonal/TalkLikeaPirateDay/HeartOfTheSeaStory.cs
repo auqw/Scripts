@@ -56,11 +56,7 @@ public class HeartOfTheSeaStory
         Story.KillQuest(6516, "HeartOfTheSea", "Grislytooth Pirate");
 
         // Interrogate the Pirates 6517
-        Story.KillQuest(
-            6517,
-            "HeartOfTheSea",
-            new[] { "First Mate Blackfang", "Quartermaster Greenfin", "Boatswain Rotbelly" }
-        );
+        Story.KillQuest(6517, "HeartOfTheSea", new[] { "First Mate Blackfang", "Quartermaster Greenfin", "Boatswain Rotbelly" });
 
         // Find the Hold 6518
         Story.MapItemQuest(6518, "HeartOfTheSea", 6002, 5);

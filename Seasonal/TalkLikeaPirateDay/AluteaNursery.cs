@@ -81,7 +81,7 @@ public class AluteaNursery
 
         //Hay! Bale Already! 8855
         Story.MapItemQuest(8855, "AluteaNursery", 10562, 2);
-        Story.KillQuest(8855, "AluteaNursery", new[] { "Spectral Jellyfish", "Bone Crustacean" });
+        Story.KillQuest(8855, "AluteaNursery", new[] { "Bone Crustacean", "Spectral Jellyfish" });
 
         //Abyss to Sun 8856
         Story.MapItemQuest(8856, "AluteaNursery", 10564);

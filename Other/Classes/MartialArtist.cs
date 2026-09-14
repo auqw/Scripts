@@ -68,12 +68,13 @@ public class MartialArtist
                 Core.Logger(
                     "Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After"
                 );
-                Core.HuntMonsterQuest(
-                    9923,
-                    ("nexus", "Frogzard", ClassType.Farm), // Frogzards Defeated (500): Join nexus, kill Frogzards
-                    ("arcangrove", "Gorillaphant", ClassType.Farm), // Gorillaphants Defeated (500): Join arcangrove, kill Gorillaphants
-                    ("etherwardes", "Water Dragon Warrior", ClassType.Farm) // Dragons Defeated (500): Join etherwardes, kill dragons
-                );
+                Core.EnsureAccept(9923);
+
+                Core.HuntMonster("nexus", "Frogzard", "Frogzards Defeated", 500);
+                Core.HuntMonster("arcangrove", "Gorillaphant", "Gorillaphants Defeated", 500);
+                Core.HuntMonster("etherwardes", "Water Dragon Warrior", "Dragons Defeated", 500);
+
+                Core.EnsureComplete(9923);
             }
 
             //stack and then turn in to  get all required mats for the rest...
