@@ -1,5 +1,5 @@
 /*
-name: Four Harbingers LW
+name: Four Harbingers LW (old)
 description: Completes the available Four Harbingers quests with custom combat behavior or repeatedly farms one selected boss.
 tags: story, quest, four harbingers, halosis, bello, fames, mors, lonewolf12
 */
