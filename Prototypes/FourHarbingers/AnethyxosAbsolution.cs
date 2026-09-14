@@ -245,7 +245,9 @@ public class AnethyxosAbsolution
 
         if (DateTimeOffset.UtcNow - _dieNowDetectedAt < TimeSpan.FromSeconds(2))
         {
-            Bot.Combat.CancelAutoAttack();
+            if (GetSelectedClass() == "King's Echo")
+                Bot.Combat.CancelAutoAttack();
+            
             return true;
         }
 
@@ -272,16 +274,12 @@ public class AnethyxosAbsolution
         else
         {
             if (!Bot.Skills.CanUseSkill(1))
-            {
-                Bot.Combat.CancelAutoAttack();
                 return true;
-            }
+
 
             if (!Bot.Skills.UseSkill(1))
-            {
-                Bot.Combat.CancelAutoAttack();
                 return true;
-            }
+
         }
 
         _dieNow = false;
