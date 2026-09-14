@@ -31,6 +31,7 @@ public class AnethyxosAbsolution
     private bool _dieNow;
     private DateTimeOffset _dieNowDetectedAt;
     private bool _lowHealthSkills;
+    private bool _dieNowHandled;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -100,7 +101,7 @@ public class AnethyxosAbsolution
         _dieNow = false;
         _dieNowDetectedAt = DateTimeOffset.MinValue;
         _lowHealthSkills = false;
-        StopSkills();
+        _dieNowHandled = false;
 
         try
         {
@@ -164,6 +165,7 @@ public class AnethyxosAbsolution
             _dieNow = false;
             _dieNowDetectedAt = DateTimeOffset.MinValue;
             _lowHealthSkills = false;
+            _dieNowHandled = false;
         }
 
         return Bot.TempInv.Contains("Signet of the Broken Bond");
@@ -172,25 +174,37 @@ public class AnethyxosAbsolution
     private void StartNormalSkills()
     {
         if (GetSelectedClass() == "King's Echo")
-            Bot.Skills.StartAdvanced("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
+            ReplaceSkillProvider("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
         else
-            Bot.Skills.StartAdvanced("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
+            ReplaceSkillProvider("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
+    }
+
+    private void ReplaceSkillProvider(string skills, int skillTimeout, SkillUseMode skillMode)
+    {
+        Bot.Skills.LoadAdvanced(skills, skillTimeout, skillMode);
+
+        if (Bot.Skills.OverrideProvider != null)
+            Bot.Skills.SetProvider(Bot.Skills.OverrideProvider);
+
+        // Start the timer only once. Farming kills only replace the provider.
+        if (!Bot.Skills.TimerRunning)
+            Bot.Skills.Start();
     }
 
     private void ApplyLowHealthSkills()
     {
-        if (_lowHealthSkills)
+        if (_lowHealthSkills || _dieNowHandled)
             return;
 
         var boss = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == 5);
-        if (boss == null || boss.MaxHP <= 0 || boss.HP > boss.MaxHP * 0.25)
+        if (boss == null || boss.MaxHP <= 0 || boss.HP <= 0 || boss.HP > boss.MaxHP * 0.30)
             return;
 
         _lowHealthSkills = true;
         if (GetSelectedClass() == "King's Echo")
-            Bot.Skills.StartAdvanced("1 | 2", 250, SkillUseMode.WaitForCooldown);
+            ReplaceSkillProvider("1 | 2", 250, SkillUseMode.WaitForCooldown);
         else
-            Bot.Skills.StartAdvanced("3 | 4 | 2", 250, SkillUseMode.UseIfAvailable);
+            ReplaceSkillProvider("3 | 4 | 2", 250, SkillUseMode.UseIfAvailable);
     }
 
     private bool StopForAuras()
@@ -206,7 +220,7 @@ public class AnethyxosAbsolution
 
     private bool HandleDieNow()
     {
-        if (!_dieNow)
+        if (!_dieNow || _dieNowHandled)
             return false;
 
         Bot.Skills.Pause();
@@ -249,7 +263,11 @@ public class AnethyxosAbsolution
                 return true;
             }
 
-            Bot.Skills.UseSkill(3);
+            if (!Bot.Skills.UseSkill(3))
+            {
+                Bot.Combat.CancelAutoAttack();
+                return true;
+            }
         }
         else
         {
@@ -259,20 +277,18 @@ public class AnethyxosAbsolution
                 return true;
             }
 
-            Bot.Skills.UseSkill(1);
+            if (!Bot.Skills.UseSkill(1))
+            {
+                Bot.Combat.CancelAutoAttack();
+                return true;
+            }
         }
 
         _dieNow = false;
         _dieNowDetectedAt = DateTimeOffset.MinValue;
-        if (_lowHealthSkills)
-        {
-            if (GetSelectedClass() == "King's Echo")
-                Bot.Skills.StartAdvanced("1 | 2", 250, SkillUseMode.WaitForCooldown);
-            else
-                Bot.Skills.StartAdvanced("3 | 4 | 2", 250, SkillUseMode.UseIfAvailable);
-        }
-        else
-            StartNormalSkills();
+        _lowHealthSkills = false;
+        _dieNowHandled = true;
+        StartNormalSkills();
         Bot.Skills.Resume();
         return true;
     }
@@ -291,13 +307,6 @@ public class AnethyxosAbsolution
         {
             return false;
         }
-    }
-
-    private void StopSkills()
-    {
-        Bot.Skills.Resume();
-        Bot.Skills.Stop();
-        Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 20);
     }
 
     private void AbsolutionFlashListener(string name, object[] args)
@@ -320,6 +329,10 @@ public class AnethyxosAbsolution
             {
                 if (animation?.msg?.ToString() != "Die now.")
                     continue;
+
+                // Ignore duplicate/late Die now packets once this mechanic is active or handled.
+                if (_dieNow || _dieNowHandled)
+                    return;
 
                 _dieNow = true;
                 _dieNowDetectedAt = DateTimeOffset.UtcNow;
