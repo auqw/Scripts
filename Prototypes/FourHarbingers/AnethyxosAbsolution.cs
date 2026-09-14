@@ -1,6 +1,6 @@
 /*
 name: Anethyx'o's Absolution
-description: null
+description: Defeat Anethyx'o's Absolution using King's Echo or Chaos Avenger
 tags: four harbingers, fourharbingers, anethyxos, anethyxos absolution, boss, farm, signet of the broken bond, lonewolf12
 */
 //cs_include Scripts/CoreBots.cs

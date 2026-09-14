@@ -98,15 +98,11 @@ public class Mors
     private bool FightBoss()
     {
         _counterAttackActive = false;
-        StopSkills();
 
         try
         {
             Core.Join("fourharbingers-100000", "r5", "Bottom");
-            if (GetSelectedClass() == "King's Echo")
-                Bot.Skills.StartAdvanced("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
-            else
-                Bot.Skills.StartAdvanced("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
+            StartNormalSkills();
 
             while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of the Long Quiet"))
             {
@@ -116,10 +112,7 @@ public class Mors
                     if (Bot.Player.Alive)
                     {
                         _counterAttackActive = false;
-                        if (GetSelectedClass() == "King's Echo")
-                            Bot.Skills.StartAdvanced("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
-                        else
-                            Bot.Skills.StartAdvanced("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
+                        StartNormalSkills();
                         Bot.Skills.Resume();
                     }
                     continue;
@@ -161,6 +154,25 @@ public class Mors
         return Bot.TempInv.Contains("Signet of the Long Quiet");
     }
 
+    private void StartNormalSkills()
+    {
+        if (GetSelectedClass() == "King's Echo")
+            ReplaceSkillProvider("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
+        else
+            ReplaceSkillProvider("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
+    }
+
+    private void ReplaceSkillProvider(string skills, int skillTimeout = -1, SkillUseMode skillMode = SkillUseMode.UseIfAvailable)
+    {
+        Bot.Skills.LoadAdvanced(skills, skillTimeout, skillMode);
+
+        if (Bot.Skills.OverrideProvider != null)
+            Bot.Skills.SetProvider(Bot.Skills.OverrideProvider);
+
+        if (!Bot.Skills.TimerRunning)
+            Bot.Skills.Start();
+    }
+
     private bool CounterAttackMechanics()
     {
         if (HasCounterAttack())
@@ -177,7 +189,7 @@ public class Mors
         {
             _counterAttackActive = false;
             if (GetSelectedClass() == "King's Echo")
-                Bot.Skills.StartAdvanced("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
+                StartNormalSkills();
             Bot.Skills.Resume();
         }
 

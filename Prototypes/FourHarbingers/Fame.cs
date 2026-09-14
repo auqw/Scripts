@@ -1,6 +1,6 @@
 /*
 name: Fame
-description: null
+description: Defeat Fame using Yami no Ronin or Verus DoomKnight
 tags: four harbingers, fourharbingers, fame, boss, farm, signet of the filled chalice, lonewolf12
 */
 //cs_include Scripts/CoreBots.cs

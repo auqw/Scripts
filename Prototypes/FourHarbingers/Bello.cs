@@ -1,6 +1,6 @@
 /*
 name: Bello
-description: null
+description: Defeat Bello using ArchPaladin or Chaos Avenger
 tags: four harbingers, fourharbingers, bello, boss, farm, signet of the endless journey, lonewolf12
 */
 //cs_include Scripts/CoreBots.cs

@@ -1,6 +1,6 @@
 /*
 name: Halosis
-description: null
+description: Defeat Halosis using Dragon of Time or Chaos Avenger
 tags: four harbingers, fourharbingers, halosis, boss, farm, signet of inner conflict, lonewolf12
 */
 //cs_include Scripts/CoreBots.cs
@@ -30,6 +30,7 @@ public class Halosis
     private DateTimeOffset _dieNowDetectedAt;
     private bool _skillOneReserved;
     private bool _autoAttackCancelled;
+    private bool _dieNowHandled;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -97,18 +98,14 @@ public class Halosis
         _dieNowDetectedAt = DateTimeOffset.MinValue;
         _skillOneReserved = false;
         _autoAttackCancelled = false;
+        _dieNowHandled = false;
         Bot.Flash.FlashCall -= HalosisFlashListener;
         Bot.Flash.FlashCall += HalosisFlashListener;
 
         try
         {
             Core.Join("fourharbingers-100000", "r2", "Bottom");
-            Bot.Skills.Resume();
-
-            if (GetSelectedClass() == "Dragon of Time")
-                Bot.Skills.StartAdvanced("3 | 2 | 1 | 2 | 4 | 2", 250, SkillUseMode.WaitForCooldown);
-            else
-                Bot.Skills.StartAdvanced("3 | 4 | 2 | 1");
+            StartNormalSkills();
 
             while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of Inner Conflict"))
             {
@@ -121,10 +118,7 @@ public class Halosis
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _skillOneReserved = false;
                         _autoAttackCancelled = false;
-                        if (GetSelectedClass() == "Dragon of Time")
-                            Bot.Skills.StartAdvanced("3 | 2 | 1 | 2 | 4 | 2", 250, SkillUseMode.WaitForCooldown);
-                        else
-                            Bot.Skills.StartAdvanced("3 | 4 | 2 | 1");
+                        StartNormalSkills();
                         Bot.Skills.Resume();
                     }
                     continue;
@@ -165,9 +159,29 @@ public class Halosis
             _dieNowDetectedAt = DateTimeOffset.MinValue;
             _skillOneReserved = false;
             _autoAttackCancelled = false;
+            _dieNowHandled = false;
         }
 
         return Bot.TempInv.Contains("Signet of Inner Conflict");
+    }
+
+    private void StartNormalSkills()
+    {
+        if (GetSelectedClass() == "Dragon of Time")
+            ReplaceSkillProvider("3 | 2 | 1 | 2 | 4 | 2", 250, SkillUseMode.WaitForCooldown);
+        else
+            ReplaceSkillProvider("3 | 4 | 2 | 1");
+    }
+
+    private void ReplaceSkillProvider(string skills, int skillTimeout = -1, SkillUseMode skillMode = SkillUseMode.UseIfAvailable)
+    {
+        Bot.Skills.LoadAdvanced(skills, skillTimeout, skillMode);
+
+        if (Bot.Skills.OverrideProvider != null)
+            Bot.Skills.SetProvider(Bot.Skills.OverrideProvider);
+
+        if (!Bot.Skills.TimerRunning)
+            Bot.Skills.Start();
     }
 
     private bool ChaosAvengerMechanics()
@@ -180,7 +194,7 @@ public class Halosis
             return false;
         }
 
-        if (_dieNowDetected)
+        if (_dieNowDetected && !_dieNowHandled)
         {
             double elapsedMilliseconds = (DateTimeOffset.UtcNow - _dieNowDetectedAt).TotalMilliseconds;
 
@@ -193,9 +207,14 @@ public class Halosis
 
             if (elapsedMilliseconds >= 2000 && Bot.Skills.CanUseSkill(1))
             {
-                Bot.Skills.UseSkill(1);
+                if (!Bot.Skills.UseSkill(1))
+                    return false;
+
                 _dieNowDetected = false;
                 _dieNowDetectedAt = DateTimeOffset.MinValue;
+                _skillOneReserved = false;
+                _dieNowHandled = true;
+                StartNormalSkills();
                 Bot.Skills.Resume();
             }
 
@@ -210,13 +229,14 @@ public class Halosis
 
         Bot.Skills.Resume();
 
-        if (!_skillOneReserved && Bot.Player.Target != null)
+        if (!_skillOneReserved && !_dieNowHandled && Bot.Player.Target != null)
         {
-            if (Bot.Player.Target.MaxHP > 0 && Bot.Player.Target.HP * 100 <= Bot.Player.Target.MaxHP * 40)
+            if (Bot.Player.Target.MaxHP > 0
+                && Bot.Player.Target.HP > 0
+                && Bot.Player.Target.HP * 100 <= Bot.Player.Target.MaxHP * 40)
             {
                 _skillOneReserved = true;
-                StopSkills();
-                Bot.Skills.StartAdvanced("3 | 4 | 2");
+                ReplaceSkillProvider("3 | 4 | 2");
                 Core.Logger("Halosis reached 40% HP. Skill 1 is now reserved for Die now.");
             }
         }
@@ -274,9 +294,14 @@ public class Halosis
                 string message = messageValue.ToString();
                 if (message == "Die now." || message == "Die now")
                 {
+                    if (_dieNowHandled || _dieNowDetected)
+                        return;
+
                     _dieNowDetected = true;
                     _dieNowDetectedAt = DateTimeOffset.UtcNow;
+                    Bot.Skills.Pause();
                     Core.Logger("Die now detected. Skill 1 will be used after 2 seconds.");
+                    return;
                 }
             }
         }
