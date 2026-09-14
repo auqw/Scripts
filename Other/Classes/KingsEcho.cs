@@ -129,7 +129,14 @@ public class KingsEcho
                         break;
 
                     case "Royal Dragon Sword": // 10442 | The Path of the King
+                        Core.AddDrop("Endured Against Chaos", "Endured Against a Fallen Friend", "Endured Against the Great Dragon", "Endured Against the Defiler", "Endured Against the Monster King");
+                        Core.Join("portal");
                         Core.EnsureAccept(10442);
+                        if (!Bot.Quests.IsInProgress(10442))
+                        {
+                            Core.Logger("The Path of the King [10442] could not be accepted.", messageBox: true, stopBot: true);
+                            return;
+                        }
                         Core.EquipClass(ClassType.Farm);
                         Core.KillMonster("chaoswar", "r9", "Left", "*", "Endured Against Chaos", 113, isTemp: false);
                         Core.EquipClass(ClassType.Solo);

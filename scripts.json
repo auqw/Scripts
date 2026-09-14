@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 174587,
-    "sha256": "832f46fe3d5501a9509cd3e87bb114a95b5f05757fe10ae01de54ce627dfe551",
+    "size": 174934,
+    "sha256": "b457c183cc12ff20e087ca1bd455df15804980c327547b2ad948334c313dda5f",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -103,7 +103,7 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/UltraSpeakerMergePreReqs.cs"
   },
   {
-    "name": "Four Harbingers LW",
+    "name": "Four Harbingers LW (old)",
     "description": "Completes the available Four Harbingers quests with custom combat behavior or repeatedly farms one selected boss.",
     "tags": [
       "story",
@@ -116,8 +116,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingersLW.cs",
-    "size": 37078,
-    "sha256": "c8c08d873b5d97672b5c4d13368273fa0b3a8174e9798367e1594288e2aa88e7",
+    "size": 37084,
+    "sha256": "d8ad8bbf2968817f6525271a4c549f24482dd2e5f45b5d1fddc6d968ccdedd94",
     "fileName": "FourHarbingersLW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingersLW.cs"
   },
@@ -5072,6 +5072,120 @@
     "sha256": "26d0ee626a62125e043b1c3107b73b9784e2e67547f4781b316a84599cc735a6",
     "fileName": "DeadLinesMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/DeadLinesMerge.cs"
+  },
+  {
+    "name": "Anethyx'o's Absolution",
+    "description": "null",
+    "tags": [
+      "four harbingers",
+      "fourharbingers",
+      "anethyxos",
+      "anethyxos absolution",
+      "boss",
+      "farm",
+      "signet of the broken bond",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingers/AnethyxosAbsolution.cs",
+    "size": 20912,
+    "sha256": "3def912f07e2b4155ccd5b8a5300658898ff7e743c3065f13f32d9d3d9606855",
+    "fileName": "AnethyxosAbsolution.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/AnethyxosAbsolution.cs"
+  },
+  {
+    "name": "Mors",
+    "description": "null",
+    "tags": [
+      "four harbingers",
+      "fourharbingers",
+      "mors",
+      "boss",
+      "farm",
+      "signet of the long quiet",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingers/Mors.cs",
+    "size": 17525,
+    "sha256": "c91369cd4c35a3e0f22021890af21f8a9177379fc82ba6b804defa21005909c5",
+    "fileName": "Mors.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Mors.cs"
+  },
+  {
+    "name": "Fame",
+    "description": "null",
+    "tags": [
+      "four harbingers",
+      "fourharbingers",
+      "fame",
+      "boss",
+      "farm",
+      "signet of the filled chalice",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingers/Fame.cs",
+    "size": 15108,
+    "sha256": "104e349bd1cf05ba8076a0b0816152f3206eb783ac98c78a68a92e5247dee42b",
+    "fileName": "Fame.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Fame.cs"
+  },
+  {
+    "name": "Halosis",
+    "description": "null",
+    "tags": [
+      "four harbingers",
+      "fourharbingers",
+      "halosis",
+      "boss",
+      "farm",
+      "signet of inner conflict",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingers/Halosis.cs",
+    "size": 21162,
+    "sha256": "de65732552071dba787d70de878af63dffe91bc304b9068cd9a61f5f64d0a7c3",
+    "fileName": "Halosis.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Halosis.cs"
+  },
+  {
+    "name": "Bello",
+    "description": "null",
+    "tags": [
+      "four harbingers",
+      "fourharbingers",
+      "bello",
+      "boss",
+      "farm",
+      "signet of the endless journey",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingers/Bello.cs",
+    "size": 15021,
+    "sha256": "0755316a506fe149e979e386133c25e37e4b16c37dc62b0f961b61baa27e150b",
+    "fileName": "Bello.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Bello.cs"
+  },
+  {
+    "name": "Do All Four Harbingers",
+    "description": "Completes the Four Harbingers story using the optimized boss setups.",
+    "tags": [
+      "four harbingers",
+      "fourharbingers",
+      "story",
+      "quest",
+      "complete",
+      "all",
+      "halosis",
+      "bello",
+      "fame",
+      "mors",
+      "anethyxos",
+      "lonewolf12"
+    ],
+    "path": "Prototypes/FourHarbingers/0DoAllFourHarbingers.cs",
+    "size": 3288,
+    "sha256": "65f06bddb095c9dea5bf47ed84e4dec9488015bb64432f125f89b126e397660b",
+    "fileName": "0DoAllFourHarbingers.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/0DoAllFourHarbingers.cs"
   },
   {
     "name": "null",
@@ -19705,8 +19819,8 @@
       "kingsecho"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 6606,
-    "sha256": "4a92a67e60e26c995f4e023d63a9e3fe8c2d10cf636f663e67de3c19f3abc86e",
+    "size": 7130,
+    "sha256": "e08cd846511c06825baaffda34c8d22a65a13a6d49448a59c40596c103ab1cff",
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
