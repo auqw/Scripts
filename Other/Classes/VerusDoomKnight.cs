@@ -184,15 +184,16 @@ public class VerusDoomKnightClass
         // Soul Fracture (9416)
         if (!Story.QuestProgression(9416))
         {
-            Core.HuntMonsterQuest(
-                9416,
-                ("ultraalteon", "Ultra Chaos Alteon", ClassType.Solo),
-                ("ebondungeon", "Dethrix", ClassType.Solo),
-                ("shadowstrike", "Sepulchuroth", ClassType.Solo),
-                ("ultradrakath", "Champion of Chaos", ClassType.Solo),
-                ("ebilcorphq", "Gravelyn", ClassType.Solo),
-                ("shadowvoid", "Fragment of Doom", ClassType.Solo)
-            );
+            Core.EnsureAccept(9416);
+
+            Core.HuntMonster("ultraalteon", "Ultra Chaos Alteon", "Soul of Alteon", 40);
+            Core.HuntMonster("ebondungeon", "Dethrix", "Soul of Dethrix", 40);
+            Core.HuntMonster("shadowstrike", "Sepulchuroth", "Soul of Sepulchuroth", 40);
+            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Soul of Drakath", 40);
+            Core.HuntMonster("ebilcorphq", "Gravelyn", "Soul of Gravelyn", 40);
+            Core.HuntMonster("shadowvoid", "Fragment of Doom", "Soul of Doom", 40);
+
+            Core.EnsureComplete(9416);
         }
 
         // Doom Spikes (9418)
