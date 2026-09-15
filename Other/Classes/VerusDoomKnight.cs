@@ -186,12 +186,12 @@ public class VerusDoomKnightClass
         {
             Core.EnsureAccept(9416);
 
-            Core.HuntMonster("ultraalteon", "Ultra Chaos Alteon", "Soul of Alteon", 40);
-            Core.HuntMonster("ebondungeon", "Dethrix", "Soul of Dethrix", 40);
-            Core.HuntMonster("shadowstrike", "Sepulchuroth", "Soul of Sepulchuroth", 40);
-            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Soul of Drakath", 40);
-            Core.HuntMonster("ebilcorphq", "Gravelyn", "Soul of Gravelyn", 40);
-            Core.HuntMonster("shadowvoid", "Fragment of Doom", "Soul of Doom", 40);
+            Core.HuntMonster("ultraalteon", "Ultra Chaos Alteon", "Soul of Alteon", 40, isTemp: false);
+            Core.HuntMonster("ebondungeon", "Dethrix", "Soul of Dethrix", 40, isTemp: false);
+            Core.HuntMonster("shadowstrike", "Sepulchuroth", "Soul of Sepulchuroth", 40, isTemp: false);
+            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Soul of Drakath", 40, isTemp: false);
+            Core.HuntMonster("ebilcorphq", "Gravelyn", "Soul of Gravelyn", 40, isTemp: false);
+            Core.HuntMonster("shadowvoid", "Fragment of Doom", "Soul of Doom", 40, isTemp: false);
 
             Core.EnsureComplete(9416);
         }
