@@ -27,6 +27,7 @@ public class Bello
     private IScriptInterface Bot = IScriptInterface.Instance;
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
+    private string? _resolvedClass;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -48,6 +49,7 @@ public class Bello
 
     private void Run()
     {
+        _resolvedClass = null;
         AddDrops();
         Core.RegisterQuests(10851);
 
@@ -184,6 +186,9 @@ public class Bello
 
     private string GetSelectedClass()
     {
+        if (!string.IsNullOrEmpty(_resolvedClass))
+            return _resolvedClass;
+
         if (DoAllMode)
             return "ArchPaladin";
 
@@ -199,11 +204,33 @@ public class Bello
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
+
+        if (!Core.CheckInventory(className, toInv: false))
         {
-            Core.Logger($"WARNING: {className} is required for this setup.");
-            return false;
+            if (DoAllMode)
+            {
+                Core.Logger($"WARNING: {className} is required for this setup.");
+                return false;
+            }
+
+            string fallbackClass = className == "ArchPaladin" ? "Chaos Avenger" : "ArchPaladin";
+            if (!Core.CheckInventory(fallbackClass, toInv: false))
+            {
+                Core.Logger(
+                    $"WARNING: You do not own {className} or {fallbackClass}. The script will stop.",
+                    messageBox: true
+                );
+                return false;
+            }
+
+            Core.Logger(
+                $"WARNING: {className} was selected, but you do not own it. Falling back to {fallbackClass}.",
+                messageBox: true
+            );
+            className = fallbackClass;
         }
+
+        _resolvedClass = className;
 
         if (!Bot.Inventory.Contains(className))
         {
@@ -243,27 +270,32 @@ public class Bello
             weaponEnhancement = WeaponSpecial.Valiance;
         else
         {
-            Core.Logger("WARNING: Valiance is not unlocked. Health Vamp will be used instead.");
+            WarnEnhancementFallback("Valiance is not unlocked. Health Vamp will be used instead.");
             weaponEnhancement = WeaponSpecial.Health_Vamp;
         }
 
         if (Adv.uForgeHelm())
             helmEnhancement = HelmSpecial.Forge;
         else
-            Core.Logger("WARNING: Forge helm is not unlocked. Lucky will be used on the helm instead.");
+            WarnEnhancementFallback("Forge helm is not unlocked. Lucky will be used on the helm instead.");
 
         if (Adv.uPenitence())
             capeEnhancement = CapeSpecial.Penitence;
         else
-            Core.Logger("WARNING: Penitence is not unlocked. Lucky will be used on the cape instead.");
+            WarnEnhancementFallback("Penitence is not unlocked. Lucky will be used on the cape instead.");
 
         if (weaponEnhancement == WeaponSpecial.Health_Vamp)
         {
             if (!Adv.uAwe())
-                Core.Logger("WARNING: Awe enhancements are not unlocked. Enhancement setup will continue.");
+                WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
         }
 
         Adv.EnhanceEquipped(EnhancementType.Lucky, capeEnhancement, helmEnhancement, weaponEnhancement, true);
+    }
+
+    private void WarnEnhancementFallback(string message)
+    {
+        Core.Logger($"WARNING: {message} The script may fail.", messageBox: true);
     }
 
     private void GetPotions()

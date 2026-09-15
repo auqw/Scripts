@@ -27,6 +27,7 @@ public class Halosis
     private IScriptInterface Bot = IScriptInterface.Instance;
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
+    private string? _resolvedClass;
     private bool _dieNowDetected;
     private DateTimeOffset _dieNowDetectedAt;
     private bool _skillOneReserved;
@@ -53,6 +54,7 @@ public class Halosis
 
     private void Run()
     {
+        _resolvedClass = null;
         AddDrops();
         Core.RegisterQuests(10850);
 
@@ -349,6 +351,9 @@ public class Halosis
 
     private string GetSelectedClass()
     {
+        if (!string.IsNullOrEmpty(_resolvedClass))
+            return _resolvedClass;
+
         if (DoAllMode)
             return "Dragon of Time";
 
@@ -364,11 +369,33 @@ public class Halosis
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
+
+        if (!Core.CheckInventory(className, toInv: false))
         {
-            Core.Logger($"WARNING: {className} is required for this setup.");
-            return false;
+            if (DoAllMode)
+            {
+                Core.Logger($"WARNING: {className} is required for this setup.");
+                return false;
+            }
+
+            string fallbackClass = className == "Dragon of Time" ? "Chaos Avenger" : "Dragon of Time";
+            if (!Core.CheckInventory(fallbackClass, toInv: false))
+            {
+                Core.Logger(
+                    $"WARNING: You do not own {className} or {fallbackClass}. The script will stop.",
+                    messageBox: true
+                );
+                return false;
+            }
+
+            Core.Logger(
+                $"WARNING: {className} was selected, but you do not own it. Falling back to {fallbackClass}.",
+                messageBox: true
+            );
+            className = fallbackClass;
         }
+
+        _resolvedClass = className;
 
         if (!Bot.Inventory.Contains(className))
         {
@@ -410,29 +437,29 @@ public class Halosis
                 weaponEnhancement = WeaponSpecial.Elysium;
             else if (Adv.uValiance())
             {
-                Core.Logger("WARNING: Elysium is not unlocked. Valiance will be used instead.");
+                WarnEnhancementFallback("Elysium is not unlocked. Valiance will be used instead.");
                 weaponEnhancement = WeaponSpecial.Valiance;
             }
             else
             {
-                Core.Logger("WARNING: Elysium and Valiance are not unlocked. Awe Blast will be used instead.");
+                WarnEnhancementFallback("Elysium and Valiance are not unlocked. Awe Blast will be used instead.");
                 weaponEnhancement = WeaponSpecial.Awe_Blast;
             }
 
             if (Adv.uPneuma())
                 helmEnhancement = HelmSpecial.Pneuma;
             else
-                Core.Logger("WARNING: Pneuma is not unlocked. Wizard will be used on the helm instead.");
+                WarnEnhancementFallback("Pneuma is not unlocked. Wizard will be used on the helm instead.");
 
             if (Adv.uVainglory())
                 capeEnhancement = CapeSpecial.Vainglory;
             else
-                Core.Logger("WARNING: Vainglory is not unlocked. Wizard will be used on the cape instead.");
+                WarnEnhancementFallback("Vainglory is not unlocked. Wizard will be used on the cape instead.");
 
             if (weaponEnhancement == WeaponSpecial.Awe_Blast)
             {
                 if (!Adv.uAwe())
-                    Core.Logger("WARNING: Awe enhancements are not unlocked. Enhancement setup will continue.");
+                    WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
             }
 
             Adv.EnhanceEquipped(EnhancementType.Wizard, capeEnhancement, helmEnhancement, weaponEnhancement, true);
@@ -443,28 +470,33 @@ public class Halosis
                 weaponEnhancement = WeaponSpecial.Praxis;
             else
             {
-                Core.Logger("WARNING: Praxis is not unlocked. Health Vamp will be used instead.");
+                WarnEnhancementFallback("Praxis is not unlocked. Health Vamp will be used instead.");
                 weaponEnhancement = WeaponSpecial.Health_Vamp;
             }
 
             if (Adv.uAnima())
                 helmEnhancement = HelmSpecial.Anima;
             else
-                Core.Logger("WARNING: Anima is not unlocked. Lucky will be used on the helm instead.");
+                WarnEnhancementFallback("Anima is not unlocked. Lucky will be used on the helm instead.");
 
             if (Adv.uPenitence())
                 capeEnhancement = CapeSpecial.Penitence;
             else
-                Core.Logger("WARNING: Penitence is not unlocked. Lucky will be used on the cape instead.");
+                WarnEnhancementFallback("Penitence is not unlocked. Lucky will be used on the cape instead.");
 
             if (weaponEnhancement == WeaponSpecial.Health_Vamp)
             {
                 if (!Adv.uAwe())
-                    Core.Logger("WARNING: Awe enhancements are not unlocked. Enhancement setup will continue.");
+                    WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
             }
 
             Adv.EnhanceEquipped(EnhancementType.Lucky, capeEnhancement, helmEnhancement, weaponEnhancement, true);
         }
+    }
+
+    private void WarnEnhancementFallback(string message)
+    {
+        Core.Logger($"WARNING: {message} The script may fail.", messageBox: true);
     }
 
     private void GetPotions()
