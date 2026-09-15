@@ -195,25 +195,38 @@ public class Fame
             return "Yami no Ronin";
 
         ClassChoice classChoice = Bot.Config!.Get<ClassChoice>("ClassChoice");
-        if (classChoice == ClassChoice.Yami_no_Ronin)
-            return "Yami no Ronin";
-        else if (classChoice == ClassChoice.Verus_DoomKnight)
-            return "Verus DoomKnight";
-        else
-            return "Yami no Ronin";
+
+        string preferredClass = classChoice == ClassChoice.Verus_DoomKnight ? "Verus DoomKnight" : "Yami no Ronin";
+        string alternateClass = classChoice == ClassChoice.Verus_DoomKnight ? "Yami no Ronin" : "Verus DoomKnight";
+
+        if (Core.CheckInventory(preferredClass))
+            return preferredClass;
+
+        if (Core.CheckInventory(alternateClass))
+        {
+            Core.Logger($"WARNING: {preferredClass} is not available. Using {alternateClass} instead.");
+            return alternateClass;
+        }
+
+        Core.Logger("WARNING: Either Yami no Ronin or Verus DoomKnight is required for this setup.");
+        return string.Empty;
     }
 
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
-        {
-            Core.Logger($"WARNING: {className} is required for this setup.");
+
+        if (string.IsNullOrEmpty(className))
             return false;
-        }
 
         if (!Bot.Inventory.Contains(className))
         {
+            if (!Bot.Bank.Contains(className))
+            {
+                Core.Logger($"WARNING: {className} is not in your inventory or bank.");
+                return false;
+            }
+
             if (Bot.Inventory.FreeSlots <= 0)
             {
                 Core.Logger($"WARNING: {className} is in the bank, but no free inventory slot is available.");
@@ -222,6 +235,7 @@ public class Fame
 
             Bot.Bank.EnsureToInventory(className);
             Bot.Wait.ForTrue(() => Bot.Inventory.Contains(className), 20);
+
             if (!Bot.Inventory.Contains(className))
             {
                 Core.Logger($"WARNING: {className} could not be moved from the bank.");
@@ -231,6 +245,7 @@ public class Fame
 
         Core.Equip(className);
         Bot.Wait.ForItemEquip(className);
+
         if (!Bot.Inventory.IsEquipped(className))
         {
             Core.Logger($"WARNING: {className} could not be equipped.");
@@ -239,7 +254,7 @@ public class Fame
 
         return true;
     }
-
+    
     private void ApplyEnhancements()
     {
         WeaponSpecial weaponEnhancement;

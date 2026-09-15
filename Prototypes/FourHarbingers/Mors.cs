@@ -254,25 +254,38 @@ public class Mors
             return "Legion Revenant";
 
         ClassChoice classChoice = Bot.Config!.Get<ClassChoice>("ClassChoice");
-        if (classChoice == ClassChoice.Legion_Revenant)
-            return "Legion Revenant";
-        else if (classChoice.ToString().Equals("Kings_Echo", StringComparison.OrdinalIgnoreCase))
-            return "King's Echo";
-        else
-            return "Legion Revenant";
+
+        string preferredClass = classChoice == ClassChoice.Legion_Revenant ? "Legion Revenant" : "King's Echo";
+        string alternateClass = classChoice == ClassChoice.Legion_Revenant ? "King's Echo" : "Legion Revenant";
+
+        if (Core.CheckInventory(preferredClass))
+            return preferredClass;
+
+        if (Core.CheckInventory(alternateClass))
+        {
+            Core.Logger($"WARNING: {preferredClass} is not available. Using {alternateClass} instead.");
+            return alternateClass;
+        }
+
+        Core.Logger("WARNING: Either Legion Revenant or King's Echo is required for this setup.");
+        return string.Empty;
     }
 
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
-        {
-            Core.Logger($"WARNING: {className} is required for this setup.");
+
+        if (string.IsNullOrEmpty(className))
             return false;
-        }
 
         if (!Bot.Inventory.Contains(className))
         {
+            if (!Bot.Bank.Contains(className))
+            {
+                Core.Logger($"WARNING: {className} is not in your inventory or bank.");
+                return false;
+            }
+
             if (Bot.Inventory.FreeSlots <= 0)
             {
                 Core.Logger($"WARNING: {className} is in the bank, but no free inventory slot is available.");
@@ -281,6 +294,7 @@ public class Mors
 
             Bot.Bank.EnsureToInventory(className);
             Bot.Wait.ForTrue(() => Bot.Inventory.Contains(className), 20);
+
             if (!Bot.Inventory.Contains(className))
             {
                 Core.Logger($"WARNING: {className} could not be moved from the bank.");
@@ -290,6 +304,7 @@ public class Mors
 
         Core.Equip(className);
         Bot.Wait.ForItemEquip(className);
+
         if (!Bot.Inventory.IsEquipped(className))
         {
             Core.Logger($"WARNING: {className} could not be equipped.");
@@ -569,6 +584,6 @@ public class Mors
     private enum ClassChoice
     {
         Legion_Revenant,
-        // Kings_Echo,
+        Kings_Echo,
     }
 }

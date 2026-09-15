@@ -188,24 +188,31 @@ public class Bello
             return "ArchPaladin";
 
         ClassChoice classChoice = Bot.Config!.Get<ClassChoice>("ClassChoice");
-        if (classChoice == ClassChoice.ArchPaladin)
-            return "ArchPaladin";
-        else if (classChoice == ClassChoice.Chaos_Avenger)
-            return "Chaos Avenger";
-        else
-            return "ArchPaladin";
+
+        string preferredClass = classChoice == ClassChoice.Chaos_Avenger ? "Chaos Avenger" : "ArchPaladin";
+        string alternateClass = classChoice == ClassChoice.Chaos_Avenger ? "ArchPaladin" : "Chaos Avenger";
+
+        if (Core.CheckInventory(preferredClass))
+            return preferredClass;
+
+        if (Core.CheckInventory(alternateClass))
+        {
+            Core.Logger($"WARNING: {preferredClass} is not available. Using {alternateClass} instead.");
+            return alternateClass;
+        }
+
+        Core.Logger($"WARNING: Either ArchPaladin or Chaos Avenger is required for this setup.");
+        return string.Empty;
     }
 
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
-        {
-            Core.Logger($"WARNING: {className} is required for this setup.");
-            return false;
-        }
 
-        if (!Bot.Inventory.Contains(className))
+        if (string.IsNullOrEmpty(className))
+            return false;
+
+        if (!Bot.Inventory.Contains(className) && Bot.Bank.Contains(className))
         {
             if (Bot.Inventory.FreeSlots <= 0)
             {
@@ -215,6 +222,7 @@ public class Bello
 
             Bot.Bank.EnsureToInventory(className);
             Bot.Wait.ForTrue(() => Bot.Inventory.Contains(className), 20);
+
             if (!Bot.Inventory.Contains(className))
             {
                 Core.Logger($"WARNING: {className} could not be moved from the bank.");
@@ -224,6 +232,7 @@ public class Bello
 
         Core.Equip(className);
         Bot.Wait.ForItemEquip(className);
+
         if (!Bot.Inventory.IsEquipped(className))
         {
             Core.Logger($"WARNING: {className} could not be equipped.");
@@ -232,6 +241,7 @@ public class Bello
 
         return true;
     }
+
 
     private void ApplyEnhancements()
     {

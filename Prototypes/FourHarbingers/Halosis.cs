@@ -350,28 +350,41 @@ public class Halosis
     private string GetSelectedClass()
     {
         if (DoAllMode)
-            return "Dragon of Time";
+            return "ArchPaladin";
 
         ClassChoice classChoice = Bot.Config!.Get<ClassChoice>("ClassChoice");
-        if (classChoice == ClassChoice.Dragon_of_Time)
-            return "Dragon of Time";
-        else if (classChoice == ClassChoice.Chaos_Avenger)
-            return "Chaos Avenger";
-        else
-            return "Dragon of Time";
+
+        string preferredClass = classChoice == ClassChoice.Chaos_Avenger ? "Chaos Avenger" : "ArchPaladin";
+        string alternateClass = classChoice == ClassChoice.Chaos_Avenger ? "ArchPaladin" : "Chaos Avenger";
+
+        if (Core.CheckInventory(preferredClass))
+            return preferredClass;
+
+        if (Core.CheckInventory(alternateClass))
+        {
+            Core.Logger($"WARNING: {preferredClass} is not available. Using {alternateClass} instead.");
+            return alternateClass;
+        }
+
+        Core.Logger("WARNING: Either ArchPaladin or Chaos Avenger is required for this setup.");
+        return string.Empty;
     }
 
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
-        {
-            Core.Logger($"WARNING: {className} is required for this setup.");
+
+        if (string.IsNullOrEmpty(className))
             return false;
-        }
 
         if (!Bot.Inventory.Contains(className))
         {
+            if (!Bot.Bank.Contains(className))
+            {
+                Core.Logger($"WARNING: {className} is not in your inventory or bank.");
+                return false;
+            }
+
             if (Bot.Inventory.FreeSlots <= 0)
             {
                 Core.Logger($"WARNING: {className} is in the bank, but no free inventory slot is available.");
@@ -380,6 +393,7 @@ public class Halosis
 
             Bot.Bank.EnsureToInventory(className);
             Bot.Wait.ForTrue(() => Bot.Inventory.Contains(className), 20);
+
             if (!Bot.Inventory.Contains(className))
             {
                 Core.Logger($"WARNING: {className} could not be moved from the bank.");
@@ -389,6 +403,7 @@ public class Halosis
 
         Core.Equip(className);
         Bot.Wait.ForItemEquip(className);
+
         if (!Bot.Inventory.IsEquipped(className))
         {
             Core.Logger($"WARNING: {className} could not be equipped.");
@@ -397,7 +412,7 @@ public class Halosis
 
         return true;
     }
-
+    
     private void ApplyEnhancements()
     {
         WeaponSpecial weaponEnhancement;
