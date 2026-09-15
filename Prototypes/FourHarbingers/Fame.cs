@@ -29,7 +29,7 @@ public class Fame
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+        if (!Bot.Config!.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);
@@ -254,7 +254,7 @@ public class Fame
 
         return true;
     }
-    
+
     private void ApplyEnhancements()
     {
         WeaponSpecial weaponEnhancement;

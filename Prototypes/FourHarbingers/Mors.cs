@@ -33,7 +33,7 @@ public class Mors
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+        if (!Bot.Config!.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);

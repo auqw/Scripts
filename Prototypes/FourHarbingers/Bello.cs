@@ -31,7 +31,7 @@ public class Bello
     public void ScriptMain(IScriptInterface bot)
     {
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
-            Bot.Config?.Configure();
+            Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);
         try
