@@ -8,6 +8,7 @@ tags: four harbingers, fourharbingers, anethyxos, anethyxos absolution, boss, fa
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Auras;
+using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 
 public class AnethyxosAbsolution
@@ -35,8 +36,8 @@ public class AnethyxosAbsolution
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (bot.Config != null)
-            bot.Config.Configure();
+        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);
         Bot.UltraBossHelper.DisableCounterAttack();
@@ -247,7 +248,7 @@ public class AnethyxosAbsolution
         {
             if (GetSelectedClass() == "King's Echo")
                 Bot.Combat.CancelAutoAttack();
-            
+
             return true;
         }
 
@@ -318,8 +319,8 @@ public class AnethyxosAbsolution
                 || args[0] is not string rawPacket)
                 return;
 
-            dynamic packet = JsonConvert.DeserializeObject<dynamic>(rawPacket);
-            dynamic data = packet?["b"]?["o"];
+            dynamic? packet = JsonConvert.DeserializeObject<dynamic>(rawPacket);
+            dynamic? data = packet?["b"]?["o"];
             if (data?.cmd?.ToString() != "ct" || data?.anims is null)
                 return;
 

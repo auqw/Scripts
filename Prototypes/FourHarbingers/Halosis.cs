@@ -6,6 +6,7 @@ tags: four harbingers, fourharbingers, halosis, boss, farm, signet of inner conf
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 
 public class Halosis
@@ -34,8 +35,8 @@ public class Halosis
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (bot.Config != null)
-            bot.Config.Configure();
+        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);
         try
@@ -259,11 +260,11 @@ public class Halosis
             if (GetSelectedClass() != "Chaos Avenger")
                 return;
 
-            string rawPacket = args[0] as string;
+            string? rawPacket = args[0] as string;
             if (string.IsNullOrWhiteSpace(rawPacket))
                 return;
 
-            dynamic packet = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(rawPacket);
+            dynamic? packet = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(rawPacket);
             if (packet == null)
                 return;
 

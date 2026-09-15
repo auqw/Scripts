@@ -29,8 +29,8 @@ public class Fame
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (bot.Config != null)
-            bot.Config.Configure();
+        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);
         try

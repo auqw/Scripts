@@ -8,6 +8,7 @@ tags: four harbingers, fourharbingers, mors, boss, farm, signet of the long quie
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Auras;
+using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 
 public class Mors
@@ -32,8 +33,8 @@ public class Mors
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (bot.Config != null)
-            bot.Config.Configure();
+        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config.Configure();
 
         Core.SetOptions(disableClassSwap: true);
         Bot.UltraBossHelper.DisableCounterAttack();

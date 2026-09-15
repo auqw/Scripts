@@ -6,6 +6,7 @@ tags: four harbingers, fourharbingers, bello, boss, farm, signet of the endless 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 
 public class Bello
@@ -29,8 +30,8 @@ public class Bello
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (bot.Config != null)
-            bot.Config.Configure();
+        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config?.Configure();
 
         Core.SetOptions(disableClassSwap: true);
         try

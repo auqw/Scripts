@@ -31,8 +31,8 @@ public class DoAllFourHarbingers
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (bot.Config != null)
-            bot.Config.Configure();
+        if (!Bot.Config?.Get<bool>(CoreBots.Instance.SkipOptions))
+            Bot.Config.Configure();
 
         if (Bot.Config!.Get<bool>("FarmBosses"))
             Core.Logger("To farm bosses, run the individual Four Harbingers boss scripts. They also contain more class choices. Continuing the story without farming.", messageBox: true);
