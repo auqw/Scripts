@@ -236,27 +236,23 @@ public class Halosis
             return false;
         }
 
+        // ⭐ PATCHED DIE-NOW HANDLING ⭐
         if (_dieNowDetected && !_dieNowHandled)
         {
             double elapsedMilliseconds = (DateTimeOffset.UtcNow - _dieNowDetectedAt).TotalMilliseconds;
 
             Bot.Skills.Pause();
-            if (_autoAttackCancelled)
-            {
-                _autoAttackCancelled = false;
-                Bot.Combat.Attack(1);
-            }
+            Bot.Combat.CancelAutoAttack();
 
-            // patched timing: 2400ms instead of 2000ms
             if (elapsedMilliseconds >= 2400 && Bot.Skills.CanUseSkill(1))
             {
-                if (!Bot.Skills.UseSkill(1))
-                    return false;
+                Bot.Skills.UseSkill(1);
 
                 _dieNowDetected = false;
                 _dieNowDetectedAt = DateTimeOffset.MinValue;
                 _skillOneReserved = false;
                 _dieNowHandled = true;
+
                 StartNormalSkills();
                 Bot.Skills.Resume();
             }
@@ -337,14 +333,14 @@ public class Halosis
                 string message = messageValue.ToString();
                 if (message == "Die now." || message == "Die now")
                 {
-                    // patched: ignore duplicates BEFORE setting flags
-                    if (_dieNowHandled || _dieNowDetected)
-                        return;
-
                     _dieNowDetected = true;
                     _dieNowDetectedAt = DateTimeOffset.UtcNow;
+
+                    // ⭐ PATCHED: STOP ATTACKING IMMEDIATELY ⭐
                     Bot.Skills.Pause();
-                    Core.Logger("Die now detected. Skill 1 will be used after 2 seconds.");
+                    Bot.Combat.CancelAutoAttack();
+
+                    Core.Logger("Die now detected. Preparing defensive skill.");
                     return;
                 }
             }
@@ -765,5 +761,3 @@ public class Halosis
         Chaos_Avenger,
     }
 }
-
-
