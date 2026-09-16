@@ -8107,6 +8107,7 @@ public class CoreBots
                 return false;
             }
 
+            // Check all inventorys (inv and bank) for class
             if (!CheckInventory(className))
             {
                 Logger("You do not own " + className);
@@ -8121,8 +8122,20 @@ public class CoreBots
 
             if (classItem == null)
             {
+                Logger($"Class \"{className}\" not found");
+                return false;
+            }
+            
+            if (classItem.Category != ItemCategory.Class)
+            {
                 Logger($"Class \"{className}\" found but not categorized as Class item");
                 return false;
+            }
+            // If bank still contains class somehow.. unbank it
+            if (Bot.Bank.Contains(className))
+            {
+                Bot.Wait.ForTrue(() => Bot.Bank.EnsureToInventory(classItem.ID), 20);
+                Bot.Sleep(500);
             }
 
             if (useEquipment && equipment.Any())
