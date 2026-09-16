@@ -1,15 +1,15 @@
 /*
-name: Anethyx'o's Absolution
-description: Defeat Anethyx'o's Absolution using King's Echo or Chaos Avenger
-tags: four harbingers, fourharbingers, anethyxos, anethyxos absolution, boss, farm, signet of the broken bond, lonewolf12
+name: Anethyxos Absolution
+description: Defeat Anethyxos using Chaos Avenger or Dragon of Time
+tags: four harbingers, fourharbingers, anethyxos, absolution, boss, farm, signet of absolution, lonewolf12
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-using Newtonsoft.Json;
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Auras;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 public class AnethyxosAbsolution
 {
@@ -20,10 +20,10 @@ public class AnethyxosAbsolution
 
     public List<IOption> Options = new()
     {
-        new Option<ClassChoice>("ClassChoice", "Use Class", "Class used to fight Anethyx'o's Absolution.", ClassChoice.Kings_Echo),
+        new Option<ClassChoice>("ClassChoice", "Use Class", "Class used to fight Anethyxos.", ClassChoice.Chaos_Avenger),
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
-        new Option<bool>("FarmAnethyxosAbsolution", "Farm Anethyx'o's Absolution?", "Farm Anethyx'o's Absolution repeatedly.", false),
+        new Option<bool>("FarmAnethyxos", "Farm Anethyxos?", "Farm Anethyxos repeatedly.", false),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -31,10 +31,10 @@ public class AnethyxosAbsolution
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
     private string? _resolvedClass;
+
     private bool _dieNow;
-    private DateTimeOffset _dieNowDetectedAt;
-    private bool _lowHealthSkills;
     private bool _dieNowHandled;
+    private DateTimeOffset _dieNowDetectedAt;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -43,15 +43,13 @@ public class AnethyxosAbsolution
 
         if (!DoAllMode)
             Core.SetOptions(disableClassSwap: true);
-        Bot.UltraBossHelper.DisableCounterAttack();
-        Bot.Flash.FlashCall -= AbsolutionFlashListener;
-        Bot.Flash.FlashCall += AbsolutionFlashListener;
         try
         {
             Run();
         }
         finally
         {
+            StopSkills();
             Bot.Flash.FlashCall -= AbsolutionFlashListener;
             Core.CancelRegisteredQuests();
             if (!DoAllMode)
@@ -78,6 +76,9 @@ public class AnethyxosAbsolution
 
         if (UsePotionsEnabled())
             UsePotions();
+
+        Bot.Flash.FlashCall -= AbsolutionFlashListener;
+        Bot.Flash.FlashCall += AbsolutionFlashListener;
 
         if (FarmQuantity > 0)
         {
@@ -122,39 +123,48 @@ public class AnethyxosAbsolution
 
     private bool FightBoss()
     {
-        _dieNow = false;
-        _dieNowDetectedAt = DateTimeOffset.MinValue;
-        _lowHealthSkills = false;
-        _dieNowHandled = false;
+        StopSkills();
 
         try
         {
             Core.Join("fourharbingers-100000", "r6", "Bottom");
-            StartNormalSkills();
+            Bot.Wait.ForTrue(() =>
+                Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                && Bot.Player.Cell.Equals("r6", StringComparison.OrdinalIgnoreCase),
+                20
+            );
 
-            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of the Broken Bond"))
+            StartSkills();
+
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of Absolution"))
             {
                 if (!Bot.Player.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
                     if (Bot.Player.Alive)
                     {
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.CancelTarget();
                         Bot.Combat.Exit();
                         Bot.Wait.ForCombatExit();
-                        Core.Jump("r6", "Bottom");
-                        Bot.Wait.ForCellChange("r6");
+
+                        Core.Join("fourharbingers-100000", "r6", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r6", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
                         if (UsePotionsEnabled())
                         {
                             RestockPotions();
                             UsePotions();
                         }
+
                         _dieNow = false;
-                        _dieNowDetectedAt = DateTimeOffset.MinValue;
-                        _lowHealthSkills = false;
-                        StartNormalSkills();
-                        Bot.Skills.Resume();
+                        _dieNowHandled = false;
+                        StartSkills();
                     }
                     continue;
                 }
@@ -171,24 +181,10 @@ public class AnethyxosAbsolution
                     continue;
                 }
 
-                if (HandleDieNow())
-                {
-                    Bot.Sleep(100);
-                    continue;
-                }
-
-                ApplyLowHealthSkills();
-
-                if (StopForAuras())
-                {
-                    Bot.Sleep(100);
-                    continue;
-                }
-
                 if (!Bot.Player.HasTarget || Bot.Player.Target == null || Bot.Player.Target.MapID != 5)
                     Bot.Combat.Attack(5);
 
-                Bot.Skills.Resume();
+                ChaosAvengerMechanics();
                 RefreshThirdPotion();
                 Bot.Sleep(100);
             }
@@ -197,181 +193,98 @@ public class AnethyxosAbsolution
         {
             Bot.Combat.CancelAutoAttack();
             Bot.Skills.Resume();
-            _dieNow = false;
-            _dieNowDetectedAt = DateTimeOffset.MinValue;
-            _lowHealthSkills = false;
-            _dieNowHandled = false;
         }
 
-        return Bot.TempInv.Contains("Signet of the Broken Bond");
+        return Bot.TempInv.Contains("Signet of Absolution");
     }
 
-    private void StartNormalSkills()
+    private void StartSkills()
     {
-        if (GetSelectedClass() == "King's Echo")
-            ReplaceSkillProvider("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
+        if (GetSelectedClass() == "Chaos Avenger")
+            Bot.Skills.StartAdvanced("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
         else
-            ReplaceSkillProvider("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
+            Bot.Skills.StartAdvanced("3 | 2 | 1 | 2 | 4 | 2", 250, SkillUseMode.WaitForCooldown);
     }
 
-    private void ReplaceSkillProvider(string skills, int skillTimeout, SkillUseMode skillMode)
+    private void ChaosAvengerMechanics()
     {
-        Bot.Skills.LoadAdvanced(skills, skillTimeout, skillMode);
+        if (_dieNow && !_dieNowHandled)
+        {
+            double elapsed = (DateTimeOffset.UtcNow - _dieNowDetectedAt).TotalMilliseconds;
 
-        if (Bot.Skills.OverrideProvider != null)
-            Bot.Skills.SetProvider(Bot.Skills.OverrideProvider);
+            Bot.Skills.Pause();
 
-        // Start the timer only once. Farming kills only replace the provider.
-        if (!Bot.Skills.TimerRunning)
-            Bot.Skills.Start();
-    }
-
-    private void ApplyLowHealthSkills()
-    {
-        if (_lowHealthSkills || _dieNowHandled)
+            if (elapsed >= 2400 && Bot.Skills.CanUseSkill(1))
+            {
+                Bot.Skills.UseSkill(1);
+                _dieNowHandled = true;
+                _dieNow = false;
+                StartSkills();
+                Bot.Skills.Resume();
+            }
             return;
-
-        var boss = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == 5);
-        if (boss == null || boss.MaxHP <= 0 || boss.HP <= 0 || boss.HP > boss.MaxHP * 0.30)
-            return;
-
-        _lowHealthSkills = true;
-        if (GetSelectedClass() == "King's Echo")
-            ReplaceSkillProvider("1 | 2", 250, SkillUseMode.WaitForCooldown);
-        else
-            ReplaceSkillProvider("3 | 4 | 2", 250, SkillUseMode.UseIfAvailable);
-    }
-
-    private bool StopForAuras()
-    {
-        if (!HasBossAura("Counter Attack") && !Bot.Self.HasActiveAura("Crits Inverted"))
-            return false;
-
-        Bot.Skills.Pause();
-        Bot.Combat.CancelAutoAttack();
-        Bot.Combat.CancelTarget();
-        return true;
-    }
-
-    private bool HandleDieNow()
-    {
-        if (!_dieNow || _dieNowHandled)
-            return false;
-
-        Bot.Skills.Pause();
-
-        if (GetSelectedClass() == "King's Echo"
-            && (Bot.Self.HasActiveAura("Waiting For Corvak") || Bot.Player.Mana <= Bot.Player.MaxMana / 2))
-        {
-            if (!Bot.Player.HasTarget || Bot.Player.Target == null || Bot.Player.Target.MapID != 5)
-            {
-                Bot.Combat.Attack(5);
-                return true;
-            }
-
-            if (Bot.Skills.CanUseSkill(4))
-            {
-                Bot.Skills.UseSkill(4);
-                Bot.Sleep(100);
-            }
-            Bot.Combat.CancelAutoAttack();
-            return true;
         }
 
-        if (DateTimeOffset.UtcNow - _dieNowDetectedAt < TimeSpan.FromSeconds(2))
-        {
-            if (GetSelectedClass() == "King's Echo")
-                Bot.Combat.CancelAutoAttack();
-
-            return true;
-        }
-
-        if (!Bot.Player.HasTarget || Bot.Player.Target == null || Bot.Player.Target.MapID != 5)
-        {
-            Bot.Combat.Attack(5);
-            return true;
-        }
-
-        if (GetSelectedClass() == "King's Echo")
-        {
-            if (!Bot.Skills.CanUseSkill(3))
-            {
-                Bot.Combat.CancelAutoAttack();
-                return true;
-            }
-
-            if (!Bot.Skills.UseSkill(3))
-            {
-                Bot.Combat.CancelAutoAttack();
-                return true;
-            }
-        }
-        else
-        {
-            if (!Bot.Skills.CanUseSkill(1))
-                return true;
-
-
-            if (!Bot.Skills.UseSkill(1))
-                return true;
-
-        }
-
-        _dieNow = false;
-        _dieNowDetectedAt = DateTimeOffset.MinValue;
-        _lowHealthSkills = false;
-        _dieNowHandled = true;
-        StartNormalSkills();
         Bot.Skills.Resume();
-        return true;
-    }
-
-    private bool HasBossAura(string auraName)
-    {
-        try
-        {
-            List<Aura>? auras = JsonConvert.DeserializeObject<List<Aura>>(Bot.Target.GetMonsterAura(5));
-            if (auras == null)
-                return false;
-
-            return auras.Any(a => a.Name.Equals(auraName, StringComparison.OrdinalIgnoreCase));
-        }
-        catch
-        {
-            return false;
-        }
     }
 
     private void AbsolutionFlashListener(string name, object[] args)
     {
         try
         {
-            if (Bot.ShouldExit
-                || !Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
-                || !name.Equals("packetFromServer", StringComparison.OrdinalIgnoreCase)
-                || args.Length == 0
-                || args[0] is not string rawPacket)
+            if (Bot.ShouldExit)
+                return;
+            if (!Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase))
+                return;
+            if (!name.Equals("packetFromServer", StringComparison.OrdinalIgnoreCase))
+                return;
+            if (args.Length == 0)
+                return;
+            if (GetSelectedClass() != "Chaos Avenger")
+                return;
+
+            if (_dieNow || _dieNowHandled)
+                return;
+
+            string? rawPacket = args[0] as string;
+            if (string.IsNullOrWhiteSpace(rawPacket))
                 return;
 
             dynamic? packet = JsonConvert.DeserializeObject<dynamic>(rawPacket);
-            dynamic? data = packet?["b"]?["o"];
-            if (data?.cmd?.ToString() != "ct" || data?.anims is null)
+            if (packet == null)
                 return;
 
-            foreach (dynamic animation in data.anims)
+            dynamic body = packet["b"];
+            if (body == null)
+                return;
+
+            dynamic data = body["o"];
+            if (data == null)
+                return;
+
+            dynamic cmd = data["cmd"];
+            if (cmd == null || cmd.ToString() != "ct")
+                return;
+
+            dynamic anims = data["anims"];
+            if (anims == null)
+                return;
+
+            foreach (dynamic anim in anims)
             {
-                if (animation?.msg?.ToString() != "Die now.")
+                dynamic msg = anim["msg"];
+                if (msg == null)
                     continue;
 
-                // Ignore duplicate/late Die now packets once this mechanic is active or handled.
-                if (_dieNow || _dieNowHandled)
+                string message = msg.ToString();
+                if (message == "Die now." || message == "Die now")
+                {
+                    _dieNow = true;
+                    _dieNowDetectedAt = DateTimeOffset.UtcNow;
+                    Bot.Skills.Pause();
+                    Core.Logger("Die now detected. Preparing defensive skill.");
                     return;
-
-                _dieNow = true;
-                _dieNowDetectedAt = DateTimeOffset.UtcNow;
-                Bot.Skills.Pause();
-                Core.Logger("Die now detected. Preparing the defensive skill.");
-                return;
+                }
             }
         }
         catch
@@ -379,14 +292,19 @@ public class AnethyxosAbsolution
         }
     }
 
+    private void StopSkills()
+    {
+        Bot.Skills.Resume();
+        Bot.Skills.Stop();
+        Bot.Wait.ForTrue(() => !Bot.Skills.TimerRunning, 20);
+    }
+
     private void AddDrops()
     {
         Bot.Drops.Add(
-            "Anethyx’o’s Absolution Orbs",
-            "Manticore of Infinity",
             "Scroll of the Heretic",
             "Scroll of the Quartet",
-            "Signet of the Broken Bond"
+            "Signet of Absolution"
         );
     }
 
@@ -405,7 +323,7 @@ public class AnethyxosAbsolution
         if (DoAllMode)
             return false;
 
-        return Bot.Config!.Get<bool>("FarmAnethyxosAbsolution");
+        return Bot.Config!.Get<bool>("FarmAnethyxos");
     }
 
     private string GetSelectedClass()
@@ -414,15 +332,15 @@ public class AnethyxosAbsolution
             return _resolvedClass;
 
         if (DoAllMode)
-            return "King's Echo";
+            return "Chaos Avenger";
 
         ClassChoice classChoice = Bot.Config!.Get<ClassChoice>("ClassChoice");
-        if (classChoice == ClassChoice.Kings_Echo)
-            return "King's Echo";
-        else if (classChoice == ClassChoice.Chaos_Avenger)
+        if (classChoice == ClassChoice.Chaos_Avenger)
             return "Chaos Avenger";
+        else if (classChoice == ClassChoice.Dragon_of_Time)
+            return "Dragon of Time";
         else
-            return "King's Echo";
+            return "Chaos Avenger";
     }
 
     private bool EquipClass()
@@ -437,7 +355,7 @@ public class AnethyxosAbsolution
                 return false;
             }
 
-            string fallbackClass = className == "King's Echo" ? "Chaos Avenger" : "King's Echo";
+            string fallbackClass = className == "Chaos Avenger" ? "Dragon of Time" : "Chaos Avenger";
             if (!Core.CheckInventory(fallbackClass, toInv: false))
             {
                 Core.Logger(
@@ -490,22 +408,7 @@ public class AnethyxosAbsolution
         HelmSpecial helmEnhancement = HelmSpecial.None;
         CapeSpecial capeEnhancement = CapeSpecial.None;
 
-        if (GetSelectedClass() == "King's Echo")
-        {
-            if (Adv.uElysium())
-                weaponEnhancement = WeaponSpecial.Elysium;
-            else
-            {
-                WarnEnhancementFallback("Elysium is not unlocked. Health Vamp will be used instead.");
-                weaponEnhancement = WeaponSpecial.Health_Vamp;
-            }
-
-            if (Adv.uExamen())
-                helmEnhancement = HelmSpecial.Examen;
-            else
-                WarnEnhancementFallback("Examen is not unlocked. Lucky will be used on the helm instead.");
-        }
-        else
+        if (GetSelectedClass() == "Chaos Avenger")
         {
             if (Adv.uPraxis())
                 weaponEnhancement = WeaponSpecial.Praxis;
@@ -520,11 +423,31 @@ public class AnethyxosAbsolution
             else
                 WarnEnhancementFallback("Anima is not unlocked. Lucky will be used on the helm instead.");
         }
-
-        if (Adv.uPenitence())
-            capeEnhancement = CapeSpecial.Penitence;
         else
-            WarnEnhancementFallback("Penitence is not unlocked. Lucky will be used on the cape instead.");
+        {
+            if (Adv.uElysium())
+                weaponEnhancement = WeaponSpecial.Elysium;
+            else if (Adv.uValiance())
+            {
+                WarnEnhancementFallback("Elysium is not unlocked. Valiance will be used instead.");
+                weaponEnhancement = WeaponSpecial.Valiance;
+            }
+            else
+            {
+                WarnEnhancementFallback("Elysium and Valiance are not unlocked. Awe Blast will be used instead.");
+                weaponEnhancement = WeaponSpecial.Awe_Blast;
+            }
+
+            if (Adv.uPneuma())
+                helmEnhancement = HelmSpecial.Pneuma;
+            else
+                WarnEnhancementFallback("Pneuma is not unlocked. Wizard will be used on the helm instead.");
+        }
+
+        if (Adv.uVainglory())
+            capeEnhancement = CapeSpecial.Vainglory;
+        else
+            WarnEnhancementFallback("Vainglory is not unlocked. Wizard will be used on the cape instead.");
 
         if (weaponEnhancement == WeaponSpecial.Health_Vamp)
         {
@@ -532,7 +455,13 @@ public class AnethyxosAbsolution
                 WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
         }
 
-        Adv.EnhanceEquipped(EnhancementType.Lucky, capeEnhancement, helmEnhancement, weaponEnhancement, true);
+        Adv.EnhanceEquipped(
+            GetSelectedClass() == "Chaos Avenger" ? EnhancementType.Lucky : EnhancementType.Wizard,
+            capeEnhancement,
+            helmEnhancement,
+            weaponEnhancement,
+            true
+        );
     }
 
     private void WarnEnhancementFallback(string message)
@@ -542,12 +471,18 @@ public class AnethyxosAbsolution
 
     private void GetPotions()
     {
-        GetPotion("Fate Tonic", "Gold Voucher 500k", 4, 500000, 10, 8, "", 0);
-        if (GetSelectedClass() == "King's Echo")
-            GetPotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500000, 20, 0, "", 0);
+        if (GetSelectedClass() == "Chaos Avenger")
+        {
+            GetPotion("Might Tonic", "Gold Voucher 500k", 2, 500000, 10, 8, "", 0);
+            GetPotion("Potent Battle Elixir", "Gold Voucher 500k", 4, 500000, 8, 0, "", 0);
+            GetPotion("Felicitous Philtre", "Gold Voucher 100k", 8, 100000, 100, 0, "", 0);
+        }
         else
-            GetPotion("Potent Battle Elixir", "Gold Voucher 500k", 4, 500000, 20, 0, "", 0);
-        GetPotion("Felicitous Philtre", "Gold Voucher 100k", 8, 100000, 100, 0, "", 0);
+        {
+            GetPotion("Sage Tonic", "Gold Voucher 500k", 2, 500000, 10, 8, "", 0);
+            GetPotion("Potent Malevolence Elixir", "Gold Voucher 500k", 4, 500000, 8, 0, "", 0);
+            GetPotion("Potent Honor Potion", "Gold Voucher 500k", 4, 500000, 20, 0, "Good", 10);
+        }
     }
 
     private void GetPotion(string itemName, string voucherName, int voucherQuantity, int voucherCost,
@@ -658,14 +593,7 @@ public class AnethyxosAbsolution
         if (!Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase))
         {
             Core.Logger("WARNING: Potions will only be used inside fourharbingers.");
-            return;
         }
-
-        UsePotion("Fate Tonic", "Fate");
-        if (GetSelectedClass() == "King's Echo")
-            UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
-        else
-            UsePotion("Potent Battle Elixir", "Potent Battle Elixir");
         UsePotion("Felicitous Philtre", "Felicitous Philtre");
     }
 
@@ -694,8 +622,14 @@ public class AnethyxosAbsolution
             int quantityBefore = Bot.Inventory.GetQuantity(itemName);
             Bot.Skills.UseSkill(5);
             Bot.Sleep(2000);
-            Bot.Wait.ForTrue(() => Bot.Self.HasActiveAura(auraName) || Bot.Inventory.GetQuantity(itemName) < quantityBefore, 20);
-            if (!Bot.Self.HasActiveAura(auraName) && Bot.Inventory.GetQuantity(itemName) >= quantityBefore)
+            Bot.Wait.ForTrue(() =>
+                Bot.Self.HasActiveAura(auraName)
+                || Bot.Inventory.GetQuantity(itemName) < quantityBefore,
+                20
+            );
+
+            if (!Bot.Self.HasActiveAura(auraName)
+                && Bot.Inventory.GetQuantity(itemName) >= quantityBefore)
                 WarnPotion(itemName, "its effect could not be verified");
         }
         catch (Exception ex)
@@ -709,21 +643,26 @@ public class AnethyxosAbsolution
     {
         if (!UsePotionsEnabled())
             return;
-        if (Bot.Player.InCombat)
-            return;
 
-        if (GetSelectedClass() == "King's Echo")
+        if (Bot.Player.InCombat)
         {
-            if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
-                && Bot.Inventory.GetQuantity("Potent Revitalize Elixir") > 1
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
+                return;
+        }
+
+        if (GetSelectedClass() == "Chaos Avenger")
+        {
+            if (Bot.Inventory.GetQuantity("Might Tonic") > 1
+                && Bot.Inventory.GetQuantity("Potent Battle Elixir") > 1
                 && Bot.Inventory.GetQuantity("Felicitous Philtre") > 1)
                 return;
         }
         else
         {
-            if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
-                && Bot.Inventory.GetQuantity("Potent Battle Elixir") > 1
-                && Bot.Inventory.GetQuantity("Felicitous Philtre") > 1)
+            if (Bot.Inventory.GetQuantity("Sage Tonic") > 1
+                && Bot.Inventory.GetQuantity("Potent Malevolence Elixir") > 1
+                && Bot.Inventory.GetQuantity("Potent Honor Potion") > 1)
                 return;
         }
 
@@ -734,8 +673,20 @@ public class AnethyxosAbsolution
 
     private void RefreshThirdPotion()
     {
-        if (Bot.Player.InCombat && !Bot.Self.HasActiveAura("Felicitous Philtre") && Bot.Skills.CanUseSkill(5))
-            Bot.Skills.UseSkill(5);
+        if (GetSelectedClass() == "Chaos Avenger")
+        {
+            if (Bot.Player.InCombat
+                && !Bot.Self.HasActiveAura("Felicitous Philtre")
+                && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+        }
+        else
+        {
+            if (Bot.Player.InCombat
+                && !Bot.Self.HasActiveAura("Potent Honor Malice")
+                && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+        }
     }
 
     private void WarnPotion(string itemName, string reason)
@@ -745,7 +696,8 @@ public class AnethyxosAbsolution
 
     private enum ClassChoice
     {
-        Kings_Echo,
         Chaos_Avenger,
+        Dragon_of_Time,
     }
 }
+
