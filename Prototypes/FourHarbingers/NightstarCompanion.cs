@@ -113,6 +113,8 @@ public class NightstarCompanion
             if (Core.CheckInventory(item))
                 continue;
 
+            Core.Logger($"Attempting merge for {item}...");
+
             Adv.StartBuyAllMerge(
                 Map,
                 TroveShop,
@@ -121,8 +123,24 @@ public class NightstarCompanion
                 buyMode: mergeOptionsEnum.all
             );
 
+            // Retry once if merge failed
             if (!Core.CheckInventory(item))
-                return;
+            {
+                Core.Logger($"{item} not obtained on first attempt, retrying...");
+                Adv.StartBuyAllMerge(
+                    Map,
+                    TroveShop,
+                    FindIngredient,
+                    buyOnlyThis: item,
+                    buyMode: mergeOptionsEnum.all
+                );
+            }
+
+            if (!Core.CheckInventory(item))
+            {
+                Core.Logger($"{item} could not be obtained. Continuing to next item.");
+                continue;
+            }
         }
 
         if (Core.CheckInventory("Nightstar Companion"))
@@ -135,53 +153,60 @@ public class NightstarCompanion
     {
         ItemBase requirement = Adv.externalItem;
         int requiredQuantity = Adv.externalQuant;
+
         if (requirement == null || string.IsNullOrEmpty(requirement.Name))
             return;
 
-        Core.CheckInventory(requirement.Name, requiredQuantity);
         int currentQuantity = Bot.Inventory.GetQuantity(requirement.Name);
-        if (currentQuantity >= requiredQuantity)
+        int needed = requiredQuantity - currentQuantity;
+
+        if (needed <= 0)
             return;
 
         switch (requirement.Name)
         {
             case "Scroll of the Heretic":
-                FarmScroll(requirement.Name, requiredQuantity, () =>
+                FarmScroll(requirement.Name, needed, () =>
                 {
-                    AnethyxosAbsolution absolution = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
+                    AnethyxosAbsolution absolution = new() { DoAllMode = true, FarmQuantity = needed };
                     absolution.ScriptMain(Bot);
                 });
                 break;
+
             case "Scroll of the Wanderer":
-                FarmScroll(requirement.Name, requiredQuantity, () =>
+                FarmScroll(requirement.Name, needed, () =>
                 {
-                    Halosis halosis = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
+                    Halosis halosis = new() { DoAllMode = true, FarmQuantity = needed };
                     halosis.ScriptMain(Bot);
                 });
                 break;
+
             case "Scroll of the Innocent":
-                FarmScroll(requirement.Name, requiredQuantity, () =>
+                FarmScroll(requirement.Name, needed, () =>
                 {
-                    Mors mors = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
+                    Mors mors = new() { DoAllMode = true, FarmQuantity = needed };
                     mors.ScriptMain(Bot);
                 });
                 break;
+
             case "Scroll of the Benevolent":
-                FarmScroll(requirement.Name, requiredQuantity, () =>
+                FarmScroll(requirement.Name, needed, () =>
                 {
-                    Fame fame = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
+                    Fame fame = new() { DoAllMode = true, FarmQuantity = needed };
                     fame.ScriptMain(Bot);
                 });
                 break;
+
             case "Scroll of the Preacher":
-                FarmScroll(requirement.Name, requiredQuantity, () =>
+                FarmScroll(requirement.Name, needed, () =>
                 {
-                    Bello bello = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
+                    Bello bello = new() { DoAllMode = true, FarmQuantity = needed };
                     bello.ScriptMain(Bot);
                 });
                 break;
+
             default:
-                Core.Logger($"No Four Harbingers farm is registered for {requirement.Name}.", messageBox: true, stopBot: true);
+                Core.Logger($"No farm registered for {requirement.Name}. Skipping.", messageBox: true);
                 break;
         }
     }
@@ -189,20 +214,39 @@ public class NightstarCompanion
     private void FarmScroll(string itemName, int quantity, Action runBoss)
     {
         Core.FarmingLogger(itemName, quantity);
+
+        int failCount = 0;
         int previousQuantity = Bot.Inventory.GetQuantity(itemName);
 
-        while (!Bot.ShouldExit && Bot.Inventory.GetQuantity(itemName) < quantity)
+        while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quantity))
         {
             runBoss();
-            Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(itemName) >= quantity, 5);
+
+            // Wait up to 20 seconds for quest turn-in or delayed pickup
+            Bot.Wait.ForTrue(() =>
+                Bot.Inventory.GetQuantity(itemName) > previousQuantity,
+                20
+            );
+
             int currentQuantity = Bot.Inventory.GetQuantity(itemName);
-            if (currentQuantity <= previousQuantity)
+
+            if (currentQuantity > previousQuantity)
             {
-                Core.Logger($"No progress was made farming {itemName}; stopping this stage.");
+                Core.Logger($"{itemName}: Progress made ({currentQuantity}/{quantity}).");
+                previousQuantity = currentQuantity;
+                failCount = 0;
+                continue;
+            }
+
+            failCount++;
+
+            if (failCount >= 5)
+            {
+                Core.Logger($"No progress after 5 attempts for {itemName}. Stopping this scroll.");
                 break;
             }
 
-            previousQuantity = currentQuantity;
+            Core.Logger($"{itemName}: No progress, retrying (attempt {failCount}/5).");
         }
     }
 }
