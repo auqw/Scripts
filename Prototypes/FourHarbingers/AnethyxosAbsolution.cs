@@ -16,6 +16,7 @@ public class AnethyxosAbsolution
     public string OptionsStorage = "FourHarbingers_AnethyxosAbsolution";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -40,7 +41,8 @@ public class AnethyxosAbsolution
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         Bot.UltraBossHelper.DisableCounterAttack();
         Bot.Flash.FlashCall -= AbsolutionFlashListener;
         Bot.Flash.FlashCall += AbsolutionFlashListener;
@@ -52,7 +54,8 @@ public class AnethyxosAbsolution
         {
             Bot.Flash.FlashCall -= AbsolutionFlashListener;
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -76,7 +79,17 @@ public class AnethyxosAbsolution
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Heretic") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -92,10 +105,18 @@ public class AnethyxosAbsolution
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Heretic");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10854);
+        if (Bot.Inventory.GetQuantity("Scroll of the Heretic") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Heretic");
+            Bot.Wait.ForPickup("Scroll of the Heretic");
+            if (Bot.Inventory.GetQuantity("Scroll of the Heretic") <= scrollsBefore)
+                return false;
+        }
         return true;
     }
 
@@ -118,6 +139,17 @@ public class AnethyxosAbsolution
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                     if (Bot.Player.Alive)
                     {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+                        Core.Jump("r6", "Bottom");
+                        Bot.Wait.ForCellChange("r6");
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
                         _dieNow = false;
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _lowHealthSkills = false;

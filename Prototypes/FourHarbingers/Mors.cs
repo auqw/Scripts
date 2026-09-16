@@ -16,6 +16,7 @@ public class Mors
     public string OptionsStorage = "FourHarbingers_Mors";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -36,7 +37,8 @@ public class Mors
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         Bot.UltraBossHelper.DisableCounterAttack();
         try
         {
@@ -47,7 +49,8 @@ public class Mors
             StopSkills();
             Bot.UltraBossHelper.EnableCounterAttack();
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -73,7 +76,17 @@ public class Mors
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Innocent") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -89,10 +102,18 @@ public class Mors
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Innocent");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10853);
+        if (Bot.Inventory.GetQuantity("Scroll of the Innocent") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Innocent");
+            Bot.Wait.ForPickup("Scroll of the Innocent");
+            if (Bot.Inventory.GetQuantity("Scroll of the Innocent") <= scrollsBefore)
+                return false;
+        }
         return true;
     }
 
@@ -112,6 +133,17 @@ public class Mors
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                     if (Bot.Player.Alive)
                     {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+                        Core.Jump("r5", "Bottom");
+                        Bot.Wait.ForCellChange("r5");
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
                         _counterAttackActive = false;
                         StartNormalSkills();
                         Bot.Skills.Resume();

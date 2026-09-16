@@ -14,6 +14,7 @@ public class Bello
     public string OptionsStorage = "FourHarbingers_Bello";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -34,7 +35,8 @@ public class Bello
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config?.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         try
         {
             Run();
@@ -43,7 +45,8 @@ public class Bello
         {
             StopSkills();
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -67,7 +70,17 @@ public class Bello
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Preacher") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -83,10 +96,18 @@ public class Bello
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Preacher");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10851);
+        if (Bot.Inventory.GetQuantity("Scroll of the Preacher") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Preacher");
+            Bot.Wait.ForPickup("Scroll of the Preacher");
+            if (Bot.Inventory.GetQuantity("Scroll of the Preacher") <= scrollsBefore)
+                return false;
+        }
         return true;
     }
 
@@ -107,6 +128,20 @@ public class Bello
                 if (!Bot.Player.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    if (Bot.Player.Alive)
+                    {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+                        Core.Jump("r3", "Bottom");
+                        Bot.Wait.ForCellChange("r3");
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
+                    }
                     continue;
                 }
 

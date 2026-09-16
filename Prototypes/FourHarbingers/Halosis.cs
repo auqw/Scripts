@@ -14,6 +14,7 @@ public class Halosis
     public string OptionsStorage = "FourHarbingers_Halosis";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -39,7 +40,8 @@ public class Halosis
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         try
         {
             Run();
@@ -48,7 +50,8 @@ public class Halosis
         {
             StopSkills();
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -72,7 +75,17 @@ public class Halosis
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Wanderer") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -88,10 +101,18 @@ public class Halosis
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Wanderer");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10850);
+        if (Bot.Inventory.GetQuantity("Scroll of the Wanderer") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Wanderer");
+            Bot.Wait.ForPickup("Scroll of the Wanderer");
+            if (Bot.Inventory.GetQuantity("Scroll of the Wanderer") <= scrollsBefore)
+                return false;
+        }
         return true;
     }
 
@@ -117,6 +138,17 @@ public class Halosis
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                     if (Bot.Player.Alive)
                     {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+                        Core.Jump("r2", "Bottom");
+                        Bot.Wait.ForCellChange("r2");
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
                         _dieNowDetected = false;
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _skillOneReserved = false;
