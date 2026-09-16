@@ -37,7 +37,7 @@ public class NightstarCompanion
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (EnsureInInventory("Nightstar Companion", 1))
+        if (Core.CheckInventory("Nightstar Companion"))
         {
             Core.Logger("Nightstar Companion already obtained.");
             return;
@@ -110,7 +110,7 @@ public class NightstarCompanion
             if (Bot.ShouldExit)
                 return;
 
-            if (EnsureInInventory(item, 1))
+            if (Core.CheckInventory(item))
                 continue;
 
             Adv.StartBuyAllMerge(
@@ -121,11 +121,11 @@ public class NightstarCompanion
                 buyMode: mergeOptionsEnum.all
             );
 
-            if (!EnsureInInventory(item, 1))
+            if (!Core.CheckInventory(item))
                 return;
         }
 
-        if (EnsureInInventory("Nightstar Companion", 1))
+        if (Core.CheckInventory("Nightstar Companion"))
             Core.Logger("Nightstar Companion complete.");
         else
             Core.Logger("Nightstar Companion was not obtained; restart the script to continue from the remaining requirements.");
@@ -138,7 +138,7 @@ public class NightstarCompanion
         if (requirement == null || string.IsNullOrEmpty(requirement.Name))
             return;
 
-        EnsureInInventory(requirement.Name, requiredQuantity);
+        Core.CheckInventory(requirement.Name, requiredQuantity);
         int currentQuantity = Bot.Inventory.GetQuantity(requirement.Name);
         if (currentQuantity >= requiredQuantity)
             return;
@@ -204,18 +204,5 @@ public class NightstarCompanion
 
             previousQuantity = currentQuantity;
         }
-    }
-
-    private bool EnsureInInventory(string itemName, int quantity)
-    {
-        if (Bot.Inventory.GetQuantity(itemName) >= quantity)
-            return true;
-
-        if (!Bot.Bank.Contains(itemName) || Bot.Inventory.FreeSlots <= 0)
-            return false;
-
-        Bot.Bank.EnsureToInventory(itemName);
-        Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(itemName) >= quantity, 20);
-        return Bot.Inventory.GetQuantity(itemName) >= quantity;
     }
 }
