@@ -117,6 +117,11 @@ public class Fame
         try
         {
             Core.Join("fourharbingers-100000", "r4", "Bottom");
+            Bot.Wait.ForTrue(() =>
+                Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                && Bot.Player.Cell.Equals("r4", StringComparison.OrdinalIgnoreCase),
+                20
+            );
 
             while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of the Filled Chalice"))
             {
@@ -129,8 +134,14 @@ public class Fame
                         Bot.Combat.CancelTarget();
                         Bot.Combat.Exit();
                         Bot.Wait.ForCombatExit();
-                        Core.Jump("r4", "Bottom");
-                        Bot.Wait.ForCellChange("r4");
+
+                        Core.Join("fourharbingers-100000", "r4", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r4", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
                         if (UsePotionsEnabled())
                         {
                             RestockPotions();
@@ -172,10 +183,10 @@ public class Fame
     {
         if (GetSelectedClass() == "Yami no Ronin")
         {
-            if (Bot.Skills.CanUseSkill(3))
-                Bot.Skills.UseSkill(3);
-            else if (Bot.Skills.CanUseSkill(2))
+            if (Bot.Skills.CanUseSkill(2))
                 Bot.Skills.UseSkill(2);
+            else if (Bot.Skills.CanUseSkill(3))
+                Bot.Skills.UseSkill(3);
             else if (Bot.Skills.CanUseSkill(1))
                 Bot.Skills.UseSkill(1);
         }
@@ -521,8 +532,13 @@ public class Fame
     {
         if (!UsePotionsEnabled())
             return;
+
         if (Bot.Player.InCombat)
-            return;
+        {
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
+                return;
+        }
 
         if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
             && Bot.Inventory.GetQuantity("Potent Battle Elixir") > 1
