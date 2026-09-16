@@ -1,3 +1,11 @@
+/*
+name: null
+description: null
+tags: null
+version: 1.4.4.4
+*/
+//cs_include Scripts/CoreBots.cs
+using Skua.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,19 +14,20 @@ using System.Text.RegularExpressions;
 
 class MemoryLeakAudit
 {
+    private IScriptInterface Bot => IScriptInterface.Instance;
+    private CoreBots Core => CoreBots.Instance;
+
     static void Main()
     {
         // Base folder - use current directory if running from Scripts folder
         string scriptsFolder = Directory.GetCurrentDirectory();
         if (!scriptsFolder.EndsWith("Scripts"))
-        {
             scriptsFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                 "Documents",
                 "Skua",
                 "Scripts"
             );
-        }
 
         Console.WriteLine($"Analyzing scripts in: {scriptsFolder}");
 
@@ -30,8 +39,9 @@ class MemoryLeakAudit
             $"MemoryLeakAudit_{DateTime.Now:yyyyMMdd_HHmmss}.txt"
         );
 
-        var excludedFolders = new[]
-        {
+        // Collection expression instead of `new[] { }`
+        string[] excludedFolders =
+        [
             "WIP",
             "SkuaScriptsGenerator",
             "obj",
@@ -39,48 +49,25 @@ class MemoryLeakAudit
             "Templates",
             "Tools",
             "Logs",
-        };
+        ];
 
-        // Improved regex patterns
-        var eventAssignRegex = new Regex(
-            @"^\s*Bot\.Events\.\w+\s*\+=\s*.*[^;]*;?\s*$",
-            RegexOptions.Compiled | RegexOptions.Multiline
-        );
-        var eventRemoveRegex = new Regex(
-            @"^\s*Bot\.Events\.\w+\s*-=\s*.*[^;]*;?\s*$",
-            RegexOptions.Compiled | RegexOptions.Multiline
-        );
-        var taskRunRegex = new Regex(@"\bTask\.Run\s*\(", RegexOptions.Compiled);
-        var taskCreationRegex = new Regex(@"new\s+Task\s*\(", RegexOptions.Compiled);
-        var timerRegex = new Regex(
-            @"new\s+(Timer|System\.Threading\.Timer)\s*\(",
-            RegexOptions.Compiled
-        );
-        var collectionRegex = new Regex(
-            @"\b(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=",
-            RegexOptions.Compiled
-        );
-        var staticCollectionRegex = new Regex(
-            @"\bstatic\s+(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=",
-            RegexOptions.Compiled
-        );
-        var handlerRegex = new Regex(@"Bot\.Handlers\.RegisterHandler\s*\(", RegexOptions.Compiled);
-        var disposeRegex = new Regex(@"\.Dispose\s*\(\s*\)", RegexOptions.Compiled);
-        var usingRegex = new Regex(@"^\s*using\s*\(", RegexOptions.Compiled);
+        // All regex patterns live on one object instead of a positional params array,
+        // so AnalyzeFile no longer depends on remembering an index order.
+        LeakPatterns patterns = new();
 
-        var stats = new MemoryLeakStats();
-        var riskFiles = new Dictionary<string, int>();
+        MemoryLeakStats stats = new();
+        Dictionary<string, int> riskFiles = new();
 
         string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        using StreamWriter writer = new StreamWriter(logFile, false);
+        using StreamWriter writer = new(logFile, false);
         writer.WriteLine($"Memory Leak Audit Report - {DateTime.Now}");
         writer.WriteLine($"Analyzing: {scriptsFolder}");
         writer.WriteLine("=" + new string('=', 50));
         writer.WriteLine();
 
         // Get all .cs files
-        var files = Directory
+        string[] files = Directory
             .GetFiles(scriptsFolder, "*.cs", SearchOption.AllDirectories)
             .Where(f =>
                 !excludedFolders.Any(ex =>
@@ -92,24 +79,9 @@ class MemoryLeakAudit
 
         Console.WriteLine($"Found {files.Length} C# files to analyze...");
 
-        foreach (var file in files)
+        foreach (string file in files)
         {
-            var fileRisk = AnalyzeFile(
-                file,
-                writer,
-                userFolder,
-                stats,
-                eventAssignRegex,
-                eventRemoveRegex,
-                taskRunRegex,
-                taskCreationRegex,
-                timerRegex,
-                collectionRegex,
-                staticCollectionRegex,
-                handlerRegex,
-                disposeRegex,
-                usingRegex
-            );
+            int fileRisk = AnalyzeFile(file, writer, userFolder, stats, patterns);
 
             if (fileRisk > 0)
                 riskFiles[file] = fileRisk;
@@ -146,41 +118,17 @@ class MemoryLeakAudit
         StreamWriter writer,
         string userFolder,
         MemoryLeakStats stats,
-        params Regex[] regexes
+        LeakPatterns patterns
     )
     {
-        var (
-            eventAssignRegex,
-            eventRemoveRegex,
-            taskRunRegex,
-            taskCreationRegex,
-            timerRegex,
-            collectionRegex,
-            staticCollectionRegex,
-            handlerRegex,
-            disposeRegex,
-            usingRegex
-        ) = (
-            regexes[0],
-            regexes[1],
-            regexes[2],
-            regexes[3],
-            regexes[4],
-            regexes[5],
-            regexes[6],
-            regexes[7],
-            regexes[8],
-            regexes[9]
-        );
-
         int fileRiskScore = 0;
         string content = File.ReadAllText(file);
         string[] lines = File.ReadAllLines(file);
         string displayFile = file.Replace(userFolder, "%USERPROFILE%").Replace("\\", "/");
 
         // Find all event unsubscriptions
-        var unsubscribedEvents = lines
-            .Where(l => !l.TrimStart().StartsWith("//") && eventRemoveRegex.IsMatch(l))
+        HashSet<string> unsubscribedEvents = lines
+            .Where(l => !l.TrimStart().StartsWith("//") && patterns.EventRemove.IsMatch(l))
             .Select(l => l.Trim().Replace("-=", "+="))
             .ToHashSet();
 
@@ -193,31 +141,29 @@ class MemoryLeakAudit
                 continue;
 
             // Event assignments
-            if (eventAssignRegex.IsMatch(line))
+            if (patterns.EventAssign.IsMatch(line) && !unsubscribedEvents.Contains(line))
             {
                 stats.EventCount++;
-                if (!unsubscribedEvents.Contains(line))
+                if (!hasFileIssues)
                 {
-                    if (!hasFileIssues)
-                    {
-                        writer.WriteLine($"\n🔍 FILE: {displayFile}");
-                        hasFileIssues = true;
-                    }
-                    writer.WriteLine($"  ⚠️  [LEAKED EVENT] Line {i + 1}: {line}");
-                    stats.LeakedEventCount++;
-                    fileRiskScore += 3;
+                    writer.WriteLine($"\n🔍 FILE: {displayFile}");
+                    hasFileIssues = true;
                 }
+                writer.WriteLine($"  ⚠️  [LEAKED EVENT] Line {i + 1}: {line}");
+                stats.LeakedEventCount++;
+                fileRiskScore += 3;
+            }
+            else if (patterns.EventAssign.IsMatch(line))
+            {
+                // Subscribed and later unsubscribed - still counts toward the total, no warning
+                stats.EventCount++;
             }
 
             // Task.Run without proper disposal/cancellation
-            if (taskRunRegex.IsMatch(line))
+            if (patterns.TaskRun.IsMatch(line))
             {
                 stats.TaskRunCount++;
-                // Check if there's a CancellationToken in the vicinity
-                bool hasCancellation =
-                    content.Contains("CancellationToken")
-                    || line.Contains("cancellation")
-                    || line.Contains("CancellationToken");
+                bool hasCancellation = content.Contains("CancellationToken");
                 if (!hasCancellation)
                 {
                     if (!hasFileIssues)
@@ -231,7 +177,7 @@ class MemoryLeakAudit
             }
 
             // Timer creations
-            if (timerRegex.IsMatch(line))
+            if (patterns.Timer.IsMatch(line))
             {
                 stats.TimerCount++;
                 if (!hasFileIssues)
@@ -244,7 +190,7 @@ class MemoryLeakAudit
             }
 
             // Handler registrations
-            if (handlerRegex.IsMatch(line))
+            if (patterns.Handler.IsMatch(line))
             {
                 stats.HandlerCount++;
                 if (!hasFileIssues)
@@ -256,7 +202,7 @@ class MemoryLeakAudit
             }
 
             // Static collections
-            if (staticCollectionRegex.IsMatch(line))
+            if (patterns.StaticCollection.IsMatch(line))
             {
                 stats.StaticCollectionCount++;
                 if (!hasFileIssues)
@@ -292,23 +238,22 @@ class MemoryLeakAudit
 
         if (riskFiles.Any())
         {
+            List<KeyValuePair<string, int>> highRisk = riskFiles
+                .Where(kv => kv.Value >= 5)
+                .OrderByDescending(kv => kv.Value)
+                .ToList();
+            List<KeyValuePair<string, int>> mediumRisk = riskFiles
+                .Where(kv => kv.Value is >= 3 and < 5)
+                .OrderByDescending(kv => kv.Value)
+                .ToList();
+
             writer.WriteLine("HIGH RISK FILES (Score >= 5):");
-            foreach (
-                var file in riskFiles.Where(kv => kv.Value >= 5).OrderByDescending(kv => kv.Value)
-            )
-            {
+            foreach (KeyValuePair<string, int> file in highRisk)
                 writer.WriteLine($"  {file.Key} (Risk Score: {file.Value})");
-            }
 
             writer.WriteLine("\nMEDIUM RISK FILES (Score 3-4):");
-            foreach (
-                var file in riskFiles
-                    .Where(kv => kv.Value >= 3 && kv.Value < 5)
-                    .OrderByDescending(kv => kv.Value)
-            )
-            {
+            foreach (KeyValuePair<string, int> file in mediumRisk)
                 writer.WriteLine($"  {file.Key} (Risk Score: {file.Value})");
-            }
         }
 
         writer.WriteLine("\nRECOMMENDATIONS:");
@@ -317,6 +262,43 @@ class MemoryLeakAudit
         writer.WriteLine("3. Ensure Timer objects are properly disposed");
         writer.WriteLine("4. Consider implementing IDisposable for Core classes");
         writer.WriteLine($"\nReport generated: {DateTime.Now}");
+    }
+}
+
+/// <summary>
+/// Compiled regex patterns used by the audit. Previously these were built in Main,
+/// passed through a `params Regex[]` and pulled back out by hand-counted index in
+/// AnalyzeFile (fragile - reordering the array silently mismatched the names).
+/// Four of the original patterns (TaskCreation, Collection, Dispose, Using) were
+/// declared but never actually consulted anywhere in the analysis logic, so they've
+/// been dropped rather than carried along as dead code.
+/// </summary>
+sealed class LeakPatterns
+{
+    public Regex EventAssign { get; }
+    public Regex EventRemove { get; }
+    public Regex TaskRun { get; }
+    public Regex Timer { get; }
+    public Regex StaticCollection { get; }
+    public Regex Handler { get; }
+
+    public LeakPatterns()
+    {
+        EventAssign = new(
+            @"^\s*Bot\.Events\.\w+\s*\+=\s*.*[^;]*;?\s*$",
+            RegexOptions.Compiled | RegexOptions.Multiline
+        );
+        EventRemove = new(
+            @"^\s*Bot\.Events\.\w+\s*-=\s*.*[^;]*;?\s*$",
+            RegexOptions.Compiled | RegexOptions.Multiline
+        );
+        TaskRun = new(@"\bTask\.Run\s*\(", RegexOptions.Compiled);
+        Timer = new(@"new\s+(Timer|System\.Threading\.Timer)\s*\(", RegexOptions.Compiled);
+        StaticCollection = new(
+            @"\bstatic\s+(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=",
+            RegexOptions.Compiled
+        );
+        Handler = new(@"Bot\.Handlers\.RegisterHandler\s*\(", RegexOptions.Compiled);
     }
 }
 
