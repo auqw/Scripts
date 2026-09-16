@@ -1,15 +1,17 @@
 /*
 name: Mors
-description: null
-tags: four harbingers, fourharbingers, mors, boss, farm, signet of the long quiet, lonewolf12
+description: Defeat Mors using Legion DoomKnight or Chaos Avenger
+tags: four harbingers, fourharbingers, mors, boss, farm, signet of the final hour, lonewolf12
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-using Newtonsoft.Json;
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Auras;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using Skua.Core.Models.Auras;
 
 public class Mors
 {
@@ -20,7 +22,7 @@ public class Mors
 
     public List<IOption> Options = new()
     {
-        new Option<ClassChoice>("ClassChoice", "Use Class", "Class used to fight Mors.", ClassChoice.Legion_Revenant),
+        new Option<ClassChoice>("ClassChoice", "Use Class", "Class used to fight Mors.", ClassChoice.Legion_DoomKnight),
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
         new Option<bool>("FarmMors", "Farm Mors?", "Farm Mors repeatedly.", false),
@@ -30,7 +32,7 @@ public class Mors
     private IScriptInterface Bot = IScriptInterface.Instance;
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
-    private bool _counterAttackActive;
+    private string? _resolvedClass;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -39,7 +41,6 @@ public class Mors
 
         if (!DoAllMode)
             Core.SetOptions(disableClassSwap: true);
-        Bot.UltraBossHelper.DisableCounterAttack();
         try
         {
             Run();
@@ -47,7 +48,6 @@ public class Mors
         finally
         {
             StopSkills();
-            Bot.UltraBossHelper.EnableCounterAttack();
             Core.CancelRegisteredQuests();
             if (!DoAllMode)
                 Core.SetOptions(false);
@@ -56,9 +56,7 @@ public class Mors
 
     private void Run()
     {
-        if (GetSelectedClass() == "King's Echo")
-            Core.Logger("WARNING: King's Echo is still in testing and will probably fail.", messageBox: true);
-
+        _resolvedClass = null;
         AddDrops();
         Core.RegisterQuests(10853);
 
@@ -119,14 +117,18 @@ public class Mors
 
     private bool FightBoss()
     {
-        _counterAttackActive = false;
+        StopSkills();
 
         try
         {
             Core.Join("fourharbingers-100000", "r5", "Bottom");
-            StartNormalSkills();
+            Bot.Wait.ForTrue(() =>
+                Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                && Bot.Player.Cell.Equals("r5", StringComparison.OrdinalIgnoreCase),
+                20
+            );
 
-            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of the Long Quiet"))
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Signet of the Final Hour"))
             {
                 if (!Bot.Player.Alive)
                 {
@@ -137,16 +139,19 @@ public class Mors
                         Bot.Combat.CancelTarget();
                         Bot.Combat.Exit();
                         Bot.Wait.ForCombatExit();
-                        Core.Jump("r5", "Bottom");
-                        Bot.Wait.ForCellChange("r5");
+
+                        Core.Join("fourharbingers-100000", "r5", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r5", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
                         if (UsePotionsEnabled())
                         {
                             RestockPotions();
                             UsePotions();
                         }
-                        _counterAttackActive = false;
-                        StartNormalSkills();
-                        Bot.Skills.Resume();
                     }
                     continue;
                 }
@@ -162,78 +167,74 @@ public class Mors
                     Core.Jump("r5", "Bottom");
                     continue;
                 }
-
-                if (!CounterAttackMechanics())
+                // Extra safety: stop attacking during Counter Attack
+                if (HasCounterAttack())
                 {
-                    Bot.Sleep(100);
-                    continue;
+                    Bot.Skills.Pause();
+                    Bot.Combat.CancelAutoAttack();
+                }
+                else
+                {
+                    if (!Bot.Player.HasTarget || Bot.Player.Target == null || Bot.Player.Target.MapID != 4)
+                        Bot.Combat.Attack(4);
+
+                    UseSkills();
                 }
 
-                if (!Bot.Player.HasTarget || Bot.Player.Target == null || Bot.Player.Target.MapID != 4)
-                    Bot.Combat.Attack(4);
-
                 RefreshThirdPotion();
-
                 Bot.Sleep(100);
+
             }
         }
         finally
         {
             Bot.Combat.CancelAutoAttack();
-            Bot.Skills.Resume();
-            _counterAttackActive = false;
         }
 
-        return Bot.TempInv.Contains("Signet of the Long Quiet");
+        return Bot.TempInv.Contains("Signet of the Final Hour");
     }
 
-    private void StartNormalSkills()
+    private void UseSkills()
     {
-        if (GetSelectedClass() == "King's Echo")
-            ReplaceSkillProvider("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
-        else
-            ReplaceSkillProvider("3 | 4 | 2 | 1", 250, SkillUseMode.UseIfAvailable);
-    }
-
-    private void ReplaceSkillProvider(string skills, int skillTimeout = -1, SkillUseMode skillMode = SkillUseMode.UseIfAvailable)
-    {
-        Bot.Skills.LoadAdvanced(skills, skillTimeout, skillMode);
-
-        if (Bot.Skills.OverrideProvider != null)
-            Bot.Skills.SetProvider(Bot.Skills.OverrideProvider);
-
-        if (!Bot.Skills.TimerRunning)
-            Bot.Skills.Start();
-    }
-
-    private bool CounterAttackMechanics()
-    {
+        // STOP attacking during Counter Attack
         if (HasCounterAttack())
         {
-            _counterAttackActive = true;
             Bot.Skills.Pause();
             Bot.Combat.CancelAutoAttack();
-            if (GetSelectedClass() == "King's Echo")
-                Bot.Combat.CancelTarget();
-            return false;
+            return;
         }
 
-        if (_counterAttackActive)
+        if (GetSelectedClass() == "Legion DoomKnight")
         {
-            _counterAttackActive = false;
-            if (GetSelectedClass() == "King's Echo")
-                StartNormalSkills();
-            Bot.Skills.Resume();
+            if (Bot.Skills.CanUseSkill(2))
+                Bot.Skills.UseSkill(2);
+            else if (Bot.Skills.CanUseSkill(3))
+                Bot.Skills.UseSkill(3);
+            else if (Bot.Skills.CanUseSkill(1))
+                Bot.Skills.UseSkill(1);
         }
-
-        return true;
+        else
+        {
+            if (Bot.Skills.CanUseSkill(2))
+                Bot.Skills.UseSkill(2);
+            else if (Bot.Skills.CanUseSkill(1))
+                Bot.Skills.UseSkill(1);
+            else if (Bot.Skills.CanUseSkill(3))
+                Bot.Skills.UseSkill(3);
+            else if (Bot.Skills.CanUseSkill(4))
+                Bot.Skills.UseSkill(4);
+        }
     }
 
     private bool HasCounterAttack()
     {
         try
         {
-            List<Aura>? auras = JsonConvert.DeserializeObject<List<Aura>>(Bot.Target.GetMonsterAura(4));
+            string auraJson = Bot.Target.GetMonsterAura(4);
+            if (string.IsNullOrWhiteSpace(auraJson))
+                return false;
+
+            List<Aura>? auras = JsonConvert.DeserializeObject<List<Aura>>(auraJson);
             if (auras == null)
                 return false;
 
@@ -255,10 +256,9 @@ public class Mors
     private void AddDrops()
     {
         Bot.Drops.Add(
-            "Manticore of Darkness",
             "Scroll of the Innocent",
             "Scroll of the Quartet",
-            "Signet of the Long Quiet"
+            "Signet of the Final Hour"
         );
     }
 
@@ -282,26 +282,51 @@ public class Mors
 
     private string GetSelectedClass()
     {
+        if (!string.IsNullOrEmpty(_resolvedClass))
+            return _resolvedClass;
+
         if (DoAllMode)
-            return "Legion Revenant";
+            return "Legion DoomKnight";
 
         ClassChoice classChoice = Bot.Config!.Get<ClassChoice>("ClassChoice");
-        if (classChoice == ClassChoice.Legion_Revenant)
-            return "Legion Revenant";
-        else if (classChoice.ToString().Equals("Kings_Echo", StringComparison.OrdinalIgnoreCase))
-            return "King's Echo";
+        if (classChoice == ClassChoice.Legion_DoomKnight)
+            return "Legion DoomKnight";
+        else if (classChoice == ClassChoice.Chaos_Avenger)
+            return "Chaos Avenger";
         else
-            return "Legion Revenant";
+            return "Legion DoomKnight";
     }
 
     private bool EquipClass()
     {
         string className = GetSelectedClass();
-        if (!Core.CheckInventory(className))
+
+        if (!Core.CheckInventory(className, toInv: false))
         {
-            Core.Logger($"WARNING: {className} is required for this setup.");
-            return false;
+            if (DoAllMode)
+            {
+                Core.Logger($"WARNING: {className} is required for this setup.");
+                return false;
+            }
+
+            string fallbackClass = className == "Legion DoomKnight" ? "Chaos Avenger" : "Legion DoomKnight";
+            if (!Core.CheckInventory(fallbackClass, toInv: false))
+            {
+                Core.Logger(
+                    $"WARNING: You do not own {className} or {fallbackClass}. The script will stop.",
+                    messageBox: true
+                );
+                return false;
+            }
+
+            Core.Logger(
+                $"WARNING: {className} was selected, but you do not own it. Falling back to {fallbackClass}.",
+                messageBox: true
+            );
+            className = fallbackClass;
         }
+
+        _resolvedClass = className;
 
         if (!Bot.Inventory.Contains(className))
         {
@@ -337,58 +362,61 @@ public class Mors
         HelmSpecial helmEnhancement = HelmSpecial.None;
         CapeSpecial capeEnhancement = CapeSpecial.None;
 
-        if (Adv.uElysium())
-            weaponEnhancement = WeaponSpecial.Elysium;
+        if (GetSelectedClass() == "Legion DoomKnight")
+        {
+            if (Adv.uValiance())
+                weaponEnhancement = WeaponSpecial.Valiance;
+            else
+            {
+                WarnEnhancementFallback("Valiance is not unlocked. Health Vamp will be used instead.");
+                weaponEnhancement = WeaponSpecial.Health_Vamp;
+            }
+
+            if (Adv.uAnima())
+                helmEnhancement = HelmSpecial.Anima;
+            else
+                WarnEnhancementFallback("Anima is not unlocked. Lucky will be used on the helm instead.");
+        }
         else
         {
-            Core.Logger("WARNING: Elysium is not unlocked. Health Vamp will be used instead.");
-            weaponEnhancement = WeaponSpecial.Health_Vamp;
+            if (Adv.uPraxis())
+                weaponEnhancement = WeaponSpecial.Praxis;
+            else
+            {
+                WarnEnhancementFallback("Praxis is not unlocked. Health Vamp will be used instead.");
+                weaponEnhancement = WeaponSpecial.Health_Vamp;
+            }
+
+            if (Adv.uForgeHelm())
+                helmEnhancement = HelmSpecial.Forge;
+            else
+                WarnEnhancementFallback("Forge helm is not unlocked. Lucky will be used on the helm instead.");
         }
 
-        if (GetSelectedClass() == "King's Echo")
-        {
-            if (Adv.uExamen())
-                helmEnhancement = HelmSpecial.Examen;
-            else
-                Core.Logger("WARNING: Examen is not unlocked. Wizard will be used on the helm instead.");
-        }
+        if (Adv.uPenitence())
+            capeEnhancement = CapeSpecial.Penitence;
         else
-        {
-            if (Adv.uPneuma())
-                helmEnhancement = HelmSpecial.Pneuma;
-            else
-                Core.Logger("WARNING: Pneuma is not unlocked. Wizard will be used on the helm instead.");
-        }
-
-        if (Adv.uAbsolution())
-            capeEnhancement = CapeSpecial.Absolution;
-        else
-            Core.Logger("WARNING: Absolution is not unlocked. Wizard will be used on the cape instead.");
+            WarnEnhancementFallback("Penitence is not unlocked. Lucky will be used on the cape instead.");
 
         if (weaponEnhancement == WeaponSpecial.Health_Vamp)
         {
             if (!Adv.uAwe())
-                Core.Logger("WARNING: Awe enhancements are not unlocked. Enhancement setup will continue.");
+                WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
         }
 
-        if (GetSelectedClass() == "Legion Revenant")
-            Adv.EnhanceEquipped(EnhancementType.Wizard, capeEnhancement, helmEnhancement, weaponEnhancement, true);
-        else
-            Adv.EnhanceEquipped(EnhancementType.Lucky, capeEnhancement, helmEnhancement, weaponEnhancement, true);
+        Adv.EnhanceEquipped(EnhancementType.Lucky, capeEnhancement, helmEnhancement, weaponEnhancement, true);
+    }
+
+    private void WarnEnhancementFallback(string message)
+    {
+        Core.Logger($"WARNING: {message} The script may fail.", messageBox: true);
     }
 
     private void GetPotions()
     {
-        if (GetSelectedClass() == "Legion Revenant")
-            GetPotion("Sage Tonic", "Gold Voucher 500k", 2, 500000, 10, 8, "", 0);
-        else
-            GetPotion("Fate Tonic", "Gold Voucher 500k", 4, 500000, 10, 8, "", 0);
-
-        GetPotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500000, 20, 0, "", 0);
-        if (GetSelectedClass() == "Legion Revenant")
-            GetPotion("Potent Honor Potion", "Gold Voucher 500k", 4, 500000, 20, 0, "Good", 10);
-        else
-            GetPotion("Felicitous Philtre", "Gold Voucher 100k", 8, 100000, 100, 0, "", 0);
+        GetPotion("Fate Tonic", "Gold Voucher 500k", 4, 500000, 10, 8, "", 0);
+        GetPotion("Potent Battle Elixir", "Gold Voucher 500k", 4, 500000, 8, 0, "", 0);
+        GetPotion("Felicitous Philtre", "Gold Voucher 100k", 8, 100000, 100, 0, "", 0);
     }
 
     private void GetPotion(string itemName, string voucherName, int voucherQuantity, int voucherCost,
@@ -502,18 +530,9 @@ public class Mors
             return;
         }
 
-        if (GetSelectedClass() == "Legion Revenant")
-        {
-            UsePotion("Sage Tonic", "Sage");
-            UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
-            UsePotion("Potent Honor Potion", "Potent Honor Malice");
-        }
-        else
-        {
-            UsePotion("Fate Tonic", "Fate");
-            UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
-            UsePotion("Felicitous Philtre", "Felicitous Philtre");
-        }
+        UsePotion("Fate Tonic", "Fate");
+        UsePotion("Potent Battle Elixir", "Potent Battle Elixir");
+        UsePotion("Felicitous Philtre", "Felicitous Philtre");
     }
 
     private void UsePotion(string itemName, string auraName)
@@ -556,23 +575,18 @@ public class Mors
     {
         if (!UsePotionsEnabled())
             return;
-        if (Bot.Player.InCombat)
-            return;
 
-        if (GetSelectedClass() == "Legion Revenant")
+        if (Bot.Player.InCombat)
         {
-            if (Bot.Inventory.GetQuantity("Sage Tonic") > 1
-                && Bot.Inventory.GetQuantity("Potent Revitalize Elixir") > 1
-                && Bot.Inventory.GetQuantity("Potent Honor Potion") > 1)
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
                 return;
         }
-        else
-        {
-            if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
-                && Bot.Inventory.GetQuantity("Potent Revitalize Elixir") > 1
-                && Bot.Inventory.GetQuantity("Felicitous Philtre") > 1)
-                return;
-        }
+
+        if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
+            && Bot.Inventory.GetQuantity("Potent Battle Elixir") > 1
+            && Bot.Inventory.GetQuantity("Felicitous Philtre") > 1)
+            return;
 
         GetPotions();
         Core.Join("fourharbingers-100000", "Enter", "Spawn");
@@ -581,16 +595,8 @@ public class Mors
 
     private void RefreshThirdPotion()
     {
-        if (GetSelectedClass() == "Legion Revenant")
-        {
-            if (Bot.Player.InCombat && !Bot.Self.HasActiveAura("Potent Honor Malice") && Bot.Skills.CanUseSkill(5))
-                Bot.Skills.UseSkill(5);
-        }
-        else
-        {
-            if (Bot.Player.InCombat && !Bot.Self.HasActiveAura("Felicitous Philtre") && Bot.Skills.CanUseSkill(5))
-                Bot.Skills.UseSkill(5);
-        }
+        if (Bot.Player.InCombat && !Bot.Self.HasActiveAura("Felicitous Philtre") && Bot.Skills.CanUseSkill(5))
+            Bot.Skills.UseSkill(5);
     }
 
     private void WarnPotion(string itemName, string reason)
@@ -600,7 +606,7 @@ public class Mors
 
     private enum ClassChoice
     {
-        Legion_Revenant,
-        // Kings_Echo,
+        Legion_DoomKnight,
+        Chaos_Avenger,
     }
 }
