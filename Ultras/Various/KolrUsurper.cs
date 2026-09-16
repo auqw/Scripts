@@ -86,6 +86,9 @@ public class LoneWolf_UltraUsurper
     private string syncFileName = string.Empty;
     private string syncFilePath = string.Empty;
     private string runId = string.Empty;
+    private string pairId = string.Empty;
+    private string player1Username = string.Empty;
+    private string player2Username = string.Empty;
     private int privateRoomNumber;
     private int lastHandledResetCycle;
     private int encounterAttempt;
@@ -253,14 +256,18 @@ public class LoneWolf_UltraUsurper
         selectedDpsClass = Bot.Config?.Get<DpsClass>("dpsClass")
             ?? DpsClass.VerusDoomKnight;
 
-        ConfigurePairIdentity(configuredPlayers[0], configuredPlayers[1]);
+        player1Username = configuredPlayers[0];
+        player2Username = configuredPlayers[1];
+        ConfigurePairIdentity(player1Username, player2Username);
 
         string assignedClass = role == PlayerRole.Player1
             ? GetDpsClassName()
             : Player2Class;
 
         Core.Logger($"{LogPrefix} Assigned role: {role} ({assignedClass}).");
-        Core.Logger($"{LogPrefix} Using automatically assigned private room {privateRoomNumber}.");
+        Core.Logger(
+            $"{LogPrefix} Pair identity: {pairId}; private room: {privateRoomNumber}."
+        );
         Core.Logger(
             $"{LogPrefix} One death will respawn and rejoin. If both players die, the encounter will reset."
         );
@@ -270,12 +277,15 @@ public class LoneWolf_UltraUsurper
 
     private void ConfigurePairIdentity(string lrUsername, string looUsername)
     {
-        string identity = string.Join(
-            "|",
-            BossMap,
+        string[] normalizedPlayers = new[]
+        {
             lrUsername.Trim().ToLowerInvariant(),
             looUsername.Trim().ToLowerInvariant()
-        );
+        };
+
+        Array.Sort(normalizedPlayers, StringComparer.Ordinal);
+
+        string identity = string.Join("|", BossMap, normalizedPlayers);
 
         using SHA256 sha256 = SHA256.Create();
         byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(identity));
@@ -288,7 +298,7 @@ public class LoneWolf_UltraUsurper
 
         privateRoomNumber = 1000 + (int)(roomSeed % 99000u);
 
-        string pairId = BitConverter
+        pairId = BitConverter
             .ToString(hash, 4, 6)
             .Replace("-", string.Empty);
 
@@ -302,6 +312,45 @@ public class LoneWolf_UltraUsurper
 
     private bool ValidateSharedConfiguration()
     {
+        string username = Bot.Player.Username?.Trim() ?? string.Empty;
+        string identityValue = string.Join(
+            "|",
+            runId,
+            username,
+            (int)role,
+            privateRoomNumber,
+            pairId
+        );
+
+        if (!UpdateSyncEntry($"{role}.Identity", identityValue))
+        {
+            return Fail($"{role} could not publish its pair identity.");
+        }
+
+        if (!WaitForPhase("PairIdentity"))
+            return false;
+
+        Dictionary<string, string> identityEntries = ReadSyncEntries();
+
+        if (!ValidateIdentityEntry(
+                identityEntries,
+                "Player1",
+                player1Username,
+                PlayerRole.Player1
+            )
+            || !ValidateIdentityEntry(
+                identityEntries,
+                "Player2",
+                player2Username,
+                PlayerRole.Player2
+            ))
+        {
+            return Fail(
+                "The two clients do not agree on the Player 1/Player 2 assignment. "
+                + "Configure both clients with the same player1 and player2 usernames."
+            );
+        }
+
         bool accessComplete = Core.isCompletedBefore(AccessQuestId);
         bool selectedFarmMode =
             Bot.Config?.Get<bool>("farmGreatFlame") ?? false;
@@ -367,6 +416,28 @@ public class LoneWolf_UltraUsurper
         Core.Logger($"{LogPrefix} Player1 DPS class: {GetDpsClassName()}.");
 
         return true;
+
+        bool ValidateIdentityEntry(
+            Dictionary<string, string> entries,
+            string player,
+            string expectedUsername,
+            PlayerRole expectedRole
+        )
+        {
+            if (!entries.TryGetValue($"{player}.Identity", out string? value))
+                return false;
+
+            string[] parts = value.Split('|');
+
+            return parts.Length == 5
+                && parts[0].Equals(runId, StringComparison.Ordinal)
+                && parts[1].Equals(expectedUsername, StringComparison.OrdinalIgnoreCase)
+                && int.TryParse(parts[2], out int publishedRole)
+                && publishedRole == (int)expectedRole
+                && int.TryParse(parts[3], out int publishedRoom)
+                && publishedRoom == privateRoomNumber
+                && parts[4].Equals(pairId, StringComparison.Ordinal);
+        }
     }
 
     private bool Setup()
@@ -920,6 +991,15 @@ public class LoneWolf_UltraUsurper
     {
         if (!(Bot.Config?.Get<bool>("usePotions") ?? true))
             return Array.Empty<string>();
+
+        if (role == PlayerRole.Player2)
+        {
+            return new[]
+            {
+                "Fate Tonic",
+                "Potent Battle Elixir"
+            };
+        }
 
         if (role != PlayerRole.Player1)
             return Array.Empty<string>();
