@@ -134,8 +134,14 @@ public class Bello
                         Bot.Combat.CancelTarget();
                         Bot.Combat.Exit();
                         Bot.Wait.ForCombatExit();
-                        Core.Jump("r3", "Bottom");
-                        Bot.Wait.ForCellChange("r3");
+
+                        Core.Join("fourharbingers-100000", "r3", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r3", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
                         if (UsePotionsEnabled())
                         {
                             RestockPotions();
@@ -179,7 +185,7 @@ public class Bello
     private void ArchPaladinMechanics()
     {
         var righteousSeal = Bot.Target.GetAura("Righteous Seal");
-        if (righteousSeal != null && righteousSeal.RemainingTime < 1 && Bot.Skills.CanUseSkill(4))
+        if (righteousSeal != null && righteousSeal.RemainingTime <= 1.5 && Bot.Skills.CanUseSkill(4))
             Bot.Skills.UseSkill(4);
     }
 
@@ -504,8 +510,13 @@ public class Bello
     {
         if (!UsePotionsEnabled())
             return;
+
         if (Bot.Player.InCombat)
-            return;
+        {
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
+                return;
+        }
 
         if (GetSelectedClass() == "ArchPaladin")
         {
