@@ -142,13 +142,20 @@ public class Halosis
                         Bot.Combat.CancelTarget();
                         Bot.Combat.Exit();
                         Bot.Wait.ForCombatExit();
-                        Core.Jump("r2", "Bottom");
-                        Bot.Wait.ForCellChange("r2");
+
+                        Core.Join("fourharbingers-100000", "r2", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r2", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
                         if (UsePotionsEnabled())
                         {
                             RestockPotions();
                             UsePotions();
                         }
+
                         _dieNowDetected = false;
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _skillOneReserved = false;
@@ -240,7 +247,8 @@ public class Halosis
                 Bot.Combat.Attack(1);
             }
 
-            if (elapsedMilliseconds >= 2000 && Bot.Skills.CanUseSkill(1))
+            // patched timing: 2400ms instead of 2000ms
+            if (elapsedMilliseconds >= 2400 && Bot.Skills.CanUseSkill(1))
             {
                 if (!Bot.Skills.UseSkill(1))
                     return false;
@@ -329,6 +337,7 @@ public class Halosis
                 string message = messageValue.ToString();
                 if (message == "Die now." || message == "Die now")
                 {
+                    // patched: ignore duplicates BEFORE setting flags
                     if (_dieNowHandled || _dieNowDetected)
                         return;
 
@@ -581,15 +590,6 @@ public class Halosis
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(requiredFaction))
-            {
-                if (!Bot.Reputation.HasRank(requiredFaction, requiredFactionRank))
-                {
-                    WarnPotion(itemName, $"{requiredFaction} rank {requiredFactionRank} is required");
-                    return;
-                }
-            }
-
             int requiredSlots = 0;
             if (!Bot.Inventory.Contains(itemName))
                 requiredSlots++;
@@ -712,8 +712,13 @@ public class Halosis
     {
         if (!UsePotionsEnabled())
             return;
+
         if (Bot.Player.InCombat)
-            return;
+        {
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
+                return;
+        }
 
         if (GetSelectedClass() == "Dragon of Time")
         {
@@ -760,3 +765,5 @@ public class Halosis
         Chaos_Avenger,
     }
 }
+
+
