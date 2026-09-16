@@ -208,25 +208,34 @@ public class AnethyxosAbsolution
 
     private void ChaosAvengerMechanics()
     {
+        // If Die Now was detected, handle it safely
         if (_dieNow && !_dieNowHandled)
         {
             double elapsed = (DateTimeOffset.UtcNow - _dieNowDetectedAt).TotalMilliseconds;
 
+            // Stop ALL outgoing actions
             Bot.Skills.Pause();
+            Bot.Combat.CancelAutoAttack();
 
+            // Wait for the safe window to fire skill 1
             if (elapsed >= 2400 && Bot.Skills.CanUseSkill(1))
             {
                 Bot.Skills.UseSkill(1);
+
                 _dieNowHandled = true;
                 _dieNow = false;
+
+                // Resume normal rotation
                 StartSkills();
                 Bot.Skills.Resume();
             }
             return;
         }
 
+        // Normal rotation
         Bot.Skills.Resume();
     }
+
 
     private void AbsolutionFlashListener(string name, object[] args)
     {
@@ -281,10 +290,15 @@ public class AnethyxosAbsolution
                 {
                     _dieNow = true;
                     _dieNowDetectedAt = DateTimeOffset.UtcNow;
+
+                    // STOP attacking immediately
                     Bot.Skills.Pause();
+                    Bot.Combat.CancelAutoAttack();
+
                     Core.Logger("Die now detected. Preparing defensive skill.");
                     return;
                 }
+
             }
         }
         catch
