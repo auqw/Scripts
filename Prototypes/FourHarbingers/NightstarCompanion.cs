@@ -168,7 +168,7 @@ public class NightstarCompanion
             case "Scroll of the Heretic":
                 FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
-                    AnethyxosAbsolution absolution = new() { DoAllMode = true, FarmQuantity = needed };
+                    AnethyxosAbsolution absolution = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
                     absolution.ScriptMain(Bot);
                 });
                 break;
@@ -176,7 +176,7 @@ public class NightstarCompanion
             case "Scroll of the Wanderer":
                 FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
-                    Halosis halosis = new() { DoAllMode = true, FarmQuantity = needed };
+                    Halosis halosis = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
                     halosis.ScriptMain(Bot);
                 });
                 break;
@@ -184,7 +184,7 @@ public class NightstarCompanion
             case "Scroll of the Innocent":
                 FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
-                    Mors mors = new() { DoAllMode = true, FarmQuantity = needed };
+                    Mors mors = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
                     mors.ScriptMain(Bot);
                 });
                 break;
@@ -192,7 +192,7 @@ public class NightstarCompanion
             case "Scroll of the Benevolent":
                 FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
-                    Fame fame = new() { DoAllMode = true, FarmQuantity = needed };
+                    Fame fame = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
                     fame.ScriptMain(Bot);
                 });
                 break;
@@ -200,7 +200,7 @@ public class NightstarCompanion
             case "Scroll of the Preacher":
                 FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
-                    Bello bello = new() { DoAllMode = true, FarmQuantity = needed };
+                    Bello bello = new() { DoAllMode = true, FarmQuantity = requiredQuantity };
                     bello.ScriptMain(Bot);
                 });
                 break;
