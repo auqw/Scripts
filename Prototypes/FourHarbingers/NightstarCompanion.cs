@@ -166,7 +166,7 @@ public class NightstarCompanion
         switch (requirement.Name)
         {
             case "Scroll of the Heretic":
-                FarmScroll(requirement.Name, needed, () =>
+                FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
                     AnethyxosAbsolution absolution = new() { DoAllMode = true, FarmQuantity = needed };
                     absolution.ScriptMain(Bot);
@@ -174,7 +174,7 @@ public class NightstarCompanion
                 break;
 
             case "Scroll of the Wanderer":
-                FarmScroll(requirement.Name, needed, () =>
+                FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
                     Halosis halosis = new() { DoAllMode = true, FarmQuantity = needed };
                     halosis.ScriptMain(Bot);
@@ -182,7 +182,7 @@ public class NightstarCompanion
                 break;
 
             case "Scroll of the Innocent":
-                FarmScroll(requirement.Name, needed, () =>
+                FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
                     Mors mors = new() { DoAllMode = true, FarmQuantity = needed };
                     mors.ScriptMain(Bot);
@@ -190,7 +190,7 @@ public class NightstarCompanion
                 break;
 
             case "Scroll of the Benevolent":
-                FarmScroll(requirement.Name, needed, () =>
+                FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
                     Fame fame = new() { DoAllMode = true, FarmQuantity = needed };
                     fame.ScriptMain(Bot);
@@ -198,7 +198,7 @@ public class NightstarCompanion
                 break;
 
             case "Scroll of the Preacher":
-                FarmScroll(requirement.Name, needed, () =>
+                FarmScroll(requirement.Name, requiredQuantity, () =>
                 {
                     Bello bello = new() { DoAllMode = true, FarmQuantity = needed };
                     bello.ScriptMain(Bot);
