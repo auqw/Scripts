@@ -5,17 +5,19 @@ tags: four harbingers, fourharbingers, anethyxos, anethyxos absolution, boss, fa
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
-using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Auras;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 public class AnethyxosAbsolution
 {
     public string OptionsStorage = "FourHarbingers_AnethyxosAbsolution";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -30,17 +32,19 @@ public class AnethyxosAbsolution
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
     private string? _resolvedClass;
+
     private bool _dieNow;
+    private bool _dieNowHandled;
     private DateTimeOffset _dieNowDetectedAt;
     private bool _lowHealthSkills;
-    private bool _dieNowHandled;
 
     public void ScriptMain(IScriptInterface bot)
     {
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         Bot.UltraBossHelper.DisableCounterAttack();
         Bot.Flash.FlashCall -= AbsolutionFlashListener;
         Bot.Flash.FlashCall += AbsolutionFlashListener;
@@ -52,7 +56,8 @@ public class AnethyxosAbsolution
         {
             Bot.Flash.FlashCall -= AbsolutionFlashListener;
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -76,7 +81,20 @@ public class AnethyxosAbsolution
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        Bot.Flash.FlashCall -= AbsolutionFlashListener;
+        Bot.Flash.FlashCall += AbsolutionFlashListener;
+
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Heretic") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -92,10 +110,16 @@ public class AnethyxosAbsolution
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Heretic");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10854);
+        if (Bot.Inventory.GetQuantity("Scroll of the Heretic") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Heretic");
+            Bot.Wait.ForPickup("Scroll of the Heretic");
+        }
         return true;
     }
 
@@ -116,8 +140,23 @@ public class AnethyxosAbsolution
                 if (!Bot.Player.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
                     if (Bot.Player.Alive)
                     {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+
+                        Core.Jump("r6", "Bottom");
+                        Bot.Wait.ForCellChange("r6");
+
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
+
                         _dieNow = false;
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _lowHealthSkills = false;
@@ -189,7 +228,6 @@ public class AnethyxosAbsolution
         if (Bot.Skills.OverrideProvider != null)
             Bot.Skills.SetProvider(Bot.Skills.OverrideProvider);
 
-        // Start the timer only once. Farming kills only replace the provider.
         if (!Bot.Skills.TimerRunning)
             Bot.Skills.Start();
     }
@@ -250,7 +288,6 @@ public class AnethyxosAbsolution
         {
             if (GetSelectedClass() == "King's Echo")
                 Bot.Combat.CancelAutoAttack();
-
             return true;
         }
 
@@ -262,13 +299,7 @@ public class AnethyxosAbsolution
 
         if (GetSelectedClass() == "King's Echo")
         {
-            if (!Bot.Skills.CanUseSkill(3))
-            {
-                Bot.Combat.CancelAutoAttack();
-                return true;
-            }
-
-            if (!Bot.Skills.UseSkill(3))
+            if (!Bot.Skills.CanUseSkill(3) || !Bot.Skills.UseSkill(3))
             {
                 Bot.Combat.CancelAutoAttack();
                 return true;
@@ -276,13 +307,8 @@ public class AnethyxosAbsolution
         }
         else
         {
-            if (!Bot.Skills.CanUseSkill(1))
+            if (!Bot.Skills.CanUseSkill(1) || !Bot.Skills.UseSkill(1))
                 return true;
-
-
-            if (!Bot.Skills.UseSkill(1))
-                return true;
-
         }
 
         _dieNow = false;
@@ -299,16 +325,14 @@ public class AnethyxosAbsolution
         try
         {
             List<Aura>? auras = JsonConvert.DeserializeObject<List<Aura>>(Bot.Target.GetMonsterAura(5));
-            if (auras == null)
-                return false;
-
-            return auras.Any(a => a.Name.Equals(auraName, StringComparison.OrdinalIgnoreCase));
+            return auras != null && auras.Any(a => a.Name.Equals(auraName, StringComparison.OrdinalIgnoreCase));
         }
         catch
         {
             return false;
         }
     }
+
 
     private void AbsolutionFlashListener(string name, object[] args)
     {
@@ -331,7 +355,6 @@ public class AnethyxosAbsolution
                 if (animation?.msg?.ToString() != "Die now.")
                     continue;
 
-                // Ignore duplicate/late Die now packets once this mechanic is active or handled.
                 if (_dieNow || _dieNowHandled)
                     return;
 
@@ -350,7 +373,7 @@ public class AnethyxosAbsolution
     private void AddDrops()
     {
         Bot.Drops.Add(
-            "Anethyx’o’s Absolution Orbs",
+            "Anethyx'o's Absolution Orbs",
             "Manticore of Infinity",
             "Scroll of the Heretic",
             "Scroll of the Quartet",
@@ -628,7 +651,6 @@ public class AnethyxosAbsolution
             Core.Logger("WARNING: Potions will only be used inside fourharbingers.");
             return;
         }
-
         UsePotion("Fate Tonic", "Fate");
         if (GetSelectedClass() == "King's Echo")
             UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
@@ -662,8 +684,14 @@ public class AnethyxosAbsolution
             int quantityBefore = Bot.Inventory.GetQuantity(itemName);
             Bot.Skills.UseSkill(5);
             Bot.Sleep(2000);
-            Bot.Wait.ForTrue(() => Bot.Self.HasActiveAura(auraName) || Bot.Inventory.GetQuantity(itemName) < quantityBefore, 20);
-            if (!Bot.Self.HasActiveAura(auraName) && Bot.Inventory.GetQuantity(itemName) >= quantityBefore)
+            Bot.Wait.ForTrue(() =>
+                Bot.Self.HasActiveAura(auraName)
+                || Bot.Inventory.GetQuantity(itemName) < quantityBefore,
+                20
+            );
+
+            if (!Bot.Self.HasActiveAura(auraName)
+                && Bot.Inventory.GetQuantity(itemName) >= quantityBefore)
                 WarnPotion(itemName, "its effect could not be verified");
         }
         catch (Exception ex)
@@ -677,6 +705,7 @@ public class AnethyxosAbsolution
     {
         if (!UsePotionsEnabled())
             return;
+
         if (Bot.Player.InCombat)
             return;
 
@@ -717,3 +746,4 @@ public class AnethyxosAbsolution
         Chaos_Avenger,
     }
 }
+

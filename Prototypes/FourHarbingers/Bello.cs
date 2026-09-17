@@ -14,6 +14,7 @@ public class Bello
     public string OptionsStorage = "FourHarbingers_Bello";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -34,7 +35,8 @@ public class Bello
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config?.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         try
         {
             Run();
@@ -43,7 +45,8 @@ public class Bello
         {
             StopSkills();
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -67,7 +70,17 @@ public class Bello
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Preacher") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -83,10 +96,18 @@ public class Bello
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Preacher");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10851);
+        if (Bot.Inventory.GetQuantity("Scroll of the Preacher") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Preacher");
+            Bot.Wait.ForPickup("Scroll of the Preacher");
+            if (Bot.Inventory.GetQuantity("Scroll of the Preacher") <= scrollsBefore)
+                return false;
+        }
         return true;
     }
 
@@ -107,6 +128,26 @@ public class Bello
                 if (!Bot.Player.Alive)
                 {
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    if (Bot.Player.Alive)
+                    {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+
+                        Core.Join("fourharbingers-100000", "r3", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r3", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
+                    }
                     continue;
                 }
 
@@ -144,7 +185,7 @@ public class Bello
     private void ArchPaladinMechanics()
     {
         var righteousSeal = Bot.Target.GetAura("Righteous Seal");
-        if (righteousSeal != null && righteousSeal.RemainingTime < 1 && Bot.Skills.CanUseSkill(4))
+        if (righteousSeal != null && righteousSeal.RemainingTime <= 1.5 && Bot.Skills.CanUseSkill(4))
             Bot.Skills.UseSkill(4);
     }
 
@@ -469,8 +510,13 @@ public class Bello
     {
         if (!UsePotionsEnabled())
             return;
+
         if (Bot.Player.InCombat)
-            return;
+        {
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
+                return;
+        }
 
         if (GetSelectedClass() == "ArchPaladin")
         {

@@ -14,6 +14,7 @@ public class Halosis
     public string OptionsStorage = "FourHarbingers_Halosis";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
+    public int FarmQuantity;
 
     public List<IOption> Options = new()
     {
@@ -39,7 +40,8 @@ public class Halosis
         if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config.Configure();
 
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         try
         {
             Run();
@@ -48,7 +50,8 @@ public class Halosis
         {
             StopSkills();
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
@@ -72,7 +75,17 @@ public class Halosis
         if (UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
+        if (FarmQuantity > 0)
+        {
+            while (!Bot.ShouldExit && Bot.Inventory.GetQuantity("Scroll of the Wanderer") < FarmQuantity)
+            {
+                if (!DoQuest())
+                    return;
+
+                RestockPotions();
+            }
+        }
+        else if (FarmBossEnabled())
         {
             while (!Bot.ShouldExit)
             {
@@ -88,10 +101,18 @@ public class Halosis
 
     private bool DoQuest()
     {
+        int scrollsBefore = Bot.Inventory.GetQuantity("Scroll of the Wanderer");
         if (!FightBoss())
             return false;
 
         Bot.Wait.ForQuestComplete(10850);
+        if (Bot.Inventory.GetQuantity("Scroll of the Wanderer") <= scrollsBefore)
+        {
+            Bot.Drops.Pickup("Scroll of the Wanderer");
+            Bot.Wait.ForPickup("Scroll of the Wanderer");
+            if (Bot.Inventory.GetQuantity("Scroll of the Wanderer") <= scrollsBefore)
+                return false;
+        }
         return true;
     }
 
@@ -117,6 +138,24 @@ public class Halosis
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                     if (Bot.Player.Alive)
                     {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        Bot.Combat.Exit();
+                        Bot.Wait.ForCombatExit();
+
+                        Core.Join("fourharbingers-100000", "r2", "Bottom");
+                        Bot.Wait.ForTrue(() =>
+                            Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                            && Bot.Player.Cell.Equals("r2", StringComparison.OrdinalIgnoreCase),
+                            20
+                        );
+
+                        if (UsePotionsEnabled())
+                        {
+                            RestockPotions();
+                            UsePotions();
+                        }
+
                         _dieNowDetected = false;
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _skillOneReserved = false;
@@ -197,26 +236,23 @@ public class Halosis
             return false;
         }
 
+        // ⭐ PATCHED DIE-NOW HANDLING ⭐
         if (_dieNowDetected && !_dieNowHandled)
         {
             double elapsedMilliseconds = (DateTimeOffset.UtcNow - _dieNowDetectedAt).TotalMilliseconds;
 
             Bot.Skills.Pause();
-            if (_autoAttackCancelled)
-            {
-                _autoAttackCancelled = false;
-                Bot.Combat.Attack(1);
-            }
+            Bot.Combat.CancelAutoAttack();
 
-            if (elapsedMilliseconds >= 2000 && Bot.Skills.CanUseSkill(1))
+            if (elapsedMilliseconds >= 2400 && Bot.Skills.CanUseSkill(1))
             {
-                if (!Bot.Skills.UseSkill(1))
-                    return false;
+                Bot.Skills.UseSkill(1);
 
                 _dieNowDetected = false;
                 _dieNowDetectedAt = DateTimeOffset.MinValue;
                 _skillOneReserved = false;
                 _dieNowHandled = true;
+
                 StartNormalSkills();
                 Bot.Skills.Resume();
             }
@@ -297,13 +333,14 @@ public class Halosis
                 string message = messageValue.ToString();
                 if (message == "Die now." || message == "Die now")
                 {
-                    if (_dieNowHandled || _dieNowDetected)
-                        return;
-
                     _dieNowDetected = true;
                     _dieNowDetectedAt = DateTimeOffset.UtcNow;
+
+                    // ⭐ PATCHED: STOP ATTACKING IMMEDIATELY ⭐
                     Bot.Skills.Pause();
-                    Core.Logger("Die now detected. Skill 1 will be used after 2 seconds.");
+                    Bot.Combat.CancelAutoAttack();
+
+                    Core.Logger("Die now detected. Preparing defensive skill.");
                     return;
                 }
             }
@@ -549,15 +586,6 @@ public class Halosis
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(requiredFaction))
-            {
-                if (!Bot.Reputation.HasRank(requiredFaction, requiredFactionRank))
-                {
-                    WarnPotion(itemName, $"{requiredFaction} rank {requiredFactionRank} is required");
-                    return;
-                }
-            }
-
             int requiredSlots = 0;
             if (!Bot.Inventory.Contains(itemName))
                 requiredSlots++;
@@ -680,8 +708,13 @@ public class Halosis
     {
         if (!UsePotionsEnabled())
             return;
+
         if (Bot.Player.InCombat)
-            return;
+        {
+            Bot.Sleep(500);
+            if (Bot.Player.InCombat)
+                return;
+        }
 
         if (GetSelectedClass() == "Dragon of Time")
         {
