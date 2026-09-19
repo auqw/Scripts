@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 452249,
-    "sha256": "6405a8a27235451c96ae68bbb06568fc7d1b5e47ab72857e5546037cc2fcda44",
+    "size": 452636,
+    "sha256": "98565ee7580fc8fa5438393d83ae2426d2ad22f0da895f7156c52d0bd814b74e",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -101,18 +101,6 @@
     "sha256": "c0bd8798728d2ecc0ddd15f15466fab807464783b6a654a90008897e6907e6bb",
     "fileName": "UltraSpeakerMergePreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/UltraSpeakerMergePreReqs.cs"
-  },
-  {
-    "name": "Four Harbingers LW (old, this script will not work) (it will be removed soon)",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Prototypes/FourHarbingersLW.cs",
-    "size": 731,
-    "sha256": "b5b23eb799b209d51775eba1dffcd086029c775b6c7d297168a54815abf7905e",
-    "fileName": "FourHarbingersLW.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingersLW.cs"
   },
   {
     "name": "Two Player PvP DoomArena",
@@ -5080,8 +5068,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/AnethyxosAbsolution.cs",
-    "size": 22889,
-    "sha256": "c0e44c4c7d49b7916e527c31bc5c8376204954277fd4d519358cb07c67cd12b1",
+    "size": 14073,
+    "sha256": "b4e0409af1bc7844af208c69e50e3e6886a6d67bf40c1c7a92cdf06120b81c4b",
     "fileName": "AnethyxosAbsolution.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/AnethyxosAbsolution.cs"
   },
@@ -5098,14 +5086,14 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Mors.cs",
-    "size": 18206,
-    "sha256": "b4e2e81db41a5b5197e2a23a1712246dc59f989d76ed44855c6f5728557e9899",
+    "size": 9636,
+    "sha256": "782d0b8b5e46b513367b69baa51124c07728c591e386574281d549ecc895e1fa",
     "fileName": "Mors.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Mors.cs"
   },
   {
     "name": "Fame",
-    "description": "Defeat Fame using Yami no Ronin or Verus DoomKnight",
+    "description": "null",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5116,14 +5104,14 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Fame.cs",
-    "size": 16309,
-    "sha256": "9ed321ef0529a0ba2e535729e478b1a74ed2232757509a2b6921b48c17bd9d50",
+    "size": 7630,
+    "sha256": "5910ab78ca1ec77adf6c3c356e0b4ab11b8ee5cdaf0099bb11736b84d986ee97",
     "fileName": "Fame.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Fame.cs"
   },
   {
     "name": "Halosis",
-    "description": "Defeat Halosis using Dragon of Time or Chaos Avenger",
+    "description": "null",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5134,14 +5122,14 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Halosis.cs",
-    "size": 23708,
-    "sha256": "ae38faaa3318c0695a656a3aa31c7201f153fade8c1dd805a8e9f4dfb8a6089b",
+    "size": 13705,
+    "sha256": "eca2542d5ad61ff2de41b921cba0ebc648daa78a944d6125fe622d66df785677",
     "fileName": "Halosis.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Halosis.cs"
   },
   {
     "name": "Bello",
-    "description": "Defeat Bello using ArchPaladin or Chaos Avenger",
+    "description": "null",
     "tags": [
       "four harbingers",
       "fourharbingers",
@@ -5152,19 +5140,20 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Bello.cs",
-    "size": 16237,
-    "sha256": "1bb817a3e1173fcbfd601674a9564764249fe298a7f3393e39c6f51e7731dc85",
+    "size": 7148,
+    "sha256": "16a92f011e1c5f5d99f154659802352ab5b6ecfd2862d31db662b761cfa11108",
     "fileName": "Bello.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Bello.cs"
   },
   {
     "name": "Do All Four Harbingers",
-    "description": "Completes the Four Harbingers story using the optimized boss setups.",
+    "description": "Completes the Four Harbingers story and optionally farms selected Four Harbingers Trove merge items.",
     "tags": [
       "four harbingers",
       "fourharbingers",
       "story",
       "quest",
+      "merge",
       "complete",
       "all",
       "halosis",
@@ -5175,8 +5164,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/0DoAllFourHarbingers.cs",
-    "size": 3362,
-    "sha256": "a4544bce8b5ffeb352f6514647622eacb93ad9d9d9d14a0e8e6506e74c437dac",
+    "size": 13885,
+    "sha256": "6d5c6f75b86215966bf54a01afa1862b8d0fb22414beb2586c4159fe49d79163",
     "fileName": "0DoAllFourHarbingers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/0DoAllFourHarbingers.cs"
   },
