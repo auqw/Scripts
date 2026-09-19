@@ -5,15 +5,15 @@ tags: four harbingers, fourharbingers, anethyxos, anethyxos absolution, boss, fa
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Prototypes/FourHarbingers/CoreFourHarbingers.cs
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Auras;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 
 public class AnethyxosAbsolution
 {
-    public string OptionsStorage = "FourHarbingers_AnethyxosAbsolution";
+    public string OptionsStorage = "FourHarbingers_AnethyxosAbsolution_v2";
     public bool DontPreconfigure = true;
     public bool DoAllMode;
 
@@ -22,25 +22,28 @@ public class AnethyxosAbsolution
         new Option<ClassChoice>("ClassChoice", "Use Class", "Class used to fight Anethyx'o's Absolution.", ClassChoice.Kings_Echo),
         new Option<bool>("UsePotions", "Use Potions", "Use potions during the fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the class enhancements before fighting.", true),
-        new Option<bool>("FarmAnethyxosAbsolution", "Farm Anethyx'o's Absolution?", "Farm Anethyx'o's Absolution repeatedly.", false),
+        new Option<int>("FarmQuantity", "Farm Anethyx'o's Absolution Amount of Times", "0 farms indefinitely. Any positive number farms that many quest completions.", 0),
         CoreBots.Instance.SkipOptions,
     };
 
     private IScriptInterface Bot = IScriptInterface.Instance;
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
+    private CoreFourHarbingers FH = new CoreFourHarbingers();
     private string? _resolvedClass;
     private bool _dieNow;
     private DateTimeOffset _dieNowDetectedAt;
     private bool _lowHealthSkills;
     private bool _dieNowHandled;
 
+    public CoreFourHarbingers.FarmMode FarmModeOverride = CoreFourHarbingers.FarmMode.Once;
+    public int FarmQuantityOverride = 1;
+    public string FarmItemOverride = "";
+
     public void ScriptMain(IScriptInterface bot)
     {
-        if (!Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
-            Bot.Config.Configure();
-
-        Core.SetOptions(disableClassSwap: true);
+        if (!DoAllMode)
+            Core.SetOptions(disableClassSwap: true);
         Bot.UltraBossHelper.DisableCounterAttack();
         Bot.Flash.FlashCall -= AbsolutionFlashListener;
         Bot.Flash.FlashCall += AbsolutionFlashListener;
@@ -52,51 +55,45 @@ public class AnethyxosAbsolution
         {
             Bot.Flash.FlashCall -= AbsolutionFlashListener;
             Core.CancelRegisteredQuests();
-            Core.SetOptions(false);
+            if (!DoAllMode)
+                Core.SetOptions(false);
         }
     }
 
     private void Run()
     {
         _resolvedClass = null;
-        AddDrops();
+        FH.AddDrops("Anethyx’o’s Absolution Orbs", "Manticore of Infinity", "Scroll of the Heretic", "Scroll of the Quartet", "Signet of the Broken Bond");
         Core.RegisterQuests(10854);
+        FH.ReturnToSafeRoom();
 
-        if (!EquipClass())
+        string selectedClass = GetSelectedClass();
+        string fallbackClass;
+        if (selectedClass == "King's Echo")
+            fallbackClass = "Chaos Avenger";
+        else
+            fallbackClass = "King's Echo";
+
+        if (!FH.EquipClass(selectedClass, fallbackClass, !DoAllMode, out string resolvedClass))
             return;
 
-        if (DoEnhancementsEnabled())
+        _resolvedClass = resolvedClass;
+
+        if (FH.DoEnhancementsEnabled())
             ApplyEnhancements();
 
-        if (UsePotionsEnabled())
+        if (FH.UsePotionsEnabled())
             GetPotions();
 
         Core.Join("fourharbingers-100000", "Enter", "Spawn");
 
-        if (UsePotionsEnabled())
+        if (FH.UsePotionsEnabled())
             UsePotions();
 
-        if (FarmBossEnabled())
-        {
-            while (!Bot.ShouldExit)
-            {
-                if (!DoQuest())
-                    return;
-
-                RestockPotions();
-            }
-        }
-        else
-            DoQuest();
-    }
-
-    private bool DoQuest()
-    {
-        if (!FightBoss())
-            return false;
-
-        Bot.Wait.ForQuestComplete(10854);
-        return true;
+        FH.RunQuests(10854, FightBoss, RestockPotions,
+            FH.GetFarmMode(DoAllMode, FarmModeOverride),
+            FH.GetFarmQuantity(DoAllMode, FarmQuantityOverride),
+            FH.GetFarmItem(DoAllMode, FarmItemOverride));
     }
 
     private bool FightBoss()
@@ -121,23 +118,15 @@ public class AnethyxosAbsolution
                         _dieNow = false;
                         _dieNowDetectedAt = DateTimeOffset.MinValue;
                         _lowHealthSkills = false;
+                        _dieNowHandled = false;
                         StartNormalSkills();
                         Bot.Skills.Resume();
                     }
                     continue;
                 }
 
-                if (!Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase))
-                {
-                    Core.Join("fourharbingers-100000", "r6", "Bottom");
+                if (!FH.EnsureBossRoom("r6", "Bottom"))
                     continue;
-                }
-
-                if (!Bot.Player.Cell.Equals("r6", StringComparison.OrdinalIgnoreCase))
-                {
-                    Core.Jump("r6", "Bottom");
-                    continue;
-                }
 
                 if (HandleDieNow())
                 {
@@ -157,7 +146,7 @@ public class AnethyxosAbsolution
                     Bot.Combat.Attack(5);
 
                 Bot.Skills.Resume();
-                RefreshThirdPotion();
+                FH.RefreshPotion("Felicitous Philtre");
                 Bot.Sleep(100);
             }
         }
@@ -200,7 +189,7 @@ public class AnethyxosAbsolution
             return;
 
         var boss = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == 5);
-        if (boss == null || boss.MaxHP <= 0 || boss.HP <= 0 || boss.HP > boss.MaxHP * 0.30)
+        if (boss == null || boss.MaxHP <= 0 || boss.HP <= 0 || boss.HP > boss.MaxHP * 0.25)
             return;
 
         _lowHealthSkills = true;
@@ -212,7 +201,7 @@ public class AnethyxosAbsolution
 
     private bool StopForAuras()
     {
-        if (!HasBossAura("Counter Attack") && !Bot.Self.HasActiveAura("Crits Inverted"))
+        if (!FH.HasMonsterAura(5, "Counter Attack") && !Bot.Self.HasActiveAura("Crits Inverted"))
             return false;
 
         Bot.Skills.Pause();
@@ -279,10 +268,8 @@ public class AnethyxosAbsolution
             if (!Bot.Skills.CanUseSkill(1))
                 return true;
 
-
             if (!Bot.Skills.UseSkill(1))
                 return true;
-
         }
 
         _dieNow = false;
@@ -292,22 +279,6 @@ public class AnethyxosAbsolution
         StartNormalSkills();
         Bot.Skills.Resume();
         return true;
-    }
-
-    private bool HasBossAura(string auraName)
-    {
-        try
-        {
-            List<Aura>? auras = JsonConvert.DeserializeObject<List<Aura>>(Bot.Target.GetMonsterAura(5));
-            if (auras == null)
-                return false;
-
-            return auras.Any(a => a.Name.Equals(auraName, StringComparison.OrdinalIgnoreCase));
-        }
-        catch
-        {
-            return false;
-        }
     }
 
     private void AbsolutionFlashListener(string name, object[] args)
@@ -347,35 +318,6 @@ public class AnethyxosAbsolution
         }
     }
 
-    private void AddDrops()
-    {
-        Bot.Drops.Add(
-            "Anethyx’o’s Absolution Orbs",
-            "Manticore of Infinity",
-            "Scroll of the Heretic",
-            "Scroll of the Quartet",
-            "Signet of the Broken Bond"
-        );
-    }
-
-    private bool UsePotionsEnabled()
-    {
-        return Bot.Config!.Get<bool>("UsePotions");
-    }
-
-    private bool DoEnhancementsEnabled()
-    {
-        return Bot.Config!.Get<bool>("DoEnhancements");
-    }
-
-    private bool FarmBossEnabled()
-    {
-        if (DoAllMode)
-            return false;
-
-        return Bot.Config!.Get<bool>("FarmAnethyxosAbsolution");
-    }
-
     private string GetSelectedClass()
     {
         if (!string.IsNullOrEmpty(_resolvedClass))
@@ -393,65 +335,6 @@ public class AnethyxosAbsolution
             return "King's Echo";
     }
 
-    private bool EquipClass()
-    {
-        string className = GetSelectedClass();
-
-        if (!Core.CheckInventory(className, toInv: false))
-        {
-            if (DoAllMode)
-            {
-                Core.Logger($"WARNING: {className} is required for this setup.");
-                return false;
-            }
-
-            string fallbackClass = className == "King's Echo" ? "Chaos Avenger" : "King's Echo";
-            if (!Core.CheckInventory(fallbackClass, toInv: false))
-            {
-                Core.Logger(
-                    $"WARNING: You do not own {className} or {fallbackClass}. The script will stop.",
-                    messageBox: true
-                );
-                return false;
-            }
-
-            Core.Logger(
-                $"WARNING: {className} was selected, but you do not own it. Falling back to {fallbackClass}.",
-                messageBox: true
-            );
-            className = fallbackClass;
-        }
-
-        _resolvedClass = className;
-
-        if (!Bot.Inventory.Contains(className))
-        {
-            if (Bot.Inventory.FreeSlots <= 0)
-            {
-                Core.Logger($"WARNING: {className} is in the bank, but no free inventory slot is available.");
-                return false;
-            }
-
-            Bot.Bank.EnsureToInventory(className);
-            Bot.Wait.ForTrue(() => Bot.Inventory.Contains(className), 20);
-            if (!Bot.Inventory.Contains(className))
-            {
-                Core.Logger($"WARNING: {className} could not be moved from the bank.");
-                return false;
-            }
-        }
-
-        Core.Equip(className);
-        Bot.Wait.ForItemEquip(className);
-        if (!Bot.Inventory.IsEquipped(className))
-        {
-            Core.Logger($"WARNING: {className} could not be equipped.");
-            return false;
-        }
-
-        return true;
-    }
-
     private void ApplyEnhancements()
     {
         WeaponSpecial weaponEnhancement;
@@ -464,14 +347,14 @@ public class AnethyxosAbsolution
                 weaponEnhancement = WeaponSpecial.Elysium;
             else
             {
-                WarnEnhancementFallback("Elysium is not unlocked. Health Vamp will be used instead.");
+                FH.WarnEnhancementFallback("Elysium is not unlocked. Health Vamp will be used instead.");
                 weaponEnhancement = WeaponSpecial.Health_Vamp;
             }
 
             if (Adv.uExamen())
                 helmEnhancement = HelmSpecial.Examen;
             else
-                WarnEnhancementFallback("Examen is not unlocked. Lucky will be used on the helm instead.");
+                FH.WarnEnhancementFallback("Examen is not unlocked. Lucky will be used on the helm instead.");
         }
         else
         {
@@ -479,236 +362,59 @@ public class AnethyxosAbsolution
                 weaponEnhancement = WeaponSpecial.Praxis;
             else
             {
-                WarnEnhancementFallback("Praxis is not unlocked. Health Vamp will be used instead.");
+                FH.WarnEnhancementFallback("Praxis is not unlocked. Health Vamp will be used instead.");
                 weaponEnhancement = WeaponSpecial.Health_Vamp;
             }
 
             if (Adv.uAnima())
                 helmEnhancement = HelmSpecial.Anima;
             else
-                WarnEnhancementFallback("Anima is not unlocked. Lucky will be used on the helm instead.");
+                FH.WarnEnhancementFallback("Anima is not unlocked. Lucky will be used on the helm instead.");
         }
 
         if (Adv.uPenitence())
             capeEnhancement = CapeSpecial.Penitence;
         else
-            WarnEnhancementFallback("Penitence is not unlocked. Lucky will be used on the cape instead.");
+            FH.WarnEnhancementFallback("Penitence is not unlocked. Lucky will be used on the cape instead.");
 
         if (weaponEnhancement == WeaponSpecial.Health_Vamp)
         {
             if (!Adv.uAwe())
-                WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
+                FH.WarnEnhancementFallback("Awe enhancements are not unlocked. Enhancement setup will continue.");
         }
 
         Adv.EnhanceEquipped(EnhancementType.Lucky, capeEnhancement, helmEnhancement, weaponEnhancement, true);
     }
 
-    private void WarnEnhancementFallback(string message)
-    {
-        Core.Logger($"WARNING: {message} The script may fail.", messageBox: true);
-    }
-
     private void GetPotions()
     {
-        GetPotion("Fate Tonic", "Gold Voucher 500k", 4, 500000, 10, 8, "", 0);
+        FH.GetPotion("Fate Tonic", "Gold Voucher 500k", 4, 500000, 10, 8);
         if (GetSelectedClass() == "King's Echo")
-            GetPotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500000, 20, 0, "", 0);
+            FH.GetPotion("Potent Revitalize Elixir", "Gold Voucher 500k", 8, 500000, 20);
         else
-            GetPotion("Potent Battle Elixir", "Gold Voucher 500k", 4, 500000, 20, 0, "", 0);
-        GetPotion("Felicitous Philtre", "Gold Voucher 100k", 8, 100000, 100, 0, "", 0);
-    }
-
-    private void GetPotion(string itemName, string voucherName, int voucherQuantity, int voucherCost,
-        int targetQuantity, int requiredAlchemyRank, string requiredFaction, int requiredFactionRank)
-    {
-        try
-        {
-            if (Bot.Inventory.GetQuantity(itemName) > 1)
-                return;
-
-            if (Bot.Bank.Contains(itemName))
-            {
-                if (!Bot.Inventory.Contains(itemName))
-                {
-                    if (Bot.Inventory.FreeSlots <= 0)
-                    {
-                        WarnPotion(itemName, "no free inventory slot is available");
-                        return;
-                    }
-                }
-
-                Bot.Bank.EnsureToInventory(itemName);
-                Bot.Wait.ForTrue(() => Bot.Inventory.Contains(itemName), 20);
-                if (Bot.Inventory.GetQuantity(itemName) > 1)
-                    return;
-            }
-
-            if (requiredAlchemyRank > 0)
-            {
-                if (!Bot.Reputation.HasRank("Alchemy", requiredAlchemyRank))
-                {
-                    WarnPotion(itemName, $"Alchemy rank {requiredAlchemyRank} is required");
-                    return;
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(requiredFaction))
-            {
-                if (!Bot.Reputation.HasRank(requiredFaction, requiredFactionRank))
-                {
-                    WarnPotion(itemName, $"{requiredFaction} rank {requiredFactionRank} is required");
-                    return;
-                }
-            }
-
-            int requiredSlots = 0;
-            if (!Bot.Inventory.Contains(itemName))
-                requiredSlots++;
-            if (!Bot.Inventory.Contains(voucherName))
-                requiredSlots++;
-            if (Bot.Inventory.FreeSlots < requiredSlots)
-            {
-                WarnPotion(itemName, $"{requiredSlots} free inventory slots are required");
-                return;
-            }
-
-            if (Bot.Bank.Contains(voucherName))
-            {
-                Bot.Bank.EnsureToInventory(voucherName);
-                Bot.Wait.ForTrue(() => Bot.Inventory.Contains(voucherName), 20);
-            }
-
-            int missingVouchers = voucherQuantity - Bot.Inventory.GetQuantity(voucherName);
-            if (missingVouchers < 0)
-                missingVouchers = 0;
-
-            int requiredGold = missingVouchers * voucherCost;
-            if (Bot.Player.Gold < requiredGold)
-            {
-                WarnPotion(itemName, $"{requiredGold} gold is required");
-                return;
-            }
-
-            Core.Join("alchemyacademy");
-            Bot.Shops.Load(2036);
-            if (!Bot.Shops.IsLoaded || Bot.Shops.ID != 2036)
-            {
-                WarnPotion(itemName, "the potion shop could not be loaded");
-                return;
-            }
-
-            if (missingVouchers > 0)
-            {
-                Core.BuyItem("alchemyacademy", 2036, voucherName, voucherQuantity);
-                Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(voucherName) >= voucherQuantity, 20);
-            }
-
-            if (Bot.Inventory.GetQuantity(voucherName) < voucherQuantity)
-            {
-                WarnPotion(itemName, "the required vouchers could not be purchased");
-                return;
-            }
-
-            Core.BuyItem("alchemyacademy", 2036, itemName, targetQuantity);
-            Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(itemName) >= targetQuantity, 20);
-            if (Bot.Inventory.GetQuantity(itemName) < targetQuantity)
-                WarnPotion(itemName, "it could not be purchased");
-        }
-        catch (Exception ex)
-        {
-            Bot.Log($"Potion preparation failed for {itemName}: {ex}");
-            WarnPotion(itemName, "preparation failed");
-        }
+            FH.GetPotion("Potent Battle Elixir", "Gold Voucher 500k", 4, 500000, 20);
+        FH.GetPotion("Felicitous Philtre", "Gold Voucher 100k", 8, 100000, 100);
     }
 
     private void UsePotions()
     {
-        if (!Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase))
-        {
-            Core.Logger("WARNING: Potions will only be used inside fourharbingers.");
-            return;
-        }
-
-        UsePotion("Fate Tonic", "Fate");
+        FH.UsePotion("Fate Tonic", "Fate");
         if (GetSelectedClass() == "King's Echo")
-            UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
+            FH.UsePotion("Potent Revitalize Elixir", "Potent Revitalize Elixir");
         else
-            UsePotion("Potent Battle Elixir", "Potent Battle Elixir");
-        UsePotion("Felicitous Philtre", "Felicitous Philtre");
-    }
-
-    private void UsePotion(string itemName, string auraName)
-    {
-        try
-        {
-            if (!Bot.Inventory.Contains(itemName))
-            {
-                WarnPotion(itemName, "it is not in the inventory");
-                return;
-            }
-
-            Bot.Inventory.EquipUsableItem(itemName);
-            Bot.Wait.ForItemEquip(itemName);
-            Bot.Sleep(2000);
-            if (!Bot.Inventory.IsEquipped(itemName))
-            {
-                WarnPotion(itemName, "it could not be equipped");
-                return;
-            }
-
-            if (Bot.Self.HasActiveAura(auraName))
-                return;
-
-            int quantityBefore = Bot.Inventory.GetQuantity(itemName);
-            Bot.Skills.UseSkill(5);
-            Bot.Sleep(2000);
-            Bot.Wait.ForTrue(() => Bot.Self.HasActiveAura(auraName) || Bot.Inventory.GetQuantity(itemName) < quantityBefore, 20);
-            if (!Bot.Self.HasActiveAura(auraName) && Bot.Inventory.GetQuantity(itemName) >= quantityBefore)
-                WarnPotion(itemName, "its effect could not be verified");
-        }
-        catch (Exception ex)
-        {
-            Bot.Log($"Potion use failed for {itemName}: {ex}");
-            WarnPotion(itemName, "use failed");
-        }
+            FH.UsePotion("Potent Battle Elixir", "Potent Battle Elixir");
+        FH.UsePotion("Felicitous Philtre", "Felicitous Philtre");
     }
 
     private void RestockPotions()
     {
-        if (!UsePotionsEnabled())
-            return;
-        if (Bot.Player.InCombat)
+        if (!FH.UsePotionsEnabled())
             return;
 
         if (GetSelectedClass() == "King's Echo")
-        {
-            if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
-                && Bot.Inventory.GetQuantity("Potent Revitalize Elixir") > 1
-                && Bot.Inventory.GetQuantity("Felicitous Philtre") > 1)
-                return;
-        }
+            FH.RestockPotions(new[] { "Fate Tonic", "Potent Revitalize Elixir", "Felicitous Philtre" }, GetPotions, UsePotions);
         else
-        {
-            if (Bot.Inventory.GetQuantity("Fate Tonic") > 1
-                && Bot.Inventory.GetQuantity("Potent Battle Elixir") > 1
-                && Bot.Inventory.GetQuantity("Felicitous Philtre") > 1)
-                return;
-        }
-
-        GetPotions();
-        Core.Join("fourharbingers-100000", "Enter", "Spawn");
-        UsePotions();
-    }
-
-    private void RefreshThirdPotion()
-    {
-        if (Bot.Player.InCombat && !Bot.Self.HasActiveAura("Felicitous Philtre") && Bot.Skills.CanUseSkill(5))
-            Bot.Skills.UseSkill(5);
-    }
-
-    private void WarnPotion(string itemName, string reason)
-    {
-        Core.Logger($"WARNING: {itemName} was skipped because {reason}. Continuing without it.");
+            FH.RestockPotions(new[] { "Fate Tonic", "Potent Battle Elixir", "Felicitous Philtre" }, GetPotions, UsePotions);
     }
 
     private enum ClassChoice

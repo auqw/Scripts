@@ -6793,11 +6793,20 @@ public class CoreBots
         )
             return;
 
-        if (CheckInventory("Dragon of Time"))
+        bool RankFiveOrHigher(string className) =>
+            Bot.Inventory.Items
+                .Concat(Bot.Bank.Items)
+                .Any(classItem =>
+                    classItem.Name.Equals(className, StringComparison.OrdinalIgnoreCase)
+                    && classItem.Category == ItemCategory.Class
+                    && classItem.Quantity >= 22500
+                );
+
+        if (RankFiveOrHigher("Dragon of Time"))
             Bot.Skills.StartAdvanced("Dragon of Time", true, ClassUseMode.Solo);
-        else if (CheckInventory("Healer (Rare)"))
+        else if (RankFiveOrHigher("Healer (Rare)"))
             Bot.Skills.StartAdvanced("Healer (Rare)", true, ClassUseMode.Base);
-        else if (CheckInventory("Healer"))
+        else if (RankFiveOrHigher("Healer"))
             Bot.Skills.StartAdvanced("Healer", true, ClassUseMode.Base);
 
         JumpWait();
