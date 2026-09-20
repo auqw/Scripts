@@ -5,8 +5,6 @@ tags: deadlyseas, story, quests, deadlyseas
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
-//cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 
 public class Deadlyseas
