@@ -5055,6 +5055,38 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/DeadLinesMerge.cs"
   },
   {
+    "name": "Deadly Seas Loot Merge",
+    "description": "Farms the Deadly Seas Loot Merge [2767] in /deadlyseas.",
+    "tags": [
+      "deadlyseas",
+      "merge",
+      "deadly",
+      "seas",
+      "loot",
+      "merge"
+    ],
+    "path": "Prototypes/DeadlySeas/DeadlySeasLoot.cs",
+    "size": 4923,
+    "sha256": "d2cb09135bba26c2ecff3e8f2d5b568ae836444a3bafc843979e88e55f24c54c",
+    "fileName": "DeadlySeasLoot.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/DeadlySeas/DeadlySeasLoot.cs"
+  },
+  {
+    "name": "Deadlyseas",
+    "description": "Completes the quest chain in /deadlyseas.",
+    "tags": [
+      "deadlyseas",
+      "story",
+      "quests",
+      "deadlyseas"
+    ],
+    "path": "Prototypes/DeadlySeas/Deadlyseas.cs",
+    "size": 2776,
+    "sha256": "a5b3ae63278ca1ca7a81339ff8b58ece9525025e9a6334d984918e1925ff1993",
+    "fileName": "Deadlyseas.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/DeadlySeas/Deadlyseas.cs"
+  },
+  {
     "name": "Anethyx'o's Absolution",
     "description": "Defeat Anethyx'o's Absolution using King's Echo or Chaos Avenger",
     "tags": [
