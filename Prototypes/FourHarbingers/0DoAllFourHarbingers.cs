@@ -50,7 +50,7 @@ public class DoAllFourHarbingers
     public List<IOption> Options = new()
     {
         new Option<ClassChoice>("ClassChoice", "Choose Class", "Optimized uses:\n\nHalosis - Dragon of Time\nBello - ArchPaladin\nFame - Yami no Ronin\nMors - Legion Revenant\nAnethyxos - King's Echo\n\nMore class options are available in the individual boss scripts.", ClassChoice.Optimized),
-        new Option<GoalChoice>("Goal", "Goal", "Complete the story only, merge Nightstar Companion,\nmerge every shop item, or merge selected items from\nthe MergeItems panel.", GoalChoice.Complete_Story_Only),
+        new Option<GoalChoice>("Goal", "Goal", "Available goals:\n\nComplete Story Only - Completes the Four Harbingers story.\nNightstar Companion - Farms and merges Nightstar Companion.\nAll Merge Items - Farms and merges every shop item.\nEach Individual Merge Item - Uses the MergeItems panel.", GoalChoice.Complete_Story_Only),
         new Option<bool>("UsePotions", "Use Potions", "Use the optimized potions during each fight.", true),
         new Option<bool>("DoEnhancements", "Do Enhancements", "Apply the optimized enhancements before each fight.", true),
         CoreBots.Instance.SkipOptions,
