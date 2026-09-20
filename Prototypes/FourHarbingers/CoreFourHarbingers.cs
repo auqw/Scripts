@@ -1,3 +1,9 @@
+/*
+name: CoreFourHarbingers
+description: null
+tags: null
+*/
+
 //cs_include Scripts/CoreBots.cs
 using Newtonsoft.Json;
 using Skua.Core.Interfaces;
