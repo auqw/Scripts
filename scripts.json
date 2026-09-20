@@ -5110,6 +5110,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Fame.cs"
   },
   {
+    "name": "CoreFourHarbingers",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Prototypes/FourHarbingers/CoreFourHarbingers.cs",
+    "size": 23433,
+    "sha256": "174ba64e9731437715ab47a8326280bfa6bc6077284134595f33c2011612b511",
+    "fileName": "CoreFourHarbingers.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/CoreFourHarbingers.cs"
+  },
+  {
     "name": "Halosis",
     "description": "null",
     "tags": [
