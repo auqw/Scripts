@@ -5,6 +5,8 @@ tags: deadlyseas, story, quests, deadlyseas
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
+//cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 
 public class Deadlyseas
@@ -62,13 +64,16 @@ public class Deadlyseas
         Story.KillQuest(10861, "deadlyseas", UseableMonsters[0]); // Eel Skin x12
 
         // 10862 | Manatees and Mermaids
-        Core.EnsureAccept(10862);
-        Core.Join("deadlyseas");
-        Core.Jump("r6", "Left");
-        Bot.Wait.ForCellChange("r6");
-        Core.Sleep();
-        Story.MapItemQuest(10862, "deadlyseas", 16193, GetReward: false);
-        Core.EnsureComplete(10862);
+        if (!Story.QuestProgression(10862))
+        {
+            Core.EnsureAccept(10862);
+            Core.Join("deadlyseas");
+            Bot.Map.Jump("r6", "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange("r6");
+            Core.Sleep();
+            Core.GetMapItem(16193, 1, "deadlyseas");
+            Core.EnsureComplete(10862);
+        }
 
         // 10863 | R-eel-ed In
         Story.KillQuest(10863, "deadlyseas", UseableMonsters[0]); // Jagged Teeth x50
