@@ -105,7 +105,7 @@ public class Bello
                 if (GetSelectedClass() == "ArchPaladin")
                     ArchPaladinMechanics();
 
-                FH.RefreshPotion("Felicitous Philtre");
+                FH.RefreshPotion("Felicitous Philtre", "Felicitous Philtre");
                 Bot.Sleep(100);
             }
         }

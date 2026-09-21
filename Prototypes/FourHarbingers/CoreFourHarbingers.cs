@@ -613,9 +613,12 @@ public class CoreFourHarbingers
         }
     }
 
-    public void RefreshPotion(string auraName)
+    public void RefreshPotion(string itemName, string auraName)
     {
-        if (Bot.Player.InCombat && !Bot.Self.HasActiveAura(auraName) && Bot.Skills.CanUseSkill(5))
+        if (Bot.Player.InCombat
+            && Bot.Inventory.IsEquipped(itemName)
+            && !Bot.Self.HasActiveAura(auraName)
+            && Bot.Skills.CanUseSkill(5))
             Bot.Skills.UseSkill(5);
     }
 

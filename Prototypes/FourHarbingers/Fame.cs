@@ -82,6 +82,7 @@ public class Fame
     private bool FightBoss()
     {
         FH.StopSkills();
+        bool signetObtained = false;
 
         try
         {
@@ -102,8 +103,16 @@ public class Fame
                     Bot.Combat.Attack(3);
 
                 UseSkills();
-                FH.RefreshPotion("Felicitous Philtre");
+                FH.RefreshPotion("Felicitous Philtre", "Felicitous Philtre");
                 Bot.Sleep(100);
+            }
+
+            signetObtained = Bot.TempInv.Contains("Signet of the Filled Chalice");
+            Bot.Combat.CancelAutoAttack();
+            if (signetObtained && !Bot.ShouldExit && Bot.Self.HasActiveAura("Starvation"))
+            {
+                Core.Logger("Waiting for Starvation to expire before fighting Fame again.");
+                Bot.Wait.ForTrue(() => !Bot.Self.HasActiveAura("Starvation"), 20);
             }
         }
         finally
@@ -111,7 +120,7 @@ public class Fame
             Bot.Combat.CancelAutoAttack();
         }
 
-        return Bot.TempInv.Contains("Signet of the Filled Chalice");
+        return signetObtained;
     }
 
     private void UseSkills()

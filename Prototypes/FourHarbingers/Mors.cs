@@ -28,6 +28,9 @@ public class Mors
     private CoreBots Core = CoreBots.Instance;
     private CoreAdvanced Adv = new CoreAdvanced();
     private CoreFourHarbingers FH = new CoreFourHarbingers();
+    private bool _counterCastDetected;
+    private DateTimeOffset _counterCastDetectedAt = DateTimeOffset.MinValue;
+    private bool _counterStopLogged;
     private bool _counterAttackActive;
 
     public CoreFourHarbingers.FarmMode FarmModeOverride = CoreFourHarbingers.FarmMode.Once;
@@ -84,8 +87,13 @@ public class Mors
 
     private bool FightBoss()
     {
+        _counterCastDetected = false;
+        _counterCastDetectedAt = DateTimeOffset.MinValue;
+        _counterStopLogged = false;
         _counterAttackActive = false;
         FH.StopSkills();
+        Bot.Flash.FlashCall -= MorsFlashListener;
+        Bot.Flash.FlashCall += MorsFlashListener;
 
         try
         {
@@ -102,6 +110,9 @@ public class Mors
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                     if (Bot.Player.Alive)
                     {
+                        _counterCastDetected = false;
+                        _counterCastDetectedAt = DateTimeOffset.MinValue;
+                        _counterStopLogged = false;
                         _counterAttackActive = false;
                         if (GetSelectedClass() == "King's Echo")
                             Bot.Skills.StartAdvanced("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
@@ -125,17 +136,21 @@ public class Mors
                     Bot.Combat.Attack(4);
 
                 if (GetSelectedClass() == "Legion Revenant")
-                    FH.RefreshPotion("Potent Honor Malice");
+                    FH.RefreshPotion("Potent Honor Potion", "Potent Honor Malice");
                 else
-                    FH.RefreshPotion("Felicitous Philtre");
+                    FH.RefreshPotion("Felicitous Philtre", "Felicitous Philtre");
 
                 Bot.Sleep(100);
             }
         }
         finally
         {
+            Bot.Flash.FlashCall -= MorsFlashListener;
             Bot.Combat.CancelAutoAttack();
             Bot.Skills.Resume();
+            _counterCastDetected = false;
+            _counterCastDetectedAt = DateTimeOffset.MinValue;
+            _counterStopLogged = false;
             _counterAttackActive = false;
         }
 
@@ -146,12 +161,42 @@ public class Mors
     {
         if (FH.HasMonsterAura(4, "Counter Attack"))
         {
+            _counterCastDetected = false;
+            _counterCastDetectedAt = DateTimeOffset.MinValue;
             _counterAttackActive = true;
             Bot.Skills.Pause();
             Bot.Combat.CancelAutoAttack();
+            if (!_counterStopLogged)
+            {
+                _counterStopLogged = true;
+                Core.Logger("Counter Cast: attacks stopped.");
+            }
             if (GetSelectedClass() == "King's Echo")
                 Bot.Combat.CancelTarget();
             return false;
+        }
+
+        if (_counterCastDetected)
+        {
+            double elapsedMilliseconds = (DateTimeOffset.UtcNow - _counterCastDetectedAt).TotalMilliseconds;
+            if (elapsedMilliseconds < 1000)
+                return true;
+
+            if (elapsedMilliseconds < 4000)
+            {
+                Bot.Skills.Pause();
+                Bot.Combat.CancelAutoAttack();
+                if (!_counterStopLogged)
+                {
+                    _counterStopLogged = true;
+                    Core.Logger("Counter Cast: attacks stopped.");
+                }
+                return false;
+            }
+
+            _counterCastDetected = false;
+            _counterCastDetectedAt = DateTimeOffset.MinValue;
+            _counterStopLogged = false;
         }
 
         if (_counterAttackActive)
@@ -160,9 +205,37 @@ public class Mors
             if (GetSelectedClass() == "King's Echo")
                 Bot.Skills.StartAdvanced("3 | 1 | 2 | 1 | 2 | 3 | 1 | 2 | 1 | 2 | 4", 250, SkillUseMode.WaitForCooldown);
             Bot.Skills.Resume();
+            Core.Logger("Counter Attack ended. Attacks resumed.");
         }
 
         return true;
+    }
+
+    private void MorsFlashListener(string name, object[] args)
+    {
+        try
+        {
+            if (Bot.ShouldExit
+                || !Bot.Map.Name.Equals("fourharbingers", StringComparison.OrdinalIgnoreCase)
+                || (!name.Equals("packetFromServer", StringComparison.OrdinalIgnoreCase)
+                    && !name.Equals("pext", StringComparison.OrdinalIgnoreCase))
+                || args.Length == 0)
+                return;
+
+            string rawPacket = args[0]?.ToString() ?? string.Empty;
+            if (rawPacket.IndexOf("Mors prepares a counter attack", StringComparison.OrdinalIgnoreCase) < 0)
+                return;
+            if (_counterCastDetected || _counterAttackActive)
+                return;
+
+            _counterCastDetected = true;
+            _counterCastDetectedAt = DateTimeOffset.UtcNow;
+            _counterStopLogged = false;
+            Core.Logger("Counter Cast detected. Attacks will stop in 1 second.");
+        }
+        catch
+        {
+        }
     }
 
     private string GetSelectedClass()
