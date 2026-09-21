@@ -5142,14 +5142,14 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Fame.cs"
   },
   {
-    "name": "CoreFourHarbingers",
+    "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Prototypes/FourHarbingers/CoreFourHarbingers.cs",
-    "size": 23433,
-    "sha256": "174ba64e9731437715ab47a8326280bfa6bc6077284134595f33c2011612b511",
+    "size": 23419,
+    "sha256": "9993c1c2206137599d3b22c9f9af3327821e2f4dc395f87560fa044b39c82116",
     "fileName": "CoreFourHarbingers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/CoreFourHarbingers.cs"
   },
@@ -5208,8 +5208,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/0DoAllFourHarbingers.cs",
-    "size": 13885,
-    "sha256": "6d5c6f75b86215966bf54a01afa1862b8d0fb22414beb2586c4159fe49d79163",
+    "size": 14007,
+    "sha256": "8eae00990cd448bb8970338858e67b2cc679f52858e70a7c147f4384ef9a14e0",
     "fileName": "0DoAllFourHarbingers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/0DoAllFourHarbingers.cs"
   },
