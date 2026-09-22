@@ -103,8 +103,23 @@ public class MergeTemplateHelperV2
             throw new InvalidOperationException($"No merge shops were found in /{map}.");
 
         Core.Logger($"Generated {outputs.Count} merge template(s):\n{string.Join("\n", outputs)}");
-        string outputDirectory = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Other", "MergeShops");
-        Process.Start(new ProcessStartInfo("explorer.exe", outputDirectory) { UseShellExecute = true });
+
+        if (outputs.Count == 1 && File.Exists(outputs[0]))
+        {
+            Process.Start(new ProcessStartInfo("explorer.exe", $"/select,\"{outputs[0]}\"")
+            {
+                UseShellExecute = true
+            });
+        }
+        else
+        {
+            string outputDirectory = Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP");
+
+            Process.Start(new ProcessStartInfo("explorer.exe", outputDirectory)
+            {
+                UseShellExecute = true
+            });
+        }
     }
 
     private string? GenerateShop(
@@ -269,6 +284,7 @@ public class MergeTemplateHelperV2
         {
             Core.Logger($"Capturing quest {questID} from its getQuests packet.");
             result.Add(new QuestPacketCollector().Load(questID));
+            Core.Sleep();
         }
         return result;
     }
@@ -288,7 +304,7 @@ public class MergeTemplateHelperV2
             return new GeneratedCase(
                 ingredient.Name,
                 $@"                    Core.EquipClass(ClassType.{MonsterClass(monster)});
-                    Core.HuntMonster("", {context.Map}"", ""{Escape(monster.MonsterName)}"", req.Name, quant, req.Temp);
+                    Core.HuntMonster(""{context.Map}"", ""{Escape(monster.MonsterName)}"", req.Name, quant, req.Temp);
                     break;",
                 FromCaseStorage: false
             );
