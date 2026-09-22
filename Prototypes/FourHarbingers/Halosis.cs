@@ -128,10 +128,10 @@ public class Halosis
                 if (GetSelectedClass() == "Chaos Avenger")
                 {
                     if (ChaosAvengerMechanics())
-                        FH.RefreshPotion("Felicitous Philtre");
+                        FH.RefreshPotion("Felicitous Philtre", "Felicitous Philtre");
                 }
                 else
-                    FH.RefreshPotion("Potent Honor Malice");
+                    FH.RefreshPotion("Potent Honor Potion", "Potent Honor Malice");
 
                 Bot.Sleep(100);
             }

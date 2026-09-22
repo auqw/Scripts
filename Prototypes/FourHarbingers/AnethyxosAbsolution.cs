@@ -146,7 +146,7 @@ public class AnethyxosAbsolution
                     Bot.Combat.Attack(5);
 
                 Bot.Skills.Resume();
-                FH.RefreshPotion("Felicitous Philtre");
+                FH.RefreshPotion("Felicitous Philtre", "Felicitous Philtre");
                 Bot.Sleep(100);
             }
         }

@@ -5100,8 +5100,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/AnethyxosAbsolution.cs",
-    "size": 14073,
-    "sha256": "b4e0409af1bc7844af208c69e50e3e6886a6d67bf40c1c7a92cdf06120b81c4b",
+    "size": 14095,
+    "sha256": "6ff2271e74be79a71c1e3fda75ed331490a66e6bd5c8efaf42f1d219fc057f99",
     "fileName": "AnethyxosAbsolution.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/AnethyxosAbsolution.cs"
   },
@@ -5118,8 +5118,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Mors.cs",
-    "size": 9636,
-    "sha256": "782d0b8b5e46b513367b69baa51124c07728c591e386574281d549ecc895e1fa",
+    "size": 12555,
+    "sha256": "522dc91a3b231f3946ab8f5f040c8331d1788958373fd7c53ced446c2309b45f",
     "fileName": "Mors.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Mors.cs"
   },
@@ -5136,20 +5136,20 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Fame.cs",
-    "size": 7630,
-    "sha256": "5910ab78ca1ec77adf6c3c356e0b4ab11b8ee5cdaf0099bb11736b84d986ee97",
+    "size": 8073,
+    "sha256": "470fb69ebeae263f7c207afef550b5106e68db402ad0800a64df66b73af612d3",
     "fileName": "Fame.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Fame.cs"
   },
   {
-    "name": "CoreFourHarbingers",
+    "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Prototypes/FourHarbingers/CoreFourHarbingers.cs",
-    "size": 23433,
-    "sha256": "174ba64e9731437715ab47a8326280bfa6bc6077284134595f33c2011612b511",
+    "size": 23510,
+    "sha256": "72bd07fd20d1e822b22b0e58994012d33674da1f588c616dd238a024867c9307",
     "fileName": "CoreFourHarbingers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/CoreFourHarbingers.cs"
   },
@@ -5166,8 +5166,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Halosis.cs",
-    "size": 13705,
-    "sha256": "eca2542d5ad61ff2de41b921cba0ebc648daa78a944d6125fe622d66df785677",
+    "size": 13750,
+    "sha256": "282c60676ecec7f0dbd39809f9f4bc1792720a606e4007aa953ec371b80e458e",
     "fileName": "Halosis.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Halosis.cs"
   },
@@ -5184,8 +5184,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/Bello.cs",
-    "size": 7148,
-    "sha256": "16a92f011e1c5f5d99f154659802352ab5b6ecfd2862d31db662b761cfa11108",
+    "size": 7170,
+    "sha256": "b19c56a4571e84be37896f7e022812a83d6e52cf956aadc9b980fef11df382c1",
     "fileName": "Bello.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/Bello.cs"
   },
@@ -5208,8 +5208,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/FourHarbingers/0DoAllFourHarbingers.cs",
-    "size": 13885,
-    "sha256": "6d5c6f75b86215966bf54a01afa1862b8d0fb22414beb2586c4159fe49d79163",
+    "size": 14007,
+    "sha256": "8eae00990cd448bb8970338858e67b2cc679f52858e70a7c147f4384ef9a14e0",
     "fileName": "0DoAllFourHarbingers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/0DoAllFourHarbingers.cs"
   },
