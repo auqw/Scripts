@@ -6445,8 +6445,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1177694,
-    "sha256": "c4993eb8b46ac3bf2ea7c9d5cd181ef8cb2ee77496d45ab434795c08bb2a1108",
+    "size": 1117855,
+    "sha256": "e0eb56a671e36b9c33b39b075b8624f0d624dde6601564a26bebe72c5920ef09",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -6520,8 +6520,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelperV2.cs",
-    "size": 28650,
-    "sha256": "1e0011d3e316cdb24612378f22a6a2bafea14de2e145167336cc31e1ec33cac3",
+    "size": 28981,
+    "sha256": "cc2416004acb44da64d3b2e66a413fe8204ec2ca2a8ab93cfc9b45c407aa2841",
     "fileName": "MergeTemplateHelperV2.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelperV2.cs"
   },
@@ -10339,8 +10339,8 @@
       "seasonal"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/PirateClass.cs",
-    "size": 1694,
-    "sha256": "01325e6c307c0fbd3dc8650b588f9ae159980a74d7bda2189004e0d9d0633b8b",
+    "size": 2945,
+    "sha256": "0cf34b0f60300e7674477ec8a70c2c3e7070696f9292f2b293ee15ed75cd7b58",
     "fileName": "PirateClass.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/PirateClass.cs"
   },
@@ -30024,8 +30024,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs",
-    "size": 8033,
-    "sha256": "234c94817a5c986f7bd638994d8bf86a97984c0985e855b17b2310d4d8a7531e",
+    "size": 8034,
+    "sha256": "27f07b4648898c3b99381019ce9a2ae63cffd253c42569b318fd1202af2b08b5",
     "fileName": "QuestPacketCollector.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/QuestPacketCollector.cs"
   },
@@ -32574,62 +32574,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/ShadowofChaosMerge.cs"
   },
   {
-    "name": "PirateHunt Merge",
-    "description": "Farms items for the PirateHunt Merge [2621] in /piratehunt",
+    "name": "Pirate Plunder Merge",
+    "description": "Farms the Pirate Plunder Merge [2621] in /piratehunt.",
     "tags": [
       "piratehunt",
       "merge",
-      "novac",
-      "sal",
       "pirate",
-      "privateer",
-      "morph",
-      "first",
-      "gold",
-      "cutlass",
-      "crew",
-      "awe"
+      "plunder",
+      "merge"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/PirateHuntMerge.cs",
-    "size": 13116,
-    "sha256": "8e0ec46135015a2e19fd2ae04836fad634559e4cc205578dd1b600bfbf1ffa7a",
+    "size": 11549,
+    "sha256": "772fe6a7c95c3653edca1cc98bde67b34d8f882ea7088b7bde667273190722fc",
     "fileName": "PirateHuntMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/PirateHuntMerge.cs"
   },
   {
     "name": "Blazebeard Merge",
-    "description": "This bot will farm the items belonging to the selected mode for the Blazebeard Merge [108] in /blazebeard",
+    "description": "Farms the Blazebeard Merge [108] in /blazebeard.",
     "tags": [
-      "tlapd",
-      "talk-like-a-pirate-day",
-      "seasonal",
       "blazebeard",
       "merge",
       "blazebeard",
-      "crimson",
-      "pirate",
-      "mage",
-      "tricorn",
-      "weapons",
-      "side",
-      "cutlass",
-      "skull",
-      "harpoon",
-      "flintlock",
-      "spellbook",
-      "cutlasses",
-      "alpha",
-      "ferret",
-      "golden",
-      "explorer",
-      "pistol",
-      "great",
-      "pistols",
-      "platinum"
+      "merge"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs",
-    "size": 12355,
-    "sha256": "5690f58c4755418386eb413619889b1723fc1f4f4e5b5eb5c301d01f18f29d36",
+    "size": 8885,
+    "sha256": "62df41e3f00a8c233c79a6a14027bf330d510710f44154ddb8452607dcf56426",
     "fileName": "BlazeBeardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/BlazeBeardMerge.cs"
   },
