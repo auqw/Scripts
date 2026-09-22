@@ -24,12 +24,12 @@ public class AlphaPirate
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
-    private static BlazeBeardMerge BBM
+    private static BlazebeardMerge BBM
     {
-        get => _BBM ??= new BlazeBeardMerge();
+        get => _BBM ??= new BlazebeardMerge();
         set => _BBM = value;
     }
-    private static BlazeBeardMerge _BBM;
+    private static BlazebeardMerge _BBM;
 
     public void ScriptMain(IScriptInterface bot)
     {
