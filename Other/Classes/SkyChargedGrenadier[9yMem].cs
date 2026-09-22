@@ -62,7 +62,7 @@ public class SkyChargedGrenadier
         Story.KillQuest(6930, "skycharged", "Sky Pirate Draconian");
 
         // Draconian Delivery (6931)
-        Story.KillQuest(6931, "skycharged", new[] { "Sky Pirate Draconian", "Sky Pirate Dragon" });
+        Story.KillQuest(6931, "skycharged", new[] { "Sky Pirate Dragon", "Sky Pirate Draconian" });
 
         // Gladius and some Jelly (6932)
         Story.KillQuest(6932, "skycharged", new[] { "Gladius", "Rehydrated Gell Oh No" });
