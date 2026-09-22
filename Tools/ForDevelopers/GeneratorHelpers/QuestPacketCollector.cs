@@ -64,7 +64,7 @@ public sealed class QuestPacketCollector
             while (!Bot.ShouldExit && !received.IsSet && DateTime.UtcNow < deadline)
             {
                 Bot.Send.Packet($"%xt%zm%getQuests%{Bot.Map.RoomID}%{questID}%");
-                received.Wait(500);
+                received.Wait(1000);
             }
         }
         finally
