@@ -54,9 +54,49 @@ public class PirateClass
         if (!Core.isSeasonalMapActive("blazebeard"))
             return;
 
+        TinyStory();
         BBM.BuyAllMerge("Pirate");
 
         if (rankUpClass)
             Adv.RankUpClass("Pirate");
+    }
+
+
+    void TinyStory()
+    {
+        if (!Core.CheckInventory("Pirate"))
+        {
+            if (!Core.isCompletedBefore(31))
+            {
+                if (!Core.isCompletedBefore(28))
+                {
+                    Core.EnsureAccept(28);
+                    Core.HuntMonster("pirates", "Shark Bait", "Pirate Key", isTemp: true);
+                    Core.GetMapItem(19, 1, "pirates");
+                    Core.EnsureComplete(28);
+                }
+
+                if (!Core.isCompletedBefore(29))
+                {
+                    Core.EnsureAccept(29);
+                    Core.HuntMonster("pirates", "Fishman Soldier", "Fish Scale", 9);
+                    Core.EnsureComplete(29);
+
+                }
+                if (!Core.isCompletedBefore(30))
+                {
+                    Core.EnsureAccept(30);
+                    Core.HuntMonster("pirates", "Fishwing", "Fish Wings", 6);
+                    Core.EnsureComplete(30);
+
+                }
+            }
+
+            //Map Recovery 31
+            Core.AddDrop("Pirate");
+            Core.EnsureAccept(31);
+            Core.KillMonster("Pirates", "Mast", "Left", "Fishwing", "Map Fragment", 5);
+            Core.EnsureComplete(31);
+        }
     }
 }
