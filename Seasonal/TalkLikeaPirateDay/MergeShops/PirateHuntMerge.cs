@@ -6,6 +6,7 @@ tags: piratehunt, merge, pirate, plunder, merge
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Seasonal/TalkLikeaPirateDay/PirateClass.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
