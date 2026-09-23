@@ -55,7 +55,7 @@ public class Batista
         Story.KillQuest(
             2696,
             "carnaval",
-            new[] { "Boiuna", "Cuco", "Mulher de Branco", "Mula Sem Cabeça" }
+            new[] { "Mulher de Branco", "Mula Sem Cabeça", "Boiuna", "Cuco" }
         );
 
         //Party Like a BOSS!
