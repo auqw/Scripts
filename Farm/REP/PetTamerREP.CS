@@ -29,6 +29,7 @@ public class PetTamerREP
         Core.SetOptions();
 
         Farm.PetTamerREP();
+        Core.Logger("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         Core.SetOptions(false);
     }
