@@ -20046,6 +20046,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DeathPitArenaREP.cs"
   },
   {
+    "name": "Pet Tamer REP",
+    "description": "This script will farm Pet Tamer reputation to rank 10.",
+    "tags": [
+      "pet",
+      "tamer",
+      "pettamer",
+      "pet tamer",
+      "rank",
+      "rep",
+      "reputation"
+    ],
+    "path": "Farm/REP/PetTamerREP.cs",
+    "size": 881,
+    "sha256": "e7606e11907c0d0a47860e090021fb5c5d10d4649aee55466afd86948e6c35b7",
+    "fileName": "PetTamerREP.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/PetTamerREP.cs"
+  },
+  {
     "name": "Blade of Awe REP",
     "description": "This script will farm Blade of Awe reputation to rank 10.",
     "tags": [
