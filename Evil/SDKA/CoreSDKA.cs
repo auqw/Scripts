@@ -852,7 +852,7 @@ public class CoreSDKA
         if (!Core.CheckInventory("Necrotic Broadsword of Bane", 1, false))
         {
             NecroticBroadsword();
-            Core.Logger(" \"Necrotic Broadsword of Bane\" still now owned, most likely missing Daily metal stuffs, stopping", stopBot: true);
+            Core.Logger(" \"Necrotic Broadsword of Bane\" still not owned, most likely missing Daily metal stuffs, stopping", stopBot: true);
         }
 
         PinpointthePieces(2183, new[] { "Diabolical Aura" }, new[] { quant });
@@ -871,7 +871,7 @@ public class CoreSDKA
             NecroticBow();
             // Recheck
             if (!Core.CheckInventory("Necrotic Bow of the Shadow", 1, false))
-                Core.Logger(" \"Necrotic Bow of the Shadow\" still now owned, most likely missing Daily metal stuffs, stopping", stopBot: true);
+                Core.Logger(" \"Necrotic Bow of the Shadow\" still not owned, most likely missing Daily metal stuffs, stopping", stopBot: true);
 
         }
 
