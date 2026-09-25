@@ -68,9 +68,9 @@ public class MartialArtist
                 Core.Logger("Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After");
                 Core.EnsureAccept(9923);
 
-                Core.HuntMonster("nexus", "Frogzard", "Frogzards Defeated", 500, isTemp: false);
-                Core.HuntMonster("arcangrove", "Gorillaphant", "Gorillaphants Defeated", 500, isTemp: false);
-                Core.HuntMonster("etherwardes", "Water Dragon Warrior", "Dragons Defeated", 500, isTemp: false);
+                Core.HuntMonster("nexus", "Frogzard", "Frogzard Defeated", 500, isTemp: false);
+                Core.HuntMonster("arcangrove", "Gorillaphant", "Gorillaphant Defeated", 500, isTemp: false);
+                Core.HuntMonster("etherwardes", "Water Dragon Warrior", "Dragon Defeated", 500, isTemp: false);
 
                 Core.EnsureComplete(9923);
             }
