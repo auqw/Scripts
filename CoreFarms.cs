@@ -303,7 +303,7 @@ public class CoreFarms
             {
                 Core.Logger("Doing Oaklore \"Bone Berserker\" Quest till level 10");
                 Core.RegisterQuests(4007, 6257);
-                while (!Bot.ShouldExit && Bot.Player.Level < 10)
+                while (!Bot.ShouldExit && Bot.Player.Level < Math.Min(10, level))
                     Core.KillMonster("oaklore", "r3", "Left", "Bone Berserker", log: false);
                 Core.CancelRegisteredQuests();
             }
@@ -316,7 +316,7 @@ public class CoreFarms
                 UndeadGiantUnlock();
                 Core.Logger("Doing swordhavenundead \"Undead Giant\" Quest till level 20");
                 Core.RegisterQuests(178);
-                while (!Bot.ShouldExit && Bot.Player.Level < 20)
+                while (!Bot.ShouldExit && Bot.Player.Level < Math.Min(20, level))
                     Core.KillMonster("swordhavenundead", "Gates", "Left", "Undead Giant", log: false);
                 Core.CancelRegisteredQuests();
             }
@@ -3964,7 +3964,7 @@ public class CoreFarms
             // Core.HuntMonster("sandsea", "Cactus Creeper", "Cactus Creeper Head", 8, log: false);
             // Core.EnsureComplete(916, 917, 919, 921, 922);
         }
-        // Core.CancelRegisteredQuests();
+        Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
         // To ensure combat exit before buying master ranger if doing so
@@ -4528,7 +4528,8 @@ public class CoreFarms
     #endregion Reputation
     public void UndeadGiantUnlock()
     {
-        if (!Core.isCompletedBefore(178))
+        // 177 unlocks 178; 178 itself is not complete until the first Undead Giant turn-in.
+        if (!Core.isCompletedBefore(177))
         {
             Core.Logger("Unlocking farm quest.");
             Core.EnsureAccept(183);

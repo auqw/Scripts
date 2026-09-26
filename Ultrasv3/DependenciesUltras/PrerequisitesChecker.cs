@@ -182,7 +182,7 @@ public class PrerequisitesChecker
             }
 
             int rank = C.CheckClassRank(ClassName: cls);
-            if (rank < 9)
+            if (rank < 10)
             {
                 C.Logger($"  ✗ {cls}: rank {rank} (need 10)", "Error");
                 _messageLines.Add($"  ✗ {cls}: rank {rank} — You need this class to be rank 10");

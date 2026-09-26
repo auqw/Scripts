@@ -2505,7 +2505,7 @@ public class Core13LoC
         }
 
         // Defeat the 13th Lord of Chaos
-        if (!Bot.Quests.IsAvailable(3881))
+        if (!Core.isCompletedBefore(3880))
         {
             Core.EnsureAccept(3880);
             Core.Join("chaoslord");
@@ -2519,8 +2519,11 @@ public class Core13LoC
             Core.JumpWait();
             Core.EnsureComplete(3880);
             Core.Join("whitemap");
+        }
 
-            // The Final Showdown!
+        // The Final Showdown!
+        if (!Core.isCompletedBefore(3881))
+        {
             Core.EnsureAccept(3881);
             Core.Join("finalshowdown");
             if (Bot.Player.Cell != "r2")
