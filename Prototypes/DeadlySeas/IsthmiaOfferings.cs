@@ -35,6 +35,9 @@ public class IsthmiaOfferings
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.BankingBlackList.AddRange([
+			"Imperial Isthmian Wand"
+			"Imperial Isthmian Gauntlet"
+			"Imperial Isthmian Gauntlets"
             "BeastBane Cutlass",
             "BeastBane Cutlasses",
             "BeastBane Seahook",
@@ -66,6 +69,8 @@ public class IsthmiaOfferings
 
             switch (req.Name)
             {
+				case "Imperial Isthmian Gauntlet"
+				case "Imperial Isthmian Gauntlets"
                 case "BeastBane Cutlass":
                 case "BeastBane Cutlasses":
                 case "BeastBane Seahook":
@@ -102,6 +107,9 @@ public class IsthmiaOfferings
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("deadlyseas", "Isthmian Guard", req.Name, quant, req.Temp);
                     break;
+				case "Imperial Isthmian Wand"
+					Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("isthmiacastle", "Isthmian Guard", req.Name, quant, req.Temp);
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
                     Core.Logger($"The bot hasn't been taught how to get {req.Name}.", messageBox: shouldStop, stopBot: shouldStop);
