@@ -6,6 +6,8 @@ tags: isthmiacastle, merge, isthmia, offerings, merge
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Prototypes/DeadlySeas/Isthmiacastle.cs
+//cs_include Scripts/Prototypes/DeadlySeas/RedBettysBudget.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -14,12 +16,19 @@ public class IsthmiaOfferings
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
-    private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
+    private static Isthmiacastle IsthmiaCastle { get => _IsthmiaCastle ??= new Isthmiacastle(); set => _IsthmiaCastle = value; }
+    private static Isthmiacastle _IsthmiaCastle;
+    private static RedBettysBudget RBB
+    {
+        get => _RBB ??= new RedBettysBudget();
+        set => _RBB = value;
+    }
+    private static RedBettysBudget _RBB;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -43,13 +52,13 @@ public class IsthmiaOfferings
             "Royal Isthmian Wand",
         ]);
         Core.SetOptions();
+        IsthmiaCastle.Storyline();
         BuyAllMerge();
         Core.SetOptions(false);
     }
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        // FILL_QUEST_UNLOCK: Add the story call that completes "Reaper Leviathan" [10878] to unlock "Overgrown Baby" [10879].
         Adv.StartBuyAllMerge("isthmiacastle", 2773, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         void findIngredients()
@@ -85,19 +94,17 @@ public class IsthmiaOfferings
                     Core.HuntMonster("isthmiacastle", "Mersoul", req.Name, quant, req.Temp);
                     break;
                 case "Royal Isthmian Axe":
-                    // FILL_ACQUISITION: Add acquisition logic for Royal Isthmian Axe [103741].
+                case "Royal Isthmian Mace":
+                    RBB.BuyAllMerge(req.Name);
                     break;
                 case "Royal Isthmian Gauntlet":
-                    // FILL_ACQUISITION: Add acquisition logic for Royal Isthmian Gauntlet [103737].
-                    break;
                 case "Royal Isthmian Gauntlets":
-                    // FILL_ACQUISITION: Add acquisition logic for Royal Isthmian Gauntlets [103738].
-                    break;
-                case "Royal Isthmian Mace":
-                    // FILL_ACQUISITION: Add acquisition logic for Royal Isthmian Mace [103736].
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("deadlyseas", "Isthmian Leviathan", req.Name, quant, req.Temp);
                     break;
                 case "Royal Isthmian Wand":
-                    // FILL_ACQUISITION: Add acquisition logic for Royal Isthmian Wand [103733].
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("deadlyseas", "Isthmian Guard", req.Name, quant, req.Temp);
                     break;
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
