@@ -22,11 +22,7 @@ public class IsthmiaOfferings
     private static CoreAdvanced _sAdv;
     private static Isthmiacastle IsthmiaCastle { get => _IsthmiaCastle ??= new Isthmiacastle(); set => _IsthmiaCastle = value; }
     private static Isthmiacastle _IsthmiaCastle;
-    private static RedBettysBudget RBB
-    {
-        get => _RBB ??= new RedBettysBudget();
-        set => _RBB = value;
-    }
+    private static RedBettysBudget RBB { get => _RBB ??= new RedBettysBudget(); set => _RBB = value;}
     private static RedBettysBudget _RBB;
 
 
