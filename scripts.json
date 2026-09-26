@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 174934,
-    "sha256": "b457c183cc12ff20e087ca1bd455df15804980c327547b2ad948334c313dda5f",
+    "size": 175845,
+    "sha256": "3ba08a99806a39f88bb533bac9f531faae6ae9c7771f9b2cfcf122db377f38ae",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 164744,
-    "sha256": "bc06925030b478b39211c305d750da36dc1e94431a49b1c46b0aaac231745db2",
+    "size": 164868,
+    "sha256": "b62c6637a5ead3db601b9cc17647f044de87e8298213d6c41f8abd7be1478fa7",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 452636,
-    "sha256": "98565ee7580fc8fa5438393d83ae2426d2ad22f0da895f7156c52d0bd814b74e",
+    "size": 452948,
+    "sha256": "99a7bd63413c56e4f3645e8d76fe40fde7a3132fd754fb3376544137a35c8f80",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -25614,8 +25614,8 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 84917,
-    "sha256": "885034821b2e89395891ed8dcfb8dccc61ab0eacc4095818476c9a1223797bed",
+    "size": 84976,
+    "sha256": "0387c44a5624efd61c2eeaaffb304f4d7ed5973b301e1295441cd634c608a3b7",
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
@@ -28527,8 +28527,8 @@
       "null"
     ],
     "path": "Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs",
-    "size": 20143,
-    "sha256": "a368d6efb433edeff3ddc7888df9b5d9058133baa13e706c00ae5a5f320f23e8",
+    "size": 20144,
+    "sha256": "8fa305ed711bf51d60cb818a745673647a1c71f846ef29fdceb88cb112828744",
     "fileName": "PrerequisitesChecker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/PrerequisitesChecker.cs"
   },
