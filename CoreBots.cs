@@ -7720,15 +7720,16 @@ public class CoreBots
                 // Define CP thresholds and corresponding ranks in a dictionary
                 var ClassPointRanks = new Dictionary<int, int>
                 {
-                    { 900, 1 }, // Rank 1 (CP < 900)
-                    { 3600, 2 }, // Rank 2 (900 <= CP < 3600)
-                    { 10000, 3 }, // Rank 3 (3600 <= CP < 10000)
-                    { 22500, 4 }, // Rank 4 (10000 <= CP < 22500)
-                    { 44100, 5 }, // Rank 5 (22500 <= CP < 44100)
-                    { 78400, 6 }, // Rank 6 (44100 <= CP < 78400)
-                    { 129600, 7 }, // Rank 7 (78400 <= CP < 129600)
-                    { 202500, 8 }, // Rank 8 (129600 <= CP < 202500)
-                    { 302500, 9 }, // Rank 9 (202500 <= CP < 302500)
+                    // Key = minimum CP for the rank (CP < 900 stays at the default rank 1)
+                    { 900, 2 }, // Rank 2 (900 <= CP < 3600)
+                    { 3600, 3 }, // Rank 3 (3600 <= CP < 10000)
+                    { 10000, 4 }, // Rank 4 (10000 <= CP < 22500)
+                    { 22500, 5 }, // Rank 5 (22500 <= CP < 44100)
+                    { 44100, 6 }, // Rank 6 (44100 <= CP < 78400)
+                    { 78400, 7 }, // Rank 7 (78400 <= CP < 129600)
+                    { 129600, 8 }, // Rank 8 (129600 <= CP < 202500)
+                    { 202500, 9 }, // Rank 9 (202500 <= CP < 302500)
+                    { 302500, 10 }, // Rank 10 (CP >= 302500)
                 };
 
                 // Determine the class rank based on quantity using the dictionary
@@ -8436,7 +8437,9 @@ public class CoreBots
     /// <param name="previousMap">The map to return to after the save state (default is empty).</param>
     public void SavedState(bool on = true, string previousMap = "")
     {
-        if (string.IsNullOrEmpty(previousMap) || on is true && _savedStateEnabled)
+        // Enabling needs a map and is a no-op while already enabled. Disabling needs no map (the old
+        // guard returned on the usual empty map, so SavedState(false) never disabled anything).
+        if (on ? (string.IsNullOrEmpty(previousMap) || _savedStateEnabled) : !_savedStateEnabled)
             return;
 
         _savedStateEnabled = on;

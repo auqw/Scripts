@@ -3159,6 +3159,17 @@ public class CoreAdvanced
     /// <param name="ForceEnh">For classes that are recieved unenhanced</param>
     public void SmartEnhance(string? className, bool ForceEnh = false)
     {
+        SmartEnhance(className, ForceEnh, null);
+    }
+
+    /// <summary>
+    /// SmartEnhance with an optional weapon special override.
+    /// </summary>
+    /// <param name="className">Name of the class you wish to enhance</param>
+    /// <param name="ForceEnh">For classes that are recieved unenhanced</param>
+    /// <param name="weaponOverride">Weapon special used instead of the library's pick (e.g. Health Vamp for survivability), or null to keep it. Falls back to the base enhancement when the special isn't unlocked, like any other weapon special.</param>
+    public void SmartEnhance(string? className, bool ForceEnh, WeaponSpecial? weaponOverride)
+    {
         // Get CBO bool for DisableAutoEnhance and return if we're not forcing an enh for unenhed (lvl = 0) classes
         bool EnhDisabled = false;
         if (Core.CBOBool("DisableAutoEnhance", out bool _AutoEnhance))
@@ -3224,7 +3235,12 @@ public class CoreAdvanced
                 return;
         }
         Core.Equip(SelectedClass.Name ?? className);
-        Bot.Wait.ForTrue(() => Bot.Player.CurrentClass?.Name == className, 40);
+        // className was lower-cased above, so compare case-insensitively (the exact compare always timed out).
+        Bot.Wait.ForTrue(() => string.Equals(Bot.Player.CurrentClass?.Name, className, StringComparison.OrdinalIgnoreCase), 40);
+
+        if (weaponOverride.HasValue)
+            wSpecial = weaponOverride.Value;
+
         EnhanceEquipped((EnhancementType)type, cSpecial, hSpecial, wSpecial);
 
         bool ForgeEnhancementLibrary()
