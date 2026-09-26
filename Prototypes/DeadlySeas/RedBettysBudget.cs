@@ -1,7 +1,7 @@
 /*
-name: Deadly Seas Loot Merge
-description: Farms the Deadly Seas Loot Merge [2767] in /deadlyseas.
-tags: deadlyseas, merge, deadly, seas, loot, merge
+name: Red Bettys Budget
+description: Farms the Red Bettys Budget [2767] in /deadlyseas.
+tags: deadlyseas, merge, deadly, seas, loot, merge, red, bettys, budget
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
