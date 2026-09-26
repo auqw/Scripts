@@ -11,7 +11,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class DeadlySeasLoot
+public class RedBettysBudget
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -34,6 +34,9 @@ public class DeadlySeasLoot
             "Isthmian Seashell",
             "Mermaid Hunter Hair",
             "Mermaid Hunter Locks",
+            "Royal Isthmian Gauntlet",
+            "Royal Isthmian Gauntlets",
+            "Royal Isthmian Wand",
         ]);
         Core.SetOptions();
         DeadlySeas.Storyline();
@@ -74,6 +77,15 @@ public class DeadlySeasLoot
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("deadlyseas", "Mermaid Hunter", req.Name, quant, req.Temp);
                     break;
+                case "Royal Isthmian Gauntlet":
+                case "Royal Isthmian Gauntlets":
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("deadlyseas", "Isthmian Leviathan", req.Name, quant, req.Temp);
+                    break;
+                case "Royal Isthmian Wand":
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("deadlyseas", "Isthmian Guard", req.Name, quant, req.Temp);
+                    break;
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
                     Core.Logger($"The bot hasn't been taught how to get {req.Name}.", messageBox: shouldStop, stopBot: shouldStop);
@@ -86,6 +98,7 @@ public class DeadlySeasLoot
     [
         new Option<bool>("103266", "Mermaid Hunter", "Mode: [select] only\nShould the bot buy \"Mermaid Hunter\" ?", false),
         new Option<bool>("103455", "Royal Isthmian Guard", "Mode: [select] only\nShould the bot buy \"Royal Isthmian Guard\" ?", false),
+        new Option<bool>("103741", "Royal Isthmian Axe", "Mode: [select] only\nShould the bot buy \"Royal Isthmian Axe\" ?", false),
         new Option<bool>("103273", "Nereid Skin Cape", "Mode: [select] only\nShould the bot buy \"Nereid Skin Cape\" ?", false),
         new Option<bool>("103458", "Isthmian Pearl Shield", "Mode: [select] only\nShould the bot buy \"Isthmian Pearl Shield\" ?", false),
         new Option<bool>("103456", "Isthmian Guard Helm", "Mode: [select] only\nShould the bot buy \"Isthmian Guard Helm\" ?", false),
@@ -94,6 +107,10 @@ public class DeadlySeasLoot
         new Option<bool>("103268", "Mermaid Hunter Visage", "Mode: [select] only\nShould the bot buy \"Mermaid Hunter Visage\" ?", false),
         new Option<bool>("103269", "Mermaid Poacher Morph", "Mode: [select] only\nShould the bot buy \"Mermaid Poacher Morph\" ?", false),
         new Option<bool>("103270", "Mermaid Poacher Visage", "Mode: [select] only\nShould the bot buy \"Mermaid Poacher Visage\" ?", false),
+        new Option<bool>("103736", "Royal Isthmian Mace", "Mode: [select] only\nShould the bot buy \"Royal Isthmian Mace\" ?", false),
+        new Option<bool>("103734", "Royal Isthmian Scythe", "Mode: [select] only\nShould the bot buy \"Royal Isthmian Scythe\" ?", false),
         new Option<bool>("103276", "Siren's Anathema", "Mode: [select] only\nShould the bot buy \"Siren's Anathema\" ?", false),
+        new Option<bool>("103732", "Royal Isthmian Staff", "Mode: [select] only\nShould the bot buy \"Royal Isthmian Staff\" ?", false),
     ];
 }
+
