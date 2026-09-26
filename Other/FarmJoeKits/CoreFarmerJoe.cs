@@ -602,6 +602,12 @@ public class CoreFarmerJoe
                 "GetBoosts Message",
                 "We'll occasionaly get rep/class/gold boosts throughout the script to help speed things up a bit (the quest's droprate is low, but fast kills - you can disable this in scripts button > edit options ( when script is stopped).)"
             );
+            Core.Logger("GetBoosts is TURNED ON - READ THIS MESSAGE " + 
+            "\n\nYour character will now start FISHING for many HOURS in order to GET the BOOSTS that you turned on in script options. " + 
+            "\n\nIF YOU REPORT IN #skua-help WHY YOUR JOE STARTED FISHING YOU WILL GET SHAMED " + 
+            "\n\nYes this message will pop up everytime you start this script if you have the GetBoosts option turned on. " + 
+            "\nNo you cannot turn it off if you have the GetBoosts option turned on. " + 
+            "\n\nEnjoy fishing :)", messageBox: true);
             // Always ensure we have 10 of each boost type
             Farm.GetBoost("REP", 10, true);
             Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
