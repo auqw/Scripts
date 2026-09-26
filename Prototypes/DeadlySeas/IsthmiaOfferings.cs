@@ -110,6 +110,7 @@ public class IsthmiaOfferings
 				case "Imperial Isthmian Wand":
 					Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("isthmiacastle", "Isthmian Guard", req.Name, quant, req.Temp);
+					break;
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
                     Core.Logger($"The bot hasn't been taught how to get {req.Name}.", messageBox: shouldStop, stopBot: shouldStop);
