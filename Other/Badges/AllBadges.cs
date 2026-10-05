@@ -52,7 +52,7 @@ tags: badge, complete, all
 //cs_include Scripts/Other/Badges/StoryARC.cs
 //cs_include Scripts/Other/Badges/JusticeSquad.cs
 //cs_include Scripts/Other/Badges/ThiefofChaos.cs
-//cs_include Scripts/Other/Badges/Goal.cs
+//cs_include Scripts/Other/Badges/WorldCup.cs
 //cs_include Scripts/Other/Badges/UltraCarnax.cs
 //cs_include Scripts/Other/Badges/YokaiAscension.cs
 //cs_include Scripts/Story/MagicThief.cs
@@ -248,12 +248,12 @@ public class AllBadges
         set => _UC = value;
     }
     private static UltraCarnaxBadge _UC;
-    private static GoalBadge G
+    private static WorldCup G
     {
-        get => _G ??= new GoalBadge();
+        get => _G ??= new WorldCup();
         set => _G = value;
     }
-    private static GoalBadge _G;
+    private static WorldCup _G;
     private static FrostvaleBadges FV
     {
         get => _FV ??= new FrostvaleBadges();
