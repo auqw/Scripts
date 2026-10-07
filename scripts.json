@@ -2396,8 +2396,8 @@
       "NPC"
     ],
     "path": "Story/Friendship.cs",
-    "size": 3858,
-    "sha256": "68d2c5d1bb4b8b91335590d2d8864e76f48093635ebb548da6d02e92471d1b7a",
+    "size": 3792,
+    "sha256": "b259dfdc6140023b3413da8a30eca4b92f3ee21337bcd24933131f2be290fb6c",
     "fileName": "Friendship.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Friendship.cs"
   },
