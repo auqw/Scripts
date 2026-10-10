@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 175845,
-    "sha256": "3ba08a99806a39f88bb533bac9f531faae6ae9c7771f9b2cfcf122db377f38ae",
+    "size": 175935,
+    "sha256": "b05f3fd3bfff3cc274bd71928b7f88426583132aadcdc02054a53ee7f44e5d49",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 465595,
-    "sha256": "9a132b512d5ba72f6e813806063dc9d0049bec5b5c5c9493b4352c67c398d1ab",
+    "size": 468498,
+    "sha256": "3d2fb7f24cd8a6c3f53d8b296e9ec33cbdc17cfba21893a35ac4d7174d2d1cde",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4819,8 +4819,8 @@
       "lonewolf12"
     ],
     "path": "Prototypes/InfernalArenaLW.cs",
-    "size": 32839,
-    "sha256": "d74ebeaa76e4b3c5f5ebd790a168d7b5f23d8cc16dd9c017d2f4c41d212903ad",
+    "size": 33031,
+    "sha256": "a33df6ae1ddcba25b440750f51d725fe0544bbde706f10494b95f451d10c40c2",
     "fileName": "InfernalArenaLW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/InfernalArenaLW.cs"
   },
@@ -7004,8 +7004,8 @@
       "seasonal"
     ],
     "path": "Seasonal/BlackFriday/AlphaHunterAndRogue.cs",
-    "size": 1929,
-    "sha256": "d5ad989a550379d021fc182a0746b90fd49065b4032fb6f66a42efeaa09bc908",
+    "size": 2023,
+    "sha256": "7c4aed446ed6f19f70bec487735010d5dae8edd7aea9a8fa022fd2266612a4df",
     "fileName": "AlphaHunterAndRogue.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/AlphaHunterAndRogue.cs"
   },
@@ -19638,8 +19638,8 @@
       "army"
     ],
     "path": "Army/OneClient/AllDailies.cs",
-    "size": 2525,
-    "sha256": "bff070aedf7f62197a9dfadb2c866ca26aeed46d45b827c0449a56ae2046662c",
+    "size": 2619,
+    "sha256": "245421da657dd939a1d3e4c7a9a7631ae5999d567f38887b1aa9bb7e7f24740f",
     "fileName": "AllDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllDailies.cs"
   },
@@ -19670,8 +19670,8 @@
       "all"
     ],
     "path": "Army/OneClient/AllRankAllClasses.cs",
-    "size": 1580,
-    "sha256": "a5faf288a27c8438e7f36f094a8796aaf75744c70a3cfef977f16b3b2f6c5511",
+    "size": 1674,
+    "sha256": "2f704bf0de64ad056c362028bc6ef8564e32d4afc7c4790737a0a845fc01237c",
     "fileName": "AllRankAllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllRankAllClasses.cs"
   },
@@ -19687,8 +19687,8 @@
       "oneclient"
     ],
     "path": "Army/OneClient/WheelOfDoom.cs",
-    "size": 1502,
-    "sha256": "c4606e676eb41813df17a45e6bde1041fa45230aa7ef5d283e277b29cb3f282d",
+    "size": 1596,
+    "sha256": "e5ab469e2d0cdafe6e063982e5a8918a40ae42d1c1e245a5073c1dc0c695b3aa",
     "fileName": "WheelOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/WheelOfDoom.cs"
   },
@@ -19721,8 +19721,8 @@
       "oneclient"
     ],
     "path": "Army/OneClient/EldersBlood.cs",
-    "size": 1550,
-    "sha256": "e2b96090296157ba51a349707b7d37c05913d7f67bc6975791a55808cddd71ae",
+    "size": 1644,
+    "sha256": "d8b78cedab6a65f031261d4cca00d249af5b7b99e77b3d4eb399055691460157",
     "fileName": "EldersBlood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/EldersBlood.cs"
   },
@@ -29843,8 +29843,8 @@
       "null"
     ],
     "path": "Prototypes/FourHarbingers/CoreFourHarbingers.cs",
-    "size": 23510,
-    "sha256": "72bd07fd20d1e822b22b0e58994012d33674da1f588c616dd238a024867c9307",
+    "size": 23796,
+    "sha256": "fc114fe1202809551926e55e77bee181b84836295343e2081737461c5bb08088",
     "fileName": "CoreFourHarbingers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/FourHarbingers/CoreFourHarbingers.cs"
   },
