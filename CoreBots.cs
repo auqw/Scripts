@@ -3859,6 +3859,7 @@ public class CoreBots
                 throw new InvalidOperationException("Cannot read the game misc inventory settings.");
             JObject settings = JObject.Parse(json);
             MiscSlots = settings.Value<int?>("MISC_SLOTS")
+                ?? flash.GetGameObject<int?>("world.myAvatar.objData.iBagSlots")
                 ?? throw new InvalidOperationException("The game misc inventory limit is unavailable.");
             _miscTypes = settings["MISC_TYPES"] is JArray types
                 ? new HashSet<string>(types.Values<string>()!, StringComparer.Ordinal)
