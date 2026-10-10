@@ -33,7 +33,7 @@ public class FreeAcs
 
     public void GetYourAcsHere()
     {
-        if (Core.isCompletedBefore(10584))
+        if (Core.isCompletedBefore(10894))
         {
             Core.Logger("Quest Already Complete");
             return;
@@ -51,8 +51,8 @@ public class FreeAcs
         if (!Core.isCompletedBefore(7522))
             borgars.StoryLine();
 
-        Core.EnsureAccept(10584);
-        Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
-        Core.EnsureComplete(10584);
+        Core.EnsureAccept(10894);
+        Core.HuntMonster("eventhub", "Agitated Orb", "Free ACs...");
+        Core.EnsureComplete(10894);
     }
 }
