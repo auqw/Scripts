@@ -61,7 +61,7 @@ public class EvilBirthdayPresents
             {
                 case "Costume Supplies":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("fortressparty", "Drago Cosplayer", req.Name, quant, req.Temp);
+                    Core.HuntMonster("fortressparty", "Athon Cosplayer", req.Name, quant, req.Temp);
                     break;
                 case "Doomed Memory":
                 case "Shadow Celebrant Hair":
