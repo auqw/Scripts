@@ -18744,14 +18744,16 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ParadoxPortalMerge.cs"
   },
   {
-    "name": "[Script Name Here]",
-    "description": "[Brief description of what this script does]",
+    "name": "2026 birthday free acs",
+    "description": "money",
     "tags": [
-      "[comma-separated tags relevant to this script]"
+      "acs",
+      "free",
+      "roblox"
     ],
     "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs.cs",
-    "size": 1674,
-    "sha256": "547512dfeaff236a58df87fc35ad1f6407d341a08888f1c346b4525c0dae8dfa",
+    "size": 1610,
+    "sha256": "a9638376597623b5adaa03fb6848e93638331ffbf263b6f71f36f81544df9e73",
     "fileName": "202xFreeAcs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs.cs"
   },
