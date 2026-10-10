@@ -555,7 +555,7 @@ public class CoreAOR
 
         // InnJustice 9738
         Story.MapItemQuest(9738, "castleeblana", 13206);
-        Story.KillQuest(9738, "castleeblana", new[] { "Bananach Raven", "Fear Gorta" });
+        Story.KillQuest(9738, "castleeblana", new[] { "Fear Gorta", "Bananach Raven" });
 
         // Find Shelter in... 9739
         Story.MapItemQuest(9739, "castleeblana", new[] { 13207, 13208 });
