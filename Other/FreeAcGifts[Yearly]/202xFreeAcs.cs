@@ -1,7 +1,7 @@
 /*
-name: [Script Name Here]
-description: [Brief description of what this script does]
-tags: [comma-separated tags relevant to this script]
+name: 2026 birthday free acs
+description: money
+tags: acs, free, roblox
 */
 
 //cs_include Scripts/CoreBots.cs
