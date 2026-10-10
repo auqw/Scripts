@@ -1078,17 +1078,20 @@ public class CoreBots
 
         // Names alone do not identify the destination pool in Game4000.
         // Unbank and BuyItem perform checks once the actual item data is known.
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
         if (UsesCategoryInventory())
             return;
 
         int requiredSlots = items.Length - counter;
 
         // Attempt to bank misc AC items to free up space if needed
-        if (requiredSlots > 1 && Bot.Inventory.FreeSlots < requiredSlots)
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+        if (requiredSlots > 1 && InventoryBagFreeSlots < requiredSlots)
             BankACMisc(requiredSlots);
 
         // Re-check free slots and alert if still insufficient
-        if (Bot.Inventory.FreeSlots < requiredSlots)
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+        if (InventoryBagFreeSlots < requiredSlots)
         {
             string plural = requiredSlots != 1 ? "s" : "";
             Logger(
@@ -1132,6 +1135,7 @@ public class CoreBots
 
             if (inBank && (!inInventory || !inHouse))
             {
+                // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
                 if (UsesCategoryInventory())
                 {
                     InventoryItem? categoryItem = Bot.Bank.Items?.FirstOrDefault(candidate =>
@@ -1154,7 +1158,8 @@ public class CoreBots
                 else
                 {
                     if (
-                        Bot.Inventory.FreeSlots <= 0
+                        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                        InventoryBagFreeSlots <= 0
                         && Bot.Inventory.Slots != 0
                         && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots
                     )
@@ -1169,12 +1174,14 @@ public class CoreBots
 
                     //Retry after banking misc stuff
                     if (
-                        Bot.Inventory.FreeSlots <= 0
+                        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                        InventoryBagFreeSlots <= 0
                         && Bot.Inventory.Slots != 0
                         && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots
                     )
                     {
-                        if (Bot.Inventory.FreeSlots <= 0)
+                        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                        if (InventoryBagFreeSlots <= 0)
                             Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.",
                                 messageBox: true,
                                 stopBot: true
@@ -1277,9 +1284,11 @@ public class CoreBots
                 }
 
                 if (
+                    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
                     UsesCategoryInventory()
                         ? !HasSpaceFor(bankItem)
-                        : Bot.Inventory.FreeSlots <= 0
+                        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                        : InventoryBagFreeSlots <= 0
                             && Bot.Inventory.Slots != 0
                             && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots
                 )
@@ -1397,6 +1406,7 @@ public class CoreBots
                 continue;
             }
 
+            // TEMPORARY Game4000 class-banking guard. Review after the client banking fix.
             // Game4000 classes cannot be banked, including AC-tagged classes.
             if (inventoryItem.Category == ItemCategory.Class)
             {
@@ -1510,6 +1520,7 @@ public class CoreBots
             if (inventoryItem == null)
                 continue;
 
+            // TEMPORARY Game4000 class-banking guard. Review after the client banking fix.
             // Game4000 classes cannot be banked, including AC-tagged classes.
             if (inventoryItem.Category == ItemCategory.Class)
             {
@@ -1887,7 +1898,8 @@ public class CoreBots
                         Relogin(
                             "Inventory de-sync (AE Issue) detected, relogging so the bot can continue"
                         );
-                        if (UsesCategoryInventory() ? !HasSpaceFor(item, buy_quant) : Bot.Inventory.FreeSlots < 1)
+                        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                        if (UsesCategoryInventory() ? !HasSpaceFor(item, buy_quant) : InventoryBagFreeSlots < 1)
                             Logger(
                                 "The destination inventory has insufficient space after login. Please clear space.",
                                 stopBot: true
@@ -1938,6 +1950,7 @@ public class CoreBots
             if (item == null)
                 return false;
 
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
             if (UsesCategoryInventory())
             {
                 int actualQuantity = _CalcBuyQuantity(item, buy_quant);
@@ -2273,10 +2286,12 @@ public class CoreBots
     private void _CheckInventorySpace()
     {
         // Game4000 purchases are checked in _canBuy using the selected item.
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
         if (UsesCategoryInventory())
             return;
 
-        if (Bot.Inventory.Slots != 0 && Bot.Inventory.FreeSlots <= 0)
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+        if (Bot.Inventory.Slots != 0 && InventoryBagFreeSlots <= 0)
         {
             int usedBefore = Bot.Inventory.UsedSlots;
             Logger(
@@ -2289,7 +2304,8 @@ public class CoreBots
             int usedAfter = Bot.Inventory.UsedSlots;
             int freed = usedBefore - usedAfter;
 
-            if (Bot.Inventory.FreeSlots <= 0)
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            if (InventoryBagFreeSlots <= 0)
             {
                 Logger(
                     $"Banked {freed} item{(freed != 1 ? "s" : "")} but your inventory is still full. Please clear space manually. Stopping the bot.",
@@ -2300,7 +2316,8 @@ public class CoreBots
             else
             {
                 Logger(
-                    $"Banked {freed} item{(freed != 1 ? "s" : "")}. {Bot.Inventory.FreeSlots} slot{(Bot.Inventory.FreeSlots != 1 ? "s" : "")} now available.",
+                    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                    $"Banked {freed} item{(freed != 1 ? "s" : "")}. {InventoryBagFreeSlots} slot{(InventoryBagFreeSlots != 1 ? "s" : "")} now available.",
                     "_CheckInventorySpace"
                 );
             }
@@ -3709,7 +3726,10 @@ public class CoreBots
         }
     }
 
+    // BEGIN TEMPORARY Game4000 inventory compatibility helpers.
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     /// <summary>Ordinary bag entries, excluding Game4000 misc items and classes.</summary>
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public int InventoryBagUsedSlots
     {
         get
@@ -3719,13 +3739,17 @@ public class CoreBots
         }
     }
 
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public int InventoryBagFreeSlots => Bot.Inventory.Slots - InventoryBagUsedSlots;
 
     /// <summary>The current Game4000 misc limit, including server overrides.</summary>
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public int InventoryMiscSlots => OpenInventoryCategories()?.MiscSlots ?? 0;
 
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public int InventoryMiscUsedSlots => OpenInventoryCategories()?.CountMisc() ?? 0;
 
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public int InventoryMiscFreeSlots
     {
         get
@@ -3739,6 +3763,7 @@ public class CoreBots
     /// Checks the item's destination pool, existing stack, and merge/token space.
     /// quantity is the actual purchase amount, not the desired final total.
     /// </summary>
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public bool HasSpaceFor(ItemBase? item, int quantity = 1)
     {
         if (item == null)
@@ -3746,7 +3771,8 @@ public class CoreBots
 
         var categories = OpenInventoryCategories();
         if (categories == null)
-            return Bot.Inventory.FreeSlots > 0 || Bot.Inventory.Contains(item.ID);
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            return InventoryBagFreeSlots > 0 || Bot.Inventory.Contains(item.ID);
 
         JObject data = InventorySpaceItemData(item);
         if (GameInventoryCategories.IsHouse(data))
@@ -3943,7 +3969,9 @@ public class CoreBots
     }
 
     /// <summary>Whether an ordinary bag entry can fit. Use HasSpaceFor for a specific item.</summary>
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public bool HasSpace => InventoryBagFreeSlots > 0;
+    // END TEMPORARY Game4000 inventory compatibility helpers.
 
     /// <summary>
     /// Completes a quest and chooses any item from it that you don't have (automatically accepts the drop).
@@ -8839,6 +8867,7 @@ public class CoreBots
     /// <param name="RequiredSpaces">
     /// Optional limit on how many items to bank; if set to 0, all matching items are banked.
     /// </param>
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public void BankACMisc(int RequiredSpaces = 0, string? inventoryPool = null)
     {
         // Items to never bank (e.g., important consumables)
@@ -8898,6 +8927,7 @@ public class CoreBots
             )
             .ToArray();
 
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
         toBankItems = FilterInventoryPool(toBankItems, inventoryPool);
 
         if (toBankItems.Length == 0)
@@ -8944,6 +8974,7 @@ public class CoreBots
     /// Optionally limits how many items are banked based on requiredSpaces.
     /// </summary>
     /// <param name="requiredSpaces">Max number of items to bank; 0 means all.</param>
+    // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
     public void BankACUnenhancedGear(int requiredSpaces = 0, string? inventoryPool = null)
     {
         var allProtectedGear = CombineGearSets([SoloGear, FarmGear, BossGear, DodgeGear]);
@@ -8952,6 +8983,7 @@ public class CoreBots
             .Where(IsValidBankableItem)
             .ToArray();
 
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
         bankableItems = FilterInventoryPool(bankableItems, inventoryPool);
 
         if (bankableItems.Length == 0)
@@ -8970,6 +9002,7 @@ public class CoreBots
         bool IsValidBankableItem(InventoryItem item)
         {
             return item is not null
+                // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
                 && item.Category != ItemCategory.Class
                 && item.Coins
                 // Bank lvl1 / non-level items & items with Adventure Enh

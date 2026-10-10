@@ -107,7 +107,8 @@ public class CoreFourHarbingers
 
         if (!Bot.Inventory.Contains(className))
         {
-            if (Bot.Inventory.FreeSlots <= 0)
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            if (Core.InventoryBagFreeSlots <= 0)
             {
                 Core.Logger($"WARNING: {className} is in the bank, but no free inventory slot is available.", messageBox: true);
                 return false;
@@ -240,7 +241,8 @@ public class CoreFourHarbingers
 
             if (Bot.Bank.Contains(itemName))
             {
-                if (!Bot.Inventory.Contains(itemName) && Bot.Inventory.FreeSlots <= 0)
+                // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                if (!Bot.Inventory.Contains(itemName) && Core.InventoryBagFreeSlots <= 0)
                 {
                     WarnPotion(itemName, "no free inventory slot is available");
                     return;
@@ -270,7 +272,8 @@ public class CoreFourHarbingers
                 requiredSlots++;
             if (!Bot.Inventory.Contains(voucherName))
                 requiredSlots++;
-            if (Bot.Inventory.FreeSlots < requiredSlots)
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            if (Core.InventoryBagFreeSlots < requiredSlots)
             {
                 WarnPotion(itemName, $"{requiredSlots} free inventory slots are required");
                 return;

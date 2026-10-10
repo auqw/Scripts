@@ -45,7 +45,8 @@ public class ArmyEldersBlood
 
         while (!Bot.ShouldExit && Army.doForAll())
         {
-            if (Bot.Inventory.FreeSlots <= 0)
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            if (Core.InventoryBagFreeSlots <= 0)
                 continue;
             Dailies.EldersBlood();
         }

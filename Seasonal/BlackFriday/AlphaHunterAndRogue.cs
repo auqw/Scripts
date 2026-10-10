@@ -54,7 +54,8 @@ public class BlackFridayAlphaHunterRogue
         while (!Bot.ShouldExit && !Core.CheckInventory(AllRewardsArray, toInv: false))
         {
             Core.KillMonster("blackfridaywar", "r4", "Left", "*", log: false);
-            if (toBank && Bot.Inventory.FreeSlots == 0)
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            if (toBank && Core.InventoryBagFreeSlots == 0)
                 Core.ToBank(AllRewardsArray);
         }
         Core.ToBank(AllRewardsArray);

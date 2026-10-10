@@ -90,7 +90,8 @@ public class CoreAdvanced
             return;
 
         // Inventory space check
-        if (Bot.Inventory.FreeSlots <= 0 && !Bot.Inventory.Contains(itemID))
+        // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+        if (Core.InventoryBagFreeSlots <= 0 && !Bot.Inventory.Contains(itemID))
         {
             if (Log) Core.Logger("❌ Inventory full, cannot buy items.");
             return;

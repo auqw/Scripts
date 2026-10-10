@@ -642,7 +642,8 @@ public class InfernalArenaLW
 
             if (Bot.Bank.Contains(itemName))
             {
-                if (Bot.Inventory.FreeSlots <= 0)
+                // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+                if (Core.InventoryBagFreeSlots <= 0)
                 {
                     WarnPotion(itemName, "no free inventory slot is available");
                     return;
@@ -665,7 +666,8 @@ public class InfernalArenaLW
             bool voucherNeedsInventorySlot = !Bot.Inventory.Contains(voucherName);
             int requiredSlots = voucherNeedsInventorySlot ? 2 : 1;
 
-            if (Bot.Inventory.FreeSlots < requiredSlots)
+            // TEMPORARY Game4000 inventory change. Remove after the client inventory fix.
+            if (Core.InventoryBagFreeSlots < requiredSlots)
             {
                 WarnPotion(itemName, $"{requiredSlots} free inventory slots are required");
                 return;
