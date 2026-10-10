@@ -6267,8 +6267,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/ZorbaksMerge.cs"
   },
   {
-    "name": "17th Birthday Hero Character Page Badge",
-    "description": "This script will get the \"17th Birthday Hero\" Character Page Badge.",
+    "name": "18th Birthday Hero Character Page Badge",
+    "description": "This script will get the \"Birthday Hero of DOOM\" Character Page Badge.",
     "tags": [
       "birthday",
       "badge",
@@ -6277,11 +6277,11 @@
       "quest",
       "seasonal"
     ],
-    "path": "Seasonal/AqwBirthday/17thBirthdayHeroBadge.cs",
-    "size": 1207,
-    "sha256": "2d4823f690b8da853117e361009244cb2a85826aaf2d536154a79ba3666f3a29",
-    "fileName": "17thBirthdayHeroBadge.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/17thBirthdayHeroBadge.cs"
+    "path": "Seasonal/AqwBirthday/18thBirthdayHeroBadge.cs",
+    "size": 1213,
+    "sha256": "f5e9c087b0d0f0b00ed31a04a31425cedfbc68f6f99f9c21b7002096b2268a20",
+    "fileName": "18thBirthdayHeroBadge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/18thBirthdayHeroBadge.cs"
   },
   {
     "name": "17th Birthday Castle Party Merge",
@@ -6438,6 +6438,38 @@
     "sha256": "7df8956f51b46e2854d8b174c787758d252fd34f7137658e0dd153129d9d9aac",
     "fileName": "AspiringNecromancerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/AspiringNecromancerMerge.cs"
+  },
+  {
+    "name": "Evil Birthday Presents Merge",
+    "description": "Farms the Evil Birthday Presents Merge [2779] in /fortressparty.",
+    "tags": [
+      "fortressparty",
+      "merge",
+      "evil",
+      "birthday",
+      "presents",
+      "merge"
+    ],
+    "path": "Seasonal/AqwBirthday/EvilBirthdayPresents.cs",
+    "size": 5694,
+    "sha256": "70c138f761808a656bed407ade44ec4e7baebbe4afdbf5268c9f123351765f75",
+    "fileName": "EvilBirthdayPresents.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/EvilBirthdayPresents.cs"
+  },
+  {
+    "name": "Fortressparty",
+    "description": "Completes the quest chain in /fortressparty.",
+    "tags": [
+      "fortressparty",
+      "story",
+      "quests",
+      "fortressparty"
+    ],
+    "path": "Seasonal/AqwBirthday/Fortressparty.cs",
+    "size": 2557,
+    "sha256": "12b621465d162ec65eb0efcd1c270908286bd06ef3b9fc466b63833e62c33553",
+    "fileName": "Fortressparty.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/Fortressparty.cs"
   },
   {
     "name": "Castle Party Story",
