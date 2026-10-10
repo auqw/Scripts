@@ -1481,10 +1481,10 @@ public class CoreBots
             if (inventoryItem == null)
                 continue;
 
-            // Game4000 classes cannot be banked, including AC-tagged classes.
+            // Classes cannot be banked anymore with new update
             if (inventoryItem.Category == ItemCategory.Class)
             {
-                Logger($"Skipping class banking for item ID {inventoryItem.ID}. Classes cannot be banked in Game4000.");
+                Logger($"Skipping class banking for item ID {inventoryItem.ID}. Classes cannot be banked anymore.");
                 continue;
             }
 
