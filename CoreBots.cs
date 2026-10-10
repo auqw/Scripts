@@ -1316,7 +1316,7 @@ public class CoreBots
 
     /// <summary>
     /// Transfers specified items by name from inventory/house to bank.
-    /// Skips equipped, blacklisted, or nonexistent items.
+    /// Skips classes, equipped, blacklisted, or nonexistent items.
     /// Retries up to 5 times on failures. Handles house items separately.
     /// </summary>
     /// <param name="items">Item names to move to bank.</param>
@@ -1365,6 +1365,13 @@ public class CoreBots
             if (inventoryItem == null)
             {
                 DebugLogger($"❌ {item} not found in inventory, skipping.", "ToBank Debug");
+                continue;
+            }
+
+            // Classes cannot be banked anymore
+            if (inventoryItem.Category == ItemCategory.Class)
+            {
+                Logger($"Skipping class banking for item ID {inventoryItem.ID}. Classes cannot be banked in Game4000.");
                 continue;
             }
 
@@ -1442,7 +1449,7 @@ public class CoreBots
     }
     /// <summary>
     /// Transfers specified items by ID from inventory/house to bank.
-    /// Skips equipped, blacklisted, or nonexistent items.
+    /// Skips classes, equipped, blacklisted, or nonexistent items.
     /// Retries up to 20 times on failures. Handles house items separately.
     /// </summary>
     /// <param name="items">Item IDs to move to bank.</param>
@@ -1473,6 +1480,13 @@ public class CoreBots
 
             if (inventoryItem == null)
                 continue;
+
+            // Game4000 classes cannot be banked, including AC-tagged classes.
+            if (inventoryItem.Category == ItemCategory.Class)
+            {
+                Logger($"Skipping class banking for item ID {inventoryItem.ID}. Classes cannot be banked in Game4000.");
+                continue;
+            }
 
             // Coin (AC) items have infinite bank space, only block non-coin items when bank is full
             if (!inventoryItem.Coins && (Bot.Bank?.FreeSlots ?? 0) <= 0)
@@ -8672,6 +8686,8 @@ public class CoreBots
         bool IsValidBankableItem(InventoryItem item)
         {
             return item is not null
+                // Classes cant be banked anymore
+                && item.Category != ItemCategory.Class
                 && item.Coins
                 // Bank lvl1 / non-level items & items with Adventure Enh
                 && (item.EnhancementLevel <= 1 || item.EnhancementPatternID == 1)
