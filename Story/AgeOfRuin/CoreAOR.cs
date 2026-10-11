@@ -554,9 +554,14 @@ public class CoreAOR
         Story.KillQuest(9737, "castleeblana", "Fear Gorta");
 
         // InnJustice 9738
-        Story.MapItemQuest(9738, "castleeblana", 13206);
-        Story.KillQuest(9738, "castleeblana", new[] { "Fear Gorta", "Bananach Raven" });
-
+        if (!Story.QuestProgression(9738))
+        {
+            Core.EnsureAccept(9738);
+            Story.MapItemQuest(9738, "castleeblana", 13206);
+            Core.HuntMonster("castleeblana", "Fear Gorta", "Hunger Leaves", 9);
+            Core.HuntMonster("castleeblana", "Bananach Raven", "Electrified Feather", 9);
+            Core.EnsureComplete(9738);
+        }
         // Find Shelter in... 9739
         Story.MapItemQuest(9739, "castleeblana", new[] { 13207, 13208 });
 
