@@ -74,6 +74,9 @@ public class CoreBots
     // [Can Change] Use public rooms if the enemy is tough
     public bool PublicDifficult { get; set; } = false;
 
+    // [Can Change] Minutes without any monster kill or farmed-item progress in a public room before switching rooms. 0 disables it.
+    public int PublicRoomStuckMinutes { get; set; } = 10;
+
     // [Can Change] If StopLocations.Custom is selected, where to go
     public string CustomStopLocation { get; set; } = "whitemap";
 
@@ -177,6 +180,11 @@ public class CoreBots
         return Version.TryParse(minimumVersion, out Version? minimum) &&
             client.GetName().Version is Version current && current >= minimum;
     }
+
+    // IsVibeSkuaAvalonia() reflects over the entry assembly and the farm loops check it on
+    // every kill, so cache it: the client can't change while a script runs.
+    private bool? _onVibeSkua;
+    private bool OnVibeSkua => _onVibeSkua ??= IsVibeSkuaAvalonia();
 
     private const string DiscordLink = "https://discord.gg/mScWZYYSKS";
 
@@ -5376,11 +5384,20 @@ public class CoreBots
 
 
         // Main kill loop
+        FarmProgress progress = new();
         while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
         {
             // Respawn check
             while (!Bot.ShouldExit && !Bot.Player.Alive)
                 Sleep(500);
+
+            if (item != null && TrackFarmProgress(progress, item, quant, isTemp, log))
+            {
+                HopPublicRoom(map, progress, cell, pad);
+                // The old snapshot points at the previous room's monsters.
+                targetMonsters = FindMonstersList(map, "*", MonsterMapID);
+                continue;
+            }
 
             // Ensure correct position
             if (Bot.Map.Name != map)
@@ -5474,10 +5491,19 @@ public class CoreBots
 
 
         // Kill until item obtained (or once if no item)
+        FarmProgress progress = new();
         while (!Bot.ShouldExit && (ItemID == 0 || !(isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))))
         {
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (ItemID != 0 && TrackFarmProgress(progress, ItemID, quant, isTemp, log))
+            {
+                HopPublicRoom(map, progress, cell, pad);
+                // The old snapshot points at the previous room's monsters.
+                targetMonsters = Bot.Monsters.MapMonsters.Where(m => m != null && m.MapID == MonsterMapID && m.Alive).ToList();
+                continue;
+            }
 
             if (Bot.Map.Name != map)
                 Join(map, cell, pad, publicRoom: publicRoom);
@@ -5685,6 +5711,7 @@ public class CoreBots
         {
             if (log)
                 Logger($"Killing {monster} for item: \"{item}\" " + $"{Bot.Inventory.GetQuantity(item)}/{quant}", "HuntMonster");
+            FarmProgress progress = new();
             while (
                 !Bot.ShouldExit
                 && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
@@ -5692,6 +5719,12 @@ public class CoreBots
             {
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                if (TrackFarmProgress(progress, item, quant, isTemp, log))
+                {
+                    HopPublicRoom(map, progress);
+                    continue;
+                }
 
                 targetMonster = FindMonster(map, monster);
                 if (targetMonster == null)
@@ -5797,6 +5830,10 @@ public class CoreBots
             }
         }
 
+        FarmProgress progress = new();
+        int totalQuant = items.Sum(x => x.quant);
+        int Collected() => items.Sum(x => Math.Min(x.quant, x.isTemp ? Bot.TempInv.GetQuantity(x.item) : Bot.Inventory.GetQuantity(x.item)));
+
         while (!Bot.ShouldExit &&
             !items.All(x => x.isTemp
                 ? Bot.TempInv.Contains(x.item, x.quant)
@@ -5804,6 +5841,12 @@ public class CoreBots
         {
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (TrackFarmProgress(progress, string.Join(" + ", items.Select(x => x.item)), totalQuant, log, Collected))
+            {
+                HopPublicRoom(map, progress);
+                continue;
+            }
 
             targetMonster = FindMonster(map, monster);
             if (targetMonster == null)
@@ -5879,10 +5922,19 @@ public class CoreBots
         }
 
         // Main attack loop
+        FarmProgress progress = new();
         while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
         {
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (item != null && TrackFarmProgress(progress, item, quant, isTemp, log))
+            {
+                HopPublicRoom(map, progress, pad: pad);
+                // The old snapshot points at the previous room's monsters.
+                targets = Bot.Monsters.MapMonsters.Where(m => m != null && m.MapID == monsterMapID && m.Alive).ToList();
+                continue;
+            }
 
             if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
             {
@@ -7240,8 +7292,17 @@ public class CoreBots
         if (log)
             FarmingLogger(item, quantity);
 
+        FarmProgress progress = new();
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
+            if (TrackFarmProgress(progress, item, quantity, isTemp, log))
+            {
+                HopPublicRoom(Bot.Map.Name, progress, target.Cell, "Left");
+                // Same monster in the new room.
+                target = FindMonster(Bot.Map.Name, trimmedName) ?? target;
+                continue;
+            }
+
             if (Bot.Player.Cell != target.Cell)
             {
                 Bot.Map.Jump(target.Cell, "Left", autoCorrect: inPublicRoom());
@@ -7281,10 +7342,17 @@ public class CoreBots
         if (log)
             FarmingLogger(itemID.ToString(), quantity);
 
+        FarmProgress progress = new();
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
         {
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (TrackFarmProgress(progress, itemID, quantity, isTemp, log))
+            {
+                HopPublicRoom(Bot.Map.Name, progress, cell ?? "Enter", "Left");
+                continue;
+            }
 
             if (cell != null && Bot.Player.Cell != cell)
             {
@@ -7339,10 +7407,17 @@ public class CoreBots
         if (log)
             FarmingLogger(item, quantity);
 
+        FarmProgress progress = new();
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (TrackFarmProgress(progress, item, quantity, isTemp, log))
+            {
+                HopPublicRoom(Bot.Map.Name, progress, cell ?? "Enter", "Left");
+                continue;
+            }
 
             if (cell != null && Bot.Player.Cell != cell)
             {
@@ -7381,6 +7456,113 @@ public class CoreBots
         Bot.Wait.ForPickup(item);
     }
 
+    private sealed class FarmProgress
+    {
+        public int LastQty = -1;
+        public long LastCellHp = -1;
+        public DateTime LastChange = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Logs "item x/quant" whenever the farmed count goes up, and returns true when, while in a public
+    /// room, there was no progress for <see cref="PublicRoomStuckMinutes"/>. Progress is the item count
+    /// going up, any monster dying, or the monsters in our cell losing HP (a long boss fight that is
+    /// still going is not a stall). Only on VibeSkua; on other clients it always returns false.
+    /// </summary>
+    private bool TrackFarmProgress(FarmProgress progress, string item, int quant, bool isTemp, bool log) =>
+        TrackFarmProgress(progress, item, quant, log,
+            () => isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item));
+
+    private bool TrackFarmProgress(FarmProgress progress, int itemID, int quant, bool isTemp, bool log) =>
+        TrackFarmProgress(progress,
+            Bot.Inventory.GetItem(itemID)?.Name ?? Bot.TempInv.GetItem(itemID)?.Name ?? itemID.ToString(),
+            quant, log,
+            () => (isTemp ? Bot.TempInv.GetItem(itemID)?.Quantity : Bot.Inventory.GetItem(itemID)?.Quantity) ?? 0);
+
+    private bool TrackFarmProgress(FarmProgress progress, string label, int quant, bool log, Func<int> quantity)
+    {
+        // VibeSkua only: other clients keep the farm loops exactly as they were.
+        if (!OnVibeSkua)
+            return false;
+
+        int qty = quantity();
+        if (qty != progress.LastQty)
+        {
+            if (log && progress.LastQty >= 0 && qty > progress.LastQty)
+                Logger($"{label}: {Math.Min(qty, quant)}/{quant}", "Progress");
+            progress.LastQty = qty;
+            progress.LastChange = DateTime.Now;
+            return false;
+        }
+
+        if (_lastMonsterKill > progress.LastChange)
+            progress.LastChange = _lastMonsterKill;
+
+        long cellHp = Bot.Monsters.CurrentMonsters.Where(m => m.HP > 0).Sum(m => (long)m.HP);
+        if (progress.LastCellHp >= 0 && cellHp < progress.LastCellHp)
+            progress.LastChange = DateTime.Now;
+        progress.LastCellHp = cellHp;
+
+        return PublicRoomStuckMinutes > 0
+            && DateTime.Now - progress.LastChange >= TimeSpan.FromMinutes(PublicRoomStuckMinutes)
+            && inPublicRoom()
+            && !InConfiguredPrivateRoom();
+    }
+
+    /// <summary>
+    /// True when the current room is the CBO private room. inPublicRoom() only checks for a number
+    /// below 1000, which also matches a private room configured with a low number.
+    /// </summary>
+    private bool InConfiguredPrivateRoom() =>
+        PrivateRooms
+        && int.TryParse(Bot.Map.FullName.Split('-').Last(), out int nr)
+        && nr == PrivateRoomNumber;
+
+    /// <summary>
+    /// Leaves the current public room and rejoins the map, which usually lands in a different room
+    /// (same as stopping and restarting the bot).
+    /// </summary>
+    private const int RoomHopAttempts = 3;
+
+    private void HopPublicRoom(string map, FarmProgress progress, string cell = "Enter", string pad = "Spawn")
+    {
+        string oldRoom = Bot.Map.FullName;
+        Logger($"No progress for {PublicRoomStuckMinutes} min in /{oldRoom}, switching room.", "RoomHop");
+
+        if (Bot.Player.HasTarget)
+            Bot.Combat.CancelTarget();
+        JumpWait();
+
+        // A hop only counts once we're actually in another room of the map (a full or
+        // unavailable room leaves us elsewhere, or back in the same one): retry a few times.
+        for (int attempt = 1; attempt <= RoomHopAttempts && !Bot.ShouldExit; attempt++)
+        {
+            Join("whitemap");
+            Bot.Wait.ForMapLoad("whitemap");
+            // Only called while in a public room, so stay public even when private rooms are enabled.
+            Join(map, cell, pad, publicRoom: true);
+            Bot.Wait.ForMapLoad(map);
+
+            if (Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase)
+                && Bot.Map.FullName != oldRoom
+                && Bot.Player.Loaded)
+            {
+                Logger($"Now in /{Bot.Map.FullName} (was /{oldRoom}).", "RoomHop");
+                progress.LastChange = DateTime.Now;
+                progress.LastCellHp = -1;
+                return;
+            }
+            Logger($"Attempt {attempt}/{RoomHopAttempts} didn't reach another room (now /{Bot.Map.FullName}).", "RoomHop");
+        }
+
+        // Give up for now: farm where we are and only try again after another full timeout.
+        Logger($"Couldn't switch rooms after {RoomHopAttempts} attempts, staying in /{Bot.Map.FullName}.", "RoomHop");
+        if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
+            Join(map, cell, pad, publicRoom: true);
+        progress.LastChange = DateTime.Now;
+        progress.LastCellHp = -1;
+    }
+
     #region IsMonsterAlive
 
     public bool IsMonsterAlive(Monster? mon) =>
@@ -7401,7 +7583,14 @@ public class CoreBots
 
     public void CleanKilledMonstersList(string map) => KilledMonsters.Clear();
 
-    public void KilledMonsterListener(int monsterMapID) => KilledMonsters.Add(monsterMapID);
+    public void KilledMonsterListener(int monsterMapID)
+    {
+        KilledMonsters.Add(monsterMapID);
+        _lastMonsterKill = DateTime.Now;
+    }
+
+    // Last time a monster died in the room; long boss fights count as progress even without the drop.
+    private DateTime _lastMonsterKill = DateTime.MinValue;
 
     public void RespawnListener(dynamic packet)
     { //%xt%respawnMon%-1%12% (monster map ID is 12 in this example)
@@ -11991,6 +12180,8 @@ public class CoreBots
             PrivateRoomNumber = _PrivateRoomNumber;
         if (CBOBool("PublicDifficult", out bool _PublicDifficult))
             PublicDifficult = _PublicDifficult;
+        if (CBOInt("PublicRoomStuckMinutes", out int _PublicRoomStuckMinutes))
+            PublicRoomStuckMinutes = Math.Max(0, _PublicRoomStuckMinutes);
         if (CBOBool("BankMiscAC", out bool _BankMiscAC))
             BankMiscAC = _BankMiscAC;
         if (CBOBool("BankUnenhancedACGear", out bool _BankUnenhGear))
