@@ -411,7 +411,7 @@ public class MergeTemplateHelperV2
         string existingBody = existingContent[(ExistingOpen + 1)..ExistingClose];
         string generatedBody = generatedContent[(GeneratedOpen + 1)..GeneratedClose];
         Dictionary<string, string> oldCaseBodies = ExtractCaseBodies(existingBody);
-        Match generatedDefault = Regex.Match(generatedBody, @"(?m)^[ \\t]*default\\s*:", RegexOptions.CultureInvariant);
+        Match generatedDefault = Regex.Match(generatedBody, @"(?m)^[ \t]*default\s*:", RegexOptions.CultureInvariant);
         int generatedCasesEnd = generatedDefault.Success ? generatedDefault.Index : generatedBody.Length;
         MatchCollection generatedLabels = Regex.Matches(
             generatedBody,
@@ -460,6 +460,10 @@ public class MergeTemplateHelperV2
             @"(?m)^[ \t]*case\s+""(?<label>(?:\\.|[^""])*)""\s*:",
             RegexOptions.CultureInvariant
         );
+        Match defaultMatch = Regex.Match(switchBody, @"(?m)^[ \t]*default\s*:", RegexOptions.CultureInvariant);
+        int casesEnd = defaultMatch.Success && (labels.Count == 0 || defaultMatch.Index > labels[0].Index)
+            ? defaultMatch.Index
+            : switchBody.Length;
         List<string> pendingLabels = [];
         for (int i = 0; i < labels.Count; i++)
         {
