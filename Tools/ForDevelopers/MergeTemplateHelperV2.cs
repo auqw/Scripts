@@ -13,6 +13,8 @@ tags: developer, merge, generator, drops, packets, v2
 
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Items;
@@ -21,6 +23,7 @@ using Skua.Core.Models.Shops;
 using Skua.Core.Options;
 using Skua.Core.Scripts;
 using Skua.Core.Utils;
+using Skua.Core.ViewModels;
 
 public class MergeTemplateHelperV2
 {
@@ -44,6 +47,7 @@ public class MergeTemplateHelperV2
         new Option<string>("location", "Location", "Location containing the merge shop and its monsters.", ""),
         new Option<int>("shopID", "Shop ID", "Optional. Leave 0 to generate every shop found in the location SWF.", 0),
         new Option<bool>("ignoreCaseStorage", "Ignore CaseStorage", "Generate without using stored acquisition cases.", false),
+        new Option<bool>("regenerateExisting", "Regenerate Existing Merge", "Select an existing merge script from your Skua Scripts directory and refresh its generated sections.", false),
         CoreBots.Instance.SkipOptions,
     ];
 
@@ -69,6 +73,12 @@ public class MergeTemplateHelperV2
         string map = (Bot.Config?.Get<string>("location") ?? "").Trim().ToLowerInvariant();
         int requestedShopID = Bot.Config?.Get<int>("shopID") ?? 0;
         bool ignoreCaseStorage = Bot.Config?.Get<bool>("ignoreCaseStorage") ?? false;
+        bool regenerateExisting = Bot.Config?.Get<bool>("regenerateExisting") ?? false;
+        if (regenerateExisting)
+        {
+            RegenerateExisting(ignoreCaseStorage);
+            return;
+        }
         if (string.IsNullOrWhiteSpace(map))
             throw new InvalidOperationException("Enter a valid location.");
 
@@ -122,13 +132,73 @@ public class MergeTemplateHelperV2
         }
     }
 
+    private void RegenerateExisting(bool ignoreCaseStorage)
+    {
+        IFileDialogService fileDialog = Ioc.Default.GetRequiredService<IFileDialogService>();
+        string? path = fileDialog.OpenFile(ClientFileSources.SkuaScriptsDIR, "Skua Merge Script (*.cs)|*.cs");
+        if (string.IsNullOrWhiteSpace(path))
+            return;
+
+        string scriptsDirectory = Path.GetFullPath(ClientFileSources.SkuaScriptsDIR);
+        string selectedPath = Path.GetFullPath(path);
+        string relativePath = Path.GetRelativePath(scriptsDirectory, selectedPath);
+        if (relativePath == ".." || relativePath.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal)
+            || Path.IsPathRooted(relativePath))
+            throw new InvalidOperationException("Select a .cs file inside your Skua Scripts directory.");
+
+        string existingContent = File.ReadAllText(selectedPath);
+        Match mergeCall = Regex.Match(
+            existingContent,
+            @"Adv\.StartBuyAllMerge\s*\(\s*""(?<map>(?:\\.|[^""])*)""\s*,\s*(?<shopID>\d+)",
+            RegexOptions.CultureInvariant
+        );
+        if (!mergeCall.Success
+            || !int.TryParse(mergeCall.Groups["shopID"].Value, out int shopID)
+            || shopID <= 0)
+            throw new InvalidOperationException("The selected file does not contain a valid Adv.StartBuyAllMerge("map", shopID, ...) call.");
+
+        string map = mergeCall.Groups["map"].Value.Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(map))
+            throw new InvalidOperationException("The selected merge call contains an empty map name.");
+
+        Core.Logger($"Regenerating {Path.GetFileName(selectedPath)} from /{map}, shop {shopID}.");
+        Core.Join(map);
+        if (!Bot.Wait.ForMapLoad(map))
+            throw new InvalidOperationException($"Failed to join /{map}.");
+
+        LocationSwfQuestReader.LocationQuestData location = new LocationSwfQuestReader().ReadCurrentMap();
+        if (!location.ShopIDs.Contains(shopID))
+            Core.Logger($"Shop {shopID} was not listed in the current location SWF; attempting to load it directly.");
+
+        IReadOnlyList<DropPacketCollector.MonsterDrops> monsters = new DropPacketCollector().Collect();
+        List<Quest> mapQuests = LoadMapQuests(location.QuestIDs);
+        string? output = GenerateShop(
+            map,
+            shopID,
+            monsters,
+            mapQuests,
+            location.MapObjectsByQuest,
+            ignoreCaseStorage,
+            selectedPath
+        );
+        if (output == null)
+            throw new InvalidOperationException($"Shop {shopID} in /{map} is not a merge shop or has no requirements.");
+
+        Core.Logger($"Successfully regenerated {Path.GetFileName(selectedPath)}. Existing custom code outside generated sections was retained.");
+        Process.Start(new ProcessStartInfo("explorer.exe", $"/select,\"{selectedPath}\"")
+        {
+            UseShellExecute = true
+        });
+    }
+
     private string? GenerateShop(
         string map,
         int shopID,
         IReadOnlyList<DropPacketCollector.MonsterDrops> monsters,
         IReadOnlyList<Quest> mapQuests,
         IReadOnlyDictionary<int, IReadOnlyList<int>> mapObjectsByQuest,
-        bool ignoreCaseStorage
+        bool ignoreCaseStorage,
+        string? existingFilePath = null
     )
     {
         List<ShopItem> allShopItems = Core.GetShopItems(map, shopID)
@@ -272,9 +342,229 @@ public class MergeTemplateHelperV2
 
         string outputDirectory = Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP");
         Directory.CreateDirectory(outputDirectory);
-        string path = Path.Combine(outputDirectory, className + ".cs");
-        Core.WriteFile(path, [.. lines]);
+        string path = existingFilePath ?? Path.Combine(outputDirectory, className + ".cs");
+        string generatedContent = string.Join(Environment.NewLine, lines);
+        if (existingFilePath != null)
+        {
+            string existingContent = File.ReadAllText(existingFilePath);
+            string backupPath = existingFilePath + ".bak";
+            if (!File.Exists(backupPath))
+                File.Copy(existingFilePath, backupPath);
+            generatedContent = MergeExistingFile(existingContent, generatedContent);
+            File.WriteAllText(existingFilePath, generatedContent);
+        }
+        else
+            Core.WriteFile(path, [.. lines]);
         return path;
+    }
+
+
+    /// <summary>
+    /// Updates generated metadata, class name, ingredient cases, and Select options while retaining
+    /// the selected script's custom code outside those generated sections.
+    /// </summary>
+    private static string MergeExistingFile(string existingContent, string generatedContent)
+    {
+        string result = existingContent;
+        string[] metadataKeys = ["name", "description", "tags"];
+        foreach (string key in metadataKeys)
+        {
+            Match generatedMetadata = Regex.Match(
+                generatedContent,
+                $@"(?m)^\s*{key}:\s*.*$",
+                RegexOptions.CultureInvariant
+            );
+            if (!generatedMetadata.Success)
+                continue;
+
+            Match existingMetadata = Regex.Match(
+                result,
+                $@"(?m)^\s*{key}:\s*.*$",
+                RegexOptions.CultureInvariant
+            );
+            if (existingMetadata.Success)
+                result = result.Remove(existingMetadata.Index, existingMetadata.Length)
+                    .Insert(existingMetadata.Index, generatedMetadata.Value);
+        }
+
+        Match generatedClass = Regex.Match(generatedContent, @"(?m)^\s*public\s+class\s+\w+");
+        Match existingClass = Regex.Match(result, @"(?m)^\s*public\s+class\s+\w+");
+        if (generatedClass.Success && existingClass.Success)
+            result = result.Remove(existingClass.Index, existingClass.Length)
+                .Insert(existingClass.Index, generatedClass.Value);
+
+        result = ReplaceGeneratedSwitch(result, generatedContent);
+        result = ReplaceSelectOptions(result, generatedContent);
+        return result;
+    }
+
+    /// <summary>
+    /// Replaces generated ingredient cases, reusing existing case bodies for ingredients that remain.
+    /// </summary>
+    private static string ReplaceGeneratedSwitch(string existingContent, string generatedContent)
+    {
+        (int ExistingOpen, int ExistingClose) = FindSwitchBounds(existingContent);
+        (int GeneratedOpen, int GeneratedClose) = FindSwitchBounds(generatedContent);
+        if (ExistingOpen < 0 || ExistingClose < 0 || GeneratedOpen < 0 || GeneratedClose < 0)
+            return existingContent;
+
+        string existingBody = existingContent[(ExistingOpen + 1)..ExistingClose];
+        string generatedBody = generatedContent[(GeneratedOpen + 1)..GeneratedClose];
+        Dictionary<string, string> oldCaseBodies = ExtractCaseBodies(existingBody);
+        MatchCollection generatedLabels = Regex.Matches(
+            generatedBody,
+            @"(?m)^[ \t]*case\s+""(?<label>(?:\\.|[^""])*)""\s*:",
+            RegexOptions.CultureInvariant
+        );
+        if (generatedLabels.Count == 0)
+            return existingContent;
+
+        int firstCase = generatedLabels[0].Index;
+        string prefix = generatedBody[..firstCase];
+        string suffix = generatedBody[(generatedLabels[^1].Index + generatedLabels[^1].Length)..];
+        List<string> refreshedCases = [];
+        List<string> pendingLabels = [];
+        for (int i = 0; i < generatedLabels.Count; i++)
+        {
+            Match labelMatch = generatedLabels[i];
+            int segmentStart = labelMatch.Index + labelMatch.Length;
+            int segmentEnd = i + 1 < generatedLabels.Count ? generatedLabels[i + 1].Index : generatedBody.Length;
+            string segment = generatedBody[segmentStart..segmentEnd];
+            pendingLabels.Add(labelMatch.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\"));
+
+            if (!ContainsCaseCode(segment) && i + 1 < generatedLabels.Count)
+                continue;
+
+            foreach (string label in pendingLabels)
+            {
+                string body = oldCaseBodies.TryGetValue(label, out string? oldBody) ? oldBody : segment;
+                string labelLine = generatedBody[labelMatch.Index..(labelMatch.Index + labelMatch.Length)].TrimEnd();
+                refreshedCases.Add(labelLine + body);
+            }
+            pendingLabels.Clear();
+        }
+
+        string mergedBody = prefix + string.Join("", refreshedCases) + suffix;
+        return existingContent.Remove(ExistingOpen + 1, ExistingClose - ExistingOpen - 1)
+            .Insert(ExistingOpen + 1, mergedBody);
+    }
+
+    private static Dictionary<string, string> ExtractCaseBodies(string switchBody)
+    {
+        Dictionary<string, string> result = [];
+        MatchCollection labels = Regex.Matches(
+            switchBody,
+            @"(?m)^[ \t]*case\s+""(?<label>(?:\\.|[^""])*)""\s*:",
+            RegexOptions.CultureInvariant
+        );
+        List<string> pendingLabels = [];
+        for (int i = 0; i < labels.Count; i++)
+        {
+            Match label = labels[i];
+            int start = label.Index + label.Length;
+            int end = i + 1 < labels.Count ? labels[i + 1].Index : switchBody.Length;
+            string body = switchBody[start..end];
+            pendingLabels.Add(label.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\"));
+            if (!ContainsCaseCode(body) && i + 1 < labels.Count)
+                continue;
+            foreach (string pending in pendingLabels)
+                result[pending] = body;
+            pendingLabels.Clear();
+        }
+        return result;
+    }
+
+    private static bool ContainsCaseCode(string value)
+    {
+        string withoutComments = Regex.Replace(value, @"(?m)//.*$", "");
+        return !string.IsNullOrWhiteSpace(withoutComments);
+    }
+
+    private static (int Open, int Close) FindSwitchBounds(string content)
+    {
+        Match match = Regex.Match(content, @"\bswitch\s*\(\s*req\.Name\s*\)", RegexOptions.CultureInvariant);
+        if (!match.Success)
+            return (-1, -1);
+        int open = content.IndexOf('{', match.Index + match.Length);
+        if (open < 0)
+            return (-1, -1);
+        int close = FindMatchingDelimiter(content, open, '{', '}');
+        return (open, close);
+    }
+
+    private static string ReplaceSelectOptions(string existingContent, string generatedContent)
+    {
+        int existingStart = existingContent.IndexOf("public List<IOption> Select", StringComparison.Ordinal);
+        int generatedStart = generatedContent.IndexOf("public List<IOption> Select", StringComparison.Ordinal);
+        if (existingStart < 0 || generatedStart < 0)
+            return existingContent;
+
+        int existingEquals = existingContent.IndexOf('=', existingStart);
+        int generatedEquals = generatedContent.IndexOf('=', generatedStart);
+        int existingOpen = FindInitializerOpen(existingContent, existingEquals + 1);
+        int generatedOpen = FindInitializerOpen(generatedContent, generatedEquals + 1);
+        if (existingOpen < 0 || generatedOpen < 0)
+            return existingContent;
+
+        char existingOpenChar = existingContent[existingOpen];
+        char generatedOpenChar = generatedContent[generatedOpen];
+        char existingCloseChar = existingOpenChar == '[' ? ']' : '}';
+        char generatedCloseChar = generatedOpenChar == '[' ? ']' : '}';
+        int existingClose = FindMatchingDelimiter(existingContent, existingOpen, existingOpenChar, existingCloseChar);
+        int generatedClose = FindMatchingDelimiter(generatedContent, generatedOpen, generatedOpenChar, generatedCloseChar);
+        if (existingClose < 0 || generatedClose < 0)
+            return existingContent;
+
+        int existingEnd = existingClose + 1;
+        while (existingEnd < existingContent.Length && char.IsWhiteSpace(existingContent[existingEnd]))
+            existingEnd++;
+        if (existingEnd < existingContent.Length && existingContent[existingEnd] == ';')
+            existingEnd++;
+        int generatedEnd = generatedClose + 1;
+        while (generatedEnd < generatedContent.Length && char.IsWhiteSpace(generatedContent[generatedEnd]))
+            generatedEnd++;
+        if (generatedEnd < generatedContent.Length && generatedContent[generatedEnd] == ';')
+            generatedEnd++;
+
+        string generatedSection = generatedContent[generatedStart..generatedEnd];
+        return existingContent.Remove(existingStart, existingEnd - existingStart)
+            .Insert(existingStart, generatedSection);
+    }
+
+    private static int FindInitializerOpen(string content, int start)
+    {
+        for (int i = Math.Max(0, start); i < content.Length; i++)
+            if (content[i] is '[' or '{')
+                return i;
+        return -1;
+    }
+
+    private static int FindMatchingDelimiter(string content, int start, char open, char close)
+    {
+        int depth = 0;
+        bool inString = false;
+        bool escaped = false;
+        for (int i = start; i < content.Length; i++)
+        {
+            char current = content[i];
+            if (inString)
+            {
+                if (escaped)
+                    escaped = false;
+                else if (current == '\\')
+                    escaped = true;
+                else if (current == '"')
+                    inString = false;
+                continue;
+            }
+            if (current == '"')
+                inString = true;
+            else if (current == open)
+                depth++;
+            else if (current == close && --depth == 0)
+                return i;
+        }
+        return -1;
     }
 
     private List<Quest> LoadMapQuests(IReadOnlyList<int> questIDs)
