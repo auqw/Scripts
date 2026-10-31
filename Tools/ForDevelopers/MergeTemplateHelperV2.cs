@@ -544,40 +544,64 @@ public class MergeTemplateHelperV2
     {
         int depth = 0;
         bool inString = false;
+        bool inCharacter = false;
+        bool inLineComment = false;
+        bool inBlockComment = false;
         bool escaped = false;
+
         for (int i = start; i < content.Length; i++)
         {
             char current = content[i];
-            if (inString)
+            char next = i + 1 < content.Length ? content[i + 1] : '\0';
+
+            if (inLineComment)
+            {
+                if (current == '\n')
+                    inLineComment = false;
+                continue;
+            }
+            if (inBlockComment)
+            {
+                if (current == '*' && next == '/')
+                {
+                    inBlockComment = false;
+                    i++;
+                }
+                continue;
+            }
+            if (inString || inCharacter)
             {
                 if (escaped)
                     escaped = false;
                 else if (current == '\\')
                     escaped = true;
-                else if (current == '"')
+                else if (inString && current == '"')
                     inString = false;
+                else if (inCharacter && current == '\'')
+                    inCharacter = false;
                 continue;
             }
-            if (current == '"')
+
+            if (current == '/' && next == '/')
+            {
+                inLineComment = true;
+                i++;
+            }
+            else if (current == '/' && next == '*')
+            {
+                inBlockComment = true;
+                i++;
+            }
+            else if (current == '"')
                 inString = true;
+            else if (current == '\'')
+                inCharacter = true;
             else if (current == open)
                 depth++;
             else if (current == close && --depth == 0)
                 return i;
         }
         return -1;
-    }
-
-    private List<Quest> LoadMapQuests(IReadOnlyList<int> questIDs)
-    {
-        List<Quest> result = [];
-        foreach (int questID in questIDs.Where(id => id > 0).Distinct())
-        {
-            Core.Logger($"Capturing quest {questID} from its getQuests packet.");
-            result.Add(new QuestPacketCollector().Load(questID));
-            Core.Sleep();
-        }
-        return result;
     }
 
     private static GeneratedCase GenerateCase(ItemBase ingredient, GenerationContext context)
