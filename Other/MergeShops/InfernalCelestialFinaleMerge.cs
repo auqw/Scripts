@@ -116,7 +116,8 @@ public class InfernalCelestialFinaleMerge
                 case "Life Spirit":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernaldianoia", "Avatar of Life", req.Name, quant, false, false);
+                    // Kill 14 then 15, 14 doesnt respawn till 15 is killed
+                    Core.KillBossWithSecondary("infernaldianoia", "r7", "Left", 14, 15, req.Name, req.Quantity, req.Temp, false);
                     break;
             }
         }
