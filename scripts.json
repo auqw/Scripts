@@ -14324,8 +14324,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/ScriptMainCleaner.cs",
-    "size": 5908,
-    "sha256": "50f7b6eca1e03d6ed0a87cd48e5c26854c4f3a775018e8a9525e93f28f46a8f7",
+    "size": 5907,
+    "sha256": "5f2f033a7c20a472cca6716b80ba3b8227cfed49fa04684b149c2f46ebe195e9",
     "fileName": "ScriptMainCleaner.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/ScriptMainCleaner.cs"
   },
