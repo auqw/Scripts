@@ -411,6 +411,8 @@ public class MergeTemplateHelperV2
         string existingBody = existingContent[(ExistingOpen + 1)..ExistingClose];
         string generatedBody = generatedContent[(GeneratedOpen + 1)..GeneratedClose];
         Dictionary<string, string> oldCaseBodies = ExtractCaseBodies(existingBody);
+        Match generatedDefault = Regex.Match(generatedBody, @"(?m)^[ \\t]*default\\s*:", RegexOptions.CultureInvariant);
+        int generatedCasesEnd = generatedDefault.Success ? generatedDefault.Index : generatedBody.Length;
         MatchCollection generatedLabels = Regex.Matches(
             generatedBody,
             @"(?m)^[ \t]*case\s+""(?<label>(?:\\.|[^""])*)""\s*:",
@@ -420,6 +422,7 @@ public class MergeTemplateHelperV2
             return existingContent;
 
         string prefix = generatedBody[..generatedLabels[0].Index];
+        string suffix = generatedBody[generatedCasesEnd..];
         List<string> refreshedCases = [];
         List<(string Label, string Line)> pendingLabels = [];
         for (int i = 0; i < generatedLabels.Count; i++)
@@ -427,7 +430,7 @@ public class MergeTemplateHelperV2
             Match labelMatch = generatedLabels[i];
             int lineEnd = generatedBody.IndexOf('\n', labelMatch.Index + labelMatch.Length);
             int segmentStart = lineEnd < 0 ? labelMatch.Index + labelMatch.Length : lineEnd + 1;
-            int segmentEnd = i + 1 < generatedLabels.Count ? generatedLabels[i + 1].Index : generatedBody.Length;
+            int segmentEnd = i + 1 < generatedLabels.Count ? generatedLabels[i + 1].Index : generatedCasesEnd;
             string segment = generatedBody[segmentStart..segmentEnd];
             string label = labelMatch.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\");
             string labelLine = generatedBody[labelMatch.Index..segmentStart];
@@ -444,7 +447,7 @@ public class MergeTemplateHelperV2
             pendingLabels.Clear();
         }
 
-        string mergedBody = prefix + string.Join("", refreshedCases);
+        string mergedBody = prefix + string.Join("", refreshedCases) + suffix;
         return existingContent.Remove(ExistingOpen + 1, ExistingClose - ExistingOpen - 1)
             .Insert(ExistingOpen + 1, mergedBody);
     }
@@ -463,7 +466,7 @@ public class MergeTemplateHelperV2
             Match label = labels[i];
             int lineEnd = switchBody.IndexOf('\n', label.Index + label.Length);
             int start = lineEnd < 0 ? label.Index + label.Length : lineEnd + 1;
-            int end = i + 1 < labels.Count ? labels[i + 1].Index : switchBody.Length;
+            int end = i + 1 < labels.Count ? labels[i + 1].Index : casesEnd;
             string body = switchBody[start..end];
             pendingLabels.Add(label.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\"));
             if (!ContainsCaseCode(body) && i + 1 < labels.Count)
