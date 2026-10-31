@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -176,19 +177,107 @@ public sealed class LocationSwfQuestReader
         string[] candidates =
         [
             Path.Combine(localAppData, "Programs", "FFDec", "ffdec-cli.exe"),
-        Path.Combine(programFiles, "FFDec", "ffdec-cli.exe"),
-        Path.Combine(programFilesX86, "FFDec", "ffdec-cli.exe"),
-        Path.Combine(localAppData, "Programs", "FFDec", "ffdec.exe"),
-        Path.Combine(programFiles, "FFDec", "ffdec.exe"),
-        Path.Combine(programFilesX86, "FFDec", "ffdec.exe"),
-    ];
+            Path.Combine(programFiles, "FFDec", "ffdec-cli.exe"),
+            Path.Combine(programFilesX86, "FFDec", "ffdec-cli.exe"),
+            Path.Combine(localAppData, "Programs", "FFDec", "ffdec.exe"),
+            Path.Combine(programFiles, "FFDec", "ffdec.exe"),
+            Path.Combine(programFilesX86, "FFDec", "ffdec.exe"),
+            Path.Combine(localAppData, "Skua", "Tools", "FFDec", "ffdec-cli.exe"),
+            Path.Combine(localAppData, "Skua", "Tools", "FFDec", "ffdec.exe"),
+        ];
 
         foreach (string candidate in candidates)
             if (File.Exists(candidate))
                 return candidate;
 
-        throw new FileNotFoundException(
-            "FFDec was not found. Install it, or set FFDEC_PATH to ffdec-cli.exe.");
+        const string version = "26.4.0";
+        string downloadUrl = $"https://github.com/jindrapetrik/jpexs-decompiler/releases/download/version{version}/ffdec_{version}.zip";
+        string installDirectory = Path.Combine(localAppData, "Skua", "Tools", "FFDec");
+
+        System.Windows.Forms.DialogResult choice = System.Windows.Forms.MessageBox.Show(
+            "FFDec is required to read this map's SWF data, but it is not installed.\n\n" +
+            "Would you like Skua to download and install the official FFDec portable package?\n\n" +
+            "This installs it only for your Windows user; no administrator access is required.",
+            "FFDec Required",
+            System.Windows.Forms.MessageBoxButtons.YesNo,
+            System.Windows.Forms.MessageBoxIcon.Question
+        );
+
+        if (choice != System.Windows.Forms.DialogResult.Yes)
+            throw new OperationCanceledException("FFDec installation was declined. Regeneration was cancelled.");
+
+        string temporaryZip = Path.Combine(Path.GetTempPath(), $"ffdec_{version}_{Guid.NewGuid():N}.zip");
+        string temporaryDirectory = Path.Combine(Path.GetTempPath(), $"ffdec_{Guid.NewGuid():N}");
+        try
+        {
+            using HttpClient client = new() { Timeout = TimeSpan.FromMinutes(5) };
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Skua-MergeTemplateHelper/1.0");
+            byte[] archive = client.GetByteArrayAsync(downloadUrl).GetAwaiter().GetResult();
+            File.WriteAllBytes(temporaryZip, archive);
+
+            Directory.CreateDirectory(temporaryDirectory);
+            using (FileStream file = File.OpenRead(temporaryZip))
+            using (ZipArchive zip = new(file, ZipArchiveMode.Read))
+            {
+                foreach (ZipArchiveEntry entry in zip.Entries)
+                {
+                    string destination = Path.GetFullPath(Path.Combine(temporaryDirectory, entry.FullName));
+                    if (!destination.StartsWith(temporaryDirectory + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+                        throw new InvalidDataException("The FFDec archive contains an invalid file path.");
+
+                    if (string.IsNullOrEmpty(entry.Name))
+                    {
+                        Directory.CreateDirectory(destination);
+                        continue;
+                    }
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                    entry.ExtractToFile(destination, overwrite: true);
+                }
+            }
+
+            string? executable = Directory.GetFiles(temporaryDirectory, "ffdec-cli.exe", SearchOption.AllDirectories).FirstOrDefault()
+                ?? Directory.GetFiles(temporaryDirectory, "ffdec.exe", SearchOption.AllDirectories).FirstOrDefault();
+            if (executable == null)
+                throw new FileNotFoundException("The downloaded FFDec archive did not contain ffdec-cli.exe or ffdec.exe.");
+
+            if (Directory.Exists(installDirectory))
+                Directory.Delete(installDirectory, recursive: true);
+            Directory.CreateDirectory(installDirectory);
+
+            foreach (string directory in Directory.GetDirectories(temporaryDirectory, "*", SearchOption.AllDirectories))
+                Directory.CreateDirectory(directory.Replace(temporaryDirectory, installDirectory, StringComparison.OrdinalIgnoreCase));
+
+            foreach (string file in Directory.GetFiles(temporaryDirectory, "*", SearchOption.AllDirectories))
+            {
+                string destination = file.Replace(temporaryDirectory, installDirectory, StringComparison.OrdinalIgnoreCase);
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Copy(file, destination, overwrite: true);
+            }
+
+            string installedExecutable = Path.Combine(installDirectory, Path.GetRelativePath(temporaryDirectory, executable));
+            if (!File.Exists(installedExecutable))
+                throw new FileNotFoundException("FFDec installation completed, but its executable could not be found.", installedExecutable);
+
+            System.Windows.Forms.MessageBox.Show(
+                $"FFDec {version} was installed successfully. The merge regeneration will now continue.",
+                "FFDec Installed",
+                System.Windows.Forms.MessageBoxButtons.OK,
+                System.Windows.Forms.MessageBoxIcon.Information
+            );
+            return installedExecutable;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Could not download or install FFDec. You can install it manually from https://github.com/jindrapetrik/jpexs-decompiler/releases or set FFDEC_PATH. Details: {ex.Message}", ex);
+        }
+        finally
+        {
+            try { if (File.Exists(temporaryZip)) File.Delete(temporaryZip); }
+            catch { }
+            try { if (Directory.Exists(temporaryDirectory)) Directory.Delete(temporaryDirectory, recursive: true); }
+            catch { }
+        }
     }
 
     private static void ExportScripts(string swf, string output)
