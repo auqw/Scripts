@@ -101,6 +101,23 @@ public class FeastoftheDepths
                     }
                     Core.CancelRegisteredQuests();
                     break;
+                case "Shrimp Noodle Pack": // #FROM CASE STORAGE
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10460, "eldritchworld", "Kathool Cultist");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
                     Core.Logger($"The bot hasn't been taught how to get {req.Name}.", messageBox: shouldStop, stopBot: shouldStop);
@@ -114,6 +131,7 @@ public class FeastoftheDepths
         new Option<bool>("89695", "Pumpkin Warlock", "Mode: [select] only\nShould the bot buy \"Pumpkin Warlock\" ?", false),
         new Option<bool>("95578", "Erudite Plague Doctor", "Mode: [select] only\nShould the bot buy \"Erudite Plague Doctor\" ?", false),
         new Option<bool>("95579", "Faustian Plague Doctor", "Mode: [select] only\nShould the bot buy \"Faustian Plague Doctor\" ?", false),
+        new Option<bool>("104743", "Elodea's Dress", "Mode: [select] only\nShould the bot buy \"Elodea's Dress\" ?", false),
         new Option<bool>("95584", "Erudite Plague Doctor Cloak", "Mode: [select] only\nShould the bot buy \"Erudite Plague Doctor Cloak\" ?", false),
         new Option<bool>("95586", "Crimson Darkling Lamps", "Mode: [select] only\nShould the bot buy \"Crimson Darkling Lamps\" ?", false),
         new Option<bool>("95580", "Erudite Plague Doctor Hair", "Mode: [select] only\nShould the bot buy \"Erudite Plague Doctor Hair\" ?", false),
