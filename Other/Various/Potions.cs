@@ -297,6 +297,7 @@ public class PotionBuyer
                     break;
 
                 case "Potent Destruction Elixir":
+                case "Destruction Elixir":
                     currTrait = CoreFarms.AlchemyTraits.mRe;
                     BulkGrind("Dried Slime", "Arashtite Ore");
                     break;
