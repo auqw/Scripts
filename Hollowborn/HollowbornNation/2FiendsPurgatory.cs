@@ -152,6 +152,7 @@ public class FiendsPurgatory
             return;
         }
 
+        Bot.Quests.UpdateQuest(10030); // to show Blighted Zubami
         while (!Bot.ShouldExit && !HasReward())
         {
             Core.EnsureAccept(QuestID);
