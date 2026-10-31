@@ -179,7 +179,7 @@ public class ScriptMainCleaner
         @"Other\WheelOfDoomSpam.cs",
         @"Tools\ForDevelopers\GenerateQuestFiles.cs",
         @"Tools\GenerateQueuedScript.cs",
-        @"Tools\ForDevelopers\MergeTemplateHelper.cs",
+        @"Tools\ForDevelopers\MergeFileGenerator.cs",
         @"Tools\ForDevelopers\ScriptMainCleaner.cs",
         @"Tools\ForDevelopers\UpdateTags.cs",
     };
