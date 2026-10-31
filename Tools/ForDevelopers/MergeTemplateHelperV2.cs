@@ -155,7 +155,7 @@ public class MergeTemplateHelperV2
         if (!mergeCall.Success
             || !int.TryParse(mergeCall.Groups["shopID"].Value, out int shopID)
             || shopID <= 0)
-            throw new InvalidOperationException("The selected file does not contain a valid Adv.StartBuyAllMerge("map", shopID, ...) call.");
+            throw new InvalidOperationException("The selected file does not contain a valid Adv.StartBuyAllMerge call with a quoted map and numeric shop ID.");
 
         string map = mergeCall.Groups["map"].Value.Trim().ToLowerInvariant();
         if (string.IsNullOrWhiteSpace(map))
@@ -419,32 +419,32 @@ public class MergeTemplateHelperV2
         if (generatedLabels.Count == 0)
             return existingContent;
 
-        int firstCase = generatedLabels[0].Index;
-        string prefix = generatedBody[..firstCase];
-        string suffix = generatedBody[(generatedLabels[^1].Index + generatedLabels[^1].Length)..];
+        string prefix = generatedBody[..generatedLabels[0].Index];
         List<string> refreshedCases = [];
-        List<string> pendingLabels = [];
+        List<(string Label, string Line)> pendingLabels = [];
         for (int i = 0; i < generatedLabels.Count; i++)
         {
             Match labelMatch = generatedLabels[i];
-            int segmentStart = labelMatch.Index + labelMatch.Length;
+            int lineEnd = generatedBody.IndexOf('\n', labelMatch.Index + labelMatch.Length);
+            int segmentStart = lineEnd < 0 ? labelMatch.Index + labelMatch.Length : lineEnd + 1;
             int segmentEnd = i + 1 < generatedLabels.Count ? generatedLabels[i + 1].Index : generatedBody.Length;
             string segment = generatedBody[segmentStart..segmentEnd];
-            pendingLabels.Add(labelMatch.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\"));
+            string label = labelMatch.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\");
+            string labelLine = generatedBody[labelMatch.Index..segmentStart];
+            pendingLabels.Add((label, labelLine));
 
             if (!ContainsCaseCode(segment) && i + 1 < generatedLabels.Count)
                 continue;
 
-            foreach (string label in pendingLabels)
+            foreach ((string pendingLabel, string pendingLine) in pendingLabels)
             {
-                string body = oldCaseBodies.TryGetValue(label, out string? oldBody) ? oldBody : segment;
-                string labelLine = generatedBody[labelMatch.Index..(labelMatch.Index + labelMatch.Length)].TrimEnd();
-                refreshedCases.Add(labelLine + body);
+                string body = oldCaseBodies.TryGetValue(pendingLabel, out string? oldBody) ? oldBody : segment;
+                refreshedCases.Add(pendingLine + body);
             }
             pendingLabels.Clear();
         }
 
-        string mergedBody = prefix + string.Join("", refreshedCases) + suffix;
+        string mergedBody = prefix + string.Join("", refreshedCases);
         return existingContent.Remove(ExistingOpen + 1, ExistingClose - ExistingOpen - 1)
             .Insert(ExistingOpen + 1, mergedBody);
     }
@@ -461,7 +461,8 @@ public class MergeTemplateHelperV2
         for (int i = 0; i < labels.Count; i++)
         {
             Match label = labels[i];
-            int start = label.Index + label.Length;
+            int lineEnd = switchBody.IndexOf('\n', label.Index + label.Length);
+            int start = lineEnd < 0 ? label.Index + label.Length : lineEnd + 1;
             int end = i + 1 < labels.Count ? labels[i + 1].Index : switchBody.Length;
             string body = switchBody[start..end];
             pendingLabels.Add(label.Groups["label"].Value.Replace("\\\"", "\"").Replace("\\\\", "\\"));
