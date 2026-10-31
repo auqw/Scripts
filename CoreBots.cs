@@ -80,6 +80,12 @@ public class CoreBots
     // [Can Change] Whether the player should rest after killing a monster
     public bool ShouldRest { get; set; } = false;
 
+    // [Can Change] Start resting when health drops below this percentage of max health
+    public int RestHealthPercent { get; set; } = 35;
+
+    // [Can Change] Resume fighting when health reaches this percentage of max health
+    public int RestTargetHealthPercent { get; set; } = 100;
+
     // [Can Change] Whether the bot should attempt to clean your inventory by banking Misc. AC Items before starting the bot
     public bool BankMiscAC { get; set; } = false;
     public bool BankUnenhancedACGear { get; set; } = false;
@@ -177,6 +183,11 @@ public class CoreBots
         return Version.TryParse(minimumVersion, out Version? minimum) &&
             client.GetName().Version is Version current && current >= minimum;
     }
+
+    // IsVibeSkuaAvalonia() reflects over the entry assembly and the farm loops check it on
+    // every kill, so cache it: the client can't change while a script runs.
+    private bool? _onVibeSkua;
+    private bool OnVibeSkua => _onVibeSkua ??= IsVibeSkuaAvalonia();
 
     private const string DiscordLink = "https://discord.gg/mScWZYYSKS";
 
@@ -5235,6 +5246,8 @@ public class CoreBots
         {
             while (!Bot.ShouldExit)
             {
+                if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
 
@@ -5434,6 +5447,8 @@ public class CoreBots
         // Main kill loop
         while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             // Respawn check
             while (!Bot.ShouldExit && !Bot.Player.Alive)
                 Sleep(500);
@@ -5532,6 +5547,8 @@ public class CoreBots
         // Kill until item obtained (or once if no item)
         while (!Bot.ShouldExit && (ItemID == 0 || !(isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -5704,6 +5721,8 @@ public class CoreBots
         {
             while (!Bot.ShouldExit)
             {
+                if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
                 if (Bot.Player != null && !Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -5746,6 +5765,8 @@ public class CoreBots
                 && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
             )
             {
+                if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -5858,6 +5879,8 @@ public class CoreBots
                 ? Bot.TempInv.Contains(x.item, x.quant)
                 : CheckInventory(x.item, x.quant)))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -5937,6 +5960,8 @@ public class CoreBots
         // Main attack loop
         while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -7298,6 +7323,8 @@ public class CoreBots
 
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             if (Bot.Player.Cell != target.Cell)
             {
                 Bot.Map.Jump(target.Cell, "Left", autoCorrect: inPublicRoom());
@@ -7339,6 +7366,8 @@ public class CoreBots
 
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -7397,6 +7426,8 @@ public class CoreBots
 
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
+            if (OnVibeSkua) Rest(); // 🛌 recover HP between fights
+
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
@@ -8166,7 +8197,9 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Initiates resting for the bot's player character if conditions allow.
+    /// Rests when health falls below <see cref="RestHealthPercent"/> and waits until health
+    /// reaches <see cref="RestTargetHealthPercent"/> before returning. On other clients than
+    /// VibeSkua it keeps the original behavior (a single rest below 2% of max health).
     /// </summary>
     public void Rest()
     {
@@ -8178,15 +8211,152 @@ public class CoreBots
                 return;
             }
 
-            // Rest if the player is alive, should rest, and health is below 2% of max health
-            int healthThreshold = (int)Math.Ceiling((double)Bot.Player.MaxHealth / 50); // 50% threshold
-
-            if (ShouldRest && Bot.Player.Alive && Bot.Player.Health < healthThreshold)
+            // Other clients keep the original behavior: rest once below 2% of max health.
+            if (!OnVibeSkua)
             {
+                if (ShouldRest && Bot.Player.Alive && Bot.Player.Health < (int)Math.Ceiling((double)Bot.Player.MaxHealth / 50))
+                {
+                    Bot.Player.Rest(false);
+                    Logger($"Resting initiated: Health below threshold ({Bot.Player.Health}/{Bot.Player.MaxHealth}).");
+                }
+                return;
+            }
+
+            // Normalize here as well as in ReadCBO so direct property assignments cannot
+            // create a target that is equal to or below the start threshold.
+            int startPercent = Math.Clamp(RestHealthPercent, 1, 99);
+            int targetPercent = Math.Clamp(RestTargetHealthPercent, 2, 100);
+            if (targetPercent <= startPercent)
+                targetPercent = Math.Min(100, startPercent + 1);
+
+            // The original code used MaxHealth / 50 (2%), despite the comment saying 50%.
+            // That meant the bot only rested when it was already almost dead.
+            int healthThreshold = (int)Math.Ceiling((double)Bot.Player.MaxHealth * (startPercent / 100.0));
+            int targetHealth = (int)Math.Ceiling((double)Bot.Player.MaxHealth * (targetPercent / 100.0));
+
+            if (!ShouldRest || !Bot.Player.Alive)
+                return;
+
+            // Check health before waiting on combat so a healthy player never pays the
+            // combat-exit wait below on every kill.
+            if (Bot.Player.Health >= healthThreshold)
+                return;
+
+            // A live target means we're mid-fight: finish it unless HP is critically low
+            // (half the rest threshold), so long boss fights aren't abandoned for a rest.
+            bool midFight = Bot.Player.HasTarget && (Bot.Player.Target?.HP ?? 0) > 0;
+            if (midFight && Bot.Player.Health >= healthThreshold / 2)
+                return;
+
+            // Stop the player's own attacks: the client auto-attacks and re-targets whoever hits
+            // us, so this has to be repeated while waiting, not done once.
+            void Disengage()
+            {
+                Bot.Combat.CancelAutoAttack();
+                if (Bot.Player.HasTarget)
+                    Bot.Combat.CancelTarget();
+            }
+
+            // Bot.Wait.ForTrue counts WAIT_SLEEP ticks, not seconds, so wait on real time here.
+            bool WaitSeconds(Func<bool> done, double seconds)
+            {
+                DateTime until = DateTime.Now.AddSeconds(seconds);
+                while (!done() && !Bot.ShouldExit && DateTime.Now < until)
+                {
+                    Disengage();
+                    Sleep(250);
+                }
+                return done();
+            }
+
+            // Re-jumping into our own cell drops the monsters' aggro without moving (the "glitch"
+            // seen when pausing on maps with no safe cell). Twice, like JumpWait does.
+            void ResetAggro()
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Disengage();
+                    Bot.Map.Jump(Bot.Player.Cell, Bot.Player.Pad);
+                    Sleep(500);
+                }
+                Disengage();
+            }
+
+            bool aggroAll = Bot.Options.AggroAllMonsters;
+            bool aggro = Bot.Options.AggroMonsters;
+            bool attackWithoutTarget = Bot.Options.AttackWithoutTarget;
+            bool stopAttacking = Bot.Combat.StopAttacking;
+            bool skillsPaused = false;
+            try
+            {
+                // Stop everything that attacks on its own (aggro options and the skill timer),
+                // otherwise the player keeps re-engaging monsters and never sits down.
+                Bot.Options.AggroAllMonsters = false;
+                Bot.Options.AggroMonsters = false;
+                Bot.Options.AttackWithoutTarget = false;
+                Bot.Combat.StopAttacking = true;
+                // Pause unconditionally, like the pause guard: TimerRunning isn't reliable for
+                // the advanced skill provider.
+                Bot.Skills.Pause();
+                skillsPaused = true;
+                Disengage();
+
+                // Still in combat (other monsters in the cell): reset their aggro right away by
+                // re-jumping into this same cell, then rest right here.
+                if (Bot.Player.InCombat)
+                {
+                    ResetAggro();
+                    if (!WaitSeconds(() => !Bot.Player.InCombat, 6))
+                    {
+                        ResetAggro();
+                        WaitSeconds(() => !Bot.Player.InCombat, 10);
+                    }
+                }
+                if (Bot.Player.InCombat)
+                {
+                    Logger($"Could not leave combat to rest in {Bot.Player.Cell} (state {Bot.Player.State}, target {Bot.Player.Target?.Name ?? "none"}): Health is {Bot.Player.Health}/{Bot.Player.MaxHealth}.");
+                    return;
+                }
+
+                Bot.Options.RestPackets = true;
                 Bot.Player.Rest(false);
                 Logger(
                     $"Resting initiated: Health below threshold ({Bot.Player.Health}/{Bot.Player.MaxHealth})."
                 );
+
+                // Rest until the target HP, for at most 2 minutes. If a monster pulls us back into
+                // combat, reset its aggro again and keep resting; stop on death or bot stop.
+                DateTime giveUp = DateTime.Now.AddMinutes(2);
+                while (Bot.Player.Alive && !Bot.ShouldExit && Bot.Player.Health < targetHealth && DateTime.Now < giveUp)
+                {
+                    if (Bot.Player.InCombat)
+                    {
+                        ResetAggro();
+                        if (!WaitSeconds(() => !Bot.Player.InCombat, 10))
+                            break;
+                    }
+                    Bot.Player.Rest(false);
+                    WaitSeconds(() => !Bot.Player.Alive || Bot.Player.InCombat || Bot.Player.Health >= targetHealth, 5);
+                }
+
+                if (Bot.Player.Alive && !Bot.ShouldExit && Bot.Player.Health < targetHealth)
+                    Logger(
+                        Bot.Player.InCombat
+                            ? $"Rest interrupted by combat: Health is {Bot.Player.Health}/{Bot.Player.MaxHealth}."
+                            : $"Rest stopped early: Health is {Bot.Player.Health}/{Bot.Player.MaxHealth}."
+                    );
+                else if (Bot.Player.Alive && !Bot.ShouldExit)
+                    Logger($"Rest done: Health {Bot.Player.Health}/{Bot.Player.MaxHealth}.");
+            }
+            finally
+            {
+                // Give the farm loop back the options it had.
+                Bot.Options.AggroAllMonsters = aggroAll;
+                Bot.Options.AggroMonsters = aggro;
+                Bot.Options.AttackWithoutTarget = attackWithoutTarget;
+                Bot.Combat.StopAttacking = stopAttacking;
+                if (skillsPaused)
+                    Bot.Skills.Resume();
             }
         }
         catch (Exception ex)
@@ -9917,7 +10087,11 @@ public class CoreBots
 
     private void PerformJump((string Cell, string Pad) cellPad, int jumpCount)
     {
-        if (lastMapJW != Bot.Map.Name || lastCellPadJW != cellPad)
+        // Skipping a repeated jump is only safe if it already got us out of combat: when the
+        // fallback re-jumps into the current cell, the cached target never changes, so later
+        // pauses/stops would otherwise do nothing while monsters keep attacking.
+        if (lastMapJW != Bot.Map.Name || lastCellPadJW != cellPad
+            || (OnVibeSkua && (Bot.Player.InCombat || Bot.Player.Cell != cellPad.Cell)))
         {
             for (int i = 0; i < jumpCount; i++)
             {
@@ -12112,6 +12286,17 @@ public class CoreBots
             ForceOffMessageboxes = _ForceOffMessageboxes;
         if (CBOBool("RestCheck", out bool _ShouldRest))
             ShouldRest = _ShouldRest;
+
+        // Reset to defaults first so a later ReadCBO() call without these keys does not
+        // silently keep thresholds from a previous script.
+        RestHealthPercent = 35;
+        RestTargetHealthPercent = 100;
+        if (CBOInt("RestHealthPercent", out int _RestHealthPercent))
+            RestHealthPercent = Math.Clamp(_RestHealthPercent, 1, 99);
+        if (CBOInt("RestTargetHealthPercent", out int _RestTargetHealthPercent))
+            RestTargetHealthPercent = Math.Clamp(_RestTargetHealthPercent, 2, 100);
+        if (RestTargetHealthPercent <= RestHealthPercent)
+            RestTargetHealthPercent = Math.Min(100, RestHealthPercent + 1);
         if (CBOBool("AntiLag", out bool _AntiLag))
             AntiLag = _AntiLag;
 
