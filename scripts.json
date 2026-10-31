@@ -16598,8 +16598,8 @@
       "nothingness"
     ],
     "path": "Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs",
-    "size": 8924,
-    "sha256": "644b0c5641a03cc23522b3e879b68e51bdfe0c38a773413338082d9537352885",
+    "size": 8974,
+    "sha256": "35a4978576da5e92500c16998a34aa61a3a046abb50c9be41be90c4c1a3ce6a3",
     "fileName": "EvolvedShadowOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs"
   },
@@ -22778,8 +22778,8 @@
       "minecraft"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 21176,
-    "sha256": "0ab8e0cc55b3daee84daa802d2dae09b4fa7f76fda207e8831c74f31247d4cd0",
+    "size": 21219,
+    "sha256": "e0e0ed1750049ad154c6a54fd879a1046c00f724806fded37e94c2e9e3346fe8",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
@@ -32798,8 +32798,8 @@
       "merge"
     ],
     "path": "Seasonal/Mogloween/MergeShops/FeastoftheDepthsMerge.cs",
-    "size": 9376,
-    "sha256": "4dfdb677b6d8933d3390b0a0daa141efdc0895657034ef5ff88a0e95519cfe1f",
+    "size": 10290,
+    "sha256": "de5b7768ab7089d33ea19ee773fed30b4378a167744e0cd4d8831e71b2120b68",
     "fileName": "FeastoftheDepthsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/FeastoftheDepthsMerge.cs"
   },
