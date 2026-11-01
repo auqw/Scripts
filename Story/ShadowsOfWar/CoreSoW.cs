@@ -1101,6 +1101,7 @@ public class CoreSoW
         }
 
         // 8787 Guilt Complex
+        Core.EquipClass(ClassType.Solo);
         Story.KillQuest(8787, "ruinedcrown", "Calamitous Warlic");
 
         // 8788 Em-pathetic Connection (Merge Shop Quest)
