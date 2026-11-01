@@ -157,6 +157,12 @@ public class LothianTreasuryMerge
                     break;
 
                 case "Skye's Lightning":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.RegisterQuests(9834);
+                    AOR.ColdThunderBoss(req.Name, quant, false);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
                 case "Priestess Eire's Cletiné":
                     Core.FarmingLogger(req.Name, quant);
                     AOR.ColdThunderBoss(req.Name, quant, false);
