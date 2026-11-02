@@ -93,8 +93,7 @@ public class EvovledHexOrbItems
         Core.Logger("Aquiring uni 22 via `The Assistant` (with War-Torn Memorabilia)," +
         "as otherwise it costs 15m gold ( you can also aquire the \"4th Betrayal Blade of Nulgath Pet\" along the way)");
         Nation.TheAssistant("Unidentified 22", 1);
-        if (!Core.CheckInventory(8069))
-            Nation.KisstheVoid(1, "4th Betrayal Blade of Nulgath Pet");
+            Nation.TheAssistant("4th Betrayal Blade of Nulgath Pet");
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Polish's Book of Avalon", isTemp: false);
         Farm.BludrutBrawlBoss(quant: 500);
