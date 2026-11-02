@@ -16614,8 +16614,8 @@
       "nothingness"
     ],
     "path": "Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs",
-    "size": 8974,
-    "sha256": "35a4978576da5e92500c16998a34aa61a3a046abb50c9be41be90c4c1a3ce6a3",
+    "size": 9474,
+    "sha256": "029205f9ef1ebae8170b16f5783fa789e4467bdc6b4541050bbd2ab915eb65dc",
     "fileName": "EvolvedShadowOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs"
   },
@@ -16626,8 +16626,8 @@
       "null"
     ],
     "path": "Nation/EvolvedOrb/EvovledHexOrbItems[Mem].cs",
-    "size": 4668,
-    "sha256": "1a4c1706c76b6eeaeb19f61243825b38295b904b78fe06f7a7105273ece4f307",
+    "size": 4626,
+    "sha256": "4735393d4c3efcae3b10531d4899614aa4c8932c873f297f055cb849058d62bf",
     "fileName": "EvovledHexOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/EvovledHexOrbItems[Mem].cs"
   },
