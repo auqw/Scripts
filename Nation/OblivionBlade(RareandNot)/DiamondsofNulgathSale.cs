@@ -33,7 +33,7 @@ public class DiamondsofNulgathSale
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<int>("DiamondQuant", "Diamond Quant", "Diamond of Nulgath quant", 00),
+        new Option<int>("DiamondQuant", "Diamond Quant", "Diamond of Nulgath quant", 1000),
     };
 
     public void ScriptMain(IScriptInterface bot)

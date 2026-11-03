@@ -180,13 +180,13 @@ public class CoreOblivionBladeofNulgath
     /// <param name="quant">Quanity of Gems of Nulgath to Get</param>
     public void DiamondsofNulgathSale(int quant)
     {
-        if (Core.CheckInventory("item"))
+        if (Core.CheckInventory("Diamond of Nulgath", quant))
             return;
 
         PetCheck(2563, 603);
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Diamonds of Nulgath", quant))
-            Nation.FarmVoucher(true);
+        while (!Bot.ShouldExit && !Core.CheckInventory("Diamond of Nulgath", quant))
+            Nation.FarmVoucher(true, true);
 
         Core.CancelRegisteredQuests();
     }
