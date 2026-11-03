@@ -49,7 +49,7 @@ public class Friendship
             Bot.Events.ExtensionPacketReceived += friendshipPacketReader;
             Core.JumpWait();
 
-            while (!Bot.TempInv.Contains("Friendship Formed"))
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Friendship Formed"))
             {
                 SendWaitedPacket($"%xt%zm%friendshipInfo%{Bot.Map.RoomID}%Maya%");
                 SendWaitedPacket($"%xt%zm%friendshipTalk%{Bot.Map.RoomID}%");
