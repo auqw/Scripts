@@ -389,11 +389,11 @@ public class CoreHollowbornStory
         // 9984 | Thurisaz - Realized
         if (!Story.QuestProgression(9984))
         {
-            Core.HuntMonsterQuest(
-                9984,
-                ("dawnsanctum", UseableMonsters[5], ClassType.Farm),
-                ("dawnsanctum", UseableMonsters[6], ClassType.Farm)
-            );
+            Core.EnsureAccept(9984);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("dawnsanctum", "Vindicator Draconian", "Vindicator Talon", 6);
+            Core.HuntMonster("dawnsanctum", "Hollowborn Draconian", "Hollowborn Talon", 6);
+            Core.EnsureComplete(9984);
         }
 
         // 9985 | Othala - Realized
