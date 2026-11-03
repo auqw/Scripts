@@ -1365,8 +1365,8 @@
       "null"
     ],
     "path": "Tools/BankAllItems.cs",
-    "size": 3959,
-    "sha256": "4fee12f5a0ecdffaf3ceb73d349cc30433f057b634adb144b1e77d42a9f8ea28",
+    "size": 4017,
+    "sha256": "28200938164bc9f4c696bca0cf8d96aa67deb0df10c13ed38927e862b2a69b87",
     "fileName": "BankAllItems.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/BankAllItems.cs"
   },
@@ -1380,8 +1380,8 @@
       "utility"
     ],
     "path": "Tools/BankAllClasses.cs",
-    "size": 802,
-    "sha256": "c17ee6f1268e3d986ddc205d94ec1d5f7ec499f8e3ac62a59484832bfad6f2ba",
+    "size": 841,
+    "sha256": "ec1721f08e33412924fd755160583d16c42ca21bce040d60e1ca2bf67aed040a",
     "fileName": "BankAllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/BankAllClasses.cs"
   },
@@ -3241,8 +3241,8 @@
       "NPC"
     ],
     "path": "Story/Friendship.cs",
-    "size": 4155,
-    "sha256": "97188788d01a3a51aec5cf551923e15d4f63413b724ebec0ae34575357a06f28",
+    "size": 4174,
+    "sha256": "e9ef4ca84de81aa7d9ca1af3c8c18419170a07a7675ec224cbcc0ed6fc9abf43",
     "fileName": "Friendship.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Friendship.cs"
   },
@@ -16686,8 +16686,8 @@
       "null"
     ],
     "path": "Nation/OblivionBlade(RareandNot)/DiamondsofNulgathSale.cs",
-    "size": 1357,
-    "sha256": "3034bf6efc708d4b2cff5f5e63ee797b0e89691d0d4747da012c0cd6e171c7b3",
+    "size": 1359,
+    "sha256": "2f25bf5e70a1c8e886bc70e032e423caff9622c82b6f0e05eddedd29c79cbcb6",
     "fileName": "DiamondsofNulgathSale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/OblivionBlade(RareandNot)/DiamondsofNulgathSale.cs"
   },
@@ -16734,8 +16734,8 @@
       "null"
     ],
     "path": "Nation/OblivionBlade(RareandNot)/CoreOblivionBladeofNulgath.cs",
-    "size": 8000,
-    "sha256": "fbc94535348984193ff95d700628be1a79a8cef1030e40bbeaa264385fc52ca4",
+    "size": 8026,
+    "sha256": "7b86b29b553356b818dd3df205ee72fa81a6c3d4e4a9ce4edfae77aa84cdf49b",
     "fileName": "CoreOblivionBladeofNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/OblivionBlade(RareandNot)/CoreOblivionBladeofNulgath.cs"
   },
