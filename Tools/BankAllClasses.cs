@@ -26,7 +26,7 @@ public class BankAllClasses
     {
         Bot.Inventory.EnsureToBank(
             Bot.Inventory.Items
-                .Where(item => item.Category == ItemCategory.Class && !item.Equipped)
+                .Where(item => item.Category == ItemCategory.Class && !item.Equipped || !Bot.Inventory.IsFavorited(item.ID))
                 .Select(item => item.ID)
                 .ToArray()
         );
