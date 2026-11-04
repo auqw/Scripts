@@ -1273,26 +1273,28 @@ public class CoreFarmerJoe
 
 
     #region BTS
-    private int _lastCheckedLevel = 0;
     private string? _lastSolo;
     private string? _lastFarm;
     private string? _lastDodge;
 
     public void SetClass()
     {
+        // Start from the user's CBO selection, then upgrade it from the class pools.
         Core.ReadCBO();
         _classCache.Clear();
 
-        // Skip if nothing meaningful changed
-        if (ShouldSkipSetClass())
+        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses) ?? Core.SoloClass;
+        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses) ?? Core.FarmClass;
+        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses) ?? Core.DodgeClass;
+
+        // Nothing new to rank or equip. This is checked on the resolved classes (not on level),
+        // so classes acquired at level 100 are still picked up.
+        if (
+            string.Equals(_lastSolo, Core.SoloClass, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(_lastFarm, Core.FarmClass, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(_lastDodge, Core.DodgeClass, StringComparison.OrdinalIgnoreCase)
+        )
             return;
-
-        // Resolve classes
-        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses, out _) ?? Core.SoloClass;
-        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, out _) ?? Core.FarmClass;
-        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, out _) ?? Core.DodgeClass;
-
-        Core.ReadCBO();
 
         (string? Class, string Label)[] rankTargets =
         [
@@ -1309,41 +1311,18 @@ public class CoreFarmerJoe
 
         Core.EquipClass(ClassType.Solo);
 
-        _lastCheckedLevel = Bot.Player?.Level ?? 0;
         _lastSolo = Core.SoloClass;
         _lastFarm = Core.FarmClass;
         _lastDodge = Core.DodgeClass;
     }
 
-    private bool ShouldSkipSetClass()
-    {
-        int currentLevel = Bot.Player?.Level ?? 0;
-
-        bool levelIncreased = currentLevel > _lastCheckedLevel;
-
-        bool classChanged =
-            !string.Equals(_lastSolo, Core.SoloClass, StringComparison.OrdinalIgnoreCase) ||
-            !string.Equals(_lastFarm, Core.FarmClass, StringComparison.OrdinalIgnoreCase) ||
-            !string.Equals(_lastDodge, Core.DodgeClass, StringComparison.OrdinalIgnoreCase);
-
-        return !levelIncreased && !classChanged;
-    }
-
-    private static string? ResolveClass(string? current, string[] pool, out string? found)
-    {
-        found = null;
-        bool invalid =
-            string.IsNullOrEmpty(current)
-            || current.Equals("Generic", StringComparison.OrdinalIgnoreCase)
-            || !pool.Any(x => x.Equals(current, StringComparison.OrdinalIgnoreCase))
-            || !Core.CheckInventory(current);
-
-        if (!invalid)
-            return current;
-
-        found = pool.FirstOrDefault(x => Core.CheckInventory(x));
-        return found ?? current;
-    }
+    /// <summary>
+    /// Returns the highest-priority owned class from <paramref name="pool"/> (pools are ordered best-first),
+    /// so an early pick (e.g. Mage) is upgraded as soon as something better is owned.
+    /// Falls back to <paramref name="current"/> if no pool class is owned.
+    /// </summary>
+    private static string? ResolveClass(string? current, string[] pool) =>
+        pool.FirstOrDefault(x => Core.CheckInventory(x)) ?? current;
 
     private static void BankAllUnusedClasses()
     {

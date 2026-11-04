@@ -8473,11 +8473,36 @@ public class CoreBots
     /// <param name="classToUse">Type "ClassType." and then either Farm, Solo, Dodge, or Boss</param>
     public void EquipClass(ClassType classToUse)
     {
-        // Already equipped? Skip if timer is running
-        if (currentClass == classToUse && Bot.Skills.TimerRunning)
+        string? targetClass = classToUse switch
+        {
+            ClassType.Solo => SoloClass,
+            ClassType.Farm => FarmClass,
+            ClassType.Dodge => DodgeClass,
+            ClassType.Boss => BossClass,
+            _ => null,
+        };
+        bool targetIsGeneric =
+            string.IsNullOrEmpty(targetClass)
+            || targetClass.Equals("Generic", StringComparison.OrdinalIgnoreCase)
+            || targetClass == "(Current)";
+
+        // Already equipped? Skip if timer is running, unless a script changed the class name
+        // for this slot at runtime (e.g. FarmerJoe upgrading its farm class).
+        if (
+            currentClass == classToUse
+            && Bot.Skills.TimerRunning
+            && (targetIsGeneric || string.Equals(Bot.Player.CurrentClass?.Name, targetClass, StringComparison.OrdinalIgnoreCase))
+        )
             return;
 
         currentClass = classToUse;
+
+        // The using*Generic flags are captured once at script start; a script that sets
+        // SoloClass/FarmClass/... at runtime would otherwise be ignored as "generic" forever.
+        usingSoloGeneric = string.Equals(SoloClass, "Generic", StringComparison.OrdinalIgnoreCase);
+        usingFarmGeneric = string.Equals(FarmClass, "Generic", StringComparison.OrdinalIgnoreCase);
+        usingDodgeGeneric = string.Equals(DodgeClass, "Generic", StringComparison.OrdinalIgnoreCase);
+        usingBossGeneric = string.Equals(BossClass, "Generic", StringComparison.OrdinalIgnoreCase);
 
         switch (classToUse)
         {
