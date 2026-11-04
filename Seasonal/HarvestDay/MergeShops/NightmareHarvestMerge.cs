@@ -64,7 +64,9 @@ public class NightmareHarvestMerge
         if (!Core.isSeasonalMapActive("gothicdream"))
             return;
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("gothicdream", 1939, findIngredients, buyOnlyThis, buyMode: buyMode);
+        // Farm Gothic Textile from its quest instead of exchanging Second Chance Coin.
+        Adv.MergeItemisinShopExceptions.Add("Gothic Textile");
+        Adv.StartBuyAllMerge("gothicdream", 1939, findIngredients, buyOnlyThis, itemBlackList: new[] { "Gothic Textile" }, buyMode: buyMode);
 
         #region Dont edit this part
         void findIngredients()
@@ -92,6 +94,20 @@ public class NightmareHarvestMerge
                     );
                     break;
         #endregion
+
+                case "Gothic Textile":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.EnsureAccept(7795);
+                        Core.HuntMonster("gothicdream", "Bat Garland", "Bats Chased Out", 8);
+                        Core.HuntMonster("gothicdream", "Ice Scream", "Ice Scream Mopped Up", 8);
+                        Core.HuntMonster("gothicdream", "Spooky Lantern", "Lantern Pieces Doomba'd", 8);
+                        Core.EnsureComplete(7795);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
 
                 case "Earplug":
                     Core.FarmingLogger(req.Name, quant);
