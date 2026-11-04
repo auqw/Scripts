@@ -1276,8 +1276,30 @@ public class CoreFarmerJoe
     private string? _lastSolo;
     private string? _lastFarm;
     private string? _lastDodge;
+    private int _setClassBusy;
 
     public void SetClass()
+    {
+        // Only one class setup at a time: an overlapping call would pass the skip check
+        // against the same old _last* values and rank/equip the same classes twice.
+        // The call already in progress sets up the same classes, so just skip.
+        if (System.Threading.Interlocked.Exchange(ref _setClassBusy, 1) == 1)
+        {
+            Core.Logger("SetClass is already running, skipping the overlapping call.");
+            return;
+        }
+
+        try
+        {
+            SetClassInner();
+        }
+        finally
+        {
+            System.Threading.Volatile.Write(ref _setClassBusy, 0);
+        }
+    }
+
+    private void SetClassInner()
     {
         // Start from the user's CBO selection, then upgrade it from the class pools.
         Core.ReadCBO();
