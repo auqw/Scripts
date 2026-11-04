@@ -1148,7 +1148,6 @@ public class CoreDailies
         Core.EnsureAccept(9896);
         Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("trygve", "Vindicator Recruit", "Soul's Deepest Darkness", 5);
-        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("greed", "Cursed Treasure", "Suspicious Ruby");
         Core.EnsureComplete(9896);
 
