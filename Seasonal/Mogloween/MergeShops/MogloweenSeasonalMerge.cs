@@ -692,9 +692,9 @@ public class MogloweenSeasonalMerge
 
 public enum MogloweenMergeMode
 {
-    all,
-    acOnly,
-    acNonLegion,
-    mergeMats,
-    select,
+    all = 0,
+    acOnly = 1,
+    mergeMats = 2,
+    select = 3,
+    acNonLegion = 4,
 }

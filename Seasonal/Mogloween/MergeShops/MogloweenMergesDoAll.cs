@@ -14,6 +14,7 @@ tags: mogloween, merge, doall
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/HuntersReward.cs
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/Mog-GLOW-weenMerge.cs
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs
+//cs_include Scripts/Seasonal/Mogloween/MoonlightKhopeshMerge.cs
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/TricktownMerge.cs
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/VampireLordMerge.cs
@@ -167,6 +168,7 @@ public class MogloweenMergesDoAll
         new HuntersReward().BuyAllMerge(buyMode: buyMode);
         new MogGLOWweenMerge().BuyAllMerge(buyMode: buyMode);
         new MogloweenSeasonalMerge().BuyAllMerge(buyMode: buyMode);
+        new MoonlightKhopeshMerge().BuyAllMerge(buyMode: buyMode);
         new TricktownMerge().BuyAllMerge(buyMode: buyMode);
         new UngourdlyGearMerge().BuyAllMerge(buyMode: buyMode);
         new VampireLordMerge().BuyAllMerge(buyMode: buyMode);
@@ -188,6 +190,7 @@ public class MogloweenMergesDoAll
         options.AddRange(new HuntersReward().Select);
         options.AddRange(new MogGLOWweenMerge().Select);
         options.AddRange(new MogloweenSeasonalMerge().Select);
+        options.AddRange(new MoonlightKhopeshMerge().Select);
         options.AddRange(new TricktownMerge().Select);
         options.AddRange(new UngourdlyGearMerge().Select);
         options.AddRange(new VampireLordMerge().Select);
