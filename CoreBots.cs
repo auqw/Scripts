@@ -8468,18 +8468,17 @@ public class CoreBots
     bool usingBossGeneric = false;
 
     /// <summary>
-    /// Equips either the FarmClass or SoloClass (or Dodge/Boss) from CoreBots
+    /// True for class slot values that mean "no specific class": null/empty, "Generic" or "(Current)".
     /// </summary>
-    /// <param name="classToUse">Type "ClassType." and then either Farm, Solo, Dodge, or Boss</param>
-    // Class name EquipClass last handled for currentClass; lets a runtime change of the
-    // slot's class (e.g. FarmerJoe upgrading FarmClass) get equipped once.
-    string? lastEquipTarget;
-
-    private static bool IsGenericClass(string? name) =>
+    public static bool IsGenericClass(string? name) =>
         string.IsNullOrEmpty(name)
         || name.Equals("Generic", StringComparison.OrdinalIgnoreCase)
         || name == "(Current)";
 
+    /// <summary>
+    /// Equips either the FarmClass or SoloClass (or Dodge/Boss) from CoreBots
+    /// </summary>
+    /// <param name="classToUse">Type "ClassType." and then either Farm, Solo, Dodge, or Boss</param>
     public void EquipClass(ClassType classToUse)
     {
         string? targetClass = classToUse switch
@@ -8491,18 +8490,25 @@ public class CoreBots
             _ => null,
         };
 
-        // Already handled this slot with this class? Skip while the skill timer runs.
-        // Comparing the name (not the worn class) means a missing or failed class is
-        // attempted once per change, not on every call.
+        // Skip while the skill timer runs for this slot, but only when there is nothing to do:
+        // - the slot is generic, or
+        // - the slot's class is actually worn (so a class swapped in by e.g. UseBossClass, or a
+        //   class changed at runtime, gets re-equipped), or
+        // - the slot's class isn't owned (nothing to equip; checked again on every call, so it
+        //   is equipped as soon as it's acquired). _equipClass loops until the class is worn,
+        //   so an owned class can't silently fail.
         if (
             currentClass == classToUse
             && Bot.Skills.TimerRunning
-            && string.Equals(lastEquipTarget, targetClass, StringComparison.OrdinalIgnoreCase)
+            && (
+                IsGenericClass(targetClass)
+                || string.Equals(Bot.Player.CurrentClass?.Name?.Trim(), targetClass!.Trim(), StringComparison.OrdinalIgnoreCase)
+                || !CheckInventory(targetClass, toInv: false)
+            )
         )
             return;
 
         currentClass = classToUse;
-        lastEquipTarget = targetClass;
 
         // using*Generic is captured once in SetOptions. Only let it block an equip while the
         // slot is still generic, so a class set at runtime isn't ignored as "generic" forever.

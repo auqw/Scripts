@@ -1287,12 +1287,24 @@ public class CoreFarmerJoe
         Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, "Farm") ?? Core.FarmClass;
         Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, "Dodge") ?? Core.DodgeClass;
 
-        // Nothing new to rank or equip. This is checked on the resolved classes (not on level),
-        // so classes acquired at level 100 are still picked up.
+        // Nothing to do: same classes as last time, and each is owned and rank 10 (or generic).
+        // Checked on the resolved classes rather than on level, so classes acquired at level 100
+        // are picked up; ownership/rank are rechecked so a class acquired later under the same
+        // name, or an interrupted rank-up, is handled on the next call.
+        static bool Settled(string? c) =>
+            CoreBots.IsGenericClass(c)
+            || Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i =>
+                i.Category == ItemCategory.Class
+                && i.Name.Equals(c, StringComparison.OrdinalIgnoreCase)
+                && i.Quantity >= RANK_10_CLASS_POINTS);
+
         if (
             string.Equals(_lastSolo, Core.SoloClass, StringComparison.OrdinalIgnoreCase)
             && string.Equals(_lastFarm, Core.FarmClass, StringComparison.OrdinalIgnoreCase)
             && string.Equals(_lastDodge, Core.DodgeClass, StringComparison.OrdinalIgnoreCase)
+            && Settled(Core.SoloClass)
+            && Settled(Core.FarmClass)
+            && Settled(Core.DodgeClass)
         )
             return;
 
@@ -1329,9 +1341,7 @@ public class CoreFarmerJoe
     private static string? ResolveClass(string? current, string[] pool, string slot)
     {
         bool userChoice =
-            !string.IsNullOrEmpty(current)
-            && !current.Equals("Generic", StringComparison.OrdinalIgnoreCase)
-            && current != "(Current)"
+            !CoreBots.IsGenericClass(current)
             && Core.CheckInventory(current, toInv: false);
 
         if (!userChoice)
