@@ -32681,6 +32681,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/WalpurgaWitchWares.cs"
   },
   {
+    "name": "Mogloween Merges Do All",
+    "description": "Runs all Mogloween merge shop scripts in this folder.",
+    "tags": [
+      "mogloween",
+      "merge",
+      "doall"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs",
+    "size": 8474,
+    "sha256": "5e53b86de98126cd19e437ddb0ad86c2e5b004584a62624371a3094070277365",
+    "fileName": "MogloweenMergesDoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs"
+  },
+  {
     "name": "Ungourdly Gear Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Ungourdly Gear Merge [2629] in /eldritchbattletown",
     "tags": [
@@ -32796,8 +32810,8 @@
       "merge"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs",
-    "size": 20151,
-    "sha256": "d1c327e382046d39dd7d5cbc0b6065ef5a2b44b59dd27d6edd699037b3458339",
+    "size": 22972,
+    "sha256": "b0aea702446366d06f3331a8804238a425375704a1ce882a7c862b21d3856032",
     "fileName": "MogloweenSeasonalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs"
   },
