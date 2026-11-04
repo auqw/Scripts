@@ -8471,6 +8471,15 @@ public class CoreBots
     /// Equips either the FarmClass or SoloClass (or Dodge/Boss) from CoreBots
     /// </summary>
     /// <param name="classToUse">Type "ClassType." and then either Farm, Solo, Dodge, or Boss</param>
+    // Class name EquipClass last handled for currentClass; lets a runtime change of the
+    // slot's class (e.g. FarmerJoe upgrading FarmClass) get equipped once.
+    string? lastEquipTarget;
+
+    private static bool IsGenericClass(string? name) =>
+        string.IsNullOrEmpty(name)
+        || name.Equals("Generic", StringComparison.OrdinalIgnoreCase)
+        || name == "(Current)";
+
     public void EquipClass(ClassType classToUse)
     {
         string? targetClass = classToUse switch
@@ -8481,60 +8490,45 @@ public class CoreBots
             ClassType.Boss => BossClass,
             _ => null,
         };
-        bool targetIsGeneric =
-            string.IsNullOrEmpty(targetClass)
-            || targetClass.Equals("Generic", StringComparison.OrdinalIgnoreCase)
-            || targetClass == "(Current)";
 
-        // Already equipped? Skip if timer is running, unless a script changed the class name
-        // for this slot at runtime (e.g. FarmerJoe upgrading its farm class).
+        // Already handled this slot with this class? Skip while the skill timer runs.
+        // Comparing the name (not the worn class) means a missing or failed class is
+        // attempted once per change, not on every call.
         if (
             currentClass == classToUse
             && Bot.Skills.TimerRunning
-            && (targetIsGeneric || string.Equals(Bot.Player.CurrentClass?.Name, targetClass, StringComparison.OrdinalIgnoreCase))
+            && string.Equals(lastEquipTarget, targetClass, StringComparison.OrdinalIgnoreCase)
         )
             return;
 
         currentClass = classToUse;
+        lastEquipTarget = targetClass;
 
-        // The using*Generic flags are captured once at script start; a script that sets
-        // SoloClass/FarmClass/... at runtime would otherwise be ignored as "generic" forever.
-        usingSoloGeneric = string.Equals(SoloClass, "Generic", StringComparison.OrdinalIgnoreCase);
-        usingFarmGeneric = string.Equals(FarmClass, "Generic", StringComparison.OrdinalIgnoreCase);
-        usingDodgeGeneric = string.Equals(DodgeClass, "Generic", StringComparison.OrdinalIgnoreCase);
-        usingBossGeneric = string.Equals(BossClass, "Generic", StringComparison.OrdinalIgnoreCase);
-
+        // using*Generic is captured once in SetOptions. Only let it block an equip while the
+        // slot is still generic, so a class set at runtime isn't ignored as "generic" forever.
         switch (classToUse)
         {
             case ClassType.Farm:
-                if (FarmClass != "Generic" && FarmClass != "(Current)"
-                    && !string.IsNullOrEmpty(FarmClass)
-                    && CheckInventory(FarmClass))
-                    if (_equipClass(usingFarmGeneric, FarmClass, FarmUseMode, FarmGearOn, FarmGear))
+                if (!IsGenericClass(FarmClass) && CheckInventory(FarmClass))
+                    if (_equipClass(usingFarmGeneric && IsGenericClass(FarmClass), FarmClass, FarmUseMode, FarmGearOn, FarmGear))
                         return;
                 break;
 
             case ClassType.Solo:
-                if (SoloClass != "Generic" && SoloClass != "(Current)"
-                    && !string.IsNullOrEmpty(SoloClass)
-                    && CheckInventory(SoloClass))
-                    if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
+                if (!IsGenericClass(SoloClass) && CheckInventory(SoloClass))
+                    if (_equipClass(usingSoloGeneric && IsGenericClass(SoloClass), SoloClass, SoloUseMode, SoloGearOn, SoloGear))
                         return;
                 break;
 
             case ClassType.Dodge:
-                if (DodgeClass != "Generic" && DodgeClass != "(Current)"
-                    && !string.IsNullOrEmpty(DodgeClass)
-                    && CheckInventory(DodgeClass))
-                    if (_equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
+                if (!IsGenericClass(DodgeClass) && CheckInventory(DodgeClass))
+                    if (_equipClass(usingDodgeGeneric && IsGenericClass(DodgeClass), DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
                         return;
                 break;
 
             case ClassType.Boss:
-                if (BossClass != "Generic" && BossClass != "(Current)"
-                    && !string.IsNullOrEmpty(BossClass)
-                    && CheckInventory(BossClass))
-                    if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
+                if (!IsGenericClass(BossClass) && CheckInventory(BossClass))
+                    if (_equipClass(usingBossGeneric && IsGenericClass(BossClass), BossClass, BossUseMode, BossGearOn, BossGear))
                         return;
                 break;
         }

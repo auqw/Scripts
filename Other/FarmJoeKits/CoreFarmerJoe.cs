@@ -1283,9 +1283,9 @@ public class CoreFarmerJoe
         Core.ReadCBO();
         _classCache.Clear();
 
-        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses) ?? Core.SoloClass;
-        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses) ?? Core.FarmClass;
-        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses) ?? Core.DodgeClass;
+        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses, "Solo") ?? Core.SoloClass;
+        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, "Farm") ?? Core.FarmClass;
+        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, "Dodge") ?? Core.DodgeClass;
 
         // Nothing new to rank or equip. This is checked on the resolved classes (not on level),
         // so classes acquired at level 100 are still picked up.
@@ -1316,13 +1316,37 @@ public class CoreFarmerJoe
         _lastDodge = Core.DodgeClass;
     }
 
+    private static readonly HashSet<string> _upgradeHintsShown = new(StringComparer.OrdinalIgnoreCase);
+
     /// <summary>
-    /// Returns the highest-priority owned class from <paramref name="pool"/> (pools are ordered best-first),
-    /// so an early pick (e.g. Mage) is upgraded as soon as something better is owned.
+    /// Picks the class for one slot (solo/farm/dodge):
+    /// - An owned class selected in CBO (in Joe's pool or not) is the user's choice and is kept.
+    ///   If it is a pool class and a better pool class is owned, a one-time hint is logged.
+    /// - Generic / empty / "(Current)" / not owned: Joe picks the highest-priority owned pool class
+    ///   (pools are ordered best-first).
     /// Falls back to <paramref name="current"/> if no pool class is owned.
     /// </summary>
-    private static string? ResolveClass(string? current, string[] pool) =>
-        pool.FirstOrDefault(x => Core.CheckInventory(x)) ?? current;
+    private static string? ResolveClass(string? current, string[] pool, string slot)
+    {
+        bool userChoice =
+            !string.IsNullOrEmpty(current)
+            && !current.Equals("Generic", StringComparison.OrdinalIgnoreCase)
+            && current != "(Current)"
+            && Core.CheckInventory(current, toInv: false);
+
+        if (!userChoice)
+            return pool.FirstOrDefault(x => Core.CheckInventory(x)) ?? current;
+
+        int currentRank = Array.FindIndex(pool, x => x.Equals(current, StringComparison.OrdinalIgnoreCase));
+        if (currentRank > 0)
+        {
+            string? better = pool.Take(currentRank).FirstOrDefault(x => Core.CheckInventory(x, toInv: false));
+            if (better != null && _upgradeHintsShown.Add($"{slot}:{current}>{better}"))
+                Core.Logger($"{slot} class is set to \"{current}\" in CBO, but you own \"{better}\". " +
+                    $"Set the {slot} class to Generic in CBO to let FarmerJoe pick the best class automatically.");
+        }
+        return current;
+    }
 
     private static void BankAllUnusedClasses()
     {
