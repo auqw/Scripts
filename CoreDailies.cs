@@ -1145,11 +1145,12 @@ public class CoreDailies
         Core.Unbank("Compass Rose Skull", "Obsessor Captain");
         Core.AddDrop("Elden Ruby");
 
-        Core.HuntMonsterQuest(
-            9896,
-            ("trygve", "Vindicator Recruit", ClassType.Farm),
-            ("greed", "Cursed Treasure", ClassType.Solo)
-        );
+        Core.EnsureAccept(9896);
+        Core.EquipClass(ClassType.Farm);
+        Core.HuntMonster("trygve", "Vindicator Recruit", "Soul's Deepest Darkness", 5);
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("greed", "Cursed Treasure", "Suspicious Ruby");
+        Core.EnsureComplete(9896);
 
         Core.ToBank("Compass Rose Skull", "Obsessor Captain");
     }
