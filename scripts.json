@@ -23709,7 +23709,7 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFilesv4.cs"
   },
   {
-    "name": "Merge Template Helper v3",
+    "name": null,
     "description": "Generates a merge bot and teaches local ingredients from live monsterDrops packets.",
     "tags": [
       "developer",
@@ -23720,8 +23720,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelperV3.cs",
-    "size": 53095,
-    "sha256": "5369b027d291d28cf62f9193b451d713276eabdaceaca4cea84e35b87cce67d8",
+    "size": 53125,
+    "sha256": "ce2a2e343a7bd831bc130777ae6cd8c3f8317f7ad53996f80851a5ba594042c1",
     "fileName": "MergeTemplateHelperV3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelperV3.cs"
   },
