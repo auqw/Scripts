@@ -8176,7 +8176,12 @@ public class CoreBots
             // The original code used MaxHealth / 50 (2%), despite the comment saying 50%.
             // That meant the bot only rested when it was already almost dead.
             int healthThreshold = (int)Math.Ceiling((double)Bot.Player.MaxHealth * (startPercent / 100.0));
-            int targetHealth = (int)Math.Ceiling((double)Bot.Player.MaxHealth * (targetPercent / 100.0));
+            // Recomputed on every check: MaxHealth can drop while resting (a max-HP buff expiring),
+            // and a target taken from the old MaxHealth can never be reached, so the rest ran into
+            // its 2-minute cap at full health.
+            int TargetHealth() => Math.Min(Bot.Player.MaxHealth,
+                (int)Math.Ceiling((double)Bot.Player.MaxHealth * (targetPercent / 100.0)));
+            bool Rested() => Bot.Player.Health >= TargetHealth();
 
             if (!ShouldRest || !Bot.Player.Alive)
                 return;
@@ -8189,6 +8194,7 @@ public class CoreBots
             // A live target means we're mid-fight: finish it unless HP is critically low
             // (half the rest threshold), so long boss fights aren't abandoned for a rest.
             bool midFight = Bot.Player.HasTarget && (Bot.Player.Target?.HP ?? 0) > 0;
+            int healthAtTrigger = Bot.Player.Health;
             if (midFight && Bot.Player.Health >= healthThreshold / 2)
                 return;
 
@@ -8265,13 +8271,13 @@ public class CoreBots
                 Bot.Options.RestPackets = true;
                 Bot.Player.Rest(false);
                 Logger(
-                    $"Resting initiated: Health below threshold ({Bot.Player.Health}/{Bot.Player.MaxHealth})."
+                    $"Resting initiated: Health below threshold ({healthAtTrigger}/{Bot.Player.MaxHealth}, now {Bot.Player.Health})."
                 );
 
                 // Rest until the target HP, for at most 2 minutes. If a monster pulls us back into
                 // combat, reset its aggro again and keep resting; stop on death or bot stop.
                 DateTime giveUp = DateTime.Now.AddMinutes(2);
-                while (Bot.Player.Alive && !Bot.ShouldExit && Bot.Player.Health < targetHealth && DateTime.Now < giveUp)
+                while (Bot.Player.Alive && !Bot.ShouldExit && !Rested() && DateTime.Now < giveUp)
                 {
                     if (Bot.Player.InCombat)
                     {
@@ -8280,10 +8286,10 @@ public class CoreBots
                             break;
                     }
                     Bot.Player.Rest(false);
-                    WaitSeconds(() => !Bot.Player.Alive || Bot.Player.InCombat || Bot.Player.Health >= targetHealth, 5);
+                    WaitSeconds(() => !Bot.Player.Alive || Bot.Player.InCombat || Rested(), 5);
                 }
 
-                if (Bot.Player.Alive && !Bot.ShouldExit && Bot.Player.Health < targetHealth)
+                if (Bot.Player.Alive && !Bot.ShouldExit && !Rested())
                     Logger(
                         Bot.Player.InCombat
                             ? $"Rest interrupted by combat: Health is {Bot.Player.Health}/{Bot.Player.MaxHealth}."
