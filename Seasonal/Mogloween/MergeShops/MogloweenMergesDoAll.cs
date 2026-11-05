@@ -168,7 +168,7 @@ public class MogloweenMergesDoAll
         {
             MogloweenMergeMode mode =
                 Bot.Config?.Get<MogloweenMergeMode>("Generic", "mogloweenSeasonalMode")
-                ?? MogloweenMergeMode.all;
+                ?? GetLegacyMode();
             new MogloweenSeasonalMerge().BuyAllMerge(
                 buyMode: ToBuyMode(mode),
                 skipLegionItems: mode == MogloweenMergeMode.acNonLegion
@@ -182,8 +182,14 @@ public class MogloweenMergesDoAll
         yield return () => new WitchsCharms().BuyAllMerge(buyMode: GetBuyMode("witchsCharmsMode"));
     }
 
-    private mergeOptionsEnum GetBuyMode(string optionKey) =>
-        Bot.Config?.Get<mergeOptionsEnum>("Generic", optionKey) ?? mergeOptionsEnum.all;
+    private mergeOptionsEnum GetBuyMode(string optionKey)
+    {
+        mergeOptionsEnum? shopMode = Bot.Config?.Get<mergeOptionsEnum>("Generic", optionKey);
+        return shopMode ?? ToBuyMode(GetLegacyMode());
+    }
+
+    private MogloweenMergeMode GetLegacyMode() =>
+        Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
 
     private static mergeOptionsEnum ToBuyMode(MogloweenMergeMode mode) =>
         mode switch
