@@ -398,7 +398,7 @@ public class MogloweenMergesDoAll
 
         foreach (IOption option in shopOptions)
         {
-            option.Category = category;
+            option.Category = "Select";
             options.Add(option);
         }
     }
