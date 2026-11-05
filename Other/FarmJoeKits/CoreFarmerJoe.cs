@@ -1302,6 +1302,7 @@ public class CoreFarmerJoe
     private void SetClassInner()
     {
         // Start from the user's CBO selection, then upgrade it from the class pools.
+        Core.SoloClass = Core.FarmClass = Core.DodgeClass = "Generic";
         Core.ReadCBO();
         _classCache.Clear();
 
