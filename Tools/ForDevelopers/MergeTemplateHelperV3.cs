@@ -1202,8 +1202,32 @@ public class MergeTemplateHelperV3
     {
         string result = new([.. value.Where(char.IsLetterOrDigit)]);
         if (string.IsNullOrEmpty(result))
-            result = "GeneratedMerge";
-        return char.IsDigit(result[0]) ? "Merge" + result : result;
+            return "GeneratedMergeShop";
+
+        // Keep the shop-based class naming used by older merge scripts.
+        // Spell out a leading digit instead of adding the newer "Merge" prefix.
+        if (char.IsDigit(result[0]))
+        {
+            string numberWord = result[0] switch
+            {
+                '0' => "Zero",
+                '1' => "One",
+                '2' => "Two",
+                '3' => "Three",
+                '4' => "Four",
+                '5' => "Five",
+                '6' => "Six",
+                '7' => "Seven",
+                '8' => "Eight",
+                '9' => "Nine",
+                _ => string.Empty,
+            };
+            result = numberWord + result[1..];
+        }
+
+        return result.EndsWith("Shop", StringComparison.OrdinalIgnoreCase)
+            ? result
+            : result + "Shop";
     }
 
     private static string Escape(string value) => value.Replace("\\", "\\\\").Replace("\"", "\\\"");
