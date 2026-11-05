@@ -57,3 +57,5 @@ Scripts.csproj.lscache
 Tools/ForDevelopers/FetchGameFiles/.last_version
 /Tools/ForDevelopers/FetchGameFiles
 *.bak
+
+.fake

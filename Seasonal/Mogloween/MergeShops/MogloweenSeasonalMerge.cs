@@ -147,14 +147,18 @@ public class MogloweenSeasonalMerge
         Core.SetOptions(false);
     }
 
-    public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
+    public void BuyAllMerge(
+        string? buyOnlyThis = null,
+        mergeOptionsEnum? buyMode = null,
+        bool? skipLegionItems = null
+    )
     {
         if (!Core.isSeasonalMapActive("mogloween"))
             return;
         //Only edit the map and shopID here
         MogloweenMergeMode selectedMode =
             Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
-        bool acNonLegion = selectedMode == MogloweenMergeMode.acNonLegion;
+        bool acNonLegion = skipLegionItems ?? selectedMode == MogloweenMergeMode.acNonLegion;
         mergeOptionsEnum resolvedMode = acNonLegion
             ? mergeOptionsEnum.acOnly
             : buyMode
