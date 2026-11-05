@@ -23569,22 +23569,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/MemoryLeakAudit/MemoryLeakAudit.cs"
   },
   {
-    "name": "Merge File Generator",
-    "description": "Generates merge scripts and teaches local ingredients from live monsterDrops packets.",
-    "tags": [
-      "developer",
-      "merge",
-      "generator",
-      "drops",
-      "packets"
-    ],
-    "path": "Tools/ForDevelopers/MergeFileGenerator.cs",
-    "size": 50090,
-    "sha256": "64064904e9961dfdd6790d2da9fd4d7ffe0905bfdf673b8e22462d500f6342c4",
-    "fileName": "MergeFileGenerator.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeFileGenerator.cs"
-  },
-  {
     "name": "Script Main Cleaner",
     "description": "Checks all scripts we have to see if there are any that break format",
     "tags": [
