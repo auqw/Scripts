@@ -614,7 +614,7 @@ public class MergeTemplateHelperV3
         // otherwise silently remove a matching #endregion and break compilation.
         string[] regionDirectives = Regex.Matches(
                 existingBody,
-                @"(?m)^[ \\t]*#(?:region|endregion)\\b[^\\r\\n]*"
+                @"(?m)^[ \t]*#(?:region|endregion)\b[^\r\n]*"
             )
             .Select(match => match.Value.Trim())
             .ToArray();
