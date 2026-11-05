@@ -166,9 +166,12 @@ public class MogloweenMergesDoAll
         yield return () => new MogGLOWweenMerge().BuyAllMerge(buyMode: GetBuyMode("mogGlowweenMode"));
         yield return () =>
         {
-            MogloweenMergeMode mode =
-                Bot.Config?.Get<MogloweenMergeMode>("Generic", "mogloweenSeasonalMode")
-                ?? GetLegacyMode();
+            MogloweenMergeShopMode shopMode =
+                Bot.Config?.Get<MogloweenMergeShopMode>("Generic", "mogloweenSeasonalMode")
+                ?? MogloweenMergeShopMode.inherit;
+            MogloweenMergeMode mode = shopMode == MogloweenMergeShopMode.inherit
+                ? GetLegacyMode()
+                : ToMogloweenMergeMode(shopMode);
             new MogloweenSeasonalMerge().BuyAllMerge(
                 buyMode: ToBuyMode(mode),
                 skipLegionItems: mode == MogloweenMergeMode.acNonLegion
@@ -184,8 +187,11 @@ public class MogloweenMergesDoAll
 
     private mergeOptionsEnum GetBuyMode(string optionKey)
     {
-        mergeOptionsEnum? shopMode = Bot.Config?.Get<mergeOptionsEnum>("Generic", optionKey);
-        return shopMode ?? ToBuyMode(GetLegacyMode());
+        MogloweenMergeShopMode shopMode =
+            Bot.Config?.Get<MogloweenMergeShopMode>("Generic", optionKey) ?? MogloweenMergeShopMode.inherit;
+        return shopMode == MogloweenMergeShopMode.inherit
+            ? ToBuyMode(GetLegacyMode())
+            : ToBuyMode(shopMode);
     }
 
     private MogloweenMergeMode GetLegacyMode() =>
@@ -200,9 +206,36 @@ public class MogloweenMergesDoAll
             _ => mergeOptionsEnum.all,
         };
 
+    private static mergeOptionsEnum ToBuyMode(MogloweenMergeShopMode mode) =>
+        mode switch
+        {
+            MogloweenMergeShopMode.acOnly or MogloweenMergeShopMode.acNonLegion => mergeOptionsEnum.acOnly,
+            MogloweenMergeShopMode.mergeMats => mergeOptionsEnum.mergeMats,
+            MogloweenMergeShopMode.select => mergeOptionsEnum.select,
+            _ => mergeOptionsEnum.all,
+        };
+
+    private static MogloweenMergeMode ToMogloweenMergeMode(MogloweenMergeShopMode mode) =>
+        mode switch
+        {
+            MogloweenMergeShopMode.acOnly => MogloweenMergeMode.acOnly,
+            MogloweenMergeShopMode.acNonLegion => MogloweenMergeMode.acNonLegion,
+            MogloweenMergeShopMode.mergeMats => MogloweenMergeMode.mergeMats,
+            MogloweenMergeShopMode.select => MogloweenMergeMode.select,
+            _ => MogloweenMergeMode.all,
+        };
+
     private static List<IOption> BuildGenericOptions()
     {
         List<IOption> options = new() { CoreBots.Instance.SkipOptions };
+        options.Add(
+            new Option<MogloweenMergeMode>(
+                "mode",
+                "Default purchase mode (legacy fallback)",
+                "Used by shops until they have an individual purchase mode saved.",
+                MogloweenMergeMode.all
+            )
+        );
         AddMergeShopOptions(options, "Alnswick Castle", "alnswickCastleMode");
         AddMergeShopOptions(options, "Candied Costumes", "candiedCostumesMode");
         AddMergeShopOptions(options, "Chroma Candy", "chromaCandyMode");
@@ -212,11 +245,11 @@ public class MogloweenMergesDoAll
         AddMergeShopOptions(options, "Hunter's Reward", "huntersRewardMode");
         AddMergeShopOptions(options, "Mog-GLOW-ween", "mogGlowweenMode");
         options.Add(
-            new Option<MogloweenMergeMode>(
+            new Option<MogloweenMergeShopMode>(
                 "mogloweenSeasonalMode",
                 "Mogloween Seasonal - Purchase mode",
-                "Choose what to buy from the Mogloween Seasonal merge shop.",
-                MogloweenMergeMode.all
+                "Choose what to buy from the Mogloween Seasonal merge shop. Inherit uses the legacy default mode.",
+                MogloweenMergeShopMode.inherit
             )
         );
         AddMergeShopOptions(options, "Moonlight Khopesh", "moonlightKhopeshMode");
@@ -231,11 +264,11 @@ public class MogloweenMergesDoAll
     private static void AddMergeShopOptions(List<IOption> options, string shopName, string optionKey)
     {
         options.Add(
-            new Option<mergeOptionsEnum>(
+            new Option<MogloweenMergeShopMode>(
                 optionKey,
                 $"{shopName} - Purchase mode",
-                $"Choose what to buy from the {shopName} merge shop.",
-                mergeOptionsEnum.all
+                $"Choose what to buy from the {shopName} merge shop. Inherit uses the legacy default mode.",
+                MogloweenMergeShopMode.inherit
             )
         );
     }
@@ -265,7 +298,7 @@ public class MogloweenMergesDoAll
     {
         options.Add(
             new Option<string>(
-                " ",
+                $"header_{shopName}",
                 $"========== {shopName.ToUpperInvariant()} MERGE SHOP ==========",
                 $"Select items from the {shopName} merge shop.",
                 " "
@@ -273,4 +306,14 @@ public class MogloweenMergesDoAll
         );
         options.AddRange(selectOptions);
     }
+}
+
+public enum MogloweenMergeShopMode
+{
+    inherit,
+    all,
+    acOnly,
+    mergeMats,
+    select,
+    acNonLegion,
 }
