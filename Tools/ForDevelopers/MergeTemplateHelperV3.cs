@@ -1,5 +1,5 @@
 /*
-name: Merge Template Helper v3
+            @"(?m)^\s*#(?<kind>region|endregion)\b[^\r\n]*",
 description: Generates a merge bot and teaches local ingredients from live monsterDrops packets.
 tags: developer, merge, generator, drops, packets, v2
 */
