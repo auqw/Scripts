@@ -160,16 +160,18 @@ public class MogloweenSeasonalMerge
             Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
         bool acNonLegion = skipLegionItems ?? (selectedMode == MogloweenMergeMode.acNonLegion);
         mergeOptionsEnum resolvedMode =
-            acNonLegion
-                ? mergeOptionsEnum.acOnly
-                : buyMode
-                    ?? selectedMode switch
+            buyMode
+            ?? (
+                acNonLegion
+                    ? mergeOptionsEnum.acOnly
+                    : selectedMode switch
                     {
-                        MogloweenMergeMode.acOnly or MogloweenMergeMode.acNonLegion => mergeOptionsEnum.acOnly,
+                        MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
                         MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
                         MogloweenMergeMode.select => mergeOptionsEnum.select,
                         _ => mergeOptionsEnum.all,
-                    };
+                    }
+            );
         Adv.StartBuyAllMerge(
             "mogloween",
             223,
