@@ -5426,6 +5426,7 @@ public class CoreBots
                     break;
             }
         }
+        FinishFarmProgress(progress);
 
         // Pickup item if needed
         if (item != null)
@@ -5534,6 +5535,7 @@ public class CoreBots
                     break;
             }
         }
+        FinishFarmProgress(progress);
 
         if (ItemID != 0)
             Bot.Wait.ForPickup(ItemID);
@@ -5745,6 +5747,7 @@ public class CoreBots
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
+            FinishFarmProgress(progress);
 
             Bot.Options.AttackWithoutTarget = false;
             Bot.Options.AggroMonsters = false;
@@ -5863,6 +5866,7 @@ public class CoreBots
 
             Bot.Sleep(500);
         }
+        FinishFarmProgress(progress);
 
         Bot.Options.AttackWithoutTarget = false;
         Bot.Options.AggroMonsters = false;
@@ -5964,6 +5968,7 @@ public class CoreBots
             || (item == null && Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0))
                 break;
         }
+        FinishFarmProgress(progress);
 
         if (item != null)
         {
@@ -7317,6 +7322,7 @@ public class CoreBots
             if (rejectElse)
                 Bot.Drops.RejectExcept(item);
         }
+        FinishFarmProgress(progress);
 
         Bot.Wait.ForPickup(item);
     }
@@ -7382,6 +7388,7 @@ public class CoreBots
 
             Sleep(250); // small loop delay
         }
+        FinishFarmProgress(progress);
 
         Bot.Wait.ForPickup(itemID);
     }
@@ -7452,6 +7459,7 @@ public class CoreBots
             Sleep(250); // Small delay to prevent spam
             continue; // Monster not found yet, loop again
         }
+        FinishFarmProgress(progress);
 
         Bot.Wait.ForPickup(item);
     }
@@ -7461,10 +7469,23 @@ public class CoreBots
         public int LastQty = -1;
         public long LastCellHp = -1;
         public DateTime LastChange = DateTime.Now;
+        public int StartQty = -1;
+        public DateTime StartTime = DateTime.Now;
+        public int LastStep = -1;
+        public string? Label;
+        public int Quant;
+        public bool Log;
+        public Func<int>? Quantity;
     }
 
+    // Progress lines are logged every 1/ProgressSteps of the target (5 = every 20%).
+    private const int ProgressSteps = 5;
+
+    private static string FormatSpan(TimeSpan t) =>
+        t.TotalMinutes < 60 ? $"{Math.Max(0, (int)t.TotalMinutes)}m" : $"{(int)t.TotalHours}h{t.Minutes:00}m";
+
     /// <summary>
-    /// Logs "item x/quant" whenever the farmed count goes up, and returns true when, while in a public
+    /// Logs "item x/quant" every 20% of the target, with the rate and ETA, and returns true when, while in a public
     /// room, there was no progress for <see cref="PublicRoomStuckMinutes"/>. Progress is the item count
     /// going up, any monster dying, or the monsters in our cell losing HP (a long boss fight that is
     /// still going is not a stall). Only on VibeSkua; on other clients it always returns false.
@@ -7479,17 +7500,66 @@ public class CoreBots
             quant, log,
             () => (isTemp ? Bot.TempInv.GetItem(itemID)?.Quantity : Bot.Inventory.GetItem(itemID)?.Quantity) ?? 0);
 
+    private void LogFarmProgress(FarmProgress progress, int qty)
+    {
+        int quant = progress.Quant;
+        int shown = Math.Min(qty, quant);
+        int gained = qty - progress.StartQty;
+        TimeSpan elapsed = DateTime.Now - progress.StartTime;
+        string line = $"{progress.Label}: {shown}/{quant} ({shown * 100 / Math.Max(1, quant)}%) | +{gained} in {FormatSpan(elapsed)}";
+        if (gained > 0 && elapsed.TotalSeconds >= 1)
+        {
+            double perHour = gained / elapsed.TotalHours;
+            line += $" | {perHour:0}/h";
+            if (shown < quant)
+                line += $" | ETA {FormatSpan(TimeSpan.FromHours((quant - shown) / perHour))}";
+        }
+        Logger(line, "Progress");
+    }
+
+    /// <summary>
+    /// Called after a farm loop ends. The loop exits as soon as the target is reached, before
+    /// TrackFarmProgress sees the final count, so the 100% line is logged here.
+    /// </summary>
+    private void FinishFarmProgress(FarmProgress progress)
+    {
+        if (!OnVibeSkua || !progress.Log || progress.Quantity == null || progress.StartQty < 0
+            || progress.LastStep >= ProgressSteps)
+            return;
+        int qty = progress.Quantity();
+        if (qty < progress.Quant)
+            return;
+        progress.LastStep = ProgressSteps;
+        LogFarmProgress(progress, qty);
+    }
+
     private bool TrackFarmProgress(FarmProgress progress, string label, int quant, bool log, Func<int> quantity)
     {
         // VibeSkua only: other clients keep the farm loops exactly as they were.
         if (!OnVibeSkua)
             return false;
 
+        progress.Label = label;
+        progress.Quant = quant;
+        progress.Log = log;
+        progress.Quantity = quantity;
+
         int qty = quantity();
         if (qty != progress.LastQty)
         {
-            if (log && progress.LastQty >= 0 && qty > progress.LastQty)
-                Logger($"{label}: {Math.Min(qty, quant)}/{quant}", "Progress");
+            int step = quant > 0 ? Math.Min(qty, quant) * ProgressSteps / quant : ProgressSteps;
+            if (progress.StartQty < 0)
+            {
+                progress.StartQty = qty;
+                progress.StartTime = DateTime.Now;
+                progress.LastStep = step;
+            }
+            else if (log && qty > progress.LastQty && step > progress.LastStep)
+            {
+                // One line per milestone, with the rate since this farm started so the ETA can be read off directly.
+                progress.LastStep = step;
+                LogFarmProgress(progress, qty);
+            }
             progress.LastQty = qty;
             progress.LastChange = DateTime.Now;
             return false;
