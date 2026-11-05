@@ -608,7 +608,27 @@ public class MergeTemplateHelperV3
             preservedCases.Add(existingBody[labelMatch.Index..segmentEnd]);
         }
 
-        string mergedBody = prefix + string.Join("", refreshedCases) + string.Join("", preservedCases) + suffix;
+        // Region directives can intentionally span the generated switch (for example,
+        // a #region before findIngredients and its #endregion after the default case).
+        // Preserve directives from the old switch body because replacing the body would
+        // otherwise silently remove a matching #endregion and break compilation.
+        string[] regionDirectives = Regex.Matches(
+                existingBody,
+                @"(?m)^[ \\t]*#(?:region|endregion)\\b[^\\r\\n]*"
+            )
+            .Select(match => match.Value.Trim())
+            .ToArray();
+
+        string mergedBody = prefix
+            + string.Join("", refreshedCases)
+            + string.Join("", preservedCases)
+            + suffix;
+
+        if (regionDirectives.Length > 0)
+            mergedBody = mergedBody.TrimEnd() + Environment.NewLine
+                + string.Join(Environment.NewLine, regionDirectives)
+                + Environment.NewLine;
+
         return existingContent.Remove(ExistingOpen + 1, ExistingClose - ExistingOpen - 1)
             .Insert(ExistingOpen + 1, mergedBody);
     }
