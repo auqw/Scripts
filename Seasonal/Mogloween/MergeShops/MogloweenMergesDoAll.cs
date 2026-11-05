@@ -31,7 +31,7 @@ public class MogloweenMergesDoAll
     public bool DontPreconfigure = true;
     public string OptionsStorage = "MogloweenMergesDoAll";
     public string[] MultiOptions = { "Generic", "Select" };
-    public List<IOption> Generic = new MogloweenSeasonalMerge().Generic;
+    public List<IOption> Generic = BuildGenericOptions();
     public List<IOption> Select = BuildSelectOptions();
 
     public void ScriptMain(IScriptInterface bot)
@@ -148,54 +148,258 @@ public class MogloweenMergesDoAll
 
         Core.SetOptions();
 
-        MogloweenMergeMode selectedMode =
-            Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
-        mergeOptionsEnum buyMode = selectedMode switch
+        (string Name, Action Run)[] merges =
         {
-            MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
-            MogloweenMergeMode.acNonLegion => mergeOptionsEnum.acOnly,
-            MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
-            MogloweenMergeMode.select => mergeOptionsEnum.select,
-            _ => mergeOptionsEnum.all,
+            (
+                "Alnswick Castle",
+                () => new AlnswickCastleMerge().BuyAllMerge(buyMode: GetMode("alnswickMode"))
+            ),
+            (
+                "Candied Costumes",
+                () => new CandiedCostumesMerge().BuyAllMerge(buyMode: GetMode("candiedCostumesMode"))
+            ),
+            (
+                "Chroma Candy",
+                () => new ChromaCandyMerge().BuyAllMerge(buyMode: GetMode("chromaCandyMode"))
+            ),
+            (
+                "Crescent",
+                () => new CrescentMerge().BuyAllMerge(buyMode: GetMode("crescentMode"))
+            ),
+            (
+                "Elodea's Candy Haul",
+                () => new ElodeasCandyHaulMerge().BuyAllMerge(buyMode: GetMode("elodeasCandyHaulMode"))
+            ),
+            (
+                "Feast of the Depths",
+                () => new FeastoftheDepths().BuyAllMerge(buyMode: GetMode("feastOfTheDepthsMode"))
+            ),
+            (
+                "Hunter's Reward",
+                () => new HuntersReward().BuyAllMerge(buyMode: GetMode("huntersRewardMode"))
+            ),
+            (
+                "Mog-GLOW-ween",
+                () => new MogGLOWweenMerge().BuyAllMerge(buyMode: GetMode("mogGlowWeenMode"))
+            ),
+            (
+                "Mogloween Seasonal",
+                () => new MogloweenSeasonalMerge().BuyAllMerge(buyMode: GetSeasonalMode())
+            ),
+            (
+                "Moonlight Khopesh",
+                () => new MoonlightKhopeshMerge().BuyAllMerge(buyMode: GetMode("moonlightKhopeshMode"))
+            ),
+            (
+                "Tricktown",
+                () => new TricktownMerge().BuyAllMerge(buyMode: GetMode("tricktownMode"))
+            ),
+            (
+                "Ungourdly Gear",
+                () => new UngourdlyGearMerge().BuyAllMerge(buyMode: GetMode("ungourdlyGearMode"))
+            ),
+            (
+                "Vampire Lord",
+                () => new VampireLordMerge().BuyAllMerge(buyMode: GetMode("vampireLordMode"))
+            ),
+            (
+                "Walpurga Witch Wares",
+                () => new WalpurgaWitchWares().BuyAllMerge(buyMode: GetMode("walpurgaWitchWaresMode"))
+            ),
+            (
+                "Witch's Charms",
+                () => new WitchsCharms().BuyAllMerge(buyMode: GetMode("witchsCharmsMode"))
+            ),
         };
 
-        new AlnswickCastleMerge().BuyAllMerge(buyMode: buyMode);
-        new CandiedCostumesMerge().BuyAllMerge(buyMode: buyMode);
-        new ChromaCandyMerge().BuyAllMerge(buyMode: buyMode);
-        new CrescentMerge().BuyAllMerge(buyMode: buyMode);
-        new ElodeasCandyHaulMerge().BuyAllMerge(buyMode: buyMode);
-        new FeastoftheDepths().BuyAllMerge(buyMode: buyMode);
-        new HuntersReward().BuyAllMerge(buyMode: buyMode);
-        new MogGLOWweenMerge().BuyAllMerge(buyMode: buyMode);
-        new MogloweenSeasonalMerge().BuyAllMerge(buyMode: buyMode);
-        new MoonlightKhopeshMerge().BuyAllMerge(buyMode: buyMode);
-        new TricktownMerge().BuyAllMerge(buyMode: buyMode);
-        new UngourdlyGearMerge().BuyAllMerge(buyMode: buyMode);
-        new VampireLordMerge().BuyAllMerge(buyMode: buyMode);
-        new WalpurgaWitchWares().BuyAllMerge(buyMode: buyMode);
-        new WitchsCharms().BuyAllMerge(buyMode: buyMode);
+        foreach (var (name, run) in merges)
+        {
+            Core.Logger($"Starting {name} Merge Shop");
+            run();
+            Core.Logger($"Finished {name} Merge Shop");
+        }
 
         Core.SetOptions(false);
     }
 
+    private mergeOptionsEnum GetMode(string optionName) =>
+        Bot.Config?.Get<mergeOptionsEnum>("Generic", optionName) ?? mergeOptionsEnum.all;
+
+    private mergeOptionsEnum GetSeasonalMode() =>
+        Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode")
+            switch
+            {
+                MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
+                MogloweenMergeMode.acNonLegion => mergeOptionsEnum.acOnly,
+                MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
+                MogloweenMergeMode.select => mergeOptionsEnum.select,
+                _ => mergeOptionsEnum.all,
+            };
+
+    private static List<IOption> BuildGenericOptions() =>
+    [
+        CoreBots.Instance.SkipOptions,
+        new Option<string>(
+            " ",
+            "Mode Explanation [all]",
+            "Mode [all]: Get every item available in each shop.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [acOnly]",
+            "Mode [acOnly]: Get AC-tagged items from each shop.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [acNonLegion]",
+            "Mode [acNonLegion]: For Mogloween Seasonal only, get AC-tagged items except Legion items.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [mergeMats]",
+            "Mode [mergeMats]: Get the materials for each shop without buying the items.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [select]",
+            "Mode [select]: Choose items in the Select category below.",
+            "click here"
+        ),
+        new Option<mergeOptionsEnum>(
+            "alnswickMode",
+            "Alnswick Castle mode",
+            "Select what to get from Alnswick Castle.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "candiedCostumesMode",
+            "Candied Costumes mode",
+            "Select what to get from Candied Costumes.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "chromaCandyMode",
+            "Chroma Candy mode",
+            "Select what to get from Chroma Candy.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "crescentMode",
+            "Crescent mode",
+            "Select what to get from Crescent.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "elodeasCandyHaulMode",
+            "Elodea's Candy Haul mode",
+            "Select what to get from Elodea's Candy Haul.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "feastOfTheDepthsMode",
+            "Feast of the Depths mode",
+            "Select what to get from Feast of the Depths.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "huntersRewardMode",
+            "Hunter's Reward mode",
+            "Select what to get from Hunter's Reward.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "mogGlowWeenMode",
+            "Mog-GLOW-ween mode",
+            "Select what to get from Mog-GLOW-ween.",
+            mergeOptionsEnum.all
+        ),
+        new Option<MogloweenMergeMode>(
+            "mode",
+            "Mogloween Seasonal mode",
+            "Select what to get from Mogloween Seasonal.",
+            MogloweenMergeMode.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "moonlightKhopeshMode",
+            "Moonlight Khopesh mode",
+            "Select what to get from Moonlight Khopesh.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "tricktownMode",
+            "Tricktown mode",
+            "Select what to get from Tricktown.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "ungourdlyGearMode",
+            "Ungourdly Gear mode",
+            "Select what to get from Ungourdly Gear.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "vampireLordMode",
+            "Vampire Lord mode",
+            "Select what to get from Vampire Lord.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "walpurgaWitchWaresMode",
+            "Walpurga Witch Wares mode",
+            "Select what to get from Walpurga Witch Wares.",
+            mergeOptionsEnum.all
+        ),
+        new Option<mergeOptionsEnum>(
+            "witchsCharmsMode",
+            "Witch's Charms mode",
+            "Select what to get from Witch's Charms.",
+            mergeOptionsEnum.all
+        ),
+    ];
+
     private static List<IOption> BuildSelectOptions()
     {
         List<IOption> options = new();
-        options.AddRange(new AlnswickCastleMerge().Select);
-        options.AddRange(new CandiedCostumesMerge().Select);
-        options.AddRange(new ChromaCandyMerge().Select);
-        options.AddRange(new CrescentMerge().Select);
-        options.AddRange(new ElodeasCandyHaulMerge().Select);
-        options.AddRange(new FeastoftheDepths().Select);
-        options.AddRange(new HuntersReward().Select);
-        options.AddRange(new MogGLOWweenMerge().Select);
-        options.AddRange(new MogloweenSeasonalMerge().Select);
-        options.AddRange(new MoonlightKhopeshMerge().Select);
-        options.AddRange(new TricktownMerge().Select);
-        options.AddRange(new UngourdlyGearMerge().Select);
-        options.AddRange(new VampireLordMerge().Select);
-        options.AddRange(new WalpurgaWitchWares().Select);
-        options.AddRange(new WitchsCharms().Select);
+        AddShopOptions(options, "Alnswick Castle", new AlnswickCastleMerge().Select);
+        AddShopOptions(options, "Candied Costumes", new CandiedCostumesMerge().Select);
+        AddShopOptions(options, "Chroma Candy", new ChromaCandyMerge().Select);
+        AddShopOptions(options, "Crescent", new CrescentMerge().Select);
+        AddShopOptions(options, "Elodea's Candy Haul", new ElodeasCandyHaulMerge().Select);
+        AddShopOptions(options, "Feast of the Depths", new FeastoftheDepths().Select);
+        AddShopOptions(options, "Hunter's Reward", new HuntersReward().Select);
+        AddShopOptions(options, "Mog-GLOW-ween", new MogGLOWweenMerge().Select);
+        AddShopOptions(options, "Mogloween Seasonal", new MogloweenSeasonalMerge().Select);
+        AddShopOptions(options, "Moonlight Khopesh", new MoonlightKhopeshMerge().Select);
+        AddShopOptions(options, "Tricktown", new TricktownMerge().Select);
+        AddShopOptions(options, "Ungourdly Gear", new UngourdlyGearMerge().Select);
+        AddShopOptions(options, "Vampire Lord", new VampireLordMerge().Select);
+        AddShopOptions(options, "Walpurga Witch Wares", new WalpurgaWitchWares().Select);
+        AddShopOptions(options, "Witch's Charms", new WitchsCharms().Select);
         return options;
+    }
+
+    private static void AddShopOptions(List<IOption> options, string category, IEnumerable<IOption> shopOptions)
+    {
+        Option<string> section = new(
+            $"shopSection{options.Count}",
+            $"===== {category.ToUpperInvariant()} MERGE =====",
+            $"Items from {category}.",
+            "click here",
+            transient: true
+        )
+        {
+            Category = category,
+        };
+        options.Add(section);
+
+        foreach (IOption option in shopOptions)
+        {
+            option.Category = category;
+            options.Add(option);
+        }
     }
 }
