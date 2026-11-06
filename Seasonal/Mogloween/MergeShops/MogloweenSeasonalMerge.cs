@@ -78,12 +78,6 @@ public class MogloweenSeasonalMerge
         ),
         new Option<string>(
             " ",
-            "Mode Explanation [acNonLegion]",
-            "Mode [acNonLegion]: Get AC-tagged items while skipping Legion Items.",
-            "click here"
-        ),
-        new Option<string>(
-            " ",
             "Mode Explanation [mergeMats]",
             "Mode [mergeMats]: Get the materials for the items without buying them.",
             "click here"
@@ -149,35 +143,50 @@ public class MogloweenSeasonalMerge
 
     public void BuyAllMerge(
         string? buyOnlyThis = null,
-        mergeOptionsEnum? buyMode = null,
-        bool? skipLegionItems = null
+        mergeOptionsEnum? buyMode = null
     )
     {
         if (!Core.isSeasonalMapActive("mogloween"))
             return;
+
+        bool skipLegionItems = false;
+        if (
+            buyOnlyThis == null
+            && !Core.isCompletedBefore(793)
+            && !Core.CheckInventory("Undead Warrior")
+        )
+        {
+            bool buyUndeadWarrior =
+                Bot.ShowMessageBox(
+                    "The Undead Warrior armor costs 1200 AC and is required to join the Legion. Do you want to buy it?",
+                    "Legion",
+                    true
+                ) == true;
+
+            if (buyUndeadWarrior)
+                Core.BuyItem("underworld", 215, "Undead Warrior");
+            else
+                skipLegionItems = true;
+        }
+
         //Only edit the map and shopID here
         MogloweenMergeMode selectedMode =
             Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
-        bool acNonLegion = skipLegionItems ?? (selectedMode == MogloweenMergeMode.acNonLegion);
         mergeOptionsEnum resolvedMode =
             buyMode
-            ?? (
-                acNonLegion
-                    ? mergeOptionsEnum.acOnly
-                    : selectedMode switch
-                    {
-                        MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
-                        MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
-                        MogloweenMergeMode.select => mergeOptionsEnum.select,
-                        _ => mergeOptionsEnum.all,
-                    }
-            );
+            ?? selectedMode switch
+            {
+                MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
+                MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
+                MogloweenMergeMode.select => mergeOptionsEnum.select,
+                _ => mergeOptionsEnum.all,
+            };
         Adv.StartBuyAllMerge(
             "mogloween",
             223,
             findIngredients,
             buyOnlyThis,
-            itemBlackList: acNonLegion ? LegionItems : null,
+            itemBlackList: skipLegionItems ? LegionItems : null,
             buyMode: resolvedMode
         );
 
@@ -268,7 +277,10 @@ public class MogloweenSeasonalMerge
                     break;
 
                 case "Legion Token":
-                    Legion.FarmLegionToken(quant);
+                    if (skipLegionItems)
+                        Core.Logger($"Skipping {req.Name}; Undead Warrior purchase was declined.");
+                    else
+                        Legion.FarmLegionToken(quant);
                     break;
 
                 case "Diamond of Nulgath":
@@ -703,5 +715,4 @@ public enum MogloweenMergeMode
     acOnly = 1,
     mergeMats = 2,
     select = 3,
-    acNonLegion = 4,
 }

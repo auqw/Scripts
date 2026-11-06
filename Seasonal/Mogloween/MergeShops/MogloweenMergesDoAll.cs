@@ -167,10 +167,7 @@ public class MogloweenMergesDoAll
         yield return () =>
         {
             MogloweenMergeMode mode = GetMode("mogloweenSeasonalMode");
-            new MogloweenSeasonalMerge().BuyAllMerge(
-                buyMode: ToBuyMode(mode),
-                skipLegionItems: mode == MogloweenMergeMode.acNonLegion
-            );
+            new MogloweenSeasonalMerge().BuyAllMerge(buyMode: ToBuyMode(mode));
         };
         yield return () => new MoonlightKhopeshMerge().BuyAllMerge(buyMode: GetBuyMode("moonlightKhopeshMode"));
         yield return () => new TricktownMerge().BuyAllMerge(buyMode: GetBuyMode("tricktownMode"));
@@ -198,7 +195,7 @@ public class MogloweenMergesDoAll
     private static mergeOptionsEnum ToBuyMode(MogloweenMergeMode mode) =>
         mode switch
         {
-            MogloweenMergeMode.acOnly or MogloweenMergeMode.acNonLegion => mergeOptionsEnum.acOnly,
+            MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
             MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
             MogloweenMergeMode.select => mergeOptionsEnum.select,
             _ => mergeOptionsEnum.all,
@@ -295,5 +292,4 @@ public enum MogloweenMergeShopMode
     acOnly,
     mergeMats,
     select,
-    acNonLegion,
 }
