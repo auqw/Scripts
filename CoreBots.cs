@@ -286,6 +286,18 @@ public class CoreBots
                 loadAttempts++;
             }
 
+            // A disconnect restarts the script while the client is still logging back in. Give the client's
+            // auto relogin up to 2 minutes before giving up; otherwise the script stops (or sits on the
+            // message box) and the relogin then finds it "already running" and never starts it again.
+            if (!Bot.Player.LoggedIn && Bot.Options.AutoRelogin)
+            {
+                Logger("Not logged in yet, waiting up to 2 min for the auto relogin.");
+                for (int i = 0; i < 120 && !Bot.Player.LoggedIn && !Bot.ShouldExit; i++)
+                    Bot.Sleep(1000);
+                for (int i = 0; i < 30 && Bot.Player.LoggedIn && !Bot.Player.Loaded && !Bot.ShouldExit; i++)
+                    Bot.Sleep(1000);
+            }
+
             // Only stop AFTER retries exhausted
             if (!Bot.Player.LoggedIn)
             {
