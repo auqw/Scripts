@@ -1,7 +1,7 @@
 /*
 name: Rabbit Merge
-description: This bot will farm the items belonging to the selected mode for the Rabbit Merge [1178] in /rivensylth
-tags: rabbit, merge, rivensylth, speedy, hare, suit, tail
+description: Farms the Rabbit Merge [1178] in /rivensylth.
+tags: rivensylth, merge, rabbit, merge
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -13,7 +13,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class RabbitMerge
+public class RabbitMergeShop
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -83,17 +83,6 @@ public class RabbitMerge
 
             switch (req.Name)
             {
-                default:
-                    bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger(
-                        $"The bot hasn't been taught how to get {req.Name}."
-                            + (shouldStop ? " Please report the issue." : " Skipping"),
-                        messageBox: shouldStop,
-                        stopBot: shouldStop
-                    );
-                    break;
-        #endregion
-
                 case "Stories of the Forest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4645);
@@ -104,29 +93,19 @@ public class RabbitMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
+                default:
+                    bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
+                    Core.Logger($"The bot hasn't been taught how to get {req.Name}.", messageBox: shouldStop, stopBot: shouldStop);
+                    break;
+        #endregion
             }
         }
     }
 
-    public List<IOption> Select = new()
-    {
-        new Option<bool>(
-            "32065",
-            "Speedy Hare Suit",
-            "Mode: [select] only\nShould the bot buy \"Speedy Hare Suit\" ?",
-            false
-        ),
-        new Option<bool>(
-            "32068",
-            "Speedy Hare Tail",
-            "Mode: [select] only\nShould the bot buy \"Speedy Hare Tail\" ?",
-            false
-        ),
-        new Option<bool>(
-            "32071",
-            "Speedy Hare Mask",
-            "Mode: [select] only\nShould the bot buy \"Speedy Hare Mask\" ?",
-            false
-        ),
-    };
+    public List<IOption> Select =
+    [
+        new Option<bool>("32065", "Speedy Hare Suit", "Mode: [select] only\nShould the bot buy \"Speedy Hare Suit\" ?", false),
+        new Option<bool>("32068", "Speedy Hare Tail", "Mode: [select] only\nShould the bot buy \"Speedy Hare Tail\" ?", false),
+        new Option<bool>("32071", "Speedy Hare Mask", "Mode: [select] only\nShould the bot buy \"Speedy Hare Mask\" ?", false),
+    ];
 }
