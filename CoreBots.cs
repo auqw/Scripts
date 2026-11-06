@@ -86,6 +86,11 @@ public class CoreBots
 
     // [Can Change] Whether you want anti lag features (lag killer, invisible monsters, set to 10 FPS)
     public bool AntiLag { get; set; } = true;
+    /// <summary>
+    /// Whether Anti-Lag also turns on the client's Lag Killer, which stops drawing the map (black screen).
+    /// The animation and monster options of Anti-Lag apply either way. CBO key "AntiLagLagKiller".
+    /// </summary>
+    public bool AntiLagLagKiller { get; set; } = true;
 
     // [Can Change] Name of your soloing class
     public string SoloClass { get; set; } = string.Empty;
@@ -638,7 +643,8 @@ public class CoreBots
                     // Anti-lag option
                     if (AntiLag)
                     {
-                        Bot.Options.LagKiller = changeTo;
+                        if (AntiLagLagKiller)
+                            Bot.Options.LagKiller = changeTo;
 
                         // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
                         Bot.Lite.FreezeMonsterPosition = changeTo;
@@ -12114,6 +12120,9 @@ public class CoreBots
             ShouldRest = _ShouldRest;
         if (CBOBool("AntiLag", out bool _AntiLag))
             AntiLag = _AntiLag;
+        // Missing key keeps the old behavior (Lag Killer on with Anti-Lag).
+        if (CBOBool("AntiLagLagKiller", out bool _AntiLagLagKiller))
+            AntiLagLagKiller = _AntiLagLagKiller;
 
         if (CBOInt("ActionDelay", out int _ActionDelay))
             ActionDelay = _ActionDelay;
