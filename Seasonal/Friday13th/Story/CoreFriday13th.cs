@@ -113,7 +113,15 @@ public class CoreFriday13th
         Story.KillQuest(3105, "Vampirates", "Stranglerfish");
 
         // Unsink This Ship! 3106
-        Story.KillQuest(3106, "Vampirates", new[] { "Murderaconian", "Vampirate", "Vampirate" });
+        if (!Story.QuestProgression(3106))
+        {
+            Core.EnsureAccept(3106);
+            Core.HuntMonster("Vampirates", "Murderaconian", "Murderaconian Slain", 5);
+            Core.HuntMonster("Vampirates", "Vampirate", "Vampirate Slain", 5);
+            Core.HuntMonster("Vampirates", "Vampirate", "Multi-Purpose Ship Widget");
+            Core.EnsureComplete(3106);
+            Bot.Sleep(200);
+        }
 
         // Release the Kraken! Wait, no - Don't. 3107
         Story.KillQuest(3107, "Vampirates", "Bracken Kraken");
@@ -151,7 +159,7 @@ public class CoreFriday13th
                 Core.EnsureAccept(3117);
                 Core.HuntMonster("Skullpunch", "Shelleton", "Turtle Meat", 10);
                 Core.HuntMonster("Skullpunch", "Fishwing", "Fish Oil", 5);
-                Core.EnsureAccept(3117);
+                Core.EnsureComplete(3117);
             }
 
             // Full o' Holes 3118
