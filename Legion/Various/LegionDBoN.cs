@@ -64,7 +64,7 @@ public class LegionDBoN
             return;
 
         Legion.FarmLegionToken(5000);
-        DBoN.GetDragonBlade();
+        DBoN.GetDragonBlade(true);
         Bot.Wait.ForPickup("Legion DragonBlade of Nulgath");
 
         //Merge:

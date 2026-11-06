@@ -826,7 +826,7 @@ public class YulgarsDualWieldMerge
                         Core.Logger($"{req.Name} requires Membership to obtain");
                         return;
                     }
-                    DBoN.GetDragonBlade();
+                    DBoN.GetDragonBlade(true);
                     break;
 
                 case "ShadowReaper Of Doom":

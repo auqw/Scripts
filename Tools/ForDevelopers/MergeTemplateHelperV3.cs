@@ -1,7 +1,7 @@
 /*
-name: Merge File Generator
-description: Generates merge scripts and teaches local ingredients from live monsterDrops packets.
-tags: developer, merge, generator, drops, packets
+            @"(?m)^\s*#(?<kind>region|endregion)\b[^\r\n]*",
+description: Generates a merge bot and teaches local ingredients from live monsterDrops packets.
+tags: developer, merge, generator, drops, packets, v2
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -26,7 +26,7 @@ using Skua.Core.Options;
 using Skua.Core.Scripts;
 using Skua.Core.Utils;
 
-public class MergeFileGenerator
+public class MergeTemplateHelperV3
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -41,13 +41,13 @@ public class MergeFileGenerator
         bool IgnoreCaseStorage
     );
 
-    public string OptionsStorage = "MergeTemplateHelperV2";
+    public string OptionsStorage = "MergeTemplateHelperV3";
     public bool DontPreconfigure = true;
     public List<IOption> Options =
     [
         new Option<bool>("regenerateExisting", "Regenerate Existing Merge", "When enabled, select an existing merge script and regenerate it instead of creating a new template. Location and Shop ID are ignored.", false),
-        new Option<string>("location", "Location", "Used only when generating a new merge file. Ignored when Regenerate Existing Merge is enabled.", ""),
-        new Option<int>("shopID", "Shop ID", "Used only when generating a new merge file. Leave 0 to generate every shop found in the location SWF. Ignored during regeneration.", 0),
+        new Option<string>("location", "Location", "Used only when generating a new merge template. Ignored when Regenerate Existing Merge is enabled.", ""),
+        new Option<int>("shopID", "Shop ID", "Used only when generating a new merge template. Leave 0 to generate every shop found in the location SWF. Ignored during regeneration.", 0),
         new Option<bool>("ignoreCaseStorage", "Ignore CaseStorage", "Generate without using stored acquisition cases. Applies to both generation modes.", false),
         CoreBots.Instance.SkipOptions,
     ];
@@ -115,7 +115,7 @@ public class MergeFileGenerator
         if (outputs.Count == 0)
             throw new InvalidOperationException($"No merge shops were found in /{map}.");
 
-        Core.Logger($"Generated {outputs.Count} merge file(s):\n{string.Join("\n", outputs)}");
+        Core.Logger($"Generated {outputs.Count} merge template(s):\n{string.Join("\n", outputs)}");
 
         if (outputs.Count == 1 && File.Exists(outputs[0]))
         {
@@ -192,7 +192,7 @@ public class MergeFileGenerator
         Core.Logger($"Collected drops for {monsters.Count} monster(s).");
         Core.Logger($"Loading {location.QuestIDs.Count} map quest(s)...");
         List<Quest> mapQuests = LoadMapQuests(location.QuestIDs);
-        Core.Logger($"Loaded {mapQuests.Count} map quest(s). Generating updated merge file...");
+        Core.Logger($"Loaded {mapQuests.Count} map quest(s). Generating updated merge template...");
         string? output = GenerateShop(
             map,
             shopID,
@@ -431,7 +431,14 @@ public class MergeFileGenerator
             string backupPath = existingFilePath + ".bak";
             if (!File.Exists(backupPath))
                 File.Copy(existingFilePath, backupPath);
-            File.WriteAllText(existingFilePath, mergedContent);
+
+            // Write only after the complete regenerated content and backup are ready.
+            string temporaryPath = existingFilePath + ".regen.tmp";
+            File.WriteAllText(temporaryPath, mergedContent);
+            File.Copy(temporaryPath, existingFilePath, overwrite: true);
+            File.Delete(temporaryPath);
+
+            ReportUnresolvedCases(mergedContent, existingFilePath);
         }
         else
         {
@@ -443,6 +450,50 @@ public class MergeFileGenerator
         return outputPath;
     }
 
+
+    /// <summary>
+    /// Reports acquisition and quest-unlock placeholders that still need manual implementation.
+    /// </summary>
+    private void ReportUnresolvedCases(string content, string filePath)
+    {
+        MatchCollection acquisitionMatches = Regex.Matches(
+            content,
+            @"(?m)^\\s*//\\s*FILL_ACQUISITION:\\s*(?<details>.+?)\\s*$",
+            RegexOptions.CultureInvariant
+        );
+        MatchCollection questUnlockMatches = Regex.Matches(
+            content,
+            @"(?m)^\\s*//\\s*FILL_QUEST_UNLOCK:\\s*(?<details>.+?)\\s*$",
+            RegexOptions.CultureInvariant
+        );
+
+        if (acquisitionMatches.Count == 0 && questUnlockMatches.Count == 0)
+        {
+            Core.Logger("Regeneration complete. No acquisition or quest-unlock placeholders remain.");
+            return;
+        }
+
+        List<string> unresolved = [];
+        if (acquisitionMatches.Count > 0)
+        {
+            unresolved.Add($"INGREDIENT CASES ({acquisitionMatches.Count}):");
+            unresolved.AddRange(acquisitionMatches
+                .Select(match => "• " + match.Groups["details"].Value.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase));
+        }
+        if (questUnlockMatches.Count > 0)
+        {
+            if (unresolved.Count > 0)
+                unresolved.Add("");
+            unresolved.Add($"QUEST UNLOCKS ({questUnlockMatches.Count}):");
+            unresolved.AddRange(questUnlockMatches
+                .Select(match => "• " + match.Groups["details"].Value.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase));
+        }
+
+        string message = $"Regenerated {Path.GetFileName(filePath)}, but manual work remains:\n\n{string.Join("\\n", unresolved)}";
+        Core.Logger(message, messageBox: true);
+    }
 
     /// <summary>
     /// Updates generated metadata, class name, ingredient cases, and Select options while retaining
@@ -557,7 +608,27 @@ public class MergeFileGenerator
             preservedCases.Add(existingBody[labelMatch.Index..segmentEnd]);
         }
 
-        string mergedBody = prefix + string.Join("", refreshedCases) + string.Join("", preservedCases) + suffix;
+        // Region directives can intentionally span the generated switch (for example,
+        // a #region before findIngredients and its #endregion after the default case).
+        // Preserve directives from the old switch body because replacing the body would
+        // otherwise silently remove a matching #endregion and break compilation.
+        string[] regionDirectives = Regex.Matches(
+                existingBody,
+                @"(?m)^[ \t]*#(?:region|endregion)\b[^\r\n]*"
+            )
+            .Select(match => match.Value.Trim())
+            .ToArray();
+
+        string mergedBody = prefix
+            + string.Join("", refreshedCases)
+            + string.Join("", preservedCases)
+            + suffix;
+
+        if (regionDirectives.Length > 0)
+            mergedBody = mergedBody.TrimEnd() + Environment.NewLine
+                + string.Join(Environment.NewLine, regionDirectives)
+                + Environment.NewLine;
+
         return existingContent.Remove(ExistingOpen + 1, ExistingClose - ExistingOpen - 1)
             .Insert(ExistingOpen + 1, mergedBody);
     }
@@ -1131,8 +1202,32 @@ public class MergeFileGenerator
     {
         string result = new([.. value.Where(char.IsLetterOrDigit)]);
         if (string.IsNullOrEmpty(result))
-            result = "GeneratedMerge";
-        return char.IsDigit(result[0]) ? "Merge" + result : result;
+            return "GeneratedMergeShop";
+
+        // Keep the shop-based class naming used by older merge scripts.
+        // Spell out a leading digit instead of adding the newer "Merge" prefix.
+        if (char.IsDigit(result[0]))
+        {
+            string numberWord = result[0] switch
+            {
+                '0' => "Zero",
+                '1' => "One",
+                '2' => "Two",
+                '3' => "Three",
+                '4' => "Four",
+                '5' => "Five",
+                '6' => "Six",
+                '7' => "Seven",
+                '8' => "Eight",
+                '9' => "Nine",
+                _ => string.Empty,
+            };
+            result = numberWord + result[1..];
+        }
+
+        return result.EndsWith("Shop", StringComparison.OrdinalIgnoreCase)
+            ? result
+            : result + "Shop";
     }
 
     private static string Escape(string value) => value.Replace("\\", "\\\\").Replace("\"", "\\\"");

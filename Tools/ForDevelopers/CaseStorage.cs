@@ -4562,7 +4562,7 @@ case ""Shadow Shroud"":
     "DragonBlade of Nulgath",
     @"
 case ""DragonBlade of Nulgath"":
-                    DBoN.GetDragonBlade();
+                    DBoN.GetDragonBlade(true);
                     break;
     "
 },
@@ -14872,7 +14872,7 @@ case ""Dark Dragon Slayer's Halberd"":
                     if (!Bot.Player.IsMember)
                         StreamwarMerge.BuyAllMerge(""Dark Dragon Slayer's Halberd"");
                     else
-                        DBoN.GetDragonBlade();
+                        DBoN.GetDragonBlade(true);
 
                     Core.BuyItem(
                         ""novashrine"",
