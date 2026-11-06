@@ -507,6 +507,8 @@ public class CoreBots
                 }
             );
             Bot.Events.ScriptStopping += StopBotEvent;
+            if (IsVibeSkuaAvalonia())
+                StartPauseGuard();
 
             // Alive Check handling
             Bot.Events.MapChanged += CleanKilledMonstersList;
@@ -870,8 +872,65 @@ public class CoreBots
 
     private bool scriptFinished = true;
 
+    private CancellationTokenSource? _pauseGuardCts;
+    private IScriptManager? _scriptManager;
+
+    /// <summary>
+    /// While the script is paused ("Pause Script" button) the script thread is frozen, but the skill loop
+    /// keeps attacking and the character stays in the monster cell getting hit. This watcher pauses the
+    /// skills, drops the target and jumps to a safe cell on pause, and resumes the skills on unpause (the
+    /// farm loops jump back to the monster cell by themselves). If the class was changed while paused, it
+    /// loads the new class's skill rotation instead. VibeSkua only.
+    /// </summary>
+    private void StartPauseGuard()
+    {
+        _pauseGuardCts?.Cancel();
+        CancellationTokenSource cts = _pauseGuardCts = new CancellationTokenSource();
+        Task.Run(async () =>
+        {
+            bool wasPaused = false;
+            string? classAtPause = null;
+            while (!cts.IsCancellationRequested)
+            {
+                try
+                {
+                    bool paused = (_scriptManager ??= Ioc.Default.GetService<IScriptManager>())?.ScriptPaused ?? false;
+                    if (paused && !wasPaused && Bot.Player.LoggedIn)
+                    {
+                        Logger("Script paused: leaving combat.", "PauseGuard");
+                        classAtPause = Bot.Player.CurrentClass?.Name;
+                        Bot.Skills.Pause();
+                        Bot.Combat.CancelTarget();
+                        JumpWait();
+                    }
+                    else if (!paused && wasPaused)
+                    {
+                        string? classNow = Bot.Player.CurrentClass?.Name;
+                        if (!string.IsNullOrEmpty(classNow) && classNow != classAtPause)
+                        {
+                            Bot.Skills.StartAdvanced(classNow, false);
+                            Logger($"Script resumed with {classNow} (skills reloaded).", "PauseGuard");
+                        }
+                        else
+                        {
+                            Bot.Skills.Resume();
+                            Logger("Script resumed.", "PauseGuard");
+                        }
+                    }
+                    wasPaused = paused;
+                }
+                catch
+                {
+                    // Never let the watcher crash the bot.
+                }
+                try { await Task.Delay(300, cts.Token); } catch (TaskCanceledException) { break; }
+            }
+        });
+    }
+
     public bool StopBotEvent(Exception? e)
     {
+        _pauseGuardCts?.Cancel();
         Bot.Events.ScriptStopping -= StopBotEvent;
         SetOptions(false);
         return StopBot(e != null);
