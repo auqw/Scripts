@@ -888,27 +888,46 @@ public class CoreBots
         CancellationTokenSource cts = _pauseGuardCts = new CancellationTokenSource();
         Task.Run(async () =>
         {
-            bool wasPaused = false;
+            // True only once the pause actions actually ran: a pause seen while logged out, or one whose
+            // actions threw, is retried on the next poll instead of being treated as handled.
+            bool guarded = false;
             string? classAtPause = null;
+            bool attackWithoutTarget = false, aggroAll = false, aggro = false;
             while (!cts.IsCancellationRequested)
             {
                 try
                 {
                     bool paused = (_scriptManager ??= Ioc.Default.GetService<IScriptManager>())?.ScriptPaused ?? false;
-                    if (paused && !wasPaused && Bot.Player.LoggedIn)
+                    if (paused && !guarded && Bot.Player.LoggedIn)
                     {
-                        Logger("Script paused: leaving combat.", "PauseGuard");
                         classAtPause = Bot.Player.CurrentClass?.Name;
+                        // JumpWait turns these off; the script expects them back as they were after the pause.
+                        attackWithoutTarget = Bot.Options.AttackWithoutTarget;
+                        aggroAll = Bot.Options.AggroAllMonsters;
+                        aggro = Bot.Options.AggroMonsters;
                         Bot.Skills.Pause();
                         Bot.Combat.CancelTarget();
                         JumpWait();
+                        guarded = true;
+                        Logger("Script paused: leaving combat.", "PauseGuard");
                     }
-                    else if (!paused && wasPaused)
+                    else if (!paused && guarded && !cts.IsCancellationRequested)
                     {
+                        Bot.Options.AttackWithoutTarget = attackWithoutTarget;
+                        Bot.Options.AggroAllMonsters = aggroAll;
+                        Bot.Options.AggroMonsters = aggro;
                         string? classNow = Bot.Player.CurrentClass?.Name;
                         if (!string.IsNullOrEmpty(classNow) && classNow != classAtPause)
                         {
-                            Bot.Skills.StartAdvanced(classNow, false);
+                            // Class changed while paused: load its rotation with the mode configured for it.
+                            Bot.Skills.StartAdvanced(classNow, false, classNow switch
+                            {
+                                var n when n == SoloClass => SoloUseMode,
+                                var n when n == FarmClass => FarmUseMode,
+                                var n when n == BossClass => BossUseMode,
+                                var n when n == DodgeClass => DodgeUseMode,
+                                _ => ClassUseMode.Base,
+                            });
                             Logger($"Script resumed with {classNow} (skills reloaded).", "PauseGuard");
                         }
                         else
@@ -916,12 +935,12 @@ public class CoreBots
                             Bot.Skills.Resume();
                             Logger("Script resumed.", "PauseGuard");
                         }
+                        guarded = false;
                     }
-                    wasPaused = paused;
                 }
                 catch
                 {
-                    // Never let the watcher crash the bot.
+                    // Never let the watcher crash the bot; an unfinished transition is retried next poll.
                 }
                 try { await Task.Delay(300, cts.Token); } catch (TaskCanceledException) { break; }
             }
