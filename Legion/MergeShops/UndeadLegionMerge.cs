@@ -190,7 +190,7 @@ public class UndeadLegionMerge
                     break;
 
                 case "DragonBlade of Nulgath":
-                    DBoN.GetDragonBlade();
+                    DBoN.GetDragonBlade(true);
                     break;
 
                 case "Fallen MonsterHunter":

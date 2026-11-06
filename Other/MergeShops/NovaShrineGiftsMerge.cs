@@ -258,7 +258,7 @@ public class NovaShrineGiftsMerge
                     if (!Bot.Player.IsMember)
                         StreamwarMerge.BuyAllMerge("Dark Dragon Slayer's Halberd");
                     else
-                        DBoN.GetDragonBlade();
+                        DBoN.GetDragonBlade(true);
 
                     Core.BuyItem(
                         "novashrine",
