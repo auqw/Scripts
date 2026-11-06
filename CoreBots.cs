@@ -12122,6 +12122,7 @@ public class CoreBots
             ShouldRest = _ShouldRest;
         if (CBOBool("AntiLag", out bool _AntiLag))
             AntiLag = _AntiLag;
+        LogToFile = false; // reset so a later ReadCBO() without the key turns it back off
         if (CBOBool("LogToFile", out bool _LogToFile))
             LogToFile = _LogToFile;
 
