@@ -86,6 +86,12 @@ public class CoreBots
 
     // [Can Change] Whether you want anti lag features (lag killer, invisible monsters, set to 10 FPS)
     public bool AntiLag { get; set; } = true;
+    /// <summary>
+    /// Also write every Logger line to logs/&lt;username&gt;_&lt;yyyy-MM-dd&gt;.log in the client's folder, so a run
+    /// can be read after the client is closed. Files older than 30 days are deleted. Off by default;
+    /// CBO key "LogToFile".
+    /// </summary>
+    public bool LogToFile { get; set; } = false;
 
     // [Can Change] Name of your soloing class
     public string SoloClass { get; set; } = string.Empty;
@@ -7690,6 +7696,8 @@ public class CoreBots
         // =========================
         string logMessage = $"[{DateTime.Now:HH:mm:ss}] ({caller}) {rawMessage}";
         Bot.Log(logMessage);
+        if (LogToFile)
+            WriteLogFile(logMessage);
 
         // =========================
         // AQW CHAT SAFE PIPELINE
@@ -12114,6 +12122,8 @@ public class CoreBots
             ShouldRest = _ShouldRest;
         if (CBOBool("AntiLag", out bool _AntiLag))
             AntiLag = _AntiLag;
+        if (CBOBool("LogToFile", out bool _LogToFile))
+            LogToFile = _LogToFile;
 
         if (CBOInt("ActionDelay", out int _ActionDelay))
             ActionDelay = _ActionDelay;
@@ -12282,6 +12292,49 @@ public class CoreBots
         return output != "fail"
             && !string.IsNullOrWhiteSpace(output)
             && !string.IsNullOrWhiteSpace(output);
+    }
+
+    private static readonly object _logFileLock = new();
+    private static bool _logsCleaned;
+    private const int LogRetentionDays = 30;
+
+    // Deletes log files not written to in LogRetentionDays days; runs once per script start.
+    private static void CleanOldLogs(string dir)
+    {
+        lock (_logFileLock)
+        {
+            if (_logsCleaned)
+                return;
+            _logsCleaned = true;
+        }
+        DateTime cutoff = DateTime.Now.AddDays(-LogRetentionDays);
+        foreach (string f in Directory.GetFiles(dir, "*.log"))
+        {
+            try
+            {
+                if (File.GetLastWriteTime(f) < cutoff)
+                    File.Delete(f);
+            }
+            catch { /* A locked or missing file is not worth failing over. */ }
+        }
+    }
+
+    // Appends a Logger line to logs/<username>_<yyyy-MM-dd>.log in the client's folder (see LogToFile).
+    private void WriteLogFile(string logMessage)
+    {
+        try
+        {
+            string dir = Path.Combine(ClientFileSources.SkuaDIR, "logs");
+            Directory.CreateDirectory(dir);
+            CleanOldLogs(dir);
+            string? user = Bot.Player?.Username;
+            if (string.IsNullOrWhiteSpace(user))
+                user = "unknown";
+            string file = Path.Combine(dir, $"{user}_{DateTime.Now:yyyy-MM-dd}.log");
+            lock (_logFileLock)
+                File.AppendAllText(file, logMessage + Environment.NewLine);
+        }
+        catch { /* Never let file logging break the bot. */ }
     }
 
     public bool CBOBool(string Name, out bool output)
