@@ -267,13 +267,14 @@ public class CoreBots
                         s.PlayerCount < s.MaxPlayers)?.Name
                 ?? "Twilly";
 
-            // A disconnect restarts the script while the client is still logging back in. Give the client's
-            // auto relogin up to 2 minutes before giving up; otherwise the script stops (or sits on the
+            // A disconnect restarts the script while the client is still logging back in. Give the client
+            // up to 2 minutes to log in before giving up; otherwise the script stops (or sits on the
             // message box) and the relogin then finds it "already running" and never starts it again.
+            // Not gated on Bot.Options.AutoRelogin: the client's relogin turns it off while it retries.
             // The load loop below then handles a slow world load as before.
-            if (!Bot.Player.LoggedIn && Bot.Options.AutoRelogin)
+            if (!Bot.Player.LoggedIn)
             {
-                Logger("Not logged in yet, waiting up to 2 min for the auto relogin.");
+                Logger("Not logged in yet, waiting up to 2 min for the login.");
                 for (int i = 0; i < 120 && !Bot.Player.LoggedIn && !Bot.ShouldExit; i++)
                     Bot.Sleep(1000);
             }
