@@ -7694,10 +7694,11 @@ public class CoreBots
         // =========================
         // Console / file log (FULL)
         // =========================
-        string logMessage = $"[{DateTime.Now:HH:mm:ss}] ({caller}) {rawMessage}";
+        DateTime logTime = DateTime.Now;
+        string logMessage = $"[{logTime:HH:mm:ss}] ({caller}) {rawMessage}";
         Bot.Log(logMessage);
         if (LogToFile)
-            WriteLogFile(logMessage);
+            WriteLogFile(logMessage, logTime);
 
         // =========================
         // AQW CHAT SAFE PIPELINE
@@ -12296,42 +12297,48 @@ public class CoreBots
     }
 
     private static readonly object _logFileLock = new();
-    private static bool _logsCleaned;
+    private bool _logsCleaned;
     private const int LogRetentionDays = 30;
 
-    // Deletes log files not written to in LogRetentionDays days; runs once per script start.
-    private static void CleanOldLogs(string dir)
+    // Deletes this feature's own files (<username>_<yyyy-MM-dd>.log) not written to in LogRetentionDays days.
+    // Runs once per script start (CoreBots is created per script); a failed scan is retried on the next line.
+    private void CleanOldLogs(string dir)
     {
-        lock (_logFileLock)
+        if (_logsCleaned)
+            return;
+        try
         {
-            if (_logsCleaned)
-                return;
+            DateTime cutoff = DateTime.Now.AddDays(-LogRetentionDays);
+            foreach (string f in Directory.GetFiles(dir, "*_????-??-??.log"))
+            {
+                try
+                {
+                    if (File.GetLastWriteTime(f) < cutoff)
+                        File.Delete(f);
+                }
+                catch { /* A locked or missing file is not worth failing over. */ }
+            }
             _logsCleaned = true;
         }
-        DateTime cutoff = DateTime.Now.AddDays(-LogRetentionDays);
-        foreach (string f in Directory.GetFiles(dir, "*.log"))
-        {
-            try
-            {
-                if (File.GetLastWriteTime(f) < cutoff)
-                    File.Delete(f);
-            }
-            catch { /* A locked or missing file is not worth failing over. */ }
-        }
+        catch { /* Keep logging even if the folder can't be listed right now. */ }
     }
 
     // Appends a Logger line to logs/<username>_<yyyy-MM-dd>.log in the client's folder (see LogToFile).
-    private void WriteLogFile(string logMessage)
+    // The file is picked from the same time the line was stamped with, so a line never lands in the next day.
+    private void WriteLogFile(string logMessage, DateTime logTime)
     {
         try
         {
-            string dir = Path.Combine(ClientFileSources.SkuaDIR, "logs");
+            string baseDir = ClientFileSources.SkuaDIR;
+            if (string.IsNullOrWhiteSpace(baseDir) || !Path.IsPathRooted(baseDir))
+                return;
+            string dir = Path.Combine(baseDir, "logs");
             Directory.CreateDirectory(dir);
             CleanOldLogs(dir);
             string? user = Bot.Player?.Username;
             if (string.IsNullOrWhiteSpace(user))
                 user = "unknown";
-            string file = Path.Combine(dir, $"{user}_{DateTime.Now:yyyy-MM-dd}.log");
+            string file = Path.Combine(dir, $"{user}_{logTime:yyyy-MM-dd}.log");
             lock (_logFileLock)
                 File.AppendAllText(file, logMessage + Environment.NewLine);
         }
