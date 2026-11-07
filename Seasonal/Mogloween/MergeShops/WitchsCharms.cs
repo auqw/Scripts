@@ -23,7 +23,7 @@ public class WitchsCharms
     private static CoreAdvanced _Adv;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
-	private static CoreMogloween CoreMogloween
+    private static CoreMogloween CoreMogloween
     {
         get => _CoreMogloween ??= new CoreMogloween();
         set => _CoreMogloween = value;
@@ -53,9 +53,9 @@ public class WitchsCharms
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-		CoreMogloween.BirgittaMogloween();
-		CoreMogloween.ShadowSlayerWar();
-		CoreMogloween.Walpurgisnacht();
+        CoreMogloween.BirgittaMogloween();
+        CoreMogloween.ShadowSlayerWar();
+        CoreMogloween.Walpurgisnacht();
         Adv.StartBuyAllMerge("walpurgisnacht", 2796, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         void findIngredients()
@@ -69,13 +69,13 @@ public class WitchsCharms
             {
                 case "Hollyhock Brew":
                     Core.FarmingLogger(req.Name, quant);
-					Core.EquipClass(ClassType.Solo);
-					Monster? ensis;
+                    Core.EquipClass(ClassType.Solo);
+                    Monster? ensis;
                     Monster? grigor;
                     Core.RegisterQuests(Core.IsMember ? 10907 : 10906);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-						if (Bot.Map.Name != "birgittamogloween")
+                        if (Bot.Map.Name != "birgittamogloween")
                             Core.Join("birgittamogloween");
 
                         if (Bot.Player.Cell != "r6")
@@ -83,8 +83,8 @@ public class WitchsCharms
 
                         ensis = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 16);
                         grigor = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 17);
-						
-						if (Bot.TempInv.Contains("Cor Mortis Cosage") && ensis != null)
+
+                        if (Bot.TempInv.Contains("Cor Mortis Cosage") && ensis != null)
                             Bot.Combat.Attack(16);
 
                         else if (Bot.TempInv.Contains("Grigor's Silver Tooth") && grigor != null)
@@ -96,12 +96,12 @@ public class WitchsCharms
 
                         else if (grigor != null)
                             Bot.Combat.Attack(17);
-						Bot.Sleep(200);
-						Bot.Wait.ForQuestComplete(Core.IsMember ? 10907 : 10906);
+                        Bot.Sleep(200);
+                        Bot.Wait.ForQuestComplete(Core.IsMember ? 10907 : 10906);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
-					break;
+                    break;
                 case "Luna Dial":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(Core.IsMember ? 10932 : 10931);
@@ -118,21 +118,22 @@ public class WitchsCharms
                     break;
                 case "Silver Stake":
                     Core.EquipClass(ClassType.Farm);
-					Core.RegisterQuests(10908, 10909);
-					while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    Core.RegisterQuests(10908, 10909);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-						Core.KillMonster("shadowslayerwar", "r11", "Left", "*");
-						Bot.Wait.ForPickup(req.Name);
-					}
+                        Core.KillMonster("shadowslayerwar", "r11", "Left", "*");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
                     Core.CancelRegisteredQuests();
                     break;
+
                 case "Silverblood Blade":
                 case "Sventura":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("walpurgisnacht", "The Gentleman", req.Name, quant, req.Temp);
                     break;
                 case "Witch Princess' Hat":
-                    Core.Logger("Use Butler to kill Witch Queen Talia in birgittaspire", messageBox: true);
+                    Core.Logger("killing Witch Queen Talia in birgittaspire SOLO is not possible please use your own army and aquire this manually.");
                     break;
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
