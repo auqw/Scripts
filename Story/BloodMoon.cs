@@ -66,7 +66,12 @@ public class BloodMoon
         Story.MapItemQuest(6054, "bloodmoon", 5457);
 
         //Beat This 6055
-        Story.KillQuest(6055, "bloodmoon", new[] { "Frankentacles", "Spidderbeast" });
+        if (!Story.QuestProgression(6055))
+        {
+            Core.EnsureAccept(6055);
+            Core.HuntMonster("bloodmoon", "Frankentacles", "Franken-beasts Slain", 8);
+            Core.EnsureComplete(6055);
+        }
 
         //Insane in the Brain? 6056
         Story.MapItemQuest(6056, "bloodmoon", 5458);

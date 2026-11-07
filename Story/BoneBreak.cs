@@ -83,7 +83,13 @@ public class BoneBreak
         Story.MapItemQuest(5977, "bonebreak", 5418);
 
         //Chew the Dead 5978
-        Story.KillQuest(5978, "bonebreak", new[] { "Undead Berserker", "Bone Leech" });
+        if (!Story.QuestProgression(5978))
+        {
+            Core.EnsureAccept(5978);
+            Core.HuntMonster("bonebreak", "Undead Berserker", "Rotten Flesh", 7);
+            Core.HuntMonster("bonebreak", "Bone Leech", "Old Bone", 7);
+            Core.EnsureComplete(5978);
+        }
 
         //Marsh Mash Pit 5979
         Story.KillQuest(5979, "bonebreak", "Marsh Thing");
