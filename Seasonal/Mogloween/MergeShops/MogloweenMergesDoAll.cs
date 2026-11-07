@@ -201,10 +201,10 @@ public class MogloweenMergesDoAll
         );
         options.Add(
             new Option<bool>(
-                "allowLegionTokenFarming",
-                "Join Legion to farm Legion Tokens",
-                "If disabled, the script will not buy Undead Warrior or join the Legion for Legion Tokens, and will continue with other items.",
-                true
+                "mogloweenBuyUndeadWarrior",
+                "Buy Undead Warrior and join the Legion",
+                "When enabled, the script may buy Undead Warrior, join the Legion, and farm Legion Tokens. When disabled, it skips all Legion items and actions.",
+                false
             )
         );
         return options;
