@@ -11127,9 +11127,7 @@ public class CoreBots
     public bool inPublicRoom()
     {
         Bot.Wait.ForMapLoad(Bot.Map.Name);
-        if (!int.TryParse(Bot.Map.FullName.Split('-').Last(), out int nr))
-            nr = 1;
-        return nr < 1000;
+        return true;
     }
 
     /// <summary>
