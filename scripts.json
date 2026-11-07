@@ -31681,8 +31681,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs",
-    "size": 22983,
-    "sha256": "20920c72a9a35a5b04ec315bb66456f718d26da4adead2d5b762f63c67fb22a3",
+    "size": 23825,
+    "sha256": "8b6e1f9c186cbdc2435fce189c4e954c9cb81f08d72e933f893e8a1758947a9c",
     "fileName": "LocationSwfQuestReader.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs"
   },
