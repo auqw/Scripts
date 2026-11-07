@@ -98,6 +98,25 @@ public class MogloweenSeasonalMerge
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
 
+    private static readonly string[] LegionItems =
+    {
+        "Twisted Legion PumpkinLord Blade",
+        "Creeper Legion Helm",
+        "Creeper Flame Legion Helm",
+        "Flaming Legion Helm",
+        "Evil Legion Helm",
+        "Barbed Legion PumpkinLord Shroud",
+        "Battered Legion PumpkinLord Shroud",
+        "Barbed Legion PumpkinLord Vines",
+        "Barbed Legion PumpkinLord Cape",
+        "Luminous Legion PumpkinLord Cape",
+        "Legion PumpkinLord",
+        "Legion Pumpking Overlord",
+        "Legion Pumpking Morph",
+        "Blade of the Pumpking Legion",
+        "A Gourdly Legion Spirit",
+    };
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -159,6 +178,7 @@ public class MogloweenSeasonalMerge
             223,
             findIngredients,
             buyOnlyThis,
+            itemBlackList: shouldFarmLegionTokens ? null : LegionItems,
             buyMode: resolvedMode
         );
 
