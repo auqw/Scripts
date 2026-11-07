@@ -146,6 +146,9 @@ public class MogloweenMergesDoAll
             }
         );
 
+        if (Bot.Config != null && !Bot.Config.Get<bool>(Core.SkipOptions))
+            Bot.Config.Configure();
+
         Core.SetOptions();
 
         foreach (Action buy in GetMergeShopActions())

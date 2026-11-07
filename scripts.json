@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 474178,
-    "sha256": "dfc3ad661c52c2393082b9ab21389079922633af301b387f40f55ea4bfdab2db",
+    "size": 475211,
+    "sha256": "ea69950b680730b6388a63cb7798d388ff688a4704067098e609511378494080",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3693,6 +3693,21 @@
     "sha256": "a02b4e1d8303b3cdc34856a5923a4912ffabf05dec49f81925da9065a64e6d6f",
     "fileName": "Yokai.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Yokai.cs"
+  },
+  {
+    "name": "KiyametGrove",
+    "description": "Completes the quest chain in /kiyametgrove.",
+    "tags": [
+      "kiyametgrove",
+      "story",
+      "quests",
+      "kiyametgrove"
+    ],
+    "path": "Story/KiyametGrove.cs",
+    "size": 1255,
+    "sha256": "e3864721a48b4d85560876ed206576e963107f9d282add9a65e27168c3d6571b",
+    "fileName": "KiyametGrove.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/KiyametGrove.cs"
   },
   {
     "name": "Dread Forest Story",
@@ -14006,6 +14021,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NightmareCarnaxMerge.cs"
   },
   {
+    "name": "Stillins Merge",
+    "description": "Farms the Stillins Merge [2806] in /kiyametgrove.",
+    "tags": [
+      "kiyametgrove",
+      "merge",
+      "stillins",
+      "merge"
+    ],
+    "path": "Other/MergeShops/StillinsShop.cs",
+    "size": 5284,
+    "sha256": "3b3729143b3a09089feb572156937d04065ffa84ccb3571d1eb69cd7870bf0cc",
+    "fileName": "StillinsShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/StillinsShop.cs"
+  },
+  {
     "name": "Doom Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Doom Merge [423] in /necropolis",
     "tags": [
@@ -14322,8 +14352,8 @@
       "fangs"
     ],
     "path": "Other/MergeShops/ForgeMalenoMerge.cs",
-    "size": 10216,
-    "sha256": "eef72455c128ac1d27adf09d183d9a72a702501ae2c5f74335a1d22f49082839",
+    "size": 7748,
+    "sha256": "999c0f1d7444e0f0a322bb2e0eb791f5d438bbfbd0599f25035cf3da5c4dd19c",
     "fileName": "ForgeMalenoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
@@ -31681,8 +31711,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs",
-    "size": 22983,
-    "sha256": "20920c72a9a35a5b04ec315bb66456f718d26da4adead2d5b762f63c67fb22a3",
+    "size": 23825,
+    "sha256": "8b6e1f9c186cbdc2435fce189c4e954c9cb81f08d72e933f893e8a1758947a9c",
     "fileName": "LocationSwfQuestReader.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GeneratorHelpers/LocationSwfQuestReader.cs"
   },
@@ -33340,8 +33370,8 @@
       "merge"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs",
-    "size": 23133,
-    "sha256": "9eca720cf9f08fc5f6b3eda7915cbd01ac30310298b7db5b7e8162916f32c37c",
+    "size": 23452,
+    "sha256": "a7ffb2f407cb22cf84064fafbb307ca9ebf8f43b33e4040baae21d35cb5056a9",
     "fileName": "MogloweenSeasonalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs"
   },
@@ -33526,8 +33556,8 @@
       "doall"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs",
-    "size": 13566,
-    "sha256": "67d42dc37ba402c7cb969fec9fc0193a5e35452f65b44051ee45b199eeea29de",
+    "size": 11161,
+    "sha256": "17d939410011f9816feeb078d5c2c731a9583bf677f280f05ed51e1c2f3911fc",
     "fileName": "MogloweenMergesDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs"
   },

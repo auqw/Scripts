@@ -115,6 +115,7 @@ public class MogloweenSeasonalMerge
         "Legion Pumpking Morph",
         "Blade of the Pumpking Legion",
         "A Gourdly Legion Spirit",
+        "Baby Dragon Dage",
     };
 
     // [Can Change] This should only be changed by the author.
@@ -140,6 +141,9 @@ public class MogloweenSeasonalMerge
                 "Diamond of Nulgath ",
             }
         );
+        if (Bot.Config != null && !Bot.Config.Get<bool>(Core.SkipOptions))
+            Bot.Config.Configure();
+
         Core.SetOptions();
 
         BuyAllMerge();
