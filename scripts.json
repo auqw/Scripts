@@ -14352,8 +14352,8 @@
       "fangs"
     ],
     "path": "Other/MergeShops/ForgeMalenoMerge.cs",
-    "size": 7748,
-    "sha256": "999c0f1d7444e0f0a322bb2e0eb791f5d438bbfbd0599f25035cf3da5c4dd19c",
+    "size": 9625,
+    "sha256": "abf0df412bfb272caf4a9ac59068578c92a0e23d92681ce9677a4f7f7e390ed9",
     "fileName": "ForgeMalenoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
@@ -32098,6 +32098,21 @@
     "sha256": "edcb268c4ac8ab973a37eb28a0b4254ef6a6953aa2b4df61500c8d010471c007",
     "fileName": "RobinasHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
+  },
+  {
+    "name": "Harvest Day Merges Do All",
+    "description": "Runs all Harvest Day merge shop scripts in this folder.",
+    "tags": [
+      "harvestday",
+      "harvest",
+      "merge",
+      "doall"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs",
+    "size": 8428,
+    "sha256": "97ea08a4603064b0857be4d2042c1ebc51e83a1f39af8106236125fe37550870",
+    "fileName": "HarvestDayMergesDoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs"
   },
   {
     "name": "Autumn Merge",
