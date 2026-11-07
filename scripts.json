@@ -14580,8 +14580,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 54886,
-    "sha256": "d38c8489ca5091ed762ee679ce86c32adb2fcaf5f45ec40ba1b52ac46c368522",
+    "size": 54903,
+    "sha256": "f2ab81416034046cfc848350cb5281d18aad0b438cf12042fdf879c29732880c",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -14597,8 +14597,8 @@
       "joe mama"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 9063,
-    "sha256": "ff2d115030a4c2c426961876c331c094c3ef9d0ccdced6c413460c9aa98276f3",
+    "size": 9080,
+    "sha256": "d381a323f72eb8e2c65fda53ff3d94c9e2f1115bb4505c7598ff8190f6f352c8",
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
