@@ -14353,7 +14353,7 @@
     ],
     "path": "Other/MergeShops/ForgeMalenoMerge.cs",
     "size": 9625,
-    "sha256": "abf0df412bfb272caf4a9ac59068578c92a0e23d92681ce9677a4f7f7e390ed9",
+    "sha256": "caa67c575f3fa98d2d49149f951935866ffb7a6de1239ec6074d042ec7791d3b",
     "fileName": "ForgeMalenoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
@@ -32100,21 +32100,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
   },
   {
-    "name": "Harvest Day Merges Do All",
-    "description": "Runs all Harvest Day merge shop scripts in this folder.",
-    "tags": [
-      "harvestday",
-      "harvest",
-      "merge",
-      "doall"
-    ],
-    "path": "Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs",
-    "size": 8428,
-    "sha256": "97ea08a4603064b0857be4d2042c1ebc51e83a1f39af8106236125fe37550870",
-    "fileName": "HarvestDayMergesDoAll.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs"
-  },
-  {
     "name": "Autumn Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Autumn Merge [2368] in /eventhub",
     "tags": [
@@ -32142,6 +32127,21 @@
     "sha256": "5cbee65d5b8cda2299b15c143479331b641aed32528c92cccc88e48b6fcb53cf",
     "fileName": "AutumnMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/AutumnMerge.cs"
+  },
+  {
+    "name": "Harvest Day Merges Do All",
+    "description": "Runs all Harvest Day merge shop scripts in this folder.",
+    "tags": [
+      "harvestday",
+      "harvest",
+      "merge",
+      "doall"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs",
+    "size": 8428,
+    "sha256": "9821c3687516fb9997922c12d56ea9db161c256b3a54eb4fbdbb0a5de6b0e515",
+    "fileName": "HarvestDayMergesDoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs"
   },
   {
     "name": "Nightmare Harvest War Merge",
