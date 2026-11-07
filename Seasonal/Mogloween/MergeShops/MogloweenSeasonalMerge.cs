@@ -64,6 +64,12 @@ public class MogloweenSeasonalMerge
             "Select what items to buy from the Mogloween shop.",
             MogloweenMergeMode.all
         ),
+        new Option<bool>(
+            "allowLegionTokenFarming",
+            "Join Legion to farm Legion Tokens",
+            "If disabled, the script will not buy Undead Warrior or join the Legion for Legion Tokens, and will continue with other items.",
+            true
+        ),
         new Option<string>(
             " ",
             "Mode Explanation [all]",
@@ -74,12 +80,6 @@ public class MogloweenSeasonalMerge
             " ",
             "Mode Explanation [acOnly]",
             "Mode [acOnly]: Get all AC-tagged items from the shop.",
-            "click here"
-        ),
-        new Option<string>(
-            " ",
-            "Mode Explanation [acNonLegion]",
-            "Mode [acNonLegion]: Get AC-tagged items while skipping Legion Items.",
             "click here"
         ),
         new Option<string>(
@@ -97,25 +97,6 @@ public class MogloweenSeasonalMerge
     };
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
-
-    private static readonly string[] LegionItems =
-    {
-        "Twisted Legion PumpkinLord Blade",
-        "Creeper Legion Helm",
-        "Creeper Flame Legion Helm",
-        "Flaming Legion Helm",
-        "Evil Legion Helm",
-        "Barbed Legion PumpkinLord Shroud",
-        "Battered Legion PumpkinLord Shroud",
-        "Barbed Legion PumpkinLord Vines",
-        "Barbed Legion PumpkinLord Cape",
-        "Luminous Legion PumpkinLord Cape",
-        "Legion PumpkinLord",
-        "Legion Pumpking Overlord",
-        "Legion Pumpking Morph",
-        "Blade of the Pumpking Legion",
-        "A Gourdly Legion Spirit",
-    };
 
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
@@ -150,7 +131,7 @@ public class MogloweenSeasonalMerge
     public void BuyAllMerge(
         string? buyOnlyThis = null,
         mergeOptionsEnum? buyMode = null,
-        bool? skipLegionItems = null
+        bool? allowLegionTokenFarming = null
     )
     {
         if (!Core.isSeasonalMapActive("mogloween"))
@@ -158,26 +139,26 @@ public class MogloweenSeasonalMerge
         //Only edit the map and shopID here
         MogloweenMergeMode selectedMode =
             Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
-        bool acNonLegion = skipLegionItems ?? (selectedMode == MogloweenMergeMode.acNonLegion);
+        bool shouldFarmLegionTokens =
+            allowLegionTokenFarming
+            ?? Bot.Config?.Get<bool>("Generic", "allowLegionTokenFarming")
+            ?? true;
         mergeOptionsEnum resolvedMode =
             buyMode
             ?? (
-                acNonLegion
-                    ? mergeOptionsEnum.acOnly
-                    : selectedMode switch
-                    {
-                        MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
-                        MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
-                        MogloweenMergeMode.select => mergeOptionsEnum.select,
-                        _ => mergeOptionsEnum.all,
-                    }
+                selectedMode switch
+                {
+                    MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
+                    MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
+                    MogloweenMergeMode.select => mergeOptionsEnum.select,
+                    _ => mergeOptionsEnum.all,
+                }
             );
         Adv.StartBuyAllMerge(
             "mogloween",
             223,
             findIngredients,
             buyOnlyThis,
-            itemBlackList: acNonLegion ? LegionItems : null,
             buyMode: resolvedMode
         );
 
@@ -268,7 +249,10 @@ public class MogloweenSeasonalMerge
                     break;
 
                 case "Legion Token":
-                    Legion.FarmLegionToken(quant);
+                    if (shouldFarmLegionTokens)
+                        Legion.FarmLegionToken(quant);
+                    else
+                        Core.Logger("Skipping Legion Tokens because joining the Legion is disabled.");
                     break;
 
                 case "Diamond of Nulgath":
@@ -703,5 +687,4 @@ public enum MogloweenMergeMode
     acOnly = 1,
     mergeMats = 2,
     select = 3,
-    acNonLegion = 4,
 }
