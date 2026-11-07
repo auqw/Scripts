@@ -115,7 +115,13 @@ public class EtherStormWastes
 
         Story.PreLoad(this);
         //Weaken The Bonds 1396
-        Story.KillQuest(1396, "water", new[] { "Water Elemental", "Living Water" });
+        if (!Story.QuestProgression(1396))
+        {
+            Core.EnsureAccept(1396);
+            Core.HuntMonster("water", "Water Elemental", "Water Elemental Destroyed", 5);
+            Core.HuntMonster("water", "Living Water", "Living Water Destroyed", 5);
+            Core.EnsureComplete(1396);
+        }
 
         //Udaroth Is Ready 1397
         Story.MapItemQuest(1397, "water", 690, 6);
@@ -151,7 +157,13 @@ public class EtherStormWastes
         Story.PreLoad(this);
 
         //A Weak Wind 1404
-        Story.KillQuest(1404, "wind", new[] { "Wind Elemental", "Living Air" });
+        if (!Story.QuestProgression(1404))
+        {
+            Core.EnsureAccept(1404);
+            Core.HuntMonster("wind", "Wind Elemental", "Wind Elemental Destroyed", 8);
+            Core.HuntMonster("wind", "Living Air", "Living Air Destroyed", 8);
+            Core.EnsureComplete(1404);
+        }
 
         //An Ounce Of Prevention 1405
         Story.MapItemQuest(1405, "wind", 695, 5);
@@ -187,7 +199,13 @@ public class EtherStormWastes
         Story.PreLoad(this);
 
         //Putting Out Fires 1412
-        Story.KillQuest(1412, "fire", new[] { "Fire Elemental", "Living Fire" });
+        if (!Story.QuestProgression(1412))
+        {
+            Core.EnsureAccept(1412);
+            Core.HuntMonster("fire", "Fire Elemental", "Fire Elemental Destroyed", 10);
+            Core.HuntMonster("fire", "Living Fire", "Living Fire Destroyed", 10);
+            Core.EnsureComplete(1412);
+        }
 
         //At A Loss 1413
         Story.MapItemQuest(1413, "fire", 693, 6);

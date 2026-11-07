@@ -41,14 +41,23 @@ public class FrozenNorthlands
         Story.PreLoad(this);
 
         // Cleanse the Chaorruption 3634
-        Story.KillQuest(3634, "chaosnorth", new[] { "Chaotic Symbiote", "Chaorruption" });
+        if (!Story.QuestProgression(3634))
+        {
+            Core.EnsureAccept(3634);
+            Core.HuntMonster("chaosnorth", "Chaotic Symbiote", "Symbiote Slain", 10);
+            Core.HuntMonster("chaosnorth", "Chaorruption", "Chaorruption Cleansed", 10);
+            Core.EnsureComplete(3634);
+        }
 
         // Book of Chaos and Flames 3635
-        Story.KillQuest(
-            3635,
-            "chaosnorth",
-            new[] { "Chaorrupted Mage", "Chaorrupted Mage", "Chaorrupted Mage" }
-        );
+        if (!Story.QuestProgression(3635))
+        {
+            Core.EnsureAccept(3635);
+            Core.HuntMonster("chaosnorth", "Chaorrupted Mage", "Chaos Magic Nullified", 13);
+            Core.HuntMonster("chaosnorth", "Chaorrupted Mage", "Tempus Chaos Amulet");
+            Core.HuntMonster("chaosnorth", "Chaorrupted Mage", "Book of Chaos and Flames");
+            Core.EnsureComplete(3635);
+        }
 
         // Facets of Chaos 3636
         if (!Story.QuestProgression(3636))
@@ -59,11 +68,15 @@ public class FrozenNorthlands
         }
 
         // Chaos Eye Spy 3637
-        Story.KillQuest(
-            3637,
-            "chaosnorth",
-            new[] { "Chaorruption", "Chaos Sp-Eye", "Chaorrupted Imp", "Chaorrupted Mage" }
-        );
+        if (!Story.QuestProgression(3637))
+        {
+            Core.EnsureAccept(3637);
+            Core.HuntMonster("chaosnorth", "Chaorruption", "Chaorrupted Tongue", 3);
+            Core.HuntMonster("chaosnorth", "Chaos Sp-eye", "Chaos Eyes", 3);
+            Core.HuntMonster("chaosnorth", "Chaorrupted Imp", "Imp Ears", 3);
+            Core.HuntMonster("chaosnorth", "Chaorrupted Mage", "Mage Nose", 3);
+            Core.EnsureComplete(3637);
+        }
 
         // Defeat Chaorrupted Xan Illusion 3638
         Story.KillQuest(3638, "chaosnorth", "Chaorrupted Xan");

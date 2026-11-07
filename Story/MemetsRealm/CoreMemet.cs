@@ -370,7 +370,13 @@ public class MemetsRealm
         Story.KillQuest(4145, "Nightmare", "Castle Spider");
 
         //Fear of Snakes? 4146
-        Story.KillQuest(4146, "Nightmare", new[] { "Wrasp", "Sneak" });
+        if (!Story.QuestProgression(4146))
+        {
+            Core.EnsureAccept(4146);
+            Core.HuntMonster("nightmare", "Wrasp", "Grappling Hook");
+            Core.HuntMonster("nightmare", "Sneak", "Rope");
+            Core.EnsureComplete(4146);
+        }
 
         //Fear of Falling? 4147
         Story.MapItemQuest(4147, "Nightmare", 3262);
@@ -385,7 +391,13 @@ public class MemetsRealm
         Story.KillQuest(4150, "Nightmare", "Broken Toy");
 
         //Fear of Being Buried Alive? 4151
-        Story.KillQuest(4151, "Nightmare", new[] { "Unearthed Skeleton", "Rotfeeder Worm" });
+        if (!Story.QuestProgression(4151))
+        {
+            Core.EnsureAccept(4151);
+            Core.HuntMonster("nightmare", "Unearthed Skeleton", "Skeleton Deboned", 8);
+            Core.HuntMonster("nightmare", "Rotfeeder Worm", "Rotfeeder squished", 4);
+            Core.EnsureComplete(4151);
+        }
 
         //Fear of Burning? 4152
         Story.KillQuest(4152, "Nightmare", "Fire Imp");
@@ -394,7 +406,14 @@ public class MemetsRealm
         Story.KillQuest(4153, "Nightmare", "Flame Elemental");
 
         //Fear of Drowning? 4154
-        Story.KillQuest(4154, "Nightmare", new[] { "Anglerfish", "Deep Dweller", "Merdraconian" });
+        if (!Story.QuestProgression(4154))
+        {
+            Core.EnsureAccept(4154);
+            Core.HuntMonster("nightmare", "Anglerfish", "Anglerfish Defeated", 6);
+            Core.HuntMonster("nightmare", "Deep Dweller", "Deep Dweller defeated");
+            Core.HuntMonster("nightmare", "Merdraconian", "Merdraconian Defeated", 6);
+            Core.EnsureComplete(4154);
+        }
 
         //Fear of Inadequacy? 4155
         Story.KillQuest(4155, "Nightmare", "Unearthed Skeleton");

@@ -257,24 +257,34 @@ public class CoreToD
         Story.KillQuest(4997, "towersilver", "Fallen Emperor Statue");
 
         // Slay 'Em All
-        Story.KillQuest(4999, "towersilver", new[] { "Undead Knight", "Undead Guard" });
+        if (!Story.QuestProgression(4999))
+        {
+            Core.EnsureAccept(4999);
+            Core.HuntMonster("towersilver", "Undead Guard", "Undead Guard Slain", 3);
+            Core.HuntMonster("towersilver", "Undead Knight", "Undead Knight Slain", 3);
+            Core.EnsureComplete(4999);
+        }
 
         // Slay 'Em All Again
-        Story.KillQuest(4998, "towersilver", new[] { "Fallen DeathKnight", "Undead Warrior" });
+        if (!Story.QuestProgression(4998))
+        {
+            Core.EnsureAccept(4998);
+            Core.HuntMonster("towersilver", "Fallen Deathknight", "Fallen Deathknight Slain", 3);
+            Core.HuntMonster("towersilver", "Undead Warrior", "Undead Warrior Slain", 3);
+            Core.EnsureComplete(4998);
+        }
 
         // Farming For Loot
-        Story.KillQuest(
-            5000,
-            "towersilver",
-            new[]
-            {
-                "Flying Spyball",
-                "Fallen DeathKnight",
-                "Undead Warrior",
-                "Undead Knight",
-                "Undead Guard",
-            }
-        );
+        if (!Story.QuestProgression(5000))
+        {
+            Core.EnsureAccept(5000);
+            Core.HuntMonster("towersilver", "Flying Spyball", "Sp-Eye Camera");
+            Core.HuntMonster("towersilver", "Fallen Deathknight", "Deathknight's Axe");
+            Core.HuntMonster("towersilver", "Undead Warrior", "Warrior's Shield");
+            Core.HuntMonster("towersilver", "Undead Knight", "Knight's Helm");
+            Core.HuntMonster("towersilver", "Undead Guard", "Guard's Skull");
+            Core.EnsureComplete(5000);
+        }
 
         // Or... Not.
         Story.MapItemQuest(5001, "towersilver", new[] { 4368, 4369, 4370, 4371, 4372 });
@@ -301,18 +311,16 @@ public class CoreToD
         Story.KillQuest(5008, "towersilver", "Flester The Silver");
 
         // Get my Stuff
-        Story.KillQuest(
-            5009,
-            "towersilver",
-            new[]
-            {
-                "Fallen DeathKnight",
-                "Undead Knight",
-                "Undead Warrior",
-                "Ghoul",
-                "Undead Guard",
-            }
-        );
+        if (!Story.QuestProgression(5009))
+        {
+            Core.EnsureAccept(5009);
+            Core.HuntMonster("towersilver", "Fallen Deathknight", "Chef Ramskull's Apron");
+            Core.HuntMonster("towersilver", "Undead Knight", "Chef Ramskull's Hat");
+            Core.HuntMonster("towersilver", "Undead Warrior", "Chef Ramskull's Cookbook");
+            Core.HuntMonster("towersilver", "Ghoul", "Chef Ramskull's Spatula");
+            Core.HuntMonster("towersilver", "Undead Guard", "Chef Ramskull's Skillet");
+            Core.EnsureComplete(5009);
+        }
 
         // In the Mix
         Story.KillQuest(5010, "towersilver", "Bloody Scary");
@@ -347,7 +355,13 @@ public class CoreToD
         Story.MapItemQuest(5019, "towergold", 4377, 3);
 
         // Advanced Self Defense
-        Story.KillQuest(5020, "towergold", new[] { "Undead Knight", "Undead Guard" });
+        if (!Story.QuestProgression(5020))
+        {
+            Core.EnsureAccept(5020);
+            Core.HuntMonster("towergold", "Undead Knight", "Undead Knight Noogied", 3);
+            Core.HuntMonster("towergold", "Undead Guard", "Undead Guard Swirlied", 3);
+            Core.EnsureComplete(5020);
+        }
 
         // Take A Mallet To 'Em
         Story.KillQuest(5021, "towergold", "Fallen Emperor Statue");
@@ -698,13 +712,25 @@ public class CoreToD
             Story.MapItemQuest(5122, "baconcatlair", 4477, 4);
 
             //Sharks Should Not Walk 5123
-            Story.KillQuest(5123, "baconcatlair", new[] { "Robo Shark", "Robo Shark" });
+            if (!Story.QuestProgression(5123))
+            {
+                Core.EnsureAccept(5123);
+                Core.HuntMonster("baconcatlair", "Robo Shark", "Walking Shark 2 Destroyed", 4);
+                Core.HuntMonster("baconcatlair", "Robo Shark", "Walking Shark 1 Destroyed", 4);
+                Core.EnsureComplete(5123);
+            }
 
             //Grab those Quarters 5124
             Story.KillQuest(5124, "baconcatlair", "Robo Shark");
 
             //Shark Invaders! 5125
-            Story.KillQuest(5125, "baconcatlair", new[] { "Shark Invader", "Shark Invader" });
+            if (!Story.QuestProgression(5125))
+            {
+                Core.EnsureAccept(5125);
+                Core.HuntMonster("baconcatlair", "Shark Invader", "Hi Score", 100);
+                Core.HuntMonster("baconcatlair", "Shark Invader", "BONUS!");
+                Core.EnsureComplete(5125);
+            }
 
             //Sharks like Honey? 5126
             Story.MapItemQuest(5126, "baconcatlair", 4480, 6);
