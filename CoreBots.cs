@@ -524,6 +524,8 @@ public class CoreBots
                 }
             );
             Bot.Events.ScriptStopping += StopBotEvent;
+            if (IsVibeSkuaAvalonia())
+                StartPauseGuard();
 
             // Alive Check handling
             Bot.Events.MapChanged += CleanKilledMonstersList;
@@ -887,8 +889,84 @@ public class CoreBots
 
     private bool scriptFinished = true;
 
+    private CancellationTokenSource? _pauseGuardCts;
+    private IScriptManager? _scriptManager;
+
+    /// <summary>
+    /// While the script is paused ("Pause Script" button) the script thread is frozen, but the skill loop
+    /// keeps attacking and the character stays in the monster cell getting hit. This watcher pauses the
+    /// skills, drops the target and jumps to a safe cell on pause, and resumes the skills on unpause (the
+    /// farm loops jump back to the monster cell by themselves). If the class was changed while paused, it
+    /// loads the new class's skill rotation instead. VibeSkua only.
+    /// </summary>
+    private void StartPauseGuard()
+    {
+        _pauseGuardCts?.Cancel();
+        CancellationTokenSource cts = _pauseGuardCts = new CancellationTokenSource();
+        Task.Run(async () =>
+        {
+            // True only once the pause actions actually ran: a pause seen while logged out, or one whose
+            // actions threw, is retried on the next poll instead of being treated as handled.
+            bool guarded = false;
+            string? classAtPause = null;
+            bool attackWithoutTarget = false, aggroAll = false, aggro = false;
+            while (!cts.IsCancellationRequested)
+            {
+                try
+                {
+                    bool paused = (_scriptManager ??= Ioc.Default.GetService<IScriptManager>())?.ScriptPaused ?? false;
+                    if (paused && !guarded && Bot.Player.LoggedIn)
+                    {
+                        classAtPause = Bot.Player.CurrentClass?.Name;
+                        // JumpWait turns these off; the script expects them back as they were after the pause.
+                        attackWithoutTarget = Bot.Options.AttackWithoutTarget;
+                        aggroAll = Bot.Options.AggroAllMonsters;
+                        aggro = Bot.Options.AggroMonsters;
+                        Bot.Skills.Pause();
+                        Bot.Combat.CancelTarget();
+                        JumpWait();
+                        guarded = true;
+                        Logger("Script paused: leaving combat.", "PauseGuard");
+                    }
+                    else if (!paused && guarded && !cts.IsCancellationRequested)
+                    {
+                        Bot.Options.AttackWithoutTarget = attackWithoutTarget;
+                        Bot.Options.AggroAllMonsters = aggroAll;
+                        Bot.Options.AggroMonsters = aggro;
+                        string? classNow = Bot.Player.CurrentClass?.Name;
+                        if (!string.IsNullOrEmpty(classNow) && classNow != classAtPause)
+                        {
+                            // Class changed while paused: load its rotation with the mode configured for it.
+                            Bot.Skills.StartAdvanced(classNow, false, classNow switch
+                            {
+                                var n when n == SoloClass => SoloUseMode,
+                                var n when n == FarmClass => FarmUseMode,
+                                var n when n == BossClass => BossUseMode,
+                                var n when n == DodgeClass => DodgeUseMode,
+                                _ => ClassUseMode.Base,
+                            });
+                            Logger($"Script resumed with {classNow} (skills reloaded).", "PauseGuard");
+                        }
+                        else
+                        {
+                            Bot.Skills.Resume();
+                            Logger("Script resumed.", "PauseGuard");
+                        }
+                        guarded = false;
+                    }
+                }
+                catch
+                {
+                    // Never let the watcher crash the bot; an unfinished transition is retried next poll.
+                }
+                try { await Task.Delay(300, cts.Token); } catch (TaskCanceledException) { break; }
+            }
+        });
+    }
+
     public bool StopBotEvent(Exception? e)
     {
+        _pauseGuardCts?.Cancel();
         Bot.Events.ScriptStopping -= StopBotEvent;
         SetOptions(false);
         return StopBot(e != null);
