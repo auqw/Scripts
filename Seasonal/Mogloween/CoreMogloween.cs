@@ -1374,10 +1374,14 @@ public class CoreMogloween
         Story.KillQuest(10922, "walpurgisnacht", UseableMonsters[4]); // Cultist's Angelica x6
 
         // 10923 | Nialla's Mourning Cypress
-        Story.MapItemQuest(10923, "walpurgisnacht", 16342);
-        Core.HuntMonster("walpurgisnacht", UseableMonsters[4], "Cultist's Eye", 6);
-        Core.HuntMonster("walpurgisnacht", UseableMonsters[3], "Druid's Eye", 6);
-        Core.EnsureComplete(10923);
+        if (!Story.QuestProgression(10923))
+        {
+            Core.EnsureAccept(10923);
+            Core.GetMapItem(16342, 1, "walpurgisnacht");
+            Core.HuntMonster("walpurgisnacht", UseableMonsters[4], "Cultist's Eye", 6);
+            Core.HuntMonster("walpurgisnacht", UseableMonsters[3], "Druid's Eye", 6);
+            Core.EnsureComplete(10923);
+        }
 
         // 10924 | Song's Sheep Sorrel
         Story.MapItemQuest(10924, "walpurgisnacht", 16343);
