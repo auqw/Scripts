@@ -36,13 +36,11 @@ public class Fiendshard_Story
 
     public void Fiendshard_QuestlineP1()
     {
-        Story.PreLoad(this);
-
         Originul.Originul_Questline();
 
-        Core.Logger(
-            "Making sure portal quest is done.. appearntly its required...? (though not stated?)"
-        );
+        Story.PreLoad(this);
+
+        Core.Logger("Making sure portal quest is done.. appearntly its required...? (though not stated?)");
         Core.Join("tercessuinotlim");
 
         // Sneak Attack
