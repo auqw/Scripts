@@ -146,6 +146,9 @@ public class MogloweenMergesDoAll
             }
         );
 
+        if (Bot.Config != null && !Bot.Config.Get<bool>(Core.SkipOptions))
+            Bot.Config.Configure();
+
         Core.SetOptions();
 
         foreach (Action buy in GetMergeShopActions())
@@ -156,51 +159,35 @@ public class MogloweenMergesDoAll
 
     private IEnumerable<Action> GetMergeShopActions()
     {
-        yield return () => new AlnswickCastleMerge().BuyAllMerge(buyMode: GetBuyMode("alnswickCastleMode"));
-        yield return () => new CandiedCostumesMerge().BuyAllMerge(buyMode: GetBuyMode("candiedCostumesMode"));
-        yield return () => new ChromaCandyMerge().BuyAllMerge(buyMode: GetBuyMode("chromaCandyMode"));
-        yield return () => new CrescentMerge().BuyAllMerge(buyMode: GetBuyMode("crescentMode"));
-        yield return () => new ElodeasCandyHaulMerge().BuyAllMerge(buyMode: GetBuyMode("elodeasCandyHaulMode"));
-        yield return () => new FeastoftheDepths().BuyAllMerge(buyMode: GetBuyMode("feastOfTheDepthsMode"));
-        yield return () => new HuntersReward().BuyAllMerge(buyMode: GetBuyMode("huntersRewardMode"));
-        yield return () => new MogGLOWweenMerge().BuyAllMerge(buyMode: GetBuyMode("mogGlowweenMode"));
-        yield return () =>
-        {
-            MogloweenMergeMode mode = GetMode("mogloweenSeasonalMode");
-            new MogloweenSeasonalMerge().BuyAllMerge(
-                buyMode: ToBuyMode(mode),
-                skipLegionItems: mode == MogloweenMergeMode.acNonLegion
-            );
-        };
-        yield return () => new MoonlightKhopeshMerge().BuyAllMerge(buyMode: GetBuyMode("moonlightKhopeshMode"));
-        yield return () => new TricktownMerge().BuyAllMerge(buyMode: GetBuyMode("tricktownMode"));
-        yield return () => new UngourdlyGearMerge().BuyAllMerge(buyMode: GetBuyMode("ungourdlyGearMode"));
-        yield return () => new VampireLordMerge().BuyAllMerge(buyMode: GetBuyMode("vampireLordMode"));
-        yield return () => new WalpurgaWitchWares().BuyAllMerge(buyMode: GetBuyMode("walpurgaWitchWaresMode"));
-        yield return () => new WitchsCharms().BuyAllMerge(buyMode: GetBuyMode("witchsCharmsMode"));
+        mergeOptionsEnum buyMode = GetBuyMode();
+        yield return () => new AlnswickCastleMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new CandiedCostumesMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new ChromaCandyMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new CrescentMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new ElodeasCandyHaulMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new FeastoftheDepths().BuyAllMerge(buyMode: buyMode);
+        yield return () => new HuntersReward().BuyAllMerge(buyMode: buyMode);
+        yield return () => new MogGLOWweenMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new MogloweenSeasonalMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new MoonlightKhopeshMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new TricktownMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new UngourdlyGearMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new VampireLordMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new WalpurgaWitchWares().BuyAllMerge(buyMode: buyMode);
+        yield return () => new WitchsCharms().BuyAllMerge(buyMode: buyMode);
     }
 
-    private mergeOptionsEnum GetBuyMode(string optionKey)
-        => ToBuyMode(GetMode(optionKey));
+    private mergeOptionsEnum GetBuyMode() =>
+        ToBuyMode(
+            Bot.Config?.Get<MogloweenMergesDoAllMode>("Generic", "mode") ?? MogloweenMergesDoAllMode.all
+        );
 
-    private MogloweenMergeMode GetMode(string optionKey)
-    {
-        MogloweenMergeShopMode shopMode =
-            Bot.Config?.Get<MogloweenMergeShopMode>("Generic", optionKey) ?? MogloweenMergeShopMode.inherit;
-        return shopMode == MogloweenMergeShopMode.inherit
-            ? GetLegacyMode()
-            : Enum.Parse<MogloweenMergeMode>(shopMode.ToString());
-    }
-
-    private MogloweenMergeMode GetLegacyMode() =>
-        Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
-
-    private static mergeOptionsEnum ToBuyMode(MogloweenMergeMode mode) =>
+    private static mergeOptionsEnum ToBuyMode(MogloweenMergesDoAllMode mode) =>
         mode switch
         {
-            MogloweenMergeMode.acOnly or MogloweenMergeMode.acNonLegion => mergeOptionsEnum.acOnly,
-            MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
-            MogloweenMergeMode.select => mergeOptionsEnum.select,
+            MogloweenMergesDoAllMode.acOnly => mergeOptionsEnum.acOnly,
+            MogloweenMergesDoAllMode.mergeMats => mergeOptionsEnum.mergeMats,
+            MogloweenMergesDoAllMode.select => mergeOptionsEnum.select,
             _ => mergeOptionsEnum.all,
         };
 
@@ -208,48 +195,22 @@ public class MogloweenMergesDoAll
     {
         List<IOption> options = new() { CoreBots.Instance.SkipOptions };
         options.Add(
-            new Option<MogloweenMergeMode>(
+            new Option<MogloweenMergesDoAllMode>(
                 "mode",
-                "Default purchase mode (legacy fallback)",
-                "Used by shops until they have an individual purchase mode saved.",
-                MogloweenMergeMode.all
+                "Purchase mode for all shops",
+                "Choose one purchase mode to apply to every Mogloween merge shop.",
+                MogloweenMergesDoAllMode.all
             )
         );
-        AddMergeShopOptions(options, "Alnswick Castle", "alnswickCastleMode");
-        AddMergeShopOptions(options, "Candied Costumes", "candiedCostumesMode");
-        AddMergeShopOptions(options, "Chroma Candy", "chromaCandyMode");
-        AddMergeShopOptions(options, "Crescent", "crescentMode");
-        AddMergeShopOptions(options, "Elodea's Candy Haul", "elodeasCandyHaulMode");
-        AddMergeShopOptions(options, "Feast of the Depths", "feastOfTheDepthsMode");
-        AddMergeShopOptions(options, "Hunter's Reward", "huntersRewardMode");
-        AddMergeShopOptions(options, "Mog-GLOW-ween", "mogGlowweenMode");
         options.Add(
-            new Option<MogloweenMergeShopMode>(
-                "mogloweenSeasonalMode",
-                "Mogloween Seasonal - Purchase mode",
-                "Choose what to buy from the Mogloween Seasonal merge shop. Inherit uses the legacy default mode.",
-                MogloweenMergeShopMode.inherit
+            new Option<bool>(
+                "mogloweenBuyUndeadWarrior",
+                "Buy Undead Warrior and join the Legion",
+                "When enabled, the script may buy Undead Warrior, join the Legion, and farm Legion Tokens. When disabled, it skips all Legion items and actions.",
+                false
             )
         );
-        AddMergeShopOptions(options, "Moonlight Khopesh", "moonlightKhopeshMode");
-        AddMergeShopOptions(options, "Tricktown", "tricktownMode");
-        AddMergeShopOptions(options, "Ungourdly Gear", "ungourdlyGearMode");
-        AddMergeShopOptions(options, "Vampire Lord", "vampireLordMode");
-        AddMergeShopOptions(options, "Walpurga Witch Wares", "walpurgaWitchWaresMode");
-        AddMergeShopOptions(options, "Witch's Charms", "witchsCharmsMode");
         return options;
-    }
-
-    private static void AddMergeShopOptions(List<IOption> options, string shopName, string optionKey)
-    {
-        options.Add(
-            new Option<MogloweenMergeShopMode>(
-                optionKey,
-                $"{shopName} - Purchase mode",
-                $"Choose what to buy from the {shopName} merge shop. Inherit uses the legacy default mode.",
-                MogloweenMergeShopMode.inherit
-            )
-        );
     }
 
     private static List<IOption> BuildSelectOptions()
@@ -288,12 +249,10 @@ public class MogloweenMergesDoAll
     }
 }
 
-public enum MogloweenMergeShopMode
+public enum MogloweenMergesDoAllMode
 {
-    inherit,
-    all,
-    acOnly,
-    mergeMats,
-    select,
-    acNonLegion,
+    all = 0,
+    acOnly = 1,
+    mergeMats = 2,
+    select = 3,
 }

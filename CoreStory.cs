@@ -1176,104 +1176,140 @@ public class CoreStory
         List<int> QuestIDs = [];
         string[] ScriptSlice = Core.CompiledScript();
 
-        if (ScriptSlice.Length == 0)
+        if (ScriptSlice == null || ScriptSlice.Length == 0)
         {
-            Core.Logger(
-                "PreLoad failed, cannot read Compiled Script. You might not be on the latest version of Skua"
-            );
+            Core.Logger("PreLoad failed, cannot read Compiled Script. You might not be on the latest version of Skua");
             return;
         }
 
-        int classStartIndex = Array.IndexOf(ScriptSlice, $"public class {_this}");
-        if (classStartIndex < 0)
+        if (_this == null || string.IsNullOrWhiteSpace(caller))
+        {
+            Core.Logger("PreLoad failed: calling class or method could not be identified.");
             return;
+        }
 
-        int classEndIndex =
-            Array.IndexOf(ScriptSlice[classStartIndex..], "}") + classStartIndex + 1;
+        string className = _this.GetType().Name;
+        int classStartIndex = Array.FindIndex(ScriptSlice, line =>
+            line?.Contains($"class {className}", StringComparison.Ordinal) == true
+        );
 
-        ScriptSlice = ScriptSlice[classStartIndex..classEndIndex];
+        if (classStartIndex < 0)
+        {
+            Core.Logger($"PreLoad failed: could not find class {className} in the compiled script.");
+            return;
+        }
 
         int methodStartIndex = -1;
-        foreach (string p in new[] { "public", "private" })
+        for (int i = classStartIndex + 1; i < ScriptSlice.Length; i++)
         {
-            foreach (string s in new[] { "void", "bool", "string", "int" })
+            string line = ScriptSlice[i] ?? string.Empty;
+            string trimmedLine = line.TrimStart();
+
+            if (
+                (trimmedLine.StartsWith("public ", StringComparison.Ordinal)
+                    || trimmedLine.StartsWith("private ", StringComparison.Ordinal)
+                    || trimmedLine.StartsWith("protected ", StringComparison.Ordinal)
+                    || trimmedLine.StartsWith("internal ", StringComparison.Ordinal))
+                && trimmedLine.Contains(caller, StringComparison.Ordinal)
+                && trimmedLine.Contains('(')
+            )
             {
-                methodStartIndex = Array.FindIndex(
-                    ScriptSlice,
-                    l => l.Contains($"{p} {s} {caller}")
-                );
-                if (methodStartIndex > -1)
+                methodStartIndex = i;
+                break;
+            }
+        }
+
+        if (methodStartIndex < 0)
+        {
+            Core.Logger($"PreLoad failed: could not find method {caller} in class {className}.");
+            return;
+        }
+
+        string methodLine = ScriptSlice[methodStartIndex] ?? string.Empty;
+        int methodIndentCount = methodLine.Length - methodLine.TrimStart().Length;
+        string methodIndent = new(' ', methodIndentCount);
+
+        int methodBodyStartIndex = -1;
+        for (int i = methodStartIndex; i < ScriptSlice.Length; i++)
+        {
+            if ((ScriptSlice[i] ?? string.Empty).Contains('{'))
+            {
+                methodBodyStartIndex = i;
+                break;
+            }
+
+            // Do not scan into another declaration if the method signature is malformed.
+            if (i > methodStartIndex && !(ScriptSlice[i] ?? string.Empty).TrimStart().StartsWith("["))
+            {
+                string candidate = (ScriptSlice[i] ?? string.Empty).TrimStart();
+                if (candidate.StartsWith("public ", StringComparison.Ordinal)
+                    || candidate.StartsWith("private ", StringComparison.Ordinal)
+                    || candidate.StartsWith("protected ", StringComparison.Ordinal)
+                    || candidate.StartsWith("internal ", StringComparison.Ordinal))
                     break;
             }
-            if (methodStartIndex > -1)
+        }
+
+        if (methodBodyStartIndex < 0)
+        {
+            Core.Logger($"PreLoad failed: could not find the opening brace for method {caller}.");
+            return;
+        }
+
+        int methodEndIndex = -1;
+        for (int i = methodBodyStartIndex + 1; i < ScriptSlice.Length; i++)
+        {
+            string line = ScriptSlice[i] ?? string.Empty;
+            if (line.Trim() == "}" && line.Length - line.TrimStart().Length == methodIndentCount)
+            {
+                methodEndIndex = i;
                 break;
+            }
         }
 
-        if (methodStartIndex == -1)
+        if (methodEndIndex < methodBodyStartIndex)
         {
-            Core.Logger("Failed to parse methodStartIndex, no quests will be pre-loaded");
+            Core.Logger($"PreLoad failed: could not find the closing brace for method {caller}.");
             return;
         }
-
-        // ===== FIX: prevent negative indent =====
-        int methodIndentCount = ScriptSlice[methodStartIndex + 1].IndexOf('{');
-
-        if (methodIndentCount < 0)
-            methodIndentCount = ScriptSlice[methodStartIndex].IndexOf('{');
-
-        if (methodIndentCount < 0)
-            methodIndentCount = 0;
-
-        string indent = new string(' ', methodIndentCount);
-        // =======================================
-
-        int methodEndIndex =
-            Array.FindIndex(ScriptSlice, methodStartIndex, l => l == indent + "}") + 1;
-
-        if (methodEndIndex <= methodStartIndex)
-        {
-            Core.Logger("Failed to parse methodEndIndex, no quests will be pre-loaded");
-            return;
-        }
-
-        ScriptSlice = ScriptSlice[methodStartIndex..methodEndIndex];
 
         string[] SearchParam =
         {
-        "Story.KillQuest",
-        "Story.MapItemQuest",
-        "Story.BuyQuest",
-        "Story.ChainQuest",
-        "Story.QuestProgression",
-        "Core.EnsureAccept",
-        "Core.EnsureComplete",
-        "Core.EnsureCompleteChoose",
-        "Core.ChainComplete",
-    };
+            "Story.KillQuest",
+            "Story.MapItemQuest",
+            "Story.BuyQuest",
+            "Story.ChainQuest",
+            "Story.QuestProgression",
+            "Core.EnsureAccept",
+            "Core.EnsureComplete",
+            "Core.EnsureCompleteChoose",
+            "Core.ChainComplete",
+        };
 
-        foreach (string Line in ScriptSlice)
+        for (int i = methodStartIndex; i <= methodEndIndex; i++)
         {
-            if (!Line.Any(char.IsDigit))
+            string line = ScriptSlice[i] ?? string.Empty;
+            if (!line.Any(char.IsDigit))
                 continue;
 
-            string EdittedLine = Line.Replace(" ", "")
-                .Replace("!", "")
-                .Replace("(", "")
-                .Replace("if", "")
-                .Replace("else", "");
+            string editedLine = line.Replace(" ", string.Empty)
+                .Replace("!", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace("if", string.Empty)
+                .Replace("else", string.Empty);
 
-            if (!SearchParam.Any(x => EdittedLine.StartsWith(x)))
+            if (!SearchParam.Any(parameter => editedLine.StartsWith(parameter, StringComparison.Ordinal)))
                 continue;
 
-            char[] digits = Line
-                .SkipWhile(c => !char.IsDigit(c))
+            string digits = new(line.SkipWhile(character => !char.IsDigit(character))
                 .TakeWhile(char.IsDigit)
-                .ToArray();
+                .ToArray());
 
-            int QuestID = int.Parse(new string(digits));
+            if (!int.TryParse(digits, out int questID))
+                continue;
 
-            if (!QuestIDs.Contains(QuestID) && !Bot.Quests.Tree.Exists(x => x.ID == QuestID))
-                QuestIDs.Add(QuestID);
+            if (!QuestIDs.Contains(questID) && !Bot.Quests.Tree.Exists(quest => quest.ID == questID))
+                QuestIDs.Add(questID);
         }
 
         if (

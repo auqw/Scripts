@@ -41,7 +41,13 @@ public class PyramidofPain
         Story.PreLoad(this);
 
         // Prove Your Worth
-        Story.KillQuest(3640, "pyramidpain", new[] { "Cactus Creeper ", "Golden Scarab " });
+        if (!Story.QuestProgression(3640))
+        {
+            Core.EnsureAccept(3640);
+            Core.HuntMonster("pyramidpain", "Cactus Creeper ", "Cup of Cactus Water", 5);
+            Core.HuntMonster("pyramidpain", "Golden Scarab ", "Slab of Scarab Meat", 3);
+            Core.EnsureComplete(3640);
+        }
         // Still Not Impressed?
         Story.KillQuest(3641, "pyramidpain", "Pyramid Vase");
         // A Prickly Situation
@@ -49,7 +55,13 @@ public class PyramidofPain
         // Beetle Battle Armor
         Story.KillQuest(3643, "pyramidpain", "Golden Scarab ");
         // Pyramid Pilgrimage
-        Story.KillQuest(3644, "pyramidpain", new[] { "Cactus Creeper ", "Golden Scarab " });
+        if (!Story.QuestProgression(3644))
+        {
+            Core.EnsureAccept(3644);
+            Core.HuntMonster("pyramidpain", "Cactus Creeper ", "Additional Cup of Cactus Water", 5);
+            Core.HuntMonster("pyramidpain", "Golden Scarab ", "Stored Slab of Scarab Meat", 6);
+            Core.EnsureComplete(3644);
+        }
         // Blood in the Sand
         Story.KillQuest(3645, "pyramidpain", "Sandshark ");
         // Defeat Tribal Traitors
@@ -63,7 +75,13 @@ public class PyramidofPain
         // The Legend of Eldo
         Story.KillQuest(3650, "pyramidpain", "Pyramid Vase");
         // There's No Point
-        Story.KillQuest(3651, "pyramidpain", new[] { "Cactus Creeper ", "Golden Scarab " });
+        if (!Story.QuestProgression(3651))
+        {
+            Core.EnsureAccept(3651);
+            Core.HuntMonster("pyramidpain", "Cactus Creeper ", "Cacti Cut", 7);
+            Core.HuntMonster("pyramidpain", "Golden Scarab ", "Scarab Squashed", 5);
+            Core.EnsureComplete(3651);
+        }
         // Trail of Naan Crumbs
         Story.MapItemQuest(3652, "pyramidpain", 2770, 13);
         // Tricky Trip Wires

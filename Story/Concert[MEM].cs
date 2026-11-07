@@ -49,13 +49,31 @@ public class Concert
         Story.MapItemQuest(1020, "vertigo", 390);
 
         //High-sterical 1021
-        Story.KillQuest(1021, "vertigo", new[] { "Fear Muncher", "Banished Banshee" });
+        if (!Story.QuestProgression(1021))
+        {
+            Core.EnsureAccept(1021);
+            Core.HuntMonster("vertigo", "Fear Muncher", "Fear Muncher Teeth", 6);
+            Core.HuntMonster("vertigo", "Banished Banshee", "Banshee Wail", 4);
+            Core.EnsureComplete(1021);
+        }
 
         //Elevation Sensation 1022
-        Story.KillQuest(1022, "vertigo", new[] { "Cloaked Fiend", "Banished Banshee" });
+        if (!Story.QuestProgression(1022))
+        {
+            Core.EnsureAccept(1022);
+            Core.HuntMonster("vertigo", "Cloaked Fiend", "Elevated Fiend", 5);
+            Core.HuntMonster("vertigo", "Banished Banshee", "Elevated Banshee", 5);
+            Core.EnsureComplete(1022);
+        }
 
         //Altitude Adjustment 1023
-        Story.KillQuest(1023, "vertigo", new[] { "Cloaked Fiend", "Abandoned Dolly" });
+        if (!Story.QuestProgression(1023))
+        {
+            Core.EnsureAccept(1023);
+            Core.HuntMonster("vertigo", "Cloaked Fiend", "Re-adjusted Fiend", 3);
+            Core.HuntMonster("vertigo", "Abandoned Dolly", "Re-adjusted Dolly", 5);
+            Core.EnsureComplete(1023);
+        }
 
         //Conquer Vertigo 1024
         Story.KillQuest(1024, "vertigo", "Vertigo");
@@ -67,13 +85,25 @@ public class Concert
             return;
 
         //No Matter How Dark the Night 1025
-        Story.KillQuest(1025, "darkness", new[] { "Fear Muncher", "Banished Banshee" });
+        if (!Story.QuestProgression(1025))
+        {
+            Core.EnsureAccept(1025);
+            Core.HuntMonster("darkness", "Fear Muncher", "Beam of Sunlight", 4);
+            Core.HuntMonster("darkness", "Banished Banshee", "Beam of Sunshine", 5);
+            Core.EnsureComplete(1025);
+        }
 
         //The Dark (K)Nights 1026
         Story.KillQuest(1026, "darkness", "Cloaked Fiend");
 
         //Something, Something Dark Side 1027
-        Story.KillQuest(1027, "darkness", new[] { "Banished Banshee", "Abandoned Dolly" });
+        if (!Story.QuestProgression(1027))
+        {
+            Core.EnsureAccept(1027);
+            Core.HuntMonster("darkness", "Banished Banshee", "Force-d Light", 6);
+            Core.HuntMonster("darkness", "Abandoned Dolly", "Force-d Beam", 5);
+            Core.EnsureComplete(1027);
+        }
 
         //One Little Candle 1028
         Story.MapItemQuest(1028, "darkness", 392, 10);
@@ -97,11 +127,15 @@ public class Concert
         Story.KillQuest(1032, "feardeath", "Fear Muncher");
 
         //Terrify the Terrorkind 1033
-        Story.KillQuest(
-            1033,
-            "feardeath",
-            new[] { "Fear Muncher", "Abandoned Dolly", "Banished Banshee", "Cloaked Fiend" }
-        );
+        if (!Story.QuestProgression(1033))
+        {
+            Core.EnsureAccept(1033);
+            Core.HuntMonster("feardeath", "Fear Muncher", "Muncher Terrified", 2);
+            Core.HuntMonster("feardeath", "Abandoned Dolly", "Dolly Terrified", 3);
+            Core.HuntMonster("feardeath", "Banished Banshee", "Banshee Terrified", 3);
+            Core.HuntMonster("feardeath", "Cloaked Fiend", "Fiend Terrified", 2);
+            Core.EnsureComplete(1033);
+        }
 
         //Conquer Thanatops 1034
         Story.KillQuest(1034, "feardeath", "Thanotops");

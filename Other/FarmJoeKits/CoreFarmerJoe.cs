@@ -2,6 +2,7 @@
 name: null
 description: null
 tags: null
+version: 1.4.5.0
 */
 #region includes
 //cs_include Scripts/Chaos/DrakathsArmor.cs
@@ -1273,26 +1274,63 @@ public class CoreFarmerJoe
 
 
     #region BTS
-    private int _lastCheckedLevel = 0;
     private string? _lastSolo;
     private string? _lastFarm;
     private string? _lastDodge;
+    private int _setClassBusy;
 
     public void SetClass()
     {
+        // Only one class setup at a time: an overlapping call would pass the skip check
+        // against the same old _last* values and rank/equip the same classes twice.
+        // The call already in progress sets up the same classes, so just skip.
+        if (System.Threading.Interlocked.Exchange(ref _setClassBusy, 1) == 1)
+        {
+            Core.Logger("SetClass is already running, skipping the overlapping call.");
+            return;
+        }
+
+        try
+        {
+            SetClassInner();
+        }
+        finally
+        {
+            System.Threading.Volatile.Write(ref _setClassBusy, 0);
+        }
+    }
+
+    private void SetClassInner()
+    {
+        // Start from the user's CBO selection, then upgrade it from the class pools.
+        Core.SoloClass = Core.FarmClass = Core.DodgeClass = "Generic";
         Core.ReadCBO();
         _classCache.Clear();
 
-        // Skip if nothing meaningful changed
-        if (ShouldSkipSetClass())
+        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses, "Solo") ?? Core.SoloClass;
+        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, "Farm") ?? Core.FarmClass;
+        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, "Dodge") ?? Core.DodgeClass;
+
+        // Nothing to do: same classes as last time, and each is owned and rank 10 (or generic).
+        // Checked on the resolved classes rather than on level, so classes acquired at level 100
+        // are picked up; ownership/rank are rechecked so a class acquired later under the same
+        // name, or an interrupted rank-up, is handled on the next call.
+        static bool Settled(string? c) =>
+            CoreBots.IsGenericClass(c)
+            || Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i =>
+                i.Category == ItemCategory.Class
+                && i.Name.Equals(c, StringComparison.OrdinalIgnoreCase)
+                && i.Quantity >= RANK_10_CLASS_POINTS);
+
+        if (
+            string.Equals(_lastSolo, Core.SoloClass, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(_lastFarm, Core.FarmClass, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(_lastDodge, Core.DodgeClass, StringComparison.OrdinalIgnoreCase)
+            && Settled(Core.SoloClass)
+            && Settled(Core.FarmClass)
+            && Settled(Core.DodgeClass)
+        )
             return;
-
-        // Resolve classes
-        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses, out _) ?? Core.SoloClass;
-        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, out _) ?? Core.FarmClass;
-        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, out _) ?? Core.DodgeClass;
-
-        Core.ReadCBO();
 
         (string? Class, string Label)[] rankTargets =
         [
@@ -1309,40 +1347,39 @@ public class CoreFarmerJoe
 
         Core.EquipClass(ClassType.Solo);
 
-        _lastCheckedLevel = Bot.Player?.Level ?? 0;
         _lastSolo = Core.SoloClass;
         _lastFarm = Core.FarmClass;
         _lastDodge = Core.DodgeClass;
     }
 
-    private bool ShouldSkipSetClass()
+    private static readonly HashSet<string> _upgradeHintsShown = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Picks the class for one slot (solo/farm/dodge):
+    /// - An owned class selected in CBO (in Joe's pool or not) is the user's choice and is kept.
+    ///   If it is a pool class and a better pool class is owned, a one-time hint is logged.
+    /// - Generic / empty / "(Current)" / not owned: Joe picks the highest-priority owned pool class
+    ///   (pools are ordered best-first).
+    /// Falls back to <paramref name="current"/> if no pool class is owned.
+    /// </summary>
+    private static string? ResolveClass(string? current, string[] pool, string slot)
     {
-        int currentLevel = Bot.Player?.Level ?? 0;
+        bool userChoice =
+            !CoreBots.IsGenericClass(current)
+            && Core.CheckInventory(current, toInv: false);
 
-        bool levelIncreased = currentLevel > _lastCheckedLevel;
+        if (!userChoice)
+            return pool.FirstOrDefault(x => Core.CheckInventory(x)) ?? current;
 
-        bool classChanged =
-            !string.Equals(_lastSolo, Core.SoloClass, StringComparison.OrdinalIgnoreCase) ||
-            !string.Equals(_lastFarm, Core.FarmClass, StringComparison.OrdinalIgnoreCase) ||
-            !string.Equals(_lastDodge, Core.DodgeClass, StringComparison.OrdinalIgnoreCase);
-
-        return !levelIncreased && !classChanged;
-    }
-
-    private static string? ResolveClass(string? current, string[] pool, out string? found)
-    {
-        found = null;
-        bool invalid =
-            string.IsNullOrEmpty(current)
-            || current.Equals("Generic", StringComparison.OrdinalIgnoreCase)
-            || !pool.Any(x => x.Equals(current, StringComparison.OrdinalIgnoreCase))
-            || !Core.CheckInventory(current);
-
-        if (!invalid)
-            return current;
-
-        found = pool.FirstOrDefault(x => Core.CheckInventory(x));
-        return found ?? current;
+        int currentRank = Array.FindIndex(pool, x => x.Equals(current, StringComparison.OrdinalIgnoreCase));
+        if (currentRank > 0)
+        {
+            string? better = pool.Take(currentRank).FirstOrDefault(x => Core.CheckInventory(x, toInv: false));
+            if (better != null && _upgradeHintsShown.Add($"{slot}:{current}>{better}"))
+                Core.Logger($"{slot} class is set to \"{current}\" in CBO, but you own \"{better}\". " +
+                    $"Set the {slot} class to Generic in CBO to let FarmerJoe pick the best class automatically.");
+        }
+        return current;
     }
 
     private static void BankAllUnusedClasses()

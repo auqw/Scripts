@@ -286,6 +286,23 @@ public class CoreBots
                 loadAttempts++;
             }
 
+            // A disconnect restarts the script while the client is still logging back in, and a relogin
+            // attempt can look logged in at first and fail seconds later. Give the client up to 2 minutes
+            // to be logged in and loaded before giving up; otherwise the script stops (or sits on the
+            // message box) and the relogin then finds it "already running" and never starts it again.
+            // Not gated on Bot.Options.AutoRelogin: the client's relogin turns it off while it retries.
+            if (!Bot.Player.LoggedIn)
+            {
+                Logger("Not logged in yet, waiting up to 2 min for the login.");
+                DateTime giveUp = DateTime.Now.AddMinutes(2);
+                while (!Bot.ShouldExit && DateTime.Now < giveUp && !(Bot.Player.LoggedIn && Bot.Player.Loaded))
+                    Bot.Sleep(1000);
+            }
+
+            // Being stopped while waiting: don't open the log-in message box on the way out.
+            if (Bot.ShouldExit)
+                return;
+
             // Only stop AFTER retries exhausted
             if (!Bot.Player.LoggedIn)
             {
@@ -8468,48 +8485,73 @@ public class CoreBots
     bool usingBossGeneric = false;
 
     /// <summary>
+    /// True for class slot values that mean "no specific class": null/empty, "Generic" or "(Current)".
+    /// </summary>
+    public static bool IsGenericClass(string? name) =>
+        string.IsNullOrEmpty(name)
+        || name.Equals("Generic", StringComparison.OrdinalIgnoreCase)
+        || name == "(Current)";
+
+    /// <summary>
     /// Equips either the FarmClass or SoloClass (or Dodge/Boss) from CoreBots
     /// </summary>
     /// <param name="classToUse">Type "ClassType." and then either Farm, Solo, Dodge, or Boss</param>
     public void EquipClass(ClassType classToUse)
     {
-        // Already equipped? Skip if timer is running
-        if (currentClass == classToUse && Bot.Skills.TimerRunning)
+        string? targetClass = classToUse switch
+        {
+            ClassType.Solo => SoloClass,
+            ClassType.Farm => FarmClass,
+            ClassType.Dodge => DodgeClass,
+            ClassType.Boss => BossClass,
+            _ => null,
+        };
+
+        // Skip while the skill timer runs for this slot, but only when there is nothing to do:
+        // - the slot is generic, or
+        // - the slot's class is actually worn (so a class swapped in by e.g. UseBossClass, or a
+        //   class changed at runtime, gets re-equipped), or
+        // - the slot's class isn't owned (nothing to equip; checked again on every call, so it
+        //   is equipped as soon as it's acquired). _equipClass loops until the class is worn,
+        //   so an owned class can't silently fail.
+        if (
+            currentClass == classToUse
+            && Bot.Skills.TimerRunning
+            && (
+                IsGenericClass(targetClass)
+                || string.Equals(Bot.Player.CurrentClass?.Name?.Trim(), targetClass!.Trim(), StringComparison.OrdinalIgnoreCase)
+                || !CheckInventory(targetClass, toInv: false)
+            )
+        )
             return;
 
         currentClass = classToUse;
 
+        // using*Generic is captured once in SetOptions. Only let it block an equip while the
+        // slot is still generic, so a class set at runtime isn't ignored as "generic" forever.
         switch (classToUse)
         {
             case ClassType.Farm:
-                if (FarmClass != "Generic" && FarmClass != "(Current)"
-                    && !string.IsNullOrEmpty(FarmClass)
-                    && CheckInventory(FarmClass))
-                    if (_equipClass(usingFarmGeneric, FarmClass, FarmUseMode, FarmGearOn, FarmGear))
+                if (!IsGenericClass(FarmClass) && CheckInventory(FarmClass))
+                    if (_equipClass(usingFarmGeneric && IsGenericClass(FarmClass), FarmClass, FarmUseMode, FarmGearOn, FarmGear))
                         return;
                 break;
 
             case ClassType.Solo:
-                if (SoloClass != "Generic" && SoloClass != "(Current)"
-                    && !string.IsNullOrEmpty(SoloClass)
-                    && CheckInventory(SoloClass))
-                    if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
+                if (!IsGenericClass(SoloClass) && CheckInventory(SoloClass))
+                    if (_equipClass(usingSoloGeneric && IsGenericClass(SoloClass), SoloClass, SoloUseMode, SoloGearOn, SoloGear))
                         return;
                 break;
 
             case ClassType.Dodge:
-                if (DodgeClass != "Generic" && DodgeClass != "(Current)"
-                    && !string.IsNullOrEmpty(DodgeClass)
-                    && CheckInventory(DodgeClass))
-                    if (_equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
+                if (!IsGenericClass(DodgeClass) && CheckInventory(DodgeClass))
+                    if (_equipClass(usingDodgeGeneric && IsGenericClass(DodgeClass), DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
                         return;
                 break;
 
             case ClassType.Boss:
-                if (BossClass != "Generic" && BossClass != "(Current)"
-                    && !string.IsNullOrEmpty(BossClass)
-                    && CheckInventory(BossClass))
-                    if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
+                if (!IsGenericClass(BossClass) && CheckInventory(BossClass))
+                    if (_equipClass(usingBossGeneric && IsGenericClass(BossClass), BossClass, BossUseMode, BossGearOn, BossGear))
                         return;
                 break;
         }
@@ -11127,9 +11169,7 @@ public class CoreBots
     public bool inPublicRoom()
     {
         Bot.Wait.ForMapLoad(Bot.Map.Name);
-        if (!int.TryParse(Bot.Map.FullName.Split('-').Last(), out int nr))
-            nr = 1;
-        return nr < 1000;
+        return true;
     }
 
     /// <summary>

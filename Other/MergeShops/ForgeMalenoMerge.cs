@@ -13,65 +13,42 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class ForgeMalenoMerge
+public class ForgeMalenoShop
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm
-    {
-        get => _Farm ??= new CoreFarms();
-        set => _Farm = value;
-    }
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv
-    {
-        get => _Adv ??= new CoreAdvanced();
-        set => _Adv = value;
-    }
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv
-    {
-        get => _sAdv ??= new CoreAdvanced();
-        set => _sAdv = value;
-    }
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
-
-    private static CoreAOR AOR
-    {
-        get => _AOR ??= new CoreAOR();
-        set => _AOR = value;
-    }
+	private static CoreAOR AOR{ get => _AOR ??= new CoreAOR(); set => _AOR = value; }
     private static CoreAOR _AOR;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
-
-    // [Can Change] This should only be changed by the author.
-    //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(
-            new[]
-            {
-                "Yew Ember",
-                "Black Flame of Maleno",
-                "Shadowbrand's Edge",
-                "Shadowbrand's Edges",
-                "Blackfire Halberd",
-                "Nightcleaver",
-                "Nightcleavers",
-                "Maleno Obsidian",
-                "Drow Silver",
-                "Maleno's Fang",
-                "Maleno's Fangs",
-            }
-        );
+        Core.BankingBlackList.AddRange([
+            "Black Flame of Maleno",
+            "Blackfire Halberd",
+            "Drow Silver",
+            "Maleno Obsidian",
+            "Maleno's Fang",
+            "Maleno's Fangs",
+            "Nightcleaver",
+            "Nightcleavers",
+            "Shadowbrand's Edge",
+            "Shadowbrand's Edges",
+            "Steel Ingot",
+            "Yew Ember",
+        ]);
         Core.SetOptions();
-
         BuyAllMerge();
         Core.SetOptions(false);
     }
@@ -79,139 +56,76 @@ public class ForgeMalenoMerge
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         AOR.MountMaleno();
-        //Only edit the map and shopID here
         Adv.StartBuyAllMerge("mountmaleno", 2615, findIngredients, buyOnlyThis, buyMode: buyMode);
 
-        #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp
-                ? Bot.TempInv.GetQuantity(req.Name)
-                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
-            {
-                Core.Logger("req is NULL");
                 return;
-            }
 
             switch (req.Name)
             {
-                default:
-                    bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger(
-                        $"The bot hasn't been taught how to get {req.Name}."
-                            + (shouldStop ? " Please report the issue." : " Skipping"),
-                        messageBox: shouldStop,
-                        stopBot: shouldStop
-                    );
-                    break;
-        #endregion
-
-
                 case "Black Flame of Maleno":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
                     Core.FarmingLogger(req.Name, quant);
-                    Core.AddDrop(req.ID);
-                    int questID = 10369;
-                    if (Core.IsMember)
-                        questID = 10370;
+                    Core.RegisterQuests(Core.IsMember ? 10370 : 10369);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.EnsureAccept(questID);
-                        Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("mountmaleno", "Draconian Bandit", "Lapis Infernalis", 9);
                         Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("mountmaleno", "Idalion", "Powder of Algaroth", 1);
+                        Core.HuntMonster("mountmaleno", "Draconian Bandit", "Lapis Infernalis", 9);
                         Core.HuntMonster("mountmaleno", "Maleno Elemental", "Plumbago", 3);
-                        Core.HuntMonster("mountmaleno", "Idalion", "Powder of Algaroth");
-                        Core.EnsureComplete(questID);
                         Bot.Wait.ForPickup(req.Name);
                     }
+                    Core.CancelRegisteredQuests();
                     break;
-
-                case "Shadowbrand's Edge":
-                case "Shadowbrand's Edges":
                 case "Blackfire Halberd":
-                case "Nightcleaver":
-                case "Nightcleavers":
                 case "Maleno's Fang":
                 case "Maleno's Fangs":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
-                    Core.FarmingLogger(req.Name, quant);
+                case "Nightcleaver":
+                case "Nightcleavers":
+                case "Shadowbrand's Edge":
+                case "Shadowbrand's Edges":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("mountmaleno", "Idalion", req.Name, quant, false, false);
+                    Core.HuntMonster("mountmaleno", "Idalion", req.Name, quant, req.Temp);
                     break;
-
-                case "Yew Ember":
+                case "Drow Silver": // #FROM CASE STORAGE
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("warwickforest", "Rubedo Elemental", req.Name, quant, false);
+                    Core.HuntMonster("thelimacity", "Drow Soldier", req.Name, quant, false);
                     break;
                 case "Maleno Obsidian":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.AddDrop(req.ID);
-                    Core.HuntMonster("thelimacity", "Maleno Elemental", req.Name, quant, false, false);
+                    Core.HuntMonster("mountmaleno", "Maleno Elemental", req.Name, quant, req.Temp);
                     break;
-
-                case "Drow Silver":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
+                case "Steel Ingot": // #FROM CASE STORAGE
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(req.ID);
-                    Core.HuntMonster("thelimacity", "Drow Soldier", req.Name, quant, false, false);
-                    break;
-
-
-                case "Steel Ingot":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.AddDrop(req.ID);
+					Core.RegisterQuests(Core.IsMember ? 10358 : 10357);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            Core.IsMember ? 10358 : 10357,
-                            ("thelimacity", "Maleno Elemental", ClassType.Solo),
-                            ("thelimacity", "Maleno Match", ClassType.Farm),
-                            ("thelimacity", "Flame of Maleno", ClassType.Solo)
-                        );
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+						Core.EquipClass(ClassType.Solo);
+						Core.HuntMonster("thelimacity", "Maleno Elemental", "Elemental Ferrum", 3);
+						Core.HuntMonster("thelimacity", "Maleno Match", "Ferrum Blood", 12);
+						Core.HuntMonster("thelimacity", "Flame of Maleno", "Melano Flicker", 1);
+						Bot.Wait.ForPickup(req.Name);
+					}
+                    Core.CancelRegisteredQuests();
+                    break;
+                case "Yew Ember":
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("mountmaleno", "Maleno Match", req.Name, quant, req.Temp);
+                    break;
+                default:
+                    bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
+                    Core.Logger($"The bot hasn't been taught how to get {req.Name}.", messageBox: shouldStop, stopBot: shouldStop);
                     break;
             }
         }
     }
 
-
-    public List<IOption> Select = new()
-    {
+    public List<IOption> Select =
+    [
         new Option<bool>("94685", "Drow Oathkeeper", "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper\" ?", false),
         new Option<bool>("100873", "Flame of Maleno", "Mode: [select] only\nShould the bot buy \"Flame of Maleno\" ?", false),
         new Option<bool>("92814", "Idalion's ShadowCleaver", "Mode: [select] only\nShould the bot buy \"Idalion's ShadowCleaver\" ?", false),
@@ -228,5 +142,5 @@ public class ForgeMalenoMerge
         new Option<bool>("100876", "Blade of Maleno", "Mode: [select] only\nShould the bot buy \"Blade of Maleno\" ?", false),
         new Option<bool>("94688", "Silver Drow Saber", "Mode: [select] only\nShould the bot buy \"Silver Drow Saber\" ?", false),
         new Option<bool>("92799", "Idalion's Shadowbrand Blade", "Mode: [select] only\nShould the bot buy \"Idalion's Shadowbrand Blade\" ?", false),
-   };
+    ];
 }
