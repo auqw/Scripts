@@ -33340,8 +33340,8 @@
       "merge"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs",
-    "size": 23133,
-    "sha256": "9eca720cf9f08fc5f6b3eda7915cbd01ac30310298b7db5b7e8162916f32c37c",
+    "size": 23312,
+    "sha256": "3f1b71ce77284de71822450163421b3b32c81eecd3310b562ac3ead25662cf42",
     "fileName": "MogloweenSeasonalMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenSeasonalMerge.cs"
   },
@@ -33526,8 +33526,8 @@
       "doall"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs",
-    "size": 13566,
-    "sha256": "67d42dc37ba402c7cb969fec9fc0193a5e35452f65b44051ee45b199eeea29de",
+    "size": 11046,
+    "sha256": "57b9f3cc68eb4c920759c4eea1ab421e43c0401d438b96315a18d95bcf16b784",
     "fileName": "MogloweenMergesDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs"
   },
