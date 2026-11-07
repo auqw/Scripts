@@ -65,10 +65,10 @@ public class MogloweenSeasonalMerge
             MogloweenMergeMode.all
         ),
         new Option<bool>(
-            "allowLegionTokenFarming",
-            "Join Legion to farm Legion Tokens",
-            "If disabled, the script will not buy Undead Warrior or join the Legion for Legion Tokens, and will continue with other items.",
-            true
+            "mogloweenBuyUndeadWarrior",
+            "Buy Undead Warrior and join the Legion",
+            "When enabled, the script may buy Undead Warrior, join the Legion, and farm Legion Tokens. When disabled, it skips all Legion items and actions.",
+            false
         ),
         new Option<string>(
             " ",
@@ -155,7 +155,7 @@ public class MogloweenSeasonalMerge
         MogloweenMergeMode selectedMode =
             Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
         bool shouldFarmLegionTokens =
-            Bot.Config?.Get<bool>("Generic", "allowLegionTokenFarming") ?? true;
+            Bot.Config?.Get<bool>("Generic", "mogloweenBuyUndeadWarrior") ?? false;
         mergeOptionsEnum resolvedMode =
             buyMode
             ?? (
@@ -263,10 +263,13 @@ public class MogloweenSeasonalMerge
                     break;
 
                 case "Legion Token":
-                    if (shouldFarmLegionTokens)
-                        Legion.FarmLegionToken(quant);
-                    else
-                        Core.Logger("Skipping Legion Tokens because joining the Legion is disabled.");
+                    if (!shouldFarmLegionTokens)
+                    {
+                        Core.Logger("Skipping Legion Token requirement; Legion actions are disabled.");
+                        break;
+                    }
+
+                    Legion.FarmLegionToken(quant);
                     break;
 
                 case "Diamond of Nulgath":
