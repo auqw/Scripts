@@ -14328,6 +14328,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
   {
+    "name": "Stillins Merge",
+    "description": "Farms the Stillins Merge [2806] in /kiyametgrove.",
+    "tags": [
+      "kiyametgrove",
+      "merge",
+      "stillins",
+      "merge"
+    ],
+    "path": "Other/MergeShops/StillinsShop.cs",
+    "size": 5388,
+    "sha256": "086e5ea706fcf6cdcb8d5c9cd3cf0106de588176f8dea2e0747186950d79ea4f",
+    "fileName": "StillinsShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/StillinsShop.cs"
+  },
+  {
     "name": "Nova Shrine Gifts Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Nova Shrine Gifts Merge [2458] in /novashrine",
     "tags": [
@@ -32068,6 +32083,21 @@
     "sha256": "edcb268c4ac8ab973a37eb28a0b4254ef6a6953aa2b4df61500c8d010471c007",
     "fileName": "RobinasHarvestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs"
+  },
+  {
+    "name": "Harvest Day Merges Do All",
+    "description": "Runs all Harvest Day merge shop scripts in this folder.",
+    "tags": [
+      "harvestday",
+      "harvest",
+      "merge",
+      "doall"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs",
+    "size": 8556,
+    "sha256": "265b56bca30a5d6567d3cd42224aac83d4afc8c116323c83632741d9588aa48a",
+    "fileName": "HarvestDayMergesDoAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs"
   },
   {
     "name": "Autumn Merge",
