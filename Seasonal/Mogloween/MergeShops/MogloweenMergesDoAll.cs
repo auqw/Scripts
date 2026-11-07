@@ -157,8 +157,6 @@ public class MogloweenMergesDoAll
     private IEnumerable<Action> GetMergeShopActions()
     {
         mergeOptionsEnum buyMode = GetBuyMode();
-        bool allowLegionTokenFarming =
-            Bot.Config?.Get<bool>("Generic", "allowLegionTokenFarming") ?? true;
         yield return () => new AlnswickCastleMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new CandiedCostumesMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new ChromaCandyMerge().BuyAllMerge(buyMode: buyMode);
@@ -167,11 +165,7 @@ public class MogloweenMergesDoAll
         yield return () => new FeastoftheDepths().BuyAllMerge(buyMode: buyMode);
         yield return () => new HuntersReward().BuyAllMerge(buyMode: buyMode);
         yield return () => new MogGLOWweenMerge().BuyAllMerge(buyMode: buyMode);
-        yield return () =>
-            new MogloweenSeasonalMerge().BuyAllMerge(
-                buyMode: buyMode,
-                allowLegionTokenFarming: allowLegionTokenFarming
-            );
+        yield return () => new MogloweenSeasonalMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new MoonlightKhopeshMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new TricktownMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new UngourdlyGearMerge().BuyAllMerge(buyMode: buyMode);

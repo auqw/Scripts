@@ -147,11 +147,7 @@ public class MogloweenSeasonalMerge
         Core.SetOptions(false);
     }
 
-    public void BuyAllMerge(
-        string? buyOnlyThis = null,
-        mergeOptionsEnum? buyMode = null,
-        bool? allowLegionTokenFarming = null
-    )
+    public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         if (!Core.isSeasonalMapActive("mogloween"))
             return;
@@ -159,9 +155,7 @@ public class MogloweenSeasonalMerge
         MogloweenMergeMode selectedMode =
             Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
         bool shouldFarmLegionTokens =
-            allowLegionTokenFarming
-            ?? Bot.Config?.Get<bool>("Generic", "allowLegionTokenFarming")
-            ?? true;
+            Bot.Config?.Get<bool>("Generic", "allowLegionTokenFarming") ?? true;
         mergeOptionsEnum resolvedMode =
             buyMode
             ?? (
