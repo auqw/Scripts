@@ -2,6 +2,7 @@
 name: FarmerJoeKit0DoAll
 description: a start to mid-game autoprogression to setup for near endgame content
 tags: 0farmerjoedoall, farmerjoe, joedoall, doall, Joe, joe mama
+version: 1.4.5.0
 */
 #region includes
 //cs_include Scripts/CoreAdvanced.cs
