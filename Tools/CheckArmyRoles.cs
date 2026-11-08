@@ -123,8 +123,8 @@ public class CheckArmyRoles
                 + "(Starlight of War) "
                 + importantItemCheckbox(
                     2,
-                    "Star Light of the Empyrean",
-                    "Star Lights of the Empyrean"
+                    "Star Light of Destiny",
+                    "Star Lights of Destiny"
                 )
                 + "(Mysteries of War) "
                 + importantItemCheckbox(2, "Sin of the Underworld")                
