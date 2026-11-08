@@ -8890,8 +8890,8 @@
       "null"
     ],
     "path": "Other/Classes/LightMage.cs",
-    "size": 1125,
-    "sha256": "50a9a2afa715be31b7bd37e92355da08d971a444a22b932d513d3ff08ba63e5c",
+    "size": 1129,
+    "sha256": "8dcd0f52c409dc248650d8910d4edaff02b504e4df5975299939ee7d29418107",
     "fileName": "LightMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/LightMage.cs"
   },
@@ -13082,8 +13082,8 @@
       "armblades"
     ],
     "path": "Other/MergeShops/DiogonsMerge.cs",
-    "size": 8006,
-    "sha256": "2d8953bb48e0d0dc4702126adf9d16a1f503eaa069a04bf1453bf4b6176c8204",
+    "size": 8020,
+    "sha256": "ecbae40934bf7a303d3fb9d1543684479bf1820f7fcd219bf0c610553d085d2e",
     "fileName": "DiogonsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DiogonsMerge.cs"
   },
