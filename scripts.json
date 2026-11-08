@@ -1900,6 +1900,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/DirtyDeedsDoneDirtCheap.cs"
   },
   {
+    "name": "Memory of my Father",
+    "description": "Farms quest 10835 until all four random rewards are owned.",
+    "tags": [
+      "memory of my father",
+      "drakath",
+      "crownsreach",
+      "slugwrath",
+      "quest rewards"
+    ],
+    "path": "Chaos/MemoryOfMyFather.cs",
+    "size": 1656,
+    "sha256": "379c6660acedc76700a28365f102cb11e34942204715c4f26efb407443c3c03c",
+    "fileName": "MemoryOfMyFather.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/MemoryOfMyFather.cs"
+  },
+  {
     "name": "Ascended Drakath Gear",
     "description": "Farms the ascended Drakath Set",
     "tags": [
