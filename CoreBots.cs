@@ -9785,6 +9785,10 @@ public class CoreBots
         switch (Bot.Map.Name)
         {
 
+            case "wormhole":
+                blackListedCells.UnionWith(new[] { "r8a" });
+                break;
+
             case "towerofmirrors":
                 blackListedCells.UnionWith(new[] { "replay", "EndCuts" });
                 break;

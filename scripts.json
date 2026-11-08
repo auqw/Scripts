@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 475211,
-    "sha256": "ea69950b680730b6388a63cb7798d388ff688a4704067098e609511378494080",
+    "size": 475325,
+    "sha256": "8349e8fb323d76556a1dd40dee7c92cf9788a0dc506780e05e8144c483434ef2",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4133,8 +4133,8 @@
       "seasonal"
     ],
     "path": "Tools/CheckArmyRoles.cs",
-    "size": 28273,
-    "sha256": "3222ff75a5b461346e6cc9c4b716a5fdcc619846cf565b8e21ef1f4e9eb6056a",
+    "size": 28263,
+    "sha256": "a43b9879f59cb359c265db05a12a4e40e635178a094383056bf7c7bc6256d668",
     "fileName": "CheckArmyRoles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/CheckArmyRoles.cs"
   },
@@ -20806,8 +20806,8 @@
       "null"
     ],
     "path": "Story/Lynaria/CoreLynaria.cs",
-    "size": 9815,
-    "sha256": "39bd172f5718a0dac6966409ce2eb00e556ba15b3664364438fd1a992274064a",
+    "size": 9893,
+    "sha256": "ceec9477545c560a42242ab760371df48473c8869140bfb4c3ba7bb892e33274",
     "fileName": "CoreLynaria.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
   },
