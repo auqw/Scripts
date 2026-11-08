@@ -4133,8 +4133,8 @@
       "seasonal"
     ],
     "path": "Tools/CheckArmyRoles.cs",
-    "size": 28273,
-    "sha256": "3222ff75a5b461346e6cc9c4b716a5fdcc619846cf565b8e21ef1f4e9eb6056a",
+    "size": 28263,
+    "sha256": "a43b9879f59cb359c265db05a12a4e40e635178a094383056bf7c7bc6256d668",
     "fileName": "CheckArmyRoles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/CheckArmyRoles.cs"
   },
