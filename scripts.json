@@ -43,7 +43,7 @@
     ],
     "path": "CoreBots.cs",
     "size": 475211,
-    "sha256": "ea69950b680730b6388a63cb7798d388ff688a4704067098e609511378494080",
+    "sha256": "bedb744a73747f274d96a339a69f8c33cdcaeeb358cf4d356e47a4ffebaf58e8",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -20806,8 +20806,8 @@
       "null"
     ],
     "path": "Story/Lynaria/CoreLynaria.cs",
-    "size": 9815,
-    "sha256": "39bd172f5718a0dac6966409ce2eb00e556ba15b3664364438fd1a992274064a",
+    "size": 9893,
+    "sha256": "ceec9477545c560a42242ab760371df48473c8869140bfb4c3ba7bb892e33274",
     "fileName": "CoreLynaria.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
   },
