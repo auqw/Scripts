@@ -6067,13 +6067,13 @@ public class CoreBots
 
         foreach (ItemBase requirement in quest.Requirements)
         {
-            if (CheckInventory(requirement.ID, requirement.Quantity))
-                continue;
-
             if (pairIndex >= MapMonsterClassPairs.Length)
                 break;
 
             var (mapName, monsterName, classType) = MapMonsterClassPairs[pairIndex++];
+
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
 
             EquipClass(classType);
 
