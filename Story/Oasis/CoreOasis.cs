@@ -181,11 +181,11 @@ public class CoreOasis
         // 10324 | Subaru
         if (!Story.QuestProgression(10324))
         {
-            Core.HuntMonsterQuest(
-                10324,
-                ("whitetigerpoint", UseableMonsters[1], ClassType.Farm),
-                ("whitetigerpoint", UseableMonsters[0], ClassType.Farm)
-            );
+            Core.EnsureAccept(10324);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("whitetigerpoint", "Byakko Cub", "Cub Stripes", 6);
+            Core.HuntMonster("whitetigerpoint", "Astral Spirit", "Astral Sparkle", 6);
+            Core.EnsureComplete(10324);
         }
 
         // 10325 | Kagasuki
@@ -209,11 +209,11 @@ public class CoreOasis
         // 10328 | Toroki
         if (!Story.QuestProgression(10328))
         {
-            Core.HuntMonsterQuest(
-                10328,
-                ("whitetigerpoint", UseableMonsters[3], ClassType.Farm),
-                ("whitetigerpoint", UseableMonsters[2], ClassType.Farm)
-            );
+            Core.EnsureAccept(10328);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("whitetigerpoint", "Lunar Haze", "Lunar Gaze", 6);
+            Core.HuntMonster("whitetigerpoint", "Rigel Stray", "Rigel Radiation", 6);
+            Core.EnsureComplete(10328);
         }
 
         // 10329 | Komokuten
@@ -316,9 +316,11 @@ public class CoreOasis
         // 9537 | Remnants of Apophis
         if (!Story.QuestProgression(9537))
         {
-            Core.HuntMonsterQuest(9537,
-                ("djinnguard", UseableMonsters[1], ClassType.Solo),
-                ("djinnguard", UseableMonsters[2], ClassType.Solo));
+            Core.EnsureAccept(9537);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("djinnguard", "Loamy Lamia", "Hissteria Scale", 6);
+            Core.HuntMonster("djinnguard", "Fluvial Lamia", "Fluvial Scale", 6);
+            Core.EnsureComplete(9537);
         }
 
 
@@ -494,9 +496,11 @@ public class CoreOasis
         // 10758 | Amnion Alchemy
         if (!Story.QuestProgression(10758))
         {
-            Core.HuntMonsterQuest(10758,
-                ("carcossacabins", UseableMonsters[2], ClassType.Solo),
-                ("carcossacabins", UseableMonsters[3], ClassType.Solo));
+            Core.EnsureAccept(10758);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("carcossacabins", "Evolved Lifeform", "Lifeform's Cranium", 9);
+            Core.HuntMonster("carcossacabins", "Doom Leech", "Leech's Sucker", 9);
+            Core.EnsureComplete(10758);
         }
 
 
@@ -549,9 +553,11 @@ public class CoreOasis
         // 10767 | Mitsutake
         if (!Story.QuestProgression(10767))
         {
-            Core.HuntMonsterQuest(10767,
-                ("vermillioncliffs", UseableMonsters[0], ClassType.Farm),
-                ("vermillioncliffs", UseableMonsters[1], ClassType.Farm));
+            Core.EnsureAccept(10767);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("vermillioncliffs", "Star Sweet", "Sugar Star", 6);
+            Core.HuntMonster("vermillioncliffs", "Tejat Muse Moth", "Muse Dust", 6);
+            Core.EnsureComplete(10767);
         }
 
         // 10768 | Nuriko
@@ -577,9 +583,11 @@ public class CoreOasis
         // 10771 | Hotohori
         if (!Story.QuestProgression(10771))
         {
-            Core.HuntMonsterQuest(10771,
-                ("vermillioncliffs", UseableMonsters[2], ClassType.Solo),
-                ("vermillioncliffs", UseableMonsters[3], ClassType.Solo));
+            Core.EnsureAccept(10771);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("vermillioncliffs", "Dawn Knight", "Knight's Shine", 6);
+            Core.HuntMonster("vermillioncliffs", "Vermillion Phoenix", "Phoenix Tongue", 6);
+            Core.EnsureComplete(10771);
         }
 
         // 10772 | Zochoten

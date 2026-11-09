@@ -79,21 +79,21 @@ public class WarMonger
         // 10156 | Perfect Practice
         if (!Story.QuestProgression(10156))
         {
-            Core.HuntMonsterQuest(
-                10156,
-                ("forest", UseableMonsters[0], ClassType.Farm),
-                ("forest", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10156);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("forest", "Zardman Grunt", "Grunt's Tooth", 5);
+            Core.HuntMonster("forest", "Zardman Hunter", "Hunter's Tooth");
+            Core.EnsureComplete(10156);
         }
 
         // 10157 | Grateful Guru
         if (!Story.QuestProgression(10157))
         {
-            Core.HuntMonsterQuest(
-                10157,
-                ("guru", UseableMonsters[2], ClassType.Farm),
-                ("guru", UseableMonsters[3], ClassType.Farm)
-            );
+            Core.EnsureAccept(10157);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("guru", "Trobble", "Trobble Fluff", 4);
+            Core.HuntMonster("guru", "LeatherWing", "Leatherwing Feathers", 4);
+            Core.EnsureComplete(10157);
         }
 
         // 10158 | Magitech
@@ -105,11 +105,11 @@ public class WarMonger
         // 10159 | Trial by Fire
         if (!Story.QuestProgression(10159))
         {
-            Core.HuntMonsterQuest(
-                10159,
-                ("citadel", UseableMonsters[5], ClassType.Solo),
-                ("citadel", UseableMonsters[6], ClassType.Solo)
-            );
+            Core.EnsureAccept(10159);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("citadel", "Inquisitor Guard", "Guard's Helm", 5);
+            Core.HuntMonster("citadel", "Inquisitor Captain", "Captain's Hood");
+            Core.EnsureComplete(10159);
         }
         #endregion Mage
 
@@ -119,31 +119,32 @@ public class WarMonger
         // 10160 | Pinch Your Nose
         if (!Story.QuestProgression(10160))
         {
-            Core.HuntMonsterQuest(
-                10160,
-                ("greenguardwest", UseableMonsters[7], ClassType.Farm),
-                ("greenguardwest", UseableMonsters[8], ClassType.Farm)
-            );
+            Core.EnsureAccept(10160);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("greenguardwest", "Frogzard", "Frogzard Glands", 5);
+            Core.HuntMonster("greenguardwest", "Slime", "Slime Goo", 5);
+            Core.EnsureComplete(10160);
         }
 
         // 10161 | Small Doses
         if (!Story.QuestProgression(10161))
         {
-            Core.HuntMonsterQuest(
-                10161,
-                ("greenguardeast", UseableMonsters[9], ClassType.Solo),
-                ("greenguardeast", UseableMonsters[10], ClassType.Solo)
-            );
+            Core.EnsureAccept(10161);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("greenguardeast", "Spider", "Spider Venom", 4);
+            Core.HuntMonster("greenguardeast", "Wolf", "Wolf's Blood", 4);
+            Core.EnsureComplete(10161);
         }
 
         // 10162 | Chaotic Seedbed
         if (!Story.QuestProgression(10162))
         {
-            Core.HuntMonsterQuest(
-                10162,
-                ("forestchaos", UseableMonsters[11], ClassType.Solo),
-                ("forestchaos", UseableMonsters[12], ClassType.Farm)
-            );
+            Core.EnsureAccept(10162);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("forestchaos", "Chaorrupted Bear", "Chaorrupted Bear Innards");
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("forestchaos", "Chaorrupted Wolf", "Chaorrupted Wolf Innards", 5);
+            Core.EnsureComplete(10162);
         }
 
         // 10163 | Dark's Embrace, Sacred Space
@@ -213,11 +214,11 @@ public class WarMonger
         // 10172 | Chaos Reigned
         if (!Story.QuestProgression(10172))
         {
-            Core.HuntMonsterQuest(
-                10172,
-                ("DeepForest", UseableMonsters[22], ClassType.Farm),
-                ("DeepForest", UseableMonsters[23], ClassType.Farm)
-            );
+            Core.EnsureAccept(10172);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("deepforest", "Eldritch Stalker", "Stalker's Eye", 8);
+            Core.HuntMonster("deepforest", "Terrarsite", "Terrasite's Maw", 8);
+            Core.EnsureComplete(10172);
         }
 
         // 10173 | Fireproofing
@@ -229,31 +230,31 @@ public class WarMonger
         // 10174 | Fishy-men Business
         if (!Story.QuestProgression(10174))
         {
-            Core.HuntMonsterQuest(
-                10174,
-                ("Ashray", UseableMonsters[25], ClassType.Farm),
-                ("Ashray", UseableMonsters[26], ClassType.Farm)
-            );
+            Core.EnsureAccept(10174);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("ashray", "Ashray Fisherman", "Fisherman's Hook", 8);
+            Core.HuntMonster("ashray", "Kitefin Shark Bait", "Sharkbait Chunk", 8);
+            Core.EnsureComplete(10174);
         }
 
         // 10175 | Baleful Morals
         if (!Story.QuestProgression(10175))
         {
-            Core.HuntMonsterQuest(
-                10175,
-                ("Balemorale", UseableMonsters[27], ClassType.Farm),
-                ("Balemorale", UseableMonsters[28], ClassType.Farm)
-            );
+            Core.EnsureAccept(10175);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("balemorale", "Lightguard Paladin", "Paladin's Apology", 8);
+            Core.HuntMonster("balemorale", "Noble's Knight", "Knight's Apology", 8);
+            Core.EnsureComplete(10175);
         }
 
         // 10176 | Nainhdeil
         if (!Story.QuestProgression(10176))
         {
-            Core.HuntMonsterQuest(
-                10176,
-                ("LiaTaraHill", UseableMonsters[29], ClassType.Farm),
-                ("LiaTaraHill", UseableMonsters[30], ClassType.Farm)
-            );
+            Core.EnsureAccept(10176);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("liatarahill", "Garde Wraith", "Wraith Exorcised", 8);
+            Core.HuntMonster("liatarahill", "Undead Garde ", "Undead Exorcised", 8);
+            Core.EnsureComplete(10176);
         }
 
         // Farming Quest - very hard to solo without army.

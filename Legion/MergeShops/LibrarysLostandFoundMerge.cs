@@ -147,12 +147,12 @@ public class LibrarysLostandFoundMerge
         }
         while (!Bot.ShouldExit && !Core.CheckInventory("Underworld Linen", quant))
         {
-            Core.HuntMonsterQuest(
-                10099,
-                ("judgement", "Minos", ClassType.Solo),
-                ("judgement", "Rhadamanthys", ClassType.Solo),
-                ("judgement", "Aeacus", ClassType.Solo)
-            );
+            Core.EnsureAccept(10099);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("judgement", "Minos", "Minos' Scylla");
+            Core.HuntMonster("judgement", "Rhadamanthys", "Rhadamanthys' Asterion");
+            Core.HuntMonster("judgement", "Aeacus", "Aeacus' Marrow");
+            Core.EnsureComplete(10099);
             Bot.Wait.ForPickup("Underworld Linen");
         }
     }

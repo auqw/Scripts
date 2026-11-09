@@ -157,11 +157,11 @@ public class CoreLynaria
         // 10246 | Ruins Near Kehl
         if (!Story.QuestProgression(10246))
         {
-            Core.HuntMonsterQuest(
-                10246,
-                ("bocklincastle", UseableMonsters[0], ClassType.Farm),
-                ("bocklincastle", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10246);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("bocklincastle", "Undead Garde", "Undead Marrow", 6);
+            Core.HuntMonster("bocklincastle", "Garde Wraith", "Wraith Cleared", 9);
+            Core.EnsureComplete(10246);
         }
 
         // 10247 | Whistling Blackbird
@@ -194,11 +194,11 @@ public class CoreLynaria
         // 10251 | Bacchanalia
         if (!Story.QuestProgression(10251))
         {
-            Core.HuntMonsterQuest(
-                10251,
-                ("bocklincastle", UseableMonsters[2], ClassType.Farm),
-                ("bocklincastle", UseableMonsters[4], ClassType.Farm)
-            );
+            Core.EnsureAccept(10251);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("bocklincastle", "Warped Revenant", "Warped Condensation", 9);
+            Core.HuntMonster("bocklincastle", "Faceless Ritualist", "Duke's Crest", 6);
+            Core.EnsureComplete(10251);
         }
 
         // 10252 | Euterpe and Deer
@@ -297,11 +297,11 @@ public class CoreLynaria
         // 10264 | Cure-All
         if (!Story.QuestProgression(10264))
         {
-            Core.HuntMonsterQuest(
-                10264,
-                ("bocklinsanctum", UseableMonsters[3], ClassType.Solo),
-                ("bocklinsanctum", UseableMonsters[4], ClassType.Solo)
-            );
+            Core.EnsureAccept(10264);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("bocklinsanctum", "Ghostly Servant", "Servant's Herb", 12);
+            Core.HuntMonster("bocklinsanctum", "Headless Rider", "Rider's Fleur", 6);
+            Core.EnsureComplete(10264);
         }
 
         // 10265 | The Thronekeeper

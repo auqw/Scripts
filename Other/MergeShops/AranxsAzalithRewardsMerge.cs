@@ -90,11 +90,11 @@ public class AranxsAzalithRewardsMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            9887,
-                            ("champazalith", "Maah-na", ClassType.Solo),
-                            ("champazalith", "Akh-a", ClassType.Solo)
-                        );
+                        Core.EnsureAccept(9887);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("champazalith", "Maah-na", "Maah-na's Wing");
+                        Core.HuntMonster("champazalith", "Akh-a", "Akh-a's Wing");
+                        Core.EnsureComplete(9887);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

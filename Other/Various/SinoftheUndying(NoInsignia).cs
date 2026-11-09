@@ -129,12 +129,12 @@ public class SinoftheSinoftheUndyingNoInsignia
             Core.FarmingLogger("Atlas Lion Pelt", 20);
             while (!Bot.ShouldExit && !Core.CheckInventory("Atlas Lion Pelt", 20))
             {
-                Core.HuntMonsterQuest(
-                    10126,
-                    ("atlaskingdom", "Atlas Leo", ClassType.Solo),
-                    ("atlaskingdom", "Atlas Elite", ClassType.Solo),
-                    ("atlaskingdom", "Executioner Ladon", ClassType.Solo)
-                );
+                Core.EnsureAccept(10126);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("atlaskingdom", "Atlas Leo", "Leo's Fang", 6);
+                Core.HuntMonster("atlaskingdom", "Atlas Elite", "Elite Pedigree", 6);
+                Core.HuntMonster("atlaskingdom", "Executioner Ladon", "Ladon's Golden Apple");
+                Core.EnsureComplete(10126);
                 Bot.Wait.ForPickup("Atlas Lion Pelt");
             }
         }
@@ -160,12 +160,13 @@ public class SinoftheSinoftheUndyingNoInsignia
             Core.FarmingLogger("Broken Chain", 150);
             while (!Bot.ShouldExit && !Core.CheckInventory("Broken Chain", 150))
             {
-                Core.HuntMonsterQuest(
-                    10115,
-                    ("atlaspromenade", "Atlas Light Magus", ClassType.Farm),
-                    ("atlaspromenade", "Wrath Guard", ClassType.Farm),
-                    ("atlaspromenade", "Usurper Lord Slaine", ClassType.Solo)
-                );
+                Core.EnsureAccept(10115);
+                Core.EquipClass(ClassType.Farm);
+                Core.HuntMonster("atlaspromenade", "Atlas Light Magus", "Atlas Citizenship", 6);
+                Core.HuntMonster("atlaspromenade", "Wrath Guard", "Wrath Scar", 12);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("atlaspromenade", "Usurper Lord Slaine", "Slaine's Barbed Chain");
+                Core.EnsureComplete(10115);
                 Bot.Wait.ForPickup("Broken Chain");
             }
         }

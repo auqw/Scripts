@@ -1073,11 +1073,11 @@ public class CoreHarvestDay
         // 10491 | Vegetarian Fricassee
         if (!Story.QuestProgression(10491))
         {
-            Core.HuntMonsterQuest(
-                10491,
-                ("moglinfeast", UseableMonsters[0], ClassType.Farm),
-                ("moglinfeast", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10491);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("moglinfeast", "Dianthus Fae", "Dianthus Pollen", 10);
+            Core.HuntMonster("moglinfeast", "Pumpkin Mimic", "Peeled Mimic", 5);
+            Core.EnsureComplete(10491);
         }
 
         // 10492 | No Thoughts, Head Empty
@@ -1111,11 +1111,11 @@ public class CoreHarvestDay
         // 10496 | Putrid Potpourri
         if (!Story.QuestProgression(10496))
         {
-            Core.HuntMonsterQuest(
-                10496,
-                ("moglinfeast", UseableMonsters[2], ClassType.Farm),
-                ("moglinfeast", UseableMonsters[3], ClassType.Farm)
-            );
+            Core.EnsureAccept(10496);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("moglinfeast", "Hay Fever Sylph", "Sylph Pollen", 8);
+            Core.HuntMonster("moglinfeast", "Redcap Mush", "Sauteed Mush", 8);
+            Core.EnsureComplete(10496);
         }
 
         // 10497 | Fairy Foray

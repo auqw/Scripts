@@ -59,17 +59,17 @@ public class DiabolicalShadowHunterSet
 
             Core.FarmingLogger(Reward.Name, 1);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
-                Core.HuntMonsterQuest(
-                    10053,
-                    new[]
-                    {
-                        ("brokenwoods", "Eldritch Amalgamation", ClassType.Solo),
-                        ("backroom", "Book Wyrm", ClassType.Solo),
-                        ("lostvilla", "Eldritch Parasite", ClassType.Solo),
-                        ("lostvilla", "Covetous Disgrace", ClassType.Solo),
-                        ("lostvilla", "Mutilated Atrocity", ClassType.Farm),
-                    }
-                );
+            {
+                Core.EnsureAccept(10053);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("brokenwoods", "Eldritch Amalgamation", "Eldritch Amalgamation's Strained Eye");
+                Core.HuntMonster("backroom", "Book Wyrm", "Book Wyrm's Wretched Vein", 2);
+                Core.HuntMonster("lostvilla", "Eldritch Parasite", "Eldritch Parasite's Infested Arteries", 12);
+                Core.HuntMonster("lostvilla", "Covetous Disgrace", "Covetous Disgrace's Mangled Rib", 3);
+                Core.EquipClass(ClassType.Farm);
+                Core.HuntMonster("lostvilla", "Mutilated Atrocity", "Mutilated Atrocity's Dismembered Winglet", 5);
+                Core.EnsureComplete(10053);
+            }
 
             Core.JumpWait();
             Core.ToBank(Reward.ID);

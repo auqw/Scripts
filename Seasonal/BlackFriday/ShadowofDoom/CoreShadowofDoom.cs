@@ -357,11 +357,11 @@ public class CoreShadowofDoom
         // 9958 | Canopic Guardians
         if (!Story.QuestProgression(9958))
         {
-            Core.HuntMonsterQuest(
-                9958,
-                ("hiddenduat", UseableMonsters[0], ClassType.Solo),
-                ("hiddenduat", UseableMonsters[2], ClassType.Solo)
-            );
+            Core.EnsureAccept(9958);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("hiddenduat", "Umbral Sphinx", "Umbral Sphinx Resin", 3);
+            Core.HuntMonster("hiddenduat", "Umbral Royal Guard", "Guard's Stomach", 3);
+            Core.EnsureComplete(9958);
         }
 
         // 9959 | Lum'ah

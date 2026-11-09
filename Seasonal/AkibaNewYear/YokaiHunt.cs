@@ -181,11 +181,11 @@ public class YokaiHunt
         // 10056 | Xionghuang Remedy
         if (!Story.QuestProgression(10056))
         {
-            Core.HuntMonsterQuest(
-                10056,
-                ("yokairiver", "Kappa Ninja", ClassType.Farm),
-                ("yokairiver", "Funa-yurei", ClassType.Farm)
-            );
+            Core.EnsureAccept(10056);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("yokairiver", "Kappa Ninja", "Kappa Spirits", 8);
+            Core.HuntMonster("yokairiver", "Funa-yurei", "Funa-Yurei Powder", 8);
+            Core.EnsureComplete(10056);
         }
 
         // 10057 | Calabash Elixir
@@ -240,9 +240,11 @@ public class YokaiHunt
         // 10588 | Natural Betrayal
         if (!Story.QuestProgression(10588))
         {
-            Core.HuntMonsterQuest(10588,
-                ("hakuwar", "Dark Zmey", ClassType.Farm),
-                ("hakuwar", "Kitsune Spy", ClassType.Farm));
+            Core.EnsureAccept(10588);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("hakuwar", "Dark Zmey", "Zmey Alexandrite", 9);
+            Core.HuntMonster("hakuwar", "Kitsune Spy", "Kitsune Kinchaku", 9);
+            Core.EnsureComplete(10588);
         }
 
 

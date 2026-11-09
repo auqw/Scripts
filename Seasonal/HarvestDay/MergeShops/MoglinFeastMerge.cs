@@ -115,12 +115,13 @@ public class MoglinFeastMerge
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            10498,
-                            ("moglinfeast", "Hay Fever Sylph", ClassType.Farm),
-                            ("moglinfeast", "Redcap Mush", ClassType.Farm),
-                            ("moglinfeast", "Fall Fae Queen", ClassType.Solo)
-                        );
+                        Core.EnsureAccept(10498);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("moglinfeast", "Hay Fever Sylph", "Golden Nectar", 6);
+                        Core.HuntMonster("moglinfeast", "Redcap Mush", "Mushroom Jaw", 6);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("moglinfeast", "Fall Fae Queen", "Fall Diadem");
+                        Core.EnsureComplete(10498);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

@@ -1138,11 +1138,11 @@ public class CoreMogloween
         // 10466 | Limitless Lengths
         if (!Story.QuestProgression(10466))
         {
-            Core.HuntMonsterQuest(
-                10466,
-                ("eldritchworld", UseableMonsters[7], ClassType.Farm),
-                ("eldritchworld", UseableMonsters[6], ClassType.Farm)
-            );
+            Core.EnsureAccept(10466);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("eldritchworld", "Mass of Teeth", "Brittle Enamel", 6);
+            Core.HuntMonster("eldritchworld", "Mass of Hair", "Moldy Strands", 6);
+            Core.EnsureComplete(10466);
         }
 
         // 10467 | Merely Existing
@@ -1190,11 +1190,11 @@ public class CoreMogloween
         // 10471 | Bottomfeeder Fruits
         if (!Story.QuestProgression(10471))
         {
-            Core.HuntMonsterQuest(
-                10471,
-                ("elodeatemple", UseableMonsters[0], ClassType.Farm),
-                ("elodeatemple", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10471);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("elodeatemple", "Nudibranch", "Seaslug Entrails", 6);
+            Core.HuntMonster("elodeatemple", "Kathool Cultist", "Kultist Entrails", 4);
+            Core.EnsureComplete(10471);
         }
 
         // 10472 | Dirge of the Depths
@@ -1215,11 +1215,11 @@ public class CoreMogloween
         // 10474 | Sea Symphony
         if (!Story.QuestProgression(10474))
         {
-            Core.HuntMonsterQuest(
-                10474,
-                ("elodeatemple", UseableMonsters[3], ClassType.Farm),
-                ("elodeatemple", UseableMonsters[2], ClassType.Farm)
-            );
+            Core.EnsureAccept(10474);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("elodeatemple", "Riptide Adept", "Adept's Aria", 8);
+            Core.HuntMonster("elodeatemple", "Merdrathoolian", "Merdrathoolian's Oratio", 6);
+            Core.EnsureComplete(10474);
         }
 
         // 10475 | If You Hate the Robe, You'll Hate its Priest

@@ -37,12 +37,14 @@ public class NusantaraBosses
             Core.HuntMonsterQuest(10371, "rangda", "Rangda");
 
         if (!Story.QuestProgression(10374))
-            Core.HuntMonsterQuest(
-                10374,
-                ("rangda", "Rangda", ClassType.Solo),
-                ("kala", "Kala", ClassType.Solo),
-                ("wentira", "Kabasaran Waranei", ClassType.Solo)
-            );
+        {
+            Core.EnsureAccept(10374);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("rangda", "Rangda", "Rangda Medali");
+            Core.HuntMonster("kala", "Kala", "Kala Medali");
+            Core.HuntMonster("wentira", "Kabasaran Waranei", "Kabasaran Medali");
+            Core.EnsureComplete(10374);
+        }
     }
 
     private readonly string badge = "Nusantara Bosses Badge";

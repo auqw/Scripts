@@ -80,11 +80,11 @@ public class AtlasFalls
         // 10128 | Exodus of Dust
         if (!Story.QuestProgression(10128))
         {
-            Core.HuntMonsterQuest(
-                10128,
-                ("atlasfalls", UseableMonsters[0], ClassType.Solo),
-                ("atlasfalls", UseableMonsters[2], ClassType.Solo)
-            );
+            Core.EnsureAccept(10128);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("atlasfalls", "Atlas Knight", "Knight's Skull", 9);
+            Core.HuntMonster("atlasfalls", "Atlas Light Mage", "Mage's Skull", 9);
+            Core.EnsureComplete(10128);
         }
 
         // 10129 | Impeccable Judgement

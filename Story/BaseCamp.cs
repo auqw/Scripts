@@ -35,24 +35,25 @@ public class BaseCamp
         // 10270 | One Brick at a Time
         if (!Story.QuestProgression(10270))
         {
-            Core.HuntMonsterQuest(
-                10270,
-                ("cornelis", "Gargoyle", ClassType.Farm),
-                ("cornelis", "Stone Golem", ClassType.Solo),
-                ("faerie", "Cyclops Warlord", ClassType.Solo)
-            );
+            Core.EnsureAccept(10270);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("cornelis", "Gargoyle", "Portal Bricks", 25);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("cornelis", "Stone Golem", "Support Pillars", 4);
+            Core.HuntMonster("faerie", "Cyclops Warlord", "Magelight", 4);
+            Core.EnsureComplete(10270);
         }
 
         // 10271 | Room with a View
         if (!Story.QuestProgression(10271))
         {
-            Core.HuntMonsterQuest(
-                10271,
-                ("dwarfhold", "Gemrald", ClassType.Farm),
-                ("crashsite", "Mithril Man", ClassType.Farm),
-                ("crashsite", "ProtoSartorium", ClassType.Farm),
-                ("digitalmaintown", "8-Bit Lionfang", ClassType.Farm)
-            );
+            Core.EnsureAccept(10271);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("dwarfhold", "Gemrald", "Magic Rocks", 8);
+            Core.HuntMonster("crashsite", "Mithril Man", "Power Cable");
+            Core.HuntMonster("crashsite", "ProtoSartorium", "75-inch Ultra-thin 144hz 1ms LED Display");
+            Core.HuntMonster("digitalmaintown", "8-bit Lionfang", "1080x1920 JPEG of Battleon");
+            Core.EnsureComplete(10271);
         }
 
         // 10272 | Transportalation
@@ -68,12 +69,12 @@ public class BaseCamp
         // 10273 | Your First Portal
         if (!Story.QuestProgression(10273))
         {
-            Core.HuntMonsterQuest(
-                10273,
-                ("swordhavenbridge", "Slime", ClassType.Farm),
-                ("farm", "Scarecrow", ClassType.Farm),
-                ("boxes", "Sneeviltron", ClassType.Farm)
-            );
+            Core.EnsureAccept(10273);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("swordhavenbridge", "Slime", "Nontoxic Children's Glue");
+            Core.HuntMonster("farm", "Scarecrow", "Unused Popsicle Sticks", 10);
+            Core.HuntMonster("boxes", "Sneeviltron", "Clear Tape");
+            Core.EnsureComplete(10273);
         }
     }
 }

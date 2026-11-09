@@ -82,11 +82,11 @@ public class OblivionTundra
         // 10039 | Greywater
         if (!Story.QuestProgression(10039))
         {
-            Core.HuntMonsterQuest(
-                10039,
-                ("obliviontundra", UseableMonsters[1], ClassType.Farm),
-                ("obliviontundra", UseableMonsters[0], ClassType.Farm)
-            );
+            Core.EnsureAccept(10039);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("obliviontundra", "Hushed", "Soiled Contract", 2);
+            Core.HuntMonster("obliviontundra", "Empty Creature", "Gray Meat", 4);
+            Core.EnsureComplete(10039);
         }
 
         // 10040 | A Fiendish Waste
@@ -116,11 +116,11 @@ public class OblivionTundra
         // 10044 | Stirring Darkness
         if (!Story.QuestProgression(10044))
         {
-            Core.HuntMonsterQuest(
-                10044,
-                ("obliviontundra", UseableMonsters[3], ClassType.Farm),
-                ("obliviontundra", UseableMonsters[4], ClassType.Farm)
-            );
+            Core.EnsureAccept(10044);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("obliviontundra", "Oblivion Magus", "Magus' Gray Soul", 6);
+            Core.HuntMonster("obliviontundra", "Ettin Fiend", "Ettin Core", 3);
+            Core.EnsureComplete(10044);
         }
 
         // 10045 | Remember to Breathe

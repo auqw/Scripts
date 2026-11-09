@@ -108,12 +108,12 @@ public class AtlasDowryTreasuryMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            10126,
-                            ("atlaskingdom", "Atlas Leo", ClassType.Solo),
-                            ("atlaskingdom", "Atlas Elite", ClassType.Solo),
-                            ("atlaskingdom", "Executioner Ladon", ClassType.Solo)
-                        );
+                        Core.EnsureAccept(10126);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("atlaskingdom", "Atlas Leo", "Leo's Fang", 6);
+                        Core.HuntMonster("atlaskingdom", "Atlas Elite", "Elite Pedigree", 6);
+                        Core.HuntMonster("atlaskingdom", "Executioner Ladon", "Ladon's Golden Apple");
+                        Core.EnsureComplete(10126);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

@@ -91,27 +91,24 @@ public class ImageOfNulgath
 
             // Doomed Extract
             TD.Storyline();
-            Core.HuntMonsterQuest(
-                9090,
-                new[]
-                {
-                    ("templedelve", "Infested Nation", ClassType.Farm),
-                    ("templedelve", "Doomed Fiend", ClassType.Solo),
-                    ("templedelve", "Delirious Elemental", ClassType.Farm),
-                }
-            );
+            Core.EnsureAccept(9090);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("templedelve", "Infested Nation", "Infestation Study", 6);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("templedelve", "Doomed Fiend", "Fiend Worm");
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("templedelve", "Delirious Elemental", "Elemental Study", 6);
+            Core.EnsureComplete(9090);
 
             // Void Remnant
             VC.Storyline();
-            Core.HuntMonsterQuest(
-                9553,
-                new[]
-                {
-                    ("voidchasm", "Carcano", ClassType.Solo),
-                    ("voidchasm", "Carnage", ClassType.Solo),
-                    ("voidchasm", "The Hushed", ClassType.Farm),
-                }
-            );
+            Core.EnsureAccept(9553);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("voidchasm", "Carcano", "Carcano's Teratoma");
+            Core.HuntMonster("voidchasm", "Carnage", "Bloodied Chainlink");
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("voidchasm", "The Hushed", "Defunct Seal of Approval", 6);
+            Core.EnsureComplete(9553);
         }
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(10019).Rewards;

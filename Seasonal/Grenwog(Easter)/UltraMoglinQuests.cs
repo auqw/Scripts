@@ -39,11 +39,12 @@ public class UltraMoglinPets
 
         // Ultra Twig's Gift Quest [10200]
         Core.FarmingLogger(Core.QuestRewards(10200)[0], 1);
-        Core.HuntMonsterQuest(
-            10200,
-            ("river", "Zardman Fisher", ClassType.Farm),
-            ("river", "Kuro", ClassType.Farm)
-        );
+        Core.Unbank(92500);
+        Core.EnsureAccept(10200);
+        Core.EquipClass(ClassType.Farm);
+        Core.HuntMonster("river", "Zardman Fisher", "River Fish", 13);
+        Core.HuntMonster("river", "Kuro", "Scoop of Ice Cream", 3);
+        Core.EnsureComplete(10200);
     }
 
     public void TwillyPet()

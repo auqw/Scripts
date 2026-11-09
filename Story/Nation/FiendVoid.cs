@@ -87,9 +87,11 @@ public class FiendVoid
         // 10563 | Forever Fall
         if (!Story.QuestProgression(10563))
         {
-            Core.HuntMonsterQuest(10563,
-                ("fiendvoid", UseableMonsters[1], ClassType.Farm),
-                ("fiendvoid", UseableMonsters[0], ClassType.Farm));
+            Core.EnsureAccept(10563);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("fiendvoid", "The Hushed", "Acrid Smoke", 3);
+            Core.HuntMonster("fiendvoid", "Blood Fiend", "Ball of Veins", 6);
+            Core.EnsureComplete(10563);
         }
 
 
@@ -133,9 +135,11 @@ public class FiendVoid
         // 10568 | Ingrained in Flesh
         if (!Story.QuestProgression(10568))
         {
-            Core.HuntMonsterQuest(10568,
-                ("fiendvoid", UseableMonsters[3], ClassType.Solo),
-                ("fiendvoid", UseableMonsters[4], ClassType.Solo));
+            Core.EnsureAccept(10568);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("fiendvoid", "Void Fang", "Mutated Scales", 2);
+            Core.HuntMonster("fiendvoid", "Arachnid Seeker", "Seeker Legs", 40);
+            Core.EnsureComplete(10568);
         }
 
 

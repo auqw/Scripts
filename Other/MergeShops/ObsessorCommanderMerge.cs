@@ -100,12 +100,12 @@ public class ObsessorCommanderMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            9894,
-                            ("dracocon", "Treasure Pile", ClassType.Farm),
-                            ("battleundere", "Treasure Pile", ClassType.Farm),
-                            ("greed", "Treasure Pile", ClassType.Farm)
-                        );
+                        Core.EnsureAccept(9894);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("dracocon", "Treasure Pile", "2nd Gold Piece");
+                        Core.HuntMonster("battleundere", "Treasure Pile", "3rd Gold Piece");
+                        Core.HuntMonster("greed", "Treasure Pile", "1st Gold Piece");
+                        Core.EnsureComplete(9894);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

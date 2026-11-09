@@ -82,11 +82,11 @@ public class InfernalParadise
         // 10078 | Eudaimonia
         if (!Story.QuestProgression(10078))
         {
-            Core.HuntMonsterQuest(
-                10078,
-                ("infernalparadise", UseableMonsters[3], ClassType.Solo),
-                ("infernalparadise", UseableMonsters[4], ClassType.Solo)
-            );
+            Core.EnsureAccept(10078);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("infernalparadise", "Akh-a", "Akh-a's Halo");
+            Core.HuntMonster("infernalparadise", "Maah-na", "Maah-na's Halo");
+            Core.EnsureComplete(10078);
         }
 
         // 10079 | Giver and Redeemer

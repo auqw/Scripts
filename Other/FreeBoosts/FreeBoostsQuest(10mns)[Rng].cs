@@ -85,12 +85,14 @@ public class FreeBoosts
 
         while (!Bot.ShouldExit && !allQuantitiesMet)
         {
-            Core.HuntMonsterQuest(
-                6208,
-                ("bloodtusk", "Trollola Plant", ClassType.Solo),
-                ("cloister", "Acornent", ClassType.Farm),
-                ("nibbleon", "Dark Makai", ClassType.Farm)
-            );
+            Core.Unbank(11469, 11476, 42837);
+            Core.EnsureAccept(6208);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("bloodtusk", "Trollola Plant", "Trollola Nectar", 2, false);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("cloister", "Acornent", "Nimblestem", 1, false);
+            Core.HuntMonster("nibbleon", "Dark Makai", "Moglinberries", 3, false);
+            Core.EnsureComplete(6208);
 
             if (allQuantitiesMet)
                 break; // Exit the loop when all quantities are met.

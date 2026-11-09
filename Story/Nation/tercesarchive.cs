@@ -76,9 +76,11 @@ public class TercesArchive
         // 10551 | O.T.
         if (!Story.QuestProgression(10551))
         {
-            Core.HuntMonsterQuest(10551,
-                ("tercesarchive", UseableMonsters[1], ClassType.Farm),
-                ("tercesarchive", UseableMonsters[0], ClassType.Farm));
+            Core.EnsureAccept(10551);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("tercesarchive", "Fiendish Devourer", "Devourer Throat", 3);
+            Core.HuntMonster("tercesarchive", "Oblivion Magus", "Oblivion Nihil", 3);
+            Core.EnsureComplete(10551);
         }
 
 
@@ -109,9 +111,11 @@ public class TercesArchive
         // 10555 | Point of No Return
         if (!Story.QuestProgression(10555))
         {
-            Core.HuntMonsterQuest(10555,
-                ("tercesarchive", UseableMonsters[3], ClassType.Farm),
-                ("tercesarchive", UseableMonsters[2], ClassType.Farm));
+            Core.EnsureAccept(10555);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("tercesarchive", "Wasted Clone", "Cloned Face", 3);
+            Core.HuntMonster("tercesarchive", "Nightmare Fiend", "Nightmarish Scream", 6);
+            Core.EnsureComplete(10555);
         }
 
 

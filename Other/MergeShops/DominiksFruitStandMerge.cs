@@ -95,11 +95,14 @@ public class DominiksFruitStandMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10054, new[] {
-                        ("extinction","Lard",ClassType.Farm),
-                        ("extinction","Gelatinous Slime",ClassType.Farm),
-                        ("extinction","SN.O.W. Challenge",ClassType.Solo),
-                    });
+                        Core.Unbank(91629);
+                        Core.EnsureAccept(10054);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("extinction", "Lard", "Lemon Lard", 10);
+                        Core.HuntMonster("extinction", "Gelatinous Slime", "Slime Gelatin", 10);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("extinction", "SN.O.W. Challenge", "SN.O.W. Ice", 1, false);
+                        Core.EnsureComplete(10054);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

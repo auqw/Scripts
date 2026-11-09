@@ -131,12 +131,12 @@ public class InfernalCelestialFinaleMerge
         Core.AddDrop("Infernal Down");
         while (!Bot.ShouldExit && !Core.CheckInventory("Infernal Down", quant))
         {
-            Core.HuntMonsterQuest(
-                10095,
-                ("infernaldianoia", "Eudae", ClassType.Solo),
-                ("infernaldianoia", "Avatar of Time", ClassType.Solo),
-                ("infernaldianoia", "Aranx, Nightstar", ClassType.Solo)
-            );
+            Core.EnsureAccept(10095);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("infernaldianoia", "Eudae", "Eudae Metanoia", 3);
+            Core.HuntMonster("infernaldianoia", "Avatar of Time", "Avatar of Time's Hand");
+            Core.HuntMonster("infernaldianoia", "Aranx, Nightstar", "Nightstar");
+            Core.EnsureComplete(10095);
             Bot.Wait.ForPickup("Infernal Down");
         }
     }

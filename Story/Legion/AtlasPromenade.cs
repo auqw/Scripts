@@ -102,11 +102,11 @@ public class AtlasPromenade
         // 10111 | Old Souls
         if (!Story.QuestProgression(10111))
         {
-            Core.HuntMonsterQuest(
-                10111,
-                ("atlaspromenade", UseableMonsters[3], ClassType.Solo),
-                ("atlaspromenade", UseableMonsters[2], ClassType.Solo)
-            );
+            Core.EnsureAccept(10111);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("atlaspromenade", "Atlas Light Magus", "Mage's Tally", 6);
+            Core.HuntMonster("atlaspromenade", "Atlas Knight", "Knight's Tally", 6);
+            Core.EnsureComplete(10111);
         }
 
         // 10114 | Digging Too Deep

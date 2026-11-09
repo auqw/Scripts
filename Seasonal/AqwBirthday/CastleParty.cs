@@ -63,11 +63,11 @@ public class CastleParty
         // 10431 | Lorekeeper Gifts
         if (!Story.QuestProgression(10431))
         {
-            Core.HuntMonsterQuest(
-                10431,
-                ("castleparty", UseableMonsters[0], ClassType.Farm),
-                ("castleparty", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10431);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("castleparty", "Lost Giftbox", "Maya's Giftboxes");
+            Core.HuntMonster("castleparty", "Treasure Chest", "Muusa's Treasures");
+            Core.EnsureComplete(10431);
         }
 
         // 10432 | Legion's Gift

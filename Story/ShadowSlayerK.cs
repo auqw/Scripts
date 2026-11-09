@@ -257,11 +257,12 @@ public class ShadowSlayerK
         // 9840 | Suspicious Minds
         if (!Story.QuestProgression(9840))
         {
-            Core.HuntMonsterQuest(
-                9840,
-                ("badmoon", UseableMonsters[0], ClassType.Farm),
-                ("badmoon", UseableMonsters[1], ClassType.Solo)
-            );
+            Core.EnsureAccept(9840);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("badmoon", "Dire Wolf", "Wolf Pelts", 8);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("badmoon", "Ghoul", "Ghoul Flesh", 8);
+            Core.EnsureComplete(9840);
         }
 
         // 9841 | Get Out The Way

@@ -96,11 +96,11 @@ public class LiveatYulgarsMerge
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            4199,
-                            ("boxes", "Sneevil Boxer", ClassType.Farm),
-                            ("greenguardwest", "Slime", ClassType.Farm)
-                        );
+                        Core.EnsureAccept(4199);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("boxes", "Sneevil Boxer", "Broken Album Shard", 3);
+                        Core.HuntMonster("greenguardwest", "Slime", "Goo Glue", 3);
+                        Core.EnsureComplete(4199);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

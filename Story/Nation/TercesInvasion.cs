@@ -138,9 +138,11 @@ public class TercesInvasion
         // 10580 | Billowing Hate
         if (!Story.QuestProgression(10580))
         {
-            Core.HuntMonsterQuest(10580,
-                ("tercesinvasion", UseableMonsters[5], ClassType.Farm),
-                ("tercesinvasion", UseableMonsters[7], ClassType.Farm));
+            Core.EnsureAccept(10580);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("tercesinvasion", "Rodeleros Soldier", "Still Air", 2);
+            Core.HuntMonster("tercesinvasion", "Elemental Fiend", "Windblades");
+            Core.EnsureComplete(10580);
         }
 
 

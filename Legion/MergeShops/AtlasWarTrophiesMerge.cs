@@ -135,12 +135,13 @@ public class AtlasWarTrophiesMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            10115,
-                            ("atlaspromenade", "Atlas Light Magus", ClassType.Farm),
-                            ("atlaspromenade", "Wrath Guard", ClassType.Farm),
-                            ("atlaspromenade", "Usurper Lord Slaine", ClassType.Solo)
-                        );
+                        Core.EnsureAccept(10115);
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("atlaspromenade", "Atlas Light Magus", "Atlas Citizenship", 6);
+                        Core.HuntMonster("atlaspromenade", "Wrath Guard", "Wrath Scar", 12);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("atlaspromenade", "Usurper Lord Slaine", "Slaine's Barbed Chain");
+                        Core.EnsureComplete(10115);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

@@ -300,11 +300,11 @@ public class CoreHollowbornStory
         // 9863 | Ceremonies and Rituals
         if (!Story.QuestProgression(9863))
         {
-            Core.HuntMonsterQuest(
-                9863,
-                ("neotower", UseableMonsters[0], ClassType.Solo),
-                ("neotower", UseableMonsters[1], ClassType.Solo)
-            );
+            Core.EnsureAccept(9863);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("neotower", "Dawn Vindicator Soldier ", "Soldier's Grace", 8);
+            Core.HuntMonster("neotower", "Vindicator Beast", "Beast's Grace", 8);
+            Core.EnsureComplete(9863);
         }
 
         // 9864 | Selective Acknowledgement

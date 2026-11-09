@@ -94,15 +94,16 @@ public class ShadowslayerSummoningRitual2
 
         while (!Core.CheckInventory("Lunate Sigil", quant))
         {
-            Core.HuntMonsterQuest(
-                9846,
-                ("chaoscave", "Dracowerepyre", ClassType.Solo),
-                ("darkoviaforest", "Lich Of The Stone", ClassType.Solo),
-                ("borgars", "Burglinster", ClassType.Solo),
-                ("firewar", "Uriax", ClassType.Solo),
-                ("maul", "Creature Creation ", ClassType.Solo),
-                ("techdungeon", "Kalron the Cryptborg", ClassType.Solo)
-            );
+            Core.Unbank(2918, 4789, 7963, 43641, 54759, 54796, 72147);
+            Core.EnsureAccept(9846);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("chaoscave", "DracoWerePyre", "Chaotic Dragon Blade", 1, false);
+            Core.HuntMonster("darkoviaforest", "Lich of the Stone", "Lich Crown", 1, false);
+            Core.HuntMonster("borgars", "Burglinster", "Deep Fried Mecha Mace", 1, false);
+            Core.HuntMonster("firewar", "Uriax", "Uriax's Tail", 1, false);
+            Core.HuntMonster("maul", "Creature Creation", "Axe of Creation", 1, false);
+            Core.HuntMonster("techdungeon", "Kalron the Cryptborg", "Zealous Cherubs", 1, false);
+            Core.EnsureComplete(9846);
             Bot.Wait.ForPickup("Lunate Sigil");
         }
     }

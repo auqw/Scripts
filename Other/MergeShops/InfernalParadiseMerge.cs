@@ -153,12 +153,14 @@ public class InfernalParadiseMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            10082,
-                            ("infernalparadise", "Akh-a", ClassType.Solo),
-                            ("infernalparadise", "Azalith", ClassType.Dodge),
-                            ("infernalparadise", "Infernal Knight", ClassType.Farm)
-                        );
+                        Core.EnsureAccept(10082);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("infernalparadise", "Akh-a", "Hybrid Feathers", 4);
+                        Core.EquipClass(ClassType.Dodge);
+                        Core.HuntMonster("infernalparadise", "Azalith", "Azalith's Horn");
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("infernalparadise", "Infernal Knight", "Knight's Broken Halo", 8);
+                        Core.EnsureComplete(10082);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -198,11 +200,11 @@ public class InfernalParadiseMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            9887,
-                            ("champazalith", "Maah-na", ClassType.Solo),
-                            ("champazalith", "Akh-a", ClassType.Solo)
-                        );
+                        Core.EnsureAccept(9887);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("champazalith", "Maah-na", "Maah-na's Wing");
+                        Core.HuntMonster("champazalith", "Akh-a", "Akh-a's Wing");
+                        Core.EnsureComplete(9887);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

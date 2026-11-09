@@ -76,11 +76,11 @@ public class InfernalDianoia
         // 10088 | Rapturous Ascent
         if (!Story.QuestProgression(10088))
         {
-            Core.HuntMonsterQuest(
-                10088,
-                ("infernaldianoia", UseableMonsters[0], ClassType.Farm),
-                ("infernaldianoia", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10088);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("infernaldianoia", "Infernal Pegasus", "Infernal Flame", 10);
+            Core.HuntMonster("infernaldianoia", "Bright Dominion", "Golden Horn", 5);
+            Core.EnsureComplete(10088);
         }
 
         // 10089 | Broken Stoicism
@@ -98,11 +98,11 @@ public class InfernalDianoia
         // 10091 | Life and Spirits
         if (!Story.QuestProgression(10091))
         {
-            Core.HuntMonsterQuest(
-                10091,
-                ("infernaldianoia", UseableMonsters[4], ClassType.Solo),
-                ("infernaldianoia", UseableMonsters[5], ClassType.Solo)
-            );
+            Core.EnsureAccept(10091);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("infernaldianoia", "Avatar of Life", "Life's Light");
+            Core.HuntMonster("infernaldianoia", "Avatar of Spirits", "Spirits' Breath");
+            Core.EnsureComplete(10091);
         }
 
         // 10092 | On Your Time

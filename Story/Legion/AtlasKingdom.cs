@@ -100,11 +100,11 @@ public class AtlasKingdom
         // 10124 | Blood of the Hesperides
         if (!Story.QuestProgression(10124))
         {
-            Core.HuntMonsterQuest(
-                10124,
-                ("atlaskingdom", UseableMonsters[3], ClassType.Solo),
-                ("atlaskingdom", UseableMonsters[4], ClassType.Solo)
-            );
+            Core.EnsureAccept(10124);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("atlaskingdom", "Atlas Leo", "Leo's Mane", 4);
+            Core.HuntMonster("atlaskingdom", "Atlas Elite", "Elite's Rose", 4);
+            Core.EnsureComplete(10124);
         }
 
         // 10125 | Prota Sparasso
