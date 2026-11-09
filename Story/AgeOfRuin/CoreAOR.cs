@@ -1072,11 +1072,11 @@ public class CoreAOR
         // 10350 | Talls and Stouts
         if (!Story.QuestProgression(10350))
         {
-            Core.HuntMonsterQuest(
-                10350,
-                ("thelimacity", UseableMonsters[2], ClassType.Farm),
-                ("thelimacity", UseableMonsters[1], ClassType.Farm)
-            );
+            Core.EnsureAccept(10350);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("thelimacity", UseableMonsters[1], "Black Glass Pendant", 9);
+            Core.HuntMonster("thelimacity", UseableMonsters[2], "Golden Ram Horn", 9);
+            Core.EnsureComplete(10350);
         }
 
         // 10351 | A Lost Matchstick
