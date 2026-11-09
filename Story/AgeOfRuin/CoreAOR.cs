@@ -1106,11 +1106,12 @@ public class CoreAOR
         // 10355 | Putrefaction
         if (!Story.QuestProgression(10355))
         {
-            Core.HuntMonsterQuest(
-                10355,
-                ("thelimacity", UseableMonsters[3], ClassType.Solo),
-                ("thelimacity", UseableMonsters[4], ClassType.Farm)
-            );
+            Core.EnsureAccept(10355);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("thelimacity", UseableMonsters[3], "Black Flame", 3);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("thelimacity", UseableMonsters[4], "Burnt Hair", 12);
+            Core.EnsureComplete(10355);
         }
 
         // 10356 | Enatiodromia
