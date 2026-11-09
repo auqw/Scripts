@@ -6698,7 +6698,7 @@ public class CoreBots
         // Prefer a live match in the cell we're already in, so we don't jump around unnecessarily without killing anything.
         string? currentCell = Bot.Player?.Cell;
         return (currentCell != null
-                ? matches.FirstOrDefault(x => x.Alive && x.Cell == currentCell)
+                ? matches.FirstOrDefault(x => x.Alive && string.Equals(x.Cell, currentCell, StringComparison.OrdinalIgnoreCase))
                 : null)
             ?? matches.FirstOrDefault(x => x.Alive)
             ?? matches.FirstOrDefault();
