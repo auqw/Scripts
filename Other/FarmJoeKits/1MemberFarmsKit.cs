@@ -472,7 +472,7 @@ public class MemberFarm
             return;
         }
 
-        DBoN.GetDragonBlade();
+        DBoN.GetDragonBlade(true);
     }
 
     public void CruxVIPWeapon()

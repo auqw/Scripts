@@ -123,7 +123,13 @@ public class DragonRoad
         Story.KillQuest(4543, "DragonRoad", "Horccolo");
 
         //Eliminate the Legion Cyborgs 4544
-        Story.KillQuest(4544, "DragonRoad", new[] { "Cyborg 71", "Cyborg 81" });
+        if (!Story.QuestProgression(4544))
+        {
+            Core.EnsureAccept(4544);
+            Core.HuntMonster("dragonroad", "Cyborg 81", "Cyborg 81 Defeated");
+            Core.HuntMonster("dragonroad", "Cyborg 71", "Cyborg 71 Defeated");
+            Core.EnsureComplete(4544);
+        }
 
         //Pulverize Majic Guu  4545
         Story.KillQuest(4545, "DragonRoad", "Majic Guu");

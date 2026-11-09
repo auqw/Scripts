@@ -2,6 +2,7 @@
 name: null
 description: null
 tags: null
+version: 1.4.5.0
 */
 #region includes
 //cs_include Scripts/Chaos/DrakathsArmor.cs

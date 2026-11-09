@@ -31,7 +31,7 @@ public class MogloweenMergesDoAll
     public bool DontPreconfigure = true;
     public string OptionsStorage = "MogloweenMergesDoAll";
     public string[] MultiOptions = { "Generic", "Select" };
-    public List<IOption> Generic = new MogloweenSeasonalMerge().Generic;
+    public List<IOption> Generic = BuildGenericOptions();
     public List<IOption> Select = BuildSelectOptions();
 
     public void ScriptMain(IScriptInterface bot)
@@ -146,56 +146,113 @@ public class MogloweenMergesDoAll
             }
         );
 
+        if (Bot.Config != null && !Bot.Config.Get<bool>(Core.SkipOptions))
+            Bot.Config.Configure();
+
         Core.SetOptions();
 
-        MogloweenMergeMode selectedMode =
-            Bot.Config?.Get<MogloweenMergeMode>("Generic", "mode") ?? MogloweenMergeMode.all;
-        mergeOptionsEnum buyMode = selectedMode switch
+        foreach (Action buy in GetMergeShopActions())
+            buy();
+
+        Core.SetOptions(false);
+    }
+
+    private IEnumerable<Action> GetMergeShopActions()
+    {
+        mergeOptionsEnum buyMode = GetBuyMode();
+        yield return () => new AlnswickCastleMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new CandiedCostumesMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new ChromaCandyMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new CrescentMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new ElodeasCandyHaulMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new FeastoftheDepths().BuyAllMerge(buyMode: buyMode);
+        yield return () => new HuntersReward().BuyAllMerge(buyMode: buyMode);
+        yield return () => new MogGLOWweenMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new MogloweenSeasonalMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new MoonlightKhopeshMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new TricktownMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new UngourdlyGearMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new VampireLordMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new WalpurgaWitchWares().BuyAllMerge(buyMode: buyMode);
+        yield return () => new WitchsCharms().BuyAllMerge(buyMode: buyMode);
+    }
+
+    private mergeOptionsEnum GetBuyMode() =>
+        ToBuyMode(
+            Bot.Config?.Get<MogloweenMergesDoAllMode>("Generic", "mode") ?? MogloweenMergesDoAllMode.all
+        );
+
+    private static mergeOptionsEnum ToBuyMode(MogloweenMergesDoAllMode mode) =>
+        mode switch
         {
-            MogloweenMergeMode.acOnly => mergeOptionsEnum.acOnly,
-            MogloweenMergeMode.acNonLegion => mergeOptionsEnum.acOnly,
-            MogloweenMergeMode.mergeMats => mergeOptionsEnum.mergeMats,
-            MogloweenMergeMode.select => mergeOptionsEnum.select,
+            MogloweenMergesDoAllMode.acOnly => mergeOptionsEnum.acOnly,
+            MogloweenMergesDoAllMode.mergeMats => mergeOptionsEnum.mergeMats,
+            MogloweenMergesDoAllMode.select => mergeOptionsEnum.select,
             _ => mergeOptionsEnum.all,
         };
 
-        new AlnswickCastleMerge().BuyAllMerge(buyMode: buyMode);
-        new CandiedCostumesMerge().BuyAllMerge(buyMode: buyMode);
-        new ChromaCandyMerge().BuyAllMerge(buyMode: buyMode);
-        new CrescentMerge().BuyAllMerge(buyMode: buyMode);
-        new ElodeasCandyHaulMerge().BuyAllMerge(buyMode: buyMode);
-        new FeastoftheDepths().BuyAllMerge(buyMode: buyMode);
-        new HuntersReward().BuyAllMerge(buyMode: buyMode);
-        new MogGLOWweenMerge().BuyAllMerge(buyMode: buyMode);
-        new MogloweenSeasonalMerge().BuyAllMerge(buyMode: buyMode);
-        new MoonlightKhopeshMerge().BuyAllMerge(buyMode: buyMode);
-        new TricktownMerge().BuyAllMerge(buyMode: buyMode);
-        new UngourdlyGearMerge().BuyAllMerge(buyMode: buyMode);
-        new VampireLordMerge().BuyAllMerge(buyMode: buyMode);
-        new WalpurgaWitchWares().BuyAllMerge(buyMode: buyMode);
-        new WitchsCharms().BuyAllMerge(buyMode: buyMode);
-
-        Core.SetOptions(false);
+    private static List<IOption> BuildGenericOptions()
+    {
+        List<IOption> options = new() { CoreBots.Instance.SkipOptions };
+        options.Add(
+            new Option<MogloweenMergesDoAllMode>(
+                "mode",
+                "Purchase mode for all shops",
+                "Choose one purchase mode to apply to every Mogloween merge shop.",
+                MogloweenMergesDoAllMode.all
+            )
+        );
+        options.Add(
+            new Option<bool>(
+                "mogloweenBuyUndeadWarrior",
+                "Buy Undead Warrior and join the Legion",
+                "When enabled, the script may buy Undead Warrior, join the Legion, and farm Legion Tokens. When disabled, it skips all Legion items and actions.",
+                false
+            )
+        );
+        return options;
     }
 
     private static List<IOption> BuildSelectOptions()
     {
         List<IOption> options = new();
-        options.AddRange(new AlnswickCastleMerge().Select);
-        options.AddRange(new CandiedCostumesMerge().Select);
-        options.AddRange(new ChromaCandyMerge().Select);
-        options.AddRange(new CrescentMerge().Select);
-        options.AddRange(new ElodeasCandyHaulMerge().Select);
-        options.AddRange(new FeastoftheDepths().Select);
-        options.AddRange(new HuntersReward().Select);
-        options.AddRange(new MogGLOWweenMerge().Select);
-        options.AddRange(new MogloweenSeasonalMerge().Select);
-        options.AddRange(new MoonlightKhopeshMerge().Select);
-        options.AddRange(new TricktownMerge().Select);
-        options.AddRange(new UngourdlyGearMerge().Select);
-        options.AddRange(new VampireLordMerge().Select);
-        options.AddRange(new WalpurgaWitchWares().Select);
-        options.AddRange(new WitchsCharms().Select);
+        AddMergeShopSelectOptions(options, "Alnswick Castle", new AlnswickCastleMerge().Select);
+        AddMergeShopSelectOptions(options, "Candied Costumes", new CandiedCostumesMerge().Select);
+        AddMergeShopSelectOptions(options, "Chroma Candy", new ChromaCandyMerge().Select);
+        AddMergeShopSelectOptions(options, "Crescent", new CrescentMerge().Select);
+        AddMergeShopSelectOptions(options, "Elodea's Candy Haul", new ElodeasCandyHaulMerge().Select);
+        AddMergeShopSelectOptions(options, "Feast of the Depths", new FeastoftheDepths().Select);
+        AddMergeShopSelectOptions(options, "Hunter's Reward", new HuntersReward().Select);
+        AddMergeShopSelectOptions(options, "Mog-GLOW-ween", new MogGLOWweenMerge().Select);
+        AddMergeShopSelectOptions(options, "Mogloween Seasonal", new MogloweenSeasonalMerge().Select);
+        AddMergeShopSelectOptions(options, "Moonlight Khopesh", new MoonlightKhopeshMerge().Select);
+        AddMergeShopSelectOptions(options, "Tricktown", new TricktownMerge().Select);
+        AddMergeShopSelectOptions(options, "Ungourdly Gear", new UngourdlyGearMerge().Select);
+        AddMergeShopSelectOptions(options, "Vampire Lord", new VampireLordMerge().Select);
+        AddMergeShopSelectOptions(options, "Walpurga Witch Wares", new WalpurgaWitchWares().Select);
+        AddMergeShopSelectOptions(options, "Witch's Charms", new WitchsCharms().Select);
         return options;
     }
+
+    private static void AddMergeShopSelectOptions(List<IOption> options, string shopName, IEnumerable<IOption> selectOptions)
+    {
+        options.Add(
+            new Option<string>(
+                $"header_{string.Concat(shopName.Where(char.IsLetterOrDigit))}",
+                $"========== {shopName.ToUpperInvariant()} MERGE SHOP ==========",
+                $"Select items from the {shopName} merge shop.",
+                " ",
+                transient: true
+            )
+        );
+        options.AddRange(selectOptions);
+    }
+}
+
+public enum MogloweenMergesDoAllMode
+{
+    all = 0,
+    acOnly = 1,
+    mergeMats = 2,
+    select = 3,
 }

@@ -5556,7 +5556,7 @@
           "rules": [
             {
               "type": "Aura",
-              "value": 2,
+              "value": 0,
               "comparison": "less",
               "auraName": "Ex Mortis",
               "auraTarget": "self"
@@ -5568,7 +5568,7 @@
           "rules": [
             {
               "type": "MultiAura",
-              "value": 2,
+              "value": 1,
               "comparison": "greater",
               "auraName": "Ex Mortis",
               "auraTarget": "self"
@@ -5589,7 +5589,7 @@
           "rules": [
             {
               "type": "MultiAura",
-              "value": 2,
+              "value": 1,
               "comparison": "greater",
               "auraName": "Ex Mortis",
               "auraTarget": "self"
@@ -5610,7 +5610,7 @@
           "rules": [
             {
               "type": "MultiAura",
-              "value": 2,
+              "value": 1,
               "comparison": "greater",
               "auraName": "Ex Mortis",
               "auraTarget": "self"
@@ -5642,7 +5642,7 @@
           "rules": [
             {
               "type": "MultiAura",
-              "value": 2,
+              "value": 1,
               "comparison": "greater",
               "auraName": "Ex Mortis",
               "auraTarget": "self"

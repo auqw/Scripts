@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -216,24 +215,41 @@ public sealed class LocationSwfQuestReader
             File.WriteAllBytes(temporaryZip, archive);
 
             Directory.CreateDirectory(temporaryDirectory);
-            using (FileStream file = File.OpenRead(temporaryZip))
-            using (ZipArchive zip = new(file, ZipArchiveMode.Read))
+            // Extract outside the script compiler: its Roslyn references do not
+            // currently include System.IO.Compression on every supported Skua build.
+            string extractionScript = Path.Combine(temporaryDirectory, "extract-ffdec.ps1");
+            File.WriteAllText(
+                extractionScript,
+                "param([string]$ArchivePath, [string]$DestinationPath)\r\n" +
+                "$ErrorActionPreference = 'Stop'\r\n" +
+                "Expand-Archive -LiteralPath $ArchivePath -DestinationPath $DestinationPath -Force\r\n"
+            );
+
+            ProcessStartInfo extraction = new("powershell.exe")
             {
-                foreach (ZipArchiveEntry entry in zip.Entries)
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+            extraction.ArgumentList.Add("-NoProfile");
+            extraction.ArgumentList.Add("-NonInteractive");
+            extraction.ArgumentList.Add("-ExecutionPolicy");
+            extraction.ArgumentList.Add("Bypass");
+            extraction.ArgumentList.Add("-File");
+            extraction.ArgumentList.Add(extractionScript);
+            extraction.ArgumentList.Add(temporaryZip);
+            extraction.ArgumentList.Add(temporaryDirectory);
+
+            using (Process process = Process.Start(extraction)
+                ?? throw new InvalidOperationException("Windows PowerShell could not be started to extract FFDec."))
+            {
+                if (!process.WaitForExit(120000))
                 {
-                    string destination = Path.GetFullPath(Path.Combine(temporaryDirectory, entry.FullName));
-                    if (!destination.StartsWith(temporaryDirectory + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
-                        throw new InvalidDataException("The FFDec archive contains an invalid file path.");
-
-                    if (string.IsNullOrEmpty(entry.Name))
-                    {
-                        Directory.CreateDirectory(destination);
-                        continue;
-                    }
-
-                    Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                    entry.ExtractToFile(destination, overwrite: true);
+                    process.Kill(entireProcessTree: true);
+                    throw new TimeoutException("FFDec archive extraction did not finish within two minutes.");
                 }
+
+                if (process.ExitCode != 0)
+                    throw new InvalidOperationException($"FFDec archive extraction failed with exit code {process.ExitCode}.");
             }
 
             string? executable = Directory.GetFiles(temporaryDirectory, "ffdec-cli.exe", SearchOption.AllDirectories).FirstOrDefault()

@@ -104,7 +104,13 @@ public class CoreFriday13th
         Story.KillQuest(3102, "Vampirates", "Vampirate");
 
         // Oh Right, They're Vampires 3103
-        Story.KillQuest(3103, "Vampirates", new[] { "Creepy Bat", "Vampirate" });
+        if (!Story.QuestProgression(3103))
+        {
+            Core.EnsureAccept(3103);
+            Core.HuntMonster("vampirates", "Creepy Bat", "Vampire Bat Staked", 4);
+            Core.HuntMonster("vampirates", "Vampirate", "Vampirate Staked", 4);
+            Core.EnsureComplete(3103);
+        }
 
         // The Vampirate Captain 3104
         Story.MapItemQuest(3104, "Vampirates", 1959);
@@ -113,7 +119,15 @@ public class CoreFriday13th
         Story.KillQuest(3105, "Vampirates", "Stranglerfish");
 
         // Unsink This Ship! 3106
-        Story.KillQuest(3106, "Vampirates", new[] { "Murderaconian", "Vampirate", "Vampirate" });
+        if (!Story.QuestProgression(3106))
+        {
+            Core.EnsureAccept(3106);
+            Core.HuntMonster("Vampirates", "Murderaconian", "Murderaconian Slain", 5);
+            Core.HuntMonster("Vampirates", "Vampirate", "Vampirate Slain", 5);
+            Core.HuntMonster("Vampirates", "Vampirate", "Multi-Purpose Ship Widget");
+            Core.EnsureComplete(3106);
+            Bot.Sleep(200);
+        }
 
         // Release the Kraken! Wait, no - Don't. 3107
         Story.KillQuest(3107, "Vampirates", "Bracken Kraken");
@@ -133,14 +147,24 @@ public class CoreFriday13th
         if (Core.IsMember)
         {
             //Me Knickers Got a Big Hole Across th' Bum 3114
-            Story.KillQuest(3114, "Skullpunch", new[] { "Fishbones", "Vampirate" });
+            if (!Story.QuestProgression(3114))
+            {
+                Core.EnsureAccept(3114);
+                Core.HuntMonster("skullpunch", "Fishbones", "Thin Fishbone Bone");
+                Core.HuntMonster("skullpunch", "Vampirate", "Scrap o' Fabric", 8);
+                Core.EnsureComplete(3114);
+            }
 
             // Where'd Me Ship's Cargo? 3115
-            Story.KillQuest(
-                3115,
-                "Skullpunch",
-                new[] { "Fishbones", "Fishbones", "Fishbones", "Fishbones" }
-            );
+            if (!Story.QuestProgression(3115))
+            {
+                Core.EnsureAccept(3115);
+                Core.HuntMonster("skullpunch", "Fishbones", "Dented Footlocker");
+                Core.HuntMonster("skullpunch", "Fishbones", "Wooden Crate");
+                Core.HuntMonster("skullpunch", "Fishbones", "Small Chest");
+                Core.HuntMonster("skullpunch", "Fishbones", "Half-Empty Barrel");
+                Core.EnsureComplete(3115);
+            }
 
             // A Most Important Package 3116
             Story.KillQuest(3116, "Skullpunch", "Fishbones");
@@ -151,7 +175,7 @@ public class CoreFriday13th
                 Core.EnsureAccept(3117);
                 Core.HuntMonster("Skullpunch", "Shelleton", "Turtle Meat", 10);
                 Core.HuntMonster("Skullpunch", "Fishwing", "Fish Oil", 5);
-                Core.EnsureAccept(3117);
+                Core.EnsureComplete(3117);
             }
 
             // Full o' Holes 3118
@@ -204,34 +228,30 @@ public class CoreFriday13th
         Story.ChainQuest(756);
 
         // The First 6 Chapters 757
-        Story.KillQuest(
-            757,
-            "Ebildread",
-            new[]
-            {
-                "Pink Ghostly Sheet",
-                "Pink Ghostly Sheet",
-                "Pink Ghostly Sheet",
-                "Pink Ghostly Sheet",
-                "Pink Ghostly Sheet",
-                "Pink Ghostly Sheet",
-            }
-        );
+        if (!Story.QuestProgression(757))
+        {
+            Core.EnsureAccept(757);
+            Core.HuntMonster("ebildread", "Pink Ghostly Sheet", "Lowe-anomicon Chapter 2");
+            Core.HuntMonster("ebildread", "Pink Ghostly Sheet", "Lowe-anomicon Chapter 3");
+            Core.HuntMonster("ebildread", "Pink Ghostly Sheet", "Lowe-anomicon Chapter 4");
+            Core.HuntMonster("ebildread", "Pink Ghostly Sheet", "Lowe-anomicon Chapter 5");
+            Core.HuntMonster("ebildread", "Pink Ghostly Sheet", "Lowe-anomicon Chapter 6");
+            Core.HuntMonster("ebildread", "Pink Ghostly Sheet", "Lowe-anomicon Chapter 1");
+            Core.EnsureComplete(757);
+        }
 
         // The Last 6 Chapters 758
-        Story.KillQuest(
-            758,
-            "Ebildread",
-            new[]
-            {
-                "Pink Skeletal Soldier",
-                "Pink Skeletal Soldier",
-                "Pink Skeletal Soldier",
-                "Pink Skeletal Soldier",
-                "Pink Skeletal Soldier",
-                "Pink Skeletal Soldier",
-            }
-        );
+        if (!Story.QuestProgression(758))
+        {
+            Core.EnsureAccept(758);
+            Core.HuntMonster("ebildread", "Pink Skeletal Soldier", "Lowe-anomicon Chapter 7");
+            Core.HuntMonster("ebildread", "Pink Skeletal Soldier", "Lowe-anomicon Chapter 8");
+            Core.HuntMonster("ebildread", "Pink Skeletal Soldier", "Lowe-anomicon Chapter 9");
+            Core.HuntMonster("ebildread", "Pink Skeletal Soldier", "Lowe-anomicon Chapter 10");
+            Core.HuntMonster("ebildread", "Pink Skeletal Soldier", "Lowe-anomicon Chapter 11");
+            Core.HuntMonster("ebildread", "Pink Skeletal Soldier", "Lowe-anomicon Chapter 12");
+            Core.EnsureComplete(758);
+        }
 
         // The Glossary 759
         Story.KillQuest(759, "Ebildread", "Jay Sun");
@@ -342,11 +362,14 @@ public class CoreFriday13th
         Story.PreLoad(this);
 
         // Gaining Trust 1552
-        Story.KillQuest(
-            1552,
-            "FireTown",
-            new[] { "Fire Elemental", "Fire Elemental", "Fire Elemental" }
-        );
+        if (!Story.QuestProgression(1552))
+        {
+            Core.EnsureAccept(1552);
+            Core.HuntMonster("firetown", "Fire Elemental", "Charyi's Garnet Bead");
+            Core.HuntMonster("firetown", "Fire Elemental", "Yans' Charred Spade Handle");
+            Core.HuntMonster("firetown", "Fire Elemental", "Kierk's Missing Gear");
+            Core.EnsureComplete(1552);
+        }
 
         // If You Can't Stand the Heat... 1553
         Story.KillQuest(1553, "FireTown", "Fire Elemental");
@@ -621,7 +644,13 @@ public class CoreFriday13th
         Story.PreLoad(this);
 
         // Something In The Air 5051
-        Story.KillQuest(5051, "Wormhole", new[] { "Goth Girl", "Vamp Boy" });
+        if (!Story.QuestProgression(5051))
+        {
+            Core.EnsureAccept(5051);
+            Core.HuntMonster("wormhole", "Goth Girl", "Goth Girl Gas Masked", 4);
+            Core.HuntMonster("wormhole", "Vamp Boy", "Vampire Boy Gas Masked", 4);
+            Core.EnsureComplete(5051);
+        }
 
         // They're Not Red Shirts - They're Deadshirts! 5052
         Story.MapItemQuest(5052, "Wormhole", new[] { 4420, 4421, 4422 });
@@ -634,7 +663,13 @@ public class CoreFriday13th
         Story.MapItemQuest(5054, "Wormhole", new[] { 4423, 4424, 4425, 4426 });
 
         // Beam Me Up! 5055
-        Story.KillQuest(5055, "Wormhole", new[] { "Undead Astronaut", "Undead Astronaut" });
+        if (!Story.QuestProgression(5055))
+        {
+            Core.EnsureAccept(5055);
+            Core.HuntMonster("wormhole", "Undead Astronaut", "Teleporter Passcode");
+            Core.HuntMonster("wormhole", "Undead Astronaut", "Undead Astronaut Defeated", 6);
+            Core.EnsureComplete(5055);
+        }
 
         // Exotic Pets 5056
         Story.KillQuest(5056, "Wormhole", "Xenodog");
@@ -661,7 +696,13 @@ public class CoreFriday13th
         }
 
         // Maybe These Guys Know Something 5062
-        Story.KillQuest(5062, "Wormhole", new[] { "Stormslasher", "Undead Space Marine" });
+        if (!Story.QuestProgression(5062))
+        {
+            Core.EnsureAccept(5062);
+            Core.HuntMonster("wormhole", "Stormslasher", "Slasher Transmission", 3);
+            Core.HuntMonster("wormhole", "Undead Space Marine", "Marine Transmission", 3);
+            Core.EnsureComplete(5062);
+        }
 
         // Look At That Awesome Armor! 5063
         Story.KillQuest(5063, "Wormhole", "Stormslasher");
@@ -670,7 +711,13 @@ public class CoreFriday13th
         Story.KillQuest(5064, "Wormhole", "Guardian");
 
         // Undead Space 5065
-        Story.KillQuest(5065, "Wormhole", new[] { "Space Ghost", "Singularity" });
+        if (!Story.QuestProgression(5065))
+        {
+            Core.EnsureAccept(5065);
+            Core.HuntMonster("wormhole", "Space Ghost", "Space Ghost Exorcised", 5);
+            Core.HuntMonster("wormhole", "Singularity", "Singularity Destroyed", 5);
+            Core.EnsureComplete(5065);
+        }
 
         // Trobbolegion! 5066
         Story.KillQuest(5066, "Wormhole", "Trobbolegion");
@@ -768,7 +815,13 @@ public class CoreFriday13th
         Story.MapItemQuest(6262, "Gonnagetcha", new[] { 5738, 5739 });
 
         // Cysero was Right! 6263
-        Story.KillQuest(6263, "Gonnagetcha", new[] { "Murkonian", "Murkonian" });
+        if (!Story.QuestProgression(6263))
+        {
+            Core.EnsureAccept(6263);
+            Core.HuntMonster("gonnagetcha", "Murkonian", "Murkonian Slain", 10);
+            Core.HuntMonster("gonnagetcha", "Murkonian", "Black Knights Cabin Key");
+            Core.EnsureComplete(6263);
+        }
 
         // Explore the Black Knight's Cabin 6264
         Story.MapItemQuest(6264, "Gonnagetcha", new[] { 5740, 5741 });
@@ -788,7 +841,13 @@ public class CoreFriday13th
         Story.KillQuest(6268, "Gonnagetcha", "Shrade");
 
         // Revitalize the Camp 6269
-        Story.KillQuest(6269, "Gonnagetcha", new[] { "Shrade Cultist", "Vengeful Ghost" });
+        if (!Story.QuestProgression(6269))
+        {
+            Core.EnsureAccept(6269);
+            Core.HuntMonster("gonnagetcha", "Shrade Cultist", "Cultist Cleared", 6);
+            Core.HuntMonster("gonnagetcha", "Vengeful Ghost", "Ghost Gone", 2);
+            Core.EnsureComplete(6269);
+        }
     }
 
     public void Greymoor()
@@ -812,7 +871,14 @@ public class CoreFriday13th
         Story.PreLoad(this);
 
         // Tired of Gremlins 6409
-        Story.KillQuest(6409, "Greymoor", new[] { "Auto Gremlin", "Auto Gremlin", "Auto Gremlin" });
+        if (!Story.QuestProgression(6409))
+        {
+            Core.EnsureAccept(6409);
+            Core.HuntMonster("greymoor", "Auto Gremlin", "Jack");
+            Core.HuntMonster("greymoor", "Auto Gremlin", "Air Pump");
+            Core.HuntMonster("greymoor", "Auto Gremlin", "Tire Patch");
+            Core.EnsureComplete(6409);
+        }
 
         // I Don't Mean To Be CRUDE 6410
         Story.KillQuest(6410, "Greymoor", "Oil Elemental");
@@ -1077,7 +1143,13 @@ public class CoreFriday13th
         Story.KillQuest(8659, "Oddities", "Creepy Baby");
 
         // Snotty Crumbs 8660
-        Story.KillQuest(8660, "Oddities", new[] { "Oddity Swarm", "Cursed Doll-Head" });
+        if (!Story.QuestProgression(8660))
+        {
+            Core.EnsureAccept(8660);
+            Core.HuntMonster("oddities", "Oddity Swarm", "Black Slime Glob", 5);
+            Core.HuntMonster("oddities", "Cursed Doll-Head", "Dried Ectoplasm", 5);
+            Core.EnsureComplete(8660);
+        }
 
         // Wobbly Rune Writing 8661
         Story.MapItemQuest(8661, "Oddities", 10155, 6);
@@ -1105,12 +1177,14 @@ public class CoreFriday13th
         Story.KillQuest(8666, "Oddities", "Cursed Spirit");
 
         // Deep Cleanse 8667
-        Story.KillQuest(
-            8667,
-            "Oddities",
-            new[] { "Cursed Curio", "Creepy Baby", "Cursed Spirit" },
-            GetReward: false
-        );
+        if (!Story.QuestProgression(8667, false, "All"))
+        {
+            Core.EnsureAccept(8667);
+            Core.HuntMonster("oddities", "Cursed Spirit", "Doll Eyes", 7);
+            Core.HuntMonster("oddities", "Cursed Curio ", "Chipped Wood", 7);
+            Core.HuntMonster("oddities", "Creepy Baby", "Fuzz Tuff", 7);
+            Core.EnsureComplete(8667);
+        }
     }
 
     public void BlackMaze()
@@ -1162,7 +1236,14 @@ public class CoreFriday13th
         Story.KillQuest(9052, "blackmaze", "Vi'eel Dreaddacovra");
 
         //9053 | Neurocranium in a Haystack
-        Story.KillQuest(9053, "blackmaze", new[] { "Screamon", "Globlin", "Shadow Demon" });
+        if (!Story.QuestProgression(9053))
+        {
+            Core.EnsureAccept(9053);
+            Core.HuntMonster("blackmaze", "Screamon", "Screamon Defeated", 5);
+            Core.HuntMonster("blackmaze", "Globlin", "Globlin Defeated", 5);
+            Core.HuntMonster("blackmaze", "Shadow Demon", "Shadows Defeated", 5);
+            Core.EnsureComplete(9053);
+        }
 
         //9054 | Burning Skeleman
         Story.MapItemQuest(9054, "blackmaze", 11093);

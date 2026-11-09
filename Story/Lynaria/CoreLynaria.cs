@@ -99,11 +99,11 @@ public class CoreLynaria
         // 10238 | Wandering Light
         if (!Story.QuestProgression(10238))
         {
-            Core.HuntMonsterQuest(
-                10238,
-                ("bocklingrove", UseableMonsters[5], ClassType.Farm),
-                ("bocklingrove", UseableMonsters[4], ClassType.Farm)
-            );
+            Core.EnsureAccept(10238);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("bocklingrove", "Garde Wraith", "Wraith's Loyalty", 9);
+            Core.HuntMonster("bocklingrove", "Undead Garde", "Undead Vaughn", 6);
+            Core.EnsureComplete(10238);
         }
 
         // 10239 | Death Plays the Fiddle
@@ -249,11 +249,11 @@ public class CoreLynaria
         // 10259 | Gilded Peace
         if (!Story.QuestProgression(10259))
         {
-            Core.HuntMonsterQuest(
-                10259,
-                ("bocklinsanctum", UseableMonsters[1], ClassType.Farm),
-                ("bocklinsanctum", UseableMonsters[0], ClassType.Farm)
-            );
+            Core.EnsureAccept(10259);
+            Core.EquipClass(ClassType.Farm);
+            Core.HuntMonster("bocklinsanctum", "Faceless Ritualist", "Ritualist's Gold Rose", 6);
+            Core.HuntMonster("bocklinsanctum", "Warped Revenant", "Revenant Appeased", 9);
+            Core.EnsureComplete(10259);
         }
 
         // 10260 | Towards Reunion

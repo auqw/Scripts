@@ -119,7 +119,7 @@ public class DiogonsMerge
             Adv.BuyItem("ectocave", 2449, "Toxian Metal", 3);
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("therift", "Noxious Fumes", "Noxious Fumes", 7);
-            Core.HuntMonster("shadowattack", "Toxic Fiend", "Toxic Fiend Blood", 3);
+            Core.KillMonster("shadowattack", "r2", "Left", "Toxic Fiend", "Toxic Fiend Blood", 3);
             Core.HuntMonster("ectocave", "Sludge Beast", "Sludge Beast's Tentacle");
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("ectocave", "Ektorax", "Ektorax's Ectoplasm");

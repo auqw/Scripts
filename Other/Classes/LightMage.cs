@@ -40,7 +40,7 @@ public class LightMage
 
         Core.BuyItem("celestialrealm", 1353, "Evolved LightCaster");
         Core.BuyItem("celestialrealm", 1613, "LightMage Class Token A");
-        Core.BuyItem("celestialrealm", 1612, "LightMage", shopItemID: 5987);
+        Core.BuyItem("celestialrealm", 1612, 44838, shopItemID: 4885, index: 1);
 
         if (rankUpClass)
             Adv.RankUpClass("LightMage");

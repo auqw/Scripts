@@ -53,7 +53,7 @@ public class EbonyDragonBladeofNulgath
         if (!Core.CheckInventory("Diamond of Nulgath", 100))
             Nation.FarmDiamondofNulgath(100);
         if (!Core.CheckInventory("DragonBlade of Nulgath"))
-            DBoN.GetDragonBlade();
+            DBoN.GetDragonBlade(true);
         Core.BuyItem("evilwarnul", 456, "Ebony DragonBlade of Nulgath");
     }
 }

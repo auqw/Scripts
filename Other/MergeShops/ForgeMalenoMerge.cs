@@ -85,16 +85,14 @@ public class ForgeMalenoMerge
         #region Dont edit this part
         void findIngredients()
         {
-            ItemBase req = Adv.externalItem;
-            int quant = Adv.externalQuant;
-            int currentQuant = req.Temp
-                ? Bot.TempInv.GetQuantity(req.Name)
-                : Bot.Inventory.GetQuantity(req.Name);
-            if (req == null)
+            ItemBase? req = Adv.externalItem;
+            if (req is null)
             {
                 Core.Logger("req is NULL");
                 return;
             }
+
+            int quant = Adv.externalQuant;
 
             switch (req.Name)
             {
@@ -111,12 +109,6 @@ public class ForgeMalenoMerge
 
 
                 case "Black Flame of Maleno":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(req.ID);
                     int questID = 10369;
@@ -186,12 +178,6 @@ public class ForgeMalenoMerge
 
 
                 case "Steel Ingot":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))

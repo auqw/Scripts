@@ -286,6 +286,23 @@ public class CoreBots
                 loadAttempts++;
             }
 
+            // A disconnect restarts the script while the client is still logging back in, and a relogin
+            // attempt can look logged in at first and fail seconds later. Give the client up to 2 minutes
+            // to be logged in and loaded before giving up; otherwise the script stops (or sits on the
+            // message box) and the relogin then finds it "already running" and never starts it again.
+            // Not gated on Bot.Options.AutoRelogin: the client's relogin turns it off while it retries.
+            if (!Bot.Player.LoggedIn)
+            {
+                Logger("Not logged in yet, waiting up to 2 min for the login.");
+                DateTime giveUp = DateTime.Now.AddMinutes(2);
+                while (!Bot.ShouldExit && DateTime.Now < giveUp && !(Bot.Player.LoggedIn && Bot.Player.Loaded))
+                    Bot.Sleep(1000);
+            }
+
+            // Being stopped while waiting: don't open the log-in message box on the way out.
+            if (Bot.ShouldExit)
+                return;
+
             // Only stop AFTER retries exhausted
             if (!Bot.Player.LoggedIn)
             {
@@ -6050,13 +6067,13 @@ public class CoreBots
 
         foreach (ItemBase requirement in quest.Requirements)
         {
-            if (CheckInventory(requirement.ID, requirement.Quantity))
-                continue;
-
             if (pairIndex >= MapMonsterClassPairs.Length)
                 break;
 
             var (mapName, monsterName, classType) = MapMonsterClassPairs[pairIndex++];
+
+            if (CheckInventory(requirement.ID, requirement.Quantity))
+                continue;
 
             EquipClass(classType);
 
@@ -9768,6 +9785,10 @@ public class CoreBots
         switch (Bot.Map.Name)
         {
 
+            case "wormhole":
+                blackListedCells.UnionWith(new[] { "r8a" });
+                break;
+
             case "towerofmirrors":
                 blackListedCells.UnionWith(new[] { "replay", "EndCuts" });
                 break;
@@ -11152,9 +11173,7 @@ public class CoreBots
     public bool inPublicRoom()
     {
         Bot.Wait.ForMapLoad(Bot.Map.Name);
-        if (!int.TryParse(Bot.Map.FullName.Split('-').Last(), out int nr))
-            nr = 1;
-        return nr < 1000;
+        return true;
     }
 
     /// <summary>
