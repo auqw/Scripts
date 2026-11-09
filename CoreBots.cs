@@ -6695,7 +6695,12 @@ public class CoreBots
     {
         List<Monster> matches = FindMonstersList(map, monster, monsterMapID);
 
-        return matches.FirstOrDefault(x => x.Alive)
+        // Prefer a live match in the cell we're already in, so we don't jump around unnecessarily without killing anything.
+        string? currentCell = Bot.Player?.Cell;
+        return (currentCell != null
+                ? matches.FirstOrDefault(x => x.Alive && x.Cell == currentCell)
+                : null)
+            ?? matches.FirstOrDefault(x => x.Alive)
             ?? matches.FirstOrDefault();
     }
 
