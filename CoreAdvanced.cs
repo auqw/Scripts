@@ -3662,15 +3662,16 @@ public class CoreAdvanced
                 #endregion
 
                 case "archivist of time":
-                    #region Wizard -  Valiance - Pneuna - Vainglory
-                    if (!uValiance() || !uPneuma() || !uVainglory())
+				case "archivist of temporis":
+                    #region Wizard -  Valiance - Examen - Vainglory
+                    if (!uValiance() || !uExamen() || !uVainglory())
                     {
                         goto default;
                     }
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Vainglory;
                     wSpecial = WeaponSpecial.Valiance;
-                    hSpecial = HelmSpecial.Pneuma;
+                    hSpecial = HelmSpecial.Examen;
                     break;
 
                     #endregion
@@ -4431,6 +4432,7 @@ public class CoreAdvanced
                 case "master martial artist":
                 case "antique hunter":
                 case "archivist of time":
+				case "archivist of temporis":
                     type = EnhancementType.Lucky;
                     wSpecial = WeaponSpecial.Awe_Blast;
                     break;
