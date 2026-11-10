@@ -1032,11 +1032,11 @@ public class CoreNation
                     KillHydra();
                 else if (UltraAlteon)
                 {
-                    Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false, publicRoom: Core.PublicDifficult == true);
+                    Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false, publicRoom: Core.PublicDifficult == true || Core.PrivateRooms);
                 }
                 else
                 {
-                    Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true, publicRoom: Core.PublicDifficult == true);
+                    Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true, publicRoom: Core.PublicDifficult == true || Core.PrivateRooms);
                 }
                 SellVoucherOfNulgath(sellMemVoucher, null);
                 AssistantDuringSupplies(AssistantDuring);
@@ -1049,7 +1049,7 @@ public class CoreNation
     private void KillHydra()
     {
         if (!string.Equals(Bot.Map.Name, "hydrachallenge", StringComparison.OrdinalIgnoreCase))
-            Core.Join("hydrachallenge", publicRoom: Core.PublicDifficult == true);
+            Core.Join("hydrachallenge", publicRoom: Core.PublicDifficult == true || Core.PrivateRooms);
 
         int relics = Bot.Inventory.GetQuantity("Relic of Chaos");
 
@@ -1089,9 +1089,9 @@ public class CoreNation
             if (HydraChallenge)
                 KillHydra();
             else if (UltraAlteon)
-                Core.KillMonster("ultraalteon", "r10", "Left", "*", isTemp: false, log: false, publicRoom: Core.PublicDifficult == true);
+                Core.KillMonster("ultraalteon", "r10", "Left", "*", isTemp: false, log: false, publicRoom: Core.PublicDifficult == true || Core.PrivateRooms);
             else
-                Core.KillEscherion(log: false, FromSupplies: true, publicRoom: Core.PublicDifficult == true);
+                Core.KillEscherion(log: false, FromSupplies: true, publicRoom: Core.PublicDifficult == true || Core.PrivateRooms);
 
             SellVoucherOfNulgath(sellMemVoucher, item);
             AssistantDuringSupplies(AssistantDuring);
