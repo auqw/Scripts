@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 177006,
-    "sha256": "509ecae684aef92bc5b7f7976ec5b4de5c7e9150ae5e776333afcdb35fb8d389",
+    "size": 177074,
+    "sha256": "f182bd894ba1c6e5db0fc4ce57a7dc4ea7a28257eb82ffd3f1f26eec9bb0c780",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -1794,8 +1794,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 116728,
-    "sha256": "f2ffd680e007c35a440dfdcb7d23f09697a2ef3bc0d0f326f7325884fa4fe163",
+    "size": 117083,
+    "sha256": "4e26bb7f2fc1505e89a9a2c4b48409184ee3b9efac0d8ca5ff864b597655b1c7",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -33587,8 +33587,8 @@
       "doall"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs",
-    "size": 11161,
-    "sha256": "17d939410011f9816feeb078d5c2c731a9583bf677f280f05ed51e1c2f3911fc",
+    "size": 11383,
+    "sha256": "942f1e6f6a55650a5f53d7ef372bdafa6c0243029e86ff404fb0d4cd731494e2",
     "fileName": "MogloweenMergesDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs"
   },

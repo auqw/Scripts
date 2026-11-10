@@ -260,11 +260,11 @@ public class CoreNation
                             while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quantity))
                             {
                                 int mapId = mobName == "Slugfit" ? 10 : 9; // Determine the map ID based on the mob name
-                                if (Bot.Monsters.CurrentAvailableMonsters.Any(monster =>monster.Name == mobName))
-                                    {
-                                    Core.CanWeAggro(); 
+                                if (Bot.Monsters.CurrentAvailableMonsters.Any(monster => monster.Name == mobName))
+                                {
+                                    Core.CanWeAggro();
                                     Bot.Combat.Attack(mobName);
-                                    }
+                                }
                                 else
                                     Core.Sleep();
                             }
@@ -310,11 +310,11 @@ public class CoreNation
                             if (!Core.CheckInventory(itemName, quantity))
                             {
                                 int mapId = mobName == "Slugfit" ? 10 : 9; // Determine the map ID based on the mob name
-                                if (Bot.Monsters.CurrentAvailableMonsters.Any(monster => monster.Name == mobName))            
-                                    {
-                                        Core.CanWeAggro(); 
-                                        Bot.Combat.Attack(mobName);
-                                    }
+                                if (Bot.Monsters.CurrentAvailableMonsters.Any(monster => monster.Name == mobName))
+                                {
+                                    Core.CanWeAggro();
+                                    Bot.Combat.Attack(mobName);
+                                }
                                 else
                                     Core.Sleep();
                             }
@@ -1027,13 +1027,17 @@ public class CoreNation
 
             while (!Bot.ShouldExit && !Core.CheckInventory(rewardItem.ID, rewardItem.MaxStack))
             {
+
                 if (HydraChallenge)
                     KillHydra();
                 else if (UltraAlteon)
-                    Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false);
+                {
+                    Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false, publicRoom: Core.PublicDifficult == true || !Core.PrivateRooms);
+                }
                 else
-                    Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
-
+                {
+                    Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true, publicRoom: Core.PublicDifficult == true || !Core.PrivateRooms);
+                }
                 SellVoucherOfNulgath(sellMemVoucher, null);
                 AssistantDuringSupplies(AssistantDuring);
                 DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
@@ -1045,7 +1049,7 @@ public class CoreNation
     private void KillHydra()
     {
         if (!string.Equals(Bot.Map.Name, "hydrachallenge", StringComparison.OrdinalIgnoreCase))
-            Core.Join("hydrachallenge");
+            Core.Join("hydrachallenge", publicRoom: Core.PublicDifficult == true || !Core.PrivateRooms);
 
         int relics = Bot.Inventory.GetQuantity("Relic of Chaos");
 
@@ -1085,9 +1089,9 @@ public class CoreNation
             if (HydraChallenge)
                 KillHydra();
             else if (UltraAlteon)
-                Core.KillMonster("ultraalteon", "r10", "Left", "*", isTemp: false, log: false);
+                Core.KillMonster("ultraalteon", "r10", "Left", "*", isTemp: false, log: false, publicRoom: Core.PublicDifficult == true || !Core.PrivateRooms);
             else
-                Core.KillEscherion(log: false, FromSupplies: true);
+                Core.KillEscherion(log: false, FromSupplies: true, publicRoom: Core.PublicDifficult == true || !Core.PrivateRooms);
 
             SellVoucherOfNulgath(sellMemVoucher, item);
             AssistantDuringSupplies(AssistantDuring);

@@ -27,6 +27,12 @@ public class MogloweenMergesDoAll
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
+    private static CoreMogloween Mog
+    {
+        get => _CoreMogloween ??= new CoreMogloween();
+        set => _CoreMogloween = value;
+    }
+    private static CoreMogloween _CoreMogloween;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "MogloweenMergesDoAll";
@@ -150,6 +156,8 @@ public class MogloweenMergesDoAll
             Bot.Config.Configure();
 
         Core.SetOptions();
+
+        Mog.DoAll();
 
         foreach (Action buy in GetMergeShopActions())
             buy();

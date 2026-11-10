@@ -271,6 +271,206 @@
           "skipOnMatch": true
         }
       ]
+    },
+	"Base": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 0
+        }
+      ]
+    }
+  },
+  "Archivist of Temporis": {
+    "Base": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 0
+        }
+      ]
     }
   },
   "Abyssal Angel": {
