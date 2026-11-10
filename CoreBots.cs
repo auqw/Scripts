@@ -10161,7 +10161,10 @@ public class CoreBots
                 break;
 
             case "ultradrakath":
-                SimpleQuestBypass((182, 5));
+                if (Bot.Flash.CallGameFunction<int>("world.getQuestValue", 182) < 5)
+                    SimpleQuestBypass((182, 5));
+                else
+                    tryJoin();
                 break;
 
             case "backroom":

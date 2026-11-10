@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 475687,
-    "sha256": "cfbe986621835597755005cd54d3f1b4fa08bf0867f0f0aca4319b4544aa7aea",
+    "size": 475828,
+    "sha256": "568c67b39d8edec8e70f9aac4b42104d9641b30934b30cb3f8645a650c7073f0",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -33587,8 +33587,8 @@
       "doall"
     ],
     "path": "Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs",
-    "size": 11161,
-    "sha256": "17d939410011f9816feeb078d5c2c731a9583bf677f280f05ed51e1c2f3911fc",
+    "size": 11383,
+    "sha256": "942f1e6f6a55650a5f53d7ef372bdafa6c0243029e86ff404fb0d4cd731494e2",
     "fileName": "MogloweenMergesDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/MogloweenMergesDoAll.cs"
   },
