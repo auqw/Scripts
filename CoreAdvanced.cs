@@ -3663,7 +3663,7 @@ public class CoreAdvanced
 
                 case "archivist of time":
 				case "archivist of temporis":
-                    #region Wizard -  Valiance - Pneuna - Vainglory
+                    #region Wizard -  Valiance - Examen - Vainglory
                     if (!uValiance() || !uExamen() || !uVainglory())
                     {
                         goto default;
@@ -3671,7 +3671,7 @@ public class CoreAdvanced
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Vainglory;
                     wSpecial = WeaponSpecial.Valiance;
-                    hSpecial = HelmSpecial.Pneuma;
+                    hSpecial = HelmSpecial.Examen;
                     break;
 
                     #endregion
