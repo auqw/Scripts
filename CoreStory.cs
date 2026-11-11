@@ -875,6 +875,7 @@ public class CoreStory
         }
 
         int attempts = 0;
+        int recoveryAttempts = 0; // re-completing the previous quest does not count as progress
 
         // ─────────────────────────────────────────────────────────────
         // QUEST UNLOCK RECOVERY LOOP
@@ -910,7 +911,15 @@ public class CoreStory
                     Core.Logger($"Attempting recovery via re-completing previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"", "QuestProgression");
 
                     TryComplete(prevQuest, true);
-                    attempts = 0;
+                    // The reset of 'attempts' used to hide this path from the relog below, so a quest
+                    // whose missing item never drops looped forever. Stop after a fixed number of tries.
+                    if (!Bot.Quests.IsUnlocked(QuestID) && ++recoveryAttempts >= 10)
+                    {
+                        Core.Logger($"Quest [{QuestID}] \"{questData.Name}\" is still locked after {recoveryAttempts} recovery attempts, stopping. Check the missing items.", "QuestProgression", stopBot: true);
+                        // StopSync already throws this on the script thread; throw it here too so no caller
+                        // can treat the stop as "quest not done yet" and keep accepting/farming.
+                        throw new OperationCanceledException($"Quest [{QuestID}] is still locked after recovery attempts.");
+                    }
                     continue;
                 }
 
