@@ -6,8 +6,10 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 using System.Diagnostics;
 using System.Dynamic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Skua.Core.Interfaces;
+using Skua.Core.Models;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Quests;
@@ -1195,7 +1197,49 @@ public class CoreStory
 
         if (classStartIndex < 0)
         {
-            Core.Logger($"PreLoad failed: could not find class {className} in the compiled script.");
+            HashSet<string> visited = new(StringComparer.OrdinalIgnoreCase);
+            Queue<string> pending = new();
+            pending.Enqueue(Bot.Manager.LoadedScript);
+
+            while (!Bot.ShouldExit && pending.Count > 0)
+            {
+                string sourcePath = Path.GetFullPath(pending.Dequeue());
+                if (!visited.Add(sourcePath) || !File.Exists(sourcePath))
+                    continue;
+
+                string[] source = File.ReadAllLines(sourcePath);
+                classStartIndex = Array.FindIndex(source, line =>
+                    line.Contains($"class {className}", StringComparison.Ordinal)
+                );
+                if (classStartIndex >= 0)
+                {
+                    ScriptSlice = source;
+                    break;
+                }
+
+                foreach (string line in source)
+                {
+                    string[] parts = line.Trim().Split(
+                        new[] { ' ', '\t' }, 2, StringSplitOptions.RemoveEmptyEntries
+                    );
+                    if (parts.Length != 2 || parts[0] != "//cs_include")
+                        continue;
+
+                    string includePath = parts[1].Replace('\\', '/');
+                    string localPath = Path.Combine(
+                        ClientFileSources.SkuaScriptsDIR, includePath.Replace("Scripts/", "")
+                    );
+                    if (File.Exists(localPath))
+                        pending.Enqueue(localPath);
+                    else
+                        pending.Enqueue(includePath);
+                }
+            }
+        }
+
+        if (classStartIndex < 0)
+        {
+            Core.Logger($"PreLoad failed: could not find class {className} in the script or its includes.");
             return;
         }
 
