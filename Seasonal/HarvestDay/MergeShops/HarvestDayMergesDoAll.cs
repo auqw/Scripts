@@ -4,6 +4,7 @@ description: Runs all Harvest Day merge shop scripts in this folder.
 tags: harvestday, harvest, merge, doall
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/AutumnMerge.cs
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/EbilCorpCafeMerge.cs
@@ -16,6 +17,7 @@ tags: harvestday, harvest, merge, doall
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/NightmareHarvestWarMerge.cs
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs
+//cs_include Scripts/Seasonal/HarvestDay/CoreHarvestDay.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -23,6 +25,12 @@ public class HarvestDayMergesDoAll
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
+    private static CoreHarvestDay HarvestDay
+    {
+        get => _HarvestDay ??= new CoreHarvestDay();
+        set => _HarvestDay = value;
+    }
+    private static CoreHarvestDay _HarvestDay;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "HarvestDayMergesDoAll";
@@ -107,6 +115,8 @@ public class HarvestDayMergesDoAll
         );
 
         Core.SetOptions();
+
+        HarvestDay.DoAll();
 
         foreach (Action buy in GetMergeShopActions())
         {

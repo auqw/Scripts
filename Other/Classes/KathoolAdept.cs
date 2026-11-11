@@ -73,11 +73,7 @@ public class KathoolAdept
             return;
         }
 
-        if (Bot.Player.Level < 80)
-        {
-            Core.Logger("Kathool Adept requires level 80.");
-            return;
-        }
+        Farm.Experience(80);
 
         if (Bot.ShouldExit)
             return;
