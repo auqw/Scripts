@@ -675,7 +675,12 @@ public class CoreQOM
         Story.MapItemQuest(5813, "charredpath", 5254);
 
         //Remove the Bile
-        Story.KillQuest(5819, "charredpath", "Noxious Fumes");
+        if (!Story.QuestProgression(5819))
+        {
+            Core.EnsureAccept(5819);
+            Core.HuntMonster("charredpath", "Noxious Fumes", "Toxin Destroyed", 10);
+            Core.EnsureComplete(5819);
+        }
 
         //Get the Plague (Crystal)
         Story.KillQuest(5820, "charredpath", "Plague Spreader");
