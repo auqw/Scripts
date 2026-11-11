@@ -112,21 +112,7 @@ public class CitadelRuins
 
         // Staying Humble
         Core.AddDrop("Elite Void Sword Pet");
-        //why the fuck was the class buffed!?
-        InventoryItem? usethis = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n =>
-                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-            );
-        if (usethis != null)
-        {
-            Core.Equip(usethis.ID);
-            Core.Equip(Core.FarmGear);
-            if (usethis.Name.Equals("Yami no Ronin"))
-                Bot.Skills.StartAdvanced("1 | 4");
-        }
-        else
-            Core.EquipClass(ClassType.Dodge);
+        Core.EquipClass(ClassType.Dodge);
         Story.KillQuest(6682, "underlair", "ArchFiend DragonLord");
     }
 

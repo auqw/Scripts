@@ -1252,22 +1252,7 @@ public class UnlockForgeEnhancements
         Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 100, isTemp: false);
         Core.HuntMonster("icewing", "Warlord Icewing", "Boreal Cavalier Bardiche", isTemp: false);
 
-        //why the fuck was the class buffed!?
-        InventoryItem? usethis = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n =>
-                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-            );
-
-        if (usethis != null)
-        {
-            Core.Equip(usethis.ID);
-            Core.Equip(Core.FarmGear);
-            if (usethis.Name.Equals("Yami no Ronin"))
-                Bot.Skills.StartAdvanced("1 | 4");
-        }
-        else
-            Core.EquipClass(ClassType.Dodge);
+        Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
 
         Core.EnsureComplete(8822);

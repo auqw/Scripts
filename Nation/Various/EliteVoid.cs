@@ -115,21 +115,7 @@ public class EliteVoid
             {
                 //Staying Humble 6682
                 Core.EnsureAccept(6682);
-                //why the fuck was the class buffed!?
-                InventoryItem? usethis = Bot
-                    .Inventory.Items.Concat(Bot.Bank.Items)
-                    .FirstOrDefault(n =>
-                        n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-                    );
-                if (usethis != null)
-                {
-                    Core.Equip(usethis.ID);
-                    Core.Equip(Core.FarmGear);
-                    if (usethis.Name.Equals("Yami no Ronin"))
-                        Bot.Skills.StartAdvanced("1 | 4");
-                }
-                else
-                    Core.EquipClass(ClassType.Dodge);
+                Core.EquipClass(ClassType.Dodge);
 
                 Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3);
                 Core.EnsureComplete(6682);
