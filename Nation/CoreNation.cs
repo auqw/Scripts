@@ -37,7 +37,8 @@ public class CoreNation
     /// <summary>
     /// Crag and Bamboozle name in game
     /// </summary>
-    public string CragName => "Crag &amp; Bamboozle";
+    public string CragName => "Crag & Bamboozle";
+    // public string CragName => "Crag &amp; Bamboozle";
 
     /// <summary>
     /// All principal drops from Nulgath
