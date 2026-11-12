@@ -8925,11 +8925,17 @@
       "king",
       "echo",
       "class",
-      "kingsecho"
+      "kingsecho",
+      "kings echo",
+      "kingkong",
+      "ke",
+      "k",
+      "kings",
+      "booty"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 7133,
-    "sha256": "7913f5b70ab77843d9f9c89cdc26d01b7019ec22974753cc2db521b9c767c240",
+    "size": 7176,
+    "sha256": "d982a2970374e20b51e598dc440f2bd565819927d68b9e01037b146b0027a6ab",
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
