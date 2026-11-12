@@ -122,7 +122,7 @@ public class KingsEcho
 
                         Core.EnsureAccept(10440);
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("queenbattle", "Queen of Monsters", "Calcified Tear", 60, isTemp: false);
+                        Core.HuntMonster("transformation", "Queen of Monsters", "Calcified Tear", 60, isTemp: false);
                         Core.HuntMonster("dreadhaven", "Slugwrath", "Whispers of Chaos", 40, isTemp: false);
                         Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false);
                         Core.EnsureComplete(10440);
