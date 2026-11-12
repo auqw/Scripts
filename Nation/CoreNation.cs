@@ -37,7 +37,7 @@ public class CoreNation
     /// <summary>
     /// Crag and Bamboozle name in game
     /// </summary>
-    public string CragName => "Crag & Bamboozle";
+    public int CragName => 4845;
     // public string CragName => "Crag &amp; Bamboozle";
 
     /// <summary>

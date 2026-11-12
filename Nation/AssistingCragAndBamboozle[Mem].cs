@@ -69,7 +69,8 @@ public class AssistingCragAndBamboozle
         Core.BankingBlackList.AddRange(
             new[]
             {
-                Nation.CragName,
+                "Crag &amp; Bamboozle",
+                "Crag & Bamboozle",
                 "Gem of Nulgath",
                 "Tainted Gem",
                 "Dark Crystal Shard",
