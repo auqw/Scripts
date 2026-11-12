@@ -1,7 +1,7 @@
 /*
 name: King's Echo Class
 description: King's Echo Class
-tags: King's, King, Echo, class, kingsecho
+tags: King's, King, Echo, class, kingsecho, kings echo, kingkong, ke, k, kings, booty
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
