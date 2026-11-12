@@ -1649,8 +1649,8 @@
       "null"
     ],
     "path": "Nation/AssistingCragAndBamboozle[Mem].cs",
-    "size": 5971,
-    "sha256": "de14528ac857f9b14a5fc1cab6ef18f09590b6ae948340ea44285f4995809912",
+    "size": 6014,
+    "sha256": "c81191a358a18af7057d93d03392b7cc8dfae0f91b703027950d840c7836a605",
     "fileName": "AssistingCragAndBamboozle[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AssistingCragAndBamboozle[Mem].cs"
   },
@@ -1794,8 +1794,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 117136,
-    "sha256": "16e24b07b15c9dca6688b2241c70e73cfe675b900c4ce87b2e9d6aeeb5faa51d",
+    "size": 117119,
+    "sha256": "11296bab2f85b3415f830302dcbee63d8eb48b341d28d25ac91542913b7fbaf9",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
