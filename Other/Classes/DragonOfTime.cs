@@ -290,17 +290,7 @@ public class DragonOfTime
             Core.HuntMonster("bosschallenge", "Mutated Void Dragon", "Omnipotent Cells", 20, false, publicRoom: true);
             if (!Core.CheckInventory("Dragon's Plasma", 20))
             {
-                //why the fuck was the class buffed!?
-                InventoryItem? usethis = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(n => n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer"));
-                if (usethis != null)
-                {
-                    Core.Equip(usethis.ID);
-                    Core.Equip(Core.FarmGear);
-                    if (usethis.Name.Equals("Yami no Ronin"))
-                        Bot.Skills.StartAdvanced("1 | 4");
-                }
-                else
-                    Core.EquipClass(ClassType.Dodge);
+                Core.EquipClass(ClassType.Dodge);
                 Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false);
             }
             Core.JumpWait();

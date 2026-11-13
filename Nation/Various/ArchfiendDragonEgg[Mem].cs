@@ -50,21 +50,7 @@ public class ArchfiendDragonEgg
         Core.BuyItem("Airstorm", 357, "Breath of Life");
         Core.HuntMonster("queenspire", "Fire Guardian Dragon", "Fire Guardian Dragon Soul", isTemp: false);
         HB.FreshSouls(1, 10);
-        //why the fuck was the class buffed!?
-        InventoryItem? usethis = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n =>
-                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-            );
-        if (usethis != null)
-        {
-            Core.Equip(usethis.ID);
-            Core.Equip(Core.FarmGear);
-            if (usethis.Name.Equals("Yami no Ronin"))
-                Bot.Skills.StartAdvanced("1 | 4");
-        }
-        else
-            Core.EquipClass(ClassType.Dodge);
+        Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false);
         Core.BuyItem("Ariapet", 12, "ArchFiend Dragon Egg");
         Core.EnsureComplete(7296);
