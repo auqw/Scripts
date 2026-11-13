@@ -1,7 +1,7 @@
 /*
-name: Radiant Goddess of War PreReqs
+name: Radiant Goddess of War Quest PreReqs
 description: Farms the six item requirements needed to accept quest 9184, The Goddess of War. This script does not complete the quest or obtain Radiant Goddess of War.
-tags: radiant goddess of war, rgow, goddess of war, prerequisites, prereqs
+tags: radiant goddess of war, rgow, goddess of war, prerequisites, prereqs, quest
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
