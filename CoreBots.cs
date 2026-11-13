@@ -7092,6 +7092,48 @@ public class CoreBots
 
 
 
+    /// <summary>
+    /// Hunts ArchFiend DragonLord using rank 10 Chaos Slayer, rank 10 Yami no Ronin,
+    /// or the configured dodge class, in that order.
+    /// </summary>
+    /// <param name="item">The item to obtain, or null to kill the boss once.</param>
+    /// <param name="quant">The desired item quantity.</param>
+    /// <param name="isTemp">Whether the item is temporary.</param>
+    /// <param name="log">Whether to log the hunt.</param>
+    /// <param name="publicRoom">Whether to use a public room.</param>
+    public void KillArchFiendDragonLord(string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
+    {
+        if (item != null)
+        {
+            if (isTemp && Bot.TempInv.Contains(item, quant))
+                return;
+            if (!isTemp && CheckInventory(item, quant))
+                return;
+        }
+
+        List<InventoryItem> ownedClasses = Bot.Inventory.Items.Concat(Bot.Bank.Items).Where(i => i.Category == ItemCategory.Class).ToList();
+        if (ownedClasses.FirstOrDefault(i => i.Name.StartsWith("Chaos Slayer", StringComparison.OrdinalIgnoreCase) && CheckClassRank(ClassName: i.Name) == 10) is InventoryItem chaosSlayer)
+        {
+            Equip(chaosSlayer.Name);
+            Bot.Skills.StartAdvanced(chaosSlayer.Name, false, ClassUseMode.Base);
+        }
+        else if (ownedClasses.FirstOrDefault(i => i.Name.Equals("Yami no Ronin", StringComparison.OrdinalIgnoreCase) && CheckClassRank(ClassName: i.Name) == 10) is InventoryItem yamiNoRonin)
+        {
+            Equip(yamiNoRonin.Name);
+            Bot.Skills.StartAdvanced(yamiNoRonin.Name, false, ClassUseMode.Def);
+        }
+        else
+        {
+            EquipClass(ClassType.Dodge);
+            if (IsGenericClass(DodgeClass))
+                Logger("No Chaos Slayer or Yami no Ronin found and no dodge class is set. Using the currently equipped class for ArchFiend DragonLord. This might fail. GOOD LUCK!!!");
+            else
+                Logger("No Chaos Slayer or Yami no Ronin found. Using the dodge class for ArchFiend DragonLord. This might fail.");
+        }
+
+        HuntMonster("underlair", "ArchFiend DragonLord", item, quant, isTemp, log, publicRoom);
+    }
+
     public void KillDoomKitten(string? item = null, int quant = 1, bool isTemp = false, bool log = true)
     {
         // Early exit if item already owned

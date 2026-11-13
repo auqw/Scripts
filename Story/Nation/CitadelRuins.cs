@@ -112,8 +112,12 @@ public class CitadelRuins
 
         // Staying Humble
         Core.AddDrop("Elite Void Sword Pet");
-        Core.EquipClass(ClassType.Dodge);
-        Story.KillQuest(6682, "underlair", "ArchFiend DragonLord");
+        if (!Story.QuestProgression(6682))
+        {
+            Core.EnsureAccept(6682);
+            Core.KillArchFiendDragonLord("Twisted Armor Piece", 3);
+            Core.EnsureComplete(6682);
+        }
     }
 
     public void CutieMakaisQuest()

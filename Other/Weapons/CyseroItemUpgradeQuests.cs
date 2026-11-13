@@ -237,8 +237,7 @@ public class CyseroItemUpgrade
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("Lair", "Bronze Draconian", "Wisp of Dragonspirit", 12);
             Core.HuntMonster("Lair", "Dark Draconian", "Crystallized Flame");
-            Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
+            Core.KillArchFiendDragonLord("Void Scale", 13, isTemp: false);
 
             Core.EnsureComplete(7065);
             Bot.Wait.ForPickup("Burning Phoenix Blade");

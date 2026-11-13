@@ -105,9 +105,7 @@ public class CelestialPirateCommander
 
             Core.HuntMonster("starsinc", "Empowered Prime", "Map of the Celestial Seas", 1, false, publicRoom: true);
 
-            Core.EquipClass(ClassType.Dodge);
-
-            Core.HuntMonster("underlair", "ArchFiend DragonLord", "Coffer of the Stars", 1, false, publicRoom: true);
+            Core.KillArchFiendDragonLord("Coffer of the Stars", 1, false, publicRoom: true);
 
             Core.EquipClass(ClassType.Solo);
 

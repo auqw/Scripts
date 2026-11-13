@@ -115,9 +115,7 @@ public class EliteVoid
             {
                 //Staying Humble 6682
                 Core.EnsureAccept(6682);
-                Core.EquipClass(ClassType.Dodge);
-
-                Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3);
+                Core.KillArchFiendDragonLord("Twisted Armor Piece", 3);
                 Core.EnsureComplete(6682);
             }
         }

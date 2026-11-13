@@ -290,8 +290,7 @@ public class DragonOfTime
             Core.HuntMonster("bosschallenge", "Mutated Void Dragon", "Omnipotent Cells", 20, false, publicRoom: true);
             if (!Core.CheckInventory("Dragon's Plasma", 20))
             {
-                Core.EquipClass(ClassType.Dodge);
-                Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false);
+                Core.KillArchFiendDragonLord("Dragon's Plasma", 20, false);
             }
             Core.JumpWait();
             Core.EquipClass(ClassType.Solo);

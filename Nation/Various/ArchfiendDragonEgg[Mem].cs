@@ -50,8 +50,7 @@ public class ArchfiendDragonEgg
         Core.BuyItem("Airstorm", 357, "Breath of Life");
         Core.HuntMonster("queenspire", "Fire Guardian Dragon", "Fire Guardian Dragon Soul", isTemp: false);
         HB.FreshSouls(1, 10);
-        Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false);
+        Core.KillArchFiendDragonLord("Fiendish Brimstone", isTemp: false);
         Core.BuyItem("Ariapet", 12, "ArchFiend Dragon Egg");
         Core.EnsureComplete(7296);
         Bot.Wait.ForPickup("ArchFiend Baby Dragon Pet");

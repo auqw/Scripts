@@ -1253,8 +1253,7 @@ public class UnlockForgeEnhancements
         Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 100, isTemp: false);
         Core.HuntMonster("icewing", "Warlord Icewing", "Boreal Cavalier Bardiche", isTemp: false);
 
-        Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
+        Core.KillArchFiendDragonLord("Void Scale", 13, isTemp: false);
 
         Core.EnsureComplete(8822);
         Core.Logger("Enhancement Unlocked: Penitence");
