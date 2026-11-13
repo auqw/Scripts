@@ -86,6 +86,12 @@ public class CoreBots
 
     // [Can Change] Whether you want anti lag features (lag killer, invisible monsters, set to 10 FPS)
     public bool AntiLag { get; set; } = true;
+    /// <summary>
+    /// Also write every Logger line to logs/&lt;username&gt;_&lt;yyyy-MM-dd&gt;.log in the client's folder, so a run
+    /// can be read after the client is closed. Files older than 30 days are deleted. Off by default;
+    /// CBO key "LogToFile".
+    /// </summary>
+    public bool LogToFile { get; set; } = false;
 
     // [Can Change] Name of your soloing class
     public string SoloClass { get; set; } = string.Empty;
@@ -7752,8 +7758,11 @@ public class CoreBots
         // =========================
         // Console / file log (FULL)
         // =========================
-        string logMessage = $"[{DateTime.Now:HH:mm:ss}] ({caller}) {rawMessage}";
+        DateTime logTime = DateTime.Now;
+        string logMessage = $"[{logTime:HH:mm:ss}] ({caller}) {rawMessage}";
         Bot.Log(logMessage);
+        if (LogToFile)
+            WriteLogFile(logMessage, logTime);
 
         // =========================
         // AQW CHAT SAFE PIPELINE
@@ -12209,6 +12218,9 @@ public class CoreBots
             ShouldRest = _ShouldRest;
         if (CBOBool("AntiLag", out bool _AntiLag))
             AntiLag = _AntiLag;
+        LogToFile = false; // reset so a later ReadCBO() without the key turns it back off
+        if (CBOBool("LogToFile", out bool _LogToFile))
+            LogToFile = _LogToFile;
 
         if (CBOInt("ActionDelay", out int _ActionDelay))
             ActionDelay = _ActionDelay;
@@ -12377,6 +12389,55 @@ public class CoreBots
         return output != "fail"
             && !string.IsNullOrWhiteSpace(output)
             && !string.IsNullOrWhiteSpace(output);
+    }
+
+    private static readonly object _logFileLock = new();
+    private bool _logsCleaned;
+    private const int LogRetentionDays = 30;
+
+    // Deletes this feature's own files (<username>_<yyyy-MM-dd>.log) not written to in LogRetentionDays days.
+    // Runs once per script start (CoreBots is created per script); a failed scan is retried on the next line.
+    private void CleanOldLogs(string dir)
+    {
+        if (_logsCleaned)
+            return;
+        try
+        {
+            DateTime cutoff = DateTime.Now.AddDays(-LogRetentionDays);
+            foreach (string f in Directory.GetFiles(dir, "*_????-??-??.log"))
+            {
+                try
+                {
+                    if (File.GetLastWriteTime(f) < cutoff)
+                        File.Delete(f);
+                }
+                catch { /* A locked or missing file is not worth failing over. */ }
+            }
+            _logsCleaned = true;
+        }
+        catch { /* Keep logging even if the folder can't be listed right now. */ }
+    }
+
+    // Appends a Logger line to logs/<username>_<yyyy-MM-dd>.log in the client's folder (see LogToFile).
+    // The file is picked from the same time the line was stamped with, so a line never lands in the next day.
+    private void WriteLogFile(string logMessage, DateTime logTime)
+    {
+        try
+        {
+            string baseDir = ClientFileSources.SkuaDIR;
+            if (string.IsNullOrWhiteSpace(baseDir) || !Path.IsPathRooted(baseDir))
+                return;
+            string dir = Path.Combine(baseDir, "logs");
+            Directory.CreateDirectory(dir);
+            CleanOldLogs(dir);
+            string? user = Bot.Player?.Username;
+            if (string.IsNullOrWhiteSpace(user))
+                user = "unknown";
+            string file = Path.Combine(dir, $"{user}_{logTime:yyyy-MM-dd}.log");
+            lock (_logFileLock)
+                File.AppendAllText(file, logMessage + Environment.NewLine);
+        }
+        catch { /* Never let file logging break the bot. */ }
     }
 
     public bool CBOBool(string Name, out bool output)
