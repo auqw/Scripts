@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 475861,
-    "sha256": "4177f7eedf8b55bfdbcb5b8f7ff252f1f41ed408d0fa7d4f0cfa120187185b96",
+    "size": 478094,
+    "sha256": "7fe3517b354bfb231c43e293af77be28b6e1c6cf7a1d177bea4644e09e00a34c",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1372,8 +1372,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 52797,
-    "sha256": "24e622e809e5d5d27e04257521bcefb4dcae94c84378b003c6eca4634d5b94bf",
+    "size": 52729,
+    "sha256": "f4d504e02b84ae2cfad5a61b04ad111dc580fdbc8fe076a91a3369083ec143e5",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -8140,8 +8140,8 @@
       "null"
     ],
     "path": "Other/Weapons/CyseroItemUpgradeQuests.cs",
-    "size": 11692,
-    "sha256": "b10af9b5b2cef555861c8c8320daea222e0d17fa892f96b4c85431a9072edeb7",
+    "size": 11621,
+    "sha256": "6fa89d1627b3782e7f74e27b12b7e205a0c90abd8d023791e181cc997eaea328",
     "fileName": "CyseroItemUpgradeQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CyseroItemUpgradeQuests.cs"
   },
@@ -8387,8 +8387,8 @@
       "fca"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 4523,
-    "sha256": "0e60319ff94b49e8de53c2496fbf552ae493b5b9a486c9056ba6ef6543c944db",
+    "size": 3599,
+    "sha256": "9408f55f17a94a683f48b8f20cb9bbbe342fa17ed6c00cf4bf06934e5d03d481",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -8723,8 +8723,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 15660,
-    "sha256": "9b7bd3463757ce89f2aaea7a93ecacb1b7d632766f0da2ef9028c9166b9d4cad",
+    "size": 15585,
+    "sha256": "a0059f639d544afda319d92e626b999891320345eacf1005aafb8f8223a20f90",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -15308,8 +15308,8 @@
       "null"
     ],
     "path": "Nation/Various/ArchfiendDragonEgg[Mem].cs",
-    "size": 1661,
-    "sha256": "8b36a59d705112c04004304c850b973f05cc58e8e75009f0e212872e7006058f",
+    "size": 1594,
+    "sha256": "8302937c67fc9090e55c8f0094a25062fbc28b8efcd9d6049e9288ef0d1d91ff",
     "fileName": "ArchfiendDragonEgg[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ArchfiendDragonEgg[Mem].cs"
   },
@@ -15534,8 +15534,8 @@
       "null"
     ],
     "path": "Nation/Various/EliteVoid.cs",
-    "size": 3852,
-    "sha256": "851acc71e1c7bd255a665f219f4443e481dd51ae93312f096ba3f68dfd2a5b67",
+    "size": 3776,
+    "sha256": "e1135ca28d5980c234f06da195ad6f48ca41e435e55a83923871d7da91a4463f",
     "fileName": "EliteVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/EliteVoid.cs"
   },
@@ -21099,8 +21099,8 @@
       "citadel-ruins"
     ],
     "path": "Story/Nation/CitadelRuins.cs",
-    "size": 10974,
-    "sha256": "0079d6fb7d1934c11e6d7726757235e4926132896d17b2d8f61c5ba758442abc",
+    "size": 11071,
+    "sha256": "7a5682a0aac3c738bdf642fc0d210f0ba6356376b85af565d10f19bab72c6795",
     "fileName": "CitadelRuins.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/CitadelRuins.cs"
   },
@@ -27108,8 +27108,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 4585,
-    "sha256": "d396e30e251e77a882f5a3e51f53d3beacd52634d78279bf170e282b919affc9",
+    "size": 4513,
+    "sha256": "865fd3cadd8b679f7dff47615f599f99d7365819fecb48e306493817e6ebcf47",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
