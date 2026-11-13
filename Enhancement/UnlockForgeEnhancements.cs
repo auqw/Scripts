@@ -1184,6 +1184,7 @@ public class UnlockForgeEnhancements
                 Core.BuyItem("museum", 1130, "Armor of Awe Pass");
                 Core.AddDrop("Pauldron Fragment");
                 Core.RegisterQuests(4162);
+                Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("gravestrike", "Ultra Akriloth", "Pauldron Fragment", 15, false);
                 Bot.Wait.ForPickup("Pauldron Fragment");
                 Core.CancelRegisteredQuests();
