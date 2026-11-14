@@ -32197,8 +32197,8 @@
       "doall"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs",
-    "size": 8743,
-    "sha256": "b9208d6b8119f51a9e2c5e0e8194e626e61016ecd9f7e9a635b023f7367f5db7",
+    "size": 9080,
+    "sha256": "ca39f6b89f751201c9536e00133756e85e6b4ac6adc0125b2dbf4cedd66ac4fd",
     "fileName": "HarvestDayMergesDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs"
   },
