@@ -9599,27 +9599,40 @@ public class CoreBots
     public void FindBestServer()
     {
         List<Server> servers = Bot.Servers.GetServers(true).AsTask().GetAwaiter().GetResult();
-        if (servers.Count == 0)
+
+        static long TcpPing(string host, int port = 5588, int timeoutMs = 2000)
         {
-            Bot.Log("Could not determine an optimal server: the AQW server list is empty.");
-            return;
+            try
+            {
+                using TcpClient client = new();
+                Stopwatch sw = Stopwatch.StartNew();
+                Task connectTask = client.ConnectAsync(host, port);
+                if (!connectTask.Wait(timeoutMs))
+                    return long.MaxValue;
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
+            }
+            catch
+            {
+                return long.MaxValue;
+            }
         }
 
-        foreach (Server server in servers.OrderBy(s => s.Ping))
-        {
-            string latency = server.Ping >= ServerLatencyClassifier.FailedPing ? "Unavailable" : $"{server.Ping}ms";
-            Bot.Log($"{server.PingIndicator} {server.Name}: {latency}");
-        }
+        // Ping each unique host once
+        Dictionary<string, long> pingResults = new();
+        foreach (string host in servers.Select(s => s.IP).Distinct())
+            pingResults[host] = TcpPing(host);
 
+        // Pick the server with the lowest ping
         Server? best = servers
-            .Where(s => s.Ping >= 0 && s.Ping < ServerLatencyClassifier.FailedPing)
-            .OrderBy(s => s.Ping)
+            .Where(s => pingResults[s.IP] != long.MaxValue)
+            .OrderBy(s => pingResults[s.IP])
             .FirstOrDefault();
 
         if (best is not null)
-            Bot.Log($"Most optimal server: {best.Name} ({best.Ping}ms, AQW handshake median).");
+            Bot.Log($"Most optimal server: {best.Name} ({best.IP}) - {pingResults[best.IP]}ms");
         else
-            Bot.Log("Could not determine an optimal server: every AQW latency handshake failed.");
+            Bot.Log("Could not determine an optimal server, all hosts failed to connect.");
     }
 
     static long TcpPing(string host, int[] ports, int timeoutMs = 2000)
