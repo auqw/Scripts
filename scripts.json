@@ -25773,14 +25773,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/10FurborgShipStory.cs"
   },
   {
+    "name": "CharityFeast",
+    "description": "Completes the quest chain in /charityfeast.",
+    "tags": [
+      "charityfeast",
+      "story",
+      "quests",
+      "charityfeast"
+    ],
+    "path": "Seasonal/HarvestDay/21CharityFeast.cs",
+    "size": 777,
+    "sha256": "cd6289410dca13331b66cbb4f46796ac7a8eba84cf3184f6bca2b7c978689e6d",
+    "fileName": "21CharityFeast.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/21CharityFeast.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 35915,
-    "sha256": "f53ffe0fd03120fcc70d88e28bf4f549c46f4f76e0f95355107fcb85d204dfe7",
+    "size": 38002,
+    "sha256": "1c39aebaf54589289e2f0f321b444bb88bb379ae9b97c03734f6eb82e58138c9",
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -32095,6 +32110,22 @@
     "sha256": "8900189490268a47322b94089f6bfd1e20765048d229e71a4592e27c475b8e7f",
     "fileName": "EbilCorpHQMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/EbilCorpHQMerge.cs"
+  },
+  {
+    "name": "Harvest Menu Merge",
+    "description": "Farms the Harvest Menu Merge [2811] in /charityfeast.",
+    "tags": [
+      "charityfeast",
+      "merge",
+      "harvest",
+      "menu",
+      "merge"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/HarvestMenuShop.cs",
+    "size": 4918,
+    "sha256": "d4af072019c803a64c82576f933576d14f50ef0378df415e6c9bca7526269506",
+    "fileName": "HarvestMenuShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestMenuShop.cs"
   },
   {
     "name": "Robinas Harvest Merge",
