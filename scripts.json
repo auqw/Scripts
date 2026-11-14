@@ -4835,18 +4835,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AllSeasonal.cs"
   },
   {
-    "name": "Radiant Goddess of War PreReqs",
+    "name": "Radiant Goddess of War Quest PreReqs",
     "description": "Farms the six item requirements needed to accept quest 9184, The Goddess of War. This script does not complete the quest or obtain Radiant Goddess of War.",
     "tags": [
       "radiant goddess of war",
       "rgow",
       "goddess of war",
       "prerequisites",
-      "prereqs"
+      "prereqs",
+      "quest"
     ],
     "path": "ShadowsOfWar/RGOWQuestPrereq.cs",
-    "size": 4542,
-    "sha256": "5716c4ba3942aae83f07053095d6dded34cfc4c140d58463e02227eb09497b5a",
+    "size": 4555,
+    "sha256": "cacd39bbd590f66140807819d1ad27f2b5168ee186eb554a5f17a4d23fc8e46c",
     "fileName": "RGOWQuestPrereq.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/RGOWQuestPrereq.cs"
   },
@@ -4863,17 +4864,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/CoreSoWMats.cs"
   },
   {
-    "name": "Ultra Speaker Merge PreReqs",
-    "description": "Gets the prerequisites for the Ultra Speaker merge.",
+    "name": "Radiant Goddess of War Merge PreReqs (Ultra Speaker Merge)",
+    "description": "Gets the merge prerequisites for RGoW (Ultra Speaker Merge).",
     "tags": [
       "ultra speaker merge",
       "ultra malgor merge",
       "rgow",
-      "goddess of war"
+      "goddess of war",
+      "merge",
+      "radiant",
+      "goddess",
+      "of",
+      "war"
     ],
     "path": "ShadowsOfWar/RGOWMergePrereq.cs",
-    "size": 17329,
-    "sha256": "c0bd8798728d2ecc0ddd15f15466fab807464783b6a654a90008897e6907e6bb",
+    "size": 17403,
+    "sha256": "9cea2870be8a48bfaf0f67853f9ed2dac03bf535cd769c105131bfee58caca66",
     "fileName": "RGOWMergePrereq.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/RGOWMergePrereq.cs"
   },
