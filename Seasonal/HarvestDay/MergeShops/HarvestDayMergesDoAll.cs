@@ -17,6 +17,7 @@ tags: harvestday, harvest, merge, doall
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/NightmareHarvestMerge.cs
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/NightmareHarvestWarMerge.cs
 //cs_include Scripts/Seasonal/HarvestDay/MergeShops/RobinasHarvestMerge.cs
+//cs_include Scripts/Seasonal/HarvestDay/MergeShops/HarvestMenuShop.cs
 //cs_include Scripts/Seasonal/HarvestDay/CoreHarvestDay.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -111,6 +112,9 @@ public class HarvestDayMergesDoAll
                 "Ebil Operative Death Blade",
                 "Ebil Operative Long Baton",
                 "Ebil Operative Tactical Rifle",
+                "Bone Harvester Eye",
+                "Bone Harvester Morph",
+                "Hans' Chore Voucher",
             }
         );
 
@@ -143,6 +147,7 @@ public class HarvestDayMergesDoAll
         yield return () => new NightmareHarvestMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new NightmareHarvestWarMerge().BuyAllMerge(buyMode: buyMode);
         yield return () => new RobinasHarvestMerge().BuyAllMerge(buyMode: buyMode);
+        yield return () => new HarvestMenuShop().BuyAllMerge(buyMode: buyMode);
     }
 
     private mergeOptionsEnum GetBuyMode() =>
@@ -162,8 +167,8 @@ public class HarvestDayMergesDoAll
 
     private static List<IOption> BuildGenericOptions()
     {
-        return new List<IOption>
-        {
+        return
+        [
             CoreBots.Instance.SkipOptions,
             new Option<HarvestDayMergesDoAllMode>(
                 "mode",
@@ -171,12 +176,12 @@ public class HarvestDayMergesDoAll
                 "Choose one purchase mode to apply to every Harvest Day merge shop.",
                 HarvestDayMergesDoAllMode.all
             ),
-        };
+        ];
     }
 
     private static List<IOption> BuildSelectOptions()
     {
-        List<IOption> options = new();
+        List<IOption> options = [];
         AddMergeShopSelectOptions(options, "Autumn", new AutumnMerge().Select);
         AddMergeShopSelectOptions(options, "Ebil Corp Cafe", new EbilCorpCafeMerge().Select);
         AddMergeShopSelectOptions(options, "Ebil Corp HQ", new EbilHQMerge().Select);
@@ -188,6 +193,7 @@ public class HarvestDayMergesDoAll
         AddMergeShopSelectOptions(options, "Nightmare Harvest", new NightmareHarvestMerge().Select);
         AddMergeShopSelectOptions(options, "Nightmare Harvest War", new NightmareHarvestWarMerge().Select);
         AddMergeShopSelectOptions(options, "Robina's Harvest", new RobinasHarvestMerge().Select);
+        AddMergeShopSelectOptions(options, "Harvest Menu", new HarvestMenuShop().Select);
         return options;
     }
 
