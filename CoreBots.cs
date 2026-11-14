@@ -9605,13 +9605,10 @@ public class CoreBots
             return;
         }
 
-        ServerLatencyTester.MeasureAsync(servers).GetAwaiter().GetResult();
-
         foreach (Server server in servers.OrderBy(s => s.Ping))
         {
-            ServerLatencyStatus status = ServerLatencyClassifier.Classify(server.Ping);
             string latency = server.Ping >= ServerLatencyClassifier.FailedPing ? "Unavailable" : $"{server.Ping}ms";
-            Bot.Log($"{ServerLatencyClassifier.GetIndicator(status)} {server.Name}: {latency}");
+            Bot.Log($"{server.PingIndicator} {server.Name}: {latency}");
         }
 
         Server? best = servers
