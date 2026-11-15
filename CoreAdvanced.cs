@@ -4112,6 +4112,7 @@ public class CoreAdvanced
                 case "imperial chunin":
                 case "infinite dark caster":
                 case "infinite legion dark caster":
+                case "infinity hero":
                 case "infinity titan":
                 case "legendary naval commander":
                 case "legion blademaster assassin":
@@ -4293,6 +4294,7 @@ public class CoreAdvanced
                 case "imperial chunin":
                 case "infinite dark caster":
                 case "infinite legion dark caster":
+                case "infinity hero":
                 case "infinity titan":
                 case "legion blademaster assassin":
                 case "legion evolved dark caster":
