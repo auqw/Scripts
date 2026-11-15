@@ -4037,6 +4037,7 @@ public class CoreAdvanced
                 case "beast warrior":
                 case "beastmaster":
                 case "berserker":
+                case "brutal berserker":
                 case "beta berserker":
                 case "blademaster assassin":
                 case "blademaster":
@@ -4242,6 +4243,7 @@ public class CoreAdvanced
                 case "assassin":
                 case "archmage":
                 case "beastmaster":
+                case "brutal berserker":
                 case "berserker":
                 case "beta berserker":
                 case "blademaster assassin":
