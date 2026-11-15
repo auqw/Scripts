@@ -1389,8 +1389,8 @@
       "equip"
     ],
     "path": "Enhancement/SmartEnhance.cs",
-    "size": 1197,
-    "sha256": "e09f86b3a693110f90d6e3e89fd88308887ad9439d7258efabfb1d6d816dd7dd",
+    "size": 1081,
+    "sha256": "e6a5405c653d0332e8eab6c9c007fe1b164115056b3200f46c981598aae3bbf7",
     "fileName": "SmartEnhance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/SmartEnhance.cs"
   },
