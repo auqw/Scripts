@@ -433,6 +433,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DoAllUltrasStorys.cs"
   },
   {
+    "name": "Restore Ultra Loadout",
+    "description": "Puts back the gear and class enhancement an Ultra Loadout changed on an account with auto enhance off, after a run stopped before it could.",
+    "tags": [
+      "ultra",
+      "loadout",
+      "restore",
+      "enhancement",
+      "gear"
+    ],
+    "path": "Ultrasv3/RestoreLoadout.cs",
+    "size": 1178,
+    "sha256": "59a520309ca47b616a4288fd0fc2eba442212d9da205dabafdf39258afb29c46",
+    "fileName": "RestoreLoadout.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/RestoreLoadout.cs"
+  },
+  {
     "name": "Do Ultras and Dailies and Challenge Bosses",
     "description": "Runs all ultras, dailies, and challenge bosses.",
     "tags": [
@@ -6395,6 +6411,18 @@
     "tags": [
       "null"
     ],
+    "path": "Ultrasv3/DependenciesUltras/UltraComp.cs",
+    "size": 41908,
+    "sha256": "8dd2c78dd75cd785742c0730c8e5048643393578b608b44b244a804e7b48df46",
+    "fileName": "UltraComp.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraComp.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
     "path": "Ultrasv3/DependenciesUltras/UltraQueue.cs",
     "size": 7621,
     "sha256": "51e3318c4cc410195b11bad1c18fba8b68f774ad6d0b48f6f057c80f82659e89",
@@ -6433,11 +6461,35 @@
     "tags": [
       "null"
     ],
+    "path": "Ultrasv3/DependenciesUltras/UltraAttempt.cs",
+    "size": 6030,
+    "sha256": "cbc59f96a26b3cfc538d2fe3b5daad367484435cc843fbff0fece74d65df9da8",
+    "fileName": "UltraAttempt.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraAttempt.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
     "path": "Ultrasv3/DependenciesUltras/CoreUltrav3.cs",
     "size": 79354,
     "sha256": "bb74cad3440e616a34332c018b916ff048ac2fe1d10a9ff7c9175be9e4f7111d",
     "fileName": "CoreUltrav3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/CoreUltrav3.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultrasv3/DependenciesUltras/UltraPartyLayout.cs",
+    "size": 8232,
+    "sha256": "3719cbcd855ebae75314b17c6ff3df27355748d5628748a9a138f84cd4e9cb98",
+    "fileName": "UltraPartyLayout.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraPartyLayout.cs"
   },
   {
     "name": "UltraEnhancements",
@@ -35517,57 +35569,5 @@
     "sha256": "da12e934c61ac64e4da92ee88c90ba930f5c129ba93f78a9d0bac888a9e46c5a",
     "fileName": "GhostShip.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/MerrowTrenchAndGhostShip/GhostShip.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Ultrasv3/DependenciesUltras/UltraAttempt.cs",
-    "size": 6030,
-    "sha256": "cbc59f96a26b3cfc538d2fe3b5daad367484435cc843fbff0fece74d65df9da8",
-    "fileName": "UltraAttempt.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraAttempt.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Ultrasv3/DependenciesUltras/UltraComp.cs",
-    "size": 41908,
-    "sha256": "8dd2c78dd75cd785742c0730c8e5048643393578b608b44b244a804e7b48df46",
-    "fileName": "UltraComp.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraComp.cs"
-  },
-  {
-    "name": "null",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Ultrasv3/DependenciesUltras/UltraPartyLayout.cs",
-    "size": 8232,
-    "sha256": "3719cbcd855ebae75314b17c6ff3df27355748d5628748a9a138f84cd4e9cb98",
-    "fileName": "UltraPartyLayout.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/DependenciesUltras/UltraPartyLayout.cs"
-  },
-  {
-    "name": "Restore Ultra Loadout",
-    "description": "Puts back the gear and class enhancement an Ultra Loadout changed on an account with auto enhance off, after a run stopped before it could.",
-    "tags": [
-      "ultra",
-      "loadout",
-      "restore",
-      "enhancement",
-      "gear"
-    ],
-    "path": "Ultrasv3/RestoreLoadout.cs",
-    "size": 1178,
-    "sha256": "59a520309ca47b616a4288fd0fc2eba442212d9da205dabafdf39258afb29c46",
-    "fileName": "RestoreLoadout.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultrasv3/RestoreLoadout.cs"
   }
 ]
