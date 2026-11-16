@@ -13135,11 +13135,8 @@ public class ArmyFarmerJoeDoAll
             return;
 
         CoreBots core = CoreBots.Instance;
-        core.Logger(
-            $"Blacksmithing Rep: farming Rank 4 via Quest 2777 (current: {Farm.TotalFactionRep("Blacksmithing")}/10000, Rank {Farm.FactionRank("Blacksmithing")})."
-        );
-        Farm.ToggleBoost(BoostType.Reputation);
-
+        core.Logger("Farming Blacksmithing Rank 4 via Quest 2777 in /greenguardwest...");
+        Farm.ToggleBoost(BoostType.Reputation, true);
         int turnIns = 0;
         try
         {
@@ -13148,7 +13145,6 @@ public class ArmyFarmerJoeDoAll
                 if (!Bot.Quests.IsInProgress(2777))
                     core.EnsureAccept(2777);
 
-                core.HuntMonster("greenguardeast", "Wolf", "Furry Lost Sock", 2, isTemp: true, log: false);
                 core.KillMonster("greenguardwest", "West4", "Right", "Slime", "Slimy Lost Sock", 5, isTemp: true, log: false);
 
                 if (Bot.ShouldExit)
@@ -15961,9 +15957,6 @@ public class ArmyFarmerJoeDoAll
     /// </summary>
     public bool RunTheEncroachingShadowsDaily()
     {
-        if (_startupEncroachingShadowsDone)
-            return true;
-
         CoreBots core = CoreBots.Instance;
         bool voidAuraCapped = core.CheckInventory("Void Aura", 7500, toInv: false);
         bool dailyAvailable = Bot.Player.Level >= 75 && !voidAuraCapped && CanRunPeriodicQuest(8653);
@@ -16013,37 +16006,28 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         bool turnInDone = false;
-        if (
-            !RunCoordinatedTurnInStep(
-                "FUTURE75_ENCROACHING_SHADOWS_COMPLETE",
-                () => !dailyAvailable || turnInDone,
-                () => !dailyAvailable || Bot.Quests.IsDailyComplete(8653) || turnInDone,
-                () =>
-                {
-                    turnInDone = true;
-                    UnbankIfOwned("Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets");
-                    if (
-                        !core.CheckInventory("Glacial Pinion", 1)
-                        || !core.CheckInventory("Hydra Eyeball", 3)
-                        || !core.CheckInventory("Flibbitigiblets", 1)
-                    )
-                        return;
+        return RunCoordinatedTurnInStep(
+            "FUTURE75_ENCROACHING_SHADOWS_COMPLETE",
+            () => !dailyAvailable || turnInDone,
+            () => !dailyAvailable || Bot.Quests.IsDailyComplete(8653) || turnInDone,
+            () =>
+            {
+                turnInDone = true;
+                UnbankIfOwned("Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets");
+                if (
+                    !core.CheckInventory("Glacial Pinion", 1)
+                    || !core.CheckInventory("Hydra Eyeball", 3)
+                    || !core.CheckInventory("Flibbitigiblets", 1)
+                )
+                    return;
 
-                    core.AddDrop("Void Aura", "(Necro) Scroll of Dark Arts");
-                    core.EnsureAccept(8653);
-                    core.EnsureComplete(8653);
-                    WaitForDailyRewardPickup(8653, "Void Aura");
-                    BankIfPresent("Void Aura", "(Necro) Scroll of Dark Arts");
-                }
-            )
-        )
-            return false;
-
-        _startupEncroachingShadowsDone = Army.AllPlayersSatisfy(
-            "ENCROACHING_SHADOWS_DONE_FLAG",
-            () => Bot.Player.Level >= 75
+                core.AddDrop("Void Aura", "(Necro) Scroll of Dark Arts");
+                core.EnsureAccept(8653);
+                core.EnsureComplete(8653);
+                WaitForDailyRewardPickup(8653, "Void Aura");
+                BankIfPresent("Void Aura", "(Necro) Scroll of Dark Arts");
+            }
         );
-        return true;
     }
 
     /// <summary>
@@ -16051,17 +16035,13 @@ public class ArmyFarmerJoeDoAll
     /// </summary>
     public bool RunDagesScrollFragmentDaily()
     {
-        if (_startupDagesScrollDone)
-            return true;
-
         CoreBots core = CoreBots.Instance;
         bool hasEnoughFragments = core.CheckInventory("Dage's Scroll Fragment", 13, toInv: false);
         bool dailyAvailable = Bot.Player.Level >= 75 && !hasEnoughFragments && CanRunPeriodicQuest(3596);
         bool dailyDone = !dailyAvailable;
 
-        if (
-            !RunCoordinatedCombatStep(
-                "STEP3B_DAGES_SCROLL_FRAGMENT",
+        return RunCoordinatedCombatStep(
+            "STEP3B_DAGES_SCROLL_FRAGMENT",
             () => dailyDone,
             () => dailyDone,
             "*",
@@ -16073,16 +16053,8 @@ public class ArmyFarmerJoeDoAll
                 Daily.DagesScrollFragment(ToBank: true);
                 dailyDone = true;
             },
-                targetMap: "mountdoomskull"
-            )
-        )
-            return false;
-
-        _startupDagesScrollDone = Army.AllPlayersSatisfy(
-            "DAGES_SCROLL_DONE_FLAG",
-            () => Bot.Player.Level >= 75 && core.isCompletedBefore(2084, log: false)
+            targetMap: "mountdoomskull"
         );
-        return true;
     }
     #endregion Approved Dailies, Weeklies & Future NSoD Daily
 

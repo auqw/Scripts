@@ -2414,6 +2414,8 @@ public class CoreArmyFJ
             Core.JumpWait();
             Bot.Wait.ForCombatExit(20);
         }
+
+        Bot.Sleep(Math.Max(Core.ActionDelay, 700));
     }
 
     /// <summary>
@@ -2425,12 +2427,13 @@ public class CoreArmyFJ
             return;
 
         ExitCombatForSafeTurnIn();
+        Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
         Core.EnsureComplete(questIds);
     }
 
     /// <summary>
     /// Turns in any completable quests in <paramref name="questIds"/> after exiting combat,
-    /// avoiding in-combat rejections and temp-item desync loops.
+    /// respecting action cooldowns and server confirmation to avoid temp-item desyncs.
     /// </summary>
     public bool CompleteCompletableQuestsOutOfCombat(int[] questIds, bool reaccept = true)
     {
@@ -2452,16 +2455,27 @@ public class CoreArmyFJ
             if (Bot.ShouldExit)
                 break;
 
-            Core.EnsureComplete(questId);
-            Bot.Sleep(Core.ActionDelay);
+            for (int attempt = 1; attempt <= 2; attempt++)
+            {
+                if (Bot.ShouldExit || !Bot.Quests.IsInProgress(questId))
+                    break;
+
+                if (attempt > 1)
+                    ExitCombatForSafeTurnIn();
+
+                Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
+                Core.EnsureComplete(questId);
+                Bot.Wait.ForTrue(() => !Bot.Quests.IsInProgress(questId), 10);
+                Bot.Sleep(Math.Max(Core.ActionDelay, 800));
+            }
 
             if (Bot.Quests.IsInProgress(questId))
             {
                 Core.Logger(
-                    $"SafeTurnIn: Quest {questId} remained in progress after out-of-combat turn-in; resetting quest state."
+                    $"SafeTurnIn: Quest {questId} remained in progress after out-of-combat turn-in retries; resetting quest state."
                 );
                 Bot.Flash.CallGameFunction("world.abandonQuest", questId);
-                Bot.Sleep(Core.ActionDelay);
+                Bot.Sleep(Math.Max(Core.ActionDelay, 700));
                 Core.EnsureLoad(questId);
             }
         }
@@ -2473,7 +2487,10 @@ public class CoreArmyFJ
                 .Distinct()
                 .ToArray();
             if (toAccept.Length > 0)
+            {
                 Core.EnsureAcceptmultiple(toAccept);
+                Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
+            }
         }
 
         return true;
@@ -2496,6 +2513,7 @@ public class CoreArmyFJ
             return;
 
         Core.EnsureAcceptmultiple(questIds);
+        Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
 
         while (!Bot.ShouldExit && !stopCondition())
         {
@@ -2510,7 +2528,10 @@ public class CoreArmyFJ
                 .Distinct()
                 .ToArray();
             if (missingAccept.Length > 0)
+            {
                 Core.EnsureAcceptmultiple(missingAccept);
+                Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
+            }
 
             Core.KillMonster(map, cell, pad, monster, log: false);
         }
