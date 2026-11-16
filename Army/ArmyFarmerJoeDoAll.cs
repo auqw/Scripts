@@ -13133,6 +13133,221 @@ public class ArmyFarmerJoeDoAll
                     core.JumpWait();
                     Bot.Sleep(500);
                     completed = core.EnsureComplete(2777);
+                }
+
+                if (completed)
+                {
+                    Bot.Wait.ForTrue(
+                        () => !Bot.Quests.IsInProgress(2777) && !Bot.TempInv.Contains("Slimy Lost Sock", 5),
+                        15
+                    );
+                    turnIns++;
+                    if (turnIns == 1 || turnIns % 5 == 0 || Farm.FactionRank("Blacksmithing") >= 4)
+                    {
+                        core.Logger(
+                            $"Blacksmithing Rep 4 progress: {Farm.TotalFactionRep("Blacksmithing")}/10000 "
+                                + $"(Rank {Farm.FactionRank("Blacksmithing")}, turn-in #{turnIns})."
+                        );
+                    }
+                }
+            }
+        }
+        finally
+        {
+            Farm.ToggleBoost(BoostType.Reputation, false);
+            if (Bot.Quests.IsInProgress(2777))
+                core.AbandonQuest(2777);
+            LeaveCombatRoomForEquipmentChange();
+        }
+    }
+
+    private void LeaveCombatRoomForEquipmentChange()
+    {
+        try
+        {
+            Bot.Skills.Stop();
+        }
+        catch
+        {
+            // Ignore if skill timer is not active
+        }
+
+        if (Bot.Player.HasTarget)
+            Bot.Combat.CancelTarget();
+
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
+
+        // 1. Prefer jumping to the safe "Enter" cell on the current map instead of forcing /whitemap.
+        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+        {
+            CoreBots.Instance.JumpWait();
+            Bot.Wait.ForCombatExit(20);
+        }
+
+        // 2. Only fall back to /whitemap if the current cell still has monsters or combat did not exit.
+        string currentMap = Bot.Map?.Name ?? string.Empty;
+        if (
+            !string.Equals(currentMap, "whitemap", StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(currentMap, "battleon", StringComparison.OrdinalIgnoreCase)
+            && (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+        )
+        {
+            CoreBots.Instance.Join("whitemap");
+            Bot.Wait.ForMapLoad("whitemap");
+            CoreBots.Instance.JumpWait();
+            Bot.Wait.ForCombatExit(20);
+        }
+    }
+
+    private readonly HashSet<int> _unequippableBoostItemIds = new();
+
+    private readonly struct BoostProfile
+    {
+        public double DmgAll { get; init; }
+        public double Chaos { get; init; }
+        public double Dragonkin { get; init; }
+        public double Elemental { get; init; }
+        public double Human { get; init; }
+        public double Undead { get; init; }
+        public double Cp { get; init; }
+        public double Exp { get; init; }
+        public double Gold { get; init; }
+        public double Rep { get; init; }
+
+        public bool HasAnyBoost =>
+            DmgAll > 0
+            || Chaos > 0
+            || Dragonkin > 0
+            || Elemental > 0
+            || Human > 0
+            || Undead > 0
+            || Cp > 0
+            || Exp > 0
+            || Gold > 0
+            || Rep > 0;
+    }
+
+    private static double ParseBoostFraction(string rawValue)
+    {
+        if (string.IsNullOrWhiteSpace(rawValue))
+            return 0;
+
+        string cleaned = rawValue.Trim();
+        bool hasPercent = cleaned.EndsWith("%", StringComparison.Ordinal);
+        if (hasPercent)
+            cleaned = cleaned.Substring(0, cleaned.Length - 1).Trim();
+        if (cleaned.StartsWith("+", StringComparison.Ordinal))
+            cleaned = cleaned.Substring(1).Trim();
+
+        if (!double.TryParse(cleaned, NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
+            return 0;
+        if (!double.IsFinite(value) || value <= 0)
+            return 0;
+
+        double bonus = hasPercent || value >= 5.0
+            ? value / 100.0
+            : value >= 1.0
+                ? value - 1.0
+                : value;
+
+        return Math.Max(0, bonus);
+    }
+
+    private static BoostProfile ParseBoostProfile(ItemBase? item)
+    {
+        string? meta = item?.Meta;
+        if (string.IsNullOrWhiteSpace(meta))
+            return default;
+
+        double dmgAll = 0;
+        double chaos = 0;
+        double dragonkin = 0;
+        double elemental = 0;
+        double human = 0;
+        double undead = 0;
+        double cp = 0;
+        double exp = 0;
+        double gold = 0;
+        double rep = 0;
+
+        string[] entries = meta.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
+        foreach (string entry in entries)
+        {
+            int sepIndex = entry.IndexOf(':');
+            if (sepIndex < 0)
+                sepIndex = entry.IndexOf('=');
+            if (sepIndex <= 0 || sepIndex >= entry.Length - 1)
+                continue;
+
+            string key = entry.Substring(0, sepIndex).Trim().ToLowerInvariant();
+            double fraction = ParseBoostFraction(entry.Substring(sepIndex + 1));
+            if (fraction <= 0)
+                continue;
+
+            switch (key)
+            {
+                case "dmgall":
+                case "alldmg":
+                case "all":
+                    dmgAll = Math.Max(dmgAll, fraction);
+                    break;
+                case "chaos":
+                    chaos = Math.Max(chaos, fraction);
+                    break;
+                case "dragonkin":
+                case "dragon":
+                    dragonkin = Math.Max(dragonkin, fraction);
+                    break;
+                case "elemental":
+                    elemental = Math.Max(elemental, fraction);
+                    break;
+                case "human":
+                    human = Math.Max(human, fraction);
+                    break;
+                case "undead":
+                    undead = Math.Max(undead, fraction);
+                    break;
+                case "cp":
+                case "classpoints":
+                    cp = Math.Max(cp, fraction);
+                    break;
+                case "exp":
+                case "xp":
+                    exp = Math.Max(exp, fraction);
+                    break;
+                case "gold":
+                    gold = Math.Max(gold, fraction);
+                    break;
+                case "rep":
+                case "reputation":
+                    rep = Math.Max(rep, fraction);
+                    break;
+            }
+        }
+
+        return new BoostProfile
+        {
+            DmgAll = dmgAll,
+            Chaos = chaos,
+            Dragonkin = dragonkin,
+            Elemental = elemental,
+            Human = human,
+            Undead = undead,
+            Cp = cp,
+            Exp = exp,
+            Gold = gold,
+            Rep = rep,
+        };
+    }
+
+    private static bool Dominates(in BoostProfile a, in BoostProfile b)
+    {
+        const double eps = 1e-6;
+        return a.DmgAll >= b.DmgAll - eps
+            && a.Chaos >= b.Chaos - eps
+            && a.Dragonkin >= b.Dragonkin - eps
             && a.Elemental >= b.Elemental - eps
             && a.Human >= b.Human - eps
             && a.Undead >= b.Undead - eps
@@ -13163,6 +13378,8 @@ public class ArmyFarmerJoeDoAll
             return null;
 
         string trimmed = race.Trim();
+        if (trimmed.Equals("None", StringComparison.OrdinalIgnoreCase))
+            return null;
         if (trimmed.Contains("Chaos", StringComparison.OrdinalIgnoreCase))
             return "Chaos";
         if (trimmed.Contains("Dragon", StringComparison.OrdinalIgnoreCase))
