@@ -4046,6 +4046,7 @@ public class CoreAdvanced
                 case "blood titan":
                 case "frostblood titan":
                 case "cardclasher":
+                case "cardclasher ace":
                 case "chaos avenger member preview":
                 case "chaos champion prime":
                 case "chaos shaper":
@@ -4252,6 +4253,7 @@ public class CoreAdvanced
                 case "blood titan":
                 case "frostblood titan":
                 case "cardclasher":
+                case "cardclasher ace":
                 case "chaos avenger member preview":
                 case "chaos champion prime":
                 case "chaos slayer":
