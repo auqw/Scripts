@@ -1225,13 +1225,28 @@ public class CoreArmyFJ
             {
                 int fails = failedGotoCounts.TryGetValue(normalizedTarget, out int prev) ? prev + 1 : 1;
                 failedGotoCounts[normalizedTarget] = fails;
-                int failThreshold = IsLevelBracketedMap(targetMap) && Bot.Player.Level >= 75 ? 5 : 2;
+
+                int mapEntryRequiredLevel = GetRequiredLevelForMapCell(targetMap, "r2");
+                bool isWholeMapLevelLocked =
+                    !string.Equals(NormalizeMapKey(targetMap), "icestormarena", StringComparison.OrdinalIgnoreCase)
+                    && IsLevelBracketedMap(targetMap)
+                    && mapEntryRequiredLevel > 0
+                    && Bot.Player.Level < mapEntryRequiredLevel;
+
+                // Only sleep early when the local player is actually below the target map's level gate.
+                // Higher-level helpers following a lower-level teammate into /icestormarena (e.g. Lv 65 -> Lv 61)
+                // must wait for the teammate to finish equipping/joining instead of sleeping after 2 quick Gotos.
+                int failThreshold = isWholeMapLevelLocked ? 2 : 12;
                 if (fails >= failThreshold && unreachableHelperTargets.Add(normalizedTarget))
                 {
                     Core.Logger(
                         $"Could not reach teammate '{normalizedTarget}' after {fails} Goto attempts (different level-locked map or private instance); putting helper in sleep mode for '{normalizedTarget}'.",
                         "CoordinateFollowAndCombat"
                     );
+                }
+                else
+                {
+                    Bot.Sleep(1000);
                 }
             }
         }
