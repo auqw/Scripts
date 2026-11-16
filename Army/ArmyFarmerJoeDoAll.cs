@@ -12796,9 +12796,20 @@ public class ArmyFarmerJoeDoAll
 
     private bool RunBracketLevelAndEnhance(string objectiveName, int targetLevel)
     {
+        string targetExpMap = targetLevel switch
+        {
+            <= 10 => "oaklore",
+            <= 20 => "swordhavenundead",
+            <= 60 => "icestormarena",
+            < 75 => "battlegrounde",
+            _ => "icestormunder",
+        };
+        int subgroupCap = GetSubgroupCapForMap(targetExpMap);
+
         // On-demand enhancement policy: only level up here; enhancements are applied lazily
         // when the next rank-up or combat Ready Check actually requires the equipped gear.
-        return RunCooperativeObjective(
+        return RunSubgroupCooperativeObjective(
+            subgroupCap,
             objectiveName,
             () => Bot.Player.Level >= targetLevel,
             () =>
@@ -12816,7 +12827,8 @@ public class ArmyFarmerJoeDoAll
                 Army.CoordinateFollowAndCombat(
                     targetPlayerName,
                     "*",
-                    compositionType: ClassType.Farm
+                    compositionType: ClassType.Farm,
+                    targetMap: targetExpMap
                 );
             }
         );
@@ -13175,13 +13187,6 @@ public class ArmyFarmerJoeDoAll
             return null;
 
         if (trimmed.Contains("Chaos", StringComparison.OrdinalIgnoreCase))
-            return "Chaos";
-        if (trimmed.Contains("Dragon", StringComparison.OrdinalIgnoreCase))
-            return "Dragonkin";
-        if (trimmed.Contains("Elemental", StringComparison.OrdinalIgnoreCase))
-            return "Elemental";
-        if (trimmed.Contains("Human", StringComparison.OrdinalIgnoreCase))
-            return "Human";
         if (trimmed.Contains("Undead", StringComparison.OrdinalIgnoreCase))
             return "Undead";
 
@@ -14122,6 +14127,11 @@ public class ArmyFarmerJoeDoAll
             "aqlesson" => 4,
             "arcangrove" => 4,
             "banished" => 4,
+            "battlegrounda" => 4,
+            "battlegroundb" => 4,
+            "battlegroundc" => 4,
+            "battlegroundd" => 4,
+            "battlegrounde" => 4,
             "beehive" => 4,
             "bloodtitan" => 4,
             "bonecastlec" => 4,
@@ -14144,6 +14154,7 @@ public class ArmyFarmerJoeDoAll
             "gravestrike" => 4,
             "hedgemaze" => 4,
             "hydrachallenge" => 4,
+            "icestormunder" => 4,
             "icewindpass" => 4,
             "icewindwar" => 4,
             "infernalspire" => 4,
@@ -14154,10 +14165,12 @@ public class ArmyFarmerJoeDoAll
             "mobius" => 4,
             "mqlesson" => 4,
             "mythsong" => 4,
+            "oaklore" => 4,
             "odokuro" => 4,
             "sepulchurebattle" => 4,
             "shadowfortress" => 4,
             "stalagbite" => 4,
+            "swordhavenundead" => 4,
             "tercessuinotlim" => 4,
             "thirdspell" => 4,
             "towerofdoom" => 4,

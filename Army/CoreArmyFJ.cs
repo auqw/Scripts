@@ -659,6 +659,10 @@ public class CoreArmyFJ
     {
         "icestormarena",
         "icestormunder",
+        "battlegrounda",
+        "battlegroundb",
+        "battlegroundc",
+        "battlegroundd",
         "battlegrounde",
         "icewing",
         "voidxyfrag",
@@ -700,6 +704,14 @@ public class CoreArmyFJ
         if (normalizedMap == "icestormunder")
             return normalizedCell is "enter" or "spawn" or "" ? 0 : 75;
 
+        if (normalizedMap == "battlegrounda")
+            return 1;
+        if (normalizedMap == "battlegroundb")
+            return normalizedCell is "enter" or "spawn" or "" ? 0 : 16;
+        if (normalizedMap == "battlegroundc")
+            return normalizedCell is "enter" or "spawn" or "" ? 0 : 31;
+        if (normalizedMap == "battlegroundd")
+            return normalizedCell is "enter" or "spawn" or "" ? 0 : 46;
         if (normalizedMap == "battlegrounde")
             return normalizedCell is "enter" or "spawn" or "" ? 0 : 61;
 
@@ -1202,6 +1214,29 @@ public class CoreArmyFJ
             {
                 Core.Join(targetMap);
                 Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+
+                // In XP/CP level-bracketed farms (where /goto is often blocked on /battlegrounde or private rooms),
+                // a higher-level helper may need to step down (or up to icestormunder if Lv 75+) to find the teammate.
+                if (!Bot.Map.PlayerExists(normalizedTarget) && IsLevelBracketedMap(targetMap))
+                {
+                    string normalizedTargetMap = NormalizeMapKey(targetMap) ?? string.Empty;
+                    string[] fallbackMaps = normalizedTargetMap switch
+                    {
+                        "icestormunder" => new[] { "battlegrounde", "icestormarena" },
+                        "battlegrounde" => new[] { "icestormarena" },
+                        "icestormarena" when Bot.Player.Level >= 75 => new[] { "icestormunder", "battlegrounde" },
+                        "icestormarena" when Bot.Player.Level >= 61 => new[] { "battlegrounde" },
+                        _ => Array.Empty<string>(),
+                    };
+
+                    foreach (string fallbackMap in fallbackMaps)
+                    {
+                        if (Bot.ShouldExit || Bot.Map.PlayerExists(normalizedTarget))
+                            break;
+                        Core.Join(fallbackMap);
+                        Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+                    }
+                }
             }
             string? loadedMap = Bot.Map?.Name ?? targetMap;
             EnsureMapAccessBypass(loadedMap);
