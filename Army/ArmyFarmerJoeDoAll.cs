@@ -274,6 +274,7 @@ public class ArmyFarmerJoeDoAll
         CoreBots.Instance.Logger("Startup: Running BankAllItems (AC inventory & house items)...");
         BankAllCore.BankAll(inventory: true, house: true, bankNonAc: false, blackList: string.Empty);
         EnsureBestStaticBoostGearEquipped();
+        SetClass();
         return Army.SyncArmy("STARTUP_BANK_ALL_DONE");
     }
 
@@ -316,6 +317,12 @@ public class ArmyFarmerJoeDoAll
         );
     }
 
+    private bool _startupBracket30DailiesDone;
+    private bool _startupBracket50DailiesDone;
+    private bool _startupBracket55DailiesDone;
+    private bool _startupEncroachingShadowsDone;
+    private bool _startupDagesScrollDone;
+
     private bool RunStartupUnlockedDailies()
     {
         CoreBots core = CoreBots.Instance;
@@ -330,23 +337,34 @@ public class ArmyFarmerJoeDoAll
         if (!RunBracket30ApprovedDailiesAndWeeklies())
             return false;
 
+        _startupBracket30DailiesDone = Army.AllPlayersSatisfy(
+            "STARTUP_DAILIES_LV30_READY",
+            () => Bot.Player.Level >= 30
+        );
+
         if (
             Army.AllPlayersSatisfy(
                 "STARTUP_DAILIES_LV50_READY",
                 () => Bot.Player.Level >= 50 && core.isCompletedBefore(2084, log: false)
             )
-            && !RunBracket50ApprovedDailies()
         )
-            return false;
+        {
+            if (!RunBracket50ApprovedDailies())
+                return false;
+            _startupBracket50DailiesDone = true;
+        }
 
         if (
             Army.AllPlayersSatisfy(
                 "STARTUP_DAILIES_LV55_BK_READY",
                 () => Bot.Player.Level >= 55 && core.isCompletedBefore(2084, log: false)
             )
-            && !RunBracket55ApprovedDailies()
         )
-            return false;
+        {
+            if (!RunBracket55ApprovedDailies())
+                return false;
+            _startupBracket55DailiesDone = true;
+        }
 
         bool cryoDailyDone = false;
         if (
@@ -397,18 +415,24 @@ public class ArmyFarmerJoeDoAll
 
         if (
             Army.AllPlayersSatisfy("STARTUP_DAILIES_LV75_READY", () => Bot.Player.Level >= 75)
-            && !RunTheEncroachingShadowsDaily()
         )
-            return false;
+        {
+            if (!RunTheEncroachingShadowsDaily())
+                return false;
+            _startupEncroachingShadowsDone = true;
+        }
 
         if (
             Army.AllPlayersSatisfy(
                 "STARTUP_DAILIES_DAGE_READY",
                 () => Bot.Player.Level >= 75 && core.isCompletedBefore(2084, log: false)
             )
-            && !RunDagesScrollFragmentDaily()
         )
-            return false;
+        {
+            if (!RunDagesScrollFragmentDaily())
+                return false;
+            _startupDagesScrollDone = true;
+        }
 
         return Army.SyncArmy("STARTUP_DAILIES_END");
     }
@@ -1143,13 +1167,16 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        // 1. Elders' Blood Daily (if Level >= 30 and daily available)
-        if (!RunEldersBloodDaily("BRACKET30"))
-            return false;
+        if (!_startupBracket30DailiesDone)
+        {
+            // 1. Elders' Blood Daily (if Level >= 30 and daily available)
+            if (!RunEldersBloodDaily("BRACKET30"))
+                return false;
 
-        // 1b. Approved Bracket 30 Weeklies & Early Daily (Design Notes 1213, Wheel of Doom 3076/3075, Odd's 'n' Ends 6187)
-        if (!RunBracket30ApprovedDailiesAndWeeklies())
-            return false;
+            // 1b. Approved Bracket 30 Weeklies & Early Daily (Design Notes 1213, Wheel of Doom 3076/3075, Odd's 'n' Ends 6187)
+            if (!RunBracket30ApprovedDailiesAndWeeklies())
+                return false;
+        }
 
         // 2. GetBoosts (only if enabled in options)
         bool getBoostsEnabled = Bot.Config?.Get<bool>("GetBoosts") == true;
@@ -2293,7 +2320,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // 8. Approved Bracket 50 Dailies (Unlock "A Loyal Follower" 2084 -> Mine Crafting 2091 -> ShadowScythe General 3828/3827)
-        if (!RunBracket50ApprovedDailies())
+        if (!_startupBracket50DailiesDone && !RunBracket50ApprovedDailies())
             return false;
 
         return Army.SyncArmy("STEP2B_COMPLETE");
@@ -3556,7 +3583,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // 6. Approved Bracket 55 Dailies (Seal of Light 3826 & Seal of Darkness 3825)
-        if (!RunBracket55ApprovedDailies())
+        if (!_startupBracket55DailiesDone && !RunBracket55ApprovedDailies())
             return false;
 
         SetClass(rankUpIfNeeded: true);
@@ -15934,6 +15961,9 @@ public class ArmyFarmerJoeDoAll
     /// </summary>
     public bool RunTheEncroachingShadowsDaily()
     {
+        if (_startupEncroachingShadowsDone)
+            return true;
+
         CoreBots core = CoreBots.Instance;
         bool voidAuraCapped = core.CheckInventory("Void Aura", 7500, toInv: false);
         bool dailyAvailable = Bot.Player.Level >= 75 && !voidAuraCapped && CanRunPeriodicQuest(8653);
@@ -15983,28 +16013,37 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         bool turnInDone = false;
-        return RunCoordinatedTurnInStep(
-            "FUTURE75_ENCROACHING_SHADOWS_COMPLETE",
-            () => !dailyAvailable || turnInDone,
-            () => !dailyAvailable || Bot.Quests.IsDailyComplete(8653) || turnInDone,
-            () =>
-            {
-                turnInDone = true;
-                UnbankIfOwned("Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets");
-                if (
-                    !core.CheckInventory("Glacial Pinion", 1)
-                    || !core.CheckInventory("Hydra Eyeball", 3)
-                    || !core.CheckInventory("Flibbitigiblets", 1)
-                )
-                    return;
+        if (
+            !RunCoordinatedTurnInStep(
+                "FUTURE75_ENCROACHING_SHADOWS_COMPLETE",
+                () => !dailyAvailable || turnInDone,
+                () => !dailyAvailable || Bot.Quests.IsDailyComplete(8653) || turnInDone,
+                () =>
+                {
+                    turnInDone = true;
+                    UnbankIfOwned("Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets");
+                    if (
+                        !core.CheckInventory("Glacial Pinion", 1)
+                        || !core.CheckInventory("Hydra Eyeball", 3)
+                        || !core.CheckInventory("Flibbitigiblets", 1)
+                    )
+                        return;
 
-                core.AddDrop("Void Aura", "(Necro) Scroll of Dark Arts");
-                core.EnsureAccept(8653);
-                core.EnsureComplete(8653);
-                WaitForDailyRewardPickup(8653, "Void Aura");
-                BankIfPresent("Void Aura", "(Necro) Scroll of Dark Arts");
-            }
+                    core.AddDrop("Void Aura", "(Necro) Scroll of Dark Arts");
+                    core.EnsureAccept(8653);
+                    core.EnsureComplete(8653);
+                    WaitForDailyRewardPickup(8653, "Void Aura");
+                    BankIfPresent("Void Aura", "(Necro) Scroll of Dark Arts");
+                }
+            )
+        )
+            return false;
+
+        _startupEncroachingShadowsDone = Army.AllPlayersSatisfy(
+            "ENCROACHING_SHADOWS_DONE_FLAG",
+            () => Bot.Player.Level >= 75
         );
+        return true;
     }
 
     /// <summary>
@@ -16012,13 +16051,17 @@ public class ArmyFarmerJoeDoAll
     /// </summary>
     public bool RunDagesScrollFragmentDaily()
     {
+        if (_startupDagesScrollDone)
+            return true;
+
         CoreBots core = CoreBots.Instance;
         bool hasEnoughFragments = core.CheckInventory("Dage's Scroll Fragment", 13, toInv: false);
         bool dailyAvailable = Bot.Player.Level >= 75 && !hasEnoughFragments && CanRunPeriodicQuest(3596);
         bool dailyDone = !dailyAvailable;
 
-        return RunCoordinatedCombatStep(
-            "STEP3B_DAGES_SCROLL_FRAGMENT",
+        if (
+            !RunCoordinatedCombatStep(
+                "STEP3B_DAGES_SCROLL_FRAGMENT",
             () => dailyDone,
             () => dailyDone,
             "*",
@@ -16030,8 +16073,16 @@ public class ArmyFarmerJoeDoAll
                 Daily.DagesScrollFragment(ToBank: true);
                 dailyDone = true;
             },
-            targetMap: "mountdoomskull"
+                targetMap: "mountdoomskull"
+            )
+        )
+            return false;
+
+        _startupDagesScrollDone = Army.AllPlayersSatisfy(
+            "DAGES_SCROLL_DONE_FLAG",
+            () => Bot.Player.Level >= 75 && core.isCompletedBefore(2084, log: false)
         );
+        return true;
     }
     #endregion Approved Dailies, Weeklies & Future NSoD Daily
 
