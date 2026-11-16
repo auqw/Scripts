@@ -2396,5 +2396,126 @@ public class CoreArmyFJ
 
         return allTrue;
     }
+
+    /// <summary>
+    /// Cancels combat targets and moves to a safe cell so quest turn-ins are not rejected for being in combat.
+    /// </summary>
+    public void ExitCombatForSafeTurnIn()
+    {
+        if (Bot.Player.HasTarget)
+            Bot.Combat.CancelTarget();
+
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
+
+        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+        {
+            Core.JumpWait();
+            Bot.Wait.ForCombatExit(20);
+        }
+    }
+
+    /// <summary>
+    /// Exits combat before completing the given quests via <see cref="CoreBots.EnsureComplete(int[])"/>.
+    /// </summary>
+    public void SafeEnsureComplete(params int[] questIds)
+    {
+        if (questIds == null || questIds.Length == 0)
+            return;
+
+        ExitCombatForSafeTurnIn();
+        Core.EnsureComplete(questIds);
+    }
+
+    /// <summary>
+    /// Turns in any completable quests in <paramref name="questIds"/> after exiting combat,
+    /// avoiding in-combat rejections and temp-item desync loops.
+    /// </summary>
+    public bool CompleteCompletableQuestsOutOfCombat(int[] questIds, bool reaccept = true)
+    {
+        if (questIds == null || questIds.Length == 0)
+            return false;
+
+        int[] completable = questIds
+            .Where(id => id > 0 && Bot.Quests.IsInProgress(id) && Bot.Quests.CanComplete(id))
+            .Distinct()
+            .ToArray();
+
+        if (completable.Length == 0)
+            return false;
+
+        ExitCombatForSafeTurnIn();
+
+        foreach (int questId in completable)
+        {
+            if (Bot.ShouldExit)
+                break;
+
+            Core.EnsureComplete(questId);
+            Bot.Sleep(Core.ActionDelay);
+
+            if (Bot.Quests.IsInProgress(questId))
+            {
+                Core.Logger(
+                    $"SafeTurnIn: Quest {questId} remained in progress after out-of-combat turn-in; resetting quest state."
+                );
+                Bot.Flash.CallGameFunction("world.abandonQuest", questId);
+                Bot.Sleep(Core.ActionDelay);
+                Core.EnsureLoad(questId);
+            }
+        }
+
+        if (reaccept && !Bot.ShouldExit)
+        {
+            int[] toAccept = questIds
+                .Where(id => id > 0 && !Bot.Quests.IsInProgress(id))
+                .Distinct()
+                .ToArray();
+            if (toAccept.Length > 0)
+                Core.EnsureAcceptmultiple(toAccept);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Farms monsters for repeatable quests without background turn-in spam,
+    /// exiting combat cleanly whenever any registered quest becomes completable.
+    /// </summary>
+    public void RunSafeQuestFarm(
+        string map,
+        string cell,
+        string pad,
+        string monster,
+        int[] questIds,
+        Func<bool> stopCondition
+    )
+    {
+        if (questIds == null || questIds.Length == 0)
+            return;
+
+        Core.EnsureAcceptmultiple(questIds);
+
+        while (!Bot.ShouldExit && !stopCondition())
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
+
+            if (CompleteCompletableQuestsOutOfCombat(questIds, reaccept: true) && stopCondition())
+                break;
+
+            int[] missingAccept = questIds
+                .Where(id => id > 0 && !Bot.Quests.IsInProgress(id))
+                .Distinct()
+                .ToArray();
+            if (missingAccept.Length > 0)
+                Core.EnsureAcceptmultiple(missingAccept);
+
+            Core.KillMonster(map, cell, pad, monster, log: false);
+        }
+
+        CompleteCompletableQuestsOutOfCombat(questIds, reaccept: false);
+    }
 }
 

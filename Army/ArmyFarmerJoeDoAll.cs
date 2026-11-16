@@ -480,6 +480,24 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         ApplyArmyRoomSettings();
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP1_BEGINNER",
+                () =>
+                    Bot.Player.Level >= 25
+                    && HasClassInInventory("Oracle")
+                    && HasRank10Class("Oracle")
+                    && HasClassInInventory("Ninja")
+                    && HasRank10Class("Ninja")
+                    && HasClassInInventory("Mage")
+                    && HasRank10Class("Mage")
+            )
+        )
+        {
+            CoreBots.Instance.Logger("Army FarmerJoe: Step 1 (Level 1-30) already completed on all accounts — skipping.");
+            return Army.SyncArmy("STEP1_COMPLETE");
+        }
+
         CoreBots.Instance.Logger("Army FarmerJoe: starting level 1-30 on all accounts.");
         if (!RunBeginnerItems())
             return false;
@@ -1072,6 +1090,37 @@ public class ArmyFarmerJoeDoAll
 
         ApplyArmyRoomSettings();
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP2A_BRACKET30",
+                () =>
+                    Bot.Config?.Get<bool>("GetBoosts") != true
+                    && Bot.Player.Level >= 30
+                    && HasClassInInventory("Master Ranger")
+                    && HasRank10Class("Master Ranger")
+                    && HasClassInInventory("Darkblood StormKing")
+                    && HasRank10Class("Darkblood StormKing")
+                    && (
+                        (HasClassInInventory("Imperial Chunin") && HasRank10Class("Imperial Chunin"))
+                        || (HasClassInInventory("Chunin") && HasRank10Class("Chunin"))
+                    )
+                    && HasClassInInventory("Shaman")
+                    && HasRank10Class("Shaman")
+                    && HasClassInInventory("Evolved Shaman")
+                    && HasRank10Class("Evolved Shaman")
+                    && HasClassInInventory("Bard")
+                    && HasRank10Class("Bard")
+                    && Farm.FactionRank("Blade of Awe") >= 10
+                    && core.CheckInventory("Awethur's Accoutrements")
+                    && core.isCompletedBefore(8828, log: false)
+            )
+        )
+        {
+            core.Logger("Army FarmerJoe: Step 2A (Bracket 30) already completed on all accounts — skipping.");
+            EnsureBestStaticBoostGearEquipped();
+            return Army.SyncArmy("STEP2A_COMPLETE");
+        }
+
         core.Logger("Army FarmerJoe: starting Step 2A (Bracket 30) on all accounts.");
 
         // 0. Initial SetClass setup
@@ -1907,6 +1956,24 @@ public class ArmyFarmerJoeDoAll
 
         ApplyArmyRoomSettings();
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP2B_BRACKET50",
+                () =>
+                    Bot.Player.Level >= 50
+                    && HasClassInInventory("Scarlet Sorceress")
+                    && HasRank10Class("Scarlet Sorceress")
+                    && HasClassInInventory("Dragonslayer General")
+                    && HasRank10Class("Dragonslayer General")
+                    && HasOwnedBoostWeaponAtLeast(0.15)
+            )
+        )
+        {
+            core.Logger("Army FarmerJoe: Step 2B (Bracket 50) already completed on all accounts — skipping.");
+            EnsureBestStaticBoostGearEquipped();
+            return Army.SyncArmy("STEP2B_COMPLETE");
+        }
+
         core.Logger("Army FarmerJoe: starting Step 2B (Bracket 50) on all accounts.");
         EnsureBestStaticBoostGearEquipped();
 
@@ -2125,30 +2192,16 @@ public class ArmyFarmerJoeDoAll
                     );
                     core.AddDrop("Enchanted Scale", "Dragon Claw");
                     SetClass(ClassType.Farm);
-                    try
-                    {
-                        core.RegisterQuests(5294);
-                        while (
-                            !Bot.ShouldExit
-                            && (
-                                !core.CheckInventory("Enchanted Scale", 75)
-                                || !core.CheckInventory("Dragon Claw", 100)
-                            )
-                        )
-                        {
-                            core.KillMonster(
-                                "dragontown",
-                                "r4",
-                                "Right",
-                                "Tempest Dracolich",
-                                log: false
-                            );
-                        }
-                    }
-                    finally
-                    {
-                        core.CancelRegisteredQuests();
-                    }
+                    Army.RunSafeQuestFarm(
+                        "dragontown",
+                        "r4",
+                        "Right",
+                        "Tempest Dracolich",
+                        new[] { 5294 },
+                        () =>
+                            core.CheckInventory("Enchanted Scale", 75)
+                            && core.CheckInventory("Dragon Claw", 100)
+                    );
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
@@ -2249,6 +2302,17 @@ public class ArmyFarmerJoeDoAll
     private bool RunCoordinatedShatterGlassMaze(Func<bool> skipCondition)
     {
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_HEDGEMAZE_STORY",
+                () =>
+                    skipCondition()
+                    || core.isCompletedBefore(5332, log: false)
+                    || core.isCompletedBefore(5313, log: false)
+            )
+        )
+            return true;
+
         core.EnsureLoad(Enumerable.Range(5298, 16).ToArray());
 
         bool IsHedgeQuestDone(int questId) =>
@@ -2576,6 +2640,14 @@ public class ArmyFarmerJoeDoAll
     private bool RunCoordinatedTowerOfMirrors(Func<bool> skipCondition)
     {
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_TOWER_OF_MIRRORS_STORY",
+                () => skipCondition() || core.isCompletedBefore(5332, log: false)
+            )
+        )
+            return true;
+
         core.EnsureLoad(Enumerable.Range(5314, 19).ToArray());
 
         bool IsTowerQuestDone(int questId) =>
@@ -3078,6 +3150,26 @@ public class ArmyFarmerJoeDoAll
         if (!Army.SyncArmy("STEP2C_55_START"))
             return false;
 
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP2C_55_BRACKET55",
+                () =>
+                    Bot.Player.Level >= 55
+                    && HasClassInInventory("Blaze Binder")
+                    && HasRank10Class("Blaze Binder")
+                    && HasClassInInventory("Cryomancer")
+                    && HasRank10Class("Cryomancer")
+                    && HasClassInInventory("Arachnomancer")
+                    && HasRank10Class("Arachnomancer")
+                    && core.CheckInventory("Cape of Awe")
+            )
+        )
+        {
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 55) already completed on all accounts — skipping.");
+            EnsureBestStaticBoostGearEquipped();
+            return Army.SyncArmy("STEP2C_55_COMPLETE") && !Bot.ShouldExit;
+        }
+
         SetClass(rankUpIfNeeded: true);
         EnsureBestStaticBoostGearEquipped();
 
@@ -3486,6 +3578,22 @@ public class ArmyFarmerJoeDoAll
         if (!Army.SyncArmy("STEP2C_60_START"))
             return false;
 
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP2C_60_BRACKET60",
+                () =>
+                    Bot.Player.Level >= 60
+                    && (HasClassInInventory(59476) || HasClassInInventory("DragonSoul Shinobi"))
+                    && HasRank10Class("DragonSoul Shinobi")
+                    && core.isCompletedBefore(8739, log: false)
+            )
+        )
+        {
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 60) already completed on all accounts — skipping.");
+            EnsureBestStaticBoostGearEquipped();
+            return Army.SyncArmy("STEP2C_60_COMPLETE") && !Bot.ShouldExit;
+        }
+
         SetClass(rankUpIfNeeded: true);
         EnsureBestStaticBoostGearEquipped();
 
@@ -3514,16 +3622,17 @@ public class ArmyFarmerJoeDoAll
                     core.AddDrop(20561);
                     SetClass(ClassType.Solo);
                     core.FarmingLogger("Dragon Shinobi Token", 300);
-                    try
+                    core.EnsureAccept(7924);
+                    while (!Bot.ShouldExit && !core.CheckInventory(20561, 300))
                     {
-                        core.RegisterQuests(7924);
-                        while (!Bot.ShouldExit && !core.CheckInventory(20561, 300))
-                            core.HuntMonster("shadowfortress", "1st Head of Orochi", log: false);
+                        Army.CompleteCompletableQuestsOutOfCombat(new[] { 7924 }, reaccept: true);
+                        if (core.CheckInventory(20561, 300))
+                            break;
+                        if (!Bot.Quests.IsInProgress(7924))
+                            core.EnsureAccept(7924);
+                        core.HuntMonster("shadowfortress", "1st Head of Orochi", log: false);
                     }
-                    finally
-                    {
-                        core.CancelRegisteredQuests();
-                    }
+                    Army.CompleteCompletableQuestsOutOfCombat(new[] { 7924 }, reaccept: false);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
@@ -4050,6 +4159,21 @@ public class ArmyFarmerJoeDoAll
         if (!Army.SyncArmy("STEP2C_65_START"))
             return false;
 
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP2C_65_BRACKET65",
+                () =>
+                    Bot.Player.Level >= 65
+                    && (HasAnyClassInInventory(38084, 38049) || HasClassInInventory("Glacial Berserker"))
+                    && HasRank10Class("Glacial Berserker")
+            )
+        )
+        {
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 65) already completed on all accounts — skipping.");
+            EnsureBestStaticBoostGearEquipped();
+            return Army.SyncArmy("STEP2C_65_COMPLETE") && !Bot.ShouldExit;
+        }
+
         SetClass(rankUpIfNeeded: true);
         EnsureBestStaticBoostGearEquipped();
 
@@ -4090,7 +4214,25 @@ public class ArmyFarmerJoeDoAll
                         return;
 
                     SetClass(ClassType.Farm);
-                    Farm.GlaceraREP(10);
+                    core.SavedState(true, "icewindwar");
+                    Farm.ToggleBoost(BoostType.Reputation);
+                    core.Logger("Farming Glacera rank 10 (safe out-of-combat turn-in)");
+                    try
+                    {
+                        Army.RunSafeQuestFarm(
+                            "icewindwar",
+                            "r5",
+                            "Left",
+                            "*",
+                            new[] { 5597, 5598, 5599, 5600 },
+                            () => IsGlaceraRepDone()
+                        );
+                    }
+                    finally
+                    {
+                        Farm.ToggleBoost(BoostType.Reputation, false);
+                        core.SavedState(false);
+                    }
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
@@ -4171,6 +4313,27 @@ public class ArmyFarmerJoeDoAll
 
         if (!Army.SyncArmy("STEP2D_70_START"))
             return false;
+
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_STEP2D_70_BRACKET70",
+                () =>
+                    Bot.Player.Level >= 70
+                    && HasClassInInventory("StoneCrusher")
+                    && HasRank10Class("StoneCrusher")
+                    && core.isCompletedBefore(8824, log: false)
+                    && core.isCompletedBefore(8825, log: false)
+                    && core.isCompletedBefore(8826, log: false)
+                    && core.isCompletedBefore(8827, log: false)
+                    && HasClassInInventory("ArchPaladin")
+                    && HasRank10Class("ArchPaladin")
+            )
+        )
+        {
+            core.Logger("Army FarmerJoe: Step 2D (Bracket 70) already completed on all accounts — skipping.");
+            EnsureBestStaticBoostGearEquipped();
+            return Army.SyncArmy("STEP2D_COMPLETE") && !Bot.ShouldExit;
+        }
 
         SetClass(rankUpIfNeeded: true);
         EnsureBestStaticBoostGearEquipped();
@@ -9113,10 +9276,14 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureAccept(9171);
                     core.AddDrop("Yami");
                     SetClass(ClassType.Farm);
-                    core.RegisterQuests(7409);
-                    while (!Bot.ShouldExit && !core.CheckInventory("Yami", 3))
-                        core.KillMonster("darkally", "r2", "Left", "*", log: false);
-                    core.CancelRegisteredQuests();
+                    Army.RunSafeQuestFarm(
+                        "darkally",
+                        "r2",
+                        "Left",
+                        "*",
+                        new[] { 7409 },
+                        () => core.CheckInventory("Yami", 3)
+                    );
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
@@ -9160,15 +9327,22 @@ public class ArmyFarmerJoeDoAll
                         }
                         core.AddDrop("Dragon Shinobi Token");
                         SetClass(ClassType.Solo);
-                        core.RegisterQuests(7924);
+                        core.EnsureAccept(7924);
                         while (!Bot.ShouldExit && !core.CheckInventory("Dragon Shinobi Token", 100))
+                        {
+                            Army.CompleteCompletableQuestsOutOfCombat(new[] { 7924 }, reaccept: true);
+                            if (core.CheckInventory("Dragon Shinobi Token", 100))
+                                break;
+                            if (!Bot.Quests.IsInProgress(7924))
+                                core.EnsureAccept(7924);
                             core.HuntMonster(
                                 "shadowfortress",
                                 "1st Head of Orochi",
                                 "Perfectly Preserved Dragon Tooth",
                                 log: false
                             );
-                        core.CancelRegisteredQuests();
+                        }
+                        Army.CompleteCompletableQuestsOutOfCombat(new[] { 7924 }, reaccept: false);
                     },
                     (targetPlayerNumber, targetPlayerName) =>
                     {
@@ -10362,6 +10536,13 @@ public class ArmyFarmerJoeDoAll
     private bool RunCoordinatedFrozenTower(Func<bool> skipCondition)
     {
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_FROZEN_TOWER_STORY",
+                () => skipCondition() || core.isCompletedBefore(3937, log: false)
+            )
+        )
+            return true;
 
         bool IsFTQuestDone(int questId) =>
             skipCondition() || core.isCompletedBefore(3937, log: false) || core.isCompletedBefore(questId, log: false);
@@ -11035,6 +11216,13 @@ public class ArmyFarmerJoeDoAll
     private bool RunCoordinatedYokaiStory(Func<bool> skipCondition)
     {
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_YOKAI_STORY",
+                () => skipCondition() || core.isCompletedBefore(6494, log: false)
+            )
+        )
+            return true;
 
         bool IsShogunDone(int questId) =>
             skipCondition()
@@ -11852,6 +12040,13 @@ public class ArmyFarmerJoeDoAll
     private bool RunCoordinatedGlaceraForGB(Func<bool> skipCondition)
     {
         CoreBots core = CoreBots.Instance;
+        if (
+            Army.AllPlayersSatisfy(
+                "SKIP_GLACERA_STORY",
+                () => skipCondition() || core.isCompletedBefore(5601, log: false)
+            )
+        )
+            return true;
 
         bool IsRuinsQuestDone(int questId) =>
             skipCondition()
@@ -12257,7 +12452,7 @@ public class ArmyFarmerJoeDoAll
                     core.HuntMonster("icewindwar", "Glaceran Defender", "Mega Frostspawn Medal", 5);
                     core.HuntMonster("icewindwar", "Frost Invader", "World Ender Medal", 10);
                     core.HuntMonster("icewindwar", "Frost Invader", "Mega World Ender Medal", 5);
-                    core.EnsureComplete(new[] { 5597, 5598, 5599, 5600 });
+                    Army.SafeEnsureComplete(new[] { 5597, 5598, 5599, 5600 });
                     warMedalsDone = true;
                 },
                 (targetPlayerNumber, targetPlayerName) =>
@@ -12938,221 +13133,6 @@ public class ArmyFarmerJoeDoAll
                     core.JumpWait();
                     Bot.Sleep(500);
                     completed = core.EnsureComplete(2777);
-                }
-
-                if (completed)
-                {
-                    Bot.Wait.ForTrue(
-                        () => !Bot.Quests.IsInProgress(2777) && !Bot.TempInv.Contains("Slimy Lost Sock", 5),
-                        15
-                    );
-                    turnIns++;
-                    if (turnIns == 1 || turnIns % 5 == 0 || Farm.FactionRank("Blacksmithing") >= 4)
-                    {
-                        core.Logger(
-                            $"Blacksmithing Rep 4 progress: {Farm.TotalFactionRep("Blacksmithing")}/10000 "
-                                + $"(Rank {Farm.FactionRank("Blacksmithing")}, turn-in #{turnIns})."
-                        );
-                    }
-                }
-            }
-        }
-        finally
-        {
-            Farm.ToggleBoost(BoostType.Reputation, false);
-            if (Bot.Quests.IsInProgress(2777))
-                core.AbandonQuest(2777);
-            LeaveCombatRoomForEquipmentChange();
-        }
-    }
-
-    private void LeaveCombatRoomForEquipmentChange()
-    {
-        try
-        {
-            Bot.Skills.Stop();
-        }
-        catch
-        {
-            // Ignore if skill timer is not active
-        }
-
-        if (Bot.Player.HasTarget)
-            Bot.Combat.CancelTarget();
-
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-
-        // 1. Prefer jumping to the safe "Enter" cell on the current map instead of forcing /whitemap.
-        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
-        {
-            CoreBots.Instance.JumpWait();
-            Bot.Wait.ForCombatExit(20);
-        }
-
-        // 2. Only fall back to /whitemap if the current cell still has monsters or combat did not exit.
-        string currentMap = Bot.Map?.Name ?? string.Empty;
-        if (
-            !string.Equals(currentMap, "whitemap", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(currentMap, "battleon", StringComparison.OrdinalIgnoreCase)
-            && (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
-        )
-        {
-            CoreBots.Instance.Join("whitemap");
-            Bot.Wait.ForMapLoad("whitemap");
-            CoreBots.Instance.JumpWait();
-            Bot.Wait.ForCombatExit(20);
-        }
-    }
-
-    private readonly HashSet<int> _unequippableBoostItemIds = new();
-
-    private readonly struct BoostProfile
-    {
-        public double DmgAll { get; init; }
-        public double Chaos { get; init; }
-        public double Dragonkin { get; init; }
-        public double Elemental { get; init; }
-        public double Human { get; init; }
-        public double Undead { get; init; }
-        public double Cp { get; init; }
-        public double Exp { get; init; }
-        public double Gold { get; init; }
-        public double Rep { get; init; }
-
-        public bool HasAnyBoost =>
-            DmgAll > 0
-            || Chaos > 0
-            || Dragonkin > 0
-            || Elemental > 0
-            || Human > 0
-            || Undead > 0
-            || Cp > 0
-            || Exp > 0
-            || Gold > 0
-            || Rep > 0;
-    }
-
-    private static double ParseBoostFraction(string rawValue)
-    {
-        if (string.IsNullOrWhiteSpace(rawValue))
-            return 0;
-
-        string cleaned = rawValue.Trim();
-        bool hasPercent = cleaned.EndsWith("%", StringComparison.Ordinal);
-        if (hasPercent)
-            cleaned = cleaned.Substring(0, cleaned.Length - 1).Trim();
-        if (cleaned.StartsWith("+", StringComparison.Ordinal))
-            cleaned = cleaned.Substring(1).Trim();
-
-        if (!double.TryParse(cleaned, NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
-            return 0;
-        if (!double.IsFinite(value) || value <= 0)
-            return 0;
-
-        double bonus = hasPercent || value >= 5.0
-            ? value / 100.0
-            : value >= 1.0
-                ? value - 1.0
-                : value;
-
-        return Math.Max(0, bonus);
-    }
-
-    private static BoostProfile ParseBoostProfile(ItemBase? item)
-    {
-        string? meta = item?.Meta;
-        if (string.IsNullOrWhiteSpace(meta))
-            return default;
-
-        double dmgAll = 0;
-        double chaos = 0;
-        double dragonkin = 0;
-        double elemental = 0;
-        double human = 0;
-        double undead = 0;
-        double cp = 0;
-        double exp = 0;
-        double gold = 0;
-        double rep = 0;
-
-        string[] entries = meta.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
-        foreach (string entry in entries)
-        {
-            int sepIndex = entry.IndexOf(':');
-            if (sepIndex < 0)
-                sepIndex = entry.IndexOf('=');
-            if (sepIndex <= 0 || sepIndex >= entry.Length - 1)
-                continue;
-
-            string key = entry.Substring(0, sepIndex).Trim().ToLowerInvariant();
-            double fraction = ParseBoostFraction(entry.Substring(sepIndex + 1));
-            if (fraction <= 0)
-                continue;
-
-            switch (key)
-            {
-                case "dmgall":
-                case "alldmg":
-                case "all":
-                    dmgAll = Math.Max(dmgAll, fraction);
-                    break;
-                case "chaos":
-                    chaos = Math.Max(chaos, fraction);
-                    break;
-                case "dragonkin":
-                case "dragon":
-                    dragonkin = Math.Max(dragonkin, fraction);
-                    break;
-                case "elemental":
-                    elemental = Math.Max(elemental, fraction);
-                    break;
-                case "human":
-                    human = Math.Max(human, fraction);
-                    break;
-                case "undead":
-                    undead = Math.Max(undead, fraction);
-                    break;
-                case "cp":
-                case "classpoints":
-                    cp = Math.Max(cp, fraction);
-                    break;
-                case "exp":
-                case "xp":
-                    exp = Math.Max(exp, fraction);
-                    break;
-                case "gold":
-                    gold = Math.Max(gold, fraction);
-                    break;
-                case "rep":
-                case "reputation":
-                    rep = Math.Max(rep, fraction);
-                    break;
-            }
-        }
-
-        return new BoostProfile
-        {
-            DmgAll = dmgAll,
-            Chaos = chaos,
-            Dragonkin = dragonkin,
-            Elemental = elemental,
-            Human = human,
-            Undead = undead,
-            Cp = cp,
-            Exp = exp,
-            Gold = gold,
-            Rep = rep,
-        };
-    }
-
-    private static bool Dominates(in BoostProfile a, in BoostProfile b)
-    {
-        const double eps = 1e-6;
-        return a.DmgAll >= b.DmgAll - eps
-            && a.Chaos >= b.Chaos - eps
-            && a.Dragonkin >= b.Dragonkin - eps
             && a.Elemental >= b.Elemental - eps
             && a.Human >= b.Human - eps
             && a.Undead >= b.Undead - eps
@@ -13183,10 +13163,14 @@ public class ArmyFarmerJoeDoAll
             return null;
 
         string trimmed = race.Trim();
-        if (trimmed.Equals("None", StringComparison.OrdinalIgnoreCase))
-            return null;
-
         if (trimmed.Contains("Chaos", StringComparison.OrdinalIgnoreCase))
+            return "Chaos";
+        if (trimmed.Contains("Dragon", StringComparison.OrdinalIgnoreCase))
+            return "Dragonkin";
+        if (trimmed.Contains("Elemental", StringComparison.OrdinalIgnoreCase))
+            return "Elemental";
+        if (trimmed.Contains("Human", StringComparison.OrdinalIgnoreCase))
+            return "Human";
         if (trimmed.Contains("Undead", StringComparison.OrdinalIgnoreCase))
             return "Undead";
 
@@ -14636,16 +14620,14 @@ public class ArmyFarmerJoeDoAll
 
                     if (!core.CheckInventory("Spirit Orb", 100))
                     {
-                        try
-                        {
-                            core.RegisterQuests(2082, 2083);
-                            while (!Bot.ShouldExit && !core.CheckInventory("Spirit Orb", 100))
-                                core.KillMonster("battleunderb", "Enter", "Spawn", "Skeleton Warrior", log: false);
-                        }
-                        finally
-                        {
-                            core.CancelRegisteredQuests();
-                        }
+                        Army.RunSafeQuestFarm(
+                            "battleunderb",
+                            "Enter",
+                            "Spawn",
+                            "Skeleton Warrior",
+                            new[] { 2082, 2083 },
+                            () => core.CheckInventory("Spirit Orb", 100)
+                        );
                     }
                 },
                 (targetPlayerNumber, targetPlayerName) =>
