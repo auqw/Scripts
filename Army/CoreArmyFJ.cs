@@ -2398,10 +2398,16 @@ public class CoreArmyFJ
     }
 
     /// <summary>
-    /// Cancels combat targets and moves to a safe cell so quest turn-ins are not rejected for being in combat.
+    /// Stops skills, cancels combat targets, moves to the map's Enter cell, and waits until out of combat.
     /// </summary>
     public void ExitCombatForSafeTurnIn()
     {
+        try
+        {
+            Bot.Skills.Stop();
+        }
+        catch { }
+
         if (Bot.Player.HasTarget)
             Bot.Combat.CancelTarget();
 
@@ -2409,17 +2415,45 @@ public class CoreArmyFJ
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
+        bool hasEnterCell =
+            Bot.Map?.Cells != null
+            && Bot.Map.Cells.Any(c => string.Equals(c, "Enter", StringComparison.OrdinalIgnoreCase));
+
+        if (hasEnterCell && !string.Equals(Bot.Player.Cell, "Enter", StringComparison.OrdinalIgnoreCase))
+        {
+            Core.Jump("Enter", "Spawn");
+            Bot.Wait.ForTrue(
+                () => string.Equals(Bot.Player.Cell, "Enter", StringComparison.OrdinalIgnoreCase),
+                10
+            );
+        }
+        else if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+        {
+            Core.JumpWait();
+        }
+
+        Bot.Wait.ForCombatExit(20);
+
         if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
         {
             Core.JumpWait();
             Bot.Wait.ForCombatExit(20);
         }
+    }
 
-        Bot.Sleep(Math.Max(Core.ActionDelay, 700));
+    private void SleepInterruptible(int totalMs)
+    {
+        int remaining = Math.Max(0, totalMs);
+        while (remaining > 0 && !Bot.ShouldExit)
+        {
+            int step = Math.Min(500, remaining);
+            Bot.Sleep(step);
+            remaining -= step;
+        }
     }
 
     /// <summary>
-    /// Exits combat before completing the given quests via <see cref="CoreBots.EnsureComplete(int[])"/>.
+    /// Exits combat to Enter cell, waits 10s, and completes the given quests via <see cref="CoreBots.EnsureComplete(int[])"/>.
     /// </summary>
     public void SafeEnsureComplete(params int[] questIds)
     {
@@ -2427,13 +2461,17 @@ public class CoreArmyFJ
             return;
 
         ExitCombatForSafeTurnIn();
+        SleepInterruptible(10000);
+        if (Bot.ShouldExit)
+            return;
+
         Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
         Core.EnsureComplete(questIds);
     }
 
     /// <summary>
-    /// Turns in any completable quests in <paramref name="questIds"/> after exiting combat,
-    /// respecting action cooldowns and server confirmation to avoid temp-item desyncs.
+    /// Turns in any completable quests in <paramref name="questIds"/> after moving to Enter cell,
+    /// exiting combat, and waiting 10 seconds so the server state is fully settled.
     /// </summary>
     public bool CompleteCompletableQuestsOutOfCombat(int[] questIds, bool reaccept = true)
     {
@@ -2449,6 +2487,7 @@ public class CoreArmyFJ
             return false;
 
         ExitCombatForSafeTurnIn();
+        SleepInterruptible(10000);
 
         foreach (int questId in completable)
         {
@@ -2461,12 +2500,17 @@ public class CoreArmyFJ
                     break;
 
                 if (attempt > 1)
+                {
                     ExitCombatForSafeTurnIn();
+                    SleepInterruptible(10000);
+                    if (Bot.ShouldExit)
+                        break;
+                }
 
                 Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
                 Core.EnsureComplete(questId);
-                Bot.Wait.ForTrue(() => !Bot.Quests.IsInProgress(questId), 10);
-                Bot.Sleep(Math.Max(Core.ActionDelay, 800));
+                Bot.Wait.ForTrue(() => !Bot.Quests.IsInProgress(questId), 15);
+                Bot.Sleep(Math.Max(Core.ActionDelay, 1500));
             }
 
             if (Bot.Quests.IsInProgress(questId))
@@ -2475,7 +2519,7 @@ public class CoreArmyFJ
                     $"SafeTurnIn: Quest {questId} remained in progress after out-of-combat turn-in retries; resetting quest state."
                 );
                 Bot.Flash.CallGameFunction("world.abandonQuest", questId);
-                Bot.Sleep(Math.Max(Core.ActionDelay, 700));
+                Bot.Sleep(Math.Max(Core.ActionDelay, 1000));
                 Core.EnsureLoad(questId);
             }
         }
@@ -2490,6 +2534,7 @@ public class CoreArmyFJ
             {
                 Core.EnsureAcceptmultiple(toAccept);
                 Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
+                Bot.Sleep(Math.Max(Core.ActionDelay, 1000));
             }
         }
 
