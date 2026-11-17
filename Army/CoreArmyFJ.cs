@@ -2441,19 +2441,8 @@ public class CoreArmyFJ
         }
     }
 
-    private void SleepInterruptible(int totalMs)
-    {
-        int remaining = Math.Max(0, totalMs);
-        while (remaining > 0 && !Bot.ShouldExit)
-        {
-            int step = Math.Min(500, remaining);
-            Bot.Sleep(step);
-            remaining -= step;
-        }
-    }
-
     /// <summary>
-    /// Exits combat to Enter cell, waits 10s, and completes the given quests via <see cref="CoreBots.EnsureComplete(int[])"/>.
+    /// Exits combat to Enter cell and completes the given quests via <see cref="CoreBots.EnsureComplete(int[])"/>.
     /// </summary>
     public void SafeEnsureComplete(params int[] questIds)
     {
@@ -2461,7 +2450,6 @@ public class CoreArmyFJ
             return;
 
         ExitCombatForSafeTurnIn();
-        SleepInterruptible(10000);
         if (Bot.ShouldExit)
             return;
 
@@ -2470,8 +2458,8 @@ public class CoreArmyFJ
     }
 
     /// <summary>
-    /// Turns in any completable quests in <paramref name="questIds"/> after moving to Enter cell,
-    /// exiting combat, and waiting 10 seconds so the server state is fully settled.
+    /// Turns in any completable quests in <paramref name="questIds"/> after moving to Enter cell
+    /// and exiting combat.
     /// </summary>
     public bool CompleteCompletableQuestsOutOfCombat(int[] questIds, bool reaccept = true)
     {
@@ -2487,7 +2475,6 @@ public class CoreArmyFJ
             return false;
 
         ExitCombatForSafeTurnIn();
-        SleepInterruptible(10000);
 
         foreach (int questId in completable)
         {
@@ -2502,7 +2489,6 @@ public class CoreArmyFJ
                 if (attempt > 1)
                 {
                     ExitCombatForSafeTurnIn();
-                    SleepInterruptible(10000);
                     if (Bot.ShouldExit)
                         break;
                 }
