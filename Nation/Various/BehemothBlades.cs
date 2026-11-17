@@ -92,8 +92,7 @@ public class BehemothBlade
             Core.BuyItem("battleon", 222, "Steel Afterlife");
         }
         Farm.BludrutBrawlBoss(quant: 500);
-        string bladeChoice = Bot.Config?.Get<Blade>("BladeChoice").ToString() ?? string.Empty;
-        Core.BuyItem("battleon", 222, $"Behemoth Blade of {bladeChoice}");
+        Core.BuyItem("battleon", 222, $"Behemoth Blade of {blade}");
     }
 
     enum Blade
