@@ -2564,6 +2564,7 @@ public class CoreArmyFJ
                 Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
             }
 
+            EnsureSkillRotationActive();
             Core.KillMonster(map, cell, pad, monster, log: false);
         }
 
