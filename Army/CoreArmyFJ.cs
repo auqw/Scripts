@@ -1,4 +1,4 @@
-﻿/*
+/*
 name: Core Army FarmerJoe
 description: Shared Army coordination and combat mechanics for FarmerJoe.
 tags: core, army, farmerjoe
@@ -236,177 +236,6 @@ public class CoreArmyFJ
         return started;
     }
 
-    private bool ValidateArmyRequirements(int? minimumLevel = null, string ultraName = "")
-    {
-        InventoryItem[]? houseItems = null;
-        bool requestedHouseInventory = false;
-        try
-        {
-            Bot.Wait.ForTrue(
-                () =>
-                {
-                    if (!Bot.Player.Loaded)
-                        return false;
-
-                    houseItems = Bot.Flash.GetGameObject<InventoryItem[]>(
-                        "world.myAvatar.houseitems"
-                    );
-                    if (houseItems != null)
-                        return true;
-
-                    if (!requestedHouseInventory)
-                    {
-                        requestedHouseInventory = true;
-                        Bot.Flash.CallGameFunction("world.loadHouseInventory");
-                    }
-
-                    return false;
-                },
-                40
-            );
-        }
-        catch
-        {
-            houseItems = null;
-        }
-
-        if (Bot.ShouldExit)
-            return false;
-
-        if (minimumLevel.HasValue)
-        {
-            if (
-                Bot.Player.Level < minimumLevel.Value
-                && !SendArmySignal("ULTRA_LEVEL_INVALID")
-            )
-                return false;
-
-            bool hasRequiredDamageBoost = Bot.Inventory.Items.Any(item =>
-                item.Equipped
-                && (
-                    !Core.NoneEnhancableFilter(item)
-                    || item.Category == ItemCategory.Armor
-                )
-                && Core.GetBoostFloat(item, "dmgAll") >= 1.30f
-            );
-
-            if (
-                !hasRequiredDamageBoost
-                && !SendArmySignal("ULTRA_WEAPON_INVALID")
-            )
-                return false;
-        }
-
-        string? failureSignal = houseItems == null
-            ? "HOUSE_REQUIREMENT_UNAVAILABLE"
-            : houseItems.Any(item =>
-                item != null && item.Category == ItemCategory.House && item.Equipped
-            )
-                ? null
-                : "HOUSE_REQUIREMENT_INVALID";
-
-        if (failureSignal != null && !SendArmySignal(failureSignal))
-            return false;
-
-        if (!SyncArmy(minimumLevel.HasValue ? "ULTRA_ACCESS_CHECK" : "HOUSE_REQUIREMENTS"))
-            return false;
-
-        if (minimumLevel.HasValue)
-        {
-            List<string> playersBelowLevel = new();
-            List<string> playersMissingDamageBoost = new();
-            for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
-            {
-                if (HasArmySignal("ULTRA_LEVEL_INVALID", playerNumber))
-                    playersBelowLevel.Add($"Player {playerNumber}");
-
-                if (HasArmySignal("ULTRA_WEAPON_INVALID", playerNumber))
-                    playersMissingDamageBoost.Add($"Player {playerNumber}");
-            }
-
-            if (playersBelowLevel.Count > 0)
-            {
-                Core.Logger(
-                    $"{ultraName} requires every player to be at least level {minimumLevel}. Players below the requirement: {string.Join(", ", playersBelowLevel)}.",
-                    "ValidateUltraAccess",
-                    messageBox: true,
-                    stopBot: true
-                );
-                return false;
-            }
-
-            if (playersMissingDamageBoost.Count > 0)
-            {
-                Core.Logger(
-                    $"{ultraName} requires every player to equip a weapon or armor with at least a 30% damage boost to all before starting. Players missing the equipped boost: {string.Join(", ", playersMissingDamageBoost)}. Equip a qualifying weapon or armor and restart the script.",
-                    "ValidateUltraAccess",
-                    messageBox: true,
-                    stopBot: true
-                );
-                return false;
-            }
-        }
-
-        string[] lines = ReadArmyLines();
-        if (Bot.ShouldExit || armyTransportFailed || !CanContinueArmySync(lines))
-            return false;
-
-        string[][] reports = lines.Select(line => line.Split('|')).Where(parts =>
-            parts.Length == 5
-            && parts[0] == "SIGNAL"
-            && parts[1] == ArmyProtocolVersion
-            && string.Equals(parts[2], armySessionId, StringComparison.Ordinal)
-        ).ToArray();
-
-        List<string> playersMissingHouse = new();
-        List<string> playersUnavailable = new();
-        for (int index = 0; index < armyPlayers.Length; index++)
-        {
-            foreach (string[] report in reports)
-            {
-                if (!string.Equals(
-                    NormalizeArmyUsername(report[4]),
-                    armyPlayers[index],
-                    StringComparison.OrdinalIgnoreCase
-                ))
-                    continue;
-
-                if (report[3] == "HOUSE_REQUIREMENT_INVALID")
-                {
-                    playersMissingHouse.Add($"Player {index + 1}");
-                    break;
-                }
-
-                if (report[3] == "HOUSE_REQUIREMENT_UNAVAILABLE")
-                {
-                    playersUnavailable.Add($"Player {index + 1}");
-                    break;
-                }
-            }
-        }
-
-        List<string> failures = new();
-        if (playersMissingHouse.Count > 0)
-            failures.Add(
-                $"Every player must own and equip a house before starting. Players missing an equipped house: {string.Join(", ", playersMissingHouse)}. Buy or equip a house and restart the script."
-            );
-        if (playersUnavailable.Count > 0)
-            failures.Add(
-                $"House requirement could not be verified for: {string.Join(", ", playersUnavailable)}. Wait for the account to finish loading and restart the script."
-            );
-
-        if (failures.Count == 0)
-            return !Bot.ShouldExit;
-
-        Core.Logger(
-            string.Join(" ", failures),
-            "ValidateEquippedHouseRequirement",
-            messageBox: true,
-            stopBot: true
-        );
-        return false;
-    }
-
     public bool SyncArmy(string step)
     {
         if (!RequireArmySession())
@@ -475,20 +304,46 @@ public class CoreArmyFJ
         if (!SyncArmy($"OBJECTIVE_{name}_START"))
             return false;
 
-        if (prepareForCombat != null)
-        {
-            if (!isComplete())
-                prepareForCombat();
-
-            if (!SyncArmy($"OBJECTIVE_{name}_READY"))
-                return false;
-        }
-
         long objectiveId = lastArmyStepId;
         string doneSignal = $"SIG_OBJ_{objectiveId}_{name}_DONE";
         string failSignal = $"SIG_OBJ_{objectiveId}_{name}_FAILED";
         bool reportedDone = false;
         int workAttempts = 0;
+
+        if (prepareForCombat != null)
+        {
+            if (isComplete())
+            {
+                if (!SendArmySignal(doneSignal))
+                    return false;
+                reportedDone = true;
+                Core.Logger($"Army objective {name}: already complete on this account before combat prep.", "CoreArmyFJ");
+            }
+
+            if (!SyncArmy($"OBJECTIVE_{name}_PREP_CHECK"))
+                return false;
+
+            List<int> prePending = new();
+            for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
+            {
+                if (!HasArmySignal(doneSignal, playerNumber) && !HasArmySignal(failSignal, playerNumber))
+                    prePending.Add(playerNumber);
+            }
+
+            if (prePending.Count == 0)
+                return SyncArmy($"OBJECTIVE_{name}_DONE");
+
+            int localPlayerNumber = armyPlayerIndex + 1;
+            bool useSubgroups = maxPlayersPerSubgroup > 0;
+            int localSubgroup = useSubgroups ? (localPlayerNumber - 1) / maxPlayersPerSubgroup : 0;
+            bool subgroupHasPending = !useSubgroups || prePending.Any(p => (p - 1) / maxPlayersPerSubgroup == localSubgroup);
+
+            if (subgroupHasPending)
+                prepareForCombat();
+
+            if (!SyncArmy($"OBJECTIVE_{name}_READY"))
+                return false;
+        }
 
         unreachableHelperTargets.Clear();
         attemptedBypassReloadCells.Clear();

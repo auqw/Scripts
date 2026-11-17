@@ -1,4 +1,4 @@
-/*
+﻿/*
 name: Army FarmerJoe DoAll
 description: Synchronized 4 to 7 account FarmerJoe progression from Level 1 to Level 100 Endgame.
 tags: army, farmerjoe, progression, doall, dailies, DoT, AF, YnR, VDK, VHL, Forge Enhancements, AM, AI, AWESCENDED, HOLLOWBORN REAPER'S SCYTHE
@@ -533,7 +533,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            CoreBots.Instance.Logger("Army FarmerJoe: Step 1 (Level 1-30) already completed on all accounts — skipping.");
+            CoreBots.Instance.Logger("Army FarmerJoe: Step 1 (Level 1-30) already completed on all accounts Ã¢â‚¬â€ skipping.");
             return Army.SyncArmy("STEP1_COMPLETE");
         }
 
@@ -678,7 +678,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        // 2b. Oracle (free 0 AC Healer/Support class in /classhalla shop 299 — bought early so Player 2 can heal from Level 1!)
+        // 2b. Oracle (free 0 AC Healer/Support class in /classhalla shop 299 Ã¢â‚¬â€ bought early so Player 2 can heal from Level 1!)
         bool HasOracle() => HasClassInInventory("Oracle");
         bool HasOracleRank10() => HasOracle() && HasRank10Class("Oracle");
 
@@ -1198,7 +1198,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2A (Bracket 30) already completed on all accounts — skipping.");
+            core.Logger("Army FarmerJoe: Step 2A (Bracket 30) already completed on all accounts Ã¢â‚¬â€ skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2A_COMPLETE");
         }
@@ -1405,7 +1405,7 @@ public class ArmyFarmerJoeDoAll
             return false;
         SetClass();
 
-        // 5d. Imperial Chunin (Yokai Rep 10 in /dragonkoiz — room limit is 3 players, so split the
+        // 5d. Imperial Chunin (Yokai Rep 10 in /dragonkoiz Ã¢â‚¬â€ room limit is 3 players, so split the
         // Army into <=3-player sub-rooms for farming Pockey Chew and buying from Shop 95, then
         // restore the shared private room before ranking Imperial Chunin in /icestormarena).
         const int DragonkoiMaxPlayers = 3;
@@ -1521,7 +1521,7 @@ public class ArmyFarmerJoeDoAll
             return false;
         SetClass();
 
-        // 5e. Shaman & Evolved Shaman (Arcangrove Rep 10 in /arcangrove — No boss, Gorillaphant & Seed Spitter ~2k HP, unlocks 2 unique classes for Player 4 & Player 5 from the same Rep!)
+        // 5e. Shaman & Evolved Shaman (Arcangrove Rep 10 in /arcangrove Ã¢â‚¬â€ No boss, Gorillaphant & Seed Spitter ~2k HP, unlocks 2 unique classes for Player 4 & Player 5 from the same Rep!)
         bool HasShaman() => HasClassInInventory("Shaman");
         bool HasShamanRank10() => HasShaman() && HasRank10Class("Shaman");
         bool HasEvolvedShaman() => HasClassInInventory("Evolved Shaman");
@@ -1641,7 +1641,7 @@ public class ArmyFarmerJoeDoAll
             return false;
         SetClass();
 
-        // 5f. Bard (Non-Member Support — Kimberly Story + Mythsong Rep 4 -> Buy in /mythsong shop 186 & Rank 10)
+        // 5f. Bard (Non-Member Support Ã¢â‚¬â€ Kimberly Story + Mythsong Rep 4 -> Buy in /mythsong shop 186 & Rank 10)
         bool HasBard() => HasClassInInventory("Bard");
         bool HasBardRank10() => HasBard() && HasRank10Class("Bard");
         bool IsBardMythsongDone() => HasBard() || Farm.FactionRank("Mythsong") >= 4;
@@ -2022,7 +2022,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2B (Bracket 50) already completed on all accounts — skipping.");
+            core.Logger("Army FarmerJoe: Step 2B (Bracket 50) already completed on all accounts Ã¢â‚¬â€ skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2B_COMPLETE");
         }
@@ -3235,7 +3235,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2C (Bracket 55) already completed on all accounts — skipping.");
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 55) already completed on all accounts Ã¢â‚¬â€ skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2C_55_COMPLETE") && !Bot.ShouldExit;
         }
@@ -3659,7 +3659,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2C (Bracket 60) already completed on all accounts — skipping.");
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 60) already completed on all accounts Ã¢â‚¬â€ skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2C_60_COMPLETE") && !Bot.ShouldExit;
         }
@@ -4238,7 +4238,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2C (Bracket 65) already completed on all accounts — skipping.");
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 65) already completed on all accounts Ã¢â‚¬â€ skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2C_65_COMPLETE") && !Bot.ShouldExit;
         }
@@ -4381,7 +4381,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2D (Bracket 70) already completed on all accounts — skipping.");
+            core.Logger("Army FarmerJoe: Step 2D (Bracket 70) already completed on all accounts Ã¢â‚¬â€ skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2D_COMPLETE") && !Bot.ShouldExit;
         }
@@ -4782,7 +4782,7 @@ public class ArmyFarmerJoeDoAll
             "Sparrow's Blood"
         );
 
-        // Part 1: Ælfred in /rivensylth (4637-4644)
+        // Part 1: Ãƒâ€ lfred in /rivensylth (4637-4644)
         bool IsAelfredDone() => skipCondition() || core.isCompletedBefore(4644, log: false);
         CoordinatedStoryStep[] aelfredSteps =
         {
@@ -6335,7 +6335,11 @@ public class ArmyFarmerJoeDoAll
                         );
                     },
                     maxPlayersPerSubgroup: 4,
-                    prepareForCombat: () => ApplyCurrentArmyRoomSettings()
+                    prepareForCombat: () =>
+                    {
+                        ApplyCurrentArmyRoomSettings();
+                        PrepareCombatLoadoutForArmy(ClassType.Solo, "doomkitten");
+                    }
                 )
             )
                 return false;
@@ -6399,7 +6403,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Xan", targetMap: "xantown");
-                }
+                },
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "xantown")
             )
             || !RunCoordinatedHuntStep(
                 "BRACKET70_AP_5465_DRACOLICH",
@@ -9394,7 +9399,11 @@ public class ArmyFarmerJoeDoAll
                         );
                     },
                     maxPlayersPerSubgroup: 4,
-                    prepareForCombat: () => ApplyCurrentArmyRoomSettings()
+                    prepareForCombat: () =>
+                    {
+                        ApplyCurrentArmyRoomSettings();
+                        PrepareCombatLoadoutForArmy(ClassType.Solo, "shadowfortress");
+                    }
                 )
             )
                 return false;
@@ -11242,7 +11251,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3439, "twilightedge", "ChaosWeaver Warrior");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "ChaosWeaver Warrior")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "ChaosWeaver Warrior"),
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "twilightedge")
             )
         )
             return false;
@@ -12057,7 +12067,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        // 6494: Defeat Jaaku! (Boss: Jaaku, MapID 31, 175,880 HP — fixes EnsureComplete(6494))
+        // 6494: Defeat Jaaku! (Boss: Jaaku, MapID 31, 175,880 HP Ã¢â‚¬â€ fixes EnsureComplete(6494))
         if (
             !RunCooperativeObjective(
                 "BRACKET60_YOKAI_6494_JAAKU",
@@ -12340,7 +12350,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3954, "frozenruins", "Frost General");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost General")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost General"),
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "frozenruins")
             )
         )
             return false;
@@ -12449,7 +12460,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5592, "icewindpass", "Frostspawn Symbiote");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostspawn Symbiote")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostspawn Symbiote"),
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindpass")
             )
         )
             return false;
@@ -12484,7 +12496,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5594, "icewindpass", "Frostspawn Horror");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostspawn Horror")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostspawn Horror"),
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindpass")
             )
         )
             return false;
@@ -12570,7 +12583,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5601, "icewindwar", "Soricomorpha");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Soricomorpha")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Soricomorpha"),
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindwar")
             )
         )
             return false;
@@ -12584,7 +12598,7 @@ public class ArmyFarmerJoeDoAll
     }
     #endregion Step 2C: Brackets 55, 60, and 65
 
-    #region SetClass (Party Role Composition & CBO Resolution — 100% Free-to-Play Classes Only)
+    #region SetClass (Party Role Composition & CBO Resolution Ã¢â‚¬â€ 100% Free-to-Play Classes Only)
     // Required Players 1-4 form the Endgame Meta Core (Main DPS + StoneCrusher + ArchPaladin + Lord of Order).
     // Optional Players 5-7 add non-overlapping debuffs, amplifiers, dodge DPS, and backup support.
 
@@ -13076,13 +13090,20 @@ public class ArmyFarmerJoeDoAll
         SetClass(role);
         string? activeClass = Bot.Player.CurrentClass?.Name;
         if (!string.IsNullOrWhiteSpace(activeClass))
-        {
             EnsureCombatEnhancementReady(activeClass, allowFullGearEnhance: true);
-            Army.EnsureSkillRotationActive();
-        }
 
         if (!string.IsNullOrWhiteSpace(targetMap))
+        {
             Army.EnsureMapAccessBypass(targetMap);
+            if (!string.Equals(Bot.Map?.Name, targetMap, StringComparison.OrdinalIgnoreCase))
+            {
+                if (!JoinMapVerified(targetMap))
+                    CoreBots.Instance.Logger($"Pre-join to '/{targetMap}' skipped or unavailable; continuing ready check.");
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(Bot.Player.CurrentClass?.Name))
+            Army.EnsureSkillRotationActive();
     }
 
     private bool RunBracketLevelAndEnhance(string objectiveName, int targetLevel)
@@ -14104,7 +14125,11 @@ public class ArmyFarmerJoeDoAll
                         );
                     },
                     maxPlayersPerSubgroup: 4,
-                    prepareForCombat: () => ApplyCurrentArmyRoomSettings()
+                    prepareForCombat: () =>
+                    {
+                        ApplyCurrentArmyRoomSettings();
+                        PrepareCombatLoadoutForArmy(ClassType.Solo, "doomvault");
+                    }
                 )
             )
                 return false;
@@ -14663,6 +14688,7 @@ public class ArmyFarmerJoeDoAll
                     return;
                 }
 
+                Army.EnsureSkillRotationActive();
                 if (!string.IsNullOrEmpty(cell) && !string.IsNullOrEmpty(pad))
                     core.KillMonster(map, cell, pad, monster, itemName, quant, isTemp);
                 else
