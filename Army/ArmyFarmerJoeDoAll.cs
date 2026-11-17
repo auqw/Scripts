@@ -272,8 +272,11 @@ public class ArmyFarmerJoeDoAll
     private bool RunStartupBankAll()
     {
         CoreBots.Instance.Logger("Startup: Running BankAllItems (AC inventory & house items)...");
+        LeaveCombatRoomForEquipmentChange();
         BankAllCore.BankAll(inventory: true, house: true, bankNonAc: false, blackList: string.Empty);
+        CoreBots.Instance.Logger("Startup: Equipping best static boost gear...");
         EnsureBestStaticBoostGearEquipped();
+        CoreBots.Instance.Logger("Startup: Setting initial class...");
         SetClass();
         return Army.SyncArmy("STARTUP_BANK_ALL_DONE");
     }
