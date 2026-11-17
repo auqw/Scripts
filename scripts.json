@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 177074,
-    "sha256": "f182bd894ba1c6e5db0fc4ce57a7dc4ea7a28257eb82ffd3f1f26eec9bb0c780",
+    "size": 177312,
+    "sha256": "8edbaefea307b7b600f345f594157c287d04c43b5ef52ad8b10a8451038bb21e",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 478040,
-    "sha256": "b17722be35cc6e9d50ec836a5b879490db7b6e4e69cd45c2f49f73925e2c923c",
+    "size": 477979,
+    "sha256": "b0b5f4a3a3b0c69904a4112d1b9ebdecc13e03ed5cbe302ffdc5df2cec247060",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1389,8 +1389,8 @@
       "equip"
     ],
     "path": "Enhancement/SmartEnhance.cs",
-    "size": 1197,
-    "sha256": "e09f86b3a693110f90d6e3e89fd88308887ad9439d7258efabfb1d6d816dd7dd",
+    "size": 1081,
+    "sha256": "e6a5405c653d0332e8eab6c9c007fe1b164115056b3200f46c981598aae3bbf7",
     "fileName": "SmartEnhance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/SmartEnhance.cs"
   },
@@ -14638,8 +14638,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 57120,
-    "sha256": "cd1798afcb2d02014ff6d0418b2ee62cabf1703a7d31aba37fd6d8a78baec9f6",
+    "size": 57161,
+    "sha256": "96c0cc867beec34e994ef13899cc8962c5906ee1364f3626d9408b5a747851bf",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -25773,14 +25773,29 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/10FurborgShipStory.cs"
   },
   {
+    "name": "CharityFeast",
+    "description": "Completes the quest chain in /charityfeast.",
+    "tags": [
+      "charityfeast",
+      "story",
+      "quests",
+      "charityfeast"
+    ],
+    "path": "Seasonal/HarvestDay/21CharityFeast.cs",
+    "size": 777,
+    "sha256": "cd6289410dca13331b66cbb4f46796ac7a8eba84cf3184f6bca2b7c978689e6d",
+    "fileName": "21CharityFeast.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/21CharityFeast.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 35915,
-    "sha256": "f53ffe0fd03120fcc70d88e28bf4f549c46f4f76e0f95355107fcb85d204dfe7",
+    "size": 38002,
+    "sha256": "1c39aebaf54589289e2f0f321b444bb88bb379ae9b97c03734f6eb82e58138c9",
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -32097,6 +32112,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/EbilCorpHQMerge.cs"
   },
   {
+    "name": "Harvest Menu Merge",
+    "description": "Farms the Harvest Menu Merge [2811] in /charityfeast.",
+    "tags": [
+      "charityfeast",
+      "merge",
+      "harvest",
+      "menu",
+      "merge"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/HarvestMenuShop.cs",
+    "size": 4918,
+    "sha256": "d4af072019c803a64c82576f933576d14f50ef0378df415e6c9bca7526269506",
+    "fileName": "HarvestMenuShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestMenuShop.cs"
+  },
+  {
     "name": "Robinas Harvest Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Robinas Harvest Merge [2366] in /blightharvest",
     "tags": [
@@ -32166,8 +32197,8 @@
       "doall"
     ],
     "path": "Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs",
-    "size": 8743,
-    "sha256": "b9208d6b8119f51a9e2c5e0e8194e626e61016ecd9f7e9a635b023f7367f5db7",
+    "size": 9080,
+    "sha256": "ca39f6b89f751201c9536e00133756e85e6b4ac6adc0125b2dbf4cedd66ac4fd",
     "fileName": "HarvestDayMergesDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/HarvestDayMergesDoAll.cs"
   },

@@ -4037,6 +4037,7 @@ public class CoreAdvanced
                 case "beast warrior":
                 case "beastmaster":
                 case "berserker":
+                case "brutal berserker":
                 case "beta berserker":
                 case "blademaster assassin":
                 case "blademaster":
@@ -4045,6 +4046,7 @@ public class CoreAdvanced
                 case "blood titan":
                 case "frostblood titan":
                 case "cardclasher":
+                case "cardclasher ace":
                 case "chaos avenger member preview":
                 case "chaos champion prime":
                 case "chaos shaper":
@@ -4111,6 +4113,7 @@ public class CoreAdvanced
                 case "imperial chunin":
                 case "infinite dark caster":
                 case "infinite legion dark caster":
+                case "infinity hero":
                 case "infinity titan":
                 case "legendary naval commander":
                 case "legion blademaster assassin":
@@ -4242,6 +4245,7 @@ public class CoreAdvanced
                 case "assassin":
                 case "archmage":
                 case "beastmaster":
+                case "brutal berserker":
                 case "berserker":
                 case "beta berserker":
                 case "blademaster assassin":
@@ -4249,6 +4253,7 @@ public class CoreAdvanced
                 case "blood titan":
                 case "frostblood titan":
                 case "cardclasher":
+                case "cardclasher ace":
                 case "chaos avenger member preview":
                 case "chaos champion prime":
                 case "chaos slayer":
@@ -4291,6 +4296,7 @@ public class CoreAdvanced
                 case "imperial chunin":
                 case "infinite dark caster":
                 case "infinite legion dark caster":
+                case "infinity hero":
                 case "infinity titan":
                 case "legion blademaster assassin":
                 case "legion evolved dark caster":

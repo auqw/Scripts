@@ -67,6 +67,7 @@ public class CoreHarvestDay
             BlightHarvest();
             ManaHarvest();
             MoglinFeast();
+			CharityFeast();
         }
         else
         {
@@ -1123,5 +1124,59 @@ public class CoreHarvestDay
         {
             Core.HuntMonsterQuest(10497, ("moglinfeast", UseableMonsters[4], ClassType.Solo));
         }
+    }
+	
+	public void CharityFeast()
+	{
+        if (Core.isCompletedBefore(10947) || !Core.isSeasonalMapActive("charityfeast"))
+            return;
+
+        Story.PreLoad(this);
+
+        string[] UseableMonsters =
+        [
+            "Fall Fae Queen", // UseableMonsters[0]
+            "Masked Skeleton", // UseableMonsters[1]
+            "Pumpkin Blossom Fae", // UseableMonsters[2]
+            "Sluagh King", // UseableMonsters[3]
+            "Sluagh Warrior", // UseableMonsters[4]
+            "Uninvited Guest", // UseableMonsters[5]
+        ];
+
+        // 10938 | Pumpkin Pop
+        Story.KillQuest(10938, "charityfeast", UseableMonsters[2]); // Magical Pumpkin Seeds x12
+
+        // 10939 | Black-Tie Pigs
+        Story.KillQuest(10939, "charityfeast", UseableMonsters[5]); // Confiscated Cravat x4
+
+        // 10940 | Unnecessary Patience
+        Story.MapItemQuest(10940, "charityfeast", 16408, 10);
+
+        // 10941 | Five-Star Service
+        Core.EnsureAccept(10941);
+        Core.HuntMonster("charityfeast", UseableMonsters[2], "Pumpkin Rind", 6);
+        Core.HuntMonster("charityfeast", UseableMonsters[5], "Embroidered Handkerchief", 6);
+        Core.EnsureComplete(10941);
+
+        // 10942 | Set Up to Fall
+        Story.MapItemQuest(10942, "charityfeast", [16409, 16410, 16411]);
+
+        // 10943 | Tricky Nixie
+        Story.KillQuest(10943, "charityfeast", UseableMonsters[0]); // Nixie's Amber x1
+
+        // 10944 | Undead Minyans
+        Story.KillQuest(10944, "charityfeast", UseableMonsters[1]); // Strange Mask x13
+
+        // 10945 | Crimson Corvus
+        Story.KillQuest(10945, "charityfeast", UseableMonsters[4]); // Sluagh Antler x24
+
+        // 10946 | Feast of Thrills
+        Core.EnsureAccept(10946);
+        Core.HuntMonster("charityfeast", UseableMonsters[1], "Chipped Mask", 6);
+        Core.HuntMonster("charityfeast", UseableMonsters[4], "Sluagh Feather", 6);
+        Core.EnsureComplete(10946);
+
+        // 10947 | King Mellori
+        Story.KillQuest(10947, "charityfeast", UseableMonsters[3]); // Sluagh King Defeated x1
     }
 }

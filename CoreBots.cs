@@ -9633,10 +9633,8 @@ public class CoreBots
             Bot.Log($"Most optimal server: {best.Name} ({best.IP}) - {pingResults[best.IP]}ms");
         else
             Bot.Log("Could not determine an optimal server, all hosts failed to connect.");
-
-
-
     }
+
     static long TcpPing(string host, int[] ports, int timeoutMs = 2000)
     {
         foreach (int port in ports)
