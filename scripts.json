@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 477979,
-    "sha256": "b0b5f4a3a3b0c69904a4112d1b9ebdecc13e03ed5cbe302ffdc5df2cec247060",
+    "size": 479618,
+    "sha256": "8c145c25286a385f14807a5e61e7cbd9cf34c3b21a62f5c2946336d1bde31a59",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4211,8 +4211,8 @@
       "ultra"
     ],
     "path": "Tools/FindBestPing.cs",
-    "size": 540,
-    "sha256": "d988fb265c21313f24112c907b70df86b49bd254ed2e911a22be063731a04fb1",
+    "size": 672,
+    "sha256": "7a9090e3aa83c3c3e374b505a47d018284497118e965419b12da36517d67ae2b",
     "fileName": "FindBestPing.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/FindBestPing.cs"
   },
