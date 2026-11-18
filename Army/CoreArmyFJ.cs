@@ -310,29 +310,29 @@ public class CoreArmyFJ
         bool reportedDone = false;
         int workAttempts = 0;
 
+        if (isComplete())
+        {
+            if (!SendArmySignal(doneSignal))
+                return false;
+            reportedDone = true;
+            Core.Logger($"Army objective {name}: already complete on this account before combat prep.", "CoreArmyFJ");
+        }
+
+        if (!SyncArmy($"OBJECTIVE_{name}_PREP_CHECK"))
+            return false;
+
+        List<int> prePending = new();
+        for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
+        {
+            if (!HasArmySignal(doneSignal, playerNumber) && !HasArmySignal(failSignal, playerNumber))
+                prePending.Add(playerNumber);
+        }
+
+        if (prePending.Count == 0)
+            return SyncArmy($"OBJECTIVE_{name}_DONE");
+
         if (prepareForCombat != null)
         {
-            if (isComplete())
-            {
-                if (!SendArmySignal(doneSignal))
-                    return false;
-                reportedDone = true;
-                Core.Logger($"Army objective {name}: already complete on this account before combat prep.", "CoreArmyFJ");
-            }
-
-            if (!SyncArmy($"OBJECTIVE_{name}_PREP_CHECK"))
-                return false;
-
-            List<int> prePending = new();
-            for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
-            {
-                if (!HasArmySignal(doneSignal, playerNumber) && !HasArmySignal(failSignal, playerNumber))
-                    prePending.Add(playerNumber);
-            }
-
-            if (prePending.Count == 0)
-                return SyncArmy($"OBJECTIVE_{name}_DONE");
-
             int localPlayerNumber = armyPlayerIndex + 1;
             bool useSubgroups = maxPlayersPerSubgroup > 0;
             int localSubgroup = useSubgroups ? (localPlayerNumber - 1) / maxPlayersPerSubgroup : 0;
@@ -340,10 +340,10 @@ public class CoreArmyFJ
 
             if (subgroupHasPending)
                 prepareForCombat();
-
-            if (!SyncArmy($"OBJECTIVE_{name}_READY"))
-                return false;
         }
+
+        if (!SyncArmy($"OBJECTIVE_{name}_READY"))
+            return false;
 
         unreachableHelperTargets.Clear();
         attemptedBypassReloadCells.Clear();

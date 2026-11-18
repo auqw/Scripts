@@ -13329,6 +13329,11 @@ public class ArmyFarmerJoeDoAll
                     compositionType: ClassType.Farm,
                     targetMap: targetExpMap
                 );
+            },
+            prepareForCombat: () =>
+            {
+                PrepareCombatLoadoutForArmy(ClassType.Farm, targetExpMap);
+                EnsureBestStaticBoostGearEquipped(BoostObjective.Exp);
             }
         );
     }
@@ -14962,7 +14967,8 @@ public class ArmyFarmerJoeDoAll
                             step.HelpMonster,
                             compositionType: step.Role,
                             targetMap: step.Map
-                        )
+                        ),
+                    prepareForCombat: () => PrepareCombatLoadoutForArmy(step.Role, step.SkipMapVerify ? null : step.Map)
                 )
             )
                 return false;
