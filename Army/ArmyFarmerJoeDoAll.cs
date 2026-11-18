@@ -5183,15 +5183,17 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // Part 4: Gaiazor Pastoral Quests (4799-4810) so Nevanna & Gaiazor in /gaiazor are unlocked for ArchPaladin 5470
+        bool HasAnyToken(params string[] tokens) => tokens.Any(t => core.CheckInventory(t, toInv: false));
         bool IsRavinos2Done() => skipCondition() || core.isCompletedBefore(4804, log: false);
         if (!IsRavinos2Done())
             UnbankIfOwned("Ravinos Token I", "Ravinos Token II", "Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
 
+        bool HasRavinosI() => IsRavinos2Done() || HasAnyToken("Ravinos Token I", "Ravinos Token II", "Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
         if (
             !RunCoordinatedTurnInStep(
                 "BRACKET70_SC_BO_4799",
-                () => IsRavinos2Done() || core.CheckInventory("Ravinos Token I", toInv: false) || core.isCompletedBefore(4799, log: false),
-                () => IsRavinos2Done() || core.CheckInventory("Ravinos Token I", toInv: false) || core.isCompletedBefore(4799, log: false),
+                HasRavinosI,
+                HasRavinosI,
                 () =>
                 {
                     core.AddDrop("Ravinos Token I");
@@ -5204,7 +5206,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        bool HasRavinosII() => IsRavinos2Done() || core.CheckInventory("Ravinos Token II", toInv: false) || core.isCompletedBefore(4800, log: false);
+        bool HasRavinosII() => IsRavinos2Done() || HasAnyToken("Ravinos Token II", "Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
         if (
             !RunCooperativeObjective(
                 "BRACKET70_SC_BO_4800",
@@ -5231,7 +5233,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        bool HasRavinosIII() => IsRavinos2Done() || core.CheckInventory("Ravinos Token III", toInv: false) || core.isCompletedBefore(4801, log: false);
+        bool HasRavinosIII() => IsRavinos2Done() || HasAnyToken("Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
         if (
             !RunCooperativeObjective(
                 "BRACKET70_SC_BO_4801",
@@ -5258,7 +5260,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        bool HasRavinosIV() => IsRavinos2Done() || core.CheckInventory("Ravinos Token IV", toInv: false) || core.isCompletedBefore(4802, log: false);
+        bool HasRavinosIV() => IsRavinos2Done() || HasAnyToken("Ravinos Token IV", "Ravinos Token V");
         if (
             !RunCooperativeObjective(
                 "BRACKET70_SC_BO_4802",
@@ -5285,7 +5287,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        bool HasRavinosV() => IsRavinos2Done() || core.CheckInventory("Ravinos Token V", toInv: false) || core.isCompletedBefore(4803, log: false);
+        bool HasRavinosV() => IsRavinos2Done() || HasAnyToken("Ravinos Token V");
         if (
             !RunCoordinatedHuntStep(
                 "BRACKET70_SC_BO_4803_DARKHEART",
@@ -5346,7 +5348,10 @@ public class ArmyFarmerJoeDoAll
 
         // LapisPart2 (4805-4808) + RavinosBrightgladePart3 (4809-4810)
         bool IsLapis2Done() => skipCondition() || core.isCompletedBefore(4808, log: false);
-        bool HasLapisI() => IsLapis2Done() || core.CheckInventory("Lapis Token I", toInv: false) || core.isCompletedBefore(4805, log: false);
+        if (!IsLapis2Done())
+            UnbankIfOwned("Lapis Token I", "Lapis Token II", "Lapis Token III", "Sparrow's Blood");
+
+        bool HasLapisI() => IsLapis2Done() || HasAnyToken("Lapis Token I", "Lapis Token II", "Lapis Token III");
         if (
             !RunCooperativeObjective(
                 "BRACKET70_SC_BO_4805",
@@ -5373,7 +5378,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // 4806: Outside Assistance requires Sparrow's Blood (Quest 803 in /arcangrove)
-        bool HasLapisII() => IsLapis2Done() || core.CheckInventory("Lapis Token II", toInv: false) || core.isCompletedBefore(4806, log: false);
+        bool HasLapisII() => IsLapis2Done() || HasAnyToken("Lapis Token II", "Lapis Token III");
         bool HasSparrowsBlood() => HasLapisII() || core.CheckInventory("Sparrow's Blood", toInv: false);
 
         if (
@@ -5440,7 +5445,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        bool HasLapisIII() => IsLapis2Done() || core.CheckInventory("Lapis Token III", toInv: false) || core.isCompletedBefore(4807, log: false);
+        bool HasLapisIII() => IsLapis2Done() || HasAnyToken("Lapis Token III");
         if (
             !RunCoordinatedTurnInStep(
                 "BRACKET70_SC_BO_4807_4808",
