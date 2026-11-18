@@ -1,4 +1,4 @@
-﻿/*
+/*
 name: Army FarmerJoe DoAll
 description: Synchronized 4 to 7 account FarmerJoe progression from Level 1 to Level 100 Endgame.
 tags: army, farmerjoe, progression, doall, dailies, DoT, AF, YnR, VDK, VHL, Forge Enhancements, AM, AI, AWESCENDED, HOLLOWBORN REAPER'S SCYTHE
@@ -5184,6 +5184,8 @@ public class ArmyFarmerJoeDoAll
 
         // Part 4: Gaiazor Pastoral Quests (4799-4810) so Nevanna & Gaiazor in /gaiazor are unlocked for ArchPaladin 5470
         bool IsRavinos2Done() => skipCondition() || core.isCompletedBefore(4804, log: false);
+        if (!IsRavinos2Done())
+            UnbankIfOwned("Ravinos Token I", "Ravinos Token II", "Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
 
         if (
             !RunCoordinatedTurnInStep(
