@@ -264,7 +264,8 @@ public class CoreArmyFJ
         Action help,
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
-        Action? prepareForCombat = null
+        Action? prepareForCombat = null,
+        Func<int>? resolveSubgroupCap = null
     ) =>
         RunCooperativeObjective(
             objectiveName,
@@ -273,7 +274,8 @@ public class CoreArmyFJ
             (targetPlayerNumber, targetPlayerName) => help(),
             maxWorkAttempts,
             maxPlayersPerSubgroup,
-            prepareForCombat
+            prepareForCombat,
+            resolveSubgroupCap
         );
 
     public bool RunCooperativeObjective(
@@ -283,7 +285,8 @@ public class CoreArmyFJ
         Action<int, string> help,
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
-        Action? prepareForCombat = null
+        Action? prepareForCombat = null,
+        Func<int>? resolveSubgroupCap = null
     )
     {
         if (!RequireArmySession())
@@ -331,12 +334,26 @@ public class CoreArmyFJ
         if (prePending.Count == 0)
             return SyncArmy($"OBJECTIVE_{name}_DONE");
 
+        int effectiveSubgroupCap = maxPlayersPerSubgroup;
+        if (resolveSubgroupCap != null)
+        {
+            if (armyPlayerIndex == 0)
+                PublishMapSubgroupCap(name, resolveSubgroupCap());
+
+            if (!SyncArmy($"OBJECTIVE_{name}_MAPCAP"))
+                return false;
+
+            int detectedCap = ReadMapSubgroupCap(name);
+            if (detectedCap > 0)
+                effectiveSubgroupCap = detectedCap;
+        }
+
         if (prepareForCombat != null)
         {
             int localPlayerNumber = armyPlayerIndex + 1;
-            bool useSubgroups = maxPlayersPerSubgroup > 0;
-            int localSubgroup = useSubgroups ? (localPlayerNumber - 1) / maxPlayersPerSubgroup : 0;
-            bool subgroupHasPending = !useSubgroups || prePending.Any(p => (p - 1) / maxPlayersPerSubgroup == localSubgroup);
+            bool useSubgroups = effectiveSubgroupCap > 0;
+            int localSubgroup = useSubgroups ? (localPlayerNumber - 1) / effectiveSubgroupCap : 0;
+            bool subgroupHasPending = !useSubgroups || prePending.Any(p => (p - 1) / effectiveSubgroupCap == localSubgroup);
 
             if (subgroupHasPending)
                 prepareForCombat();
@@ -395,14 +412,14 @@ public class CoreArmyFJ
             {
                 // Spread helpers across pending players (optionally scoped to fixed-size room subgroups).
                 int localPlayerNumber = armyPlayerIndex + 1;
-                bool useSubgroups = maxPlayersPerSubgroup > 0;
+                bool useSubgroups = effectiveSubgroupCap > 0;
                 int localSubgroup = useSubgroups
-                    ? (localPlayerNumber - 1) / maxPlayersPerSubgroup
+                    ? (localPlayerNumber - 1) / effectiveSubgroupCap
                     : 0;
 
                 List<int> scopedPending = useSubgroups
                     ? pendingPlayers
-                        .Where(p => (p - 1) / maxPlayersPerSubgroup == localSubgroup)
+                        .Where(p => (p - 1) / effectiveSubgroupCap == localSubgroup)
                         .ToList()
                     : pendingPlayers;
 
@@ -434,7 +451,7 @@ public class CoreArmyFJ
                     {
                         List<int> scopedHelpers = useSubgroups
                             ? helperPlayers
-                                .Where(p => (p - 1) / maxPlayersPerSubgroup == localSubgroup)
+                                .Where(p => (p - 1) / effectiveSubgroupCap == localSubgroup)
                                 .ToList()
                             : helperPlayers;
 
@@ -450,7 +467,7 @@ public class CoreArmyFJ
                         // subgroup's dedicated Support when split) finishes, that account takes over the
                         // Support role and the temporary support helper returns to its own SoloClass!
                         int supportPlayerNumber = useSubgroups
-                            ? localSubgroup * maxPlayersPerSubgroup + 2
+                            ? localSubgroup * effectiveSubgroupCap + 2
                             : 2;
                         actAsSupportHelper =
                             localPlayerNumber == supportPlayerNumber
@@ -2250,6 +2267,69 @@ public class CoreArmyFJ
         catch { }
 
         return allTrue;
+    }
+
+    public int ArmyPlayerCount => armyPlayers.Length;
+
+    public int DetectCurrentMapMaxPlayers(string? expectedMap = null)
+    {
+        try
+        {
+            if (
+                !string.IsNullOrWhiteSpace(expectedMap)
+                && !string.Equals(Bot.Map?.Name, expectedMap, StringComparison.OrdinalIgnoreCase)
+            )
+                return 0;
+
+            int maxPlayers = Bot.Flash.GetGameObject<int>("world.areaData.intMaxPlayers");
+            return maxPlayers > 0 ? maxPlayers : 0;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
+    public void PublishMapSubgroupCap(string objectiveName, int cap)
+    {
+        if (!armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath))
+            return;
+
+        string safeName = NormalizeArmyRecordName(objectiveName);
+        if (string.IsNullOrEmpty(safeName))
+            safeName = "MAP";
+
+        string capPath = $"{armySyncPath}.MAPCAP.{safeName}.{armySessionId}";
+        int normalizedCap = (cap > 0 && cap < armyPlayers.Length) ? cap : 0;
+        try
+        {
+            File.WriteAllText(capPath, normalizedCap.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+        catch { }
+    }
+
+    public int ReadMapSubgroupCap(string objectiveName)
+    {
+        if (!armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath))
+            return 0;
+
+        string safeName = NormalizeArmyRecordName(objectiveName);
+        if (string.IsNullOrEmpty(safeName))
+            safeName = "MAP";
+
+        string capPath = $"{armySyncPath}.MAPCAP.{safeName}.{armySessionId}";
+        try
+        {
+            if (!File.Exists(capPath))
+                return 0;
+
+            string raw = File.ReadAllText(capPath).Trim();
+            if (int.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int cap))
+                return (cap > 0 && cap < armyPlayers.Length) ? cap : 0;
+        }
+        catch { }
+
+        return 0;
     }
 }
 

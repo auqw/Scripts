@@ -13303,12 +13303,10 @@ public class ArmyFarmerJoeDoAll
             < 75 => "battlegrounde",
             _ => "icestormunder",
         };
-        int subgroupCap = GetSubgroupCapForMap(targetExpMap);
-
         // On-demand enhancement policy: only level up here; enhancements are applied lazily
         // when the next rank-up or combat Ready Check actually requires the equipped gear.
         return RunSubgroupCooperativeObjective(
-            subgroupCap,
+            0,
             objectiveName,
             () => Bot.Player.Level >= targetLevel,
             () =>
@@ -13334,7 +13332,8 @@ public class ArmyFarmerJoeDoAll
             {
                 PrepareCombatLoadoutForArmy(ClassType.Farm, targetExpMap);
                 EnsureBestStaticBoostGearEquipped(BoostObjective.Exp);
-            }
+            },
+            targetMap: targetExpMap
         );
     }
 
@@ -14622,79 +14621,38 @@ public class ArmyFarmerJoeDoAll
         );
     }
 
-    private static int GetSubgroupCapForMap(string? mapName)
+    private readonly Dictionary<string, int> _detectedMapCaps = new(StringComparer.OrdinalIgnoreCase);
+
+    private int ProbeMapSubgroupCapForArmy(string? targetMap)
     {
-        if (string.IsNullOrWhiteSpace(mapName))
+        if (string.IsNullOrWhiteSpace(targetMap))
             return 0;
 
-        string normalized = mapName.Trim().ToLowerInvariant();
-        if (normalized == "dragonkoiz")
-            return 3;
+        string normalized = targetMap.Trim().ToLowerInvariant();
+        if (_detectedMapCaps.TryGetValue(normalized, out int cachedCap))
+            return cachedCap;
 
-        return normalized switch
-        {
-            "aqlesson" => 4,
-            "arcangrove" => 4,
-            "banished" => 4,
-            "battlegrounda" => 4,
-            "battlegroundb" => 4,
-            "battlegroundc" => 4,
-            "battlegroundd" => 4,
-            "battlegrounde" => 4,
-            "beehive" => 4,
-            "bloodtitan" => 4,
-            "bonecastlec" => 4,
-            "bosschallenge" => 4,
-            "boxes" => 4,
-            "brightfall" => 4,
-            "callofkathool" => 4,
-            "deathgazer" => 4,
-            "deepchaos" => 4,
-            "djinn" => 4,
-            "doomkitten" => 4,
-            "doomvault" => 4,
-            "doomvaultb" => 4,
-            "ectocave" => 4,
-            "fireforge" => 4,
-            "frozentower" => 4,
-            "frozenruins" => 4,
-            "gaiazor" => 4,
-            "gilead" => 4,
-            "gravestrike" => 4,
-            "hedgemaze" => 4,
-            "hydrachallenge" => 4,
-            "icestormunder" => 4,
-            "icewindpass" => 4,
-            "icewindwar" => 4,
-            "infernalspire" => 4,
-            "kitsune" => 4,
-            "ledgermayne" => 4,
-            "lostruinswar" => 4,
-            "maul" => 4,
-            "mobius" => 4,
-            "mqlesson" => 4,
-            "mythsong" => 4,
-            "oaklore" => 4,
-            "odokuro" => 4,
-            "sepulchurebattle" => 4,
-            "shadowfortress" => 4,
-            "stalagbite" => 4,
-            "swordhavenundead" => 4,
-            "tercessuinotlim" => 4,
-            "thirdspell" => 4,
-            "towerofdoom" => 4,
-            "towerofdoom10" => 4,
-            "towerofmirrors" => 4,
-            "ultraalteon" => 4,
-            "undergroundlabb" => 4,
-            "underworld" => 4,
-            "warhorc" => 4,
-            "well" => 4,
-            "wolfwing" => 4,
-            "xancave" => 4,
-            "yokaiwar" => 4,
-            _ => 0,
-        };
+        ApplyArmyRoomSettings();
+        if (!JoinMapVerified(normalized))
+            return 0;
+
+        int maxPlayers = Army.DetectCurrentMapMaxPlayers(normalized);
+        int cap = (maxPlayers > 0 && maxPlayers < Army.ArmyPlayerCount) ? maxPlayers : 0;
+        _detectedMapCaps[normalized] = cap;
+        if (cap > 0)
+            CoreBots.Instance.Logger(
+                $"Auto room-cap detected for '/{normalized}': {cap} players/room (Army={Army.ArmyPlayerCount})."
+            );
+        return cap;
+    }
+
+    private void ApplyEffectiveSubgroupRoomSettings(string objectiveName, int fixedCap)
+    {
+        int cap = fixedCap > 0 ? fixedCap : Army.ReadMapSubgroupCap(objectiveName);
+        if (cap > 0)
+            ApplySubgroupRoomSettings(cap);
+        else if (_activeSubgroupMaxPlayers == 0)
+            ApplyArmyRoomSettings();
     }
 
     private bool RunCoordinatedCombatStep(
@@ -14711,10 +14669,7 @@ public class ArmyFarmerJoeDoAll
         int attempts = 0;
         bool done = initialSkipCheck();
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
-        int mapSubgroupCap = previousSubgroupCap > 0 ? 0 : GetSubgroupCapForMap(targetMap);
-
-        if (mapSubgroupCap > 0)
-            ApplySubgroupRoomSettings(mapSubgroupCap);
+        bool autoDetectCap = previousSubgroupCap <= 0 && !string.IsNullOrWhiteSpace(targetMap);
 
         try
         {
@@ -14729,8 +14684,8 @@ public class ArmyFarmerJoeDoAll
                         return;
                     }
 
-                    if (mapSubgroupCap > 0)
-                        ApplyCurrentArmyRoomSettings();
+                    if (autoDetectCap)
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, 0);
 
                     attempts++;
                     PrepareCombatLoadoutForArmy(role, targetMap);
@@ -14752,8 +14707,8 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    if (mapSubgroupCap > 0)
-                        ApplyCurrentArmyRoomSettings();
+                    if (autoDetectCap)
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, 0);
 
                     Army.CoordinateFollowAndCombat(
                         targetPlayerName,
@@ -14763,18 +14718,18 @@ public class ArmyFarmerJoeDoAll
                     );
                 },
                 maxWorkAttempts: softRetryLimit > 0 ? softRetryLimit + 1 : 0,
-                maxPlayersPerSubgroup: mapSubgroupCap,
                 prepareForCombat: () =>
                 {
-                    if (mapSubgroupCap > 0)
-                        ApplyCurrentArmyRoomSettings();
+                    if (autoDetectCap)
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, 0);
                     PrepareCombatLoadoutForArmy(role, targetMap);
-                }
+                },
+                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap) : null
             );
         }
         finally
         {
-            if (mapSubgroupCap > 0)
+            if (autoDetectCap)
                 ApplyArmyRoomSettings();
         }
     }
@@ -14786,11 +14741,13 @@ public class ArmyFarmerJoeDoAll
         Action doWork,
         Action<int, string> help,
         int maxWorkAttempts = 0,
-        Action? prepareForCombat = null
+        Action? prepareForCombat = null,
+        string? targetMap = null
     )
     {
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
         int effectiveCap = previousSubgroupCap > 0 ? 0 : subgroupCap;
+        bool autoDetectCap = previousSubgroupCap <= 0 && effectiveCap <= 0 && !string.IsNullOrWhiteSpace(targetMap);
         if (effectiveCap > 0)
             ApplySubgroupRoomSettings(effectiveCap);
 
@@ -14801,14 +14758,14 @@ public class ArmyFarmerJoeDoAll
                 isComplete,
                 () =>
                 {
-                    if (effectiveCap > 0)
-                        ApplyCurrentArmyRoomSettings();
+                    if (effectiveCap > 0 || autoDetectCap)
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
                     doWork();
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    if (effectiveCap > 0)
-                        ApplyCurrentArmyRoomSettings();
+                    if (effectiveCap > 0 || autoDetectCap)
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
                     help(targetPlayerNumber, targetPlayerName);
                 },
                 maxWorkAttempts: maxWorkAttempts,
@@ -14817,15 +14774,16 @@ public class ArmyFarmerJoeDoAll
                     ? null
                     : () =>
                     {
-                        if (effectiveCap > 0)
-                            ApplyCurrentArmyRoomSettings();
+                        if (effectiveCap > 0 || autoDetectCap)
+                            ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
                         prepareForCombat();
-                    }
+                    },
+                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap) : null
             );
         }
         finally
         {
-            if (effectiveCap > 0)
+            if (effectiveCap > 0 || autoDetectCap)
                 ApplyArmyRoomSettings();
         }
     }
@@ -14921,12 +14879,11 @@ public class ArmyFarmerJoeDoAll
                 return false;
 
             string objName = $"{objectivePrefix}_{step.QuestId}";
-            int stepSubgroupCap = GetSubgroupCapForMap(step.Map);
             if (!step.IsCombat)
             {
                 if (
                     !RunSubgroupCooperativeObjective(
-                        stepSubgroupCap,
+                        0,
                         objName,
                         () => IsDisabled() || core.isCompletedBefore(step.QuestId, log: false),
                         () =>
@@ -14938,7 +14895,8 @@ public class ArmyFarmerJoeDoAll
                             step.Work(core);
                         },
                         (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                        maxWorkAttempts: 3
+                        maxWorkAttempts: 3,
+                        targetMap: step.SkipMapVerify ? null : step.Map
                     )
                 )
                     return false;
@@ -14948,7 +14906,7 @@ public class ArmyFarmerJoeDoAll
 
             if (
                 !RunSubgroupCooperativeObjective(
-                    stepSubgroupCap,
+                    0,
                     objName,
                     () => IsDisabled() || core.isCompletedBefore(step.QuestId, log: false),
                     () =>
@@ -14968,7 +14926,8 @@ public class ArmyFarmerJoeDoAll
                             compositionType: step.Role,
                             targetMap: step.Map
                         ),
-                    prepareForCombat: () => PrepareCombatLoadoutForArmy(step.Role, step.SkipMapVerify ? null : step.Map)
+                    prepareForCombat: () => PrepareCombatLoadoutForArmy(step.Role, step.SkipMapVerify ? null : step.Map),
+                    targetMap: step.SkipMapVerify ? null : step.Map
                 )
             )
                 return false;
@@ -16749,7 +16708,8 @@ public class ArmyFarmerJoeDoAll
         Action help,
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
-        Action? prepareForCombat = null
+        Action? prepareForCombat = null,
+        Func<int>? resolveSubgroupCap = null
     ) => Army.RunCooperativeObjective(
         objectiveName,
         isComplete,
@@ -16757,7 +16717,8 @@ public class ArmyFarmerJoeDoAll
         (targetPlayerNumber, targetPlayerName) => help(),
         maxWorkAttempts,
         maxPlayersPerSubgroup,
-        prepareForCombat
+        prepareForCombat,
+        resolveSubgroupCap
     );
 
     public bool RunCooperativeObjective(
@@ -16767,7 +16728,8 @@ public class ArmyFarmerJoeDoAll
         Action<int, string> help,
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
-        Action? prepareForCombat = null
+        Action? prepareForCombat = null,
+        Func<int>? resolveSubgroupCap = null
     ) => Army.RunCooperativeObjective(
         objectiveName,
         isComplete,
@@ -16775,7 +16737,8 @@ public class ArmyFarmerJoeDoAll
         help,
         maxWorkAttempts,
         maxPlayersPerSubgroup,
-        prepareForCombat
+        prepareForCombat,
+        resolveSubgroupCap
     );
 
     public bool IsPlayer(int playerNumber) => Army.IsArmyPlayer(playerNumber);
