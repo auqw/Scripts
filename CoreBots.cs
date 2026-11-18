@@ -9596,59 +9596,86 @@ public class CoreBots
         }
     }
 
-    public void FindBestServer()
+    /// <summary>
+    /// Finds the optimal game server by measuring actual AQW handshake latency.
+    /// Uses three samples per server and selects the server with the lowest median latency.
+    /// </summary>
+    public async Task<string> FindBestServer()
     {
-        List<Server> servers = Bot.Servers.GetServers(true).AsTask().GetAwaiter().GetResult();
+        List<Server> servers = await Bot.Servers.GetServers(true);
+        byte[] versionCheck = Encoding.UTF8.GetBytes("<msg t='sys'><body action='verChk' r='0'><ver v='165' /></body></msg>\0");
+        Dictionary<string, long> pingResults = new();
 
-        static long TcpPing(string host, int port = 5588, int timeoutMs = 2000)
+        foreach (Server server in servers.Where(s => s.Online && !string.IsNullOrWhiteSpace(s.IP) && s.Port > 0))
         {
-            try
+            List<double> samples = new(3);
+
+            for (int sample = 0; sample < 3; sample++)
             {
-                using TcpClient client = new();
-                Stopwatch sw = Stopwatch.StartNew();
-                Task connectTask = client.ConnectAsync(host, port);
-                if (!connectTask.Wait(timeoutMs))
-                    return long.MaxValue;
-                sw.Stop();
-                return sw.ElapsedMilliseconds;
+                try
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    using TcpClient client = new();
+                    await client.ConnectAsync(server.IP, server.Port).WaitAsync(TimeSpan.FromMilliseconds(2500));
+
+                    using NetworkStream stream = client.GetStream();
+                    await stream.WriteAsync(versionCheck.AsMemory());
+                    await stream.FlushAsync();
+
+                    using CancellationTokenSource timeout = new(2500);
+                    byte[] buffer = new byte[1];
+                    StringBuilder response = new();
+
+                    while (!timeout.IsCancellationRequested)
+                    {
+                        int bytesRead = await stream.ReadAsync(buffer.AsMemory(), timeout.Token);
+                        if (bytesRead == 0)
+                            break;
+
+                        if (buffer[0] != 0)
+                        {
+                            response.Append((char)buffer[0]);
+                            continue;
+                        }
+
+                        string message = response.ToString();
+                        response.Clear();
+
+                        if (message.Contains("action='apiOK'", StringComparison.OrdinalIgnoreCase) ||
+                            message.Contains("action=\"apiOK\"", StringComparison.OrdinalIgnoreCase))
+                        {
+                            stopwatch.Stop();
+                            samples.Add(stopwatch.Elapsed.TotalMilliseconds);
+                            break;
+                        }
+
+                        if (message.Contains("action='apiKO'", StringComparison.OrdinalIgnoreCase) ||
+                            message.Contains("action=\"apiKO\"", StringComparison.OrdinalIgnoreCase))
+                            break;
+                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception) { }
             }
-            catch
+
+            if (samples.Count == 0)
             {
-                return long.MaxValue;
+                pingResults[server.IP] = long.MaxValue;
+                continue;
             }
+
+            samples.Sort();
+            pingResults[server.IP] = (long)Math.Round(samples[samples.Count / 2], MidpointRounding.AwayFromZero);
         }
 
-        // Ping each unique host once
-        Dictionary<string, long> pingResults = new();
-        foreach (string host in servers.Select(s => s.IP).Distinct())
-            pingResults[host] = TcpPing(host);
-
-        // Pick the server with the lowest ping
         Server? best = servers
-            .Where(s => pingResults[s.IP] != long.MaxValue)
+            .Where(s => pingResults.TryGetValue(s.IP, out long ping) && ping != long.MaxValue)
             .OrderBy(s => pingResults[s.IP])
             .FirstOrDefault();
-
         if (best is not null)
-            Bot.Log($"Most optimal server: {best.Name} ({best.IP}) - {pingResults[best.IP]}ms");
-        else
-            Bot.Log("Could not determine an optimal server, all hosts failed to connect.");
-    }
+            return $"Most optimal server: {best.Name} ({best.IP}) - {pingResults[best.IP]}ms";
 
-    static long TcpPing(string host, int[] ports, int timeoutMs = 2000)
-    {
-        foreach (int port in ports)
-        {
-            try
-            {
-                using TcpClient client = new();
-                Stopwatch sw = Stopwatch.StartNew();
-                if (client.ConnectAsync(host, port).Wait(timeoutMs))
-                    return sw.ElapsedMilliseconds;
-            }
-            catch { }
-        }
-        return long.MaxValue;
+        return "Could not determine an optimal server, all hosts failed their AQW handshake.";
     }
 
 
@@ -10381,7 +10408,7 @@ public class CoreBots
 
                     prereqQuest2 = true;
                 }
-                
+
                 tryJoin();
                 break;
 
