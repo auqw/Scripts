@@ -13,13 +13,19 @@ public class FindBestPing
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    public void ScriptMain(IScriptInterface Bot)
+    public async Task ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions(disableClassSwap: true);
 
-        Core.FindBestServer();
-
-        Core.SetOptions(false);
+        try
+        {
+            string result = await Core.FindBestServer();
+            Bot.Log(result);
+        }
+        finally
+        {
+            Core.SetOptions(false);
+        }
     }
 
 
