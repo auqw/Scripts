@@ -3656,6 +3656,7 @@ public class ArmyFarmerJoeDoAll
                     && (HasClassInInventory(59476) || HasClassInInventory("DragonSoul Shinobi"))
                     && HasRank10Class("DragonSoul Shinobi")
                     && core.isCompletedBefore(8739, log: false)
+                    && core.isCompletedBefore(8740, log: false)
             )
         )
         {
@@ -4210,8 +4211,199 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
+        // 4. Unlock Forge Weapon Enhancement: Smite (Quest 8740, Level 60)
+        if (!RunCoordinatedSmiteForge("BRACKET60_SMITE"))
+            return false;
+
         SetClass(rankUpIfNeeded: true);
         return Army.SyncArmy("STEP2C_60_COMPLETE") && !Bot.ShouldExit;
+    }
+
+    private bool RunCoordinatedSmiteForge(string objectivePrefix)
+    {
+        CoreBots core = CoreBots.Instance;
+        bool IsSmiteDone() => core.isCompletedBefore(8740, log: false);
+
+        if (Army.AllPlayersSatisfy($"SKIP_{objectivePrefix}", IsSmiteDone))
+            return true;
+
+        if (!RunCoordinatedBlacksmithingRankStep($"{objectivePrefix}_BS6", 6, 8, IsSmiteDone))
+            return false;
+
+        bool IsShadowfallRiseDone() => IsSmiteDone() || core.isCompletedBefore(6592, log: false);
+        CoordinatedStoryStep[] shadowfallRiseSteps =
+        {
+            new(6539, "noxustower", "Slimeskull", c => Story.KillQuest(6539, "noxustower", "Slimeskull")),
+            new(6540, "noxustower", "Doomwood Treeant", c => Story.KillQuest(6540, "noxustower", "Doomwood Treeant")),
+            new(6541, "noxustower", "Sanguine Souleater", c => Story.KillQuest(6541, "noxustower", "Sanguine Souleater")),
+            new(6542, "noxustower", "Lightguard Caster", c => Story.KillQuest(6542, "noxustower", "Lightguard Caster")),
+            new(6543, "noxustower", "Lightguard Caster", c => Story.KillQuest(6543, "noxustower", "Lightguard Caster")),
+            new(
+                6544,
+                "noxustower",
+                "Lightguard Caster",
+                c =>
+                {
+                    c.EnsureAccept(6544);
+                    c.GetMapItem(6018, 4, "noxustower");
+                    c.HuntMonster("noxustower", "Lightguard Caster", "Lightguard Scroll", 4);
+                    c.EnsureComplete(6544);
+                }
+            ),
+            new(6545, "noxustower", "Lightguard Wolf", c => Story.KillQuest(6545, "noxustower", "Lightguard Wolf")),
+            new(6546, "noxustower", "Lightguard Paladin", c => Story.KillQuest(6546, "noxustower", "Lightguard Paladin")),
+            new(
+                6547,
+                "noxustower",
+                "*",
+                c =>
+                {
+                    c.EnsureAccept(6547);
+                    c.HuntMonster("noxustower", "Slimeskull", "Necrotic Ooze", 3);
+                    c.HuntMonster("noxustower", "Lightguard Caster", "Lightguard Armor", 4);
+                    c.HuntMonster("noxustower", "Doomwood Treeant", "Arcane Energy", 3);
+                    c.EnsureComplete(6547);
+                }
+            ),
+            new(6548, "noxustower", "*", c => Story.MapItemQuest(6548, "noxustower", 6019), isCombat: false),
+            new(6549, "noxustower", "*", c => Story.MapItemQuest(6549, "noxustower", 6020), isCombat: false),
+            new(6550, "noxustower", "General Goldhammer", c => Story.KillQuest(6550, "noxustower", "General Goldhammer"), ClassType.Solo),
+            new(6560, "lightguardwar", "Citadel Crusader", c => Story.KillQuest(6560, "lightguardwar", "Citadel Crusader")),
+            new(6561, "lightguardwar", "Citadel Crusader", c => Story.KillQuest(6561, "lightguardwar", "Citadel Crusader")),
+            new(6562, "lightguardwar", "Citadel Crusader", c => Story.KillQuest(6562, "lightguardwar", "Citadel Crusader")),
+            new(6563, "lightguardwar", "Slimeskull", c => Story.KillQuest(6563, "lightguardwar", "Slimeskull")),
+            new(6564, "lightguardwar", "Lightguard Engine", c => Story.KillQuest(6564, "lightguardwar", "Lightguard Engine")),
+            new(6565, "lightguardwar", "Scorching Flame", c => Story.KillQuest(6565, "lightguardwar", "Scorching Flame")),
+            new(6566, "lightguardwar", "Citadel Crusader", c => Story.KillQuest(6566, "lightguardwar", "Citadel Crusader")),
+            new(6567, "lightguardwar", "Sigrid Sunshield", c => Story.KillQuest(6567, "lightguardwar", "Sigrid Sunshield"), ClassType.Solo),
+            new(
+                6581,
+                "lumafortress",
+                "Invasive Shadow",
+                c =>
+                {
+                    c.EnsureAccept(6581);
+                    c.GetMapItem(6098, 8, "lumafortress");
+                    c.HuntMonster("lumafortress", "Invasive Shadow", "Shadows Defeated", 8);
+                    c.EnsureComplete(6581);
+                }
+            ),
+            new(
+                6582,
+                "lumafortress",
+                "Light Treeant",
+                c =>
+                {
+                    c.EnsureAccept(6582);
+                    c.GetMapItem(6099, 7, "lumafortress");
+                    c.HuntMonster("lumafortress", "Light Treeant", "Glowmoss", 6);
+                    c.EnsureComplete(6582);
+                }
+            ),
+            new(6583, "lumafortress", "Light Elemental", c => Story.KillQuest(6583, "lumafortress", "Light Elemental")),
+            new(6584, "lumafortress", "Hapless Skeleton", c => Story.KillQuest(6584, "lumafortress", "Hapless Skeleton")),
+            new(6585, "lumafortress", "Light Treeant", c => Story.KillQuest(6585, "lumafortress", "Light Treeant")),
+            new(
+                6586,
+                "lumafortress",
+                "Lightwing",
+                c =>
+                {
+                    c.EnsureAccept(6586);
+                    c.GetMapItem(6100, 1, "lumafortress");
+                    c.HuntMonster("lumafortress", "Lightwing", "Brilliant Feather", 1);
+                    c.EnsureComplete(6586);
+                }
+            ),
+            new(6587, "lumafortress", "*", c => Story.MapItemQuest(6587, "lumafortress", 6101), isCombat: false),
+            new(6588, "lumafortress", "Light Elemental", c => Story.KillQuest(6588, "lumafortress", "Light Elemental")),
+            new(6589, "lumafortress", "Living Shadow", c => Story.KillQuest(6589, "lumafortress", "Living Shadow")),
+            new(6590, "lumafortress", "Skeleton Minion", c => Story.KillQuest(6590, "lumafortress", "Skeleton Minion")),
+            new(
+                6591,
+                "lumafortress",
+                "Corrupted Luma",
+                c =>
+                {
+                    c.EnsureAccept(6591);
+                    c.KillMonster("lumafortress", "r4", "Left", "Corrupted Luma", "Luma Defeated");
+                    c.EnsureComplete(6591);
+                },
+                ClassType.Solo
+            ),
+            new(6592, "lumafortress", "Light Elemental", c => Story.KillQuest(6592, "lumafortress", "Light Elemental")),
+        };
+
+        if (!RunCoordinatedStoryChain($"{objectivePrefix}_SR", shadowfallRiseSteps, isEnabled: () => !IsShadowfallRiseDone()))
+            return false;
+
+        return
+            RunCoordinatedHuntStep(
+                $"{objectivePrefix}_DEATH",
+                8740,
+                "shadowattack",
+                "Death",
+                "Death's Power",
+                3,
+                isTemp: false,
+                role: ClassType.Solo,
+                isEnabled: () => !IsSmiteDone()
+            )
+            && RunCoordinatedHuntStep(
+                $"{objectivePrefix}_ESCHERION",
+                8740,
+                "escherion",
+                "Escherion",
+                "Chaotic Power",
+                7,
+                isTemp: false,
+                role: ClassType.Solo,
+                isEnabled: () => !IsSmiteDone()
+            )
+            && RunCoordinatedHuntStep(
+                $"{objectivePrefix}_EMPOWERED",
+                8740,
+                "shadowrealmpast",
+                "Pure Shadowscythe",
+                "Empowered Essence",
+                50,
+                isTemp: false,
+                role: ClassType.Farm,
+                isEnabled: () => !IsSmiteDone()
+            )
+            && RunCoordinatedHuntStep(
+                $"{objectivePrefix}_GEM",
+                8740,
+                "undergroundlabb",
+                "Ultra Battle Gem",
+                "Gem Power",
+                25,
+                isTemp: false,
+                role: ClassType.Solo,
+                isEnabled: () => !IsSmiteDone()
+            )
+            && RunCoordinatedTurnInStep(
+                $"{objectivePrefix}_COMPLETE",
+                IsSmiteDone,
+                IsSmiteDone,
+                () =>
+                {
+                    LeaveCombatRoomForEquipmentChange();
+                    Adv.BuyItem("alchemyacademy", 2116, "Power Tonic", 10);
+                    core.EnsureAccept(8740);
+                    core.EnsureComplete(8740);
+
+                    if (IsSmiteDone() && !ShouldPreserveEquippedGear() && !IsDisableAutoEnhanceEnabled())
+                    {
+                        string? currentClass = Bot.Player.CurrentClass?.Name;
+                        if (!string.IsNullOrWhiteSpace(currentClass))
+                        {
+                            ApplyAndRecordSmartEnhance(currentClass);
+                            Army.StartClassSkills(currentClass);
+                        }
+                    }
+                }
+            );
     }
 
     /// <summary>
@@ -9433,24 +9625,7 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(9171);
                 }
             )
-            || !RunSubgroupCooperativeObjective(
-                4,
-                "STEP3A_FORGE_SMITE",
-                () => core.isCompletedBefore(8740, log: false),
-                () =>
-                {
-                    if (core.isCompletedBefore(8740, log: false))
-                        return;
-
-                    PrepareCombatLoadoutForArmy(ClassType.Solo);
-                    ForgeUnlock.Smite();
-                },
-                (targetPlayerNumber, targetPlayerName) =>
-                {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Solo);
-                },
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo)
-            )
+            || !RunCoordinatedSmiteForge("STEP3A_SMITE")
         )
             return false;
 
@@ -12716,18 +12891,23 @@ public class ArmyFarmerJoeDoAll
     private static readonly string[] FarmClasses =
     {
         "ArchMage",
-        "Kathool Adept",
+        "King's Echo",
         "Arcana Invoker",
-        "Dragon of Time",
+        "Kathool Adept",
         "Archfiend",
+        "Dragon of Time",
         "Blaze Binder",
+        "Chaos Slayer",
+        "Eternal Inversionist",
         "ShadowScythe General",
         "Scarlet Sorceress",
+        "Darkblood StormKing",
         "Pyromancer",
         "Evolved Shaman",
         "Shaman",
         "Imperial Chunin",
         "Master Ranger",
+        "Royal BattleMage",
         "Mage",
     };
 
