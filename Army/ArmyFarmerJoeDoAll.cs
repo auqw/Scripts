@@ -3269,7 +3269,7 @@ public class ArmyFarmerJoeDoAll
 
                     core.AddDrop("Shurpu Blaze Token");
                     PrepareCombatLoadoutForArmy(ClassType.Solo, "xancave");
-                    if (!JoinMapVerified("xancave"))
+                    if (!ShouldSkipMapVerification("xancave") && !JoinMapVerified("xancave"))
                     {
                         core.Logger("Map '/xancave' is currently unavailable for 'BRACKET55_BB_PYRO_TOKENS'.");
                         return;
@@ -13068,9 +13068,6 @@ public class ArmyFarmerJoeDoAll
                 LeaveCombatRoomForEquipmentChange();
                 core.EquipClass(effectiveType);
                 Army.StartClassSkills(Bot.Player.CurrentClass?.Name);
-                _syncedClassType = effectiveType;
-            }
-            else
             {
                 Army.EnsureSkillRotationActive();
             }
@@ -13251,6 +13248,8 @@ public class ArmyFarmerJoeDoAll
     private void PrepareCombatLoadoutForArmy(ClassType role, string? targetMap = null)
     {
         string? targetRace = role == ClassType.Boss ? DetectCurrentCellMonsterRace() : null;
+        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+            LeaveCombatRoomForEquipmentChange();
         EnsureBestStaticBoostGearEquipped(role == ClassType.Boss ? BoostObjective.Combat : BoostObjective.Balanced, targetRace);
         SetClass(role);
         string? activeClass = Bot.Player.CurrentClass?.Name;
@@ -13260,7 +13259,10 @@ public class ArmyFarmerJoeDoAll
         if (!string.IsNullOrWhiteSpace(targetMap))
         {
             Army.EnsureMapAccessBypass(targetMap);
-            if (!string.Equals(Bot.Map?.Name, targetMap, StringComparison.OrdinalIgnoreCase))
+            if (
+                !ShouldSkipMapVerification(targetMap)
+                && !string.Equals(Bot.Map?.Name, targetMap, StringComparison.OrdinalIgnoreCase)
+            )
             {
                 if (!JoinMapVerified(targetMap))
                     CoreBots.Instance.Logger($"Pre-join to '/{targetMap}' skipped or unavailable; continuing ready check.");
@@ -14558,6 +14560,11 @@ public class ArmyFarmerJoeDoAll
     private bool JoinMapVerified(string map, string? cell = null, string? pad = null)
     {
         CoreBots core = CoreBots.Instance;
+        if (string.IsNullOrEmpty(cell) && string.Equals(map, "xantown", StringComparison.OrdinalIgnoreCase))
+        {
+            cell = "r12";
+            pad = "Left";
+        }
         Army.EnsureMapAccessBypass(map);
         if (!string.IsNullOrEmpty(cell) && !string.IsNullOrEmpty(pad))
             core.Join(map, cell, pad);
@@ -14599,7 +14606,40 @@ public class ArmyFarmerJoeDoAll
         );
     }
 
+    private static readonly HashSet<string> AggressiveSpawnMaps = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "xantown",
+        "xancave",
+        "stalagbite",
+        "gluttony",
+        "oaklore",
+        "shadowattack",
+        "shadowrise",
+        "bloodmoon",
+        "wanders",
+        "zephyrus",
+    };
+
+    private readonly HashSet<string> _detectedAggressiveSpawnMaps = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, int> _detectedMapCaps = new(StringComparer.OrdinalIgnoreCase);
+
+    private bool ShouldSkipMapVerification(string? targetMap)
+    {
+        if (string.IsNullOrWhiteSpace(targetMap))
+            return false;
+
+        string normalized = targetMap.Trim().ToLowerInvariant();
+        if (AggressiveSpawnMaps.Contains(normalized) || _detectedAggressiveSpawnMaps.Contains(normalized))
+            return true;
+
+        if (Army.IsMapUnsafeSpawn(normalized))
+        {
+            _detectedAggressiveSpawnMaps.Add(normalized);
+            return true;
+        }
+
+        return false;
+    }
 
     private int ProbeMapSubgroupCapForArmy(string? targetMap)
     {
@@ -14607,6 +14647,9 @@ public class ArmyFarmerJoeDoAll
             return 0;
 
         string normalized = targetMap.Trim().ToLowerInvariant();
+        if (ShouldSkipMapVerification(normalized))
+            return 0;
+
         if (_detectedMapCaps.TryGetValue(normalized, out int cachedCap))
             return cachedCap;
 
@@ -14615,6 +14658,13 @@ public class ArmyFarmerJoeDoAll
             return 0;
 
         int maxPlayers = Army.DetectCurrentMapMaxPlayers(normalized);
+        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+        {
+            _detectedAggressiveSpawnMaps.Add(normalized);
+            Army.PublishMapUnsafeSpawn(normalized);
+            LeaveCombatRoomForEquipmentChange();
+        }
+
         int cap = (maxPlayers > 0 && maxPlayers < Army.ArmyPlayerCount) ? maxPlayers : 0;
         _detectedMapCaps[normalized] = cap;
         if (cap > 0)
@@ -14647,7 +14697,10 @@ public class ArmyFarmerJoeDoAll
         int attempts = 0;
         bool done = initialSkipCheck();
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
-        bool autoDetectCap = previousSubgroupCap <= 0 && !string.IsNullOrWhiteSpace(targetMap);
+        bool autoDetectCap =
+            previousSubgroupCap <= 0
+            && !string.IsNullOrWhiteSpace(targetMap)
+            && !ShouldSkipMapVerification(targetMap);
 
         try
         {
@@ -14725,7 +14778,11 @@ public class ArmyFarmerJoeDoAll
     {
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
         int effectiveCap = previousSubgroupCap > 0 ? 0 : subgroupCap;
-        bool autoDetectCap = previousSubgroupCap <= 0 && effectiveCap <= 0 && !string.IsNullOrWhiteSpace(targetMap);
+        bool autoDetectCap =
+            previousSubgroupCap <= 0
+            && effectiveCap <= 0
+            && !string.IsNullOrWhiteSpace(targetMap)
+            && !ShouldSkipMapVerification(targetMap);
         if (effectiveCap > 0)
             ApplySubgroupRoomSettings(effectiveCap);
 
@@ -14810,7 +14867,11 @@ public class ArmyFarmerJoeDoAll
                 if (acceptQuest && questId > 0)
                     core.EnsureAccept(questId);
 
-                if (!JoinMapVerified(map, cell, pad))
+                if (string.IsNullOrEmpty(cell) && ShouldSkipMapVerification(map))
+                {
+                    Army.EnsureMapAccessBypass(map);
+                }
+                else if (!JoinMapVerified(map, cell, pad))
                 {
                     core.Logger($"Map '/{map}' is currently unavailable for '{objectiveName}'.");
                     return;
@@ -14874,7 +14935,7 @@ public class ArmyFarmerJoeDoAll
                         },
                         (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
                         maxWorkAttempts: 3,
-                        targetMap: step.SkipMapVerify ? null : step.Map
+                        targetMap: (step.SkipMapVerify || ShouldSkipMapVerification(step.Map)) ? null : step.Map
                     )
                 )
                     return false;
@@ -14893,7 +14954,7 @@ public class ArmyFarmerJoeDoAll
                             return;
 
                         SetClass(step.Role);
-                        if (!step.SkipMapVerify && !string.IsNullOrEmpty(step.Map))
+                        if (!step.SkipMapVerify && !ShouldSkipMapVerification(step.Map) && !string.IsNullOrEmpty(step.Map))
                             core.Join(step.Map);
                         step.Work(core);
                     },
@@ -14905,7 +14966,7 @@ public class ArmyFarmerJoeDoAll
                             targetMap: step.Map
                         ),
                     prepareForCombat: () => PrepareCombatLoadoutForArmy(step.Role, step.SkipMapVerify ? null : step.Map),
-                    targetMap: step.SkipMapVerify ? null : step.Map
+                    targetMap: (step.SkipMapVerify || ShouldSkipMapVerification(step.Map)) ? null : step.Map
                 )
             )
                 return false;

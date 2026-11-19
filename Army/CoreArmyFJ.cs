@@ -2331,5 +2331,42 @@ public class CoreArmyFJ
 
         return 0;
     }
+
+    public void PublishMapUnsafeSpawn(string mapName)
+    {
+        if (!armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath))
+            return;
+
+        string safeName = NormalizeArmyRecordName(mapName);
+        if (string.IsNullOrEmpty(safeName))
+            return;
+
+        string path = $"{armySyncPath}.UNSAFESPAWN.{safeName}.{armySessionId}";
+        try
+        {
+            File.WriteAllText(path, "1");
+        }
+        catch { }
+    }
+
+    public bool IsMapUnsafeSpawn(string mapName)
+    {
+        if (!armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath))
+            return false;
+
+        string safeName = NormalizeArmyRecordName(mapName);
+        if (string.IsNullOrEmpty(safeName))
+            return false;
+
+        string path = $"{armySyncPath}.UNSAFESPAWN.{safeName}.{armySessionId}";
+        try
+        {
+            return File.Exists(path);
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
 
