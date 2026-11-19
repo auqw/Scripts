@@ -335,7 +335,6 @@ public class ArmyFarmerJoeDoAll
     private bool _startupBracket30DailiesDone;
     private bool _startupBracket50DailiesDone;
     private bool _startupBracket55DailiesDone;
-    private bool _startupEncroachingShadowsDone;
     private bool _startupDagesScrollDone;
 
     private bool RunStartupUnlockedDailies()
@@ -427,15 +426,6 @@ public class ArmyFarmerJoeDoAll
             && !RunLordOfOrderProgression("STARTUP")
         )
             return false;
-
-        if (
-            Army.AllPlayersSatisfy("STARTUP_DAILIES_LV75_READY", () => Bot.Player.Level >= 75)
-        )
-        {
-            if (!RunTheEncroachingShadowsDaily())
-                return false;
-            _startupEncroachingShadowsDone = true;
-        }
 
         if (
             Army.AllPlayersSatisfy(
@@ -7092,7 +7082,7 @@ public class ArmyFarmerJoeDoAll
     /// <summary>
     /// Step 3A: Level 75 Progression.
     /// Follows the agreed 3-phase flow:
-    /// - Level 75 + The Encroaching Shadows daily (Quest 8653)
+    /// - Level 75 + Enhance + Best Boost Gear
     /// - Phase 1: Healer / Dragon of Time Rank 10 preparation (for Chaos Lord Xiang)
     /// - Phase 2: Cape of Awe check + Complete 13 Lords of Chaos (Escherion through Chaos Lord Drakath)
     /// - Phase 3: Lord of Order Daily + Additional Classes (Shaman, Northlands Monk, Frost SpiritReaver) + Forge Weapons (Forge & Praxis)
@@ -7108,14 +7098,11 @@ public class ArmyFarmerJoeDoAll
         if (!Army.SyncArmy("STEP3A_75_START"))
             return false;
 
-        // 0. Level 75 + Enhance + Best Boost Gear + The Encroaching Shadows Daily (8653)
+        // 0. Level 75 + Enhance + Best Boost Gear
         if (!RunBracketLevelAndEnhance("STEP3A_LEVEL_75", 75))
             return false;
 
         EnsureBestStaticBoostGearEquipped();
-
-        if (!RunTheEncroachingShadowsDaily())
-            return false;
 
         // Phase 1: Prepare Healer (or Dragon of Time) at Rank 10 for Chaos Lord Xiang (13 LoC & LoO Day 9)
         if (!RunStep3AHealerPrep())
@@ -9696,7 +9683,7 @@ public class ArmyFarmerJoeDoAll
     /// <summary>
     /// Step 3B: Level 80 Progression.
     /// - Level 80 + Enhance + Best Boost Gear
-    /// - Dailies: The Encroaching Shadows (8653), LoO (7156-7165), Dage's Scroll Fragment (3596)
+    /// - Dailies: LoO (7156-7165), Dage's Scroll Fragment (3596)
     /// - Burning Blade of Abezeth (+30% All Damage, solo-only /celestialarenad)
     /// - Dragon of Time (subgroup 1-4 / 5-7 for /towerofdoom*, bypass via EnsureMapAccessBypass)
     /// - ArchFiend (50x Bone Dust pre-check + subgroup 1-4 / 5-7 for /tercessuinotlim)
@@ -9716,9 +9703,6 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         EnsureBestStaticBoostGearEquipped();
-
-        if (!RunTheEncroachingShadowsDaily())
-            return false;
 
         if (!RunLordOfOrderProgression("STEP3B"))
             return false;
@@ -9976,7 +9960,7 @@ public class ArmyFarmerJoeDoAll
     /// <summary>
     /// Step 3C: Level 90 Progression.
     /// - Level 90 + Enhance + Best Boost Gear
-    /// - Dailies: The Encroaching Shadows (8653), LoO (7156-7165), Dage's Scroll Fragment (3596)
+    /// - Dailies: LoO (7156-7165), Dage's Scroll Fragment (3596)
     /// - Verus DoomKnight (Rank 10 Evil + coordinated /terminatemple questline + Rank 10)
     /// - Forge Capes (Blacksmithing Rank 9 + Good Rank 10 + Absolution -> Vainglory -> Avarice -> Penitence -> Lament)
     /// </summary>
@@ -9992,9 +9976,6 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         EnsureBestStaticBoostGearEquipped();
-
-        if (!RunTheEncroachingShadowsDaily())
-            return false;
 
         if (!RunLordOfOrderProgression("STEP3C"))
             return false;
@@ -10337,7 +10318,7 @@ public class ArmyFarmerJoeDoAll
     /// <summary>
     /// Step 4A: Level 100 Endgame Progression (no weekly Ultra Bosses).
     /// - Level 100 + Enhance + Best Boost Gear
-    /// - Dailies: The Encroaching Shadows (8653), LoO (7156-7165), Dage's Scroll Fragment (3596)
+    /// - Dailies: LoO (7156-7165), Dage's Scroll Fragment (3596)
     /// - Endgame Classes: Void Highlord, ArchMage, Arcana Invoker (Non-Insignia)
     /// - Forge Weapons: Hero's Valiance (8741) & Ravenous (9560)
     /// - Endgame Gear: Infernal ArchFiend (+40% All Races), Hollowborn Reaper's Scythe (+40% All Damage)
@@ -10357,9 +10338,6 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         EnsureBestStaticBoostGearEquipped();
-
-        if (!RunTheEncroachingShadowsDaily())
-            return false;
 
         if (!RunLordOfOrderProgression("STEP4A"))
             return false;
@@ -16224,85 +16202,6 @@ public class ArmyFarmerJoeDoAll
             },
             (targetPlayerNumber, targetPlayerName) =>
                 Army.CoordinateFollowAndCombat(targetPlayerName, "*")
-        );
-    }
-
-    /// <summary>
-    /// Future Bracket (Level 75+): Daily "The Encroaching Shadows" [8653] (Void Aura x50 + (Necro) Scroll of Dark Arts).
-    /// Intentionally NOT invoked during Level 1-65 brackets; ready for future Level 75+ integration.
-    /// </summary>
-    public bool RunTheEncroachingShadowsDaily()
-    {
-        CoreBots core = CoreBots.Instance;
-        bool voidAuraCapped = core.CheckInventory("Void Aura", 7500, toInv: false);
-        bool dailyAvailable = Bot.Player.Level >= 75 && !voidAuraCapped && CanRunPeriodicQuest(8653);
-
-        if (
-            !RunCoordinatedHuntStep(
-                "FUTURE75_ENCROACHING_SHADOWS_ICEWING",
-                8653,
-                "icewing",
-                "Warlord Icewing",
-                "Glacial Pinion",
-                1,
-                role: ClassType.Solo,
-                acceptQuest: true,
-                checkBankAlso: true,
-                beforeHunt: c =>
-                {
-                    if (!dailyAvailable)
-                        return;
-                    c.AddDrop("Void Aura", "(Necro) Scroll of Dark Arts", "Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets");
-                },
-                isEnabled: () => dailyAvailable
-            )
-            || !RunCoordinatedHuntStep(
-                "FUTURE75_ENCROACHING_SHADOWS_HYDRA90",
-                8653,
-                "hydrachallenge",
-                "Hydra Head 90",
-                "Hydra Eyeball",
-                3,
-                role: ClassType.Solo,
-                cell: "h90",
-                pad: "Left",
-                isEnabled: () => dailyAvailable
-            )
-            || !RunCoordinatedHuntStep(
-                "FUTURE75_ENCROACHING_SHADOWS_FLIBBI",
-                8653,
-                "voidflibbi",
-                "Flibbitiestgibbet",
-                "Flibbitigiblets",
-                1,
-                role: ClassType.Solo,
-                isEnabled: () => dailyAvailable
-            )
-        )
-            return false;
-
-        bool turnInDone = false;
-        return RunCoordinatedTurnInStep(
-            "FUTURE75_ENCROACHING_SHADOWS_COMPLETE",
-            () => !dailyAvailable || turnInDone,
-            () => !dailyAvailable || Bot.Quests.IsDailyComplete(8653) || turnInDone,
-            () =>
-            {
-                turnInDone = true;
-                UnbankIfOwned("Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets");
-                if (
-                    !core.CheckInventory("Glacial Pinion", 1)
-                    || !core.CheckInventory("Hydra Eyeball", 3)
-                    || !core.CheckInventory("Flibbitigiblets", 1)
-                )
-                    return;
-
-                core.AddDrop("Void Aura", "(Necro) Scroll of Dark Arts");
-                core.EnsureAccept(8653);
-                core.EnsureComplete(8653);
-                WaitForDailyRewardPickup(8653, "Void Aura");
-                BankIfPresent("Void Aura", "(Necro) Scroll of Dark Arts");
-            }
         );
     }
 
