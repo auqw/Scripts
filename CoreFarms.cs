@@ -1458,9 +1458,9 @@ public class CoreFarms
             if (!maxedQuests)
             {
                 int[] availableQuests =
-                    Bot.Quests.IsUnlocked(10812) ? new[] { 10810, 10811, 10812 } :
-                    Bot.Quests.IsUnlocked(10811) ? new[] { 10810, 10811 } :
-                    new[] { 10810 };
+                    Bot.Quests.IsUnlocked(10812) ? [10810, 10811, 10812] :
+                    Bot.Quests.IsUnlocked(10811) ? [10810, 10811] :
+                    [10810];
 
                 if (!availableQuests.SequenceEqual(currentQuests))
                 {
@@ -3216,11 +3216,11 @@ public class CoreFarms
     }
 
     public string[] AcceptablePvPAmulets =
-    {
+    [
         "Mithril PvP Amulet +15000",
         "Diamond PvP Amulet +5500",
         "Platinum PvP Amulet +5000",
-    };
+    ];
 
     public void DeathPitBrawlREP(int rank = 10)
     {
@@ -4275,7 +4275,7 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank} for Yew Mountains");
 
-        Core.RegisterQuests(Core.IsMember ? new[] { 10345 } : new[] { 10341, 10346 });
+        Core.RegisterQuests(Core.IsMember ? new[] { 10345 } : [10341, 10346]);
         Core.AddDrop(
             Core.EnsureLoad(10342)
                 .Rewards.Select(r => r.Name)
@@ -4339,7 +4339,7 @@ public class CoreFarms
             Core.AddDrop("Super-Fan Swag Token D");
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(
-            !Core.IsMember ? new[] { 1304, 1307 } : new[] { 1310, 1312, 1313, 1314 }
+            !Core.IsMember ? new[] { 1304, 1307 } : [1310, 1312, 1313, 1314]
         );
 
         #region Token farm and check for Token A only
@@ -4444,10 +4444,10 @@ public class CoreFarms
         Bot.Wait.ForCellChange("Begin");
         Core.Sleep();
 
-        // Token D > Token C (purchase if needed)
-        if (dQuantity / 10 > 1 && cQuantity < 500 && dQuantity / 10 + cQuantity < 500)
+        // Token D > Token C (purchase up to the remaining capacity)
+        int buyC = Math.Min(dQuantity / 10, 500 - cQuantity);
+        if (buyC > 0)
         {
-            int buyC = dQuantity / 10;
             Core.BuyItem("collection", 325, "Super-Fan Swag Token C", buyC);
             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
             Bot.Wait.ForItemBuy();
@@ -4455,10 +4455,10 @@ public class CoreFarms
 
         Core.Sleep();
 
-        // Token C > Token B (buy from shop if needed)
-        if (cQuantity / 10 > 1 && bQuantity < 200 && cQuantity / 10 + bQuantity < 200)
+        // Token C > Token B (purchase up to the remaining capacity)
+        int buyB = Math.Min(cQuantity / 10, 200 - bQuantity);
+        if (buyB > 0)
         {
-            int buyB = cQuantity / 10;
             Core.BuyItem("collection", 325, "Super-Fan Swag Token B", buyB);
             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
             Bot.Wait.ForItemBuy();
@@ -4466,10 +4466,10 @@ public class CoreFarms
 
         Core.Sleep();
 
-        // Token B > Token A (buy from shop if needed)
-        if (bQuantity / 20 > 1 && aQuantity < 100 && bQuantity / 20 + aQuantity < 100)
+        // Token B > Token A (purchase up to the remaining capacity)
+        int buyA = Math.Min(bQuantity / 20, 100 - aQuantity);
+        if (buyA > 0)
         {
-            int buyA = bQuantity / 20;
             Core.BuyItem("collection", 325, "Super-Fan Swag Token A", buyA);
             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
             Bot.Wait.ForItemBuy();
