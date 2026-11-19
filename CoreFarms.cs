@@ -11,6 +11,7 @@ using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Quests;
 using Skua.Core.Models.Shops;
+using Timer = System.Threading.Timer;
 
 public class CoreFarms
 {
@@ -1069,78 +1070,85 @@ public class CoreFarms
         }
     }
 
+
+
+#nullable enable
+
     /// <summary>
     /// Defeats the Team B Captain in /BludrutBrawl to farm the specified item.
     /// </summary>
     /// <param name="item">The name of the item to be obtained (e.g., "Combat Trophy" or "Yoshino's Citrine").</param>
     /// <param name="quant">The target quantity of the item.</param>
     /// <param name="canSoloBoss">Indicates if the boss can be soloed; true by default.</param>
-    public void BludrutBrawlBoss(
-        string item = "Combat Trophy",
-        int quant = 5000,
-        bool canSoloBoss = true
-    )
+    public void BludrutBrawlBoss(string item = "Combat Trophy", int quant = 5000, bool canSoloBoss = true)
     {
         if (Core.CheckInventory(item, quant))
             return;
 
         if (Bot.Map.Name == "bludrutbrawl")
         {
-            Core.Logger(
-                "Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first."
-            );
+            Core.Logger("Started in PvP map. Joining whitemap first to avoid equipment issues.");
             Core.Join("whitemap");
         }
 
-        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
-        Core.Logger($"`Kill Ads` Enabled? {KillAds}" + (KillAds ? "if enabled this will kill the healers aswell for an aditional 3 trophies (totaling 10) but will take longer." : ""));
-        Core.AddDrop(new[] { item } ?? new[] { "The Secret 4", "Yoshino's Citrine" });
+        bool KillAds = Core.CBOBool("PvP_SoloPvPBoss", out bool killAds);
+        KillAds = killAds;
+
+        Core.Logger($"`Kill Ads` Enabled? {KillAds}" +
+            (KillAds ? " This also kills the healers for an additional 3 trophies (10 total), but takes longer." : ""));
+
+        Core.AddDrop(new[] { item, "Combat Trophy", "The Secret 4", "Yoshino's Citrine" });
 
         Core.EquipClass(ClassType.Solo);
         Core.FarmingLogger(item, quant);
+
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        // Find the first matching amulet in inventory or bank
+        // Find the first acceptable PvP amulet in inventory or bank.
         string? amulet = AcceptablePvPAmulets.FirstOrDefault(name =>
             Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i?.Name == name)
         );
 
-        // Equip the amulet if found in inventory or bank
         if (amulet != null)
         {
             Core.Unbank(amulet);
             Core.Equip(amulet);
         }
 
-        int CurrentTrohpies;
-        int UpdatedTrophies;
-
-    Start:
-        int ExitAttempt = 1;
-        int Death = 0;
         Random random = new();
+
+        int deathCount = 0;
+        int exitAttempt = 0;
+
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
+            bool restart = false;
+
+            int currentTrophies = Bot.Inventory.GetQuantity("Combat Trophy");
+
             Core.Join("bludrutbrawl-999999", "Enter0", "Spawn");
             Bot.Wait.ForMapLoad("bludrutbrawl");
-            CurrentTrohpies = Bot.Inventory.GetQuantity("Combat Trophy");
+
+            if (Bot.Map.Name != "bludrutbrawl")
+                continue;
+
+            currentTrophies = Bot.Inventory.GetQuantity("Combat Trophy");
 
             Core.PvPMove(5, "Morale0C", random.Next(784, 862), random.Next(254, 274));
             Core.PvPMove(4, "Morale0B", random.Next(786, 850), random.Next(262, 287));
             Core.PvPMove(7, "Morale0A", random.Next(783, 857), random.Next(263, 293));
             Core.PvPMove(9, "Crosslower", random.Next(777, 857), random.Next(254, 290));
 
-            // If CBO setting for `Kill ads before boss` is enabled do:
             if (KillAds)
             {
-                if (
-                    !Bot.Inventory.Items.Any(x =>
-                        x != null
-                        && Core.CheckInventory(AcceptablePvPAmulets, any: true)
-                        && x.Equipped
-                    )
-                )
+                bool hasEquippedAmulet = Bot.Inventory.Items.Any(x =>
+                    x != null &&
+                    x.Equipped &&
+                    AcceptablePvPAmulets.Contains(x.Name)
+                );
+
+                if (!hasEquippedAmulet)
                     Core.OneTimeMessage(
                         "Wheres your amulet retard?",
                         "Hey ChuckleFuck, you forgot your amulet! So now you get to kill the minions."
@@ -1150,13 +1158,21 @@ public class CoreFarms
                 Core.PvPMove(18, "Resource1A", random.Next(786, 860), random.Next(255, 274));
 
                 Core.PVPKilling();
+
                 if (!Bot.Player.Alive)
+                    restart = true;
+
+                if (restart)
                     goto RestartOnDeath;
 
                 Core.PvPMove(20, "Resource1B", random.Next(784, 852), random.Next(254, 293));
 
                 Core.PVPKilling();
+
                 if (!Bot.Player.Alive)
+                    restart = true;
+
+                if (restart)
                     goto RestartOnDeath;
 
                 Core.PvPMove(21, "Resource1A", random.Next(123, 189), random.Next(262, 297));
@@ -1167,80 +1183,98 @@ public class CoreFarms
             Core.PvPMove(15, "Morale1A", random.Next(781, 858), random.Next(258, 290));
 
             Bot.Kill.Monster(13);
+
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
             Core.PvPMove(23, "Morale1B", random.Next(782, 850), random.Next(259, 276));
 
             Bot.Kill.Monster(14);
+
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
             Core.PvPMove(25, "Morale1C", random.Next(802, 865), random.Next(264, 286));
 
             Bot.Kill.Monster(15);
+
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
             Core.PvPMove(28, "Captain1", random.Next(430, 537), random.Next(254, 255));
+
             Bot.Kill.Monster(16);
+
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            // Wait for drop to appear in stack
+            // Wait for the requested drop and attempt pickup.
             Bot.Wait.ForTrue(() => Bot.Drops.CurrentDrops.Contains(item), 40);
 
             Core.Sleep(1500);
             Bot.Wait.ForPickup(item, 40);
 
-            // Record updated quantity until server actually updates it
-            UpdatedTrophies = Bot.Inventory.GetQuantity(item);
+            // Wait up to 30 seconds for the server to update trophy inventory.
+            System.Diagnostics.Stopwatch trophyTimer = System.Diagnostics.Stopwatch.StartNew();
 
-            while (!Bot.ShouldExit && UpdatedTrophies <= CurrentTrohpies)
+            int updatedTrophies = currentTrophies;
+
+            while (!Bot.ShouldExit &&
+                Bot.Player.Alive &&
+                updatedTrophies <= currentTrophies &&
+                trophyTimer.Elapsed.TotalSeconds < 30)
             {
-                Core.Sleep(500); // give server time to process PvP reward
-                UpdatedTrophies = Bot.Inventory.GetQuantity(item);
+                Core.Sleep(500);
+                updatedTrophies = Bot.Inventory.GetQuantity("Combat Trophy");
             }
 
-            // Update baseline so next run compares correctly
-            CurrentTrohpies = UpdatedTrophies;
+            trophyTimer.Stop();
 
-            if (!string.IsNullOrEmpty(item))
-                Core.FarmingLogger(item, quant);
+            if (updatedTrophies <= currentTrophies)
+                Core.Logger("Combat Trophy reward was not detected within 30 seconds, restarting PvP");
 
-            Core.Sleep(1500);
-            goto Exit;
+            Core.FarmingLogger(item, quant);
 
+            if (Bot.ShouldExit)
+                break;
 
-        Exit:
+            // Return to Battleon before starting another round.
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
+
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
-                if (Bot.Map.Name != "battleon")
-                    continue;
-                else
-                    goto Start;
             }
 
+            continue;
+
         RestartOnDeath:
-            Core.Logger($"Death: {Death++}, resetting");
+            deathCount++;
+            Core.Logger($"Death: {deathCount}, resetting.");
+
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
-                Core.Logger($"Attempting Death Exit {ExitAttempt++}.");
+
+                if (!Bot.Player.Alive)
+                    continue;
+
+                Core.Logger($"Attempting Death Exit {++exitAttempt}.");
+
                 Bot.Map.Join("battleon-999999");
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
+
                 if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
                 {
-                    Core.Logger("Successful!");
-                    goto Start;
+                    Core.Logger("Failed!? HOW.. trying again.");
+                    continue;
                 }
+
+                Core.Logger("Successful!");
+                break;
             }
         }
 
@@ -1424,9 +1458,9 @@ public class CoreFarms
             if (!maxedQuests)
             {
                 int[] availableQuests =
-                    Bot.Quests.IsUnlocked(10812) ? new[] { 10810, 10811, 10812 } :
-                    Bot.Quests.IsUnlocked(10811) ? new[] { 10810, 10811 } :
-                    new[] { 10810 };
+                    Bot.Quests.IsUnlocked(10812) ? [10810, 10811, 10812] :
+                    Bot.Quests.IsUnlocked(10811) ? [10810, 10811] :
+                    [10810];
 
                 if (!availableQuests.SequenceEqual(currentQuests))
                 {
@@ -3182,11 +3216,11 @@ public class CoreFarms
     }
 
     public string[] AcceptablePvPAmulets =
-    {
+    [
         "Mithril PvP Amulet +15000",
         "Diamond PvP Amulet +5500",
         "Platinum PvP Amulet +5000",
-    };
+    ];
 
     public void DeathPitBrawlREP(int rank = 10)
     {
@@ -4241,7 +4275,7 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank} for Yew Mountains");
 
-        Core.RegisterQuests(Core.IsMember ? new[] { 10345 } : new[] { 10341, 10346 });
+        Core.RegisterQuests(Core.IsMember ? new[] { 10345 } : [10341, 10346]);
         Core.AddDrop(
             Core.EnsureLoad(10342)
                 .Rewards.Select(r => r.Name)
@@ -4305,7 +4339,7 @@ public class CoreFarms
             Core.AddDrop("Super-Fan Swag Token D");
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(
-            !Core.IsMember ? new[] { 1304, 1307 } : new[] { 1310, 1312, 1313, 1314 }
+            !Core.IsMember ? new[] { 1304, 1307 } : [1310, 1312, 1313, 1314]
         );
 
         #region Token farm and check for Token A only
@@ -4410,10 +4444,10 @@ public class CoreFarms
         Bot.Wait.ForCellChange("Begin");
         Core.Sleep();
 
-        // Token D > Token C (purchase if needed)
-        if (dQuantity / 10 > 1 && cQuantity < 500 && dQuantity / 10 + cQuantity < 500)
+        // Token D > Token C (purchase up to the remaining capacity)
+        int buyC = Math.Min(dQuantity / 10, 500 - cQuantity);
+        if (buyC > 0)
         {
-            int buyC = dQuantity / 10;
             Core.BuyItem("collection", 325, "Super-Fan Swag Token C", buyC);
             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
             Bot.Wait.ForItemBuy();
@@ -4421,10 +4455,10 @@ public class CoreFarms
 
         Core.Sleep();
 
-        // Token C > Token B (buy from shop if needed)
-        if (cQuantity / 10 > 1 && bQuantity < 200 && cQuantity / 10 + bQuantity < 200)
+        // Token C > Token B (purchase up to the remaining capacity)
+        int buyB = Math.Min(cQuantity / 10, 200 - bQuantity);
+        if (buyB > 0)
         {
-            int buyB = cQuantity / 10;
             Core.BuyItem("collection", 325, "Super-Fan Swag Token B", buyB);
             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
             Bot.Wait.ForItemBuy();
@@ -4432,10 +4466,10 @@ public class CoreFarms
 
         Core.Sleep();
 
-        // Token B > Token A (buy from shop if needed)
-        if (bQuantity / 20 > 1 && aQuantity < 100 && bQuantity / 20 + aQuantity < 100)
+        // Token B > Token A (purchase up to the remaining capacity)
+        int buyA = Math.Min(bQuantity / 20, 100 - aQuantity);
+        if (buyA > 0)
         {
-            int buyA = bQuantity / 20;
             Core.BuyItem("collection", 325, "Super-Fan Swag Token A", buyA);
             Bot.Wait.ForActionCooldown(GameActions.BuyItem);
             Bot.Wait.ForItemBuy();
