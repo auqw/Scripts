@@ -13068,6 +13068,9 @@ public class ArmyFarmerJoeDoAll
                 LeaveCombatRoomForEquipmentChange();
                 core.EquipClass(effectiveType);
                 Army.StartClassSkills(Bot.Player.CurrentClass?.Name);
+                _syncedClassType = effectiveType;
+            }
+            else
             {
                 Army.EnsureSkillRotationActive();
             }
