@@ -15372,9 +15372,13 @@ public class ArmyFarmerJoeDoAll
             string objName = $"{objectivePrefix}_{step.QuestId}";
             if (!step.IsCombat)
             {
+                // Non-combat steps (map items, buys, chain turn-ins) are solo by nature: give every
+                // account its own private room and skip the map-cap probe. The probe made the leader
+                // park inside the target map, which blocked the shared room on small story maps
+                // (e.g. /chaoscrypt for quest 6217: everyone else got "Failed to join" forever).
                 if (
                     !RunSubgroupCooperativeObjective(
-                        0,
+                        1,
                         objName,
                         () => IsDisabled() || core.isCompletedBefore(step.QuestId, log: false),
                         () =>
@@ -15389,8 +15393,7 @@ public class ArmyFarmerJoeDoAll
                             step.Work(core);
                         },
                         (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                        maxWorkAttempts: 3,
-                        targetMap: (step.SkipMapVerify || ShouldSkipMapVerification(step.Map)) ? null : step.Map
+                        maxWorkAttempts: 3
                     )
                 )
                     return false;
