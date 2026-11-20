@@ -5148,6 +5148,13 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureAccept(820);
                     core.EnsureComplete(820);
                     Bot.Wait.ForPickup("Paddylump's Elixir");
+                },
+                refarmBeforeRetry: () =>
+                {
+                    PrepareCombatLoadoutForArmy(ClassType.Farm);
+                    core.EnsureAccept(820);
+                    core.HuntMonster("cloister", "Acornent", "Wiggly Worm", 15, isTemp: true, log: false);
+                    core.HuntMonster("cloister", "Karasu", "MegaMite", 10, isTemp: true, log: false);
                 }
             )
         )
@@ -5517,6 +5524,14 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureAccept(4803);
                     core.EnsureComplete(4803);
                     Bot.Wait.ForPickup("Ravinos Token V");
+                },
+                refarmBeforeRetry: () =>
+                {
+                    PrepareCombatLoadoutForArmy(ClassType.Farm);
+                    core.EnsureAccept(4803);
+                    core.HuntMonster("darkheart", "Toxic Grove Spider", "Grove Spider Silk", 6, isTemp: true, log: false);
+                    core.HuntMonster("bloodtusk", "Trollola Plant", "Trollola Nectar", 5, isTemp: true, log: false);
+                    core.HuntMonster("firestorm", "Sulfur Imp", "Searbush", 2, isTemp: true, log: false);
                 }
             )
             || !RunCoordinatedTurnInStep(
@@ -5622,6 +5637,17 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureAccept(4806);
                     core.EnsureComplete(4806);
                     Bot.Wait.ForPickup("Lapis Token II");
+                },
+                refarmBeforeRetry: () =>
+                {
+                    if (core.CheckInventory("Sparrow's Blood"))
+                        return;
+
+                    PrepareCombatLoadoutForArmy(ClassType.Farm);
+                    core.EnsureAccept(803);
+                    core.KillMonster("arcangrove", "LeftBack", "Left", "*", "Blood Lily", 30, isTemp: true, log: false);
+                    core.KillMonster("arcangrove", "RightBack", "Left", "*", "Snapdrake", 17, isTemp: true, log: false);
+                    core.KillMonster("arcangrove", "Back", "Left", "*", "DOOM Dirt", 12, isTemp: true, log: false);
                 }
             )
         )
@@ -7269,7 +7295,7 @@ public class ArmyFarmerJoeDoAll
             ),
             new(177, "swordhavenundead", "Skeletal Ice Mage", () => Story.KillQuest(177, "swordhavenundead", "Skeletal Ice Mage")),
             new(178, "swordhavenundead", "Undead Giant", () => Story.KillQuest(178, "swordhavenundead", "Undead Giant"), ClassType.Solo),
-            new(179, "castleundead", "*", () => Story.MapItemQuest(179, "castleundead", 38, 5)),
+            new(179, "castleundead", "*", () => Story.MapItemQuest(179, "castleundead", 38, 5), isCombat: false),
             new(180, "castleundead", "Skeletal Viking", () => Story.KillQuest(180, "castleundead", "Skeletal Viking")),
             new(
                 195,
@@ -7277,7 +7303,7 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    if (!core.isCompletedBefore(195, log: false))
+                    if (!Bot.Quests.IsUnlocked(196))
                     {
                         core.Join("castleundead", "King2", "Center");
                         Bot.Sleep(1500);
@@ -7285,36 +7311,46 @@ public class ArmyFarmerJoeDoAll
                         core.SendPackets("%xt%zm%updateQuest%73922%43%1%");
                         Bot.Sleep(1500);
                         core.SendPackets($"%xt%zm%updateQuest%188220%41%{(core.HeroAlignment > 1 ? 1 : core.HeroAlignment)}%");
-                        Bot.Sleep(1500);
+                        Bot.Sleep(2000);
+                        core.Join("shadowfall");
+                        Bot.Sleep(2000);
                     }
                     Story.ChainQuest(195);
-                }
+                },
+                isCombat: false
             ),
             new(196, "chaoscrypt", "Chaorrupted Armor", () => Story.KillQuest(196, "chaoscrypt", "Chaorrupted Armor"), ClassType.Solo),
             new(
                 6216,
                 "prison",
-                "Piggy Drake",
+                "*",
                 () =>
                 {
                     core.EnsureAccept(6216);
                     core.GetMapItem(39, 5, "prison");
                     core.BuyItem("prison", 1559, 42993);
                     core.EnsureComplete(6216);
-                }
+                },
+                isCombat: false
             ),
-            new(6217, "chaoscrypt", "*", () => Story.MapItemQuest(6217, "chaoscrypt", 5662)),
+            new(6217, "chaoscrypt", "*", () => Story.MapItemQuest(6217, "chaoscrypt", 5662), isCombat: false),
             new(6218, "chaoscrypt", "Chaorrupted Knight", () => Story.KillQuest(6218, "chaoscrypt", "Chaorrupted Knight")),
             new(
                 6219,
                 "forestchaos",
                 "*",
-                () => Story.KillQuest(6219, "forestchaos", new[] { "Chaorrupted Bear", "Chaorrupted Wolf" }),
+                () =>
+                {
+                    core.EnsureAccept(6219);
+                    core.HuntMonster("forestchaos", "Chaorrupted Bear", "Chaorrupted Bear Defeated", 1, log: false);
+                    core.HuntMonster("forestchaos", "Chaorrupted Wolf", "Chaorrupted Wolf Defeated", 7, log: false);
+                    core.EnsureComplete(6219);
+                },
                 ClassType.Solo
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_PROLOGUE", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_PROLOGUE", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCEscherion()
@@ -7325,24 +7361,24 @@ public class ArmyFarmerJoeDoAll
         var steps = new CoordinatedStoryStep[]
         {
             new(245, "mobius", "Chaos Sp-Eye", () => Story.KillQuest(245, "mobius", "Chaos Sp-Eye")),
-            new(246, "mobius", "*", () => Story.MapItemQuest(246, "mobius", 42, 5)),
+            new(246, "mobius", "*", () => Story.MapItemQuest(246, "mobius", 42, 5), isCombat: false),
             new(247, "mobius", "Fire Imp", () => Story.KillQuest(247, "mobius", "Fire Imp")),
-            new(260, "mobius", "*", () => Story.MapItemQuest(260, "mobius", 44)),
+            new(260, "mobius", "*", () => Story.MapItemQuest(260, "mobius", 44), isCombat: false),
             new(248, "mobius", "Cyclops Raider", () => Story.KillQuest(248, "mobius", "Cyclops Raider")),
             new(249, "mobius", "Slugfit", () => Story.KillQuest(249, "mobius", "Slugfit")),
             new(250, "faerie", "Chainsaw Sneevil", () => Story.KillQuest(250, "faerie", "Chainsaw Sneevil")),
-            new(251, "faerie", "*", () => Story.MapItemQuest(251, "faerie", 43, 7)),
+            new(251, "faerie", "*", () => Story.MapItemQuest(251, "faerie", 43, 7), isCombat: false),
             new(252, "faerie", "Chainsaw Sneevil", () => Story.KillQuest(252, "faerie", "Chainsaw Sneevil")),
             new(255, "faerie", "Cyclops Warlord", () => Story.KillQuest(255, "faerie", "Cyclops Warlord"), ClassType.Solo),
             new(256, "faerie", "Aracara", () => Story.KillQuest(256, "faerie", "Aracara"), ClassType.Solo),
             new(257, "cornelis", "Gargoyle", () => Story.KillQuest(257, "cornelis", "Gargoyle")),
-            new(261, "cornelis", "*", () => Story.MapItemQuest(261, "cornelis", 45)),
+            new(261, "cornelis", "*", () => Story.MapItemQuest(261, "cornelis", 45), isCombat: false),
             new(258, "cornelis", "Gargoyle", () => Story.KillQuest(258, "cornelis", "Gargoyle")),
-            new(262, "cornelis", "*", () => Story.MapItemQuest(262, "cornelis", 46)),
+            new(262, "cornelis", "*", () => Story.MapItemQuest(262, "cornelis", 46), isCombat: false),
             new(259, "cornelis", "Stone Golem", () => Story.KillQuest(259, "cornelis", "Stone Golem")),
-            new(263, "cornelis", "*", () => Story.MapItemQuest(263, "cornelis", 47)),
-            new(266, "mobius", "*", () => Story.MapItemQuest(266, "mobius", 48)),
-            new(267, "mobius", "*", () => Story.MapItemQuest(267, "mobius", 49)),
+            new(263, "cornelis", "*", () => Story.MapItemQuest(263, "cornelis", 47), isCombat: false),
+            new(266, "mobius", "*", () => Story.MapItemQuest(266, "mobius", 48), isCombat: false),
+            new(267, "mobius", "*", () => Story.MapItemQuest(267, "mobius", 49), isCombat: false),
             new(264, "mobius", "Cyclops Raider", () => Story.KillQuest(264, "mobius", "Cyclops Raider")),
             new(
                 265,
@@ -7351,14 +7387,14 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(265);
-                    core.HuntMonster("faerie", "Chainsaw Sneevil", "Cardboard Box", 4, isTemp: false, log: false);
+                    core.HuntMonster("faerie", "Chainsaw Sneevil", "Cardboard Box", 4, log: false);
                     core.EnsureComplete(265);
                 }
             ),
             new(268, "relativity", "Cyclops Raider", () => Story.KillQuest(268, "relativity", "Cyclops Raider")),
             new(269, "relativity", "Fire Imp", () => Story.KillQuest(269, "relativity", "Fire Imp")),
             new(270, "relativity", "Head Gargoyle", () => Story.KillQuest(270, "relativity", "Head Gargoyle")),
-            new(271, "hydra", "*", () => Story.MapItemQuest(271, "hydra", new[] { 50, 51, 52 })),
+            new(271, "hydra", "*", () => Story.MapItemQuest(271, "hydra", new[] { 50, 51, 52 }), isCombat: false),
             new(
                 272,
                 "escherion",
@@ -7373,7 +7409,7 @@ public class ArmyFarmerJoeDoAll
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_ESCHERION", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_ESCHERION", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCVath()
@@ -7383,7 +7419,7 @@ public class ArmyFarmerJoeDoAll
 
         var steps = new CoordinatedStoryStep[]
         {
-            new(319, "tavern", "*", () => Story.MapItemQuest(319, "tavern", 56, 7)),
+            new(319, "tavern", "*", () => Story.MapItemQuest(319, "tavern", 56, 7), isCombat: false),
             new(320, "pines", "Pine Grizzly", () => Story.KillQuest(320, "pines", "Pine Grizzly")),
             new(321, "pines", "Red Shell Turtle", () => Story.KillQuest(321, "pines", "Red Shell Turtle")),
             new(322, "pines", "Twistedtooth", () => Story.KillQuest(322, "pines", "Twistedtooth"), ClassType.Solo),
@@ -7396,21 +7432,22 @@ public class ArmyFarmerJoeDoAll
                 "Pine Troll",
                 () =>
                 {
+                    core.AddDrop("Snowbeard's Gold");
                     core.EnsureAccept(327);
                     core.HuntMonster("pines", "Pine Troll", "Pine Air Freshener", log: false);
                     core.EnsureComplete(327);
-                    if (core.CheckInventory("Snowbeard's Gold"))
-                        core.ChainComplete(323);
+                    Bot.Wait.ForPickup("Snowbeard's Gold");
+                    core.ChainComplete(323);
                 }
             ),
-            new(344, "dwarfhold", "*", () => Story.MapItemQuest(344, "dwarfhold", 60)),
+            new(344, "dwarfhold", "*", () => Story.MapItemQuest(344, "dwarfhold", 60), isCombat: false),
             new(331, "mountainpath", "Ore Balboa", () => Story.KillQuest(331, "mountainpath", "Ore Balboa")),
             new(332, "mountainpath", "Vultragon", () => Story.KillQuest(332, "mountainpath", "Vultragon")),
             new(333, "dwarfhold", "Chaos Drow", () => Story.KillQuest(333, "dwarfhold", "Chaos Drow")),
             new(334, "dwarfhold", "Glow Worm", () => Story.KillQuest(334, "dwarfhold", "Glow Worm")),
             new(335, "dwarfhold", "Albino Bat", () => Story.KillQuest(335, "dwarfhold", "Albino Bat")),
             new(336, "dwarfhold", "Chaotic Draconian", () => Story.KillQuest(336, "dwarfhold", "Chaotic Draconian")),
-            new(337, "dwarfhold", "*", () => Story.MapItemQuest(337, "dwarfhold", 59, 7)),
+            new(337, "dwarfhold", "*", () => Story.MapItemQuest(337, "dwarfhold", 59, 7), isCombat: false),
             new(338, "dwarfhold", "Chaos Drow", () => Story.KillQuest(338, "dwarfhold", "Chaos Drow")),
             new(339, "dwarfhold", "Chaotic Draconian", () => Story.KillQuest(339, "dwarfhold", "Chaotic Draconian")),
             new(
@@ -7419,31 +7456,22 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    if (!core.CheckInventory("Upper City Key"))
+                    while (!Bot.ShouldExit && !Bot.TempInv.Contains("Upper City Key"))
                     {
-                        core.AddDrop("Key Mold", "Block of Talc", "Upper City Key");
-                        if (!core.CheckInventory("Block of Talc") && !core.CheckInventory("Key Mold"))
-                        {
-                            core.EnsureAccept(340);
-                            core.HuntMonster("dwarfhold", "Albino Bat", "warm liquid", log: false);
-                            core.GetMapItem(58, 1, "dwarfhold");
-                            core.EnsureComplete(340);
-                            Bot.Wait.ForPickup("Block of Talc");
-                        }
-                        if (!core.CheckInventory("Key Mold"))
-                        {
-                            core.ChainComplete(343);
-                            Bot.Wait.ForPickup("Key Mold");
-                        }
-                        core.EnsureAccept(341);
-                        core.HuntMonster("dwarfhold", "Amadeus", "Iron Ingot", log: false);
-                        core.EnsureComplete(341);
-                        Bot.Wait.ForPickup("Upper City Key");
+                        core.AddDrop("Upper City Key");
+                        core.EnsureAccept(340);
+                        core.HuntMonster("dwarfhold", "Albino Bat", "Block of Talc", log: false);
+                        core.EnsureComplete(340);
+                        Bot.Wait.ForTrue(() => Bot.TempInv.Contains("Upper City Key"), 20);
                     }
+                    core.ChainComplete(343);
+                    core.EnsureAccept(341);
+                    core.HuntMonster("dwarfhold", "Amadeus", "Key Mold", log: false);
+                    core.EnsureComplete(341);
                 },
                 ClassType.Solo
             ),
-            new(346, "uppercity", "*", () => Story.MapItemQuest(346, "uppercity", 61)),
+            new(346, "uppercity", "*", () => Story.MapItemQuest(346, "uppercity", 61), isCombat: false),
             new(347, "uppercity", "Drow Assassin", () => Story.KillQuest(347, "uppercity", "Drow Assassin")),
             new(348, "uppercity", "Chaotic Draconian", () => Story.KillQuest(348, "uppercity", "Chaotic Draconian")),
             new(349, "uppercity", "Chaos Egg", () => Story.KillQuest(349, "uppercity", "Chaos Egg")),
@@ -7457,16 +7485,19 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.AddDrop("Thermite");
-                    core.EnsureAccept(353);
-                    core.HuntMonster("dwarfprison", "Balboa", "Iron Oxide", 4, log: false);
-                    core.HuntMonster("dwarfprison", "Chaos Drow", "Aluminum Powder", log: false);
-                    core.HuntMonster("dwarfprison", "Albino Bat", "Magnesium", 3, log: false);
-                    core.EnsureComplete(353);
-                    Bot.Wait.ForPickup("Thermite");
+                    if (!core.CheckInventory("Thermite"))
+                    {
+                        core.EnsureAccept(353);
+                        core.HuntMonster("dwarfprison", "Balboa", "Balboa Core", 4, log: false);
+                        core.HuntMonster("dwarfprison", "Chaos Drow", "Magnesium Flare", log: false);
+                        core.HuntMonster("dwarfprison", "Albino Bat", "Rusted Claw", 3, log: false);
+                        core.EnsureComplete(353);
+                        Bot.Wait.ForPickup("Thermite");
+                    }
 
-                    core.EnsureAccept(354);
                     core.Join("vath");
                     core.Jump("CutCap", "Left");
+                    Bot.Sleep(2500);
                     Bot.Quests.UpdateQuest(354);
                     core.Join("dwarfprison", "Enter", "Right");
                     core.EnsureComplete(354);
@@ -7483,20 +7514,21 @@ public class ArmyFarmerJoeDoAll
                     if (!core.CheckInventory("Tee-En-Tee"))
                     {
                         core.EnsureAccept(356);
-                        core.HuntMonster("dwarfprison", "Albino Bat", "concentrated nitric acid", 3, log: false);
-                        core.HuntMonster("dwarfprison", "Chaos Drow", "concentrated sulfuric acid", 3, log: false);
-                        core.HuntMonster("dwarfprison", "Balboa", "methylbenzene", 2, log: false);
+                        core.HuntMonster("dwarfprison", "Albino Bat", "Nitrate Elements", 3, log: false);
+                        core.HuntMonster("dwarfprison", "Chaos Drow", "Drow Shoelaces", 3, log: false);
+                        core.HuntMonster("dwarfprison", "Balboa", "Flint Stone", 2, log: false);
                         core.EnsureComplete(356);
                         Bot.Wait.ForPickup("Tee-En-Tee");
                     }
+                    core.Join("dwarfprison");
                     Story.ChainQuest(357);
                 }
             ),
-            new(362, "roc", "*", () => Story.MapItemQuest(362, "roc", 62)),
-            new(363, "stalagbite", "*", () => Story.MapItemQuest(363, "stalagbite", 63)),
+            new(362, "roc", "*", () => Story.MapItemQuest(362, "roc", 62), isCombat: false),
+            new(363, "stalagbite", "*", () => Story.MapItemQuest(363, "stalagbite", 63), isCombat: false),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_VATH", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_VATH", steps, isEnabled: () => !IsDone(), "Snowbeard's Gold");
     }
 
     private bool Run13LoCKitsune()
@@ -7513,7 +7545,8 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     Story.MapItemQuest(380, "yokaiboat", 64);
-                    Story.KillQuest(380, "yokaiboat", "Kappa Ninja");
+                    core.HuntMonster("yokaiboat", "Kappa Ninja", "Kappa Ninja Slain", 7, log: false);
+                    core.EnsureComplete(380);
                 }
             ),
             new(
@@ -7527,24 +7560,18 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(381);
                 }
             ),
-            new(
-                382,
-                "dragonkoi",
-                "Ryoku",
-                () =>
-                {
-                    core.EnsureAccept(382);
-                    core.Join("dragonkoi");
-                    core.HuntMonster("dragonkoi", "Ryoku", "Absolute Defeat", log: false);
-                    core.EnsureComplete(382);
-                },
-                ClassType.Solo
-            ),
+            new(382, "dragonkoi", "Ryoku", () => Story.KillQuest(382, "dragonkoi", "Ryoku"), ClassType.Solo),
             new(
                 402,
                 "hachiko",
                 "*",
-                () => Story.KillQuest(402, "hachiko", new[] { "Samurai Nopperabo", "Ninja Nopperabo" })
+                () =>
+                {
+                    core.EnsureAccept(402);
+                    core.HuntMonster("hachiko", "Samurai Nopperabo", "Samurai Questioned", 5, log: false);
+                    core.HuntMonster("hachiko", "Ninja Nopperabo", "Ninja Questioned", 5, log: false);
+                    core.EnsureComplete(402);
+                }
             ),
             new(
                 403,
@@ -7564,23 +7591,29 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(405);
-                    core.KillMonster("hachiko", "Tiger", "Left", "Samurai Nopperabo", "Scroll Case Key", log: false);
-                    core.KillMonster("hachiko", "Snake", "Left", "Ninja Nopperabo", "Scrap I", log: false);
-                    core.KillMonster("hachiko", "Horse", "Left", "Samurai Nopperabo", "Scrap II", log: false);
-                    core.KillMonster("hachiko", "Pig", "Left", "Ninja Nopperabo", "Scrap III", log: false);
+                    core.KillMonster("hachiko", "Tiger", "Center", "Samurai Nopperabo", "Rat-Ox-Tiger Piece", log: false);
+                    core.KillMonster("hachiko", "Snake", "Center", "Ninja Nopperabo", "Rabbit-Dragon-Snake piece", log: false);
+                    core.KillMonster("hachiko", "Horse", "Center", "Samurai Nopperabo", "Horse-Sheep-Monkey piece", log: false);
+                    core.KillMonster("hachiko", "Pig", "Center", "Ninja Nopperabo", "Rooster-Dog-Pig Piece", log: false);
                     core.EnsureComplete(405);
                 }
             ),
             new(406, "hachiko", "Dai Tengu", () => Story.KillQuest(406, "hachiko", "Dai Tengu"), ClassType.Solo),
-            new(466, "bamboo", "*", () => Story.MapItemQuest(466, "bamboo", 90)),
+            new(466, "bamboo", "*", () => Story.MapItemQuest(466, "bamboo", 90), isCombat: false),
             new(
                 467,
                 "bamboo",
                 "Tanuki",
-                () => Story.KillQuest(467, "bamboo", new[] { "Tanuki", "Tanuki" })
+                () =>
+                {
+                    core.EnsureAccept(467);
+                    core.HuntMonster("bamboo", "Tanuki", "Jinmenju Fruit Core", 5, log: false);
+                    core.HuntMonster("bamboo", "Tanuki", "Charred Paper Talisman", 1, log: false);
+                    core.EnsureComplete(467);
+                }
             ),
             new(468, "bamboo", "SoulTaker", () => Story.KillQuest(468, "bamboo", "SoulTaker"), ClassType.Solo),
-            new(469, "junkyard", "*", () => Story.MapItemQuest(469, "junkyard", 91)),
+            new(469, "junkyard", "*", () => Story.MapItemQuest(469, "junkyard", 91), isCombat: false),
             new(
                 470,
                 "junkyard",
@@ -7588,11 +7621,11 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(470);
-                    core.KillMonster("junkyard", "r2", "Right", 1, "Wild Plain's Blade", log: false);
-                    core.KillMonster("junkyard", "r3", "Top", 4, "Cold Steel Hilt", log: false);
-                    core.KillMonster("junkyard", "r3", "Top", 3, "Soul Gem", log: false);
-                    core.KillMonster("junkyard", "r4", "Left", 6, "Iron Tsuba", log: false);
-                    core.KillMonster("junkyard", "r2", "Right", 2, "Wooden Saya", log: false);
+                    core.KillMonster("junkyard", "Enter", "Left", 1, "Wild Kara-Kasa", 5, log: false);
+                    core.KillMonster("junkyard", "r2", "Left", 4, "Wild Bura-Bura", 4, log: false);
+                    core.KillMonster("junkyard", "r2", "Left", 3, "Wild Biwa-Bokuboku", 3, log: false);
+                    core.KillMonster("junkyard", "r3", "Left", 6, "Wild Koto-Furunushi", 2, log: false);
+                    core.KillMonster("junkyard", "Enter", "Left", 2, "Wild Bakezouri", 1, log: false);
                     core.EnsureComplete(470);
                 }
             ),
@@ -7604,10 +7637,9 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(473);
-                    core.HuntMonster("yokairiver", "Funa-yurei", "Roka's Geta", log: false);
-                    core.HuntMonster("yokairiver", "Funa-yurei", "Roka's Kabuto", log: false);
-                    core.HuntMonster("yokairiver", "Funa-yurei", "Roka's Sashimono", log: false);
-                    core.HuntMonster("yokairiver", "Funa-yurei", "Roka'sened Wakizashi", log: false);
+                    core.HuntMonster("yokairiver", "Funa-yurei", "Nori Recipe", 1, log: false);
+                    core.HuntMonster("yokairiver", "Funa-yurei", "Cucumber Recipe", 1, log: false);
+                    core.HuntMonster("yokairiver", "Funa-yurei", "Sumeshi Recipe", 1, log: false);
                     core.EnsureComplete(473);
                 }
             ),
@@ -7617,8 +7649,12 @@ public class ArmyFarmerJoeDoAll
                 "Kappa Ninja",
                 () =>
                 {
-                    Story.KillQuest(474, "yokairiver", "Kappa Ninja");
-                    Story.MapItemQuest(474, "yokairiver", 92);
+                    core.EnsureAccept(474);
+                    core.KillMonster("yokairiver", "r4", "Left", "Kappa Ninja", "Dried Nori Leaf", 6, log: false);
+                    core.KillMonster("yokairiver", "r4", "Left", "Kappa Ninja", "Sumeshi Bundle", 3, log: false);
+                    core.KillMonster("yokairiver", "r4", "Left", "Kappa Ninja", "Fresh Cucumber", 1, log: false);
+                    core.GetMapItem(92, 1, "yokairiver");
+                    core.EnsureComplete(474);
                 }
             ),
             new(476, "yokairiver", "Nure Onna", () => Story.KillQuest(476, "yokairiver", "Nure Onna"), ClassType.Solo),
@@ -7627,7 +7663,13 @@ public class ArmyFarmerJoeDoAll
                 478,
                 "yokaigrave",
                 "*",
-                () => Story.KillQuest(478, "yokaigrave", new[] { "Ninja Nopperabo", "Samurai Nopperabo" })
+                () =>
+                {
+                    core.EnsureAccept(478);
+                    core.HuntMonster("yokaigrave", "Ninja Nopperabo", "Ninja Face Mask", 4, log: false);
+                    core.HuntMonster("yokaigrave", "Samurai Nopperabo", "Samurai Face Mask", 4, log: false);
+                    core.EnsureComplete(478);
+                }
             ),
             new(479, "yokaigrave", "Neko Mata", () => Story.KillQuest(479, "yokaigrave", "Neko Mata"), ClassType.Solo),
             new(481, "odokuro", "O-dokuro", () => Story.KillQuest(481, "odokuro", "O-dokuro"), ClassType.Solo),
@@ -7646,7 +7688,7 @@ public class ArmyFarmerJoeDoAll
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_KITSUNE", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_KITSUNE", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCWolfwing()
@@ -7656,7 +7698,7 @@ public class ArmyFarmerJoeDoAll
 
         var steps = new CoordinatedStoryStep[]
         {
-            new(494, "darkoviagrave", "*", () => Story.MapItemQuest(494, "darkoviagrave", 97)),
+            new(494, "darkoviagrave", "*", () => Story.MapItemQuest(494, "darkoviagrave", 97), isCombat: false),
             new(495, "darkoviagrave", "Skeletal Fire Mage", () => Story.KillQuest(495, "darkoviagrave", "Skeletal Fire Mage")),
             new(496, "darkoviagrave", "Rattlebones", () => Story.KillQuest(496, "darkoviagrave", "Rattlebones")),
             new(497, "darkoviagrave", "Albino Bat", () => Story.KillQuest(497, "darkoviagrave", "Albino Bat")),
@@ -7668,16 +7710,23 @@ public class ArmyFarmerJoeDoAll
             new(
                 514,
                 "greenguardwest",
-                "Big Bad Boar",
+                "*",
                 () =>
                 {
+                    core.AddDrop("Red's Big Wolf Slaying Axe");
+                    core.EnsureAccept(514);
                     if (!core.CheckInventory("Red's Big Wolf Slaying Axe"))
                     {
-                        core.AddDrop("Red's Big Wolf Slaying Axe");
-                        Story.KillQuest(515, "greenguardwest", "Big Bad Boar");
+                        core.EnsureAccept(515);
+                        core.HuntMonster("greenguardeast", "Spider", "Spider Documentation", log: false);
+                        core.HuntMonster("greenguardeast", "Wolf", "Wolf Documentation", log: false);
+                        core.HuntMonster("greenguardwest", "Slime", "Slime Documentation", log: false);
+                        core.HuntMonster("greenguardwest", "Frogzard", "Frogzard Documentation", log: false);
+                        core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Documentation", log: false);
+                        core.EnsureComplete(515);
                         Bot.Wait.ForPickup("Red's Big Wolf Slaying Axe");
                     }
-                    Story.ChainQuest(514);
+                    core.EnsureComplete(514);
                 }
             ),
             new(516, "darkoviaforest", "Dire Wolf", () => Story.KillQuest(516, "darkoviaforest", "Dire Wolf")),
@@ -7685,7 +7734,14 @@ public class ArmyFarmerJoeDoAll
                 517,
                 "darkoviaforest",
                 "Blood Maggot",
-                () => Story.KillQuest(517, "darkoviaforest", new[] { "Blood Maggot", "Blood Maggot", "Blood Maggot" })
+                () =>
+                {
+                    core.EnsureAccept(517);
+                    core.HuntMonster("darkoviaforest", "Blood Maggot", "Vial of Blood", 3, log: false);
+                    core.HuntMonster("darkoviaforest", "Blood Maggot", "Vial of Sweat", 2, log: false);
+                    core.HuntMonster("darkoviaforest", "Blood Maggot", "Vial of Tears", log: false);
+                    core.EnsureComplete(517);
+                }
             ),
             new(
                 518,
@@ -7699,18 +7755,28 @@ public class ArmyFarmerJoeDoAll
             new(521, "safiria", "Chaos Lycan", () => Story.KillQuest(521, "safiria", "Chaos Lycan")),
             new(522, "safiria", "Twisted Paw", () => Story.KillQuest(522, "safiria", "Twisted Paw"), ClassType.Solo),
             new(534, "lycan", "Dire Wolf", () => Story.KillQuest(534, "lycan", "Dire Wolf")),
-            new(535, "lycan", "*", () => Story.KillQuest(535, "lycan", new[] { "Lycan Knight", "Lycan" })),
+            new(
+                535,
+                "lycan",
+                "*",
+                () =>
+                {
+                    core.EnsureAccept(535);
+                    core.HuntMonster("lycan", "Lycan Knight", "Lycan Knight Defeated", 2, log: false);
+                    core.HuntMonster("lycan", "Lycan", "Lycan Defeated", 5, log: false);
+                    core.EnsureComplete(535);
+                }
+            ),
             new(536, "lycan", "Chaos Vampire Knight", () => Story.KillQuest(536, "lycan", "Chaos Vampire Knight")),
             new(537, "lycan", "Sanguine", () => Story.KillQuest(537, "lycan", "Sanguine"), ClassType.Solo),
-            new(552, "", "*", () => Story.ChainQuest(552)),
+            new(552, "", "*", () => Story.ChainQuest(552), isCombat: false),
             new(
                 564,
                 "lycanwar",
                 "Edvard",
                 () =>
                 {
-                    core.Join("lycanwar");
-                    core.Jump("Boss", "Left");
+                    core.EnsureAccept(564);
                     core.KillMonster("lycanwar", "Boss", "Left", "Edvard", log: false);
                     Bot.Sleep(5000);
                     Story.MapItemQuest(564, "chaoscave", 107);
@@ -7735,8 +7801,8 @@ public class ArmyFarmerJoeDoAll
                 "DracoWerePyre",
                 () =>
                 {
-                    core.EnsureAccept(567);
                     Bot.Quests.UpdateQuest(567);
+                    core.EnsureAccept(567);
                     core.KillMonster("chaoscave", "r5", "Left", "DracoWerePyre", "DracoWerePyre Defeated", log: false);
                     core.EnsureComplete(567);
                     Bot.Quests.UpdateQuest(597);
@@ -7753,11 +7819,12 @@ public class ArmyFarmerJoeDoAll
                         core.ChangeAlignment(Alignment.Good);
                     Story.ChainQuest(597);
                 },
-                ClassType.Solo
+                ClassType.Solo,
+                isCombat: false
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_WOLFWING", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_WOLFWING", steps, isEnabled: () => !IsDone(), "Red's Big Wolf Slaying Axe");
     }
 
     private bool Run13LoCLedgermayne()
@@ -7767,9 +7834,9 @@ public class ArmyFarmerJoeDoAll
 
         var steps = new CoordinatedStoryStep[]
         {
-            new(805, "arcangrove", "*", () => Story.MapItemQuest(805, "arcangrove", 139)),
-            new(806, "cloister", "*", () => Story.MapItemQuest(806, "cloister", 142)),
-            new(807, "cloister", "*", () => Story.MapItemQuest(807, "cloister", 140)),
+            new(805, "arcangrove", "*", () => Story.MapItemQuest(805, "arcangrove", 139), isCombat: false),
+            new(806, "cloister", "*", () => Story.MapItemQuest(806, "cloister", 142), isCombat: false),
+            new(807, "cloister", "*", () => Story.MapItemQuest(807, "cloister", 140), isCombat: false),
             new(808, "cloister", "Acornent", () => Story.KillQuest(808, "cloister", "Acornent")),
             new(809, "cloister", "Karasu", () => Story.KillQuest(809, "cloister", "Karasu")),
             new(
@@ -7778,22 +7845,24 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
+                    core.EnsureAccept(810);
                     if (core.CheckInventory(43280))
                         core.SellItem(43280, all: true);
-                    core.EnsureAccept(810);
                     Adv.BuyItem("embersea", 1100, 5572, shopItemID: 17967);
-                    Story.MapItemQuest(810, "cloister", 141, 3);
-                }
+                    core.GetMapItem(141, 3, "cloister");
+                    core.EnsureComplete(810);
+                },
+                isCombat: false
             ),
             new(811, "cloister", "Wendigo", () => Story.KillQuest(811, "cloister", "Wendigo"), ClassType.Solo),
-            new(813, "mudluk", "*", () => Story.MapItemQuest(813, "mudluk", 143)),
+            new(813, "mudluk", "*", () => Story.MapItemQuest(813, "mudluk", 143), isCombat: false),
             new(814, "mudluk", "Swamp Lurker", () => Story.KillQuest(814, "mudluk", "Swamp Lurker")),
             new(815, "mudluk", "Swamp Lurker", () => Story.KillQuest(815, "mudluk", "Swamp Lurker")),
             new(816, "arcangrove", "Gorillaphant", () => Story.KillQuest(816, "arcangrove", "Gorillaphant")),
             new(817, "mudluk", "Swamp Frogdrake", () => Story.KillQuest(817, "mudluk", "Swamp Frogdrake")),
             new(818, "mudluk", "Tiger Leech", () => Story.KillQuest(818, "mudluk", "Tiger Leech"), ClassType.Solo),
-            new(825, "natatorium", "*", () => Story.MapItemQuest(825, "natatorium", 144)),
-            new(826, "natatorium", "*", () => Story.MapItemQuest(826, "natatorium", 145, 12)),
+            new(825, "natatorium", "*", () => Story.MapItemQuest(825, "natatorium", 144), isCombat: false),
+            new(826, "natatorium", "*", () => Story.MapItemQuest(826, "natatorium", 145, 12), isCombat: false),
             new(827, "natatorium", "Anglerfish", () => Story.KillQuest(827, "natatorium", "Anglerfish")),
             new(828, "natatorium", "Merdraconian", () => Story.KillQuest(828, "natatorium", "Merdraconian")),
             new(
@@ -7803,17 +7872,17 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(829);
-                    core.HuntMonster("arcangrove", "Seed Spitter", "Snapdrake", 5, log: false);
-                    core.HuntMonster("cloister", "Acornent", "Green Finger", 4, log: false);
-                    core.HuntMonster("cloister", "Karasu", "Karasu's Feather", 3, log: false);
-                    core.HuntMonster("cloister", "Wendigo", "Wendigo's Tooth", log: false);
-                    core.HuntMonster("mudluk", "Swamp Frogdrake", "Fresh Water", 6, log: false);
+                    core.HuntMonster("arcangrove", "Seed Spitter", "Brain Coral", 5, log: false);
+                    core.HuntMonster("cloister", "Acornent", "Staghorns", 4, log: false);
+                    core.HuntMonster("cloister", "Karasu", "Sea Fan", 3, log: false);
+                    core.HuntMonster("cloister", "Wendigo", "Sea Whip", log: false);
+                    core.HuntMonster("mudluk", "Swamp Frogdrake", "Anemones", 6, log: false);
                     core.EnsureComplete(829);
                 },
                 ClassType.Solo
             ),
             new(830, "natatorium", "Nessie", () => Story.KillQuest(830, "natatorium", "Nessie"), ClassType.Solo),
-            new(831, "gilead", "*", () => Story.MapItemQuest(831, "gilead", 146)),
+            new(831, "gilead", "*", () => Story.MapItemQuest(831, "gilead", 146), isCombat: false),
             new(
                 832,
                 "gilead",
@@ -7821,8 +7890,8 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(832);
-                    core.HuntMonster("gilead", "Earth Elemental", "Clod of Earth", 5, log: false);
-                    core.HuntMonster("arcangrove", "Seed Spitter", "Living Earth", 4, log: false);
+                    core.HuntMonster("gilead", "Earth Elemental", "Dregs Essence", 5, log: false);
+                    core.HuntMonster("arcangrove", "Seed Spitter", "Spitter Spirit", 4, log: false);
                     core.EnsureComplete(832);
                 }
             ),
@@ -7833,8 +7902,8 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(833);
-                    core.HuntMonster("gilead", "Water Elemental", "Drop of Water", 5, log: false);
-                    core.HuntMonster("natatorium", "Merdraconian", "Living Water", 6, log: false);
+                    core.HuntMonster("gilead", "Water Elemental", "Aqueous Essence", 5, log: false);
+                    core.HuntMonster("natatorium", "Merdraconian", "MerCore", 6, log: false);
                     core.EnsureComplete(833);
                 }
             ),
@@ -7845,8 +7914,8 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(834);
-                    core.HuntMonster("gilead", "Wind Elemental", "Breeze of Air", 5, log: false);
-                    core.HuntMonster("cloister", "Karasu", "Living Air", 8, log: false);
+                    core.HuntMonster("gilead", "Wind Elemental", "Welkin Essence", 5, log: false);
+                    core.HuntMonster("cloister", "Karasu", "Karasu Soul", 8, log: false);
                     core.EnsureComplete(834);
                 }
             ),
@@ -7857,13 +7926,13 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(835);
-                    core.HuntMonster("gilead", "Fire Elemental", "Spark of Fire", 5, log: false);
-                    core.HuntMonster("mudluk", "Swamp Frogdrake", "Living Fire", 5, log: false);
+                    core.HuntMonster("gilead", "Fire Elemental", "Pyre Essence", 5, log: false);
+                    core.HuntMonster("mudluk", "Swamp Frogdrake", "Fire Salamander", 5, log: false);
                     core.EnsureComplete(835);
                 }
             ),
             new(836, "gilead", "Mana Elemental", () => Story.KillQuest(836, "gilead", "Mana Elemental"), ClassType.Solo),
-            new(838, "mafic", "*", () => Story.MapItemQuest(838, "mafic", 147)),
+            new(838, "mafic", "*", () => Story.MapItemQuest(838, "mafic", 147), isCombat: false),
             new(839, "mafic", "Volcanic Maggot", () => Story.KillQuest(839, "mafic", "Volcanic Maggot")),
             new(840, "mafic", "Scoria Serpent", () => Story.KillQuest(840, "mafic", "Scoria Serpent")),
             new(841, "mafic", "Living Fire", () => Story.KillQuest(841, "mafic", "Living Fire")),
@@ -7877,11 +7946,11 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(845);
-                    core.HuntMonster("mafic", "Mafic Dragon", "Ruby Dragonstone", log: false);
-                    core.HuntMonster("cloister", "Wendigo", "Quartz Beaststone", log: false);
-                    core.HuntMonster("mudluk", "Tiger Leech", "Beryl Leechstone", log: false);
-                    core.HuntMonster("natatorium", "Nessie", "Sapphire Serpentstone", log: false);
-                    core.HuntMonster("gilead", "Mana Elemental", "Tourmaline Monolith", log: false);
+                    core.HuntMonster("mafic", "Mafic Dragon", "Astral Orb of Mafic", log: false);
+                    core.HuntMonster("cloister", "Wendigo", "Astral Orb of the Cloister", log: false);
+                    core.HuntMonster("mudluk", "Tiger Leech", "Astral Orb of Mudluk", log: false);
+                    core.HuntMonster("natatorium", "Nessie", "Astral Orb of Natatorium", log: false);
+                    core.HuntMonster("gilead", "Mana Elemental", "Astral Orb of Gilead", log: false);
                     core.EnsureComplete(845);
                 },
                 ClassType.Solo
@@ -7892,8 +7961,10 @@ public class ArmyFarmerJoeDoAll
                 "Mana Golem",
                 () =>
                 {
+                    core.EnsureAccept(846);
                     Bot.Quests.UpdateQuest(847);
-                    Story.KillQuest(846, "elemental", "Mana Golem");
+                    core.HuntMonster("elemental", "Mana Golem", "Mana Golem Defeated", log: false);
+                    core.EnsureComplete(846);
                 },
                 ClassType.Solo
             ),
@@ -7920,7 +7991,7 @@ public class ArmyFarmerJoeDoAll
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_LEDGERMAYNE", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_LEDGERMAYNE", steps, isEnabled: () => !IsDone());
     }
 
     private async void LedgermayneZoneListener(dynamic packet)
@@ -7963,7 +8034,7 @@ public class ArmyFarmerJoeDoAll
 
         var steps = new CoordinatedStoryStep[]
         {
-            new(930, "sandport", "*", () => Story.MapItemQuest(930, "sandport", 251)),
+            new(930, "sandport", "*", () => Story.MapItemQuest(930, "sandport", 251), isCombat: false),
             new(931, "sandport", "Sandshark", () => Story.KillQuest(931, "sandport", "Sandshark")),
             new(932, "sandport", "Tomb Robber", () => Story.KillQuest(932, "sandport", "Tomb Robber")),
             new(933, "sandport", "Tomb Robber", () => Story.KillQuest(933, "sandport", "Tomb Robber")),
@@ -7974,8 +8045,8 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(934);
-                    core.KillMonster("sandport", "r6", "Left", "Sell-Sword Leader", "Leader's Note", log: false);
-                    core.KillMonster("sandport", "r5", "Left", "Horc Sell-Sword", "Horc Sell-Sword Defeated", 3, log: false);
+                    core.KillMonster("sandport", "r6", "Left", "Sell-Sword Leader", "Sell-Sword Leader Defeated", log: false);
+                    core.KillMonster("sandport", "r5", "Left", "Horc Sell-Sword", "Horc Sell-Swords Defeated", 3, log: false);
                     core.EnsureComplete(934);
                     Bot.Quests.UpdateQuest(4614);
                 }
@@ -7984,7 +8055,7 @@ public class ArmyFarmerJoeDoAll
             new(968, "pyramid", "Anubis Deathguard", () => Story.KillQuest(968, "pyramid", "Anubis Deathguard")),
             new(969, "pyramid", "Mummy", () => Story.KillQuest(969, "pyramid", "Mummy")),
             new(970, "pyramid", "Golden Scarab", () => Story.KillQuest(970, "pyramid", "Golden Scarab")),
-            new(971, "pyramid", "*", () => Story.MapItemQuest(971, "pyramid", 304)),
+            new(971, "pyramid", "*", () => Story.MapItemQuest(971, "pyramid", 304), isCombat: false),
             new(
                 972,
                 "wanders",
@@ -7992,7 +8063,7 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(972);
-                    core.KillMonster("wanders", "r2", "Right", "Kalestri Worshiper", "Kalestri Worshipper Slain", 8, log: false);
+                    core.KillMonster("wanders", "r2", "Right", "Kalestri Worshiper", "Dark Medallion", 8, log: false);
                     core.EnsureComplete(972);
                 }
             ),
@@ -8003,7 +8074,7 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(973);
-                    core.KillMonster("wanders", "r3", "Right", "Kalestri Hound", "Star Ruby of Shifting", 10, log: false);
+                    core.KillMonster("wanders", "r3", "Right", "Kalestri Hound", "Hound Defeated", 10, log: false);
                     core.EnsureComplete(973);
                 }
             ),
@@ -8014,7 +8085,7 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(974);
-                    core.KillMonster("wanders", "r3", "Right", "Kalestri Hound", "Kalestri Hound Slain", 10, log: false);
+                    core.KillMonster("wanders", "r3", "Right", "Kalestri Hound", "Evil Essence", 10, log: false);
                     core.EnsureComplete(974);
                 }
             ),
@@ -8025,11 +8096,11 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(975);
-                    core.KillMonster("wanders", "r5", "Right", "Lotus Spider", "Lotus Spider Slain", 10, log: false);
+                    core.KillMonster("wanders", "r5", "Right", "Lotus Spider", "Spider Defeated", 10, log: false);
                     core.EnsureComplete(975);
                 }
             ),
-            new(976, "wanders", "*", () => Story.MapItemQuest(976, "wanders", 306)),
+            new(976, "wanders", "*", () => Story.MapItemQuest(976, "wanders", 306), isCombat: false),
             new(
                 977,
                 "wanders",
@@ -8037,7 +8108,7 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(977);
-                    core.KillMonster("wanders", "r5", "Right", "Lotus Spider", "Venom Sac", log: false);
+                    core.KillMonster("wanders", "r5", "Right", "Lotus Spider", "Dreamsand", log: false);
                     core.EnsureComplete(977);
                 }
             ),
@@ -8048,12 +8119,12 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(978);
-                    core.KillMonster("wanders", "Boss", "Left", "Sek-Duat", "Sek-Duat Freed", log: false);
+                    core.KillMonster("wanders", "Boss", "Left", "Sek-Duat", "Sek-Duat Defeated", log: false);
                     core.EnsureComplete(978);
                 },
                 ClassType.Solo
             ),
-            new(995, "sandcastle", "*", () => Story.MapItemQuest(995, "sandcastle", 361)),
+            new(995, "sandcastle", "*", () => Story.MapItemQuest(995, "sandcastle", 361), isCombat: false),
             new(996, "sandcastle", "War Hyena", () => Story.KillQuest(996, "sandcastle", "War Hyena")),
             new(997, "sandcastle", "War Mummy", () => Story.KillQuest(997, "sandcastle", "War Mummy")),
             new(998, "sandcastle", "War Hyena", () => Story.KillQuest(998, "sandcastle", "War Hyena")),
@@ -8062,11 +8133,11 @@ public class ArmyFarmerJoeDoAll
             new(1001, "sandsea", "Desert Vase", () => Story.KillQuest(1001, "sandsea", "Desert Vase")),
             new(1002, "sandsea", "Bupers Camel", () => Story.KillQuest(1002, "sandsea", "Bupers Camel")),
             new(1003, "djinn", "Harpy", () => Story.KillQuest(1003, "djinn", "Harpy")),
-            new(1004, "djinn", "*", () => Story.MapItemQuest(1004, "djinn", 370, 5)),
+            new(1004, "djinn", "*", () => Story.MapItemQuest(1004, "djinn", 370, 5), isCombat: false),
             new(1005, "djinn", "Tibicenas", () => Story.KillQuest(1005, "djinn", "Tibicenas"), ClassType.Solo),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_TIBICENAS", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_TIBICENAS", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCKhasaanda()
@@ -8082,16 +8153,24 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(1232, "bloodtusk", 523);
-                    Story.KillQuest(1232, "bloodtusk", "Trollola Plant");
-                    Story.KillQuest(1232, "crossroads", "Chinchilizard");
+                    core.EnsureAccept(1232);
+                    core.HuntMonster("crossroads", "Chinchilizard", "Scaly Skin Scrub", 7, log: false);
+                    core.HuntMonster("bloodtusk", "Trollola Plant", "Perfumed Trollola Flower", 5, log: false);
+                    core.GetMapItem(523, 1, "bloodtusk");
+                    core.EnsureComplete(1232);
                 }
             ),
             new(
                 1233,
                 "crossroads",
                 "*",
-                () => Story.KillQuest(1233, "crossroads", new[] { "Lemurphant", "Koalion" })
+                () =>
+                {
+                    core.EnsureAccept(1233);
+                    core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Stones", 5, log: false);
+                    core.HuntMonster("crossroads", "Koalion", "Golden Down-fur", 5, log: false);
+                    core.EnsureComplete(1233);
+                }
             ),
             new(
                 1234,
@@ -8100,10 +8179,11 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(1234);
-                    core.KillMonster("bloodtusk", "r8", "Right", "Crystal-Rock", "Quartze", 3, log: false);
-                    core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Tusks", 5, log: false);
-                    core.HuntMonster("crossroads", "Chinchilizard", "Chinchilizard Scales", 5, log: false);
-                    Story.MapItemQuest(1234, "crossroads", 525);
+                    core.KillMonster("bloodtusk", "r8", "Left", "Crystal-Rock", "Polished Rocks", 3, log: false);
+                    core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Ivory", 5, log: false);
+                    core.HuntMonster("crossroads", "Chinchilizard", "Liz-Leather Thongs", 5, log: false);
+                    core.GetMapItem(525, 1, "crossroads");
+                    core.EnsureComplete(1234);
                 }
             ),
             new(
@@ -8112,36 +8192,46 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(1235, "crossroads", 521, 10);
-                    Story.KillQuest(1235, "bloodtusk", "Trollola Plant");
-                    Story.KillQuest(1235, "crossroads", new[] { "Lemurphant", "Koalion" });
+                    core.EnsureAccept(1235);
+                    core.HuntMonster("bloodtusk", "Trollola Plant", "Trollola Plant Resin", 4, log: false);
+                    core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Musk", 5, log: false);
+                    core.HuntMonster("crossroads", "Koalion", "Fur for Firestarting", 5, log: false);
+                    core.GetMapItem(521, 10, "crossroads");
+                    core.EnsureComplete(1235);
                 }
             ),
-            new(1236, "", "*", () => Story.ChainQuest(1236)),
+            new(1236, "", "*", () => Story.ChainQuest(1236), isCombat: false),
             new(
                 1237,
                 "crossroads",
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(1237, "bloodtusk", 524, 5);
-                    Story.MapItemQuest(1237, "crossroads", 522, 5);
-                    Story.KillQuest(1237, "bloodtusk", "Rock");
-                    Story.KillQuest(1237, "crossroads", new[] { "Koalion", "Lemurphant" });
+                    core.EnsureAccept(1237);
+                    core.HuntMonster("bloodtusk", "Rock", "Skin of the Mountain", 3, log: false);
+                    core.HuntMonster("crossroads", "Koalion", "Koalion Claw", 5, log: false);
+                    core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Tusks", 5, log: false);
+                    core.GetMapItem(524, 5, "crossroads");
+                    core.GetMapItem(522, 5, "crossroads");
+                    core.EnsureComplete(1237);
                 }
             ),
-            new(1241, "", "*", () => Story.ChainQuest(1241)),
-            new(1273, "", "*", () => Story.ChainQuest(1273)),
-            new(1280, "ravinetemple", "*", () => Story.MapItemQuest(1280, "ravinetemple", 553)),
+            new(1241, "", "*", () => Story.ChainQuest(1241), isCombat: false),
+            new(1273, "", "*", () => Story.ChainQuest(1273), isCombat: false),
+            new(1280, "ravinetemple", "*", () => Story.MapItemQuest(1280, "ravinetemple", 553), isCombat: false),
             new(
                 1281,
                 "ravinetemple",
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(1281, "ravinetemple", 554, 5);
-                    Story.MapItemQuest(1281, "ravinetemple", new[] { 555, 556 }, 10);
-                }
+                    core.EnsureAccept(1281);
+                    core.GetMapItem(554, 5, "ravinetemple");
+                    core.GetMapItem(555, 10, "ravinetemple");
+                    core.GetMapItem(556, 10, "ravinetemple");
+                    core.EnsureComplete(1281);
+                },
+                isCombat: false
             ),
             new(1282, "ravinetemple", "Temple Guardian", () => Story.KillQuest(1282, "ravinetemple", "Temple Guardian")),
             new(
@@ -8150,26 +8240,40 @@ public class ArmyFarmerJoeDoAll
                 "Temple Guardian",
                 () =>
                 {
-                    Story.MapItemQuest(1283, "ravinetemple", 557, 10);
-                    Story.KillQuest(1283, "ravinetemple", "Temple Guardian");
+                    core.EnsureAccept(1283);
+                    core.GetMapItem(557, 10, "ravinetemple");
+                    core.HuntMonster("ravinetemple", "Temple Guardian", "Sharpened Bone Stake", 5, log: false);
+                    core.EnsureComplete(1283);
                 }
             ),
             new(1284, "ravinetemple", "Temple Guardian", () => Story.KillQuest(1284, "ravinetemple", "Temple Guardian")),
-            new(1375, "alliance", "*", () => Story.MapItemQuest(1375, "alliance", new[] { 679, 680 })),
+            new(1375, "alliance", "*", () => Story.MapItemQuest(1375, "alliance", new[] { 679, 680 }), isCombat: false),
             new(
                 1376,
                 "alliance",
                 "*",
-                () => Story.KillQuest(1376, "alliance", new[] { "Good Soldier", "Evil Soldier" })
+                () =>
+                {
+                    core.EnsureAccept(1376);
+                    core.HuntMonster("alliance", "Good Soldier", "Good Soldier Vanquished", 10, log: false);
+                    core.HuntMonster("alliance", "Evil Soldier", "Evil Soldier Vanquished", 10, log: false);
+                    core.EnsureComplete(1376);
+                }
             ),
-            new(1377, "alliance", "*", () => Story.MapItemQuest(1377, "alliance", 675, 10)),
-            new(1378, "alliance", "*", () => Story.MapItemQuest(1378, "alliance", 676)),
+            new(1377, "alliance", "*", () => Story.MapItemQuest(1377, "alliance", 675, 10), isCombat: false),
+            new(1378, "alliance", "*", () => Story.MapItemQuest(1378, "alliance", 676), isCombat: false),
             new(1379, "alliance", "Chaorrupted Evil Soldier", () => Story.KillQuest(1379, "alliance", "Chaorrupted Evil Soldier")),
             new(
                 1380,
                 "alliance",
                 "*",
-                () => Story.KillQuest(1380, "alliance", new[] { "General Cynari", "General Tibias" }),
+                () =>
+                {
+                    core.EnsureAccept(1380);
+                    core.HuntMonster("alliance", "General Cynari", "Cynari Defeated!", log: false);
+                    core.HuntMonster("alliance", "General Tibias", "Tibias Defeated!", log: false);
+                    core.EnsureComplete(1380);
+                },
                 ClassType.Solo
             ),
             new(1424, "ancienttemple", "Chaotic Vulture", () => Story.KillQuest(1424, "ancienttemple", "Chaotic Vulture")),
@@ -8179,33 +8283,45 @@ public class ArmyFarmerJoeDoAll
                 "Chaotic Vulture",
                 () =>
                 {
-                    Story.MapItemQuest(1425, "ancienttemple", 706, 7);
-                    Story.KillQuest(1425, "ancienttemple", "Chaotic Vulture");
+                    core.EnsureAccept(1425);
+                    core.GetMapItem(706, 7, "ancienttemple");
+                    core.HuntMonster("ancienttemple", "Chaotic Vulture", "Stolen Urn", 7, log: false);
+                    core.EnsureComplete(1425);
                 }
             ),
             new(1426, "ancienttemple", "Chaos Troll Spirit", () => Story.KillQuest(1426, "ancienttemple", "Chaos Troll Spirit")),
             new(1427, "ancienttemple", "Serpentress", () => Story.KillQuest(1427, "ancienttemple", "Serpentress"), ClassType.Solo),
-            new(1428, "ancienttemple", "*", () => Story.MapItemQuest(1428, "ancienttemple", 707)),
-            new(1456, "orecavern", "*", () => Story.MapItemQuest(1456, "orecavern", 717)),
+            new(1428, "ancienttemple", "*", () => Story.MapItemQuest(1428, "ancienttemple", 707), isCombat: false),
+            new(1456, "orecavern", "*", () => Story.MapItemQuest(1456, "orecavern", 717), isCombat: false),
             new(
                 1457,
                 "orecavern",
                 "Crashroom",
                 () =>
                 {
-                    Story.MapItemQuest(1457, "orecavern", 719, 5);
-                    Story.KillQuest(1457, "orecavern", "Crashroom");
+                    core.EnsureAccept(1457);
+                    core.GetMapItem(719, 5, "orecavern");
+                    core.HuntMonster("orecavern", "Crashroom", "Light Orb Recovered", 10, log: false);
+                    core.EnsureComplete(1457);
                 }
             ),
-            new(1458, "orecavern", "*", () => Story.MapItemQuest(1458, "orecavern", 718, 5)),
+            new(1458, "orecavern", "*", () => Story.MapItemQuest(1458, "orecavern", 718, 5), isCombat: false),
             new(1459, "orecavern", "Chaorrupted Evil Soldier", () => Story.KillQuest(1459, "orecavern", "Chaorrupted Evil Soldier")),
             new(1460, "orecavern", "Naga Baas", () => Story.KillQuest(1460, "orecavern", "Naga Baas"), ClassType.Solo),
-            new(1469, "dreamnexus", "*", () => Story.MapItemQuest(1469, "dreamnexus", new[] { 734, 735, 736, 737 })),
+            new(1469, "dreamnexus", "*", () => Story.MapItemQuest(1469, "dreamnexus", new[] { 734, 735, 736, 737 }), isCombat: false),
             new(
                 1470,
                 "dreamnexus",
                 "*",
-                () => Story.KillQuest(1470, "dreamnexus", new[] { "Dark Wyvern", "Aether Serpent" })
+                () =>
+                {
+                    core.EnsureAccept(1470);
+                    core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Scales", 2, log: false);
+                    core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Claws", 2, log: false);
+                    core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Fangs", 2, log: false);
+                    core.HuntMonster("dreamnexus", "Aether Serpent", "Serpent Hair", 2, log: false);
+                    core.EnsureComplete(1470);
+                }
             ),
             new(
                 1471,
@@ -8213,11 +8329,25 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(1471, "dreamnexus", 738, 10);
-                    Story.MapItemQuest(1471, "dreamnexus", 739, 11);
+                    core.EnsureAccept(1471);
+                    core.GetMapItem(738, 10, "dreamnexus");
+                    core.GetMapItem(739, 11, "dreamnexus");
+                    core.EnsureComplete(1471);
+                },
+                isCombat: false
+            ),
+            new(
+                1472,
+                "dreamnexus",
+                "Solar Phoenix",
+                () =>
+                {
+                    core.EnsureAccept(1472);
+                    core.HuntMonster("dreamnexus", "Solar Phoenix", "Phoenix Tear", 10, log: false);
+                    core.HuntMonster("dreamnexus", "Solar Phoenix", "Phoenix Blood", 5, log: false);
+                    core.EnsureComplete(1472);
                 }
             ),
-            new(1472, "dreamnexus", "Solar Phoenix", () => Story.KillQuest(1472, "dreamnexus", "Solar Phoenix")),
             new(
                 1473,
                 "dreamnexus",
@@ -8225,14 +8355,15 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     core.EnsureAccept(1473);
-                    core.KillMonster("dreamnexus", "r17a", "Up", "Khasaanda", "Khasaanda Defeated", log: false);
+                    core.KillMonster("dreamnexus", "r17a", "Up", "Khasaanda", "Khasaanda Defeated!", log: false);
                     core.EnsureComplete(1473);
+                    Bot.Wait.ForQuestComplete(1473);
                 },
                 ClassType.Solo
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_KHASAANDA", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_KHASAANDA", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCIadoa()
@@ -8242,16 +8373,31 @@ public class ArmyFarmerJoeDoAll
 
         var steps = new CoordinatedStoryStep[]
         {
-            new(2239, "thespan", "*", () => Story.MapItemQuest(2239, "thespan", new[] { 1358, 1359, 1360, 1361, 1362, 1363 })),
-            new(2240, "timelibrary", "*", () => Story.KillQuest(2240, "timelibrary", new[] { "Sneak", "Tog", "Shadowscythe" })),
+            new(2239, "thespan", "*", () => Story.MapItemQuest(2239, "thespan", new[] { 1358, 1359, 1360, 1361, 1362, 1363 }), isCombat: false),
+            new(
+                2240,
+                "timelibrary",
+                "*",
+                () =>
+                {
+                    core.EnsureAccept(2240);
+                    core.HuntMonster("timelibrary", "Sneak", "AQ Dimension Key", 1, log: false);
+                    core.HuntMonster("timelibrary", "Tog", "DF Dimension Key", 1, log: false);
+                    core.HuntMonster("timelibrary", "Shadowscythe", "MQ Dimension Key", 1, log: false);
+                    core.EnsureComplete(2240);
+                }
+            ),
             new(
                 2241,
                 "timelibrary",
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2241, "timelibrary", 1365, 3);
-                    Story.KillQuest(2241, "timelibrary", new[] { "Moglin Ghost", "Undead Knight" });
+                    core.EnsureAccept(2241);
+                    core.HuntMonster("timelibrary", "Moglin Ghost", "Necromancy in AQ Knowledge", log: false);
+                    core.HuntMonster("timelibrary", "Undead Knight", "Tales of Planet-Peril Page", 6, log: false);
+                    core.GetMapItem(1365, 3, "timelibrary");
+                    core.EnsureComplete(2241);
                 }
             ),
             new(
@@ -8260,8 +8406,11 @@ public class ArmyFarmerJoeDoAll
                 "Tog",
                 () =>
                 {
-                    Story.MapItemQuest(2242, "timelibrary", 1366, 2);
-                    Story.KillQuest(2242, "timelibrary", "Tog");
+                    core.EnsureAccept(2242);
+                    core.HuntMonster("timelibrary", "Tog", "Elemental Orb Knowledge", 8, log: false);
+                    core.HuntMonster("timelibrary", "Tog", "\"Draconic Prophecy\" Page", 6, log: false);
+                    core.GetMapItem(1366, 2, "timelibrary");
+                    core.EnsureComplete(2242);
                 }
             ),
             new(
@@ -8270,8 +8419,11 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2243, "timelibrary", 1367);
-                    Story.KillQuest(2243, "timelibrary", new[] { "Shadowscythe", "Training Globe" });
+                    core.EnsureAccept(2243);
+                    core.HuntMonster("timelibrary", "Shadowscythe", "Shadowscythe Combat Strategy", 7, log: false);
+                    core.HuntMonster("timelibrary", "Training Globe", "Galactic Hypertron Engines: A Primer", log: false);
+                    core.GetMapItem(1367, 1, "timelibrary");
+                    core.EnsureComplete(2243);
                 }
             ),
             new(
@@ -8280,8 +8432,12 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2244, "timelibrary", 1368);
-                    Story.KillQuest(2244, "timelibrary", new[] { "Queen's Recruit", "Queen's Knight" });
+                    core.EnsureAccept(2244);
+                    core.HuntMonster("timelibrary", "Queen's Recruit", "The Future is Now", 3, log: false);
+                    core.HuntMonster("timelibrary", "Queen's Recruit", "Past Failures Brought Us Here", 2, log: false);
+                    core.HuntMonster("timelibrary", "Queen's Knight", "Princess Freed... but for what?", 2, log: false);
+                    core.GetMapItem(1368, 1, "timelibrary");
+                    core.EnsureComplete(2244);
                 }
             ),
             new(2253, "timevoid", "Ephemerite", () => Story.KillQuest(2253, "timevoid", "Ephemerite")),
@@ -8291,8 +8447,11 @@ public class ArmyFarmerJoeDoAll
                 "Time-Travel Fairy",
                 () =>
                 {
-                    Story.MapItemQuest(2254, "timevoid", 1438, 16);
-                    Story.KillQuest(2254, "timevoid", "Time-Travel Fairy");
+                    core.EnsureAccept(2254);
+                    core.HuntMonster("timevoid", "Time-Travel Fairy", "Exaglass", 4, log: false);
+                    core.HuntMonster("timevoid", "Time-Travel Fairy", "Fairy Plasma", 8, log: false);
+                    core.GetMapItem(1438, 16, "timevoid");
+                    core.EnsureComplete(2254);
                 }
             ),
             new(
@@ -8301,17 +8460,26 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2255, "timevoid", 1439, 12);
-                    Story.KillQuest(2255, "timevoid", new[] { "Ephemerite", "Time-Travel Fairy" });
+                    core.EnsureAccept(2255);
+                    core.GetMapItem(1439, 12, "timevoid");
+                    core.HuntMonster("timevoid", "Ephemerite", "Ephemeral Dust", 4, log: false);
+                    core.HuntMonster("timevoid", "Time-Travel Fairy", "Fairy Plasma", 4, log: false);
+                    core.EnsureComplete(2255);
                 }
             ),
             new(
                 2256,
                 "timevoid",
                 "*",
-                () => Story.KillQuest(2256, "timevoid", new[] { "Time-Travel Fairy", "Void Phoenix" })
+                () =>
+                {
+                    core.EnsureAccept(2256);
+                    core.HuntMonster("timevoid", "Time-Travel Fairy", "Powdered Fairy Wings", 6, log: false);
+                    core.HuntMonster("timevoid", "Void Phoenix", "Dried Phoenix Tears", 6, log: false);
+                    core.EnsureComplete(2256);
+                }
             ),
-            new(2257, "timevoid", "*", () => Story.MapItemQuest(2257, "timevoid", new[] { 1440, 1441, 1442, 1443 })),
+            new(2257, "timevoid", "*", () => Story.MapItemQuest(2257, "timevoid", new[] { 1440, 1441, 1442, 1443 }), isCombat: false),
             new(
                 2258,
                 "timevoid",
@@ -8319,7 +8487,7 @@ public class ArmyFarmerJoeDoAll
                 () => Story.KillQuest(2258, "timevoid", "Unending Avatar", AutoCompleteQuest: false),
                 ClassType.Solo
             ),
-            new(2376, "aqlesson", "*", () => Story.MapItemQuest(2376, "aqlesson", 1467)),
+            new(2376, "aqlesson", "*", () => Story.MapItemQuest(2376, "aqlesson", 1467), isCombat: false),
             new(2377, "aqlesson", "Ninja", () => Story.KillQuest(2377, "aqlesson", "Ninja")),
             new(
                 2378,
@@ -8327,9 +8495,12 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2378, "aqlesson", 1468, 8);
-                    Story.MapItemQuest(2378, "aqlesson", 1469);
-                }
+                    core.EnsureAccept(2378);
+                    core.GetMapItem(1468, 8, "aqlesson");
+                    core.GetMapItem(1469, 1, "aqlesson");
+                    core.EnsureComplete(2378);
+                },
+                isCombat: false
             ),
             new(
                 2379,
@@ -8337,8 +8508,11 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2379, "aqlesson", new[] { 1470, 1471 }, 3);
-                    Story.KillQuest(2379, "aqlesson", new[] { "Eternite Ore", "Water Elemental" });
+                    core.EnsureAccept(2379);
+                    core.GetMapItems(new[] { (1470, 3), (1471, 3) }, "aqlesson");
+                    core.HuntMonster("aqlesson", "Eternite Ore", "TimeSpark Acquired", 3, log: false);
+                    core.HuntMonster("aqlesson", "Water Elemental", "Tears of Joy Acquired", 3, log: false);
+                    core.EnsureComplete(2379);
                 }
             ),
             new(
@@ -8347,29 +8521,57 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2380, "aqlesson", new[] { 1473, 1472 }, 3);
-                    Story.KillQuest(2380, "aqlesson", new[] { "Ice Elemental", "Fire Elemental" });
+                    core.EnsureAccept(2380);
+                    core.GetMapItems(new[] { (1473, 3), (1472, 3) }, "aqlesson");
+                    core.HuntMonster("aqlesson", "Ice Elemental", "Frigid Liquid Acquired", 3, log: false);
+                    core.HuntMonster("aqlesson", "Fire Elemental", "Heart of Lava Acquired", 3, log: false);
+                    core.EnsureComplete(2380);
                 }
             ),
             new(2381, "aqlesson", "Void Dragon", () => Story.KillQuest(2381, "aqlesson", "Void Dragon")),
             new(2382, "aqlesson", "Firezard", () => Story.KillQuest(2382, "aqlesson", "Firezard")),
             new(2383, "aqlesson", "Ice Elemental", () => Story.KillQuest(2383, "aqlesson", "Ice Elemental")),
-            new(2384, "thespan", "*", () => Story.MapItemQuest(2384, "thespan", 1474)),
+            new(2384, "thespan", "*", () => Story.MapItemQuest(2384, "thespan", 1474), isCombat: false),
             new(2385, "aqlesson", "Akriloth", () => Story.KillQuest(2385, "aqlesson", "Akriloth"), ClassType.Solo),
             new(2386, "aqlesson", "Carnax", () => Story.KillQuest(2386, "aqlesson", "Carnax"), ClassType.Solo),
-            new(2470, "dflesson", "*", () => Story.MapItemQuest(2470, "dflesson", 1549, 8)),
-            new(2471, "dflesson", "Fire Elemental", () => Story.KillQuest(2471, "dflesson", "Fire Elemental")),
+            new(2470, "dflesson", "*", () => Story.MapItemQuest(2470, "dflesson", 1549, 8), isCombat: false),
+            new(
+                2471,
+                "dflesson",
+                "Fire Elemental",
+                () =>
+                {
+                    core.EnsureAccept(2471);
+                    core.HuntMonster("dflesson", "Fire Elemental", "Slain Flame Elemental", 8, log: false);
+                    core.HuntMonster("dflesson", "Fire Elemental", "Chaos Gemerald", 4, log: false);
+                    core.EnsureComplete(2471);
+                }
+            ),
             new(
                 2472,
                 "dflesson",
                 "*",
-                () => Story.KillQuest(2472, "dflesson", new[] { "Lava Slime", "Fire Elemental" })
+                () =>
+                {
+                    core.EnsureAccept(2472);
+                    core.HuntMonster("dflesson", "Lava Slime", "Slain Slime", 5, log: false);
+                    core.HuntMonster("dflesson", "Fire Elemental", "Slain Elemental", 6, log: false);
+                    core.HuntMonster("dflesson", "Fire Elemental", "Blue Clue", log: false);
+                    core.EnsureComplete(2472);
+                }
             ),
             new(
                 2473,
                 "dflesson",
                 "*",
-                () => Story.KillQuest(2473, "dflesson", new[] { "Tog", "Agitated Orb" })
+                () =>
+                {
+                    core.EnsureAccept(2473);
+                    core.HuntMonster("dflesson", "Tog", "Life AND the Universe", 4, log: false);
+                    core.HuntMonster("dflesson", "Agitated Orb", "Everything", 5, log: false);
+                    core.HuntMonster("dflesson", "Agitated Orb", "Hoopy Frood's Towel", 3, log: false);
+                    core.EnsureComplete(2473);
+                }
             ),
             new(2474, "dflesson", "Vultragon", () => Story.KillQuest(2474, "dflesson", "Vultragon")),
             new(2475, "dflesson", "Chaos Sp-Eye", () => Story.KillQuest(2475, "dflesson", "Chaos Sp-Eye")),
@@ -8378,13 +8580,25 @@ public class ArmyFarmerJoeDoAll
                 2477,
                 "dflesson",
                 "*",
-                () => Story.KillQuest(2477, "dflesson", new[] { "Lava Golem", "Fire Elemental" })
+                () =>
+                {
+                    core.EnsureAccept(2477);
+                    core.HuntMonster("dflesson", "Lava Golem", "Golem Crushed", 6, log: false);
+                    core.HuntMonster("dflesson", "Fire Elemental", "Elemental Eliminated", 3, log: false);
+                    core.EnsureComplete(2477);
+                }
             ),
             new(
                 2478,
                 "dflesson",
                 "*",
-                () => Story.KillQuest(2478, "dflesson", new[] { "Chaotic Horcboar", "Chaotic Chicken" })
+                () =>
+                {
+                    core.EnsureAccept(2478);
+                    core.HuntMonster("dflesson", "Chaotic Horcboar", "Hero Protein", 1, log: false);
+                    core.HuntMonster("dflesson", "Chaotic Chicken", "Spell Rune", 5, log: false);
+                    core.EnsureComplete(2478);
+                }
             ),
             new(
                 2479,
@@ -8393,35 +8607,58 @@ public class ArmyFarmerJoeDoAll
                 () => Story.KillQuest(2479, "dflesson", "Fluffy the Dracolich"),
                 ClassType.Solo
             ),
-            new(2504, "mqlesson", "*", () => Story.MapItemQuest(2504, "mqlesson", 1580, GetReward: false)),
+            new(2504, "mqlesson", "*", () => Story.MapItemQuest(2504, "mqlesson", 1580, GetReward: false), isCombat: false),
             new(2505, "mqlesson", "Asteroid", () => Story.KillQuest(2505, "mqlesson", "Asteroid")),
-            new(2506, "mqlesson", "*", () => Story.MapItemQuest(2506, "mqlesson", 1581, 5)),
+            new(2506, "mqlesson", "*", () => Story.MapItemQuest(2506, "mqlesson", 1581, 5), isCombat: false),
             new(2507, "mqlesson", "MystRaven Student", () => Story.KillQuest(2507, "mqlesson", "MystRaven Student")),
             new(2508, "mqlesson", "Training Globe", () => Story.KillQuest(2508, "mqlesson", "Training Globe")),
             new(2509, "mqlesson", "MystRaven Student", () => Story.KillQuest(2509, "mqlesson", "MystRaven Student")),
             new(2510, "mqlesson", "Chaos Shadowscythe", () => Story.KillQuest(2510, "mqlesson", "Chaos Shadowscythe")),
-            new(2511, "mqlesson", "Chaos Shadowscythe", () => Story.KillQuest(2511, "mqlesson", "Chaos Shadowscythe")),
+            new(
+                2511,
+                "mqlesson",
+                "Chaos Shadowscythe",
+                () =>
+                {
+                    core.EnsureAccept(2511);
+                    core.HuntMonster("mqlesson", "Chaos Shadowscythe", "Truth Glasses", log: false);
+                    core.HuntMonster("mqlesson", "Chaos Shadowscythe", "Darkness Destroyed", 13, log: false);
+                    core.EnsureComplete(2511);
+                }
+            ),
             new(2512, "mqlesson", "Dragonoid", () => Story.KillQuest(2512, "mqlesson", "Dragonoid"), ClassType.Solo),
             new(2513, "deepchaos", "Chaotic Merdrac", () => Story.KillQuest(2513, "deepchaos", "Chaotic Merdrac")),
             new(2515, "deepchaos", "Chaos Angler", () => Story.KillQuest(2515, "deepchaos", "Chaos Angler")),
-            new(2516, "deepchaos", "*", () => Story.MapItemQuest(2516, "deepchaos", 1582, 3)),
+            new(2516, "deepchaos", "*", () => Story.MapItemQuest(2516, "deepchaos", 1582, 3), isCombat: false),
             new(2517, "deepchaos", "Kathool", () => Story.KillQuest(2517, "deepchaos", "Kathool"), ClassType.Solo),
-            new(2518, "timespace", "Astral Ephemerite", () => Story.KillQuest(2518, "timespace", "Astral Ephemerite")),
+            new(
+                2518,
+                "timespace",
+                "Astral Ephemerite",
+                () =>
+                {
+                    core.EnsureAccept(2518);
+                    core.HuntMonster("timespace", "Astral Ephemerite", "Star Death", 6, log: false);
+                    core.EnsureComplete(2518);
+                }
+            ),
             new(
                 2519,
                 "timespace",
                 "Chaos Lord Iadoa",
                 () =>
                 {
+                    core.EnsureAccept(2519);
                     if (!core.CheckInventory("Dragonoid of Hours"))
                         core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false, log: false);
-                    Story.KillQuest(2519, "timespace", "Chaos Lord Iadoa");
+                    core.HuntMonster("timespace", "Chaos Lord Iadoa", "Iadoa Defeated", log: false);
+                    core.EnsureComplete(2519);
                 },
                 ClassType.Solo
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_IADOA", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_IADOA", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCLionfang()
@@ -8432,7 +8669,7 @@ public class ArmyFarmerJoeDoAll
         var steps = new CoordinatedStoryStep[]
         {
             new(2612, "blackhorn", "Restless Undead", () => Story.KillQuest(2612, "blackhorn", "Restless Undead")),
-            new(2613, "blackhorn", "*", () => Story.MapItemQuest(2613, "blackhorn", 1615, 10)),
+            new(2613, "blackhorn", "*", () => Story.MapItemQuest(2613, "blackhorn", 1615, 10), isCombat: false),
             new(2614, "blackhorn", "Tomb Spider", () => Story.KillQuest(2614, "blackhorn", "Tomb Spider")),
             new(
                 2615,
@@ -8440,24 +8677,27 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(2615, "blackhorn", 1616);
-                    Story.KillQuest(2615, "blackhorn", new[] { "Restless Undead", "Tomb Spider" });
+                    core.EnsureAccept(2615);
+                    core.GetMapItem(1616, 1, "blackhorn");
+                    core.HuntMonster("blackhorn", "Restless Undead", "Scrap Of Cloth", 3, log: false);
+                    core.HuntMonster("blackhorn", "Tomb Spider", "Gas Bladder", 3, log: false);
+                    core.EnsureComplete(2615);
                 }
             ),
-            new(2616, "blackhorn", "*", () => Story.MapItemQuest(2616, "blackhorn", 1617)),
+            new(2616, "blackhorn", "*", () => Story.MapItemQuest(2616, "blackhorn", 1617), isCombat: false),
             new(2617, "blackhorn", "Bonefeeder Spider", () => Story.KillQuest(2617, "blackhorn", "Bonefeeder Spider"), ClassType.Solo),
-            new(2618, "blackhorn", "*", () => Story.MapItemQuest(2618, "blackhorn", 1618)),
+            new(2618, "blackhorn", "*", () => Story.MapItemQuest(2618, "blackhorn", 1618), isCombat: false),
             new(2619, "blackhorn", "Tomb Spider", () => Story.KillQuest(2619, "blackhorn", "Tomb Spider")),
             new(2620, "blackhorn", "Restless Undead", () => Story.KillQuest(2620, "blackhorn", "Restless Undead")),
-            new(2621, "blackhorn", "*", () => Story.MapItemQuest(2621, "blackhorn", 1619)),
-            new(2622, "onslaughttower", "*", () => Story.MapItemQuest(2622, "onslaughttower", new[] { 1620, 1621, 1622, 1623 })),
+            new(2621, "blackhorn", "*", () => Story.MapItemQuest(2621, "blackhorn", 1619), isCombat: false),
+            new(2622, "onslaughttower", "*", () => Story.MapItemQuest(2622, "onslaughttower", new[] { 1620, 1621, 1622, 1623 }), isCombat: false),
             new(2623, "onslaughttower", "Golden Caster", () => Story.KillQuest(2623, "onslaughttower", "Golden Caster")),
             new(2624, "onslaughttower", "Golden Caster", () => Story.KillQuest(2624, "onslaughttower", "Golden Caster")),
-            new(2625, "onslaughttower", "*", () => Story.MapItemQuest(2625, "onslaughttower", 1624, 8)),
-            new(2626, "onslaughttower", "*", () => Story.MapItemQuest(2626, "onslaughttower", 1625)),
-            new(2627, "onslaughttower", "*", () => Story.MapItemQuest(2627, "onslaughttower", 1626, 4)),
+            new(2625, "onslaughttower", "*", () => Story.MapItemQuest(2625, "onslaughttower", 1624, 8), isCombat: false),
+            new(2626, "onslaughttower", "*", () => Story.MapItemQuest(2626, "onslaughttower", 1625), isCombat: false),
+            new(2627, "onslaughttower", "*", () => Story.MapItemQuest(2627, "onslaughttower", 1626, 4), isCombat: false),
             new(2628, "onslaughttower", "Golden Caster", () => Story.KillQuest(2628, "onslaughttower", "Golden Caster")),
-            new(2629, "onslaughttower", "*", () => Story.MapItemQuest(2629, "onslaughttower", 1627)),
+            new(2629, "onslaughttower", "*", () => Story.MapItemQuest(2629, "onslaughttower", 1627), isCombat: false),
             new(
                 2630,
                 "onslaughttower",
@@ -8466,62 +8706,96 @@ public class ArmyFarmerJoeDoAll
                 ClassType.Solo
             ),
             new(2666, "falguard", "Chaonslaught Caster", () => Story.KillQuest(2666, "falguard", "Chaonslaught Caster")),
-            new(2667, "falguard", "*", () => Story.MapItemQuest(2667, "falguard", 1628, 6)),
+            new(2667, "falguard", "*", () => Story.MapItemQuest(2667, "falguard", 1628, 6), isCombat: false),
             new(
                 2668,
                 "falguard",
                 "*",
-                () => Story.KillQuest(2668, "falguard", new[] { "Chaonslaught Warrior", "Chaonslaught Cavalry" })
+                () =>
+                {
+                    core.EnsureAccept(2668);
+                    core.HuntMonster("falguard", "Chaonslaught Warrior", "Chaonslaught Shield", 2, log: false);
+                    core.HuntMonster("falguard", "Chaonslaught Cavalry", "Chaonslaught Sword", 3, log: false);
+                    core.EnsureComplete(2668);
+                }
             ),
-            new(2669, "falguard", "*", () => Story.MapItemQuest(2669, "falguard", 1629)),
+            new(2669, "falguard", "*", () => Story.MapItemQuest(2669, "falguard", 1629), isCombat: false),
             new(2670, "falguard", "Chaonslaught Warrior", () => Story.KillQuest(2670, "falguard", "Chaonslaught Warrior")),
-            new(2671, "falguard", "*", () => Story.MapItemQuest(2671, "falguard", 1630)),
-            new(2672, "falguard", "*", () => Story.MapItemQuest(2672, "falguard", 1631)),
+            new(2671, "falguard", "*", () => Story.MapItemQuest(2671, "falguard", 1630), isCombat: false),
+            new(2672, "falguard", "*", () => Story.MapItemQuest(2672, "falguard", 1631), isCombat: false),
             new(2673, "falguard", "Chaonslaught Caster", () => Story.KillQuest(2673, "falguard", "Chaonslaught Caster")),
-            new(2674, "falguard", "*", () => Story.MapItemQuest(2674, "falguard", 1632)),
+            new(2674, "falguard", "*", () => Story.MapItemQuest(2674, "falguard", 1632), isCombat: false),
             new(2675, "falguard", "Primarch", () => Story.KillQuest(2675, "falguard", "Primarch"), ClassType.Solo),
             new(2720, "deathpits", "Rotting Darkblood", () => Story.KillQuest(2720, "deathpits", "Rotting Darkblood")),
-            new(2721, "deathpits", "*", () => Story.MapItemQuest(2721, "deathpits", 1691, 5)),
+            new(2721, "deathpits", "*", () => Story.MapItemQuest(2721, "deathpits", 1691, 5), isCombat: false),
             new(2722, "deathpits", "Rotting Darkblood", () => Story.KillQuest(2722, "deathpits", "Rotting Darkblood")),
             new(2723, "deathpits", "Rotting Darkblood", () => Story.KillQuest(2723, "deathpits", "Rotting Darkblood")),
             new(2724, "deathpits", "Ghastly Darkblood", () => Story.KillQuest(2724, "deathpits", "Ghastly Darkblood")),
             new(2725, "deathpits", "Ghastly Darkblood", () => Story.KillQuest(2725, "deathpits", "Ghastly Darkblood")),
-            new(2726, "deathpits", "*", () => Story.MapItemQuest(2726, "deathpits", 1692, 6)),
+            new(2726, "deathpits", "*", () => Story.MapItemQuest(2726, "deathpits", 1692, 6), isCombat: false),
             new(2727, "deathpits", "Rotting Darkblood", () => Story.KillQuest(2727, "deathpits", "Rotting Darkblood")),
             new(2728, "deathpits", "Ghastly Darkblood", () => Story.KillQuest(2728, "deathpits", "Ghastly Darkblood")),
             new(2729, "deathpits", "Sundered Darkblood", () => Story.KillQuest(2729, "deathpits", "Sundered Darkblood")),
-            new(2730, "deathpits", "*", () => Story.MapItemQuest(2730, "deathpits", 1693, 9)),
+            new(2730, "deathpits", "*", () => Story.MapItemQuest(2730, "deathpits", 1693, 9), isCombat: false),
             new(
                 2731,
                 "deathpits",
                 "*",
-                () => Story.KillQuest(2731, "deathpits", new[] { "Sundered Darkblood", "Rotting Darkblood", "Ghastly Darkblood" })
+                () =>
+                {
+                    core.EnsureAccept(2731);
+                    core.HuntMonster("deathpits", "Sundered Darkblood", "Primarch Mace", log: false);
+                    core.HuntMonster("deathpits", "Rotting Darkblood", "Primarch Trident", log: false);
+                    core.HuntMonster("deathpits", "Ghastly Darkblood", "Primarch Spear", log: false);
+                    core.EnsureComplete(2731);
+                }
             ),
-            new(2732, "deathpits", "*", () => Story.MapItemQuest(2732, "deathpits", 1694, 12)),
+            new(2732, "deathpits", "*", () => Story.MapItemQuest(2732, "deathpits", 1694, 12), isCombat: false),
             new(
                 2740,
                 "deathpits",
                 "Wrathful Vestis",
                 () =>
                 {
-                    Story.MapItemQuest(2740, "deathpits", 1695);
-                    Story.KillQuest(2740, "deathpits", "Wrathful Vestis");
+                    core.EnsureAccept(2740);
+                    core.GetMapItem(1695, 1, "deathpits");
+                    core.HuntMonster("deathpits", "Wrathful Vestis", "Vestis Defeated", 1, log: false);
+                    core.EnsureComplete(2740);
                 },
                 ClassType.Solo
             ),
-            new(2792, "venomvaults", "*", () => Story.MapItemQuest(2792, "venomvaults", 1724)),
+            new(2792, "venomvaults", "*", () => Story.MapItemQuest(2792, "venomvaults", 1724), isCombat: false),
             new(2793, "venomvaults", "Chaonslaught Warrior", () => Story.KillQuest(2793, "venomvaults", "Chaonslaught Warrior")),
-            new(2794, "venomvaults", "*", () => Story.MapItemQuest(2794, "venomvaults", 1725)),
-            new(2796, "venomvaults", "*", () => Story.MapItemQuest(2796, "venomvaults", 1726)),
-            new(2797, "venomvaults", "Chaonslaught Caster", () => Story.KillQuest(2797, "venomvaults", "Chaonslaught Caster")),
-            new(2798, "venomvaults", "*", () => Story.MapItemQuest(2798, "venomvaults", 1727, 5)),
+            new(2794, "venomvaults", "*", () => Story.MapItemQuest(2794, "venomvaults", 1725), isCombat: false),
+            new(2796, "venomvaults", "*", () => Story.MapItemQuest(2796, "venomvaults", 1726), isCombat: false),
+            new(
+                2798,
+                "venomvaults",
+                "Chaonslaught Caster",
+                () =>
+                {
+                    Story.KillQuest(2797, "venomvaults", "Chaonslaught Caster");
+                    Story.MapItemQuest(2798, "venomvaults", 1727, 5);
+                }
+            ),
             new(2799, "venomvaults", "Chaonslaught Caster", () => Story.KillQuest(2799, "venomvaults", "Chaonslaught Caster")),
             new(2800, "venomvaults", "Chaonslaught Warrior", () => Story.KillQuest(2800, "venomvaults", "Chaonslaught Warrior")),
             new(2801, "venomvaults", "Chaonslaught Caster", () => Story.KillQuest(2801, "venomvaults", "Chaonslaught Caster")),
-            new(2802, "venomvaults", "*", () => Story.MapItemQuest(2802, "venomvaults", 1728, 3)),
+            new(2802, "venomvaults", "*", () => Story.MapItemQuest(2802, "venomvaults", 1728, 3), isCombat: false),
             new(2803, "venomvaults", "Chaonslaught Caster", () => Story.KillQuest(2803, "venomvaults", "Chaonslaught Caster")),
             new(2804, "venomvaults", "Manticore", () => Story.KillQuest(2804, "venomvaults", "Manticore"), ClassType.Solo),
-            new(2805, "stormtemple", "*", () => Story.MapItemQuest(2805, "stormtemple", 1729, 4)),
+            new(
+                2805,
+                "stormtemple",
+                "*",
+                () =>
+                {
+                    core.EnsureAccept(2805);
+                    core.GetMapItem(1729, 4, "stormtemple");
+                    core.EnsureComplete(2805);
+                },
+                isCombat: false
+            ),
             new(
                 2806,
                 "stormtemple",
@@ -8535,11 +8809,11 @@ public class ArmyFarmerJoeDoAll
             ),
             new(2807, "stormtemple", "Chaonslaught Caster", () => Story.KillQuest(2807, "stormtemple", "Chaonslaught Caster")),
             new(2808, "stormtemple", "Chaonslaught Caster", () => Story.KillQuest(2808, "stormtemple", "Chaonslaught Caster")),
-            new(2809, "stormtemple", "*", () => Story.MapItemQuest(2809, "stormtemple", 1730, 3)),
+            new(2809, "stormtemple", "*", () => Story.MapItemQuest(2809, "stormtemple", 1730, 3), isCombat: false),
             new(2810, "stormtemple", "Chaonslaught Caster", () => Story.KillQuest(2810, "stormtemple", "Chaonslaught Caster")),
-            new(2811, "stormtemple", "*", () => Story.MapItemQuest(2811, "stormtemple", 1731)),
+            new(2811, "stormtemple", "*", () => Story.MapItemQuest(2811, "stormtemple", 1731), isCombat: false),
             new(2812, "stormtemple", "Chaonslaught Cavalry", () => Story.KillQuest(2812, "stormtemple", "Chaonslaught Cavalry")),
-            new(2813, "stormtemple", "*", () => Story.MapItemQuest(2813, "stormtemple", 1732)),
+            new(2813, "stormtemple", "*", () => Story.MapItemQuest(2813, "stormtemple", 1732), isCombat: false),
             new(
                 2814,
                 "stormtemple",
@@ -8549,7 +8823,7 @@ public class ArmyFarmerJoeDoAll
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_LIONFANG", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_LIONFANG", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCXiang()
@@ -8557,16 +8831,16 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         bool IsDone() => core.isCompletedBefore(3189, log: false);
 
-        var preBossSteps = new CoordinatedStoryStep[]
+        var pre3184Steps = new CoordinatedStoryStep[]
         {
-            new(2909, "battleoff", "*", () => Story.MapItemQuest(2909, "battleoff", 1779)),
-            new(2910, "battleoff", "*", () => Story.MapItemQuest(2910, "battleoff", 1780, 8)),
+            new(2909, "battleoff", "*", () => Story.MapItemQuest(2909, "battleoff", 1779), isCombat: false),
+            new(2910, "battleoff", "*", () => Story.MapItemQuest(2910, "battleoff", 1780, 8), isCombat: false),
             new(2911, "battleoff", "Evil Moglin", () => Story.KillQuest(2911, "battleoff", "Evil Moglin")),
             new(2912, "battleoff", "Evil Moglin", () => Story.KillQuest(2912, "battleoff", "Evil Moglin")),
             new(2913, "brightfall", "Undead Minion", () => Story.KillQuest(2913, "brightfall", "Undead Minion")),
             new(2914, "brightfall", "Undead Mage", () => Story.KillQuest(2914, "brightfall", "Undead Mage")),
-            new(2915, "brightfall", "*", () => Story.MapItemQuest(2915, "brightfall", 1781, 6)),
-            new(2916, "brightfall", "*", () => Story.MapItemQuest(2916, "brightfall", 1782, 8)),
+            new(2915, "brightfall", "*", () => Story.MapItemQuest(2915, "brightfall", 1781, 6), isCombat: false),
+            new(2916, "brightfall", "*", () => Story.MapItemQuest(2916, "brightfall", 1782, 8), isCombat: false),
             new(2917, "brightfall", "Painadin Overlord", () => Story.KillQuest(2917, "brightfall", "Painadin Overlord"), ClassType.Solo),
             new(
                 2918,
@@ -8576,21 +8850,22 @@ public class ArmyFarmerJoeDoAll
                 {
                     core.Join("overworld");
                     Story.ChainQuest(2918);
-                }
+                },
+                isCombat: false
             ),
             new(2919, "overworld", "Undead Minion", () => Story.KillQuest(2919, "overworld", "Undead Minion")),
             new(2920, "overworld", "Undead Minion", () => Story.KillQuest(2920, "overworld", "Undead Minion")),
             new(2921, "overworld", "Undead Minion", () => Story.KillQuest(2921, "overworld", "Undead Minion")),
             new(2922, "overworld", "Undead Mage", () => Story.KillQuest(2922, "overworld", "Undead Mage")),
-            new(2923, "overworld", "*", () => Story.MapItemQuest(2923, "overworld", 1800, 6)),
+            new(2923, "overworld", "*", () => Story.MapItemQuest(2923, "overworld", 1800, 6), isCombat: false),
             new(2924, "overworld", "Undead Bruiser", () => Story.KillQuest(2924, "overworld", "Undead Bruiser")),
             new(2925, "overworld", "Undead Bruiser", () => Story.KillQuest(2925, "overworld", "Undead Bruiser")),
             new(2926, "overworld", "Undead Minion", () => Story.KillQuest(2926, "overworld", "Undead Minion")),
-            new(2927, "overworld", "*", () => Story.MapItemQuest(2927, "overworld", 1801, 8)),
+            new(2927, "overworld", "*", () => Story.MapItemQuest(2927, "overworld", 1801, 8), isCombat: false),
             new(2928, "overworld", "Undead Minion", () => Story.KillQuest(2928, "overworld", "Undead Minion")),
             new(2929, "overworld", "Undead Minion", () => Story.KillQuest(2929, "overworld", "Undead Minion")),
             new(2930, "overworld", "Undead Minion", () => Story.KillQuest(2930, "overworld", "Undead Minion")),
-            new(2931, "overworld", "*", () => Story.MapItemQuest(2931, "overworld", 1802, 10)),
+            new(2931, "overworld", "*", () => Story.MapItemQuest(2931, "overworld", 1802, 10), isCombat: false),
             new(2932, "overworld", "Undead Artix", () => Story.KillQuest(2932, "overworld", "Undead Artix"), ClassType.Solo),
             new(3166, "reddeath", "Fire Leech", () => Story.KillQuest(3166, "reddeath", "Fire Leech")),
             new(
@@ -8599,98 +8874,172 @@ public class ArmyFarmerJoeDoAll
                 "RedDeath Moglin",
                 () =>
                 {
-                    Story.MapItemQuest(3167, "reddeath", new[] { 2178, 2179 });
-                    Story.KillQuest(3167, "reddeath", "RedDeath Moglin");
+                    core.EnsureAccept(3167);
+                    core.GetMapItems(new[] { (2178, 1), (2179, 1) }, "reddeath");
+                    core.HuntMonster("reddeath", "RedDeath Moglin", "Boneweed", 5, log: false);
+                    core.EnsureComplete(3167);
                 }
             ),
-            new(3168, "reddeath", "*", () => Story.MapItemQuest(3168, "reddeath", 2180)),
+            new(3168, "reddeath", "*", () => Story.MapItemQuest(3168, "reddeath", 2180), isCombat: false),
             new(3169, "reddeath", "Fire Leech", () => Story.KillQuest(3169, "reddeath", "Fire Leech")),
             new(3170, "reddeath", "Grim Widow", () => Story.KillQuest(3170, "reddeath", "Grim Widow")),
             new(3171, "reddeath", "Swamp Wraith", () => Story.KillQuest(3171, "reddeath", "Swamp Wraith")),
             new(3172, "reddeath", "Swamp Wraith", () => Story.KillQuest(3172, "reddeath", "Swamp Wraith")),
-            new(3183, "battleontown", "*", () => Story.MapItemQuest(3183, "battleontown", 2203)),
-            new(
-                3184,
-                "earthstorm",
+            new(3183, "battleontown", "*", () => Story.MapItemQuest(3183, "battleontown", 2203), isCombat: false),
+        };
+
+        if (!RunCoordinatedStoryChain("STEP3A_LOC_XIANG", pre3184Steps, isEnabled: () => !IsDone()))
+            return false;
+
+        if (!IsDone())
+            core.EnsureLoad(3184, 3185, 3186, 3187, 3188, 3189);
+
+        // 3184-3186 are repeatable drop-reward quests (no story slot) feeding 3187 (Ward Off the Beast), which unlocks 3188
+        bool Is3187Done() =>
+            IsDone()
+            || core.isCompletedBefore(3188, log: false)
+            || Bot.Quests.IsUnlocked(3188);
+
+        if (!Is3187Done())
+        {
+            core.AddDrop("Perfect Prism", "Unchaorrupted Sample", "Harpy Feather", "Shriekward Potion");
+            UnbankIfOwned("Perfect Prism", "Unchaorrupted Sample", "Harpy Feather");
+        }
+
+        if (
+            !RunCoordinatedCombatStep(
+                "STEP3A_LOC_XIANG_3184",
+                () => Is3187Done() || core.CheckInventory("Perfect Prism"),
+                () => Is3187Done() || core.CheckInventory("Perfect Prism"),
                 "Shard Spinner",
+                ClassType.Farm,
                 () =>
                 {
-                    if (!core.CheckInventory("Shriekward Potion"))
+                    core.AddDrop("Perfect Prism");
+                    core.EnsureAccept(3187);
+                    core.RegisterQuests(3184);
+                    try
                     {
-                        core.EnsureAccept(3184);
-                        core.HuntMonster("earthstorm", "Shard Spinner", "Perfect Prism", log: false);
-                        core.EnsureComplete(3184);
+                        while (!Bot.ShouldExit && !core.CheckInventory("Perfect Prism"))
+                        {
+                            core.HuntMonster("earthstorm", "Shard Spinner", "Reflective Fragment", 5, log: false);
+                            Bot.Wait.ForPickup("Perfect Prism");
+                        }
                     }
-                }
-            ),
-            new(
-                3185,
-                "bloodtuskwar",
+                    finally
+                    {
+                        core.CancelRegisteredQuests();
+                    }
+                },
+                softRetryLimit: 0,
+                targetMap: "earthstorm"
+            )
+            || !RunCoordinatedCombatStep(
+                "STEP3A_LOC_XIANG_3185",
+                () => Is3187Done() || core.CheckInventory("Unchaorrupted Sample"),
+                () => Is3187Done() || core.CheckInventory("Unchaorrupted Sample"),
                 "Chaotic Horcboar",
+                ClassType.Farm,
                 () =>
                 {
-                    if (!core.CheckInventory("Shriekward Potion"))
+                    core.AddDrop("Unchaorrupted Sample");
+                    core.EnsureAccept(3187);
+                    core.RegisterQuests(3185);
+                    try
                     {
-                        core.EnsureAccept(3185);
-                        core.HuntMonster("bloodtuskwar", "Chaotic Horcboar", "Unchaorrupted Sample", log: false);
-                        core.EnsureComplete(3185);
+                        while (!Bot.ShouldExit && !core.CheckInventory("Unchaorrupted Sample"))
+                        {
+                            core.HuntMonster("bloodtuskwar", "Chaotic Horcboar", "Vials of Blood", 5, log: false);
+                            Bot.Wait.ForPickup("Unchaorrupted Sample");
+                        }
                     }
-                }
-            ),
-            new(
-                3186,
-                "bloodtuskwar",
+                    finally
+                    {
+                        core.CancelRegisteredQuests();
+                    }
+                },
+                softRetryLimit: 0,
+                targetMap: "bloodtuskwar"
+            )
+            || !RunCoordinatedCombatStep(
+                "STEP3A_LOC_XIANG_3186",
+                () => Is3187Done() || core.CheckInventory("Harpy Feather"),
+                () => Is3187Done() || core.CheckInventory("Harpy Feather"),
                 "Chaos Tigriff",
+                ClassType.Farm,
                 () =>
                 {
-                    if (!core.CheckInventory("Shriekward Potion"))
+                    core.AddDrop("Harpy Feather");
+                    core.EnsureAccept(3187);
+                    core.RegisterQuests(3186);
+                    try
                     {
-                        core.EnsureAccept(3186);
-                        core.HuntMonster("bloodtuskwar", "Chaos Tigriff", "Harpy Feather", log: false);
-                        core.EnsureComplete(3186);
+                        while (!Bot.ShouldExit && !core.CheckInventory("Harpy Feather"))
+                        {
+                            core.HuntMonster("bloodtuskwar", "Chaos Tigriff", "Feathers", 5, log: false);
+                            Bot.Wait.ForPickup("Harpy Feather");
+                        }
                     }
-                }
-            ),
-            new(
-                3187,
-                "mirrorportal",
-                "*",
+                    finally
+                    {
+                        core.CancelRegisteredQuests();
+                    }
+                },
+                softRetryLimit: 0,
+                targetMap: "bloodtuskwar"
+            )
+            || !RunCoordinatedTurnInStep(
+                "STEP3A_LOC_XIANG_3187",
+                Is3187Done,
+                Is3187Done,
                 () =>
                 {
-                    if (!core.CheckInventory("Shriekward Potion"))
-                    {
-                        core.EnsureAccept(3187);
-                        core.Join("mirrorportal");
-                        core.EnsureComplete(3187);
-                        Bot.Wait.ForPickup("Shriekward Potion");
+                    core.AddDrop("Shriekward Potion");
+                    core.EnsureAccept(3187);
+                    core.Join("mirrorportal");
+                    Bot.Wait.ForMapLoad("mirrorportal");
+                    core.EnsureComplete(3187);
+                    Bot.Wait.ForPickup("Shriekward Potion");
+                    if (core.CheckInventory("Shriekward Potion"))
                         core.SellItem("Shriekward Potion", all: true);
-                    }
+                    core.Join("whitemap");
+                    core.Join("mirrorportal");
                 }
-            ),
+            )
+        )
+            return false;
+
+        var harpySteps = new CoordinatedStoryStep[]
+        {
             new(
                 3188,
                 "mirrorportal",
                 "Chaos Harpy",
                 () =>
                 {
+                    core.Join("whitemap");
+                    core.Join("mirrorportal");
                     core.EnsureAccept(3188);
                     core.BuyItem("mirrorportal", 774, "Shriekward Potion", 99);
-                    core.Equip("Shriekward Potion");
                     core.KillMonster("mirrorportal", "r3", "Left", "Chaos Harpy", "Chaos Harpy Defeated", log: false);
-                    core.EnsureComplete(3188);
                     core.JumpWait();
-                    if (Bot.Inventory.IsEquipped(20771))
+                    core.EnsureComplete(3188);
+                    if (core.CheckInventory("Shriekward Potion"))
                     {
-                        core.SendPackets($"%xt%zm%unequipItem%{Bot.Map.RoomID}%{20771}%");
-                        core.Sleep();
+                        core.JumpWait();
+                        if (Bot.Inventory.IsEquipped(20771))
+                        {
+                            core.SendPackets($"%xt%zm%unequipItem%{Bot.Map.RoomID}%{20771}%");
+                            core.Sleep();
+                        }
+                        core.SellItem("Shriekward Potion", all: true);
                     }
-                    core.SellItem("Shriekward Potion", all: true);
                 },
                 ClassType.Solo
             ),
         };
 
-        if (!RunCoordinatedStoryChain("STEP3A_LOC_XIANG", preBossSteps, IsDone))
+        if (!RunCoordinatedStoryChain("STEP3A_LOC_XIANG", harpySteps, isEnabled: () => !IsDone()))
             return false;
 
         // 3189: Chaos Lord Xiang (equip Healer / Dragon of Time across the whole army)
@@ -8703,9 +9052,11 @@ public class ArmyFarmerJoeDoAll
                     if (IsDone())
                         return;
 
+                    LeaveCombatRoomForEquipmentChange();
                     Adv.GearStore();
                     core.EnsureAccept(3189);
                     core.KillXiang("Chaos Lord Xiang Defeated", isTemp: true);
+                    core.JumpWait();
                     core.EnsureComplete(3189);
                     Adv.GearStore(true);
                 },
@@ -8716,7 +9067,10 @@ public class ArmyFarmerJoeDoAll
                         : HasClassInInventory("Healer (Rare)") ? "Healer (Rare)"
                         : "Healer";
                     if (HasClassInInventory(healerClass) && Bot.Player.CurrentClass?.Name != healerClass)
+                    {
+                        LeaveCombatRoomForEquipmentChange();
                         core.Equip(healerClass);
+                    }
 
                     Army.CoordinateFollowAndCombat(
                         targetPlayerName,
@@ -8746,7 +9100,13 @@ public class ArmyFarmerJoeDoAll
                 3079,
                 "archives",
                 "*",
-                () => Story.KillQuest(3079, "archives", new[] { "Chaos Bandit", "Camouflaged Sp-eye" })
+                () =>
+                {
+                    core.EnsureAccept(3079);
+                    core.HuntMonster("archives", "Chaos Bandit", "Clump of Tentacles", 3, log: false);
+                    core.HuntMonster("archives", "Camouflaged Sp-eye", "Chaorrupted Humor", 3, log: false);
+                    core.EnsureComplete(3079);
+                }
             ),
             new(
                 3080,
@@ -8754,13 +9114,26 @@ public class ArmyFarmerJoeDoAll
                 "Chaos Bandit",
                 () =>
                 {
-                    Story.MapItemQuest(3080, "archives", 1937);
-                    Story.KillQuest(3080, "archives", "Chaos Bandit");
+                    core.EnsureAccept(3080);
+                    core.GetMapItem(1937, 1, "archives");
+                    core.HuntMonster("archives", "Chaos Bandit", "Reeking Clue", 6, log: false);
+                    core.EnsureComplete(3080);
                 }
             ),
             new(3081, "archives", "Chaos Rat", () => Story.KillQuest(3081, "archives", "Chaos Rat")),
             new(3082, "archives", "Chaos Spider", () => Story.KillQuest(3082, "archives", "Chaos Spider")),
-            new(3083, "archives", "*", () => Story.KillQuest(3083, "archives", new[] { "Chaos Rat", "Chaos Spider" })),
+            new(
+                3083,
+                "archives",
+                "*",
+                () =>
+                {
+                    core.EnsureAccept(3083);
+                    core.HuntMonster("archives", "Chaos Rat", "Intact Rat Brain", 5, log: false);
+                    core.HuntMonster("archives", "Chaos Spider", "Vial of Ichor", 5, log: false);
+                    core.EnsureComplete(3083);
+                }
+            ),
             new(3084, "archives", "Sludgelord", () => Story.KillQuest(3084, "archives", "Sludgelord"), ClassType.Solo),
             new(3094, "armory", "Chaorrupted Prisoner", () => Story.KillQuest(3094, "armory", "Chaorrupted Prisoner")),
             new(
@@ -8769,15 +9142,17 @@ public class ArmyFarmerJoeDoAll
                 "Chaorrupted Prisoner",
                 () =>
                 {
-                    Story.MapItemQuest(3095, "armory", 1956, 4);
-                    Story.KillQuest(3095, "armory", "Chaorrupted Prisoner");
+                    core.EnsureAccept(3095);
+                    core.GetMapItem(1956, 4, "armory");
+                    core.HuntMonster("armory", "Chaorrupted Prisoner", "Weapon Recovered", 4, log: false);
+                    core.EnsureComplete(3095);
                 }
             ),
             new(3096, "armory", "Chaos Drifter", () => Story.KillQuest(3096, "armory", "Chaos Drifter")),
             new(3089, "armory", "Chaorrupted Prisoner", () => Story.KillQuest(3089, "armory", "Chaorrupted Prisoner")),
             new(3090, "armory", "Chaos Mage", () => Story.KillQuest(3090, "armory", "Chaos Mage")),
             new(3091, "armory", "Chaos Mage", () => Story.KillQuest(3091, "armory", "Chaos Mage")),
-            new(3092, "armory", "*", () => Story.MapItemQuest(3092, "armory", 1957)),
+            new(3092, "armory", "*", () => Story.MapItemQuest(3092, "armory", 1957), isCombat: false),
             new(3093, "armory", "Chaos General", () => Story.KillQuest(3093, "armory", "Chaos General"), ClassType.Solo),
             new(3120, "ceremony", "Chaos Invader", () => Story.KillQuest(3120, "ceremony", "Chaos Invader")),
             new(
@@ -8786,30 +9161,40 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
-                    Story.MapItemQuest(3121, "yulgar", new[] { 2108, 2109, 2110 });
-                    Story.MapItemQuest(3121, "archives", 2111);
-                    Story.MapItemQuest(3121, "swordhaven", new[] { 2112, 2113, 2114, 2115 });
-                }
+                    core.EnsureAccept(3121);
+                    core.GetMapItem(2108, 1, "yulgar");
+                    core.GetMapItem(2109, 1, "yulgar");
+                    core.GetMapItem(2110, 1, "yulgar");
+                    core.GetMapItem(2111, 1, "archives");
+                    core.GetMapItem(2112, 1, "swordhaven");
+                    core.GetMapItem(2113, 1, "swordhaven");
+                    core.GetMapItem(2114, 1, "swordhaven");
+                    core.GetMapItem(2115, 1, "swordhaven");
+                    core.EnsureComplete(3121);
+                },
+                isCombat: false
             ),
-            new(3122, "swordhaven", "*", () => Story.MapItemQuest(3122, "swordhaven", 2116, 8)),
+            new(3122, "swordhaven", "*", () => Story.MapItemQuest(3122, "swordhaven", 2116, 8), isCombat: false),
             new(3123, "mafic", "Living Fire", () => Story.KillQuest(3123, "mafic", "Living Fire")),
             new(3124, "ceremony", "Chaos Invader", () => Story.KillQuest(3124, "ceremony", "Chaos Invader")),
-            new(3125, "ceremony", "*", () => Story.MapItemQuest(3125, "ceremony", 2118, 6)),
+            new(3125, "ceremony", "*", () => Story.MapItemQuest(3125, "ceremony", 2118, 6), isCombat: false),
             new(
                 3126,
                 "ceremony",
                 "Chaos Invader",
                 () =>
                 {
-                    Story.MapItemQuest(3126, "ceremony", 2119);
-                    Story.KillQuest(3126, "ceremony", "Chaos Invader");
+                    core.EnsureAccept(3126);
+                    core.GetMapItem(2119, 1, "ceremony");
+                    core.HuntMonster("ceremony", "Chaos Invader", "Invaders Defeated", 8, log: false);
+                    core.EnsureComplete(3126);
                 }
             ),
             new(3127, "ceremony", "Chaos Justicar", () => Story.KillQuest(3127, "ceremony", "Chaos Justicar"), ClassType.Solo),
-            new(3133, "chaosaltar", "*", () => Story.MapItemQuest(3133, "chaosaltar", 2127, 12)),
+            new(3133, "chaosaltar", "*", () => Story.MapItemQuest(3133, "chaosaltar", 2127, 12), isCombat: false),
             new(3134, "chaosaltar", "Princess Thrall", () => Story.KillQuest(3134, "chaosaltar", "Princess Thrall"), ClassType.Solo),
             new(3158, "castleroof", "Chaos Dragon", () => Story.KillQuest(3158, "castleroof", "Chaos Dragon"), ClassType.Solo),
-            new(3159, "swordhavenfalls", "*", () => Story.MapItemQuest(3159, "swordhavenfalls", 2158)),
+            new(3159, "swordhavenfalls", "*", () => Story.MapItemQuest(3159, "swordhavenfalls", 2158), isCombat: false),
             new(
                 3160,
                 "swordhavenfalls",
@@ -8819,7 +9204,7 @@ public class ArmyFarmerJoeDoAll
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_ALTEON", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_ALTEON", steps, isEnabled: () => !IsDone());
     }
 
     private bool Run13LoCHero()
@@ -8827,26 +9212,37 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         bool IsDone() => core.isCompletedBefore(3799, log: false) && core.isCompletedBefore(3881, log: false);
 
+        void ResetShadowAttack()
+        {
+            core.JumpWait();
+            Bot.Sleep(2500);
+            core.Join("whitemap-100000");
+            Bot.Sleep(2500);
+            core.Join("shadowattack");
+            Bot.Wait.ForMapLoad("shadowattack");
+            Bot.Sleep(2500);
+        }
+
         var steps = new CoordinatedStoryStep[]
         {
-            new(3578, "", "*", () => Story.ChainQuest(3578)),
-            new(3579, "", "*", () => Story.ChainQuest(3579)),
-            new(3580, "", "*", () => Story.ChainQuest(3580)),
-            new(3581, "", "*", () => Story.ChainQuest(3581)),
-            new(3582, "", "*", () => Story.ChainQuest(3582)),
-            new(3583, "", "*", () => Story.ChainQuest(3583)),
-            new(3584, "", "*", () => Story.ChainQuest(3584)),
-            new(3585, "", "*", () => Story.ChainQuest(3585)),
-            new(3586, "", "*", () => Story.ChainQuest(3586)),
-            new(3587, "", "*", () => Story.ChainQuest(3587)),
-            new(3588, "", "*", () => Story.ChainQuest(3588)),
-            new(3589, "", "*", () => Story.ChainQuest(3589)),
-            new(3590, "", "*", () => Story.ChainQuest(3590)),
-            new(3591, "", "*", () => Story.ChainQuest(3591)),
-            new(3764, "", "*", () => Story.ChainQuest(3764)),
-            new(3765, "mountdoomskull", "*", () => Story.MapItemQuest(3765, "mountdoomskull", 2726)),
-            new(3766, "", "*", () => Story.ChainQuest(3766)),
-            new(3779, "", "*", () => Story.ChainQuest(3779)),
+            new(3578, "", "*", () => Story.ChainQuest(3578), isCombat: false),
+            new(3579, "", "*", () => Story.ChainQuest(3579), isCombat: false),
+            new(3580, "", "*", () => Story.ChainQuest(3580), isCombat: false),
+            new(3581, "", "*", () => Story.ChainQuest(3581), isCombat: false),
+            new(3582, "", "*", () => Story.ChainQuest(3582), isCombat: false),
+            new(3583, "", "*", () => Story.ChainQuest(3583), isCombat: false),
+            new(3584, "", "*", () => Story.ChainQuest(3584), isCombat: false),
+            new(3585, "", "*", () => Story.ChainQuest(3585), isCombat: false),
+            new(3586, "", "*", () => Story.ChainQuest(3586), isCombat: false),
+            new(3587, "", "*", () => Story.ChainQuest(3587), isCombat: false),
+            new(3588, "", "*", () => Story.ChainQuest(3588), isCombat: false),
+            new(3589, "", "*", () => Story.ChainQuest(3589), isCombat: false),
+            new(3590, "", "*", () => Story.ChainQuest(3590), isCombat: false),
+            new(3591, "", "*", () => Story.ChainQuest(3591), isCombat: false),
+            new(3764, "", "*", () => Story.ChainQuest(3764), isCombat: false),
+            new(3765, "mountdoomskull", "*", () => Story.MapItemQuest(3765, "mountdoomskull", 2726), isCombat: false),
+            new(3766, "", "*", () => Story.ChainQuest(3766), isCombat: false),
+            new(3779, "", "*", () => Story.ChainQuest(3779), isCombat: false),
             new(3781, "newfinale", "Alliance Virago", () => Story.KillQuest(3781, "newfinale", "Alliance Virago")),
             new(3788, "newfinale", "Chaos Challenger", () => Story.KillQuest(3788, "newfinale", "Chaos Challenger"), ClassType.Solo),
             new(3783, "newfinale", "Alliance Virago", () => Story.KillQuest(3783, "newfinale", "Alliance Virago")),
@@ -8856,7 +9252,8 @@ public class ArmyFarmerJoeDoAll
                 "Chaorrupted Lycan Hunter",
                 () =>
                 {
-                    Story.KillQuest(3789, "newfinale", "Chaorrupted Lycan Hunter");
+                    core.EnsureAccept(3789);
+                    core.HuntMonster("newfinale", "Chaorrupted Lycan Hunter", "Chaorrupted Lycan Hunter Defeated", log: false);
                     core.EnsureComplete(3789);
                 },
                 ClassType.Solo
@@ -8864,20 +9261,20 @@ public class ArmyFarmerJoeDoAll
             new(3785, "newfinale", "Alliance Virago", () => Story.KillQuest(3785, "newfinale", "Alliance Virago")),
             new(3790, "newfinale", "Memory of Vampires", () => Story.KillQuest(3790, "newfinale", "Memory of Vampires"), ClassType.Solo),
             new(3787, "newfinale", "Alliance Virago", () => Story.KillQuest(3787, "newfinale", "Alliance Virago")),
-            new(3608, "", "*", () => Story.ChainQuest(3608)),
-            new(3609, "", "*", () => Story.ChainQuest(3609)),
-            new(3610, "", "*", () => Story.ChainQuest(3610)),
-            new(3611, "", "*", () => Story.ChainQuest(3611)),
-            new(3612, "", "*", () => Story.ChainQuest(3612)),
-            new(3613, "", "*", () => Story.ChainQuest(3613)),
-            new(3614, "", "*", () => Story.ChainQuest(3614)),
-            new(3615, "", "*", () => Story.ChainQuest(3615)),
-            new(3616, "", "*", () => Story.ChainQuest(3616)),
-            new(3617, "", "*", () => Story.ChainQuest(3617)),
-            new(3618, "", "*", () => Story.ChainQuest(3618)),
-            new(3619, "", "*", () => Story.ChainQuest(3619)),
-            new(3791, "", "*", () => Story.ChainQuest(3791)),
-            new(3792, "", "*", () => Story.ChainQuest(3792)),
+            new(3608, "", "*", () => Story.ChainQuest(3608), isCombat: false),
+            new(3618, "", "*", () => Story.ChainQuest(3618), isCombat: false),
+            new(3609, "", "*", () => Story.ChainQuest(3609), isCombat: false),
+            new(3610, "", "*", () => Story.ChainQuest(3610), isCombat: false),
+            new(3611, "", "*", () => Story.ChainQuest(3611), isCombat: false),
+            new(3612, "", "*", () => Story.ChainQuest(3612), isCombat: false),
+            new(3613, "", "*", () => Story.ChainQuest(3613), isCombat: false),
+            new(3614, "", "*", () => Story.ChainQuest(3614), isCombat: false),
+            new(3615, "", "*", () => Story.ChainQuest(3615), isCombat: false),
+            new(3616, "", "*", () => Story.ChainQuest(3616), isCombat: false),
+            new(3617, "", "*", () => Story.ChainQuest(3617), isCombat: false),
+            new(3619, "", "*", () => Story.ChainQuest(3619), isCombat: false),
+            new(3791, "", "*", () => Story.ChainQuest(3791), isCombat: false),
+            new(3792, "", "*", () => Story.ChainQuest(3792), isCombat: false),
             new(
                 3794,
                 "newfinale",
@@ -8889,23 +9286,24 @@ public class ArmyFarmerJoeDoAll
                     core.SendPackets("%xt%zm%setAchievement%15075%ia1%20%1%");
                 }
             ),
-            new(3795, "drakathfight", "*", () => Story.MapItemQuest(3795, "drakathfight", 2894)),
+            new(3795, "drakathfight", "*", () => Story.MapItemQuest(3795, "drakathfight", 2894), isCombat: false),
             new(3620, "shadowrise", "Darkness Elemental", () => Story.KillQuest(3620, "shadowrise", "Darkness Elemental")),
-            new(3796, "shadowrise", "*", () => Story.MapItemQuest(3796, "shadowrise", 2895)),
-            new(3797, "", "*", () => Story.ChainQuest(3797)),
+            new(3796, "shadowrise", "*", () => Story.MapItemQuest(3796, "shadowrise", 2895), isCombat: false),
+            new(3797, "", "*", () => Story.ChainQuest(3797), isCombat: false),
             new(
                 3798,
                 "shadowattack",
                 "*",
                 () =>
                 {
-                    if (!core.CheckInventory("Hunt for Death"))
-                    {
-                        core.AddDrop("Hunt for Death");
-                        Story.MapItemQuest(3798, "shadowattack", 2896);
-                        Bot.Wait.ForPickup("Hunt for Death");
-                    }
-                }
+                    ResetShadowAttack();
+                    core.EnsureAccept(3798);
+                    core.GetMapItem(2896, 1, "shadowattack");
+                    Bot.Wait.ForTrue(() => Bot.TempInv.Contains(25903) || Bot.TempInv.Contains("Hunt for Death"), 20);
+                    core.EnsureComplete(3798);
+                    Bot.Wait.ForQuestComplete(3798);
+                },
+                isCombat: false
             ),
             new(
                 3799,
@@ -8913,25 +9311,11 @@ public class ArmyFarmerJoeDoAll
                 "Death",
                 () =>
                 {
-                    if (!core.CheckInventory("You Beat Death?!"))
-                    {
-                        core.AddDrop("You Beat Death?!");
-                        Story.KillQuest(3799, "shadowattack", "Death");
-                        Bot.Wait.ForPickup("You Beat Death?!");
-                    }
-                },
-                ClassType.Solo
-            ),
-            new(
-                3875,
-                "confrontation",
-                "*",
-                () =>
-                {
-                    core.EnsureAccept(3875);
-                    core.Join("confrontation");
-                    Bot.Wait.ForMapLoad("confrontation");
-                    core.EnsureComplete(3875);
+                    ResetShadowAttack();
+                    core.EnsureAccept(3799);
+                    core.HuntMonster("shadowattack", "Death", "You Beat Death?!", log: false);
+                    core.JumpWait();
+                    core.EnsureComplete(3799);
                 },
                 ClassType.Solo
             ),
@@ -8941,6 +9325,11 @@ public class ArmyFarmerJoeDoAll
                 "*",
                 () =>
                 {
+                    core.EnsureAccept(3875);
+                    core.Join("confrontation");
+                    Bot.Wait.ForMapLoad("confrontation");
+                    core.EnsureComplete(3875);
+
                     core.EnsureAccept(3876);
                     core.KillMonster("finalbattle", "r1", "Left", 1, 26875, log: false);
                     core.EnsureComplete(3876);
@@ -8967,7 +9356,9 @@ public class ArmyFarmerJoeDoAll
                 {
                     core.EnsureAccept(3878);
                     core.KillMonster("finalbattle", "r9", "Left", 23, 26877, log: false);
+                    core.JumpWait();
                     core.EnsureComplete(3878);
+                    core.Join("whitemap");
                 },
                 ClassType.Solo
             ),
@@ -8980,7 +9371,9 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureAccept(3879);
                     core.Join("chaosrealm");
                     core.KillMonster("chaosrealm", "r24", "Left", "Alteon", "Chaos Lord Alteon Defeated", log: false);
+                    core.JumpWait();
                     core.EnsureComplete(3879);
+                    core.Join("whitemap");
                 },
                 ClassType.Solo
             ),
@@ -8992,8 +9385,16 @@ public class ArmyFarmerJoeDoAll
                 {
                     core.EnsureAccept(3880);
                     core.Join("chaoslord");
-                    core.KillMonster("chaoslord", "r2", "Left", "*", "13th Lord of Chaos Defeated", log: false);
+                    if (Bot.Player.Cell != "r2")
+                        core.Jump("r2", "Left");
+                    while (!Bot.ShouldExit && !Bot.TempInv.Contains("13th Lord of Chaos Defeated"))
+                    {
+                        Bot.Combat.Attack("*");
+                        core.Sleep();
+                    }
+                    core.JumpWait();
                     core.EnsureComplete(3880);
+                    core.Join("whitemap");
                 },
                 ClassType.Solo
             ),
@@ -9014,12 +9415,13 @@ public class ArmyFarmerJoeDoAll
                     }
                     core.JumpWait();
                     core.EnsureComplete(3881);
+                    core.Join("whitemap");
                 },
                 ClassType.Solo
             ),
         };
 
-        return RunCoordinatedStoryChain("STEP3A_LOC_HERO", steps, IsDone);
+        return RunCoordinatedStoryChain("STEP3A_LOC_HERO", steps, isEnabled: () => !IsDone());
     }
 
     private bool RunStep3AAdditionalClasses()
@@ -9504,7 +9906,7 @@ public class ArmyFarmerJoeDoAll
             ),
         };
 
-        if (!RunCoordinatedStoryChain("STEP3A_PRAXIS_DARKALLY", darkAllySteps, IsDarkAllyDone))
+        if (!RunCoordinatedStoryChain("STEP3A_PRAXIS_DARKALLY", darkAllySteps, isEnabled: () => !IsDarkAllyDone()))
             return false;
 
         if (
@@ -14581,14 +14983,20 @@ public class ArmyFarmerJoeDoAll
         return true;
     }
 
+    // Only marks the step done when liveDoneCheck confirms it. A failed turn-in is retried
+    // (optionally re-farming lost temp items first) and then fails loudly instead of
+    // letting the next quest in the chain spin forever on a locked prerequisite.
     private bool RunCoordinatedTurnInStep(
         string objectiveName,
         Func<bool> initialSkipCheck,
         Func<bool> liveDoneCheck,
-        Action work
+        Action work,
+        Action? refarmBeforeRetry = null
     )
     {
         bool done = initialSkipCheck();
+        bool softFail = IsOptionalObjective(objectiveName);
+        int attempts = 0;
         return RunCooperativeObjective(
             objectiveName,
             () => done || liveDoneCheck(),
@@ -14600,14 +15008,42 @@ public class ArmyFarmerJoeDoAll
                     return;
                 }
 
+                attempts++;
                 LeaveCombatRoomForEquipmentChange();
+                if (attempts > 1 && refarmBeforeRetry != null)
+                {
+                    CoreBots.Instance.Logger(
+                        $"Turn-in '{objectiveName}': previous attempt failed (temp items lost?). Re-farming before retry {attempts}."
+                    );
+                    refarmBeforeRetry();
+                    LeaveCombatRoomForEquipmentChange();
+                }
+
                 work();
-                done = true;
+                if (softFail || liveDoneCheck())
+                {
+                    done = true;
+                    return;
+                }
+
+                CoreBots.Instance.Logger(
+                    $"Turn-in '{objectiveName}': work finished but completion was NOT confirmed (attempt {attempts})."
+                );
             },
             (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-            maxWorkAttempts: 2
+            maxWorkAttempts: refarmBeforeRetry != null ? 3 : 2
         );
     }
+
+    // Dailies, weeklies, LoO daily chain and cosmetic FarmerJoe extras may be skipped after
+    // retries without breaking progression. Everything else must really complete.
+    private static bool IsOptionalObjective(string objectiveName) =>
+        objectiveName.Contains("_DAILY", StringComparison.OrdinalIgnoreCase)
+        || objectiveName.Contains("_WEEKLY", StringComparison.OrdinalIgnoreCase)
+        || objectiveName.Contains("WHEEL_OF_DOOM", StringComparison.OrdinalIgnoreCase)
+        || objectiveName.Contains("_LOO_", StringComparison.OrdinalIgnoreCase)
+        || objectiveName.Contains("DAGES_SCROLL", StringComparison.OrdinalIgnoreCase)
+        || objectiveName.StartsWith("FARMERJOE_", StringComparison.OrdinalIgnoreCase);
 
     private static readonly HashSet<string> AggressiveSpawnMaps = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -14621,6 +15057,10 @@ public class ArmyFarmerJoeDoAll
         "bloodmoon",
         "wanders",
         "zephyrus",
+        "junkyard",
+        "finalbattle",
+        "chaoslord",
+        "finalshowdown",
     };
 
     private readonly HashSet<string> _detectedAggressiveSpawnMaps = new(StringComparer.OrdinalIgnoreCase);
@@ -14733,10 +15173,19 @@ public class ArmyFarmerJoeDoAll
 
                     if (softRetryLimit > 0 && attempts >= softRetryLimit)
                     {
-                        CoreBots.Instance.Logger(
-                            $"Daily objective '{objectiveName}' could not finish after {attempts} attempts; skipping cleanly so the Army can continue."
-                        );
-                        done = true;
+                        if (IsOptionalObjective(objectiveName))
+                        {
+                            CoreBots.Instance.Logger(
+                                $"Optional objective '{objectiveName}' could not finish after {attempts} attempts; skipping cleanly so the Army can continue."
+                            );
+                            done = true;
+                        }
+                        else
+                        {
+                            CoreBots.Instance.Logger(
+                                $"Progression objective '{objectiveName}' still incomplete after {attempts} attempts; one last try before stopping the Army (not faking completion)."
+                            );
+                        }
                     }
                 },
                 (targetPlayerNumber, targetPlayerName) =>
@@ -14933,6 +15382,9 @@ public class ArmyFarmerJoeDoAll
                             if (IsDisabled() || core.isCompletedBefore(step.QuestId, log: false))
                                 return;
 
+                            if (!IsStoryStepUnlocked(step.QuestId, objName))
+                                return;
+
                             LeaveCombatRoomForEquipmentChange();
                             step.Work(core);
                         },
@@ -14956,6 +15408,9 @@ public class ArmyFarmerJoeDoAll
                         if (IsDisabled() || core.isCompletedBefore(step.QuestId, log: false))
                             return;
 
+                        if (!IsStoryStepUnlocked(step.QuestId, objName))
+                            return;
+
                         SetClass(step.Role);
                         if (!step.SkipMapVerify && !ShouldSkipMapVerification(step.Map) && !string.IsNullOrEmpty(step.Map))
                             core.Join(step.Map);
@@ -14968,6 +15423,7 @@ public class ArmyFarmerJoeDoAll
                             compositionType: step.Role,
                             targetMap: step.Map
                         ),
+                    maxWorkAttempts: 5,
                     prepareForCombat: () => PrepareCombatLoadoutForArmy(step.Role, step.SkipMapVerify ? null : step.Map),
                     targetMap: (step.SkipMapVerify || ShouldSkipMapVerification(step.Map)) ? null : step.Map
                 )
@@ -14976,6 +15432,49 @@ public class ArmyFarmerJoeDoAll
         }
 
         return !Bot.ShouldExit;
+    }
+
+    // CoreStory.QuestProgression spins forever (relogging every 5 tries) when a quest is locked.
+    // Detect the locked prerequisite up front, log exactly what is missing and let the
+    // objective fail cleanly instead.
+    private bool IsStoryStepUnlocked(int questId, string objectiveName)
+    {
+        if (questId <= 0 || Bot.Quests.IsUnlocked(questId))
+            return true;
+
+        // Slot values can lag right after the previous turn-in.
+        Bot.Sleep(1500);
+        if (Bot.Quests.IsUnlocked(questId))
+            return true;
+
+        try
+        {
+            Quest? quest = CoreBots.Instance.EnsureLoad(questId);
+            if (quest == null)
+                return true;
+
+            int current = quest.Slot > 0
+                ? Bot.Flash.CallGameFunction<int>("world.getQuestValue", quest.Slot)
+                : 0;
+            Quest? previous = Bot.Quests.Tree?
+                .Where(q => q.Slot == quest.Slot && q.Value < quest.Value)
+                .OrderByDescending(q => q.Value)
+                .FirstOrDefault();
+            string previousText = previous != null
+                ? $" Missing prerequisite: [{previous.ID}] \"{previous.Name}\"."
+                : string.Empty;
+
+            CoreBots.Instance.Logger(
+                $"Story step '{objectiveName}': quest [{questId}] \"{quest.Name}\" is LOCKED "
+                    + $"(slot {quest.Slot} = {current}, needs {quest.Value - 1}).{previousText} Skipping work so the objective fails cleanly."
+            );
+        }
+        catch
+        {
+            CoreBots.Instance.Logger($"Story step '{objectiveName}': quest [{questId}] is locked.");
+        }
+
+        return false;
     }
 
     private bool RunBracket30ApprovedDailiesAndWeeklies()
