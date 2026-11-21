@@ -682,7 +682,9 @@ public class CoreArmyFJ
     {
         "Lord of Order",
         "ArchPaladin",
+        "Paladin Chronomancer",
         "StoneCrusher",
+        "Infinity Titan",
         "Oracle",
         "Evolved Shaman",
         "Healer (Rare)",
@@ -1619,7 +1621,12 @@ public class CoreArmyFJ
             || className.Equals("Evolved Shaman", StringComparison.OrdinalIgnoreCase)
             || className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase)
             || className.Equals("ArchPaladin", StringComparison.OrdinalIgnoreCase)
-            || className.Equals("Lord of Order", StringComparison.OrdinalIgnoreCase);
+            || className.Equals("Lord of Order", StringComparison.OrdinalIgnoreCase)
+            || className.Equals("Infinity Titan", StringComparison.OrdinalIgnoreCase)
+            || className.Equals("Paladin Chronomancer", StringComparison.OrdinalIgnoreCase)
+            || className.Equals("Bard", StringComparison.OrdinalIgnoreCase)
+            || className.Equals("Troubador of Love", StringComparison.OrdinalIgnoreCase)
+            || className.Equals("Shaman", StringComparison.OrdinalIgnoreCase);
     }
 
     public void StartClassSkills(string? className = null)

@@ -8,7 +8,7 @@ tags: army, farmerjoe, progression, doall, dailies, DoT, AF, YnR, VDK, VHL, Forg
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreDailies.cs
-//cs_include Scripts/Army/CoreArmyFJ.cs
+//cs_include Scripts/Prototypes/ArmyFarmerJoe/CoreArmyFJ.cs
 //cs_include Scripts/Story/Tutorial.cs
 //cs_include Scripts/Story/Mazumi.cs
 //cs_include Scripts/Story/Lair.cs
@@ -30,6 +30,17 @@ tags: army, farmerjoe, progression, doall, dailies, DoT, AF, YnR, VDK, VHL, Forg
 //cs_include Scripts/Tools/BankAllItems.cs
 //cs_include Scripts/Other/Weapons/ChaorrupterUnlocked.cs
 //cs_include Scripts/Other/MergeShops/RemnantsofachampionMerge.cs
+//cs_include Scripts/Story/Glacera.cs
+//cs_include Scripts/Other/Classes/FrostSpiritReaver.cs
+//cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
+//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
+//cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
+//cs_include Scripts/Story/Lynaria/CoreLynaria.cs
+//cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Other/Classes/KingsEcho.cs
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -65,6 +76,8 @@ public class ArmyFarmerJoeDoAll
     private static readonly CelestialPast CelestialPastCore = new();
     private static readonly KathoolAdept KACore = new();
     private static readonly ScionofFlames SOFCore = new();
+    private static readonly FrostSpiritReaver FSRCore = new();
+    private static readonly KingsEcho KECore = new();
     private static readonly BankAllItems BankAllCore = new();
     private static readonly ChaorrupterUnlocked ChaorrupterCore = new();
     private static readonly RemnantsofachampionMerge ROACCore = new();
@@ -4582,7 +4595,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        // 2b. Buy Glacial Berserker in /icewindpass Shop 1339 (Seasonal Frostval shop; skips cleanly if out-of-season)
+        // 2b. Buy Glacial Berserker in /icewindpass Shop 1339 (permanent shop, no season check)
         bool gbBuyAttempted = false;
         if (
             !RunCooperativeObjective(
@@ -9654,40 +9667,76 @@ public class ArmyFarmerJoeDoAll
             core.Logger("Step 3A: Skipping Northlands Monk (/frozensoul is currently out of season).");
         }
 
-        // 3. Frost SpiritReaver (requires seasonal Frost Sigil + Kyanos merge items if not already owned)
-        bool HasFSR() => HasClassInInventory("Frost SpiritReaver");
+        // 3. Frost SpiritReaver (permanent; official FrostSpiritReaver.cs). Its Frost Sigil is bought with
+        // Cryomancer, so only accounts that own Cryomancer (or the Sigil) farm it; the rest help.
+        bool HasFSR() => core.CheckInventory("Frost SpiritReaver", 1, toInv: false);
         bool HasRank10FSR() => HasRank10Class("Frost SpiritReaver");
-        bool HasFSRMergeMaterials() =>
-            core.CheckInventory("Frost Sigil", toInv: false)
-            && core.CheckInventory("Envoy of Kyanos", toInv: false)
-            && core.CheckInventory("Favored of Kyanos", toInv: false)
-            && core.CheckInventory("Warrior of Kyanos", toInv: false)
-            && core.CheckInventory("Ice Diamond", 29, toInv: false);
-        bool CanFarmFSR() => HasFSR() || HasFSRMergeMaterials();
+        bool HasFrostSigilSource() =>
+            core.CheckInventory(25464, 1, toInv: false)
+            || core.CheckInventory(new[] { 27437, 27525 }, 1, any: true, toInv: false);
+        bool CanFarmFSR() => HasFSR() || HasFrostSigilSource();
+        int fsrAttempts = 0;
+        bool fsrGaveUp = false;
+        bool FSRDone() => HasFSR() || !HasFrostSigilSource() || fsrGaveUp;
 
         if (!Army.AllPlayersSatisfy("STEP3A_FSR_NONE", () => !CanFarmFSR()))
         {
-            if (
-                !RunCoordinatedTurnInStep(
-                    "STEP3A_FSR_BUY",
-                    () => HasFSR() || !HasFSRMergeMaterials(),
-                    () => HasFSR() || !HasFSRMergeMaterials(),
-                    () =>
-                    {
-                        if (HasFSR() || !HasFSRMergeMaterials())
-                            return;
-                        core.Unbank(
-                            "Frost Sigil",
-                            "Envoy of Kyanos",
-                            "Favored of Kyanos",
-                            "Warrior of Kyanos",
-                            "Ice Diamond"
-                        );
-                        Adv.BuyItem("icedungeon", 1948, "Frost SpiritReaver");
-                    }
+            ApplySubgroupRoomSettings(4);
+            try
+            {
+                if (
+                    !RunCooperativeObjective(
+                        "STEP3A_FSR_GET",
+                        FSRDone,
+                        () =>
+                        {
+                            if (FSRDone())
+                                return;
+
+                            ApplyCurrentArmyRoomSettings();
+                            PrepareCombatLoadoutForArmy(ClassType.Boss);
+                            if (!core.CheckInventory(25464, 1, toInv: false))
+                            {
+                                bool memberCryo = core.CheckInventory(27437, 1, toInv: false);
+                                core.Unbank(memberCryo ? 27437 : 27525);
+                                core.BuyItem(
+                                    "icedungeon",
+                                    memberCryo ? 2294 : 2295,
+                                    25464,
+                                    shopItemID: memberCryo ? 48001 : 48002
+                                );
+                            }
+                            FSRCore.GetFSR(rankUpClass: false);
+
+                            if (!HasFSR() && ++fsrAttempts >= 2)
+                            {
+                                core.Logger("Frost SpiritReaver: still missing after 2 attempts; skipping it for now.");
+                                fsrGaveUp = true;
+                            }
+                        },
+                        (targetPlayerNumber, targetPlayerName) =>
+                        {
+                            ApplyCurrentArmyRoomSettings();
+                            Army.CoordinateFollowAndCombat(
+                                targetPlayerName,
+                                "*",
+                                compositionType: ClassType.Boss,
+                                copyHelpedActions: true
+                            );
+                        },
+                        prepareForCombat: () =>
+                        {
+                            ApplyCurrentArmyRoomSettings();
+                            PrepareCombatLoadoutForArmy(ClassType.Boss);
+                        }
+                    )
                 )
-            )
-                return false;
+                    return false;
+            }
+            finally
+            {
+                ApplyArmyRoomSettings();
+            }
 
             if (
                 !RunCooperativeObjective(
@@ -9717,9 +9766,7 @@ public class ArmyFarmerJoeDoAll
         }
         else
         {
-            core.Logger(
-                "Step 3A: Skipping Frost SpiritReaver (missing seasonal Frost Sigil / Kyanos merge materials)."
-            );
+            core.Logger("Step 3A: Skipping Frost SpiritReaver (no account owns Cryomancer yet).");
         }
 
         _syncedClassType = ClassType.None;
@@ -10884,6 +10931,9 @@ public class ArmyFarmerJoeDoAll
         if (!RunStep4AElysium())
             return false;
 
+        if (!RunStep4AKingsEcho())
+            return false;
+
         EnsureBestStaticBoostGearEquipped();
         _lastSmartEnhancedClass = null;
         _syncedClassType = ClassType.None;
@@ -11133,6 +11183,73 @@ public class ArmyFarmerJoeDoAll
             },
             prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo)
         );
+    }
+
+    // King's Echo (official KingsEcho.cs, Lv 80+, farmable by anyone). Long chain, so it is optional:
+    // after 2 failed attempts the account skips it instead of stopping the Army.
+    private bool RunStep4AKingsEcho()
+    {
+        CoreBots core = CoreBots.Instance;
+        bool HasKE() => core.CheckInventory("King's Echo", 1, toInv: false);
+        int keAttempts = 0;
+        bool keGaveUp = false;
+        bool KEDone() => HasKE() || keGaveUp || Bot.Player.Level < 80;
+
+        if (!Army.AllPlayersSatisfy("STEP4A_KE_ALL_DONE", KEDone))
+        {
+            ApplySubgroupRoomSettings(4);
+            try
+            {
+                if (
+                    !RunCooperativeObjective(
+                        "STEP4A_KINGS_ECHO",
+                        KEDone,
+                        () =>
+                        {
+                            if (KEDone())
+                                return;
+
+                            ApplyCurrentArmyRoomSettings();
+                            PrepareCombatLoadoutForArmy(ClassType.Boss);
+                            KECore.GetKE(rankup: false);
+
+                            if (!HasKE() && ++keAttempts >= 2)
+                            {
+                                core.Logger("King's Echo: still missing after 2 attempts; skipping it for now.");
+                                keGaveUp = true;
+                            }
+                        },
+                        (targetPlayerNumber, targetPlayerName) =>
+                        {
+                            ApplyCurrentArmyRoomSettings();
+                            Army.CoordinateFollowAndCombat(
+                                targetPlayerName,
+                                "*",
+                                compositionType: ClassType.Boss,
+                                copyHelpedActions: true
+                            );
+                        },
+                        prepareForCombat: () =>
+                        {
+                            ApplyCurrentArmyRoomSettings();
+                            PrepareCombatLoadoutForArmy(ClassType.Boss);
+                        }
+                    )
+                )
+                    return false;
+            }
+            finally
+            {
+                ApplyArmyRoomSettings();
+            }
+        }
+        else if (!Army.SyncArmy("STEP4A_KINGS_ECHO_SKIP"))
+            return false;
+
+        if (HasKE())
+            RankUpClassForArmy("King's Echo");
+
+        return !Bot.ShouldExit;
     }
 
     private bool RunStep4AElysium()
@@ -13271,54 +13388,71 @@ public class ArmyFarmerJoeDoAll
     }
     #endregion Step 2C: Brackets 55, 60, and 65
 
-    #region SetClass (Party Role Composition & CBO Resolution - 100% Free-to-Play Classes Only)
-    // Required Players 1-4 form the Endgame Meta Core (Main DPS + StoneCrusher + ArchPaladin + Lord of Order).
-    // Optional Players 5-7 add non-overlapping debuffs, amplifiers, dodge DPS, and backup support.
+    #region SetClass (Party Role Composition & CBO Resolution)
+    // Roles follow the account's POSITION INSIDE ITS ROOM, not its player number, so every room
+    // keeps a working composition when a map cap splits the Army (7 -> 4+3, 3+2+2, ...).
+    //   Room seat 1: DPS | 2: StoneCrusher | 3: ArchPaladin | 4: Lord of Order
+    //   Seats 5-7 (all 7 together): VDK, Bard, Shaman (same layout as the LoneWolf 7-player armies).
+    //   Two-player room: DPS + ArchPaladin (heals so the pair survives).
+    // Every account obtains every Army class, so any account can fill any seat.
+    // Pools are "best class the account owns": popular/paid classes are used only if already owned.
+    // Same-skill variants (LoneWolf AlternateClassNames) sit next to their main class.
 
-    // Player 1 (Required): Main Solo DPS (never overlaps with Players 2-7 at the same milestone)
-    private static readonly string[] Player1SoloClasses =
+    private static readonly string[] DpsClasses =
     {
-        "King's Echo",
-        "Arcana Invoker",
+        "Legion Revenant",
         "Chaos Avenger",
-        "Void Highlord",
+        "Arcana Invoker",
+        "King's Echo",
         "Verus DoomKnight",
+        "Guardian",
+        "Chrono ShadowHunter",
+        "Chrono ShadowSlayer",
+        "Void Highlord",
+        "Void Highlord (IoDA)",
+        "Debris Highlord",
+        "Kathool Adept",
         "Dragon of Time",
+        "Martial Artist",
+        "Master Martial Artist",
+        "Chaos Slayer Berserker",
+        "Chaos Slayer Mystic",
+        "Chaos Slayer Cleric",
+        "Chaos Slayer Thief",
+        "Scion of Flames",
         "Frost SpiritReaver",
         "Cryomancer",
         "Dragonslayer General",
         "Glacial Berserker",
         "Dragonslayer",
-        "DragonSoul Shinobi",
         "Ninja",
         "Rogue",
     };
 
-    // Player 2 (Required): Primary Support / Haste & HoT Buffer -> Endgame preference: StoneCrusher
-    private static readonly string[] Player2SupportClasses =
+    private static readonly string[] StoneCrusherSeatClasses =
     {
         "StoneCrusher",
+        "Infinity Titan",
         "Bard",
+        "Troubador of Love",
         "Oracle",
         "Healer (Rare)",
         "Healer",
     };
 
-    // Player 3 (Required): Hit-Chance / Damage Debuffer & Tank -> Endgame preference: ArchPaladin
-    private static readonly string[] Player3DebuffClasses =
+    private static readonly string[] ArchPaladinSeatClasses =
     {
         "ArchPaladin",
-        "Imperial Chunin",
-        "Rogue (Rare)",
-        "Rogue",
-        "Ninja",
+        "Paladin Chronomancer",
+        "Healer (Rare)",
         "Oracle",
+        "Healer",
     };
 
-    // Player 4 (Required): Damage Amplifier & Stat Buffer -> Endgame preference: Lord of Order
-    private static readonly string[] Player4AmpClasses =
+    private static readonly string[] LordOfOrderSeatClasses =
     {
         "Lord of Order",
+        "Archfiend",
         "Arachnomancer",
         "Shaman",
         "Mage (Rare)",
@@ -13326,8 +13460,7 @@ public class ArmyFarmerJoeDoAll
         "Oracle",
     };
 
-    // Player 5 (Optional): Defense Shred / Decay Debuffer & Sub-DPS (Evolved Shaman -> ShadowScythe General -> Glacial Berserker -> Kathool Adept -> Verus DoomKnight)
-    private static readonly string[] Player5FlexClasses =
+    private static readonly string[] VerusSeatClasses =
     {
         "Verus DoomKnight",
         "Kathool Adept",
@@ -13340,37 +13473,29 @@ public class ArmyFarmerJoeDoAll
         "Healer",
     };
 
-    // Player 6 (Optional): Crit / Damage Amplifier & Flex DPS (Master Ranger -> Scarlet Sorceress -> Northlands Monk -> Archfiend -> Scion of Flames)
-    private static readonly string[] Player6FlexClasses =
+    private static readonly string[] BardSeatClasses =
     {
-        "Scion of Flames",
-        "Archfiend",
-        "Northlands Monk",
-        "Scarlet Sorceress",
-        "Master Ranger",
+        "Bard",
+        "Troubador of Love",
         "Oracle",
         "Healer (Rare)",
         "Healer",
     };
 
-    // Player 7 (Optional): Stealth / Dodge DPS & Execute (Ninja -> ShadowScythe General -> DragonSoul Shinobi -> Yami No Ronin)
-    private static readonly string[] Player7FlexClasses =
+    private static readonly string[] ShamanSeatClasses =
     {
-        "Yami No Ronin",
-        "DragonSoul Shinobi",
-        "ShadowScythe General",
-        "Ninja",
-        "Rogue",
-        "Oracle",
+        "Shaman",
+        "Evolved Shaman",
         "Healer (Rare)",
         "Healer",
     };
 
-    // Secondary Support pool for Player 5 during Farm mode in larger armies (5-7 players)
-    private static readonly string[] Player5FarmSupportClasses =
+    // Second farm support when all 7 share one room (seat 5).
+    private static readonly string[] FarmSecondSupportClasses =
     {
         "Lord of Order",
         "StoneCrusher",
+        "Infinity Titan",
         "ArchPaladin",
         "Bard",
         "Oracle",
@@ -13381,73 +13506,76 @@ public class ArmyFarmerJoeDoAll
 
     private static readonly string[] FarmClasses =
     {
+        "Legion Revenant",
         "ArchMage",
         "King's Echo",
         "Arcana Invoker",
+        "Dragon of Time",
         "Kathool Adept",
         "Archfiend",
-        "Dragon of Time",
+        "Necrotic Chronomancer",
+        "Abyssal Angel",
+        "Daimon",
         "Blaze Binder",
-        "Chaos Slayer",
         "Eternal Inversionist",
-        "ShadowScythe General",
+        "Firelord Summoner",
         "Scarlet Sorceress",
+        "ShadowScythe General",
         "Darkblood StormKing",
+        "Chaos Slayer Berserker",
+        "Chaos Slayer Mystic",
+        "Chaos Slayer Cleric",
+        "Chaos Slayer Thief",
         "Pyromancer",
-        "Evolved Shaman",
         "Shaman",
+        "Evolved Shaman",
         "Imperial Chunin",
         "Master Ranger",
         "Royal BattleMage",
         "Mage",
     };
 
+    // Seat (0-based) and size of the room this account is in, using the same balanced split as rooms/helpers.
+    private (int seat, int roomSize) GetRoomSeat()
+    {
+        int playerCount = Math.Max(1, Army.ArmyPlayerCount);
+        int playerNumber = GetLocalPlayerNumber();
+        int cap = _activeSubgroupMaxPlayers > 0 && _activeSubgroupMaxPlayers < playerCount ? _activeSubgroupMaxPlayers : 0;
+        if (cap <= 0)
+            return (Math.Max(0, playerNumber - 1), playerCount);
+
+        int subgroup = CoreArmyFJ.GetSubgroupIndex(playerNumber, playerCount, cap);
+        int first = CoreArmyFJ.GetSubgroupFirstPlayer(subgroup, playerCount, cap);
+        int groups = (playerCount + cap - 1) / cap;
+        int next = subgroup + 1 < groups ? CoreArmyFJ.GetSubgroupFirstPlayer(subgroup + 1, playerCount, cap) : playerCount + 1;
+        return (Math.Max(0, playerNumber - first), Math.Max(1, next - first));
+    }
+
     private string[] GetRoleBossPool()
     {
-        if (IsPlayer(2))
-            return Player2SupportClasses;
-        if (IsPlayer(3))
-            return Player3DebuffClasses;
-        if (IsPlayer(4))
-            return Player4AmpClasses;
-        if (IsPlayer(5))
-            return Player5FlexClasses;
-        if (IsPlayer(6))
-            return Player6FlexClasses;
-        if (IsPlayer(7))
-            return Player7FlexClasses;
-
-        return Player1SoloClasses;
+        (int seat, int roomSize) = GetRoomSeat();
+        return seat switch
+        {
+            0 => DpsClasses,
+            1 => roomSize == 2 ? ArchPaladinSeatClasses : StoneCrusherSeatClasses,
+            2 => ArchPaladinSeatClasses,
+            3 => LordOfOrderSeatClasses,
+            4 => VerusSeatClasses,
+            5 => BardSeatClasses,
+            _ => ShamanSeatClasses,
+        };
     }
 
     private string[] GetRoleFarmPool()
     {
-        // Farm Composition: AoE Farm classes combined with Support/Healer classes
-        // - Player 2 stays on Primary Healer/Support (4-7 player armies)
-        // - Player 5 adds Secondary Buffer/Support in larger armies (5-7 player armies)
-        if (IsPlayer(2))
-            return Player2SupportClasses;
-        if (IsPlayer(5))
-            return Player5FarmSupportClasses;
+        // Farm: seat 2 of every room keeps a support class; seat 5 adds a second one when all 7 share a room.
+        (int seat, int roomSize) = GetRoomSeat();
+        if (seat == 1)
+            return StoneCrusherSeatClasses;
+        if (seat == 4 && roomSize >= 7)
+            return FarmSecondSupportClasses;
 
         return FarmClasses;
-    }
-
-    private string GetPartyRoleLabel()
-    {
-        if (IsPlayer(2))
-            return "P2-Support(SC)";
-        if (IsPlayer(3))
-            return "P3-Debuff(AP)";
-        if (IsPlayer(4))
-            return "P4-BuffAmp(LoO)";
-        if (IsPlayer(5))
-            return "P5-FlexDebuff";
-        if (IsPlayer(6))
-            return "P6-FlexAmpDPS";
-        if (IsPlayer(7))
-            return "P7-FlexDodgeDPS";
-        return "P1-MainDPS";
     }
 
     private string? _lastSolo;
@@ -13518,7 +13646,7 @@ public class ArmyFarmerJoeDoAll
 
         // Two unified compositions:
         // 1. Boss Composition (used for SoloClass, DodgeClass, and BossClass)
-        // 2. Farm Composition (AoE farmers + dedicated Supports on P2 and P5)
+        // 2. Farm Composition (AoE farmers + a support on room seat 2, and seat 5 when all 7 share a room)
         string resolvedSolo = ResolveClass(bossPool);
         string resolvedFarm = ResolveClass(farmPool);
 
