@@ -417,6 +417,39 @@ public class CoreArmyFJ
         Func<int>? resolveSubgroupCap = null
     )
     {
+        int[]? outerRoomLayout = activeRoomLayout;
+        try
+        {
+            return RunCooperativeObjectiveInner(
+                objectiveName,
+                isComplete,
+                doWork,
+                help,
+                maxWorkAttempts,
+                maxPlayersPerSubgroup,
+                prepareForCombat,
+                resolveSubgroupCap
+            );
+        }
+        finally
+        {
+            // Nested objectives restore the layout of the objective that called them.
+            activeRoomLayout = outerRoomLayout;
+            loggedRoomWaitMode = false;
+        }
+    }
+
+    private bool RunCooperativeObjectiveInner(
+        string objectiveName,
+        Func<bool> isComplete,
+        Action doWork,
+        Action<int, string> help,
+        int maxWorkAttempts,
+        int maxPlayersPerSubgroup,
+        Action? prepareForCombat,
+        Func<int>? resolveSubgroupCap
+    )
+    {
         if (!RequireArmySession())
             return false;
 
@@ -506,15 +539,30 @@ public class CoreArmyFJ
                 effectiveSubgroupCap = detectedCap;
         }
 
+        // Room layout: pending accounts are spread first, finished accounts fill the free seats.
+        // Every account computes the same initial layout from the PREP_CHECK snapshot (no one works
+        // between PREP_CHECK and READY), later changes come from the layout file.
+        bool useSubgroups = effectiveSubgroupCap > 0 && effectiveSubgroupCap < armyPlayers.Length;
+        if (useSubgroups)
+        {
+            bool[] prePendingMask = new bool[armyPlayers.Length];
+            foreach (int p in prePending)
+                prePendingMask[p - 1] = true;
+            activeRoomLayout = ComputeRoomLayout(prePendingMask, effectiveSubgroupCap, null);
+            Core.Logger($"Army objective {name}: rooms {DescribeRoomLayout(activeRoomLayout)}.", "CoreArmyFJ");
+        }
+        else
+        {
+            activeRoomLayout = null;
+        }
+
         if (prepareForCombat != null)
         {
-            int localPlayerNumber = armyPlayerIndex + 1;
-            bool useSubgroups = effectiveSubgroupCap > 0;
-            int localSubgroup = useSubgroups ? GetSubgroupIndex(localPlayerNumber, armyPlayers.Length, effectiveSubgroupCap) : 0;
-            bool subgroupHasPending = !useSubgroups
-                || prePending.Any(p => GetSubgroupIndex(p, armyPlayers.Length, effectiveSubgroupCap) == localSubgroup);
+            int localRoom = GetLayoutRoom(armyPlayerIndex + 1);
+            bool roomHasPending = activeRoomLayout == null
+                || (localRoom >= 0 && prePending.Any(p => activeRoomLayout[p - 1] == localRoom));
 
-            if (subgroupHasPending)
+            if (roomHasPending)
                 prepareForCombat();
         }
 
@@ -573,28 +621,35 @@ public class CoreArmyFJ
             if (pendingPlayers.Count == 0)
                 return SyncArmy($"OBJECTIVE_{name}_DONE");
 
+            if (useSubgroups)
+                RefreshRoomLayout(name, objectiveId, effectiveSubgroupCap, pendingPlayers, helperPlayers);
+
             if (localComplete)
             {
-                // Spread helpers across pending players (optionally scoped to fixed-size room subgroups).
+                // Spread helpers across the pending players of this account's room (layout-scoped).
                 int localPlayerNumber = armyPlayerIndex + 1;
-                bool useSubgroups = effectiveSubgroupCap > 0;
-                int localSubgroup = useSubgroups
-                    ? GetSubgroupIndex(localPlayerNumber, armyPlayers.Length, effectiveSubgroupCap)
-                    : 0;
+                int localRoom = GetLayoutRoom(localPlayerNumber);
 
                 List<int> scopedPending = useSubgroups
-                    ? pendingPlayers
-                        .Where(p => GetSubgroupIndex(p, armyPlayers.Length, effectiveSubgroupCap) == localSubgroup)
-                        .ToList()
+                    ? pendingPlayers.Where(p => GetLayoutRoom(p) == localRoom).ToList()
                     : pendingPlayers;
 
-                if (scopedPending.Count == 0)
+                if (useSubgroups && localRoom < 0)
                 {
+                    // Every room with a pending teammate is full: wait outside the map.
+                    actAsSupportHelper = false;
+                    help(0, string.Empty);
+                    WaitOutsideFullRooms(name);
+                }
+                else if (scopedPending.Count == 0)
+                {
+                    loggedRoomWaitMode = false;
                     actAsSupportHelper = false;
                     help(0, string.Empty);
                 }
                 else
                 {
+                    loggedRoomWaitMode = false;
                     List<int> accessiblePending = scopedPending
                         .Where(p => !unreachableHelperTargets.Contains(NormalizeArmyUsername(armyPlayers[p - 1])))
                         .ToList();
@@ -615,9 +670,7 @@ public class CoreArmyFJ
                     else
                     {
                         List<int> scopedHelpers = useSubgroups
-                            ? helperPlayers
-                                .Where(p => GetSubgroupIndex(p, armyPlayers.Length, effectiveSubgroupCap) == localSubgroup)
-                                .ToList()
+                            ? helperPlayers.Where(p => GetLayoutRoom(p) == localRoom).ToList()
                             : helperPlayers;
 
                         int helperIndex = Math.Max(0, scopedHelpers.IndexOf(localPlayerNumber));
@@ -631,9 +684,7 @@ public class CoreArmyFJ
                         // ArchPaladin / Lord of Order) to heal the remaining accounts. Once Player 2 (or the
                         // subgroup's dedicated Support when split) finishes, that account takes over the
                         // Support role and the temporary support helper returns to its own SoloClass!
-                        int supportPlayerNumber = useSubgroups
-                            ? GetSubgroupFirstPlayer(localSubgroup, armyPlayers.Length, effectiveSubgroupCap) + 1
-                            : 2;
+                        int supportPlayerNumber = useSubgroups ? GetLayoutRoomSupportPlayer(localRoom) : 2;
                         actAsSupportHelper =
                             localPlayerNumber == supportPlayerNumber
                             || (!scopedHelpers.Contains(supportPlayerNumber) && helperIndex == 0);
@@ -1866,6 +1917,311 @@ public class CoreArmyFJ
     }
 
     // ---------------------------------------------------------------------------------------
+    // Dynamic room layout (per cooperative objective). Rooms follow who still has work to do:
+    // - pending accounts are spread first (with everyone pending this equals the static split);
+    // - finished accounts fill the free seats, every room getting a helper before any gets two;
+    // - when a room has nobody pending left, its accounts move to rooms with free seats;
+    // - accounts that fit nowhere wait in /whitemap (or /house) until a seat opens.
+    // Pending accounts never change room mid-objective: their farm call can run for a long time.
+    // Room index i always maps to RoomNumber + i, so room numbers stay predictable.
+    // ---------------------------------------------------------------------------------------
+    public const int RoomLayoutWaiting = -1;
+
+    // Room per player (index = player - 1) for the running objective; null = single shared room.
+    private int[]? activeRoomLayout;
+    private bool loggedRoomWaitMode;
+
+    public bool HasActiveRoomLayout => activeRoomLayout != null;
+
+    /// <summary>Room of a player in the active layout: 0 without a layout, -1 when waiting outside.</summary>
+    public int GetLayoutRoom(int playerNumber)
+    {
+        int[]? layout = activeRoomLayout;
+        if (layout == null || playerNumber < 1 || playerNumber > layout.Length)
+            return 0;
+        return layout[playerNumber - 1];
+    }
+
+    /// <summary>Players (ascending) sharing the given room in the active layout.</summary>
+    public List<int> GetLayoutRoomMembers(int room)
+    {
+        int[]? layout = activeRoomLayout;
+        List<int> members = new();
+        if (layout == null)
+        {
+            for (int p = 1; p <= armyPlayers.Length; p++)
+                members.Add(p);
+            return members;
+        }
+
+        for (int i = 0; i < layout.Length; i++)
+        {
+            if (layout[i] == room)
+                members.Add(i + 1);
+        }
+        return members;
+    }
+
+    // Seat 1 of the room is the support seat (same rule as GetRoomSeat in the main script).
+    private int GetLayoutRoomSupportPlayer(int room)
+    {
+        List<int> members = GetLayoutRoomMembers(room);
+        if (members.Count > 1)
+            return members[1];
+        return members.Count == 1 ? members[0] : 2;
+    }
+
+    public static int[] ComputeRoomLayout(bool[] pending, int cap, int[]? previous)
+    {
+        int n = pending.Length;
+        int[] layout = new int[n];
+        List<int> pendingIdx = Enumerable.Range(0, n).Where(i => pending[i]).ToList();
+        if (cap <= 0 || n <= cap || pendingIdx.Count == 0)
+            return layout;
+
+        for (int i = 0; i < n; i++)
+            layout[i] = RoomLayoutWaiting;
+
+        bool usePrevious = previous != null && previous.Length == n;
+        Dictionary<int, int> members = new();
+
+        if (!usePrevious)
+        {
+            // Fewest rooms that hold everyone, never more rooms than pending accounts.
+            int groups = Math.Min((n + cap - 1) / cap, pendingIdx.Count);
+            int baseSize = pendingIdx.Count / groups;
+            int extra = pendingIdx.Count % groups;
+            int k = 0;
+            for (int room = 0; room < groups; room++)
+            {
+                int size = baseSize + (room < extra ? 1 : 0);
+                members[room] = 0;
+                for (int s = 0; s < size; s++, k++)
+                {
+                    layout[pendingIdx[k]] = room;
+                    members[room]++;
+                }
+            }
+        }
+        else
+        {
+            // Pending accounts keep their room.
+            foreach (int i in pendingIdx)
+            {
+                int room = previous![i];
+                if (room < 0 || (members.TryGetValue(room, out int count) && count >= cap))
+                    continue;
+                layout[i] = room;
+                members[room] = members.TryGetValue(room, out int c) ? c + 1 : 1;
+            }
+
+            // Safety: a pending account without a valid room takes a free seat or a new room.
+            foreach (int i in pendingIdx.Where(i => layout[i] == RoomLayoutWaiting).ToList())
+            {
+                int room = members.Where(m => m.Value < cap).OrderBy(m => m.Value).ThenBy(m => m.Key).Select(m => m.Key).DefaultIfEmpty(-1).First();
+                if (room < 0)
+                {
+                    room = 0;
+                    while (members.ContainsKey(room))
+                        room++;
+                }
+                layout[i] = room;
+                members[room] = members.TryGetValue(room, out int c) ? c + 1 : 1;
+            }
+        }
+
+        // Finished accounts fill free seats: room with fewest helpers first; prefer the helper
+        // already in that room, then one without a room, then the lowest player number.
+        HashSet<int> activeRooms = new(members.Keys);
+        Dictionary<int, int> helpersIn = activeRooms.ToDictionary(r => r, r => 0);
+        List<int> freeHelpers = Enumerable.Range(0, n).Where(i => !pending[i]).ToList();
+        while (freeHelpers.Count > 0)
+        {
+            List<int> open = activeRooms.Where(r => members[r] < cap).ToList();
+            if (open.Count == 0)
+                break;
+
+            int room = open.OrderBy(r => helpersIn[r]).ThenBy(r => members[r]).ThenBy(r => r).First();
+            int pick = -1;
+            if (usePrevious)
+            {
+                int[] prev = previous!;
+                foreach (int i in freeHelpers)
+                {
+                    if (prev[i] == room)
+                    {
+                        pick = i;
+                        break;
+                    }
+                }
+                if (pick < 0)
+                {
+                    foreach (int i in freeHelpers)
+                    {
+                        if (!activeRooms.Contains(prev[i]))
+                        {
+                            pick = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (pick < 0)
+                pick = freeHelpers[0];
+
+            layout[pick] = room;
+            members[room]++;
+            helpersIn[room]++;
+            freeHelpers.Remove(pick);
+        }
+
+        return layout;
+    }
+
+    public static string DescribeRoomLayout(int[] layout)
+    {
+        List<string> parts = new();
+        foreach (int room in layout.Where(r => r >= 0).Distinct().OrderBy(r => r))
+        {
+            IEnumerable<string> players = Enumerable.Range(0, layout.Length).Where(i => layout[i] == room).Select(i => $"P{i + 1}");
+            parts.Add($"room+{room}: {string.Join(",", players)}");
+        }
+
+        List<string> waiting = Enumerable.Range(0, layout.Length).Where(i => layout[i] < 0).Select(i => $"P{i + 1}").ToList();
+        if (waiting.Count > 0)
+            parts.Add($"waiting: {string.Join(",", waiting)}");
+        return string.Join(" | ", parts);
+    }
+
+    private string RoomLayoutPath(string objectiveName)
+    {
+        string safeName = NormalizeArmyRecordName(objectiveName);
+        if (string.IsNullOrEmpty(safeName))
+            safeName = "OBJ";
+        return $"{armySyncPath}.LAYOUT.{safeName}.{armySessionId}";
+    }
+
+    private int[]? ReadRoomLayout(string objectiveName, long objectiveId)
+    {
+        if (!armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath))
+            return null;
+
+        try
+        {
+            string path = RoomLayoutPath(objectiveName);
+            if (!File.Exists(path))
+                return null;
+
+            string[] parts = File.ReadAllText(path).Trim().Split('|');
+            if (
+                parts.Length != 2
+                || !long.TryParse(parts[0], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out long id)
+                || id != objectiveId
+            )
+                return null;
+
+            string[] rooms = parts[1].Split(',');
+            if (rooms.Length != armyPlayers.Length)
+                return null;
+
+            int[] layout = new int[rooms.Length];
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                if (!int.TryParse(rooms[i], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out layout[i]) || layout[i] < RoomLayoutWaiting)
+                    return null;
+            }
+            return layout;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private void WriteRoomLayout(string objectiveName, long objectiveId, int[] layout)
+    {
+        if (!armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath))
+            return;
+
+        try
+        {
+            string path = RoomLayoutPath(objectiveName);
+            string temp = $"{path}.{armyPlayerIndex + 1}.tmp";
+            string content = $"{objectiveId.ToString(System.Globalization.CultureInfo.InvariantCulture)}|{string.Join(",", layout)}";
+            File.WriteAllText(temp, content);
+            if (File.Exists(path))
+                File.Delete(path);
+            File.Move(temp, path);
+        }
+        catch { }
+    }
+
+    // Called once per objective loop. The coordinator is the lowest-numbered finished account:
+    // accounts still working may sit inside a long farm call and cannot react in time.
+    private void RefreshRoomLayout(string objectiveName, long objectiveId, int cap, List<int> pendingPlayers, List<int> helperPlayers)
+    {
+        int[]? fromFile = ReadRoomLayout(objectiveName, objectiveId);
+        if (fromFile != null && (activeRoomLayout == null || !fromFile.SequenceEqual(activeRoomLayout)))
+        {
+            activeRoomLayout = fromFile;
+            Core.Logger($"Army objective {objectiveName}: rooms updated -> {DescribeRoomLayout(fromFile)}.", "CoreArmyFJ");
+        }
+
+        if (activeRoomLayout == null || helperPlayers.Count == 0 || helperPlayers.Min() != armyPlayerIndex + 1)
+            return;
+
+        bool[] mask = new bool[armyPlayers.Length];
+        foreach (int p in pendingPlayers)
+            mask[p - 1] = true;
+
+        int[] next = ComputeRoomLayout(mask, cap, activeRoomLayout);
+        if (next.SequenceEqual(activeRoomLayout))
+            return;
+
+        activeRoomLayout = next;
+        WriteRoomLayout(objectiveName, objectiveId, next);
+        Core.Logger($"Army objective {objectiveName}: rooms rebalanced -> {DescribeRoomLayout(next)}.", "CoreArmyFJ");
+    }
+
+    // No room with a pending teammate has a free seat: stop fighting and wait in /whitemap (or /house).
+    private void WaitOutsideFullRooms(string objectiveName)
+    {
+        if (!loggedRoomWaitMode)
+        {
+            Core.Logger(
+                $"Army objective {objectiveName}: every room with a pending teammate is full; waiting in /whitemap until a seat opens.",
+                "CoreArmyFJ"
+            );
+            loggedRoomWaitMode = true;
+        }
+
+        string currentMap = Bot.Map?.Name ?? string.Empty;
+        if (
+            !string.Equals(currentMap, "whitemap", StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(currentMap, "house", StringComparison.OrdinalIgnoreCase)
+        )
+        {
+            try
+            {
+                Bot.Skills.Stop();
+            }
+            catch { }
+
+            if (Bot.Player.HasTarget)
+                Bot.Combat.CancelTarget();
+
+            Bot.Options.AttackWithoutTarget = false;
+            Bot.Options.AggroAllMonsters = false;
+            Bot.Options.AggroMonsters = false;
+            Core.JumpWait();
+            Core.Join("whitemap", ignoreCheck: true);
+            Bot.Wait.ForMapLoad("whitemap");
+        }
+
+        Bot.Sleep(1000);
+    }
+
+    // ---------------------------------------------------------------------------------------
     // Persistent map player caps (world.areaData.intMaxPlayers), learned whenever any Army
     // account stands in a map and shared by every account/session through one small file.
     // Lets playerOne split rooms without probing, including maps it should not probe.
@@ -2851,7 +3207,8 @@ public class CoreArmyFJ
             safeName = "MAP";
 
         string capPath = $"{armySyncPath}.MAPCAP.{safeName}.{armySessionId}";
-        int normalizedCap = (cap > 0 && cap < armyPlayers.Length) ? cap : 0;
+        // Raw cap (0 = unknown); a cap >= Army size means one shared room.
+        int normalizedCap = cap > 0 ? cap : 0;
         try
         {
             File.WriteAllText(capPath, normalizedCap.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -2876,7 +3233,7 @@ public class CoreArmyFJ
 
             string raw = File.ReadAllText(capPath).Trim();
             if (int.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int cap))
-                return (cap > 0 && cap < armyPlayers.Length) ? cap : 0;
+                return cap > 0 ? cap : 0;
         }
         catch { }
 

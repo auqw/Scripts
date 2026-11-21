@@ -500,6 +500,10 @@ public class ArmyFarmerJoeDoAll
     // Same balanced split CoreArmyFJ uses for helper scoping, so rooms and helpers always agree.
     private int GetSubgroupRoomIndex(int maxPlayersPerRoom)
     {
+        // Inside a cooperative objective the dynamic layout decides the room (waiting accounts use room 0).
+        if (Army.HasActiveRoomLayout)
+            return Math.Max(0, Army.GetLayoutRoom(GetLocalPlayerNumber()));
+
         if (maxPlayersPerRoom <= 0)
             return 0;
 
@@ -1569,7 +1573,8 @@ public class ArmyFarmerJoeDoAll
                             compositionType: ClassType.Farm
                         );
                     },
-                    maxPlayersPerSubgroup: DragonkoiMaxPlayers
+                    maxPlayersPerSubgroup: DragonkoiMaxPlayers,
+                    resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("dragonkoiz")
                 )
             )
                 return false;
@@ -1595,7 +1600,8 @@ public class ArmyFarmerJoeDoAll
                         Bot.Sleep(1000);
                     },
                     maxWorkAttempts: 3,
-                    maxPlayersPerSubgroup: DragonkoiMaxPlayers
+                    maxPlayersPerSubgroup: DragonkoiMaxPlayers,
+                    resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("dragonkoiz")
                 )
             )
                 return false;
@@ -1660,7 +1666,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm);
-                }
+                },
+                targetMap: "arcangrove"
             )
         )
             return false;
@@ -1776,7 +1783,8 @@ public class ArmyFarmerJoeDoAll
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm);
                 },
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Farm)
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Farm),
+                targetMap: "beehive"
             )
         )
             return false;
@@ -2034,7 +2042,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, targetMap: "stalagbite");
-                }
+                },
+                targetMap: "stalagbite"
             )
         )
             return false;
@@ -2057,7 +2066,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, targetMap: "kitsune");
-                }
+                },
+                targetMap: "kitsune"
             )
         )
             return false;
@@ -2080,7 +2090,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Wolfwing", targetMap: "wolfwing");
-                }
+                },
+                targetMap: "wolfwing"
             )
         )
             return false;
@@ -3406,7 +3417,8 @@ public class ArmyFarmerJoeDoAll
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Shurpu Ring Guardian", targetMap: "xancave");
                 },
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "xancave")
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "xancave"),
+                targetMap: "xancave"
             )
         )
             return false;
@@ -3505,7 +3517,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm);
-                }
+                },
+                targetMap: "fireforge"
             )
         )
             return false;
@@ -3631,7 +3644,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm);
-                }
+                },
+                targetMap: "frozentower"
             )
         )
             return false;
@@ -3988,7 +4002,8 @@ public class ArmyFarmerJoeDoAll
                             "Creature Creation",
                             targetMap: "maul"
                         );
-                    }
+                    },
+                    targetMap: "maul"
                 )
             )
                 return false;
@@ -4030,7 +4045,8 @@ public class ArmyFarmerJoeDoAll
                                 targetMap: "towerofdoom"
                             );
                         },
-                        prepareForCombat: () => ApplyCurrentArmyRoomSettings()
+                        prepareForCombat: () => ApplyCurrentArmyRoomSettings(),
+                        resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("towerofdoom")
                     )
                 )
                     return false;
@@ -4190,7 +4206,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Gell Oh No");
-                }
+                },
+                targetMap: "well"
             )
         )
             return false;
@@ -4237,7 +4254,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Deathgazer");
-                }
+                },
+                targetMap: "deathgazer"
             )
         )
             return false;
@@ -4590,7 +4608,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm);
-                }
+                },
+                targetMap: "icewindwar"
             )
         )
             return false;
@@ -5932,7 +5951,8 @@ public class ArmyFarmerJoeDoAll
                                 targetMap: "towerofdoom"
                             );
                         },
-                        prepareForCombat: () => ApplyCurrentArmyRoomSettings()
+                        prepareForCombat: () => ApplyCurrentArmyRoomSettings(),
+                        resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("towerofdoom")
                     )
                 )
                     return false;
@@ -6670,6 +6690,7 @@ public class ArmyFarmerJoeDoAll
                         );
                     },
                     maxPlayersPerSubgroup: 4,
+                    resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("doomkitten"),
                     prepareForCombat: () =>
                     {
                         ApplyCurrentArmyRoomSettings();
@@ -9819,7 +9840,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", targetMap: "stalagbite");
-                }
+                },
+                targetMap: "stalagbite"
             )
             || !RunSubgroupCooperativeObjective(
                 4,
@@ -9836,7 +9858,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", targetMap: "kitsune");
-                }
+                },
+                targetMap: "kitsune"
             )
             || !RunCoordinatedHuntStep(
                 "STEP3A_FORGE_WEAPON_WOLFWING",
@@ -10145,6 +10168,7 @@ public class ArmyFarmerJoeDoAll
                         );
                     },
                     maxPlayersPerSubgroup: 4,
+                    resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("shadowfortress"),
                     prepareForCombat: () =>
                     {
                         ApplyCurrentArmyRoomSettings();
@@ -11400,7 +11424,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3907, "frozentower", 3022);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11418,7 +11443,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3908, "frozentower", "Polar Elemental");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11435,7 +11461,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3909, "frozentower", 3019);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11452,7 +11479,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3910, "frozentower", 3004, 13);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11472,7 +11500,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3911);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostwyrm", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostwyrm", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11490,7 +11519,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3912, "frozentower", "FrostDeep Dweller");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "FrostDeep Dweller")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "FrostDeep Dweller"),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11507,7 +11537,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3913, "frozentower", 3005, 13);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11525,7 +11556,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3914, "frozentower", "Twisted Ice");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Twisted Ice", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Twisted Ice", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11542,7 +11574,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3915, "frozentower", 3006);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11560,7 +11593,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3916, "frozentower", "Polar Elemental");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11577,7 +11611,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3917, "frozentower", 3007, 6);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11594,7 +11629,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3918, "frozentower", 3013);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11615,7 +11651,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3919);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11637,7 +11674,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3920);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11658,7 +11696,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3921);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "FrostDeep Dweller")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "FrostDeep Dweller"),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11676,7 +11715,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3922, "frozentower", "Polar Elemental");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11694,7 +11734,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3923, "frozentower", "Frostwyrm");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostwyrm", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostwyrm", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11711,7 +11752,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3924, "frozentower", 3009, 6);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11734,7 +11776,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3925);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11751,7 +11794,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3926, "frozentower", 3021);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11768,7 +11812,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3927, "frozentower", 3014, 7);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11786,7 +11831,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3928, "frozentower", "Arctic Eel");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Arctic Eel", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Arctic Eel", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11804,7 +11850,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3929, "frozentower", "Polar Elemental");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11822,7 +11869,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3930, "frozentower", "Twisted Ice");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Twisted Ice", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Twisted Ice", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11840,7 +11888,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3931, "frozentower", "Frostwyrm");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostwyrm", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frostwyrm", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11857,7 +11906,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(3932, "frozentower", 3016, 13);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11875,7 +11925,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3933, "frozentower", "Ice Wolf");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Ice Wolf", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Ice Wolf", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11893,7 +11944,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(3934, "frozentower", "Rotten Ice");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Rotten Ice")
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Rotten Ice"),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11914,7 +11966,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3935);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Ice Wolf", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Ice Wolf", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11934,7 +11987,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3936);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -11954,7 +12008,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(3937);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Fangbeast", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Fangbeast", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("frozentower")
             )
         )
             return false;
@@ -13161,7 +13216,8 @@ public class ArmyFarmerJoeDoAll
                     Story.MapItemQuest(5587, "icewindpass", 5074, 5);
                 },
                 (targetPlayerNumber, targetPlayerName) => Bot.Sleep(1000),
-                maxWorkAttempts: 3
+                maxWorkAttempts: 3,
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13178,7 +13234,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5588, "icewindpass", "Glacial Elemental");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Glacial Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Glacial Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13198,7 +13255,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(5589);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Glacial Elemental", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Glacial Elemental", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13215,7 +13273,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5590, "icewindpass", "Polar Golem");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Golem", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Polar Golem", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13232,7 +13291,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5591, "icewindpass", "Frost Invader");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13251,7 +13311,8 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Frostspawn Symbiote"),
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindpass")
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindpass"),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13268,7 +13329,8 @@ public class ArmyFarmerJoeDoAll
                     Story.KillQuest(5593, "icewindpass", "Frost Invader");
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Frost Invader", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13287,7 +13349,8 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Frostspawn Horror"),
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindpass")
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindpass"),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13308,7 +13371,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(5595);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13329,7 +13393,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(5596);
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindpass")
             )
         )
             return false;
@@ -13355,7 +13420,8 @@ public class ArmyFarmerJoeDoAll
                     warMedalsDone = true;
                 },
                 (targetPlayerNumber, targetPlayerName) =>
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm)
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindwar")
             )
         )
             return false;
@@ -13374,7 +13440,8 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Soricomorpha"),
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindwar")
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "icewindwar"),
+                resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("icewindwar")
             )
         )
             return false;
@@ -13540,6 +13607,17 @@ public class ArmyFarmerJoeDoAll
     {
         int playerCount = Math.Max(1, Army.ArmyPlayerCount);
         int playerNumber = GetLocalPlayerNumber();
+
+        // Dynamic layout of the running objective: seat = position inside the current room.
+        if (Army.HasActiveRoomLayout)
+        {
+            int room = Army.GetLayoutRoom(playerNumber);
+            List<int> members = room >= 0 ? Army.GetLayoutRoomMembers(room) : new List<int>();
+            int index = members.IndexOf(playerNumber);
+            if (index >= 0)
+                return (index, members.Count);
+        }
+
         int cap = _activeSubgroupMaxPlayers > 0 && _activeSubgroupMaxPlayers < playerCount ? _activeSubgroupMaxPlayers : 0;
         if (cap <= 0)
             return (Math.Max(0, playerNumber - 1), playerCount);
@@ -14940,6 +15018,7 @@ public class ArmyFarmerJoeDoAll
                         );
                     },
                     maxPlayersPerSubgroup: 4,
+                    resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("doomvault"),
                     prepareForCombat: () =>
                     {
                         ApplyCurrentArmyRoomSettings();
@@ -15369,9 +15448,11 @@ public class ArmyFarmerJoeDoAll
             }
         }
 
-        int cap = (maxPlayers > 0 && maxPlayers < Army.ArmyPlayerCount) ? maxPlayers : 0;
+        // Raw map cap (0 = unknown). A cap >= Army size means "everyone fits in one room",
+        // which must win over a caller's fallback split, so it is not collapsed to 0 any more.
+        int cap = maxPlayers > 0 ? maxPlayers : 0;
         _detectedMapCaps[normalized] = cap;
-        if (cap > 0)
+        if (cap > 0 && cap < Army.ArmyPlayerCount)
         {
             int groups = (Army.ArmyPlayerCount + cap - 1) / cap;
             CoreBots.Instance.Logger(
@@ -15381,9 +15462,20 @@ public class ArmyFarmerJoeDoAll
         return cap;
     }
 
+    // Back to the enclosing ApplySubgroupRoomSettings(...) block, or to the shared room.
+    private void RestoreSubgroupRoomSettings(int previousSubgroupCap)
+    {
+        if (previousSubgroupCap > 0)
+            ApplySubgroupRoomSettings(previousSubgroupCap);
+        else
+            ApplyArmyRoomSettings();
+    }
+
     private void ApplyEffectiveSubgroupRoomSettings(string objectiveName, int fixedCap)
     {
-        int cap = fixedCap > 0 ? fixedCap : Army.ReadMapSubgroupCap(objectiveName);
+        // Detected map cap first; the caller's fixed cap is only a fallback for unknown maps.
+        int detected = Army.ReadMapSubgroupCap(objectiveName);
+        int cap = detected > 0 ? detected : fixedCap;
         if (cap > 0)
             ApplySubgroupRoomSettings(cap);
         else if (_activeSubgroupMaxPlayers == 0)
@@ -15403,10 +15495,10 @@ public class ArmyFarmerJoeDoAll
     {
         int attempts = 0;
         bool done = initialSkipCheck();
+        // Any objective with a known map uses that map's real cap, also inside an
+        // ApplySubgroupRoomSettings(...) block (the block's cap is only the fallback).
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
-        bool autoDetectCap =
-            previousSubgroupCap <= 0
-            && !string.IsNullOrWhiteSpace(targetMap);
+        bool autoDetectCap = !string.IsNullOrWhiteSpace(targetMap);
 
         try
         {
@@ -15476,7 +15568,7 @@ public class ArmyFarmerJoeDoAll
         finally
         {
             if (autoDetectCap)
-                ApplyArmyRoomSettings();
+                RestoreSubgroupRoomSettings(previousSubgroupCap);
         }
     }
 
@@ -15492,12 +15584,12 @@ public class ArmyFarmerJoeDoAll
         bool probeMapByJoin = true
     )
     {
+        // subgroupCap (or the enclosing block's cap) is only a fallback: with a targetMap the
+        // real map cap is detected (learned caps are cached, so playerOne probes each map once).
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
         int effectiveCap = previousSubgroupCap > 0 ? 0 : subgroupCap;
-        bool autoDetectCap =
-            previousSubgroupCap <= 0
-            && effectiveCap <= 0
-            && !string.IsNullOrWhiteSpace(targetMap);
+        int fallbackCap = effectiveCap > 0 ? effectiveCap : previousSubgroupCap;
+        bool autoDetectCap = !string.IsNullOrWhiteSpace(targetMap);
         if (effectiveCap > 0)
             ApplySubgroupRoomSettings(effectiveCap);
 
@@ -15509,13 +15601,13 @@ public class ArmyFarmerJoeDoAll
                 () =>
                 {
                     if (effectiveCap > 0 || autoDetectCap)
-                        ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, fallbackCap);
                     doWork();
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     if (effectiveCap > 0 || autoDetectCap)
-                        ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
+                        ApplyEffectiveSubgroupRoomSettings(objectiveName, fallbackCap);
                     help(targetPlayerNumber, targetPlayerName);
                 },
                 maxWorkAttempts: maxWorkAttempts,
@@ -15525,7 +15617,7 @@ public class ArmyFarmerJoeDoAll
                     : () =>
                     {
                         if (effectiveCap > 0 || autoDetectCap)
-                            ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
+                            ApplyEffectiveSubgroupRoomSettings(objectiveName, fallbackCap);
                         prepareForCombat();
                     },
                 resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap, probeMapByJoin) : null
@@ -15534,7 +15626,7 @@ public class ArmyFarmerJoeDoAll
         finally
         {
             if (effectiveCap > 0 || autoDetectCap)
-                ApplyArmyRoomSettings();
+                RestoreSubgroupRoomSettings(previousSubgroupCap);
         }
     }
 
