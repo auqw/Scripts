@@ -64,6 +64,21 @@ public class CoreArmyFJ
     private bool armyTransportFailed;
     private bool armyTransportFailureLogged;
 
+    // Recovery: a restarted account (relogin / manual restart) asks for a REJOIN, the leader
+    // re-creates the session and every account restarts its run from the top (skip gates make
+    // that fast). A FAIL record stops the whole Army with the reason instead of hanging forever.
+    private bool armyRestartRequested;
+    private bool armyFailureLogged;
+    private string armyIgnoredSessionId = string.Empty;
+    private System.Threading.Timer? armyHeartbeatTimer;
+    private const int ArmyHeartbeatIntervalMs = 10000;
+    private const int ArmyHeartbeatStaleSeconds = 60;
+    private const int ArmyStaleWarningIntervalSeconds = 120;
+    private readonly Dictionary<string, DateTime> armyStaleWarnedAt = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>True when the current run ended because the Army session must be re-created.</summary>
+    public bool RestartRequested => armyRestartRequested;
+
     public Option<string> player1 = new(
         "player1",
         "Player 1",
@@ -173,7 +188,11 @@ public class CoreArmyFJ
         if (!ValidateFunctionBasedSkillsDisabled())
             return false;
 
+        // After a restart request, never rejoin the session we just left.
+        string ignoredSession = armyRestartRequested ? armySessionId : string.Empty;
+        StopArmyHeartbeat();
         ResetArmyState();
+        armyIgnoredSessionId = ignoredSession;
 
         if (
             string.IsNullOrWhiteSpace(syncFileName)
@@ -229,11 +248,120 @@ public class CoreArmyFJ
         armySyncPath = Path.Combine(ClientFileSources.SkuaOptionsDIR, syncFileName);
         armyInitialized = true;
 
+        StartArmyHeartbeat();
         bool started = armyPlayerIndex == 0
             ? StartLeaderArmySession()
             : JoinFollowerArmySession();
         armySessionStarted = started;
         return started;
+    }
+
+    /// <summary>Stops background work owned by the Army session. Call from the script's finally block.</summary>
+    public void EndArmySession() => StopArmyHeartbeat();
+
+    /// <summary>
+    /// Tells every account that this one cannot continue, so nobody waits forever at a barrier.
+    /// Ignored when the session is already stopping, failed, or being restarted.
+    /// </summary>
+    public void ReportArmyFailure(string reason)
+    {
+        if (!armySessionStarted || string.IsNullOrEmpty(armySessionId) || armyRestartRequested || armyTransportFailed)
+            return;
+
+        string[] lines = ReadArmyLines();
+        if (FindLatestArmyReset(lines) != armySessionId || HasArmyStop(lines, armySessionId) || FindArmyFailure(lines) != null)
+            return;
+
+        string safeReason = new string(
+            (reason ?? string.Empty).Select(c => c == '|' || c == '\r' || c == '\n' || c == '\0' ? ' ' : c).ToArray()
+        ).Trim();
+        if (safeReason.Length > 200)
+            safeReason = safeReason[..200];
+
+        AppendArmyRecord(new[] { "FAIL", ArmyProtocolVersion, armySessionId, armyUsername, safeReason });
+    }
+
+    private string HeartbeatPath(string username) => $"{armySyncPath}.HB.{username}";
+
+    private void StartArmyHeartbeat()
+    {
+        StopArmyHeartbeat();
+        string path = HeartbeatPath(armyUsername);
+        void Beat()
+        {
+            try
+            {
+                File.WriteAllText(path, DateTime.UtcNow.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
+            catch { }
+        }
+
+        Beat();
+        armyHeartbeatTimer = new System.Threading.Timer(
+            _ =>
+            {
+                if (Bot.ShouldExit)
+                {
+                    StopArmyHeartbeat();
+                    return;
+                }
+                Beat();
+            },
+            null,
+            ArmyHeartbeatIntervalMs,
+            ArmyHeartbeatIntervalMs
+        );
+    }
+
+    private void StopArmyHeartbeat()
+    {
+        try
+        {
+            armyHeartbeatTimer?.Dispose();
+        }
+        catch { }
+        armyHeartbeatTimer = null;
+    }
+
+    private double? GetHeartbeatAgeSeconds(string username)
+    {
+        try
+        {
+            string path = HeartbeatPath(username);
+            if (!File.Exists(path))
+                return null;
+            if (!long.TryParse(File.ReadAllText(path).Trim(), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out long ticks))
+                return null;
+            return (DateTime.UtcNow - new DateTime(ticks, DateTimeKind.Utc)).TotalSeconds;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    // Called while waiting at a barrier: warns (rate-limited) about teammates whose bot stopped beating.
+    private void WarnAboutStaleArmyPlayers(IEnumerable<string> waitingFor)
+    {
+        foreach (string player in waitingFor)
+        {
+            double? age = GetHeartbeatAgeSeconds(player);
+            if (age == null || age < ArmyHeartbeatStaleSeconds)
+                continue;
+
+            if (
+                armyStaleWarnedAt.TryGetValue(player, out DateTime last)
+                && (DateTime.UtcNow - last).TotalSeconds < ArmyStaleWarningIntervalSeconds
+            )
+                continue;
+
+            armyStaleWarnedAt[player] = DateTime.UtcNow;
+            Core.Logger(
+                $"{LogArmyName(player)} has not responded for {(int)age}s (bot stopped or disconnected?). "
+                    + "Restart the bot on that account; the Army will resync automatically.",
+                "CoreArmyFJ"
+            );
+        }
     }
 
     public bool SyncArmy(string step)
@@ -304,6 +432,18 @@ public class CoreArmyFJ
             return false;
         }
 
+        // Fast path: every step id is leader-sequential, so the START barrier's id is known in
+        // advance. Accounts already done publish their DONE signal *before* arriving at START;
+        // after START continues every account sees the same set of signals, so "all done" is a
+        // consistent decision and the objective costs a single barrier instead of three.
+        // The fast decision only looks at PRE signals, which are written exclusively before START,
+        // so a teammate finishing right after START can never make accounts decide differently.
+        long predictedObjectiveId = lastArmyStepId + 1;
+        string preSignal = $"SIG_OBJ_{predictedObjectiveId}_{name}_PRE";
+        bool doneBeforeStart = isComplete();
+        if (doneBeforeStart && !SendArmySignal(preSignal))
+            return false;
+
         if (!SyncArmy($"OBJECTIVE_{name}_START"))
             return false;
 
@@ -312,6 +452,20 @@ public class CoreArmyFJ
         string failSignal = $"SIG_OBJ_{objectiveId}_{name}_FAILED";
         bool reportedDone = false;
         int workAttempts = 0;
+
+        if (objectiveId == predictedObjectiveId)
+        {
+            string[] startLines = ReadArmyLines();
+            if (!CanContinueArmySync(startLines))
+                return false;
+
+            bool allDoneAtStart = true;
+            for (int playerNumber = 1; playerNumber <= armyPlayers.Length && allDoneAtStart; playerNumber++)
+                allDoneAtStart = HasArmySignalIn(startLines, preSignal, playerNumber);
+
+            if (allDoneAtStart)
+                return true;
+        }
 
         if (isComplete())
         {
@@ -324,10 +478,14 @@ public class CoreArmyFJ
         if (!SyncArmy($"OBJECTIVE_{name}_PREP_CHECK"))
             return false;
 
+        string[] prepLines = ReadArmyLines();
+        if (!CanContinueArmySync(prepLines))
+            return false;
+
         List<int> prePending = new();
         for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
         {
-            if (!HasArmySignal(doneSignal, playerNumber) && !HasArmySignal(failSignal, playerNumber))
+            if (!HasArmySignalIn(prepLines, doneSignal, playerNumber) && !HasArmySignalIn(prepLines, failSignal, playerNumber))
                 prePending.Add(playerNumber);
         }
 
@@ -352,8 +510,9 @@ public class CoreArmyFJ
         {
             int localPlayerNumber = armyPlayerIndex + 1;
             bool useSubgroups = effectiveSubgroupCap > 0;
-            int localSubgroup = useSubgroups ? (localPlayerNumber - 1) / effectiveSubgroupCap : 0;
-            bool subgroupHasPending = !useSubgroups || prePending.Any(p => (p - 1) / effectiveSubgroupCap == localSubgroup);
+            int localSubgroup = useSubgroups ? GetSubgroupIndex(localPlayerNumber, armyPlayers.Length, effectiveSubgroupCap) : 0;
+            bool subgroupHasPending = !useSubgroups
+                || prePending.Any(p => GetSubgroupIndex(p, armyPlayers.Length, effectiveSubgroupCap) == localSubgroup);
 
             if (subgroupHasPending)
                 prepareForCombat();
@@ -369,13 +528,17 @@ public class CoreArmyFJ
 
         while (!Bot.ShouldExit && !armyTransportFailed)
         {
-            if (!CanContinueArmySync(ReadArmyLines()))
+            // One read of the sync file per iteration (it was read ~15 times before).
+            string[] loopLines = ReadArmyLines();
+            if (!CanContinueArmySync(loopLines))
                 return false;
+
+            RecordCurrentMapCap();
 
             // Abort the whole Army if any account gave up on this objective.
             for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
             {
-                if (HasArmySignal(failSignal, playerNumber))
+                if (HasArmySignalIn(loopLines, failSignal, playerNumber))
                 {
                     Core.Logger(
                         $"Army objective {name}: player {playerNumber} ({armyPlayers[playerNumber - 1]}) failed. Stopping.",
@@ -399,7 +562,9 @@ public class CoreArmyFJ
             List<int> helperPlayers = new();
             for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
             {
-                if (HasArmySignal(doneSignal, playerNumber))
+                bool playerDone = HasArmySignalIn(loopLines, doneSignal, playerNumber)
+                    || (playerNumber == armyPlayerIndex + 1 && reportedDone);
+                if (playerDone)
                     helperPlayers.Add(playerNumber);
                 else
                     pendingPlayers.Add(playerNumber);
@@ -414,12 +579,12 @@ public class CoreArmyFJ
                 int localPlayerNumber = armyPlayerIndex + 1;
                 bool useSubgroups = effectiveSubgroupCap > 0;
                 int localSubgroup = useSubgroups
-                    ? (localPlayerNumber - 1) / effectiveSubgroupCap
+                    ? GetSubgroupIndex(localPlayerNumber, armyPlayers.Length, effectiveSubgroupCap)
                     : 0;
 
                 List<int> scopedPending = useSubgroups
                     ? pendingPlayers
-                        .Where(p => (p - 1) / effectiveSubgroupCap == localSubgroup)
+                        .Where(p => GetSubgroupIndex(p, armyPlayers.Length, effectiveSubgroupCap) == localSubgroup)
                         .ToList()
                     : pendingPlayers;
 
@@ -451,7 +616,7 @@ public class CoreArmyFJ
                     {
                         List<int> scopedHelpers = useSubgroups
                             ? helperPlayers
-                                .Where(p => (p - 1) / effectiveSubgroupCap == localSubgroup)
+                                .Where(p => GetSubgroupIndex(p, armyPlayers.Length, effectiveSubgroupCap) == localSubgroup)
                                 .ToList()
                             : helperPlayers;
 
@@ -467,13 +632,26 @@ public class CoreArmyFJ
                         // subgroup's dedicated Support when split) finishes, that account takes over the
                         // Support role and the temporary support helper returns to its own SoloClass!
                         int supportPlayerNumber = useSubgroups
-                            ? localSubgroup * effectiveSubgroupCap + 2
+                            ? GetSubgroupFirstPlayer(localSubgroup, armyPlayers.Length, effectiveSubgroupCap) + 1
                             : 2;
                         actAsSupportHelper =
                             localPlayerNumber == supportPlayerNumber
                             || (!scopedHelpers.Contains(supportPlayerNumber) && helperIndex == 0);
 
-                        help(targetPlayerNumber, targetPlayerName);
+                        int helpedPlayerNumber = targetPlayerNumber;
+                        lastHelpTargetFinished = false;
+                        lastHelpTargetCheckTick = unchecked(Environment.TickCount - 1000);
+                        helpTargetFinished = () =>
+                            HasArmySignal(doneSignal, helpedPlayerNumber)
+                            || HasArmySignal(failSignal, helpedPlayerNumber);
+                        try
+                        {
+                            help(targetPlayerNumber, targetPlayerName);
+                        }
+                        finally
+                        {
+                            helpTargetFinished = null;
+                        }
                     }
                 }
             }
@@ -520,6 +698,34 @@ public class CoreArmyFJ
         );
 
     private bool actAsSupportHelper;
+
+    // Set by RunCooperativeObjective while a help callback runs, so long Goto/Join waits in
+    // CoordinateFollowAndCombat can bail out as soon as the helped teammate finishes.
+    private Func<bool>? helpTargetFinished;
+    private int lastHelpTargetCheckTick;
+    private bool lastHelpTargetFinished;
+
+    private bool HelpTargetFinished()
+    {
+        if (helpTargetFinished == null)
+            return false;
+
+        int now = Environment.TickCount;
+        if (unchecked(now - lastHelpTargetCheckTick) < 1000)
+            return lastHelpTargetFinished;
+
+        lastHelpTargetCheckTick = now;
+        try
+        {
+            lastHelpTargetFinished = helpTargetFinished();
+        }
+        catch
+        {
+            lastHelpTargetFinished = false;
+        }
+        return lastHelpTargetFinished;
+    }
+
     private string lastSkillRotationClass = string.Empty;
     private string lastSpecialEquippedMapRoom = string.Empty;
     private readonly HashSet<string> unreachableHelperTargets = new(StringComparer.OrdinalIgnoreCase);
@@ -1077,7 +1283,12 @@ public class CoreArmyFJ
         {
             EnsureMapAccessBypass(targetMap);
             Bot.Player.Goto(normalizedTarget);
-            Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+            Bot.Wait.ForTrue(
+                () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
+                20
+            );
+            if (HelpTargetFinished())
+                return;
             if (
                 (!Bot.Map.PlayerExists(normalizedTarget) || string.Equals(Bot.Map?.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
                 && !string.IsNullOrEmpty(targetMap)
@@ -1085,7 +1296,12 @@ public class CoreArmyFJ
             )
             {
                 Core.Join(targetMap);
-                Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+                Bot.Wait.ForTrue(
+                    () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
+                    20
+                );
+                if (HelpTargetFinished())
+                    return;
 
                 // In XP/CP level-bracketed farms (where /goto is often blocked on /battlegrounde or private rooms),
                 // a higher-level helper may need to step down (or up to icestormunder if Lv 75+) to find the teammate.
@@ -1103,13 +1319,19 @@ public class CoreArmyFJ
 
                     foreach (string fallbackMap in fallbackMaps)
                     {
-                        if (Bot.ShouldExit || Bot.Map.PlayerExists(normalizedTarget))
+                        if (Bot.ShouldExit || Bot.Map.PlayerExists(normalizedTarget) || HelpTargetFinished())
                             break;
                         Core.Join(fallbackMap);
-                        Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+                        Bot.Wait.ForTrue(
+                            () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
+                            20
+                        );
                     }
                 }
             }
+            // Teammate finished while we were travelling: don't count it as a failed Goto.
+            if (HelpTargetFinished())
+                return;
             string? loadedMap = Bot.Map?.Name ?? targetMap;
             EnsureMapAccessBypass(loadedMap);
             if (string.Equals(Bot.Map?.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
@@ -1569,6 +1791,160 @@ public class CoreArmyFJ
     }
 
 
+    // Same as HasArmySignal but over lines already read (avoids re-reading the sync file per player).
+    private bool HasArmySignalIn(string[] lines, string signal, int senderPlayerNumber)
+    {
+        string signalName = NormalizeArmyRecordName(signal);
+        if (string.IsNullOrEmpty(signalName) || senderPlayerNumber < 1 || senderPlayerNumber > armyPlayers.Length)
+            return false;
+
+        string expectedSender = armyPlayers[senderPlayerNumber - 1];
+        foreach (string line in lines)
+        {
+            if (!line.StartsWith("SIGNAL|", StringComparison.Ordinal))
+                continue;
+
+            string[] parts = line.Split('|');
+            if (
+                parts.Length == 5
+                && parts[1] == ArmyProtocolVersion
+                && string.Equals(parts[2], armySessionId, StringComparison.Ordinal)
+                && string.Equals(parts[3], signalName, StringComparison.Ordinal)
+                && string.Equals(NormalizeArmyUsername(parts[4]), expectedSender, StringComparison.OrdinalIgnoreCase)
+            )
+                return true;
+        }
+
+        return false;
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Room subgroups. A map cap smaller than the Army splits players into the fewest rooms
+    // possible with balanced sizes (7 @ cap 6 -> 4+3, 7 @ cap 3 -> 3+2+2) instead of leaving
+    // the last player alone (old (p-1)/cap gave 6+1 and 3+3+1). Groups stay contiguous so
+    // P1-P4 (the core roles) stay together whenever the cap allows.
+    // ---------------------------------------------------------------------------------------
+    public static int GetSubgroupIndex(int playerNumber, int playerCount, int cap)
+    {
+        if (cap <= 0 || playerCount <= 0 || playerCount <= cap)
+            return 0;
+
+        int groups = (playerCount + cap - 1) / cap;
+        int baseSize = playerCount / groups;
+        int extra = playerCount % groups;
+        int start = 1;
+        for (int group = 0; group < groups; group++)
+        {
+            int size = baseSize + (group < extra ? 1 : 0);
+            if (playerNumber < start + size)
+                return group;
+            start += size;
+        }
+
+        return groups - 1;
+    }
+
+    public static int GetSubgroupFirstPlayer(int subgroup, int playerCount, int cap)
+    {
+        if (cap <= 0 || playerCount <= cap || subgroup <= 0)
+            return 1;
+
+        int groups = (playerCount + cap - 1) / cap;
+        int baseSize = playerCount / groups;
+        int extra = playerCount % groups;
+        int start = 1;
+        for (int group = 0; group < subgroup && group < groups; group++)
+            start += baseSize + (group < extra ? 1 : 0);
+        return start;
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Persistent map player caps (world.areaData.intMaxPlayers), learned whenever any Army
+    // account stands in a map and shared by every account/session through one small file.
+    // Lets playerOne split rooms without probing, including maps it should not probe.
+    // ---------------------------------------------------------------------------------------
+    private Dictionary<string, int>? knownMapCaps;
+    private string lastRecordedCapMap = string.Empty;
+
+    private static string MapCapsPath => Path.Combine(ClientFileSources.SkuaOptionsDIR, "ArmyMapCaps.txt");
+
+    private Dictionary<string, int> LoadKnownMapCaps()
+    {
+        Dictionary<string, int> caps = new(StringComparer.OrdinalIgnoreCase);
+        try
+        {
+            if (File.Exists(MapCapsPath))
+            {
+                foreach (string line in File.ReadAllLines(MapCapsPath))
+                {
+                    string[] parts = line.Split('=');
+                    if (
+                        parts.Length == 2
+                        && int.TryParse(parts[1].Trim(), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int max)
+                        && max > 0
+                    )
+                        caps[parts[0].Trim()] = max;
+                }
+            }
+        }
+        catch { }
+
+        return caps;
+    }
+
+    /// <summary>Known intMaxPlayers for a map (0 when never seen).</summary>
+    public int GetKnownMapMaxPlayers(string? mapName)
+    {
+        string? key = NormalizeMapKey(mapName);
+        if (string.IsNullOrEmpty(key))
+            return 0;
+
+        knownMapCaps ??= LoadKnownMapCaps();
+        if (knownMapCaps.TryGetValue(key, out int max))
+            return max;
+
+        // Another account may have learned it since we loaded.
+        knownMapCaps = LoadKnownMapCaps();
+        return knownMapCaps.TryGetValue(key, out max) ? max : 0;
+    }
+
+    public void RecordMapMaxPlayers(string? mapName, int maxPlayers)
+    {
+        string? key = NormalizeMapKey(mapName);
+        if (string.IsNullOrEmpty(key) || maxPlayers <= 0 || key == "whitemap")
+            return;
+
+        knownMapCaps ??= LoadKnownMapCaps();
+        if (knownMapCaps.TryGetValue(key, out int existing) && existing == maxPlayers)
+            return;
+
+        knownMapCaps[key] = maxPlayers;
+        try
+        {
+            File.AppendAllText(MapCapsPath, $"{key}={maxPlayers}{Environment.NewLine}");
+        }
+        catch { }
+    }
+
+    /// <summary>Records the cap of the map this account is standing in (cheap; only when the map changed).</summary>
+    public void RecordCurrentMapCap()
+    {
+        try
+        {
+            string? map = NormalizeMapKey(Bot.Map?.Name);
+            if (string.IsNullOrEmpty(map) || string.Equals(map, lastRecordedCapMap, StringComparison.OrdinalIgnoreCase) || !Bot.Map.Loaded)
+                return;
+
+            int max = DetectCurrentMapMaxPlayers();
+            if (max <= 0)
+                return;
+
+            RecordMapMaxPlayers(map, max);
+            lastRecordedCapMap = map;
+        }
+        catch { }
+    }
+
     public int ArmyPlayerNumber =>
         armyInitialized && armyPlayerIndex >= 0 ? armyPlayerIndex + 1 : 0;
 
@@ -1608,6 +1984,8 @@ public class CoreArmyFJ
         if (!ClearArmyFile())
             return false;
 
+        DeleteOldArmySideFiles();
+
         if (
             !AppendArmyRecord(new[] { "RESET", ArmyProtocolVersion, armySessionId })
             || !WriteArmyReady(armySessionId)
@@ -1627,14 +2005,41 @@ public class CoreArmyFJ
     {
         Core.Logger("Waiting for playerOne to start Army sync.", "CoreArmyFJ");
         string readySession = string.Empty;
+        DateTime lastLeaderCheck = DateTime.UtcNow;
 
         while (!Bot.ShouldExit && !armyTransportFailed)
         {
             string[] lines = ReadArmyLines();
             string? sessionId = FindLatestArmyReset(lines);
-            if (sessionId == null)
+            if (
+                sessionId == null
+                || string.Equals(sessionId, armyIgnoredSessionId, StringComparison.Ordinal)
+            )
             {
                 Bot.Sleep(ArmyPollDelay);
+                continue;
+            }
+
+            if (HasAnyArmyStart(lines, sessionId))
+            {
+                if (HasMatchingArmyStart(lines, sessionId))
+                {
+                    if (HasArmyStop(lines, sessionId))
+                        return false;
+
+                    armySessionId = sessionId;
+                    return true;
+                }
+
+                // This session started without us (our bot was restarted mid-run). If it is still
+                // live, ask playerOne to re-create it; then wait for the next RESET.
+                if (!HasArmyStop(lines, sessionId))
+                {
+                    Core.Logger("Army is already running without this account; asking playerOne to restart the session.", "CoreArmyFJ");
+                    AppendArmyRecord(new[] { "REJOIN", ArmyProtocolVersion, sessionId, armyUsername });
+                }
+
+                armyIgnoredSessionId = sessionId;
                 continue;
             }
 
@@ -1646,19 +2051,62 @@ public class CoreArmyFJ
                 readySession = sessionId;
             }
 
-            if (HasMatchingArmyStart(lines, sessionId))
+            if ((DateTime.UtcNow - lastLeaderCheck).TotalSeconds >= 15 && armyPlayers.Length > 0)
             {
-                if (HasArmyStop(lines, sessionId))
-                    return false;
-
-                armySessionId = sessionId;
-                return true;
+                lastLeaderCheck = DateTime.UtcNow;
+                WarnAboutStaleArmyPlayers(new[] { armyPlayers[0] });
             }
 
             Bot.Sleep(ArmyPollDelay);
         }
 
         return false;
+    }
+
+    private bool HasAnyArmyStart(string[] lines, string sessionId)
+    {
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split('|');
+            if (
+                parts.Length >= 3
+                && parts[0] == "START"
+                && parts[1] == ArmyProtocolVersion
+                && string.Equals(parts[2], sessionId, StringComparison.Ordinal)
+            )
+                return true;
+        }
+
+        return false;
+    }
+
+    // MAPCAP / UNSAFESPAWN / AllPlayersSatisfy flag files are per session; drop the old ones
+    // (heartbeat files are kept, live teammates keep rewriting them).
+    private void DeleteOldArmySideFiles()
+    {
+        try
+        {
+            string? dir = Path.GetDirectoryName(armySyncPath);
+            string prefix = Path.GetFileName(armySyncPath) + ".";
+            if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir))
+                return;
+
+            foreach (string file in Directory.GetFiles(dir, prefix + "*"))
+            {
+                string name = Path.GetFileName(file);
+                if (
+                    !name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                    || name.Contains(".HB.", StringComparison.Ordinal)
+                )
+                    continue;
+                try
+                {
+                    File.Delete(file);
+                }
+                catch { }
+            }
+        }
+        catch { }
     }
 
     private bool WriteArmyReady(string sessionId) =>
@@ -1669,6 +2117,7 @@ public class CoreArmyFJ
     private Dictionary<string, string>? WaitForArmyReady(string sessionId)
     {
         string previousMissing = string.Empty;
+        DateTime lastStaleCheck = DateTime.UtcNow;
         while (!Bot.ShouldExit && !armyTransportFailed)
         {
             Dictionary<string, string> tokens = new(StringComparer.OrdinalIgnoreCase);
@@ -1701,6 +2150,12 @@ public class CoreArmyFJ
             {
                 Core.Logger($"Waiting for Army players: {missing}.", "CoreArmyFJ");
                 previousMissing = missing;
+            }
+
+            if ((DateTime.UtcNow - lastStaleCheck).TotalSeconds >= 15)
+            {
+                lastStaleCheck = DateTime.UtcNow;
+                WarnAboutStaleArmyPlayers(armyPlayers.Where(player => !tokens.ContainsKey(player)));
             }
 
             Bot.Sleep(ArmyPollDelay);
@@ -1756,6 +2211,7 @@ public class CoreArmyFJ
             return false;
 
         string previousMissing = string.Empty;
+        DateTime lastStaleCheck = DateTime.UtcNow;
         while (!Bot.ShouldExit && !armyTransportFailed)
         {
             string[] lines = ReadArmyLines();
@@ -1791,6 +2247,12 @@ public class CoreArmyFJ
                 previousMissing = missing;
             }
 
+            if ((DateTime.UtcNow - lastStaleCheck).TotalSeconds >= 15)
+            {
+                lastStaleCheck = DateTime.UtcNow;
+                WarnAboutStaleArmyPlayers(armyPlayers.Where(player => !arrived.Contains(player)));
+            }
+
             Bot.Sleep(ArmyPollDelay);
         }
 
@@ -1813,7 +2275,10 @@ public class CoreArmyFJ
 
             if (!string.Equals(stepName, expectedStepName, StringComparison.Ordinal))
             {
-                Core.Logger("Army sync step does not match playerOne.", "CoreArmyFJ");
+                string mismatch =
+                    $"sync step mismatch: playerOne is at '{stepName}' but this account reached '{expectedStepName}'";
+                Core.Logger($"Army {mismatch}. Stopping the Army so nobody waits forever.", "CoreArmyFJ");
+                ReportArmyFailure(mismatch);
                 return false;
             }
 
@@ -1932,22 +2397,49 @@ public class CoreArmyFJ
     private bool CanContinueArmySync(string[] lines)
     {
         string? latestSessionId = FindLatestArmyReset(lines);
+        if (armyRestartRequested)
+            return false;
+
         if (
             latestSessionId != null
             && !string.Equals(latestSessionId, armySessionId, StringComparison.Ordinal)
         )
         {
+            // playerOne re-created the session (it restarted, or a teammate asked to rejoin).
             if (!armySessionFailureLogged)
             {
-                Core.Logger(
-                    "Army sync session was replaced.",
-                    "CoreArmyFJ",
-                    messageBox: true,
-                    stopBot: true
-                );
+                Core.Logger("Army session was re-created by playerOne; restarting this run to rejoin.", "CoreArmyFJ");
                 armySessionFailureLogged = true;
             }
 
+            armyRestartRequested = true;
+            return false;
+        }
+
+        (string User, string Reason)? failure = FindArmyFailure(lines);
+        if (failure != null)
+        {
+            if (!armyFailureLogged)
+            {
+                Core.Logger(
+                    $"Army stopped: {LogArmyName(failure.Value.User)} ({failure.Value.User}) failed: {failure.Value.Reason}",
+                    "CoreArmyFJ",
+                    messageBox: true
+                );
+                armyFailureLogged = true;
+            }
+
+            return false;
+        }
+
+        string? rejoining = FindArmyRejoin(lines);
+        if (rejoining != null)
+        {
+            Core.Logger(
+                $"{LogArmyName(rejoining)} restarted its bot and asked to rejoin; restarting the Army session.",
+                "CoreArmyFJ"
+            );
+            armyRestartRequested = true;
             return false;
         }
 
@@ -1977,6 +2469,47 @@ public class CoreArmyFJ
                 && Guid.TryParseExact(parts[2], "N", out _)
             )
                 return parts[2];
+        }
+
+        return null;
+    }
+
+    private (string User, string Reason)? FindArmyFailure(string[] lines)
+    {
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split('|');
+            if (
+                parts.Length == 5
+                && parts[0] == "FAIL"
+                && parts[1] == ArmyProtocolVersion
+                && string.Equals(parts[2], armySessionId, StringComparison.Ordinal)
+            )
+                return (NormalizeArmyUsername(parts[3]), parts[4]);
+        }
+
+        return null;
+    }
+
+    private string? FindArmyRejoin(string[] lines)
+    {
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split('|');
+            if (
+                parts.Length == 4
+                && parts[0] == "REJOIN"
+                && parts[1] == ArmyProtocolVersion
+                && string.Equals(parts[2], armySessionId, StringComparison.Ordinal)
+            )
+            {
+                string user = NormalizeArmyUsername(parts[3]);
+                if (
+                    !string.Equals(user, armyUsername, StringComparison.OrdinalIgnoreCase)
+                    && armyPlayers.Contains(user, StringComparer.OrdinalIgnoreCase)
+                )
+                    return user;
+            }
         }
 
         return null;
@@ -2106,6 +2639,12 @@ public class CoreArmyFJ
             case "STOP":
                 Core.Logger("Army sync stop sent.", "CoreArmyFJ");
                 break;
+            case "FAIL" when fields.Count > 4:
+                Core.Logger($"Army failure reported to all accounts: {fields[4]}", "CoreArmyFJ");
+                break;
+            case "REJOIN":
+                Core.Logger("Army rejoin requested.", "CoreArmyFJ");
+                break;
         }
     }
 
@@ -2190,6 +2729,11 @@ public class CoreArmyFJ
         armyStopLogged = false;
         armyTransportFailed = false;
         armyTransportFailureLogged = false;
+        armyRestartRequested = false;
+        armyFailureLogged = false;
+        armyIgnoredSessionId = string.Empty;
+        armyStaleWarnedAt.Clear();
+        lastRecordedCapMap = string.Empty;
     }
 
     private static string NormalizeArmyUsername(string? username) =>

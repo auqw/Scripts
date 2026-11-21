@@ -155,69 +155,102 @@ public class ArmyFarmerJoeDoAll
     {
         CoreBots core = CoreBots.Instance;
         core.SetOptions();
+        AttachRoomFullListener();
         try
         {
-            if (!StartArmySync(SyncFileName))
-                return;
-
-            if (!RunStartupBankAll())
-                return;
-
-            if (!RunStartupUnlockedDailies())
-                return;
-
-            if (!RunLevel1To30())
-                return;
-
-            if (!RunBracket30())
-                return;
-
-            if (!RunBracket50())
-                return;
-
-            if (!RunBracket55())
-                return;
-
-            if (!RunBracket60())
-                return;
-
-            if (!RunBracket65())
-                return;
-
-            if (!RunBracket70())
-                return;
-
-            if (!RunStep3A())
-                return;
-
-            if (!RunStep3B())
-                return;
-
-            if (!RunStep3C())
-                return;
-
-            if (!RunStep4A())
-                return;
-
-            if (!RunSellStarterClasses())
-                return;
-
-            if (!RunFarmerJoeOutfit())
-                return;
-
-            if (IsPlayer(1))
+            // A teammate that restarts its bot (relogin / manual restart) makes playerOne re-create
+            // the session; every account then restarts from the top and the skip gates fast-forward.
+            const int MaxSessionRestarts = 25;
+            for (int restart = 0; restart <= MaxSessionRestarts && !Bot.ShouldExit; restart++)
             {
-                if (StopArmySync("STEP4A_COMPLETE"))
-                    core.Logger("Army FarmerJoe: player 1 published STEP4A_COMPLETE.");
+                if (restart > 0)
+                {
+                    core.Logger($"Army FarmerJoe: rejoining the Army session (restart {restart}/{MaxSessionRestarts}).");
+                    ResetRunState();
+                }
+
+                string failedStage;
+                try
+                {
+                    failedStage = RunArmyProgression(core);
+                }
+                catch (Exception ex) when (!Bot.ShouldExit)
+                {
+                    core.Logger($"Army FarmerJoe: unexpected error: {ex.Message}");
+                    Bot.Log(ex.ToString());
+                    Army.ReportArmyFailure($"{ex.GetType().Name}: {ex.Message}");
+                    return;
+                }
+
+                if (failedStage.Length == 0 || Bot.ShouldExit)
+                    return;
+
+                if (Army.RestartRequested)
+                    continue;
+
+                // This account stopped on its own (objective gave up, map unavailable...). Tell everyone.
+                Army.ReportArmyFailure($"stopped during {failedStage}");
                 return;
             }
-
-            WaitForArmyStop();
         }
         finally
         {
+            DetachRoomFullListener();
+            Army.EndArmySession();
             core.SetOptions(false);
         }
+    }
+
+    // Returns "" when the run finished, otherwise the name of the stage that returned false.
+    private string RunArmyProgression(CoreBots core)
+    {
+        (string Name, Func<bool> Run)[] stages =
+        {
+            ("StartArmySync", () => StartArmySync(SyncFileName)),
+            ("StartupBankAll", RunStartupBankAll),
+            ("StartupDailies", RunStartupUnlockedDailies),
+            ("Level1To30", RunLevel1To30),
+            ("Bracket30", RunBracket30),
+            ("Bracket50", RunBracket50),
+            ("Bracket55", RunBracket55),
+            ("Bracket60", RunBracket60),
+            ("Bracket65", RunBracket65),
+            ("Bracket70", RunBracket70),
+            ("Step3A", RunStep3A),
+            ("Step3B", RunStep3B),
+            ("Step3C", RunStep3C),
+            ("Step4A", RunStep4A),
+            ("SellStarterClasses", RunSellStarterClasses),
+            ("FarmerJoeOutfit", RunFarmerJoeOutfit),
+        };
+
+        foreach ((string stageName, Func<bool> run) in stages)
+        {
+            if (!run())
+                return stageName;
+        }
+
+        if (IsPlayer(1))
+        {
+            if (StopArmySync("STEP4A_COMPLETE"))
+                core.Logger("Army FarmerJoe: player 1 published STEP4A_COMPLETE.");
+            return string.Empty;
+        }
+
+        WaitForArmyStop();
+        return string.Empty;
+    }
+
+    // Per-run flags that must not leak into a restarted run.
+    private void ResetRunState()
+    {
+        _startupBracket30DailiesDone = false;
+        _startupBracket50DailiesDone = false;
+        _startupBracket55DailiesDone = false;
+        _startupDagesScrollDone = false;
+        _loOCheckedDayKey = string.Empty;
+        _activeSubgroupMaxPlayers = 0;
+        _syncedClassType = ClassType.None;
     }
 
     public bool StartArmySync(string syncFileName)
@@ -296,10 +329,7 @@ public class ArmyFarmerJoeDoAll
     private bool RunEldersBloodDaily(string objectivePrefix = "BRACKET30")
     {
         CoreBots core = CoreBots.Instance;
-        bool eldersBloodAvailable =
-            Bot.Player.Level >= 30
-            && !core.CheckInventory("Elders' Blood", 20, toInv: false)
-            && CanRunPeriodicQuest(802);
+        bool eldersBloodAvailable = IsEldersBloodEligible();
 
         return RunCooperativeObjective(
             $"{objectivePrefix}_ELDERS_BLOOD",
@@ -315,9 +345,7 @@ public class ArmyFarmerJoeDoAll
                     && !core.CheckInventory("Elders' Blood", 20, toInv: false)
                 )
                 {
-                    UnbankIfOwned("Elders' Blood");
-                    SetClass(ClassType.Farm);
-                    Daily.EldersBlood();
+                    DoEldersBloodDaily();
                 }
             },
             (targetPlayerNumber, targetPlayerName) =>
@@ -345,29 +373,23 @@ public class ArmyFarmerJoeDoAll
         if (!Army.SyncArmy("STARTUP_DAILIES_START"))
             return false;
 
-        if (!RunEldersBloodDaily("STARTUP"))
+        // Light dailies: each account runs only the ones it already qualifies for, solo and in parallel.
+        if (!RunStartupLightDailiesParallel())
             return false;
 
-        if (!RunBracket30ApprovedDailiesAndWeeklies())
-            return false;
-
+        // When every account qualified, the light pass already covered these brackets' dailies,
+        // so progression can skip them. Otherwise progression reruns them as a group (done accounts pass instantly).
         _startupBracket30DailiesDone = Army.AllPlayersSatisfy(
             "STARTUP_DAILIES_LV30_READY",
             () => Bot.Player.Level >= 30
         );
 
-        if (
-            Army.AllPlayersSatisfy(
-                "STARTUP_DAILIES_LV50_READY",
-                () => Bot.Player.Level >= 50 && core.isCompletedBefore(2084, log: false)
-            )
-        )
-        {
-            if (!RunBracket50ApprovedDailies())
-                return false;
-            _startupBracket50DailiesDone = true;
-        }
+        _startupBracket50DailiesDone = Army.AllPlayersSatisfy(
+            "STARTUP_DAILIES_LV50_READY",
+            () => Bot.Player.Level >= 50 && core.isCompletedBefore(2084, log: false)
+        );
 
+        // Heavy dailies below stay group-only and run only when ALL accounts meet the requirements.
         if (
             Army.AllPlayersSatisfy(
                 "STARTUP_DAILIES_LV55_BK_READY",
@@ -382,7 +404,11 @@ public class ArmyFarmerJoeDoAll
 
         bool cryoDailyDone = false;
         if (
-            !RunCooperativeObjective(
+            Army.AllPlayersSatisfy(
+                "STARTUP_DAILIES_CRYO_READY",
+                () => Bot.Player.Level >= 55 && core.isCompletedBefore(3937, log: false)
+            )
+            && !RunCooperativeObjective(
                 "STARTUP_CRYO_DAILY",
                 () =>
                     cryoDailyDone
@@ -458,34 +484,115 @@ public class ArmyFarmerJoeDoAll
         return 1;
     }
 
+    // Same balanced split CoreArmyFJ uses for helper scoping, so rooms and helpers always agree.
     private int GetSubgroupRoomIndex(int maxPlayersPerRoom)
     {
         if (maxPlayersPerRoom <= 0)
             return 0;
 
-        return (GetLocalPlayerNumber() - 1) / maxPlayersPerRoom;
+        return CoreArmyFJ.GetSubgroupIndex(GetLocalPlayerNumber(), Army.ArmyPlayerCount, maxPlayersPerRoom);
     }
 
-    private bool ApplyRoomSettingsWithOffset(int roomOffset)
-    {
-        const int MinRoom = 1001;
-        const int MaxRoom = 99999;
+    private const int MinPrivateRoom = 1001;
+    private const int MaxPrivateRoom = 99999;
 
+    // Overflow rooms start far from the planned subgroup rooms (offsets 0..6).
+    private const int RoomOverflowBaseOffset = 10;
+    private int _roomOverflowStep;
+
+    private int? ComputeArmyRoomNumber(int roomOffset)
+    {
         string? rawRoom = Bot.Config?.Get<string>("RoomNumber")?.Trim();
         int roomNumber = int.TryParse(rawRoom, out int parsedRoom) ? parsedRoom : 0;
 
         if (!Army.ValidatePrivateRoomNumber(roomNumber))
+            return null;
+
+        int span = MaxPrivateRoom - MinPrivateRoom + 1;
+        int normalizedOffset = ((roomOffset % span) + span) % span;
+        return MinPrivateRoom + (((roomNumber - MinPrivateRoom) + normalizedOffset) % span);
+    }
+
+    private bool ApplyRoomSettingsWithOffset(int roomOffset)
+    {
+        int? effectiveRoom = ComputeArmyRoomNumber(roomOffset);
+        if (effectiveRoom == null)
             return false;
 
-        int span = MaxRoom - MinRoom + 1;
-        int normalizedOffset = ((roomOffset % span) + span) % span;
-        int effectiveRoom = MinRoom + (((roomNumber - MinRoom) + normalizedOffset) % span);
-
         CoreBots core = CoreBots.Instance;
+        _roomOverflowStep = 0;
         core.PrivateRooms = true;
-        core.PrivateRoomNumber = effectiveRoom;
+        core.PrivateRoomNumber = effectiveRoom.Value;
         core.PublicDifficult = false;
         return true;
+    }
+
+    // Safety net for maps whose cap was not planned for: when the server answers a join with
+    // "... is full", move this account to the next overflow room. CoreBots.Join rebuilds
+    // "map-room" on every retry, so its own retry loop then lands in the overflow room.
+    // Overflowing teammates from the same full room pick the same overflow room, so they stay together.
+    private void AttachRoomFullListener()
+    {
+        try
+        {
+            Bot.Events.ExtensionPacketReceived -= RoomFullListener;
+            Bot.Events.ExtensionPacketReceived += RoomFullListener;
+        }
+        catch { }
+    }
+
+    private void DetachRoomFullListener()
+    {
+        try
+        {
+            Bot.Events.ExtensionPacketReceived -= RoomFullListener;
+        }
+        catch { }
+    }
+
+    private void RoomFullListener(dynamic packet)
+    {
+        try
+        {
+            if (packet == null)
+                return;
+
+            dynamic? paramsObj = packet["params"];
+            if (paramsObj == null || paramsObj.type != "str")
+                return;
+
+            dynamic? dataObj = paramsObj.dataObj;
+            if (dataObj == null)
+                return;
+
+            string? cmd = dataObj[0];
+            if (cmd != "warning")
+                return;
+
+            string text = Convert.ToString(packet) ?? string.Empty;
+            if (
+                !text.Contains("is full", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("inventory", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("bank", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("house", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("bag", StringComparison.OrdinalIgnoreCase)
+            )
+                return;
+
+            CoreBots core = CoreBots.Instance;
+            if (!core.PrivateRooms || _roomOverflowStep >= 7)
+                return;
+
+            _roomOverflowStep++;
+            int? overflowRoom = ComputeArmyRoomNumber(RoomOverflowBaseOffset + _roomOverflowStep - 1);
+            if (overflowRoom == null)
+                return;
+
+            int previousRoom = core.PrivateRoomNumber;
+            core.PrivateRoomNumber = overflowRoom.Value;
+            core.Logger($"Room {previousRoom} is full; retrying in overflow room {overflowRoom.Value}.");
+        }
+        catch { }
     }
 
     private bool ApplyArmyRoomSettings()
@@ -523,7 +630,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            CoreBots.Instance.Logger("Army FarmerJoe: Step 1 (Level 1-30) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            CoreBots.Instance.Logger("Army FarmerJoe: Step 1 (Level 1-30) already completed on all accounts - skipping.");
             return Army.SyncArmy("STEP1_COMPLETE");
         }
 
@@ -668,7 +775,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        // 2b. Oracle (free 0 AC Healer/Support class in /classhalla shop 299 Ã¢â‚¬â€ bought early so Player 2 can heal from Level 1!)
+        // 2b. Oracle (free 0 AC Healer/Support class in /classhalla shop 299 - bought early so Player 2 can heal from Level 1!)
         bool HasOracle() => HasClassInInventory("Oracle");
         bool HasOracleRank10() => HasOracle() && HasRank10Class("Oracle");
 
@@ -1188,7 +1295,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2A (Bracket 30) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            core.Logger("Army FarmerJoe: Step 2A (Bracket 30) already completed on all accounts - skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2A_COMPLETE");
         }
@@ -1217,10 +1324,6 @@ public class ArmyFarmerJoeDoAll
 
         if (!_startupBracket30DailiesDone)
         {
-            // 1. Elders' Blood Daily (if Level >= 30 and daily available)
-            if (!RunEldersBloodDaily("BRACKET30"))
-                return false;
-
             // 1b. Approved Bracket 30 Weeklies & Early Daily (Design Notes 1213, Wheel of Doom 3076/3075, Odd's 'n' Ends 6187)
             if (!RunBracket30ApprovedDailiesAndWeeklies())
                 return false;
@@ -1228,6 +1331,10 @@ public class ArmyFarmerJoeDoAll
 
         // 3. Level 30 + post-level-up SmartEnhance
         if (!RunBracketLevelAndEnhance("BRACKET30_LEVEL_30", 30))
+            return false;
+
+        // 3b. Elders' Blood Daily, after Level 30 so new accounts actually qualify for it here.
+        if (!_startupBracket30DailiesDone && !RunEldersBloodDaily("BRACKET30"))
             return false;
 
         // 4. Master Ranger (Sandsea Rep 10 -> Buy & Rank 10)
@@ -1395,7 +1502,7 @@ public class ArmyFarmerJoeDoAll
             return false;
         SetClass();
 
-        // 5d. Imperial Chunin (Yokai Rep 10 in /dragonkoiz Ã¢â‚¬â€ room limit is 3 players, so split the
+        // 5d. Imperial Chunin (Yokai Rep 10 in /dragonkoiz - room limit is 3 players, so split the
         // Army into <=3-player sub-rooms for farming Pockey Chew and buying from Shop 95, then
         // restore the shared private room before ranking Imperial Chunin in /icestormarena).
         const int DragonkoiMaxPlayers = 3;
@@ -1511,7 +1618,7 @@ public class ArmyFarmerJoeDoAll
             return false;
         SetClass();
 
-        // 5e. Shaman & Evolved Shaman (Arcangrove Rep 10 in /arcangrove Ã¢â‚¬â€ No boss, Gorillaphant & Seed Spitter ~2k HP, unlocks 2 unique classes for Player 4 & Player 5 from the same Rep!)
+        // 5e. Shaman & Evolved Shaman (Arcangrove Rep 10 in /arcangrove - No boss, Gorillaphant & Seed Spitter ~2k HP, unlocks 2 unique classes for Player 4 & Player 5 from the same Rep!)
         bool HasShaman() => HasClassInInventory("Shaman");
         bool HasShamanRank10() => HasShaman() && HasRank10Class("Shaman");
         bool HasEvolvedShaman() => HasClassInInventory("Evolved Shaman");
@@ -1631,7 +1738,7 @@ public class ArmyFarmerJoeDoAll
             return false;
         SetClass();
 
-        // 5f. Bard (Non-Member Support Ã¢â‚¬â€ Kimberly Story + Mythsong Rep 4 -> Buy in /mythsong shop 186 & Rank 10)
+        // 5f. Bard (Non-Member Support - Kimberly Story + Mythsong Rep 4 -> Buy in /mythsong shop 186 & Rank 10)
         bool HasBard() => HasClassInInventory("Bard");
         bool HasBardRank10() => HasBard() && HasRank10Class("Bard");
         bool IsBardMythsongDone() => HasBard() || Farm.FactionRank("Mythsong") >= 4;
@@ -2012,7 +2119,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2B (Bracket 50) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            core.Logger("Army FarmerJoe: Step 2B (Bracket 50) already completed on all accounts - skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2B_COMPLETE");
         }
@@ -3225,7 +3332,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2C (Bracket 55) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 55) already completed on all accounts - skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2C_55_COMPLETE") && !Bot.ShouldExit;
         }
@@ -3650,7 +3757,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2C (Bracket 60) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 60) already completed on all accounts - skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2C_60_COMPLETE") && !Bot.ShouldExit;
         }
@@ -4420,7 +4527,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2C (Bracket 65) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            core.Logger("Army FarmerJoe: Step 2C (Bracket 65) already completed on all accounts - skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2C_65_COMPLETE") && !Bot.ShouldExit;
         }
@@ -4563,7 +4670,7 @@ public class ArmyFarmerJoeDoAll
             )
         )
         {
-            core.Logger("Army FarmerJoe: Step 2D (Bracket 70) already completed on all accounts Ã¢â‚¬â€ skipping.");
+            core.Logger("Army FarmerJoe: Step 2D (Bracket 70) already completed on all accounts - skipping.");
             EnsureBestStaticBoostGearEquipped();
             return Army.SyncArmy("STEP2D_COMPLETE") && !Bot.ShouldExit;
         }
@@ -4964,7 +5071,7 @@ public class ArmyFarmerJoeDoAll
             "Sparrow's Blood"
         );
 
-        // Part 1: Ãƒâ€ lfred in /rivensylth (4637-4644)
+        // Part 1: Aelfred in /rivensylth (4637-4644)
         bool IsAelfredDone() => skipCondition() || core.isCompletedBefore(4644, log: false);
         CoordinatedStoryStep[] aelfredSteps =
         {
@@ -7438,7 +7545,8 @@ public class ArmyFarmerJoeDoAll
                     core.EnsureComplete(327);
                     Bot.Wait.ForPickup("Snowbeard's Gold");
                     core.ChainComplete(323);
-                }
+                },
+                unlockQuestId: 327 // 323 needs slot 22 = 8, set by 327 "Follow your Nose!"
             ),
             new(344, "dwarfhold", "*", () => Story.MapItemQuest(344, "dwarfhold", 60), isCombat: false),
             new(331, "mountainpath", "Ore Balboa", () => Story.KillQuest(331, "mountainpath", "Ore Balboa")),
@@ -7469,7 +7577,8 @@ public class ArmyFarmerJoeDoAll
                     core.HuntMonster("dwarfhold", "Amadeus", "Key Mold", log: false);
                     core.EnsureComplete(341);
                 },
-                ClassType.Solo
+                ClassType.Solo,
+                unlockQuestId: 340 // 341 needs 343 (slot 21), which needs 340 (slot 20)
             ),
             new(346, "uppercity", "*", () => Story.MapItemQuest(346, "uppercity", 61), isCombat: false),
             new(347, "uppercity", "Drow Assassin", () => Story.KillQuest(347, "uppercity", "Drow Assassin")),
@@ -7501,7 +7610,8 @@ public class ArmyFarmerJoeDoAll
                     Bot.Quests.UpdateQuest(354);
                     core.Join("dwarfprison", "Enter", "Right");
                     core.EnsureComplete(354);
-                }
+                },
+                unlockQuestId: 353 // 354 needs slot 22 = 30, set by 353 "Mock the Lock"
             ),
             new(355, "dwarfprison", "Warden Elfis", () => Story.KillQuest(355, "dwarfprison", "Warden Elfis"), ClassType.Solo),
             new(
@@ -9334,7 +9444,8 @@ public class ArmyFarmerJoeDoAll
                     core.KillMonster("finalbattle", "r1", "Left", 1, 26875, log: false);
                     core.EnsureComplete(3876);
                 },
-                ClassType.Solo
+                ClassType.Solo,
+                unlockQuestId: 3875 // 3876 needs slot 182 = 1, set by 3875
             ),
             new(
                 3877,
@@ -9493,9 +9604,11 @@ public class ArmyFarmerJoeDoAll
         // 2. Northlands Monk (Seasonal /frozensoul drop from Frozensoul Queen)
         bool HasNorthlandsMonk() => HasClassInInventory("Northlands Monk");
         bool HasRank10NorthlandsMonk() => HasRank10Class("Northlands Monk");
-        bool canFarmNorthlandsMonk = HasNorthlandsMonk() || core.isSeasonalMapActive("frozensoul");
+        bool frozensoulActive = core.isSeasonalMapActive("frozensoul");
+        bool CanFarmNorthlandsMonk() => HasNorthlandsMonk() || frozensoulActive;
 
-        if (canFarmNorthlandsMonk)
+        // Army-wide decision (a per-account flag here put accounts on different barriers).
+        if (!Army.AllPlayersSatisfy("STEP3A_NORTHLANDS_MONK_NONE", () => !CanFarmNorthlandsMonk()))
         {
             if (
                 !RunCoordinatedHuntStep(
@@ -9508,7 +9621,7 @@ public class ArmyFarmerJoeDoAll
                     isTemp: false,
                     role: ClassType.Solo,
                     softRetryLimit: 0,
-                    isEnabled: () => !HasNorthlandsMonk()
+                    isEnabled: () => !HasNorthlandsMonk() && frozensoulActive
                 )
             )
                 return false;
@@ -9521,7 +9634,6 @@ public class ArmyFarmerJoeDoAll
                     {
                         if (!HasNorthlandsMonk() || HasRank10NorthlandsMonk())
                             return;
-                        core.Unbank("Northlands Monk");
                         RankUpClassForArmy("Northlands Monk");
                         EnhanceClassForArmyRespectingGearPolicy("Northlands Monk", allowFullGearEnhance: false);
                     },
@@ -9551,18 +9663,18 @@ public class ArmyFarmerJoeDoAll
             && core.CheckInventory("Favored of Kyanos", toInv: false)
             && core.CheckInventory("Warrior of Kyanos", toInv: false)
             && core.CheckInventory("Ice Diamond", 29, toInv: false);
-        bool canFarmFSR = HasFSR() || HasFSRMergeMaterials();
+        bool CanFarmFSR() => HasFSR() || HasFSRMergeMaterials();
 
-        if (canFarmFSR)
+        if (!Army.AllPlayersSatisfy("STEP3A_FSR_NONE", () => !CanFarmFSR()))
         {
             if (
                 !RunCoordinatedTurnInStep(
                     "STEP3A_FSR_BUY",
-                    HasFSR,
-                    HasFSR,
+                    () => HasFSR() || !HasFSRMergeMaterials(),
+                    () => HasFSR() || !HasFSRMergeMaterials(),
                     () =>
                     {
-                        if (HasFSR())
+                        if (HasFSR() || !HasFSRMergeMaterials())
                             return;
                         core.Unbank(
                             "Frost Sigil",
@@ -9585,7 +9697,6 @@ public class ArmyFarmerJoeDoAll
                     {
                         if (!HasFSR() || HasRank10FSR())
                             return;
-                        core.Unbank("Frost SpiritReaver");
                         RankUpClassForArmy("Frost SpiritReaver");
                         EnhanceClassForArmyRespectingGearPolicy(
                             "Frost SpiritReaver",
@@ -9623,7 +9734,7 @@ public class ArmyFarmerJoeDoAll
         // 1. Forge Weapon Enhancement (Quest 8738 - Blacksmithing Rank 4, Level 30)
         bool IsForgeWeaponDone() => core.isCompletedBefore(8738, log: false);
 
-        if (!IsForgeWeaponDone())
+        if (!Army.AllPlayersSatisfy("STEP3A_FORGE_WEAPON_ALL_DONE", IsForgeWeaponDone))
         {
             if (!RunBlacksmithingRank4Step("STEP3A_FORGE_WEAPON_BS_RANK_4", IsForgeWeaponDone))
                 return false;
@@ -9708,7 +9819,7 @@ public class ArmyFarmerJoeDoAll
         // 2. Praxis (Quest 9171 - Another One Bites the Dust, Blacksmithing Rank 6)
         bool IsPraxisDone() => core.isCompletedBefore(9171, log: false);
 
-        if (!IsPraxisDone())
+        if (!Army.AllPlayersSatisfy("STEP3A_PRAXIS_ALL_DONE", IsPraxisDone))
         {
             if (!RunCoordinatedBlacksmithingRankStep("STEP3A_PRAXIS_BS_RANK_6", 6, 12, IsPraxisDone))
                 return false;
@@ -10176,7 +10287,7 @@ public class ArmyFarmerJoeDoAll
         bool HasDoT() => core.CheckInventory("Dragon of Time", 1, toInv: false);
 
         // /towerofdoom* has a 6-player room cap: split into Group 0 (Players 1-4) and Group 1 (Players 5-7).
-        if (!HasDoT())
+        if (!Army.AllPlayersSatisfy("STEP3B_DOT_ALL_HAVE", HasDoT))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -10244,7 +10355,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // /tercessuinotlim has a 6-player room cap: split into Group 0 (Players 1-4) and Group 1 (Players 5-7).
-        if (!HasArchFiend())
+        if (!Army.AllPlayersSatisfy("STEP3B_AF_ALL_HAVE", HasArchFiend))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -10560,7 +10671,7 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         bool HasSOF() => core.CheckInventory("Scion of Flames", 1, toInv: false);
 
-        if (!HasSOF())
+        if (!Army.AllPlayersSatisfy("STEP3C_SOF_ALL_HAVE", HasSOF))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -10664,7 +10775,7 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         bool HasKA() => core.CheckInventory("Kathool Adept", 1, toInv: false);
 
-        if (!HasKA())
+        if (!Army.AllPlayersSatisfy("STEP3C_KA_ALL_HAVE", HasKA))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -10845,7 +10956,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        if (!IsValianceDone())
+        if (!Army.AllPlayersSatisfy("STEP4A_VALIANCE_ALL_DONE", IsValianceDone))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -10913,7 +11024,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        if (!IsRavenousDone())
+        if (!Army.AllPlayersSatisfy("STEP4A_RAVENOUS_ALL_DONE", IsRavenousDone))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -11039,7 +11150,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        if (!IsElysiumDone())
+        if (!Army.AllPlayersSatisfy("STEP4A_ELYSIUM_ALL_DONE", IsElysiumDone))
         {
             ApplySubgroupRoomSettings(4);
             try
@@ -12629,7 +12740,7 @@ public class ArmyFarmerJoeDoAll
         )
             return false;
 
-        // 6494: Defeat Jaaku! (Boss: Jaaku, MapID 31, 175,880 HP Ã¢â‚¬â€ fixes EnsureComplete(6494))
+        // 6494: Defeat Jaaku! (Boss: Jaaku, MapID 31, 175,880 HP - fixes EnsureComplete(6494))
         if (
             !RunCooperativeObjective(
                 "BRACKET60_YOKAI_6494_JAAKU",
@@ -13160,7 +13271,7 @@ public class ArmyFarmerJoeDoAll
     }
     #endregion Step 2C: Brackets 55, 60, and 65
 
-    #region SetClass (Party Role Composition & CBO Resolution Ã¢â‚¬â€ 100% Free-to-Play Classes Only)
+    #region SetClass (Party Role Composition & CBO Resolution - 100% Free-to-Play Classes Only)
     // Required Players 1-4 form the Endgame Meta Core (Main DPS + StoneCrusher + ArchPaladin + Lord of Order).
     // Optional Players 5-7 add non-overlapping debuffs, amplifiers, dodge DPS, and backup support.
 
@@ -14842,7 +14953,8 @@ public class ArmyFarmerJoeDoAll
             Action<CoreBots> work,
             ClassType role = ClassType.Farm,
             bool isCombat = true,
-            bool skipMapVerify = false
+            bool skipMapVerify = false,
+            int unlockQuestId = 0
         )
         {
             QuestId = questId;
@@ -14852,6 +14964,7 @@ public class ArmyFarmerJoeDoAll
             Role = role;
             IsCombat = isCombat;
             SkipMapVerify = skipMapVerify;
+            UnlockQuestId = unlockQuestId > 0 ? unlockQuestId : questId;
         }
 
         public CoordinatedStoryStep(
@@ -14861,11 +14974,15 @@ public class ArmyFarmerJoeDoAll
             Action work,
             ClassType role = ClassType.Farm,
             bool isCombat = true,
-            bool skipMapVerify = false
+            bool skipMapVerify = false,
+            int unlockQuestId = 0
         )
-            : this(questId, map, helpMonster, _ => work(), role, isCombat, skipMapVerify) { }
+            : this(questId, map, helpMonster, _ => work(), role, isCombat, skipMapVerify, unlockQuestId) { }
 
         public int QuestId { get; }
+        // Quest whose unlock gates this step's work. Differs from QuestId when Work first
+        // completes a prerequisite quest in the same slot (e.g. 327 before 323).
+        public int UnlockQuestId { get; }
         public string Map { get; }
         public string HelpMonster { get; }
         public Action<CoreBots> Work { get; }
@@ -14980,6 +15097,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         Army.EnsureMapAccessBypass(map);
+        Army.RecordCurrentMapCap();
         return true;
     }
 
@@ -15084,36 +15202,54 @@ public class ArmyFarmerJoeDoAll
         return false;
     }
 
-    private int ProbeMapSubgroupCapForArmy(string? targetMap)
+    // playerOne decides the room split for an objective's map:
+    //   1. cap already learned this run, or in the shared ArmyMapCaps file -> no join needed;
+    //   2. otherwise (allowJoin) playerOne joins the map alone, reads intMaxPlayers and records it.
+    //      Aggressive-spawn maps are probed too, but playerOne leaves them right after reading.
+    // The leader publishes the result at the MAPCAP barrier, so every account uses the same split.
+    private int ProbeMapSubgroupCapForArmy(string? targetMap, bool allowJoin = true)
     {
         if (string.IsNullOrWhiteSpace(targetMap))
             return 0;
 
         string normalized = targetMap.Trim().ToLowerInvariant();
-        if (ShouldSkipMapVerification(normalized))
-            return 0;
-
         if (_detectedMapCaps.TryGetValue(normalized, out int cachedCap))
             return cachedCap;
 
-        ApplyArmyRoomSettings();
-        if (!JoinMapVerified(normalized))
-            return 0;
-
-        int maxPlayers = Army.DetectCurrentMapMaxPlayers(normalized);
-        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+        int maxPlayers = Army.GetKnownMapMaxPlayers(normalized);
+        if (maxPlayers <= 0)
         {
-            _detectedAggressiveSpawnMaps.Add(normalized);
-            Army.PublishMapUnsafeSpawn(normalized);
-            LeaveCombatRoomForEquipmentChange();
+            if (!allowJoin)
+                return 0;
+
+            bool aggressive = ShouldSkipMapVerification(normalized);
+            ApplyArmyRoomSettings();
+            if (!JoinMapVerified(normalized))
+                return 0;
+
+            maxPlayers = Army.DetectCurrentMapMaxPlayers(normalized);
+            Army.RecordMapMaxPlayers(normalized, maxPlayers);
+
+            if (aggressive || Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Any(m => m.Alive))
+            {
+                if (!aggressive)
+                {
+                    _detectedAggressiveSpawnMaps.Add(normalized);
+                    Army.PublishMapUnsafeSpawn(normalized);
+                }
+                LeaveCombatRoomForEquipmentChange();
+            }
         }
 
         int cap = (maxPlayers > 0 && maxPlayers < Army.ArmyPlayerCount) ? maxPlayers : 0;
         _detectedMapCaps[normalized] = cap;
         if (cap > 0)
+        {
+            int groups = (Army.ArmyPlayerCount + cap - 1) / cap;
             CoreBots.Instance.Logger(
-                $"Auto room-cap detected for '/{normalized}': {cap} players/room (Army={Army.ArmyPlayerCount})."
+                $"Room cap for '/{normalized}': {cap} players/room (Army={Army.ArmyPlayerCount}) -> splitting into {groups} rooms."
             );
+        }
         return cap;
     }
 
@@ -15142,8 +15278,7 @@ public class ArmyFarmerJoeDoAll
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
         bool autoDetectCap =
             previousSubgroupCap <= 0
-            && !string.IsNullOrWhiteSpace(targetMap)
-            && !ShouldSkipMapVerification(targetMap);
+            && !string.IsNullOrWhiteSpace(targetMap);
 
         try
         {
@@ -15225,7 +15360,8 @@ public class ArmyFarmerJoeDoAll
         Action<int, string> help,
         int maxWorkAttempts = 0,
         Action? prepareForCombat = null,
-        string? targetMap = null
+        string? targetMap = null,
+        bool probeMapByJoin = true
     )
     {
         int previousSubgroupCap = _activeSubgroupMaxPlayers;
@@ -15233,8 +15369,7 @@ public class ArmyFarmerJoeDoAll
         bool autoDetectCap =
             previousSubgroupCap <= 0
             && effectiveCap <= 0
-            && !string.IsNullOrWhiteSpace(targetMap)
-            && !ShouldSkipMapVerification(targetMap);
+            && !string.IsNullOrWhiteSpace(targetMap);
         if (effectiveCap > 0)
             ApplySubgroupRoomSettings(effectiveCap);
 
@@ -15265,7 +15400,7 @@ public class ArmyFarmerJoeDoAll
                             ApplyEffectiveSubgroupRoomSettings(objectiveName, effectiveCap);
                         prepareForCombat();
                     },
-                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap) : null
+                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap, probeMapByJoin) : null
             );
         }
         finally
@@ -15353,7 +15488,7 @@ public class ArmyFarmerJoeDoAll
         if (!IsDisabled())
         {
             int[] questIdsToPreload = steps
-                .Select(s => s.QuestId)
+                .SelectMany(s => new[] { s.QuestId, s.UnlockQuestId })
                 .Where(id => id > 0)
                 .Distinct()
                 .ToArray();
@@ -15363,6 +15498,16 @@ public class ArmyFarmerJoeDoAll
             if (dropsToKeep != null && dropsToKeep.Length > 0)
                 core.AddDrop(dropsToKeep);
         }
+
+        // Whole-chain skip: when every account already finished every step (typical on a restart),
+        // pay one AllPlayersSatisfy (2 barriers) instead of one objective per step.
+        if (
+            Army.AllPlayersSatisfy(
+                $"{objectivePrefix}_CHAIN_DONE",
+                () => IsDisabled() || steps.All(s => core.isCompletedBefore(s.QuestId, log: false))
+            )
+        )
+            return !Bot.ShouldExit;
 
         foreach (CoordinatedStoryStep step in steps)
         {
@@ -15386,7 +15531,7 @@ public class ArmyFarmerJoeDoAll
                             if (IsDisabled() || core.isCompletedBefore(step.QuestId, log: false))
                                 return;
 
-                            if (!IsStoryStepUnlocked(step.QuestId, objName))
+                            if (!IsStoryStepUnlocked(step.UnlockQuestId, objName))
                                 return;
 
                             LeaveCombatRoomForEquipmentChange();
@@ -15411,7 +15556,7 @@ public class ArmyFarmerJoeDoAll
                         if (IsDisabled() || core.isCompletedBefore(step.QuestId, log: false))
                             return;
 
-                        if (!IsStoryStepUnlocked(step.QuestId, objName))
+                        if (!IsStoryStepUnlocked(step.UnlockQuestId, objName))
                             return;
 
                         SetClass(step.Role);
@@ -15428,7 +15573,11 @@ public class ArmyFarmerJoeDoAll
                         ),
                     maxWorkAttempts: 5,
                     prepareForCombat: () => PrepareCombatLoadoutForArmy(step.Role, step.SkipMapVerify ? null : step.Map),
-                    targetMap: (step.SkipMapVerify || ShouldSkipMapVerification(step.Map)) ? null : step.Map
+                    // Always plan the room split from the step map (static per step, so every account
+                    // takes the same MAPCAP barrier). SkipMapVerify maps are never joined for a probe:
+                    // they only use a cap already learned in ArmyMapCaps.
+                    targetMap: string.IsNullOrWhiteSpace(step.Map) || step.Map == "*" ? null : step.Map,
+                    probeMapByJoin: !step.SkipMapVerify
                 )
             )
                 return false;
@@ -15485,75 +15634,314 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
 
         // 1b-1. Weekly: Read the Design Notes! [1213] (+150 Loremaster Rep)
-        bool skipDesignNotes =
-            Farm.FactionRank("Loremaster") >= 10
-            || !CanRunPeriodicQuest(1213);
+        bool skipDesignNotes = !IsDesignNotesEligible();
         if (
             !RunCoordinatedTurnInStep(
                 "BRACKET30_DESIGN_NOTES_WEEKLY",
                 () => skipDesignNotes,
-                () => Bot.Quests.IsDailyComplete(1213) || Farm.FactionRank("Loremaster") >= 10,
-                () =>
-                {
-                    core.Logger("Weekly: Read the Design Notes! [1213]");
-                    core.ChainComplete(1213);
-                }
+                IsDesignNotesDone,
+                DoDesignNotesWeekly
             )
         )
             return false;
 
         // 1b-2. Weekly: Wheel of Doom [3076 F2P / 3075 Mem]
-        bool HasGearForSpin() => core.CheckInventory("Gear of Doom", 3, toInv: false);
-        bool f2pWheelReady = HasGearForSpin() && CanRunPeriodicQuest(3076);
-        bool memWheelReady = core.IsMember && CanRunPeriodicQuest(3075);
-        bool skipWheel = !f2pWheelReady && !memWheelReady;
+        bool skipWheel = !IsWheelOfDoomEligible();
         if (
             !RunCoordinatedTurnInStep(
                 "BRACKET30_WHEEL_OF_DOOM",
                 () => skipWheel,
-                () =>
-                    (!HasGearForSpin() || Bot.Quests.IsDailyComplete(3076))
-                    && (!core.IsMember || Bot.Quests.IsDailyComplete(3075)),
-                () =>
-                {
-                    core.Logger("Weekly: Wheel of Doom [3076/3075]");
-                    UnbankIfOwned("Gear of Doom");
-                    core.AddDrop("Treasure Potion");
-                    Daily.WheelofDoom(log: true);
-                    BankIfPresent("Gear of Doom", "Treasure Potion");
-                }
+                IsWheelOfDoomDone,
+                DoWheelOfDoom
             )
         )
             return false;
 
         // 1b-3. Daily: Odd's 'n' Ends [6187] (Crypto Token, cap 300)
-        bool cryptoCapped = core.CheckInventory("Crypto Token", 300, toInv: false);
-        bool oddsAvailable = !cryptoCapped && CanRunPeriodicQuest(6187);
+        bool oddsAvailable = IsOddsNEndsEligible();
         if (
             !RunCoordinatedCombatStep(
                 "BRACKET30_ODDS_N_ENDS_DAILY",
                 () => !oddsAvailable,
-                () => Bot.Quests.IsDailyComplete(6187) || core.CheckInventory("Crypto Token", 300, toInv: false),
+                IsOddsNEndsDone,
                 "Sneevil",
                 ClassType.Farm,
-                () =>
-                {
-                    core.Logger("Daily: Odd's 'n' Ends [6187] (/boxes Sneevil -> Crypto Token)");
-                    UnbankIfOwned("Crypto Token");
-                    core.AddDrop("Crypto Token");
-                    core.EnsureAccept(6187);
-                    core.KillMonster("boxes", "Closet", "Center", "Sneevil", "Metal Ore", 1, isTemp: true);
-                    LeaveCombatRoomForEquipmentChange();
-                    core.EnsureComplete(6187);
-                    WaitForDailyRewardPickup(6187, "Crypto Token");
-                    BankIfPresent("Crypto Token");
-                },
+                DoOddsNEndsDaily,
                 targetMap: "boxes"
             )
         )
             return false;
 
         return !Bot.ShouldExit;
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Light dailies/weeklies. Eligibility = the minimum the quest itself needs (unlocked,
+    // prerequisite done, required item owned, cap not reached, not done this period).
+    // Shared by the parallel startup pass and the grouped bracket progression.
+    // ---------------------------------------------------------------------------------------
+
+    private bool IsDesignNotesEligible() =>
+        Farm.FactionRank("Loremaster") < 10 && CanRunPeriodicQuest(1213);
+
+    private bool IsDesignNotesDone() =>
+        Bot.Quests.IsDailyComplete(1213) || Farm.FactionRank("Loremaster") >= 10;
+
+    private void DoDesignNotesWeekly()
+    {
+        CoreBots.Instance.Logger("Weekly: Read the Design Notes! [1213]");
+        CoreBots.Instance.ChainComplete(1213);
+    }
+
+    private bool HasGearForWheelSpin() => CoreBots.Instance.CheckInventory("Gear of Doom", 3, toInv: false);
+
+    private bool IsWheelOfDoomEligible() =>
+        (HasGearForWheelSpin() && CanRunPeriodicQuest(3076))
+        || (CoreBots.Instance.IsMember && CanRunPeriodicQuest(3075));
+
+    private bool IsWheelOfDoomDone() =>
+        (!HasGearForWheelSpin() || Bot.Quests.IsDailyComplete(3076))
+        && (!CoreBots.Instance.IsMember || Bot.Quests.IsDailyComplete(3075));
+
+    private void DoWheelOfDoom()
+    {
+        CoreBots core = CoreBots.Instance;
+        core.Logger("Weekly: Wheel of Doom [3076/3075]");
+        UnbankIfOwned("Gear of Doom");
+        core.AddDrop("Treasure Potion");
+        Daily.WheelofDoom(log: true);
+        BankIfPresent("Gear of Doom", "Treasure Potion");
+    }
+
+    private bool IsOddsNEndsEligible() =>
+        !CoreBots.Instance.CheckInventory("Crypto Token", 300, toInv: false) && CanRunPeriodicQuest(6187);
+
+    private bool IsOddsNEndsDone() =>
+        Bot.Quests.IsDailyComplete(6187) || CoreBots.Instance.CheckInventory("Crypto Token", 300, toInv: false);
+
+    private void DoOddsNEndsDaily()
+    {
+        CoreBots core = CoreBots.Instance;
+        core.Logger("Daily: Odd's 'n' Ends [6187] (/boxes Sneevil -> Crypto Token)");
+        UnbankIfOwned("Crypto Token");
+        core.AddDrop("Crypto Token");
+        core.EnsureAccept(6187);
+        core.KillMonster("boxes", "Closet", "Center", "Sneevil", "Metal Ore", 1, isTemp: true);
+        LeaveCombatRoomForEquipmentChange();
+        core.EnsureComplete(6187);
+        WaitForDailyRewardPickup(6187, "Crypto Token");
+        BankIfPresent("Crypto Token");
+    }
+
+    // Lv 30 is not a quest lock here: it is the minimum to solo 50 Gorillaphants safely.
+    // Lower accounts simply skip it until a later startup finds them at Lv 30+.
+    private bool IsEldersBloodEligible() =>
+        Bot.Player.Level >= 30
+        && !CoreBots.Instance.CheckInventory("Elders' Blood", 20, toInv: false)
+        && CanRunPeriodicQuest(802);
+
+    private bool IsEldersBloodDone() =>
+        Bot.Quests.IsDailyComplete(802) || CoreBots.Instance.CheckInventory("Elders' Blood", 20, toInv: false);
+
+    private void DoEldersBloodDaily()
+    {
+        UnbankIfOwned("Elders' Blood");
+        SetClass(ClassType.Farm);
+        Daily.EldersBlood();
+    }
+
+    private bool IsMineCraftingEligible(out string metalName, out int metalId)
+    {
+        (metalName, metalId) = PickMineCraftingMetal(CoreBots.Instance);
+        return CoreBots.Instance.isCompletedBefore(2084, log: false)
+            && metalId > 0
+            && CanRunPeriodicQuest(2091);
+    }
+
+    private void DoMineCraftingDaily(string metalName, int metalId)
+    {
+        CoreBots core = CoreBots.Instance;
+        core.Logger($"Daily: Mine Crafting [2091] -> Target Metal: {metalName} (+2,000 DoomWood Rep)");
+        UnbankIfOwned("Axe of the Prospector");
+        core.AddDrop("Axe of the Prospector", metalName);
+        core.EnsureAccept(2091);
+        if (!core.CheckInventory("Axe of the Prospector"))
+            core.HuntMonster("stalagbite", "Balboa", "Axe of the Prospector", 1, isTemp: false);
+        core.HuntMonster("stalagbite", "Balboa", "Raw Ore", 30, isTemp: true);
+        LeaveCombatRoomForEquipmentChange();
+        core.EnsureComplete(2091, metalId);
+        WaitForDailyRewardPickup(2091, metalName);
+        BankIfPresent(metalName, "Axe of the Prospector");
+    }
+
+    private bool HasShadowScytheGeneral() => CoreBots.Instance.CheckInventory("ShadowScythe General", toInv: false);
+
+    // 3828/3827 require Lv 50 in the quest data itself.
+    private bool IsShadowScytheF2PReady() =>
+        Bot.Player.Level >= 50 && !HasShadowScytheGeneral() && CanRunPeriodicQuest(3828);
+
+    private bool IsShadowScytheMemReady() =>
+        Bot.Player.Level >= 50 && !HasShadowScytheGeneral() && CoreBots.Instance.IsMember && CanRunPeriodicQuest(3827);
+
+    private bool CanBuyShadowScytheGeneralNow() =>
+        !HasShadowScytheGeneral() && CoreBots.Instance.CheckInventory("Shadow Shield", 100, toInv: false);
+
+    private bool IsShadowScytheDone() =>
+        HasShadowScytheGeneral()
+        || (
+            Bot.Quests.IsDailyComplete(3828)
+            && (!CoreBots.Instance.IsMember || Bot.Quests.IsDailyComplete(3827))
+            && !CoreBots.Instance.CheckInventory("Shadow Shield", 100, toInv: false)
+        );
+
+    private void DoShadowScytheDaily(bool f2pReady, bool memReady)
+    {
+        CoreBots core = CoreBots.Instance;
+        core.Logger("Daily: ShadowScythe General [3828/3827]");
+        UnbankIfOwned("Shadow Shield");
+        core.AddDrop("Shadow Shield");
+
+        if (f2pReady && !Bot.Quests.IsDailyComplete(3828))
+        {
+            core.EnsureAccept(3828);
+            core.HuntMonster("lightguardwar", "Citadel Crusader", "Broken Blade", 1, isTemp: true);
+            LeaveCombatRoomForEquipmentChange();
+            core.EnsureComplete(3828);
+            WaitForDailyRewardPickup(3828, "Shadow Shield");
+        }
+
+        if (memReady && !Bot.Quests.IsDailyComplete(3827))
+        {
+            core.EnsureAccept(3827);
+            core.HuntMonster("lightguardwar", "Citadel Crusader", "Broken Blade", 1, isTemp: true);
+            LeaveCombatRoomForEquipmentChange();
+            core.EnsureComplete(3827);
+            WaitForDailyRewardPickup(3827, "Shadow Shield");
+        }
+
+        if (!HasShadowScytheGeneral() && core.CheckInventory("Shadow Shield", 100))
+        {
+            LeaveCombatRoomForEquipmentChange();
+            core.BuyItem("shadowfall", 1644, "ShadowScythe General");
+            Bot.Wait.ForItemBuy();
+        }
+
+        BankIfPresent("Shadow Shield");
+    }
+
+    // Startup pass: no per-daily barriers, no helpers, no loadout sync. Each account works in its
+    // own private room (subgroup cap 1) so 7 accounts never fight over room caps or mobs, then the
+    // whole Army meets at one barrier. Heavy/boss dailies are NOT here; they stay grouped.
+    private bool RunStartupLightDailiesParallel()
+    {
+        CoreBots core = CoreBots.Instance;
+        if (!Army.SyncArmy("STARTUP_LIGHT_DAILIES_START"))
+            return false;
+
+        List<string> report = new();
+        bool loadoutReady = false;
+        void PrepSoloLoadout()
+        {
+            if (loadoutReady)
+                return;
+            PrepareCombatLoadoutForArmy(ClassType.Farm);
+            loadoutReady = true;
+        }
+
+        void RunLight(string label, Func<bool> eligible, Action work, Func<bool> done, bool combat)
+        {
+            if (Bot.ShouldExit)
+                return;
+
+            bool isEligible;
+            try
+            {
+                isEligible = eligible();
+            }
+            catch
+            {
+                isEligible = false;
+            }
+
+            if (!isEligible)
+                return;
+
+            try
+            {
+                LeaveCombatRoomForEquipmentChange();
+                if (combat)
+                    PrepSoloLoadout();
+                work();
+            }
+            catch (Exception ex) when (!Bot.ShouldExit)
+            {
+                core.Logger($"Startup daily '{label}' failed ({ex.Message}); skipping it.");
+            }
+            finally
+            {
+                LeaveCombatRoomForEquipmentChange();
+            }
+
+            bool ok;
+            try
+            {
+                ok = done();
+            }
+            catch
+            {
+                ok = false;
+            }
+            report.Add(ok ? label : $"{label} (not confirmed)");
+        }
+
+        ApplySubgroupRoomSettings(1);
+        try
+        {
+            RunLight("Design Notes", IsDesignNotesEligible, DoDesignNotesWeekly, IsDesignNotesDone, combat: false);
+            RunLight("Wheel of Doom", IsWheelOfDoomEligible, DoWheelOfDoom, IsWheelOfDoomDone, combat: false);
+            RunLight("Odd's 'n' Ends", IsOddsNEndsEligible, DoOddsNEndsDaily, IsOddsNEndsDone, combat: true);
+            RunLight("Elders' Blood", IsEldersBloodEligible, DoEldersBloodDaily, IsEldersBloodDone, combat: true);
+
+            string metalName = string.Empty;
+            int metalId = 0;
+            RunLight(
+                "Mine Crafting",
+                () => IsMineCraftingEligible(out metalName, out metalId),
+                () => DoMineCraftingDaily(metalName, metalId),
+                () => Bot.Quests.IsDailyComplete(2091),
+                combat: true
+            );
+
+            bool ssgF2P = false;
+            bool ssgMem = false;
+            RunLight(
+                "ShadowScythe",
+                () =>
+                {
+                    ssgF2P = IsShadowScytheF2PReady();
+                    ssgMem = IsShadowScytheMemReady();
+                    return ssgF2P || ssgMem || CanBuyShadowScytheGeneralNow();
+                },
+                () => DoShadowScytheDaily(ssgF2P, ssgMem),
+                IsShadowScytheDone,
+                combat: true
+            );
+        }
+        finally
+        {
+            ApplyArmyRoomSettings();
+        }
+
+        if (Bot.ShouldExit)
+            return false;
+
+        core.Logger(
+            report.Count == 0
+                ? "Startup dailies: none available for this account (requirements not met or already done)."
+                : $"Startup dailies on this account: {string.Join(", ", report)}."
+        );
+
+        return Army.SyncArmy("STARTUP_LIGHT_DAILIES_DONE");
     }
 
     private bool EnsureLoyalFollowerUnlocked(string objectivePrefix)
@@ -15736,11 +16124,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // 8b. Daily: Mine Crafting [2091] (Metals for BLoD/NSoD + 2,000 DoomWood Rep)
-        (string targetMetalName, int targetMetalId) = PickMineCraftingMetal(core);
-        bool mineCraftingAvailable =
-            core.isCompletedBefore(2084, log: false)
-            && targetMetalId > 0
-            && CanRunPeriodicQuest(2091);
+        bool mineCraftingAvailable = IsMineCraftingEligible(out string targetMetalName, out int targetMetalId);
 
         if (
             !RunCoordinatedCombatStep(
@@ -15749,77 +16133,25 @@ public class ArmyFarmerJoeDoAll
                 () => Bot.Quests.IsDailyComplete(2091),
                 "Balboa",
                 ClassType.Farm,
-                () =>
-                {
-                    core.Logger($"Daily: Mine Crafting [2091] -> Target Metal: {targetMetalName} (+2,000 DoomWood Rep)");
-                    UnbankIfOwned("Axe of the Prospector");
-                    core.AddDrop("Axe of the Prospector", targetMetalName);
-                    core.EnsureAccept(2091);
-                    if (!core.CheckInventory("Axe of the Prospector"))
-                        core.HuntMonster("stalagbite", "Balboa", "Axe of the Prospector", 1, isTemp: false);
-                    core.HuntMonster("stalagbite", "Balboa", "Raw Ore", 30, isTemp: true);
-                    LeaveCombatRoomForEquipmentChange();
-                    core.EnsureComplete(2091, targetMetalId);
-                    WaitForDailyRewardPickup(2091, targetMetalName);
-                    BankIfPresent(targetMetalName, "Axe of the Prospector");
-                },
+                () => DoMineCraftingDaily(targetMetalName, targetMetalId),
                 targetMap: "stalagbite"
             )
         )
             return false;
 
         // 8c. Daily: ShadowScythe General [3828 F2P / 3827 Mem] (Lvl 50+, fixed F2P handling)
-        bool HasSSG() => core.CheckInventory("ShadowScythe General", toInv: false);
-        bool ssgF2PReady = Bot.Player.Level >= 50 && !HasSSG() && CanRunPeriodicQuest(3828);
-        bool ssgMemReady = Bot.Player.Level >= 50 && !HasSSG() && core.IsMember && CanRunPeriodicQuest(3827);
-        bool canBuySSGNow = !HasSSG() && core.CheckInventory("Shadow Shield", 100, toInv: false);
+        bool ssgF2PReady = IsShadowScytheF2PReady();
+        bool ssgMemReady = IsShadowScytheMemReady();
+        bool canBuySSGNow = CanBuyShadowScytheGeneralNow();
 
         if (
             !RunCoordinatedCombatStep(
                 "BRACKET50_SHADOWSCYTHE_DAILY",
-                () => HasSSG() || (!ssgF2PReady && !ssgMemReady && !canBuySSGNow),
-                () =>
-                    HasSSG()
-                    || (
-                        Bot.Quests.IsDailyComplete(3828)
-                        && (!core.IsMember || Bot.Quests.IsDailyComplete(3827))
-                        && !core.CheckInventory("Shadow Shield", 100, toInv: false)
-                    ),
+                () => HasShadowScytheGeneral() || (!ssgF2PReady && !ssgMemReady && !canBuySSGNow),
+                IsShadowScytheDone,
                 "Citadel Crusader",
                 ClassType.Farm,
-                () =>
-                {
-                    core.Logger("Daily: ShadowScythe General [3828/3827]");
-                    UnbankIfOwned("Shadow Shield");
-                    core.AddDrop("Shadow Shield");
-
-                    if (ssgF2PReady && !Bot.Quests.IsDailyComplete(3828))
-                    {
-                        core.EnsureAccept(3828);
-                        core.HuntMonster("lightguardwar", "Citadel Crusader", "Broken Blade", 1, isTemp: true);
-                        LeaveCombatRoomForEquipmentChange();
-                        core.EnsureComplete(3828);
-                        WaitForDailyRewardPickup(3828, "Shadow Shield");
-                    }
-
-                    if (ssgMemReady && !Bot.Quests.IsDailyComplete(3827))
-                    {
-                        core.EnsureAccept(3827);
-                        core.HuntMonster("lightguardwar", "Citadel Crusader", "Broken Blade", 1, isTemp: true);
-                        LeaveCombatRoomForEquipmentChange();
-                        core.EnsureComplete(3827);
-                        WaitForDailyRewardPickup(3827, "Shadow Shield");
-                    }
-
-                    if (!HasSSG() && core.CheckInventory("Shadow Shield", 100))
-                    {
-                        LeaveCombatRoomForEquipmentChange();
-                        core.BuyItem("shadowfall", 1644, "ShadowScythe General");
-                        Bot.Wait.ForItemBuy();
-                    }
-
-                    BankIfPresent("Shadow Shield");
-                }
+                () => DoShadowScytheDaily(ssgF2PReady, ssgMemReady)
             )
         )
             return false;
@@ -15946,11 +16278,9 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         // 3a. Daily: Embrace Your Chaos [3596] (/mountdoomskull b1 -> +5,000 Chaos Rep + Dage's Scroll Fragment)
-        bool embraceReady =
-            core.isCompletedBefore(2084, log: false)
-            && !core.CheckInventory("Dage's Scroll Fragment", 13, toInv: false)
-            && CanRunPeriodicQuest(3596);
-        if (embraceReady && !RunDagesScrollFragmentDaily())
+        // Every account must enter the objective (it was gated by a per-account condition, which put
+        // accounts on different barriers and aborted the Army). Readiness is checked inside, per account.
+        if (!RunDagesScrollFragmentDaily())
             return false;
 
         // 3b. Daily: Lord of Order Progression Chain [7156-7165] (Level 50+, Player 4 Endgame Support Class)
@@ -16316,7 +16646,42 @@ public class ArmyFarmerJoeDoAll
         );
     }
 
+    // LoO is one quest per day, but it is called at startup and again in Bracket 65 / 3A / 3B / 3C / 4A.
+    // Each full pass costs up to ~22 barriers even when nothing is due, so after a pass every later
+    // call on the same AQW day is skipped with a single army-wide check.
+    private string _loOCheckedDayKey = string.Empty;
+
+    private static string GetAqwDayKey()
+    {
+        DateTime serverNow;
+        try
+        {
+            serverNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+        }
+        catch
+        {
+            serverNow = DateTime.UtcNow.AddHours(-5);
+        }
+        return serverNow.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+    }
+
     private bool RunLordOfOrderProgression(string objectivePrefix = "BRACKET65")
+    {
+        string dayKey = GetAqwDayKey();
+        if (
+            _loOCheckedDayKey.Length > 0
+            && Army.AllPlayersSatisfy($"{objectivePrefix}_LOO_SAME_DAY", () => _loOCheckedDayKey == dayKey)
+        )
+            return !Bot.ShouldExit;
+
+        if (!RunLordOfOrderProgressionPass(objectivePrefix))
+            return false;
+
+        _loOCheckedDayKey = dayKey;
+        return !Bot.ShouldExit;
+    }
+
+    private bool RunLordOfOrderProgressionPass(string objectivePrefix)
     {
         CoreBots core = CoreBots.Instance;
         bool HasLoOClass() => HasClassInInventory(50741) || HasClassInInventory("Lord of Order");
@@ -17181,10 +17546,16 @@ public class ArmyFarmerJoeDoAll
         doWork,
         (targetPlayerNumber, targetPlayerName) => help(),
         maxWorkAttempts,
-        maxPlayersPerSubgroup,
+        EffectiveHelperSubgroupCap(maxPlayersPerSubgroup),
         prepareForCombat,
         resolveSubgroupCap
     );
+
+    // Objectives run inside an ApplySubgroupRoomSettings(...) block (e.g. the 1-4 / 5-7 splits)
+    // used to pass 0 here, so helpers ignored the split and tried to Goto into the other group's
+    // room (often full). Inherit the active split unless the caller set one explicitly.
+    private int EffectiveHelperSubgroupCap(int requested) =>
+        requested > 0 ? requested : (_activeSubgroupMaxPlayers > 1 ? _activeSubgroupMaxPlayers : 0);
 
     public bool RunCooperativeObjective(
         string objectiveName,
@@ -17201,7 +17572,7 @@ public class ArmyFarmerJoeDoAll
         doWork,
         help,
         maxWorkAttempts,
-        maxPlayersPerSubgroup,
+        EffectiveHelperSubgroupCap(maxPlayersPerSubgroup),
         prepareForCombat,
         resolveSubgroupCap
     );
