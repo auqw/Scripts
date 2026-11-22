@@ -1768,7 +1768,10 @@ public class AllStories
         Core.Logger($"Story: SuperDeath - Complete");
 
         ThirdSpell.StoryLine();
-        Core.Logger($"Story: Third Spell - Complete");
+        if (Core.CheckInventory("Sun Token VIII", toInv: false))
+            Core.Logger("Story: Third Spell - Complete");
+        else
+            Core.Logger("Story: Third Spell - Sun Token VIII missing");
 
         TitanAttackStory.DoAll();
         Core.Logger($"Story: Titan Attack - Complete");

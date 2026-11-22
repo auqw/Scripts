@@ -253,7 +253,7 @@ public class EtherStormWastes
         if (!Story.QuestProgression(1532))
         {
             Core.EnsureAccept(1532);
-            Core.HuntMonster("firestorm", "Sulfur Imp", "Sulfuric Core", 10);
+            Core.HuntMonster("firestorm", "Sulfur Imp", "Sulfuric Core", 8);
             Core.HuntMonster("firestorm", "Sulfur Imp", "Enchanted Lava Bucket", 1);
             Core.EnsureComplete(1532);
         }
@@ -342,7 +342,7 @@ public class EtherStormWastes
         {
             Core.EnsureAccept(1619);
             Core.GetMapItem(843, 10, "waterstorm");
-            Core.HuntMonster("waterstorm", "Living Water", "Aqua Vitae", 15);
+            Core.HuntMonster("waterstorm", "Living Water", "Aqua Vitae", 12);
             Core.HuntMonster("waterstorm", "Living Water", "Water Bubble Burst", 10);
             Core.EnsureComplete(1619);
         }

@@ -31,7 +31,7 @@ public class PotionBuyer
     public List<IOption> Options = new()
     {
         new Option<bool>("BuyReagents", "Buy Reagents?", "Use gold to buy the reagents for the Potions [this takes ALOT of gold.].", false),
-        new Option<int>("PotionQuant", "Potion Quantity", "Desired stack amount [max - 300]", 0),
+        new Option<string>("PotionQuant", "Potion Quantity", "Desired stack amount [1-300]", "0"),
         new Option<bool>("MaxAll", "Max all Potions within the script.", "as the name says", false),
 
         CoreBots.Instance.SkipOptions,
@@ -75,6 +75,13 @@ public class PotionBuyer
         // Determine if MaxAll is enabled
         bool maxAll = Bot.Config!.Get<bool>("MaxAll");
 
+        int potionQuant = 300;
+        if (!maxAll && (!int.TryParse(Bot.Config!.Get<string>("PotionQuant"), out potionQuant) || potionQuant is < 1 or > 300))
+        {
+            Core.Logger("Enter a Potion Quantity from 1 to 300.", messageBox: true, stopBot: true);
+            return;
+        }
+
         // Prepare Potions and PotionsFarm arrays if MaxAll is true
         string[]? potions = maxAll
             ? new[]
@@ -110,17 +117,6 @@ public class PotionBuyer
             ? [.. Enumerable.Repeat(true, potions!.Length)]
             : null;
 
-        string? raw = Bot.Config!.Get<string>("PotionQuant");
-
-        int potionQuant;
-
-        if (!int.TryParse(raw, out potionQuant))
-        {
-            Core.Logger($"Invalid PotionQuant '{raw}', defaulting to 300");
-            potionQuant = 300;
-        }
-
-        potionQuant = maxAll ? 300 : potionQuant;
         // Call the main potion farming method
         INeedYourStrongestPotions(
         Potions: potions,
