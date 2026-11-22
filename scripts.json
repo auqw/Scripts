@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 166230,
-    "sha256": "0e031b1e29a3eb75344571bca6724d09c0cf90971f8561c2e46d37e1ec395bd7",
+    "size": 166215,
+    "sha256": "f088bdc5f3526b90f71ee33472e701e66820e1b296de91c9f282fb8d4a558829",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -701,8 +701,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 53768,
-    "sha256": "6cded52f5ed37c4ef0df1fc7e0f22acbae091bea59b2412cd467739502945e01",
+    "size": 53921,
+    "sha256": "08d827da65b6fd9d459d2c35ff34f30b829c3d81650d20dfb1cc18d42a448a3f",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -889,8 +889,8 @@
       "thirdspell"
     ],
     "path": "Story/ThirdSpell.cs",
-    "size": 22641,
-    "sha256": "b2c9db51d6ad76d5d3b8c34fb250f5af921fc224275e1a38d2cf5e76a27a914c",
+    "size": 22740,
+    "sha256": "c1914c6c866c4c562eae9794c902bef892d08d43d4620b74d9343011ec672690",
     "fileName": "ThirdSpell.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThirdSpell.cs"
   },
@@ -1006,8 +1006,8 @@
       "etherstorm-wastes"
     ],
     "path": "Story/EtherstormWastes.cs",
-    "size": 20377,
-    "sha256": "80d627138f125ce6463719e5d05587d32e8bdec0cc11517844faccdca106cceb",
+    "size": 20376,
+    "sha256": "2493e5b4e4cfb40e31118aebb7df2f71a8a365242be22950069629ec9ffcfce5",
     "fileName": "EtherstormWastes.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/EtherstormWastes.cs"
   },
@@ -28342,8 +28342,8 @@
       "minecraft"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 21219,
-    "sha256": "e0e0ed1750049ad154c6a54fd879a1046c00f724806fded37e94c2e9e3346fe8",
+    "size": 21204,
+    "sha256": "8944efe8329f7e67edd5b8b03dc261d88e6508cf9a8a7fdfc18c7638bef75177",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
