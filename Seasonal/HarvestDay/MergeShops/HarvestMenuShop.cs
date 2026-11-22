@@ -65,6 +65,10 @@ public class HarvestMenuShop
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("charityfeast", "Fall Fae Queen", req.Name, quant, req.Temp);
                     break;
+                case "Bone Harvester Gaze":
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster("charityfeast", "Sluagh King", req.Name, quant, req.Temp);
+                    break;
                 case "Hans' Chore Voucher":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(Core.IsMember ? 10949 : 10948);
@@ -93,6 +97,8 @@ public class HarvestMenuShop
         new Option<bool>("102919", "Executioner's Spare Mace", "Mode: [select] only\nShould the bot buy \"Executioner's Spare Mace\" ?", false),
         new Option<bool>("100033", "Bone Meridians", "Mode: [select] only\nShould the bot buy \"Bone Meridians\" ?", false),
         new Option<bool>("102921", "Executioner's Maces", "Mode: [select] only\nShould the bot buy \"Executioner's Maces\" ?", false),
+        new Option<bool>("100022", "Bone Harvester Jaw", "Mode: [select] only\nShould the bot buy \"Bone Harvester Jaw\" ?", false),
+        new Option<bool>("100024", "Bone Harvester's Stare", "Mode: [select] only\nShould the bot buy \"Bone Harvester's Stare\" ?", false),
         new Option<bool>("100023", "Bone Harvester Mask", "Mode: [select] only\nShould the bot buy \"Bone Harvester Mask\" ?", false),
         new Option<bool>("100025", "Bone Harvester Skull", "Mode: [select] only\nShould the bot buy \"Bone Harvester Skull\" ?", false),
         new Option<bool>("102916", "Rogue Executioner Mask", "Mode: [select] only\nShould the bot buy \"Rogue Executioner Mask\" ?", false),

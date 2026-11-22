@@ -68,6 +68,7 @@ public class CoreHarvestDay
             ManaHarvest();
             MoglinFeast();
 			CharityFeast();
+			CryptFeast();
         }
         else
         {
@@ -1153,11 +1154,14 @@ public class CoreHarvestDay
         Story.MapItemQuest(10940, "charityfeast", 16408, 10);
 
         // 10941 | Five-Star Service
+		if (!Story.QuestProgression(10941))
+		{
         Core.EnsureAccept(10941);
         Core.HuntMonster("charityfeast", UseableMonsters[2], "Pumpkin Rind", 6);
         Core.HuntMonster("charityfeast", UseableMonsters[5], "Embroidered Handkerchief", 6);
         Core.EnsureComplete(10941);
-
+		}
+		
         // 10942 | Set Up to Fall
         Story.MapItemQuest(10942, "charityfeast", [16409, 16410, 16411]);
 
@@ -1171,12 +1175,84 @@ public class CoreHarvestDay
         Story.KillQuest(10945, "charityfeast", UseableMonsters[4]); // Sluagh Antler x24
 
         // 10946 | Feast of Thrills
+		if (!Story.QuestProgression(10946))
+		{
         Core.EnsureAccept(10946);
         Core.HuntMonster("charityfeast", UseableMonsters[1], "Chipped Mask", 6);
         Core.HuntMonster("charityfeast", UseableMonsters[4], "Sluagh Feather", 6);
         Core.EnsureComplete(10946);
+		}
 
         // 10947 | King Mellori
         Story.KillQuest(10947, "charityfeast", UseableMonsters[3]); // Sluagh King Defeated x1
+    }
+	
+	public void CryptFeast()
+    {
+        if (Core.isCompletedBefore(10961)|| !Core.isSeasonalMapActive("cryptfeast"))
+            return;
+
+        Story.PreLoad(this);
+
+        string[] UseableMonsters =
+        [
+            "Masked Skeleton", // UseableMonsters[0]
+			"Undead Bear", // UseableMonsters[1]
+			"Vengeful Ghost", // UseableMonsters[2]
+			"Anatomical Puppet", // UseableMonsters[3]
+			"Warped Ghost", // UseableMonsters[4]
+			"Pack of Undead Werewolves", // UseableMonsters[5]
+			"Blood Blossom Fae", // UseableMonsters[6]
+			"Fall Unseelie Queen", // UseableMonsters[7]
+			"Sluagh Warrior", // UseableMonsters[8]
+			"Masked Warriors", // UseableMonsters[9]
+			"The Last Lady", // UseableMonsters[10]
+        ];
+
+        // 10952 | The Descent
+		if (!Story.QuestProgression(10952)){
+			Core.EnsureAccept(10952);
+			Core.Jump("r2", "Left");
+			Core.HuntMonster("cryptfeast", UseableMonsters[0], "Scarred Bone", 113);
+			Core.EnsureComplete(10952);
+		}
+		
+        // 10953 | Midautumnal
+        Story.MapItemQuest(10953, "cryptfeast", 16424);
+		Story.KillQuest(10953, "cryptfeast", UseableMonsters[1]); // "Bear's Harvest Crown" x1
+        Core.EnsureComplete(10953);
+
+        // 10954 | Grudges of the Slain
+		Story.KillQuest(10954, "cryptfeast", UseableMonsters[2]); // "Vengeful Vision" x12
+
+        // 10955 | Doctor Death
+        Story.MapItemQuest(10955, "cryptfeast", 16425);
+		Story.KillQuest(10955, "cryptfeast", UseableMonsters[3]); // "Puppet's Saw" x1
+
+        // 10956 | Paranormal Activity
+		Story.KillQuest(10956, "cryptfeast", UseableMonsters[4]); // "Warped Vision" x12
+
+        // 10957 | The Wolf's Quarry
+        Story.MapItemQuest(10957, "cryptfeast", 16426);
+		Story.KillQuest(10957, "cryptfeast", UseableMonsters[5]); // "Werewolf's Crest" x5
+
+        // 10958 | Fairly Frustrating
+        Story.MapItemQuest(10958, "cryptfeast", 16427);
+		Story.KillQuest(10958, "cryptfeast", UseableMonsters[6]); // "Blood Lilies" x6
+
+        // 10959 | Unrepentant Unseelie
+		Story.KillQuest(10959, "cryptfeast", UseableMonsters[7]); // "Fall Unseelie Queen Defeated" x1
+		
+        // 10960 | Undying Fealty
+		if (!Story.QuestProgression(10960))
+		{
+			Core.EnsureAccept(10960);
+			Core.HuntMonster("cryptfeast", UseableMonsters[8], "Sluagh's Heart", 9);		
+			Core.HuntMonster("cryptfeast", UseableMonsters[9], "Warrior's Mask", 9);
+			Core.EnsureComplete(10960);
+		}
+		
+        // 10961 | The Danger
+		Story.KillQuest(10961, "cryptfeast", UseableMonsters[10]); // "The Last Lady Defeated" x1
     }
 }
