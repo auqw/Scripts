@@ -516,6 +516,21 @@ public class ArmyFarmerJoeDoAll
     // Overflow rooms start far from the planned subgroup rooms (offsets 0..6).
     private const int RoomOverflowBaseOffset = 10;
     private int _roomOverflowStep;
+    private int _roomBeforeOverflow;
+
+    // Overflow is decided per join: every new objective starts again from the planned room,
+    // otherwise one full map strands the account in an empty overflow room for the rest of the run.
+    private void RestorePlannedRoomAfterOverflow()
+    {
+        if (_roomOverflowStep == 0)
+            return;
+
+        CoreBots core = CoreBots.Instance;
+        if (_roomBeforeOverflow > 0)
+            core.PrivateRoomNumber = _roomBeforeOverflow;
+        _roomOverflowStep = 0;
+        _roomBeforeOverflow = 0;
+    }
 
     private int? ComputeArmyRoomNumber(int roomOffset)
     {
@@ -538,6 +553,7 @@ public class ArmyFarmerJoeDoAll
 
         CoreBots core = CoreBots.Instance;
         _roomOverflowStep = 0;
+        _roomBeforeOverflow = 0;
         core.PrivateRooms = true;
         core.PrivateRoomNumber = effectiveRoom.Value;
         core.PublicDifficult = false;
@@ -600,12 +616,19 @@ public class ArmyFarmerJoeDoAll
             if (!core.PrivateRooms || _roomOverflowStep >= 7)
                 return;
 
-            _roomOverflowStep++;
-            int? overflowRoom = ComputeArmyRoomNumber(RoomOverflowBaseOffset + _roomOverflowStep - 1);
+            // A helper's /goto into a teammate's full room also answers "is full". Moving the helper
+            // to an empty overflow room only separates it from the group (Goto then fails 12x -> sleep mode).
+            if (Army.IsHelpingTeammate)
+                return;
+
+            int? overflowRoom = ComputeArmyRoomNumber(RoomOverflowBaseOffset + _roomOverflowStep);
             if (overflowRoom == null)
                 return;
 
             int previousRoom = core.PrivateRoomNumber;
+            if (_roomOverflowStep == 0)
+                _roomBeforeOverflow = previousRoom;
+            _roomOverflowStep++;
             core.PrivateRoomNumber = overflowRoom.Value;
             core.Logger($"Room {previousRoom} is full; retrying in overflow room {overflowRoom.Value}.");
         }
@@ -1928,7 +1951,8 @@ public class ArmyFarmerJoeDoAll
 
         // 6a-5. Quest 2937: Find the Runes! (Escherion in /escherion)
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET30_BOA_2937_RUNES",
                 () => core.isCompletedBefore(2937, log: false),
                 () =>
@@ -1945,7 +1969,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, targetMap: "escherion");
-                }
+                },
+                targetMap: "escherion"
             )
         )
             return false;
@@ -2004,7 +2029,8 @@ public class ArmyFarmerJoeDoAll
 
         // 7b-1. Quest 8828 Boss 1: Escherion (1st Lord Of Chaos Staff)
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                4,
                 "BRACKET30_FORGE_HELM_ESCHERION",
                 () => IsForgeHelmDone() || core.CheckInventory("1st Lord Of Chaos Staff", 1, toInv: false),
                 () =>
@@ -2019,7 +2045,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, targetMap: "escherion");
-                }
+                },
+                targetMap: "escherion"
             )
         )
             return false;
@@ -2509,9 +2536,19 @@ public class ArmyFarmerJoeDoAll
             || core.isCompletedBefore(5313, log: false)
             || core.isCompletedBefore(questId, log: false);
 
+        // /hedgemaze does not fit the whole Army: detect the map cap and split rooms
+        // (without it all 7 accounts joined one room and overflowed at random).
+        bool RunHedgeMazeObjective(
+            string objectiveName,
+            Func<bool> isComplete,
+            Action doWork,
+            Action<int, string> help,
+            int maxWorkAttempts = 0
+        ) => RunSubgroupCooperativeObjective(0, objectiveName, isComplete, doWork, help, maxWorkAttempts, targetMap: "hedgemaze");
+
         // Quest 5298: Find the Hedge Maze
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5298",
                 () => IsHedgeQuestDone(5298),
                 () =>
@@ -2532,7 +2569,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Knight's Reflection", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Knight's Reflection", compositionType: ClassType.Farm, targetMap: "hedgemaze");
                 }
             )
         )
@@ -2540,7 +2577,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5299: Clear the Hedges
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5299",
                 () => IsHedgeQuestDone(5299),
                 () =>
@@ -2557,7 +2594,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm, targetMap: "hedgemaze");
                 }
             )
         )
@@ -2565,7 +2602,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5300: Un-Mirror the Knights
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5300",
                 () => IsHedgeQuestDone(5300),
                 () =>
@@ -2578,7 +2615,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Knight's Reflection", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Knight's Reflection", compositionType: ClassType.Farm, targetMap: "hedgemaze");
                 }
             )
         )
@@ -2586,7 +2623,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5301: Find the Goblin Camp
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5301",
                 () => IsHedgeQuestDone(5301),
                 () =>
@@ -2607,7 +2644,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5302:Wait, Those Aren't Redcaps!
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5302",
                 () => IsHedgeQuestDone(5302),
                 () =>
@@ -2620,7 +2657,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Hedge Goblin", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Hedge Goblin", compositionType: ClassType.Farm, targetMap: "hedgemaze");
                 }
             )
         )
@@ -2628,7 +2665,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5303: Pick the Glass Flowers
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5303",
                 () => IsHedgeQuestDone(5303),
                 () =>
@@ -2649,7 +2686,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5304: Polish the Mirror Shards
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5304",
                 () => IsHedgeQuestDone(5304),
                 () =>
@@ -2662,7 +2699,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Mirrored Shard", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Mirrored Shard", compositionType: ClassType.Farm, targetMap: "hedgemaze");
                 }
             )
         )
@@ -2670,7 +2707,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5305: Hone the Guerilla Tactic
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5305",
                 () => IsHedgeQuestDone(5305),
                 () =>
@@ -2691,7 +2728,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5306: Slay the Minotaur Prime (Boss)
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5306_MINOTAUR_PRIME",
                 () => IsHedgeQuestDone(5306),
                 () =>
@@ -2704,7 +2741,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Minotaur Prime");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Minotaur Prime", targetMap: "hedgemaze");
                 }
             )
         )
@@ -2712,7 +2749,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quests 5307, 5308, 5309: MapItems 4683, 4684, 4685 x5
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5307_5309",
                 () => IsHedgeQuestDone(5309),
                 () =>
@@ -2738,7 +2775,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5310: Defend the Maze
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5310",
                 () => IsHedgeQuestDone(5310),
                 () =>
@@ -2753,7 +2790,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm, targetMap: "hedgemaze");
                 }
             )
         )
@@ -2761,7 +2798,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5311: Find the Center
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5311",
                 () => IsHedgeQuestDone(5311),
                 () =>
@@ -2782,7 +2819,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5312: Shattered Knight (54.3k HP Boss)
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5312_SHATTERED_KNIGHT",
                 () => IsHedgeQuestDone(5312),
                 () =>
@@ -2795,7 +2832,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Shattered Knight");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Shattered Knight", targetMap: "hedgemaze");
                 }
             )
         )
@@ -2803,7 +2840,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5313: Resurrected Minotaur (79.1k HP Boss)
         if (
-            !RunCooperativeObjective(
+            !RunHedgeMazeObjective(
                 "BRACKET50_HEDGEMAZE_5313_RESURRECTED_MINOTAUR",
                 () => IsHedgeQuestDone(5313),
                 () =>
@@ -2816,7 +2853,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Resurrected Minotaur");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Resurrected Minotaur", targetMap: "hedgemaze");
                 }
             )
         )
@@ -2843,9 +2880,18 @@ public class ArmyFarmerJoeDoAll
             || core.isCompletedBefore(5332, log: false)
             || core.isCompletedBefore(questId, log: false);
 
+        // Same as Hedge Maze: split rooms by the real /towerofmirrors cap.
+        bool RunTowerObjective(
+            string objectiveName,
+            Func<bool> isComplete,
+            Action doWork,
+            Action<int, string> help,
+            int maxWorkAttempts = 0
+        ) => RunSubgroupCooperativeObjective(0, objectiveName, isComplete, doWork, help, maxWorkAttempts, targetMap: "towerofmirrors");
+
         // Quest 5314: Drink Me
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5314_DRINK_ME",
                 () => IsTowerQuestDone(5314),
                 () =>
@@ -2861,7 +2907,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -2869,7 +2915,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5315: The Key To Success
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5315_KEY_SUCCESS",
                 () => IsTowerQuestDone(5315),
                 () =>
@@ -2885,7 +2931,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -2893,7 +2939,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5316: Phanatics
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5316_PHANATICS",
                 () => IsTowerQuestDone(5316),
                 () =>
@@ -2909,7 +2955,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Phans", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Phans", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -2917,7 +2963,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5317: But I Have A Backstage Pass! (Boss: Lathannos the Reversed, MapID 36)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5317_LATHANNOS",
                 () => IsTowerQuestDone(5317),
                 () =>
@@ -2936,7 +2982,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "36");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "36", targetMap: "towerofmirrors");
                 }
             )
         )
@@ -2944,7 +2990,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5318: True Love
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5318_TRUE_LOVE",
                 () => IsTowerQuestDone(5318),
                 () =>
@@ -2960,7 +3006,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -2968,7 +3014,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5319: Turn to the Left
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5319_TURN_LEFT",
                 () => IsTowerQuestDone(5319),
                 () =>
@@ -2991,7 +3037,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Runway Wraith", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Runway Wraith", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -2999,7 +3045,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5320: Now Turn to the Right (Boss: Lukrisio the Buffed, MapID 40)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5320_LUKRISIO",
                 () => IsTowerQuestDone(5320),
                 () =>
@@ -3014,7 +3060,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "40");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "40", targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3022,7 +3068,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5321: Or Maybe THIS Is True Love
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5321_MAYBE_TRUE_LOVE",
                 () => IsTowerQuestDone(5321),
                 () =>
@@ -3043,7 +3089,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3051,7 +3097,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5322: Those Harpies!
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5322_HARPIES",
                 () => IsTowerQuestDone(5322),
                 () =>
@@ -3067,7 +3113,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Pageant Mom", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Pageant Mom", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3075,7 +3121,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5323: Drink your Go-Go Juice (Boss: Mendeskar the Smudged, MapID 45)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5323_MENDESKAR",
                 () => IsTowerQuestDone(5323),
                 () =>
@@ -3090,7 +3136,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "45");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "45", targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3098,7 +3144,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5324: Oh Sure, Why Not
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5324_SURE_WHY_NOT",
                 () => IsTowerQuestDone(5324),
                 () =>
@@ -3119,7 +3165,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3127,7 +3173,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5325: Behind the Scenes
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5325_BEHIND_SCENES",
                 () => IsTowerQuestDone(5325),
                 () =>
@@ -3143,7 +3189,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Stage Tech", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Stage Tech", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3151,7 +3197,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5326: In the Spotlight (Boss: Atticus the Warped, MapID 49)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5326_ATTICUS",
                 () => IsTowerQuestDone(5326),
                 () =>
@@ -3166,7 +3212,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "49");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "49", targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3174,7 +3220,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5327: Oh, I Give Up
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5327_I_GIVE_UP",
                 () => IsTowerQuestDone(5327),
                 () =>
@@ -3190,7 +3236,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Silver Elemental", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3198,7 +3244,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5328: We Gotta Wendi-GO
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5328_WENDIGO",
                 () => IsTowerQuestDone(5328),
                 () =>
@@ -3214,7 +3260,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Sasquatch", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Sasquatch", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3222,7 +3268,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5329: Kick His- Wait, Did We Already Use That Pun? (Boss: Leofire the Shattered, MapID 52)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5329_LEOFIRE",
                 () => IsTowerQuestDone(5329),
                 () =>
@@ -3237,7 +3283,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "52");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "52", targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3245,7 +3291,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5330: Fiend Zoned
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5330_FIEND_ZONED",
                 () => IsTowerQuestDone(5330),
                 () =>
@@ -3258,7 +3304,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "Fervent Suitor", compositionType: ClassType.Farm);
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "Fervent Suitor", compositionType: ClassType.Farm, targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3266,7 +3312,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5331: Find Scarletta (Cutscene Cut4 -> Jump back to Enter)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5331_FIND_SCARLETTA",
                 () => IsTowerQuestDone(5331),
                 () =>
@@ -3293,7 +3339,7 @@ public class ArmyFarmerJoeDoAll
 
         // Quest 5332: Defeat ... Wait. What? (Final Boss: Scarletta / Groglurk, MapID 32)
         if (
-            !RunCooperativeObjective(
+            !RunTowerObjective(
                 "BRACKET50_TOWER_5332_GROGLURK",
                 () => IsTowerQuestDone(5332),
                 () =>
@@ -3309,7 +3355,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "32");
+                    Army.CoordinateFollowAndCombat(targetPlayerName, "32", targetMap: "towerofmirrors");
                 }
             )
         )
@@ -3941,7 +3987,8 @@ public class ArmyFarmerJoeDoAll
             bool roundCompleted = false;
 
             if (
-                !RunCooperativeObjective(
+                !RunSubgroupCooperativeObjective(
+                    0,
                     $"BRACKET60_LACERATE_BS8736_R{currentRound}_HYDRA",
                     () => HasBlacksmithRank5() || core.CheckInventory("Hydra Scale Piece", 75, toInv: false),
                     () =>
@@ -3968,7 +4015,8 @@ public class ArmyFarmerJoeDoAll
                             "Hydra Head 25",
                             targetMap: "hydrachallenge"
                         );
-                    }
+                    },
+                targetMap: "hydrachallenge"
                 )
             )
                 return false;
@@ -5054,7 +5102,8 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         bool IsDone() => skipCheck() || core.CheckInventory("Restoration of Nature Potion", quant, toInv: false);
 
-        return RunCooperativeObjective(
+        return RunSubgroupCooperativeObjective(
+            0,
             objectiveName,
             IsDone,
             () =>
@@ -5082,7 +5131,8 @@ public class ArmyFarmerJoeDoAll
                     compositionType: ClassType.Farm,
                     targetMap: "brightoak"
                 );
-            }
+            },
+                targetMap: "brightoak"
         );
     }
 
@@ -5536,7 +5586,8 @@ public class ArmyFarmerJoeDoAll
 
         bool HasRavinosII() => IsRavinos2Done() || HasAnyToken("Ravinos Token II", "Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_SC_BO_4800",
                 HasRavinosII,
                 () =>
@@ -5556,14 +5607,16 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm, targetMap: "gaiazor");
-                }
+                },
+                targetMap: "gaiazor"
             )
         )
             return false;
 
         bool HasRavinosIII() => IsRavinos2Done() || HasAnyToken("Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_SC_BO_4801",
                 HasRavinosIII,
                 () =>
@@ -5583,14 +5636,16 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm, targetMap: "gaiazor");
-                }
+                },
+                targetMap: "gaiazor"
             )
         )
             return false;
 
         bool HasRavinosIV() => IsRavinos2Done() || HasAnyToken("Ravinos Token IV", "Ravinos Token V");
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_SC_BO_4802",
                 HasRavinosIV,
                 () =>
@@ -5610,7 +5665,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm, targetMap: "gaiazor");
-                }
+                },
+                targetMap: "gaiazor"
             )
         )
             return false;
@@ -5689,7 +5745,8 @@ public class ArmyFarmerJoeDoAll
 
         bool HasLapisI() => IsLapis2Done() || HasAnyToken("Lapis Token I", "Lapis Token II", "Lapis Token III");
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_SC_BO_4805",
                 HasLapisI,
                 () =>
@@ -5708,7 +5765,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", compositionType: ClassType.Farm, targetMap: "gaiazor");
-                }
+                },
+                targetMap: "gaiazor"
             )
         )
             return false;
@@ -5849,7 +5907,8 @@ public class ArmyFarmerJoeDoAll
             bool roundCompleted = false;
 
             if (
-                !RunCooperativeObjective(
+                !RunSubgroupCooperativeObjective(
+                    0,
                     $"{objectivePrefix}_BS8736_R{currentRound}_HYDRA",
                     () => HasTargetRank() || core.CheckInventory("Hydra Scale Piece", 75, toInv: false),
                     () =>
@@ -5876,13 +5935,15 @@ public class ArmyFarmerJoeDoAll
                             "Hydra Head 25",
                             targetMap: "hydrachallenge"
                         );
-                    }
+                    },
+                targetMap: "hydrachallenge"
                 )
             )
                 return false;
 
             if (
-                !RunCooperativeObjective(
+                !RunSubgroupCooperativeObjective(
+                    0,
                     $"{objectivePrefix}_BS8736_R{currentRound}_MAUL",
                     () => HasTargetRank() || core.CheckInventory("Creature Shard", 1, toInv: false),
                     () =>
@@ -5909,7 +5970,8 @@ public class ArmyFarmerJoeDoAll
                             "Creature Creation",
                             targetMap: "maul"
                         );
-                    }
+                    },
+                targetMap: "maul"
                 )
             )
                 return false;
@@ -6372,7 +6434,8 @@ public class ArmyFarmerJoeDoAll
 
         // 1. Unlock SpellCrafting (Quest 2260) if Rank 0
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_AP_SC_UNLOCK_2260",
                 HasRank1,
                 () =>
@@ -6394,7 +6457,8 @@ public class ArmyFarmerJoeDoAll
                         compositionType: ClassType.Farm,
                         targetMap: "castleundead"
                     );
-                }
+                },
+                targetMap: "castleundead"
             )
         )
             return false;
@@ -6430,7 +6494,8 @@ public class ArmyFarmerJoeDoAll
 
         // 3. Rank 4 -> Rank 8 via Mystic Parchment (Skull Warrior in /underworld) + Hallow Ink (2322)
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_AP_SC_RANK8",
                 HasRank8,
                 () =>
@@ -6458,7 +6523,8 @@ public class ArmyFarmerJoeDoAll
                         compositionType: ClassType.Farm,
                         targetMap: "underworld"
                     );
-                }
+                },
+                targetMap: "underworld"
             )
         )
             return false;
@@ -6741,7 +6807,8 @@ public class ArmyFarmerJoeDoAll
         bool HasPyromancerArtifact() => Is5465Done() || core.CheckInventory("Pyromancer Artifact", toInv: false);
 
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET70_AP_5465_XAN",
                 HasPyromancerArtifact,
                 () =>
@@ -6760,7 +6827,8 @@ public class ArmyFarmerJoeDoAll
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "Xan", targetMap: "xantown");
                 },
-                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "xantown")
+                prepareForCombat: () => PrepareCombatLoadoutForArmy(ClassType.Solo, "xantown"),
+                targetMap: "xantown"
             )
             || !RunCoordinatedHuntStep(
                 "BRACKET70_AP_5465_DRACOLICH",
@@ -9809,7 +9877,8 @@ public class ArmyFarmerJoeDoAll
         }
 
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "STEP3A_FORGE_WEAPON_ESCHERION",
                 () => IsForgeWeaponDone() || core.CheckInventory("1st Lord Of Chaos Helm", toInv: false),
                 () =>
@@ -9823,7 +9892,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", targetMap: "escherion");
-                }
+                },
+                targetMap: "escherion"
             )
             || !RunSubgroupCooperativeObjective(
                 4,
@@ -10091,7 +10161,8 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "STEP3A_PRAXIS_YAMI",
                 () => IsPraxisDone() || core.CheckInventory("Yami", 3, toInv: false),
                 () =>
@@ -10109,7 +10180,8 @@ public class ArmyFarmerJoeDoAll
                 (targetPlayerNumber, targetPlayerName) =>
                 {
                     Army.CoordinateFollowAndCombat(targetPlayerName, "*", targetMap: "darkally");
-                }
+                },
+                targetMap: "darkally"
             )
         )
             return false;
@@ -11324,7 +11396,8 @@ public class ArmyFarmerJoeDoAll
                     return false;
 
                 if (
-                    !RunCooperativeObjective(
+                    !RunSubgroupCooperativeObjective(
+                        0,
                         "STEP4A_ELYSIUM_AZALITH",
                         () => IsElysiumDone() || core.CheckInventory("The Divine Will", toInv: false),
                         () =>
@@ -11350,7 +11423,8 @@ public class ArmyFarmerJoeDoAll
                         {
                             ApplyCurrentArmyRoomSettings();
                             PrepareCombatLoadoutForArmy(ClassType.Boss);
-                        }
+                        },
+                targetMap: "celestialpast"
                     )
                 )
                     return false;
@@ -13071,7 +13145,8 @@ public class ArmyFarmerJoeDoAll
 
         // 3948: Key to the Fortress
         if (
-            !RunCooperativeObjective(
+            !RunSubgroupCooperativeObjective(
+                0,
                 "BRACKET65_GLACERA_3948",
                 () => IsRuinsQuestDone(3948),
                 () =>
@@ -13087,7 +13162,8 @@ public class ArmyFarmerJoeDoAll
                         "Frost Invader",
                         compositionType: ClassType.Farm,
                         targetMap: "glacera"
-                    )
+                    ),
+                targetMap: "glacera"
             )
         )
             return false;
@@ -14127,6 +14203,10 @@ public class ArmyFarmerJoeDoAll
                 if (!Bot.Quests.IsInProgress(2777))
                     core.EnsureAccept(2777);
 
+                // Quest 2777 needs both socks (CoreFarms.BlacksmithingREP / CyseroMerge farm both).
+                core.HuntMonster("greenguardeast", "Wolf", "Furry Lost Sock", 2, isTemp: true, log: false);
+                if (Bot.ShouldExit)
+                    break;
                 core.KillMonster("greenguardwest", "West4", "Right", "Slime", "Slimy Lost Sock", 5, isTemp: true, log: false);
 
                 if (Bot.ShouldExit)
@@ -14143,7 +14223,9 @@ public class ArmyFarmerJoeDoAll
                 if (completed)
                 {
                     Bot.Wait.ForTrue(
-                        () => !Bot.Quests.IsInProgress(2777) && !Bot.TempInv.Contains("Slimy Lost Sock", 5),
+                        () => !Bot.Quests.IsInProgress(2777)
+                            && !Bot.TempInv.Contains("Slimy Lost Sock", 5)
+                            && !Bot.TempInv.Contains("Furry Lost Sock", 2),
                         15
                     );
                     turnIns++;
@@ -17760,13 +17842,13 @@ public class ArmyFarmerJoeDoAll
         int maxPlayersPerSubgroup = 0,
         Action? prepareForCombat = null,
         Func<int>? resolveSubgroupCap = null
-    ) => Army.RunCooperativeObjective(
+    ) => RunCooperativeObjective(
         objectiveName,
         isComplete,
         doWork,
         (targetPlayerNumber, targetPlayerName) => help(),
         maxWorkAttempts,
-        EffectiveHelperSubgroupCap(maxPlayersPerSubgroup),
+        maxPlayersPerSubgroup,
         prepareForCombat,
         resolveSubgroupCap
     );
@@ -17786,16 +17868,20 @@ public class ArmyFarmerJoeDoAll
         int maxPlayersPerSubgroup = 0,
         Action? prepareForCombat = null,
         Func<int>? resolveSubgroupCap = null
-    ) => Army.RunCooperativeObjective(
-        objectiveName,
-        isComplete,
-        doWork,
-        help,
-        maxWorkAttempts,
-        EffectiveHelperSubgroupCap(maxPlayersPerSubgroup),
-        prepareForCombat,
-        resolveSubgroupCap
-    );
+    )
+    {
+        RestorePlannedRoomAfterOverflow();
+        return Army.RunCooperativeObjective(
+            objectiveName,
+            isComplete,
+            doWork,
+            help,
+            maxWorkAttempts,
+            EffectiveHelperSubgroupCap(maxPlayersPerSubgroup),
+            prepareForCombat,
+            resolveSubgroupCap
+        );
+    }
 
     public bool IsPlayer(int playerNumber) => Army.IsArmyPlayer(playerNumber);
 

@@ -695,12 +695,14 @@ public class CoreArmyFJ
                         helpTargetFinished = () =>
                             HasArmySignal(doneSignal, helpedPlayerNumber)
                             || HasArmySignal(failSignal, helpedPlayerNumber);
+                        IsHelpingTeammate = true;
                         try
                         {
                             help(targetPlayerNumber, targetPlayerName);
                         }
                         finally
                         {
+                            IsHelpingTeammate = false;
                             helpTargetFinished = null;
                         }
                     }
@@ -720,13 +722,140 @@ public class CoreArmyFJ
                 }
 
                 workAttempts++;
-                doWork();
+                RunWorkWithStallGuard(name, doWork);
             }
 
             Bot.Sleep(ArmyPollDelay);
         }
 
         return false;
+    }
+
+    // StallGuard. doWork usually ends in official farm loops (Story.KillQuest,
+    // HuntMonster, ...) that have no timeout: one account looping silently held the whole
+    // Army for 45 min (quest 5330). While doWork runs, a background monitor watches a
+    // progress signature (inventory, temp items, gold/XP/level, rep, monster HP in the
+    // cell). With no progress at all for WorkStallMinutes it logs the account state and
+    // nudges it: odd nudges jump to Enter (the farm loops jump back to their target
+    // cell), even nudges rejoin the current map (temp items and accepted quests survive
+    // a map change). A real fight always changes monster HP, so bosses are never nudged.
+    public int WorkStallMinutes { get; set; } = 5;
+
+    private void RunWorkWithStallGuard(string objectiveName, Action doWork)
+    {
+        using CancellationTokenSource stallGuardCts = new();
+        Thread stallGuard = new(() => WatchWorkForStalls(objectiveName, stallGuardCts.Token))
+        {
+            IsBackground = true,
+            Name = $"ArmyStallGuard-{objectiveName}",
+        };
+        stallGuard.Start();
+        try
+        {
+            doWork();
+        }
+        finally
+        {
+            stallGuardCts.Cancel();
+            stallGuard.Join(3000);
+        }
+    }
+
+    private void WatchWorkForStalls(string objectiveName, CancellationToken token)
+    {
+        string lastSignature = ReadWorkProgressSignature();
+        DateTime lastProgress = DateTime.UtcNow;
+        int nudges = 0;
+
+        while (!token.IsCancellationRequested && !Bot.ShouldExit)
+        {
+            if (token.WaitHandle.WaitOne(5000))
+                return;
+
+            string signature = ReadWorkProgressSignature();
+            if (signature != lastSignature)
+            {
+                lastSignature = signature;
+                lastProgress = DateTime.UtcNow;
+                nudges = 0;
+                continue;
+            }
+
+            if (DateTime.UtcNow - lastProgress < TimeSpan.FromMinutes(Math.Max(1, WorkStallMinutes)))
+                continue;
+
+            if (token.IsCancellationRequested || Bot.ShouldExit)
+                return;
+
+            nudges++;
+            lastProgress = DateTime.UtcNow;
+            bool rejoin = nudges % 2 == 0;
+            Core.Logger(
+                $"Army objective {objectiveName}: no progress for {WorkStallMinutes} min (nudge #{nudges}, "
+                    + $"{(rejoin ? "rejoining map" : "jumping to Enter")}). State: {DescribeWorkState()}",
+                "StallGuard"
+            );
+
+            try
+            {
+                if (rejoin)
+                {
+                    string? map = Bot.Map?.Name;
+                    if (!string.IsNullOrWhiteSpace(map))
+                        Core.Join(map, ignoreCheck: true);
+                }
+                else
+                {
+                    Bot.Map.Jump("Enter", "Spawn");
+                }
+            }
+            catch (Exception ex)
+            {
+                Core.Logger($"Army objective {objectiveName}: stall recovery failed: {ex.Message}", "StallGuard");
+            }
+        }
+    }
+
+    private string ReadWorkProgressSignature()
+    {
+        try
+        {
+            StringBuilder sb = new();
+            sb.Append(Bot.Player.Level).Append('|').Append(Bot.Player.XP).Append('|').Append(Bot.Player.Gold).Append('|');
+            sb.Append(Bot.Inventory.Items?.Sum(i => (long)i.Quantity) ?? 0).Append('|');
+            sb.Append(Bot.Inventory.Items?.Count ?? 0).Append('|');
+            sb.Append(Bot.TempInv.Items?.Sum(i => (long)i.Quantity) ?? 0).Append('|');
+            sb.Append(Bot.Reputation.FactionList?.Sum(f => (long)f.Rep) ?? 0).Append('|');
+            foreach (var monster in Bot.Monsters.CurrentMonsters ?? Enumerable.Empty<Skua.Core.Models.Monsters.Monster>())
+                sb.Append(monster.MapID).Append(':').Append(monster.HP).Append(',');
+            return sb.ToString();
+        }
+        catch
+        {
+            // Game state is read from a background thread; a failed read must never look like a stall.
+            return Guid.NewGuid().ToString();
+        }
+    }
+
+    private string DescribeWorkState()
+    {
+        try
+        {
+            var target = Bot.Player.Target;
+            var cellMonsters = Bot.Monsters.CurrentMonsters ?? Enumerable.Empty<Skua.Core.Models.Monsters.Monster>();
+            string monsters = string.Join(
+                ", ",
+                cellMonsters.GroupBy(m => m.Name).Select(g => $"{g.Key} x{g.Count()} ({g.Count(m => m.HP > 0)} alive)")
+            );
+            return $"map={Bot.Map?.FullName ?? Bot.Map?.Name}, cell={Bot.Player.Cell}/{Bot.Player.Pad}, "
+                + $"alive={Bot.Player.Alive}, hp={Bot.Player.Health}, "
+                + $"target={(Bot.Player.HasTarget ? $"{target?.Name} hp={target?.HP}" : "none")}, "
+                + $"cellMonsters=[{(string.IsNullOrEmpty(monsters) ? "none" : monsters)}]";
+        }
+        catch (Exception ex)
+        {
+            return $"unavailable ({ex.Message})";
+        }
     }
 
     private static readonly string[] SupportHelperPriority =
@@ -751,6 +880,10 @@ public class CoreArmyFJ
         );
 
     private bool actAsSupportHelper;
+
+    // True while this (finished) account runs the help callback (Goto/follow a teammate).
+    // A "room is full" warning then means the teammate's room is full, not ours.
+    public volatile bool IsHelpingTeammate;
 
     // Set by RunCooperativeObjective while a help callback runs, so long Goto/Join waits in
     // CoordinateFollowAndCombat can bail out as soon as the helped teammate finishes.
