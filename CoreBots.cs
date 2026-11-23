@@ -10077,6 +10077,44 @@ public class CoreBots
         @"^e\d+$", // matches e1, e2, e55, etc.
     };
 
+    private bool CompleteCitadelStory()
+    {
+        Logger("Completing the Citadel storyline to unlock the portal.");
+
+        (int QuestID, string Monster, string Item, int Quantity)[] quests =
+        [
+            (144, "Inquisitor Guard", "Guard's Pauldron", 8),
+            (145, "Crusader", "Crusader's Gauntlet", 4),
+            (146, "Inquisitor Captain", "Captain's Insignia", 2),
+            (147, "Burning Witch", "Witch's Gratitude", 7),
+            (148, "Inquisitor Guard", "Mana Vacuum", 10),
+            (149, "Inquisitor Guard", "Mana Amplifier", 5),
+            (181, "Belrot The Fiend", "Belrot's Head", 1),
+            (182, "Grand Inquisitor", "Ring of Evil Intent", 1),
+        ];
+
+        foreach (var (questID, monster, item, quantity) in quests)
+        {
+            if (Bot.ShouldExit)
+                return false;
+            if (Bot.Quests.HasBeenCompleted(questID))
+                continue;
+
+            EnsureAccept(questID);
+            HuntMonster("citadel", monster, item, quantity);
+            EnsureComplete(questID);
+
+            if (!Bot.Quests.HasBeenCompleted(questID))
+            {
+                if (!Bot.ShouldExit)
+                    Logger($"Could not complete Citadel quest {questID}.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Joins a map and does bonus steps for said map if needed
     /// </summary>
@@ -10393,6 +10431,9 @@ public class CoreBots
                         messageBox: false
                     );
                     Join("citadel");
+                    if (!Bot.Quests.HasBeenCompleted(182) && !CompleteCitadelStory())
+                        return;
+
                     Jump("m22", "Left");
                     EquipClass(ClassType.Solo);
                     EnsureAccept(9540);
