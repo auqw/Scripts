@@ -46,6 +46,7 @@ public class Friendship
         if (!Story.QuestProgression(9102))
         {
             Core.EnsureAccept(9102);
+            Core.Join("battleodium-100000");
             Bot.Events.ExtensionPacketReceived += friendshipPacketReader;
             Core.JumpWait();
 
@@ -78,10 +79,11 @@ public class Friendship
         if (!Story.QuestProgression(9104))
         {
             Core.EnsureAccept(9104);
+            Core.Join("greyguard-100000");
             Bot.Events.ExtensionPacketReceived += friendshipPacketReader;
             Core.JumpWait();
 
-            while (!Bot.TempInv.Contains("Greyguard Friendship Formed"))
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Greyguard Friendship Formed"))
             {
                 SendWaitedPacket($"%xt%zm%friendshipInfo%{Bot.Map.RoomID}%Xing%");
                 SendWaitedPacket($"%xt%zm%friendshipTalk%{Bot.Map.RoomID}%");
