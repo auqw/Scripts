@@ -3308,7 +3308,7 @@ public class CoreFarms
         // -------------------------
         // 1) Faction Rank farming
         // -------------------------
-        while (!Bot.ShouldExit && FactionRank("Death Pit Brawl") < rank)
+        while (!Bot.ShouldExit && !ForStory && FactionRank("Death Pit Brawl") < rank)
         {
             runTimer.Start();
             ExecuteOneBrawlRun();
@@ -3324,7 +3324,7 @@ public class CoreFarms
         }
 
         // -------------------------
-        // 2) {item} farming (only AFTER rank is done)
+        // 2) Item farming
         // -------------------------
         if (item != null)
         {

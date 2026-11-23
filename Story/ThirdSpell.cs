@@ -165,6 +165,7 @@ public class ThirdSpell
                         break;
 
                     case 4491: // 4491|Mother Knows The Sun
+                        Core.AddDrop("Heart of the Sun");
                         Core.HuntMonster("thirdspell", "Solar Incarnation ", "Heart of the Sun Received");
                         break;
 
@@ -173,6 +174,7 @@ public class ThirdSpell
                         break;
 
                     case 4493: // 4493|See the Hero Run
+                        HeartoftheSun();
                         Core.GetMapItem(3677, map: "thirdspell");
                         break;
                 }
