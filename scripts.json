@@ -14862,8 +14862,8 @@
       "v3"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV3.cs",
-    "size": 37966,
-    "sha256": "a4dea98bd7623dc67708731942215b8a291c731f1401e710c6427f62a9f9b2b3",
+    "size": 38337,
+    "sha256": "b2cfd8e5aa9140e495b4899a940f644e788713c6850b05afb1cb4041b4df8e6b",
     "fileName": "WeeklyReleaseGeneratorV3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV3.cs"
   },
@@ -14925,24 +14925,6 @@
     "sha256": "5f2f033a7c20a472cca6716b80ba3b8227cfed49fa04684b149c2f46ebe195e9",
     "fileName": "ScriptMainCleaner.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/ScriptMainCleaner.cs"
-  },
-  {
-    "name": "Weekly Release Generator v2",
-    "description": "Reads every quest chain from a location SWF and matches requirements to live monsterDrops packets.",
-    "tags": [
-      "developer",
-      "generator",
-      "story",
-      "quests",
-      "drops",
-      "packets",
-      "v2"
-    ],
-    "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs",
-    "size": 37909,
-    "sha256": "160c26e3a5a795b8286c557b93502fa131e71ac800cc9462ef64ca163098d6d0",
-    "fileName": "WeeklyReleaseGeneratorV2.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs"
   },
   {
     "name": "GenerateQuestFilesv4",
