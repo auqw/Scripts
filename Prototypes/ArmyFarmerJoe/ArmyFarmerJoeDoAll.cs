@@ -4624,7 +4624,12 @@ public class ArmyFarmerJoeDoAll
             HasAnyClassInInventory(38084, 38049) || HasClassInInventory("Glacial Berserker");
         bool HasGBRank10() => HasRank10Class("Glacial Berserker");
         bool IsGlaceraRepDone() => HasGB() || Farm.FactionRank("Glacera") >= 10;
-        bool IsGlaceraStoryDone() => IsGlaceraRepDone() || core.isCompletedBefore(5601, log: false);
+        // Both halves of the story are needed (official Glacera.cs does 3951-3954 before IceWindPass).
+        // 5601 alone was seen reading "done" on accounts stuck at 3950, which skipped 3951-3954 and
+        // left the rep quests (5597-5600) failing every turn-in with "missing requirements".
+        bool IsGlaceraStoryDone() =>
+            IsGlaceraRepDone()
+            || (core.isCompletedBefore(3954, log: false) && core.isCompletedBefore(5601, log: false));
 
         ApplySubgroupRoomSettings(4);
         try
@@ -4651,6 +4656,10 @@ public class ArmyFarmerJoeDoAll
                     if (IsGlaceraRepDone())
                         return;
 
+                    core.Logger(
+                        $"Glacera REP: rank {Farm.FactionRank("Glacera")}, story 3954 [{(core.isCompletedBefore(3954, log: false) ? "✔" : "❌")}], "
+                            + $"5594 [{(core.isCompletedBefore(5594, log: false) ? "✔" : "❌")}], 5601 [{(core.isCompletedBefore(5601, log: false) ? "✔" : "❌")}]."
+                    );
                     SetClass(ClassType.Farm);
                     Farm.GlaceraREP(10);
                 },
@@ -13023,7 +13032,7 @@ public class ArmyFarmerJoeDoAll
         if (
             Army.AllPlayersSatisfy(
                 "SKIP_GLACERA_STORY",
-                () => skipCondition() || core.isCompletedBefore(5601, log: false)
+                skipCondition
             )
         )
             return true;
