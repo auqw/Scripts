@@ -204,17 +204,24 @@ public class WeeklyReleaseGeneratorV3
     {
         List<Quest> quests = new();
         List<int> failed = new();
+        QuestPacketCollector collector = new();
 
         foreach (int questID in questIDs.Where(id => id > 0).Distinct())
         {
             try
             {
-                Quest loadedQuest = new QuestPacketCollector().Load(questID);
+                Quest loadedQuest = collector.Load(questID);
                 quests.Add(loadedQuest);
 
                 int reqCount = loadedQuest.Requirements?.Count ?? 0;
                 int rwdCount = loadedQuest.Rewards?.Count ?? 0;
                 Core.Logger($"Captured quest '{loadedQuest.Name}' [{loadedQuest.ID}] (Slot: {loadedQuest.Slot}, Value: {loadedQuest.Value} | Req: {reqCount}, Rwd: {rwdCount})");
+            }
+            catch (TimeoutException)
+            {
+                // Some map SWFs retain obsolete quest IDs that no longer have QData.
+                // These stale references should not prevent weekly release generation.
+                Core.Logger($"Skipping Quest [{questID}]: no getQuests packet/QData was returned.");
             }
             catch (Exception ex)
             {
