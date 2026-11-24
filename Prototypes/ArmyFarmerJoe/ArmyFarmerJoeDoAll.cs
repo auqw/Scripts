@@ -4094,7 +4094,8 @@ public class ArmyFarmerJoeDoAll
                             );
                         },
                         prepareForCombat: () => ApplyCurrentArmyRoomSettings(),
-                        resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("towerofdoom")
+                        resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("towerofdoom"),
+                        targetMap: "towerofdoom"
                     )
                 )
                     return false;
@@ -6014,7 +6015,8 @@ public class ArmyFarmerJoeDoAll
                             );
                         },
                         prepareForCombat: () => ApplyCurrentArmyRoomSettings(),
-                        resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("towerofdoom")
+                        resolveSubgroupCap: () => ProbeMapSubgroupCapForArmy("towerofdoom"),
+                        targetMap: "towerofdoom"
                     )
                 )
                     return false;
@@ -14146,6 +14148,13 @@ public class ArmyFarmerJoeDoAll
         // (Adv.RankUpClass only calls Core.Equip, which does not start Bot.Skills.StartAdvanced!)
         Army.StartClassSkills(className);
 
+        // Official Farm.IcestormArena sends Lv 50-60 to cell r16, whose Lv 50 screen moved to
+        // /icestormunder (Lv 75): the jump lands in moveFrame ("level up before facing...") forever.
+        // Rank those levels in r14 (Lv 35 screen) instead; at Lv 61+ the official farm takes over.
+        RankUpClassInIcestormR14(className);
+        if (HasRank10Class(className))
+            return;
+
         if (preserveGear)
         {
             // Adv.RankUpClass calls SmartEnhance(className) internally without ForceEnh, which would overwrite
@@ -14164,6 +14173,50 @@ public class ArmyFarmerJoeDoAll
         // Pass gearRestore: false so that when this account hits Rank 10 in /icestormarena while other
         // accounts are still fighting, it doesn't try to restore/re-enhance old gear inside the active combat room!
         Adv.RankUpClass(className, gearRestore: false);
+    }
+
+    private void RankUpClassInIcestormR14(string className)
+    {
+        bool InBrokenBracket() => Bot.Player.Level >= 50 && Bot.Player.Level < 61;
+        if (!InBrokenBracket() || HasRank10Class(className))
+            return;
+
+        CoreBots core = CoreBots.Instance;
+        core.Logger($"Ranking '{className}' in /icestormarena r14 (Lv {Bot.Player.Level}; official r16 is unreachable).");
+        Farm.ToggleBoost(BoostType.Class);
+        try
+        {
+            while (!Bot.ShouldExit && InBrokenBracket() && Bot.Player.CurrentClassRank < 10)
+            {
+                if (!Bot.Player.Alive)
+                {
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    continue;
+                }
+
+                if (!string.Equals(Bot.Map?.Name, "icestormarena", StringComparison.OrdinalIgnoreCase))
+                {
+                    core.Join("icestormarena");
+                    Bot.Wait.ForMapLoad("icestormarena");
+                }
+
+                if (Bot.Player.Cell != "r14")
+                {
+                    core.Jump("r14", "Left");
+                    Bot.Wait.ForCellChange("r14");
+                }
+
+                Bot.Options.AggroMonsters = true;
+                Bot.Combat.Attack("*");
+                core.Sleep(200);
+            }
+        }
+        finally
+        {
+            Bot.Options.AggroMonsters = false;
+            core.Jump("Enter");
+            Farm.ToggleBoost(BoostType.Class, false);
+        }
     }
 
     private bool RunBlacksmithingRank4Step(string objectiveName, Func<bool> alreadySatisfied)
@@ -15644,7 +15697,8 @@ public class ArmyFarmerJoeDoAll
                         ApplyEffectiveSubgroupRoomSettings(objectiveName, 0);
                     PrepareCombatLoadoutForArmy(role, targetMap);
                 },
-                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap) : null
+                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap) : null,
+                targetMap: targetMap
             );
         }
         finally
@@ -15702,7 +15756,8 @@ public class ArmyFarmerJoeDoAll
                             ApplyEffectiveSubgroupRoomSettings(objectiveName, fallbackCap);
                         prepareForCombat();
                     },
-                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap, probeMapByJoin) : null
+                resolveSubgroupCap: autoDetectCap ? () => ProbeMapSubgroupCapForArmy(targetMap, probeMapByJoin) : null,
+                targetMap: targetMap
             );
         }
         finally
@@ -17841,7 +17896,8 @@ public class ArmyFarmerJoeDoAll
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
         Action? prepareForCombat = null,
-        Func<int>? resolveSubgroupCap = null
+        Func<int>? resolveSubgroupCap = null,
+        string? targetMap = null
     ) => RunCooperativeObjective(
         objectiveName,
         isComplete,
@@ -17850,7 +17906,8 @@ public class ArmyFarmerJoeDoAll
         maxWorkAttempts,
         maxPlayersPerSubgroup,
         prepareForCombat,
-        resolveSubgroupCap
+        resolveSubgroupCap,
+        targetMap
     );
 
     // Objectives run inside an ApplySubgroupRoomSettings(...) block (e.g. the 1-4 / 5-7 splits)
@@ -17867,7 +17924,8 @@ public class ArmyFarmerJoeDoAll
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
         Action? prepareForCombat = null,
-        Func<int>? resolveSubgroupCap = null
+        Func<int>? resolveSubgroupCap = null,
+        string? targetMap = null
     )
     {
         RestorePlannedRoomAfterOverflow();
@@ -17879,7 +17937,8 @@ public class ArmyFarmerJoeDoAll
             maxWorkAttempts,
             EffectiveHelperSubgroupCap(maxPlayersPerSubgroup),
             prepareForCombat,
-            resolveSubgroupCap
+            resolveSubgroupCap,
+            targetMap
         );
     }
 

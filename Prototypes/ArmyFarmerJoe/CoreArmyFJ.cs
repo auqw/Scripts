@@ -393,7 +393,8 @@ public class CoreArmyFJ
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
         Action? prepareForCombat = null,
-        Func<int>? resolveSubgroupCap = null
+        Func<int>? resolveSubgroupCap = null,
+        string? targetMap = null
     ) =>
         RunCooperativeObjective(
             objectiveName,
@@ -403,9 +404,12 @@ public class CoreArmyFJ
             maxWorkAttempts,
             maxPlayersPerSubgroup,
             prepareForCombat,
-            resolveSubgroupCap
+            resolveSubgroupCap,
+            targetMap
         );
 
+    // targetMap (optional) is the map doWork farms on; StallGuard uses it to re-enter that map
+    // when the account stalls (frozen client) or idles in a /house after a manual unstick.
     public bool RunCooperativeObjective(
         string objectiveName,
         Func<bool> isComplete,
@@ -414,7 +418,8 @@ public class CoreArmyFJ
         int maxWorkAttempts = 0,
         int maxPlayersPerSubgroup = 0,
         Action? prepareForCombat = null,
-        Func<int>? resolveSubgroupCap = null
+        Func<int>? resolveSubgroupCap = null,
+        string? targetMap = null
     )
     {
         int[]? outerRoomLayout = activeRoomLayout;
@@ -428,7 +433,8 @@ public class CoreArmyFJ
                 maxWorkAttempts,
                 maxPlayersPerSubgroup,
                 prepareForCombat,
-                resolveSubgroupCap
+                resolveSubgroupCap,
+                targetMap
             );
         }
         finally
@@ -447,7 +453,8 @@ public class CoreArmyFJ
         int maxWorkAttempts,
         int maxPlayersPerSubgroup,
         Action? prepareForCombat,
-        Func<int>? resolveSubgroupCap
+        Func<int>? resolveSubgroupCap,
+        string? targetMap
     )
     {
         if (!RequireArmySession())
@@ -570,8 +577,10 @@ public class CoreArmyFJ
             return false;
 
         unreachableHelperTargets.Clear();
+        unreachableHelperMarkedAt.Clear();
         attemptedBypassReloadCells.Clear();
         failedGotoCounts.Clear();
+        failedSameMapJumpCounts.Clear();
         loggedHelperSleepMode = false;
 
         while (!Bot.ShouldExit && !armyTransportFailed)
@@ -650,6 +659,7 @@ public class CoreArmyFJ
                 else
                 {
                     loggedRoomWaitMode = false;
+                    ExpireUnreachableHelperTargets(name);
                     List<int> accessiblePending = scopedPending
                         .Where(p => !unreachableHelperTargets.Contains(NormalizeArmyUsername(armyPlayers[p - 1])))
                         .ToList();
@@ -722,7 +732,7 @@ public class CoreArmyFJ
                 }
 
                 workAttempts++;
-                RunWorkWithStallGuard(name, doWork);
+                RunWorkWithStallGuard(name, doWork, targetMap);
             }
 
             Bot.Sleep(ArmyPollDelay);
@@ -736,15 +746,22 @@ public class CoreArmyFJ
     // Army for 45 min (quest 5330). While doWork runs, a background monitor watches a
     // progress signature (inventory, temp items, gold/XP/level, rep, monster HP in the
     // cell). With no progress at all for WorkStallMinutes it logs the account state and
-    // nudges it: odd nudges jump to Enter (the farm loops jump back to their target
-    // cell), even nudges rejoin the current map (temp items and accepted quests survive
-    // a map change). A real fight always changes monster HP, so bosses are never nudged.
+    // nudges it (temp items and accepted quests survive a map change). With a known objective
+    // map every nudge is a full re-entry (/whitemap, then the objective map): a frozen client
+    // only recovers with a real map change. Without one, odd nudges jump to Enter (the farm
+    // loops jump back to their target cell) and even nudges rejoin the current map.
+    // From the 3rd nudge a "still stuck" warning is logged.
+    // A real fight always changes monster HP, so bosses are never nudged.
+    // Fast path: the usual manual unstick is "/join house". The farm loops join their map only
+    // once, so the account then idled in the house forever; now, after OffMapRecoverySeconds
+    // in a /house without progress, it is sent back to the objective map.
     public int WorkStallMinutes { get; set; } = 5;
+    public int OffMapRecoverySeconds { get; set; } = 20;
 
-    private void RunWorkWithStallGuard(string objectiveName, Action doWork)
+    private void RunWorkWithStallGuard(string objectiveName, Action doWork, string? targetMap = null)
     {
         using CancellationTokenSource stallGuardCts = new();
-        Thread stallGuard = new(() => WatchWorkForStalls(objectiveName, stallGuardCts.Token))
+        Thread stallGuard = new(() => WatchWorkForStalls(objectiveName, targetMap, stallGuardCts.Token))
         {
             IsBackground = true,
             Name = $"ArmyStallGuard-{objectiveName}",
@@ -761,10 +778,12 @@ public class CoreArmyFJ
         }
     }
 
-    private void WatchWorkForStalls(string objectiveName, CancellationToken token)
+    private void WatchWorkForStalls(string objectiveName, string? targetMap, CancellationToken token)
     {
+        string? objectiveMap = NormalizeMapKey(targetMap);
         string lastSignature = ReadWorkProgressSignature();
         DateTime lastProgress = DateTime.UtcNow;
+        DateTime? strandedSince = null;
         int nudges = 0;
 
         while (!token.IsCancellationRequested && !Bot.ShouldExit)
@@ -773,13 +792,42 @@ public class CoreArmyFJ
                 return;
 
             string signature = ReadWorkProgressSignature();
-            if (signature != lastSignature)
+            bool progressed = signature != lastSignature;
+            if (progressed)
             {
                 lastSignature = signature;
                 lastProgress = DateTime.UtcNow;
                 nudges = 0;
+            }
+
+            string? currentMap = ReadCurrentMapKey();
+
+            // Fast path: stranded in a /house without progress (needs a known objective map;
+            // otherwise the regular nudges below handle it).
+            if (objectiveMap != null && IsHouseMap(currentMap))
+            {
+                if (progressed || strandedSince == null)
+                    strandedSince = DateTime.UtcNow;
+                else if (DateTime.UtcNow - strandedSince.Value >= TimeSpan.FromSeconds(Math.Max(15, OffMapRecoverySeconds)))
+                {
+                    if (token.IsCancellationRequested || Bot.ShouldExit)
+                        return;
+
+                    strandedSince = null;
+                    lastProgress = DateTime.UtcNow;
+                    Core.Logger(
+                        $"Army objective {objectiveName}: in '/{currentMap}' for {OffMapRecoverySeconds}s without progress "
+                            + $"(manual unstick?); returning to '/{objectiveMap}'. State: {DescribeWorkState()}",
+                        "StallGuard"
+                    );
+                    TryStallRecovery(objectiveName, () => RejoinObjectiveMap(objectiveMap, fullReentry: false));
+                }
                 continue;
             }
+            strandedSince = null;
+
+            if (progressed)
+                continue;
 
             if (DateTime.UtcNow - lastProgress < TimeSpan.FromMinutes(Math.Max(1, WorkStallMinutes)))
                 continue;
@@ -789,32 +837,88 @@ public class CoreArmyFJ
 
             nudges++;
             lastProgress = DateTime.UtcNow;
-            bool rejoin = nudges % 2 == 0;
+
+            string action;
+            Action recovery;
+            if (objectiveMap != null)
+            {
+                // A frozen client only wakes up with a real map change (same fix as a manual
+                // /join house), so with a known objective map every nudge is a full re-entry.
+                action = $"full re-entry into '/{objectiveMap}'";
+                recovery = () => RejoinObjectiveMap(objectiveMap, fullReentry: true);
+            }
+            else if (nudges % 2 == 0)
+            {
+                string? rejoinMap = IsHouseMap(currentMap) ? null : Bot.Map?.Name;
+                action = rejoinMap != null ? $"rejoining '/{NormalizeMapKey(rejoinMap)}'" : "no map to rejoin";
+                recovery = () =>
+                {
+                    if (rejoinMap != null)
+                        RejoinObjectiveMap(rejoinMap, fullReentry: false);
+                };
+            }
+            else
+            {
+                action = "jumping to Enter";
+                recovery = () => Bot.Map.Jump("Enter", "Spawn");
+            }
+
             Core.Logger(
-                $"Army objective {objectiveName}: no progress for {WorkStallMinutes} min (nudge #{nudges}, "
-                    + $"{(rejoin ? "rejoining map" : "jumping to Enter")}). State: {DescribeWorkState()}",
+                $"Army objective {objectiveName}: no progress for {WorkStallMinutes} min (nudge #{nudges}, {action}). State: {DescribeWorkState()}",
                 "StallGuard"
             );
+            if (nudges >= 3)
+            {
+                Core.Logger(
+                    $"Army objective {objectiveName}: still stuck after {nudges} nudges (~{nudges * WorkStallMinutes} min); the rest of the Army is waiting on this account.",
+                    "StallGuard"
+                );
+            }
 
-            try
-            {
-                if (rejoin)
-                {
-                    string? map = Bot.Map?.Name;
-                    if (!string.IsNullOrWhiteSpace(map))
-                        Core.Join(map, ignoreCheck: true);
-                }
-                else
-                {
-                    Bot.Map.Jump("Enter", "Spawn");
-                }
-            }
-            catch (Exception ex)
-            {
-                Core.Logger($"Army objective {objectiveName}: stall recovery failed: {ex.Message}", "StallGuard");
-            }
+            TryStallRecovery(objectiveName, recovery);
         }
     }
+
+    private void TryStallRecovery(string objectiveName, Action recovery)
+    {
+        try
+        {
+            recovery();
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"Army objective {objectiveName}: stall recovery failed: {ex.Message}", "StallGuard");
+        }
+    }
+
+    // Joins the objective map in the account's current (private) room. A full re-entry passes
+    // through /whitemap first so a half-loaded map or a stuck transition is fully reset.
+    private void RejoinObjectiveMap(string map, bool fullReentry)
+    {
+        if (fullReentry)
+        {
+            Core.Join("whitemap", ignoreCheck: true);
+            Bot.Wait.ForMapLoad("whitemap");
+        }
+
+        EnsureMapAccessBypass(NormalizeMapKey(map));
+        Core.Join(map, ignoreCheck: true);
+    }
+
+    private string? ReadCurrentMapKey()
+    {
+        try
+        {
+            return NormalizeMapKey(Bot.Map?.Name);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static bool IsHouseMap(string? normalizedMap) =>
+        !string.IsNullOrEmpty(normalizedMap) && normalizedMap.StartsWith("house", StringComparison.OrdinalIgnoreCase);
 
     private string ReadWorkProgressSignature()
     {
@@ -912,12 +1016,100 @@ public class CoreArmyFJ
         return lastHelpTargetFinished;
     }
 
+    // Core.Join retries 20x with a growing random back-off and never looks at the helped
+    // teammate: when the map refused the join ("Failed to join hydrachallenge") a helper sat
+    // there ~3 min while every other account waited at the next barrier (each BS8736 round,
+    // 2026-11-23). Helpers make one bounded attempt instead and give up as soon as the
+    // teammate finishes; the help loop simply retries on its next pass.
+    public int HelperJoinTimeoutSeconds { get; set; } = 15;
+
+    private bool JoinMapForHelp(string map)
+    {
+        string? key = NormalizeMapKey(map?.Replace(" ", ""));
+        if (string.IsNullOrEmpty(key) || Bot.ShouldExit)
+            return false;
+
+        bool OnMap() => string.Equals(NormalizeMapKey(Bot.Map?.Name), key, StringComparison.OrdinalIgnoreCase);
+        if (OnMap())
+            return true;
+        if (HelpTargetFinished())
+            return false;
+
+        EnsureMapAccessBypass(key);
+        Bot.Options.AggroMonsters = false;
+        Bot.Options.AggroAllMonsters = false;
+
+        string requested = map!.Replace(" ", "").ToLowerInvariant();
+        string joinTarget = requested.Contains('-') || !Core.PrivateRooms
+            ? requested
+            : $"{requested}-{Core.PrivateRoomNumber}";
+
+        Bot.Map.Join(joinTarget, "Enter", "Spawn", autoCorrect: !Core.PrivateRooms);
+        Bot.Wait.ForTrue(() => OnMap() || HelpTargetFinished() || Bot.ShouldExit, Math.Max(5, HelperJoinTimeoutSeconds));
+        if (OnMap())
+            return true;
+
+        if (!HelpTargetFinished() && !Bot.ShouldExit)
+        {
+            Core.Logger(
+                $"Helper could not join '/{joinTarget}' within {Math.Max(5, HelperJoinTimeoutSeconds)}s (now on '/{Bot.Map?.Name}'); retrying on the next pass.",
+                "CoordinateFollowAndCombat"
+            );
+        }
+        return false;
+    }
+
     private string lastSkillRotationClass = string.Empty;
     private string lastSpecialEquippedMapRoom = string.Empty;
     private readonly HashSet<string> unreachableHelperTargets = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> attemptedBypassReloadCells = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, int> failedGotoCounts = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, int> failedSameMapJumpCounts = new(StringComparer.OrdinalIgnoreCase);
     private bool loggedHelperSleepMode;
+
+    // "Unreachable" is not forever: a teammate that was in a /house (manual unstick), a frozen
+    // client or another instance can come back to the objective map, and helpers sleeping until
+    // the objective ends left it alone (quest 8736 Klunk, 2026-11-23). Each mark expires after this many seconds, then
+    // the helper tries to reach that teammate again from scratch.
+    public int UnreachableHelperRetrySeconds { get; set; } = 120;
+    private readonly Dictionary<string, DateTime> unreachableHelperMarkedAt = new(StringComparer.OrdinalIgnoreCase);
+
+    private void ExpireUnreachableHelperTargets(string objectiveName)
+    {
+        if (unreachableHelperTargets.Count == 0)
+        {
+            unreachableHelperMarkedAt.Clear();
+            return;
+        }
+
+        DateTime now = DateTime.UtcNow;
+        foreach (string target in unreachableHelperTargets)
+        {
+            if (!unreachableHelperMarkedAt.ContainsKey(target))
+                unreachableHelperMarkedAt[target] = now;
+        }
+
+        List<string> expired = unreachableHelperMarkedAt
+            .Where(kv => now - kv.Value >= TimeSpan.FromSeconds(Math.Max(30, UnreachableHelperRetrySeconds)))
+            .Select(kv => kv.Key)
+            .ToList();
+        if (expired.Count == 0)
+            return;
+
+        foreach (string target in expired)
+        {
+            unreachableHelperTargets.Remove(target);
+            unreachableHelperMarkedAt.Remove(target);
+            failedGotoCounts.Remove(target);
+            failedSameMapJumpCounts.Remove(target);
+        }
+
+        loggedHelperSleepMode = false;
+        Core.Logger(
+            $"Army objective {objectiveName}: retrying unreachable teammate(s) {string.Join(", ", expired.Select(t => $"'{t}'"))}.",
+            "CoreArmyFJ"
+        );
+    }
 
     private static readonly HashSet<string> LevelBracketedMaps = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -1272,7 +1464,22 @@ public class CoreArmyFJ
             }
             else
             {
-                Bot.Sleep(500);
+                // The table says the cell is open, but the client keeps refusing the jump (e.g. the
+                // teammate itself is stuck in a transition cell like moveFrame). Give up after a while
+                // instead of retrying forever; the helper then serves another reachable teammate.
+                int fails = failedSameMapJumpCounts.TryGetValue(normalizedTarget, out int prev) ? prev + 1 : 1;
+                failedSameMapJumpCounts[normalizedTarget] = fails;
+                if (fails >= 12 && unreachableHelperTargets.Add(normalizedTarget))
+                {
+                    Core.Logger(
+                        $"Map '{currentMap}' cell '{targetCell}' refused {fails} jumps (local Lv {Bot.Player.Level}, table Lv {requiredLevel}); putting helper in sleep mode for '{normalizedTarget}'.",
+                        "CoordinateFollowAndCombat"
+                    );
+                }
+                else
+                {
+                    Bot.Sleep(500);
+                }
             }
             return false;
         }
@@ -1290,11 +1497,15 @@ public class CoreArmyFJ
             Core.Join("whitemap", ignoreCheck: true);
             EnsureMapAccessBypass(currentMap);
             Bot.Player.Goto(normalizedTarget);
-            Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+            Bot.Wait.ForTrue(() => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(), 20);
+            if (HelpTargetFinished())
+                return false;
             if (!Bot.Map.PlayerExists(normalizedTarget) || string.Equals(Bot.Map?.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
             {
-                Core.Join(currentMap);
-                Bot.Wait.ForTrue(() => Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget), 20);
+                JoinMapForHelp(currentMap!);
+                Bot.Wait.ForTrue(() => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(), 20);
+                if (HelpTargetFinished())
+                    return false;
             }
             EnsureMapAccessBypass(currentMap);
             if (Bot.Map.TryGetPlayer(normalizedTarget, out var playerAfterReload) && playerAfterReload != null)
@@ -1481,7 +1692,7 @@ public class CoreArmyFJ
                 && !IsSoloOnlyMap(targetMap)
             )
             {
-                Core.Join(targetMap);
+                JoinMapForHelp(targetMap!);
                 Bot.Wait.ForTrue(
                     () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
                     20
@@ -1507,7 +1718,7 @@ public class CoreArmyFJ
                     {
                         if (Bot.ShouldExit || Bot.Map.PlayerExists(normalizedTarget) || HelpTargetFinished())
                             break;
-                        Core.Join(fallbackMap);
+                        JoinMapForHelp(fallbackMap);
                         Bot.Wait.ForTrue(
                             () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
                             20
@@ -1565,6 +1776,9 @@ public class CoreArmyFJ
                 }
             }
         }
+
+        if (inSameCell)
+            failedSameMapJumpCounts.Remove(normalizedTarget);
 
         if (!inSameCell)
         {
