@@ -88,7 +88,7 @@ public class CoreNSOD
             NSBlade();
             Core.Logger("NSoD: Step #11/16: NSHilt.");
             NSHilt();
-            Core.Logger("NSoD: Step #12/16: NSAura (Note: this also requires an extra `Unenhanced Blade` & `Unenhanced Hilt`).");
+            Core.Logger("NSoD: Step #12/16: NSAura\n (To the retards; yes this requires an extra `Unenhanced Blade` & `Unenhanced Hilt`).");
             NSAura();
             Core.Logger("NSoD: Step #13/16: ULTRA Sepulchure for \"Doom Heart\"");
             GetDoomHeart();
