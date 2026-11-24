@@ -13593,6 +13593,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/UnundeadGoat.cs"
   },
   {
+    "name": "Pal9001",
+    "description": "Completes the quest chain in /pal9001.",
+    "tags": [
+      "pal9001",
+      "story",
+      "quests",
+      "pal9001"
+    ],
+    "path": "Seasonal/AprilFools/Pal9001.cs",
+    "size": 2365,
+    "sha256": "c22ef3962007a0300535c2df7fc839fc00b22096b29917b8f33ab6ba3feafc3b",
+    "fileName": "Pal9001.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/Pal9001.cs"
+  },
+  {
     "name": "DERP! Badge",
     "description": "This will get the DERP! Badge.",
     "tags": [
@@ -14862,8 +14877,8 @@
       "v3"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV3.cs",
-    "size": 37966,
-    "sha256": "a4dea98bd7623dc67708731942215b8a291c731f1401e710c6427f62a9f9b2b3",
+    "size": 40662,
+    "sha256": "739d185bf66fa9fe7acbf78bcf77f57f4a7766181169c263c1b89ae490f7be6b",
     "fileName": "WeeklyReleaseGeneratorV3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV3.cs"
   },
@@ -14925,24 +14940,6 @@
     "sha256": "5f2f033a7c20a472cca6716b80ba3b8227cfed49fa04684b149c2f46ebe195e9",
     "fileName": "ScriptMainCleaner.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/ScriptMainCleaner.cs"
-  },
-  {
-    "name": "Weekly Release Generator v2",
-    "description": "Reads every quest chain from a location SWF and matches requirements to live monsterDrops packets.",
-    "tags": [
-      "developer",
-      "generator",
-      "story",
-      "quests",
-      "drops",
-      "packets",
-      "v2"
-    ],
-    "path": "Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs",
-    "size": 37909,
-    "sha256": "160c26e3a5a795b8286c557b93502fa131e71ac800cc9462ef64ca163098d6d0",
-    "fileName": "WeeklyReleaseGeneratorV2.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGeneratorV2.cs"
   },
   {
     "name": "GenerateQuestFilesv4",
