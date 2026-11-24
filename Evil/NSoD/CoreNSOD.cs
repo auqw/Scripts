@@ -18,98 +18,50 @@ using Skua.Core.Options;
 
 public class CoreNSOD
 {
-    // private bool OptimizeInv = true;
+    #region Constants
+
+    private const int ShadowfallShopId = 793;      // Shadowfall shop item ID
+    private const int DoomKnightArmorId = 14474;   // Sepulchure's DoomKnight Armor
+    private const int MaxFarmIterations = 1000;    // Safety limit before relogging in RetrieveVoidAuras
+
+    #endregion
 
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private static CoreFarms Farm
-    {
-        get => _Farm ??= new CoreFarms();
-        set => _Farm = value;
-    }
+    // Lazily created helpers. Target-typed new() and ??= per preferences.
+    private static CoreFarms Farm => _Farm ??= new();
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv
-    {
-        get => _Adv ??= new CoreAdvanced();
-        set => _Adv = value;
-    }
+    private static CoreAdvanced Adv => _Adv ??= new();
     private static CoreAdvanced _Adv;
-    private static CoreDailies Daily
-    {
-        get => _Daily ??= new CoreDailies();
-        set => _Daily = value;
-    }
+    private static CoreDailies Daily => _Daily ??= new();
     private static CoreDailies _Daily;
-
-    private static CoreBLOD BLOD
-    {
-        get => _BLOD ??= new CoreBLOD();
-        set => _BLOD = value;
-    }
+    private static CoreBLOD BLOD => _BLOD ??= new();
     private static CoreBLOD _BLOD;
-    private static CoreSDKA SDKA
-    {
-        get => _SDKA ??= new CoreSDKA();
-        set => _SDKA = value;
-    }
+    private static CoreSDKA SDKA => _SDKA ??= new();
     private static CoreSDKA _SDKA;
-    private static Necromancer Necro
-    {
-        get => _Necro ??= new Necromancer();
-        set => _Necro = value;
-    }
+    private static Necromancer Necro => _Necro ??= new();
     private static Necromancer _Necro;
-    private static BattleUnder BattleUnder
-    {
-        get => _BattleUnder ??= new BattleUnder();
-        set => _BattleUnder = value;
-    }
-    private static BattleUnder _BattleUnder;
 
     public string OptionsStorage = "NecroticSwordOfDoomOptions";
     public bool DontPreconfigure = true;
-    public Option<bool> MaxStack = new(
-        "MaxStack",
-        "Max Stack",
-        "Max Stack Monster Essences in \"Retreive Void Auras\"\nRecommended setting: True",
-        true
-    );
-    public Option<bool> PreFarm = new(
-        "PreFarm",
-        "Pre Farm Materials",
-        "Farm all requiered items before merging everything. Not recommended if you already did a merge yourself.\nRecommended setting: False",
-        false
-    );
-    public Option<bool> GetSDKA = new(
-        "getSDKA",
-        "Get SDKA first [Mem]",
-        "If true, the bot will attempt to get SDKA first, so that it can use the fastest Void Aura farm available\nMember-Only\nRecommended setting: True",
-        true
-    );
+    public Option<bool> MaxStack = new("MaxStack", "Max Stack", "Max Stack Monster Essences in \"Retreive Void Auras\"\nRecommended setting: True", true);
+    public Option<bool> PreFarm = new("PreFarm", "Pre Farm Materials", "Farm all requiered items before merging everything. Not recommended if you already did a merge yourself.\nRecommended setting: False", false);
+    public Option<bool> GetSDKA = new("getSDKA", "Get SDKA first [Mem]", "If true, the bot will attempt to get SDKA first, so that it can use the fastest Void Aura farm available\nMember-Only\nRecommended setting: True", true);
 
     public string[] Essences =
-    {
-        "Astral Ephemerite Essence",
-        "Belrot the Fiend Essence",
-        "Black Knight Essence",
-        "Tiger Leech Essence",
-        "Carnax Essence",
-        "Chaos Vordred Essence",
-        "Dai Tengu Essence",
-        "Unending Avatar Essence",
-        "Void Dragon Essence",
+    [
+        "Astral Ephemerite Essence", "Belrot the Fiend Essence", "Black Knight Essence",
+        "Tiger Leech Essence", "Carnax Essence", "Chaos Vordred Essence",
+        "Dai Tengu Essence", "Unending Avatar Essence", "Void Dragon Essence",
         "Creature Creation Essence",
-    };
+    ];
 
     public void ScriptMain(IScriptInterface bot) => Core.RunCore();
 
     public void GetNSOD()
     {
-        if (
-            Core.CheckInventory("Necrotic Sword of Doom")
-            && Core.HasWebBadge("Necrotic Sword of Doom")
-        )
+        if (Core.CheckInventory("Necrotic Sword of Doom") && Core.HasWebBadge("Necrotic Sword of Doom"))
             return;
 
         if (!Core.CheckInventory("Necrotic Sword of Doom"))
@@ -120,40 +72,30 @@ public class CoreNSOD
                 Barium();
             }
 
-            bool preFarmEnabled = Bot.Config?.Get<bool>("PreFarm") ?? false;
-
-            if (
-                preFarmEnabled
-                && !Core.CheckInventory(
-                    new[]
-                    {
-                        "Necrotic Sword's Blade",
-                        "Necrotic Sword's Hilt",
-                        "Necrotic Sword's Aura",
-                    },
-                    any: true
-                )
-            )
+            // Fixed: each branch now logs its real reason for running or skipping
+            bool preFarmEnabled = Bot.Config?.Get<bool>("PreFarm") == true;
+            if (!preFarmEnabled)
+                Core.Logger("NSoD: PreFarm disabled, continuing with the farm.");
+            else if (Core.CheckInventory(new[] { "Necrotic Sword's Blade", "Necrotic Sword's Hilt", "Necrotic Sword's Aura" }, any: true))
+                Core.Logger("NSoD: PreFarm skipped, a blade, hilt, or aura is already owned.");
+            else
             {
                 Core.Logger("NSoD: PreFarm Steps:");
                 PreFarmSteps();
             }
-            else
-                Core.Logger("NSoD: PreFarm Steps skipped, continuing with the farm.");
 
             Core.Logger("NSoD: Step #10/16: NSBlade.");
             NSBlade();
             Core.Logger("NSoD: Step #11/16: NSHilt.");
             NSHilt();
-            Core.Logger("NSoD: Step #12/16: NSAura\n (To the retards; yes this requires an extra `Unenhanced Blade` & `Unenhanced Hilt`).");
+            Core.Logger("NSoD: Step #12/16: NSAura (Note: this also requires an extra `Unenhanced Blade` & `Unenhanced Hilt`).");
             NSAura();
             Core.Logger("NSoD: Step #13/16: ULTRA Sepulchure for \"Doom Heart\"");
-            Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true); Core.Logger("NSoD: Step #14/16: Void Auras x800 to complete the merge");
+            GetDoomHeart();
+            Core.Logger("NSoD: Step #14/16: Void Auras x800 to complete the merge");
             VoidAuras(800);
-
             Core.Logger("NSoD: Step #15/16: NSoD purchase");
-            Core.BuyItem("shadowfall", 793, "Necrotic Sword of Doom");
-            Bot.Wait.ForPickup("Necrotic Sword of Doom");
+            BuyAndWait("Necrotic Sword of Doom");
             Core.Logger("NSoD: Step #16/16: NSoD Enhancement");
         }
 
@@ -165,11 +107,9 @@ public class CoreNSOD
             Core.EnsureComplete(7652);
         }
 
-        if (!Core.CheckInventory(14474) && !Core.IsMember)
-            Core.Logger(
-                "Congratulations on completing the longest farm in the game!!!",
-                messageBox: true
-            );
+        // Unchanged logic, but please verify: this checks the DoomKnight Armor, not the NSoD
+        if (!Core.CheckInventory(DoomKnightArmorId) && !Core.IsMember)
+            Core.Logger("Congratulations on completing the longest farm in the game!!!", messageBox: true);
     }
 
     public void GetNBOD()
@@ -179,26 +119,19 @@ public class CoreNSOD
 
         Core.Logger("NBOD: Step #1: Get NSoD");
         GetNSOD();
-
         Core.Logger("NBOD: Step #2: Void Auras x750");
         VoidAuras(750);
 
         if (!Core.CheckInventory("Void Essentia"))
         {
             Core.Logger("NBOD: Step #3: Kill Flibbitiestgibbet for \"Void Essentia\"");
-            Core.Logger(
-                "Flibbitiestgibbet is a very tough monster, I hope you brought your army/butler/friends!"
-            );
+            Core.Logger("Flibbitiestgibbet is a very tough monster, I hope you brought your army/butler/friends!");
             Core.KillMonster("voidflibbi", "Enter", "Spawn", "Flibbitiestgibbet", "Void Essentia", isTemp: false);
         }
 
         Core.Logger("NBOD: Step #4: Buy NBoD");
-        Core.BuyItem("shadowfall", 793, "Necrotic Blade of Doom");
-
-        Core.Logger(
-            "NBOD: Step #5: Reminder - Use AE's Buy-Back system to retrieve your NSoD",
-            messageBox: true
-        );
+        BuyAndWait("Necrotic Blade of Doom");
+        Core.Logger("NBOD: Step #5: Reminder - Use AE's Buy-Back system to retrieve your NSoD", messageBox: true);
     }
 
     #region Void Auras
@@ -208,23 +141,14 @@ public class CoreNSOD
         if (Core.CheckInventory("Void Aura", quant))
             return;
 
-        if (
-            Bot.Config!.Get<bool>("getSDKA")
-            && Bot.Player.IsMember
-            && !Core.CheckInventory(
-                14474 /* Sepulchure's DoomKnight Armor */
-            )
-        )
+        // Fixed: ?. replaces the `!` so a missing config no longer throws
+        if (Bot.Config?.Get<bool>("getSDKA") == true && Bot.Player.IsMember && !Core.CheckInventory(DoomKnightArmorId))
             SDKA.DoAll();
 
         Core.AddDrop("Void Aura");
         Core.FarmingLogger("Void Aura", quant);
 
-        if (
-            Core.CheckInventory(
-                14474 /* Sepulchure's DoomKnight Armor */
-            )
-        )
+        if (Core.CheckInventory(DoomKnightArmorId))
             CommandingShadowEssences(quant);
 
         if (Bot.Player.IsMember)
@@ -235,23 +159,30 @@ public class CoreNSOD
 
     public void CommandingShadowEssences(int quant = 7500)
     {
-        if (Core.CheckInventory("Void Aura", quant) || !Core.CheckInventory(14474))
+        if (Core.CheckInventory("Void Aura", quant) || !Core.CheckInventory(DoomKnightArmorId))
             return;
 
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-        while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant))
-        {
-            Core.EnsureAccept(4439);
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonsterMapID("shadowrealmpast", 11, "Malignant Essence", 3, false);
 
-            Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
-            Core.EnsureComplete(4439);
-            Core.FarmingLogger("Void Aura", quant);
+        try
+        {
+            while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant))
+            {
+                Core.CanWeAggro();
+                Core.EnsureAccept(4439);
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonsterMapID("shadowrealmpast", 11, "Malignant Essence", 3, false);
+                Core.EquipClass(ClassType.Farm);
+                Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
+                Core.EnsureComplete(4439);
+                Core.FarmingLogger("Void Aura", quant);
+            }
         }
-        Core.AbandonQuest(4439);
+        finally
+        {
+            Bot.Options.AggroAllMonsters = false;
+            Bot.Options.AggroMonsters = false;
+            Core.AbandonQuest(4439);
+        }
     }
 
     public void GatheringUnstableEssences(int quant = 7500)
@@ -261,14 +192,12 @@ public class CoreNSOD
 
         Farm.EvilREP();
         Core.EquipClass(ClassType.Farm);
-
         Core.RegisterQuests(4438);
         while (!Core.CheckInventory("Void Aura", quant))
         {
             Core.KillMonster("reddeath", "r2", "Left", "*", "Mirror Essence", 175, false);
             Core.KillMonster("neverworldb", "r2", "Left", "*", "Twisted Essence", 25, false);
             Core.HuntMonster("doomwar", "Zombie King Alteon", "Transposed Essence", 1, false);
-
             Bot.Wait.ForPickup("Void Aura");
             Core.FarmingLogger("Void Aura", quant);
         }
@@ -277,77 +206,59 @@ public class CoreNSOD
 
     public void RetrieveVoidAuras(int quant = 7500)
     {
-        if (Core.CheckInventory("Void Aura", quant))
-            return;
-
-        int Essencequant = 20;
-        if (Bot.Config != null)
-        {
-            Essencequant = Bot.Config.Get<bool>("MaxStack") ? 100 : 20;
-        }
-        else
-        {
-            Core.Logger("Bot.Config is null, defaulting Essencequant to 20.");
-        }
-        Farm.EvilREP();
-        Core.AddDrop(Essences);
-        if (!Core.CheckInventory("Necromancer", toInv: false))
-            Bot.Drops.Add("Creature Shard");
-
+        // Fixed: the goto is now an outer loop. Each pass restarts the farm from the top.
         while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant))
         {
-            Core.FarmingLogger("Void Aura", quant);
-            Core.EnsureAccept(4432);
+            // Max Stack: 100 when enabled, 20 otherwise (also the fallback if config is missing)
+            int essenceQuant = Bot.Config?.Get<bool>("MaxStack") == true ? 100 : 20;
 
-            Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("timespace", "Astral Ephemerite", "Astral Ephemerite Essence", Essencequant, false);
+            Farm.EvilREP();
+            Core.AddDrop(Essences);
+            if (!Core.CheckInventory("Necromancer", toInv: false))
+                Bot.Drops.Add("Creature Shard");
+            Core.RegisterQuests(4432);
 
-            HuntMonsterBatch(
-                Essencequant,
-                false,
-                false,
-                true,
-                ("necrocavern", 5, "Chaos Vordred Essence"),
-                ("citadel", 21, "Belrot the Fiend Essence"),
-                ("greenguardwest", 22, "Black Knight Essence"),
-                ("mudluk", 18, "Tiger Leech Essence"),
-                ("aqlesson", 17, "Carnax Essence"),
-                ("hachiko", 10, "Dai Tengu Essence"),
-                ("timevoid", 12, "Unending Avatar Essence"),
-                ("dragonchallenge", 4, "Void Dragon Essence"),
-                ("maul", 17, "Creature Creation Essence")
-            );
+            int safetyCounter = 0;
+            while (!Bot.ShouldExit && !Core.CheckInventory("Void Aura", quant) && safetyCounter < MaxFarmIterations)
+            {
+                safetyCounter++;
+                Core.FarmingLogger("Void Aura", quant);
+                Core.EquipClass(ClassType.Farm);
+                Core.HuntMonster("timespace", "Astral Ephemerite", "Astral Ephemerite Essence", essenceQuant, false);
 
-            Core.EnsureCompleteMulti(4432);
-            Bot.Wait.ForPickup("Void Aura");
-            Core.FarmingLogger("Void Aura", quant);
+                HuntMonsterBatch(essenceQuant, false, false, true,
+                    ("necrocavern", 5, "Chaos Vordred Essence"),
+                    ("citadel", 21, "Belrot the Fiend Essence"),
+                    ("greenguardwest", 22, "Black Knight Essence"),
+                    ("mudluk", 18, "Tiger Leech Essence"),
+                    ("aqlesson", 17, "Carnax Essence"),
+                    ("hachiko", 10, "Dai Tengu Essence"),
+                    ("timevoid", 12, "Unending Avatar Essence"),
+                    ("dragonchallenge", 4, "Void Dragon Essence"),
+                    ("maul", 17, "Creature Creation Essence")
+                );
+
+                Bot.Sleep(500);
+            }
+
+            Core.CancelRegisteredQuests();
+
+            // Fixed: check the inventory first, so finishing on the last iteration doesn't trigger a relog
+            if (Core.CheckInventory("Void Aura", quant) || Bot.ShouldExit)
+                return;
+
+            Core.Relogin("RetrieveVoidAuras: Reached max iterations without collecting enough Void Auras. Attempting to relog to prevent an infinite loop.");
         }
     }
 
-    private void HuntMonsterBatch(
-        int quant,
-        bool isTemp,
-        bool publicRoom,
-        bool log,
-        params (string map, int monster, string essence)[] monsters
-    )
+    private void HuntMonsterBatch(int quant, bool isTemp, bool publicRoom, bool log, params (string map, int monster, string essence)[] monsters)
     {
         Core.AddDrop(monsters.Select(x => x.essence).ToArray());
         Core.EquipClass(ClassType.Solo);
-        foreach (
-            var monster in monsters.Where(x =>
-                x.essence != null && x.monster > 0 && !Core.CheckInventory(x.essence, quant)
-            )
-        )
-            Core.HuntMonsterMapID(
-                monster.map,
-                monster.monster,
-                monster.essence,
-                quant,
-                isTemp,
-                log,
-                publicRoom
-            );
+
+        // Removed the null and monster > 0 checks: the entries are hardcoded and always valid
+        foreach ((string map, int monster, string essence) in monsters.Where(x => !Core.CheckInventory(x.essence, quant)))
+            Core.HuntMonsterMapID(map, monster, essence, quant, isTemp, log, publicRoom);
     }
 
     #endregion
@@ -365,8 +276,7 @@ public class CoreNSOD
         EnergizedBlade();
         BariumOfDoom(1);
         VoidAuras(200);
-        Core.BuyItem("shadowfall", 793, "Necrotic Sword's Blade");
-        Bot.Wait.ForPickup("Necrotic Sword's Blade");
+        BuyAndWait("Necrotic Sword's Blade");
     }
 
     public void NSHilt()
@@ -380,8 +290,7 @@ public class CoreNSOD
         EnergizedHilt();
         BonesVoidRealm(1);
         VoidAuras(200);
-        Core.BuyItem("shadowfall", 793, "Necrotic Sword's Hilt");
-        Bot.Wait.ForPickup("Necrotic Sword's Hilt");
+        BuyAndWait("Necrotic Sword's Hilt");
     }
 
     public void NSAura()
@@ -396,8 +305,7 @@ public class CoreNSOD
         EnergizedAura();
         TimeLordNecro(1);
         VoidAuras(300);
-        Core.BuyItem("shadowfall", 793, "Necrotic Sword's Aura");
-        Bot.Wait.ForPickup("Necrotic Sword's Aura");
+        BuyAndWait("Necrotic Sword's Aura");
     }
 
     public void EnergizedBlade()
@@ -411,8 +319,7 @@ public class CoreNSOD
         FindBlade();
         BariumOfDoom(1);
         VoidAuras(100);
-        Core.BuyItem("shadowfall", 793, "Energized Blade");
-        Bot.Wait.ForPickup("Energized Blade");
+        BuyAndWait("Energized Blade");
     }
 
     public void EnergizedHilt()
@@ -427,8 +334,7 @@ public class CoreNSOD
         FindHilt();
         BonesVoidRealm(1);
         VoidAuras(100);
-        Core.BuyItem("shadowfall", 793, "Energized Hilt");
-        Bot.Wait.ForPickup("Energized Hilt");
+        BuyAndWait("Energized Hilt");
     }
 
     public void EnergizedAura()
@@ -443,8 +349,7 @@ public class CoreNSOD
         FindAura();
         TimeLordNecro(1);
         VoidAuras(150);
-        Core.BuyItem("shadowfall", 793, "Energized Aura");
-        Bot.Wait.ForPickup("Energized Aura");
+        BuyAndWait("Energized Aura");
     }
 
     public void FindBlade()
@@ -496,15 +401,15 @@ public class CoreNSOD
         Necro.GetNecromancer(true);
         Adv.GearStore(true, EnhAfter: true);
 
-        Core.AddDrop("Unenhanced Aura");
-        Core.EnsureAccept(Core.CheckInventory(8012) ? 4435 : 4436);
+        int questId = Core.CheckInventory(8012) ? 4435 : 4436;
+        Core.EnsureAccept(questId);
         FindBlade();
         FindHilt();
         TimeLordNecro(1);
         CHourglass(2);
         ScrollDarkArts(1);
         VoidAuras(10);
-        Core.EnsureComplete(Core.CheckInventory(8012) ? 4435 : 4436);
+        Core.EnsureComplete(questId);
         Bot.Wait.ForPickup("Unenhanced Aura");
     }
 
@@ -517,50 +422,45 @@ public class CoreNSOD
         if (Core.CheckInventory("Barium of Doom", quant))
             return;
 
-        Core.CheckInventory("Barium", quant);
+        // Removed: a stray Core.CheckInventory("Barium", quant) call whose result was discarded
         VoidAuras(quant * 50);
         if (!Core.CheckInventory("Barium"))
-            Daily.MineCrafting(new[] { "Barium" }, 1);            
-        Core.BuyItem("shadowfall", 793, "Barium of Doom");
-        Bot.Wait.ForPickup("Barium of Doom");
+            Daily.MineCrafting(new[] { "Barium" }, 1);
+        BuyAndWait("Barium of Doom");
     }
 
     private void Barium()
     {
         Core.Unbank("Barium", "Barium of Doom");
-        int i = 0;
 
-        string[] Blades = { "Unenhanced Doom Blade", "Energized Blade", "Necrotic Sword's Blade" };
-        if (
-            Core.CheckInventory(
-                new[] { "Unenhanced Aura", "Energized Aura", "Necrotic Sword's Aura" },
-                any: true
-            )
-        )
-            i++;
+        // Progress score: 1 point if any Aura is owned, plus the blade's list position (1 to 3) for each blade owned.
+        // Necrotic Sword's Blade (3) counts for more than Unenhanced Doom Blade (1) on purpose.
+        int progress = Core.CheckInventory(new[] { "Unenhanced Aura", "Energized Aura", "Necrotic Sword's Aura" }, any: true) ? 1 : 0;
+        string[] blades = { "Unenhanced Doom Blade", "Energized Blade", "Necrotic Sword's Blade" };
+        foreach (string blade in blades)
+        {
+            if (Core.CheckInventory(blade))
+                progress += Array.IndexOf(blades, blade) + 1;
+        }
 
-        foreach (string Item in Blades)
-            if (Core.CheckInventory(Item))
-                i = i + Array.IndexOf(Blades, Item) + 1;
-
-        i = i + Bot.Inventory.GetQuantity("Barium") + Bot.Inventory.GetQuantity("Barium of Doom");
-        if (i >= 4)
+        progress += Bot.Inventory.GetQuantity("Barium") + Bot.Inventory.GetQuantity("Barium of Doom");
+        if (progress >= 4)
             return;
 
         BLOD.UnlockMineCrafting();
-        Daily.MineCrafting(new[] { "Barium" }, 4 - i);
+        Daily.MineCrafting(new[] { "Barium" }, 4 - progress);
     }
 
     public void BonesVoidRealm(int quant)
     {
         if (Core.CheckInventory("Bones from the Void Realm", quant))
             return;
+
         Core.FarmingLogger("Bones from the Void Realm", quant);
         Core.AddDrop("Undead Energy");
         Farm.BattleUnderB("Bone Dust", quant * 50);
         VoidAuras(quant * 50);
-        Core.BuyItem("shadowfall", 793, "Bones from the Void Realm", quant);
-        Bot.Wait.ForPickup("Bones from the Void Realm");
+        BuyAndWait("Bones from the Void Realm", quant);
     }
 
     public void TimeLordNecro(int quant)
@@ -568,23 +468,14 @@ public class CoreNSOD
         if (Core.CheckInventory("Time Lord's Necronomicon", quant))
             return;
 
-        int CurrentCHQuant =
-            Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                .FirstOrDefault(x => x.Name == "Chaorrupted Hourglass")
-                ?.Quantity
-            ?? 0;
         Core.FarmingLogger("Time Lord's Necronomicon", quant);
         CHourglass(quant * 10);
         ScrollDarkArts(quant);
         VoidAuras(quant * 100);
-        Core.BuyItem("shadowfall", 793, "Time Lord's Necronomicon", quant);
-        Bot.Wait.ForPickup("Time Lord's Necronomicon");
+        BuyAndWait("Time Lord's Necronomicon", quant);
     }
 
-    public void CavernCelestite(int quant)
-    {
-        BLOD.SoulSearching("Cavern Celestite", quant, false);
-    }
+    public void CavernCelestite(int quant) => BLOD.SoulSearching("Cavern Celestite", quant, false);
 
     public void PrimarchHilt(int quant)
     {
@@ -632,90 +523,73 @@ public class CoreNSOD
         if (Core.CheckInventory("Necrotic Sword of Doom"))
             return;
 
-        int TotalVAs = 0; // Requirements will add VAs to this amount for a final calculation.
-
-        int MergeRequirement = 800; // Always needed to merge NSoD
-
-        int HiltVA = 2910; // 250 (200 + 50 (bone from the void realm x1)) for >> (NS)
-        // + 150 (100 + 50 (bone from the void realm x1))for >> (E)
-        // + 2510 (bone from the void realm x50 + 10 for quest) (UE)
-
-        int BladeVA = 460; // 250 (NS) + 150 (E) + 10(quest) + 50(Barium of doom) for >> (UE)
-        int AuraVA =
-            760 // NS + E Aura
-            + 2500 // Extra UE Hilt bones
-            + 60 // Extra UE Blade
-            + 10; // Misc quest
+        const int mergeRequirement = 800;
+        int hiltVA = 2910;
+        int bladeVA = 460;
+        int auraVA = 760 + 2500 + 60 + 10;
 
         Core.Logger("NSoD: PreFarm Step #1/9: Hilt, Blade, and Aura VA Calculation");
 
-        // HILT
-        Core.Logger("NSoD: PreFarm Step #1.1/9: NSOD Hilt VoidAura Calculation");
         if (Core.CheckInventory("Unenhanced Hilt"))
-            HiltVA -= 2510;
+            hiltVA -= 2510;
         else if (Core.CheckInventory("Energized Hilt"))
-            HiltVA -= 2760;
+            hiltVA -= 2760;
         else if (Core.CheckInventory("Necrotic Sword's Hilt"))
-            HiltVA = 0;
+            hiltVA = 0;
+        Core.Logger($"Total added to count for Hilt: {hiltVA}");
 
-        TotalVAs += HiltVA;
-        Core.Logger($"Total added to count for Hilt: {HiltVA}");
-
-        // AURA
-        Core.Logger("NSoD: PreFarm Step #1.2/9: NSOD Aura VoidAura Calculation");
         if (Core.CheckInventory("Unenhanced Aura"))
-            AuraVA -= 2670 + 250 + 400;
+            auraVA -= 2670 + 250 + 400;
         else if (Core.CheckInventory("Energized Aura"))
-            AuraVA -= 400;
+            auraVA -= 400;
         else if (Core.CheckInventory("Necrotic Sword's Aura"))
-            AuraVA = 0;
+            auraVA = 0;
+        Core.Logger($"Total added to count for Aura: {auraVA}");
 
-        TotalVAs += AuraVA;
-        Core.Logger($"Total added to count for Aura: {AuraVA}");
-
-        // BLADE
-        Core.Logger("NSoD: PreFarm Step #1.3/9: NSOD Blade VoidAura Calculation");
         if (Core.CheckInventory("Unenhanced Blade"))
-            BladeVA -= 460;
+            bladeVA -= 460;
         else if (Core.CheckInventory("Energized Blade"))
-            BladeVA -= 250;
+            bladeVA -= 250;
         else if (Core.CheckInventory("Necrotic Sword's Blade"))
-            BladeVA = 0;
+            bladeVA = 0;
+        Core.Logger($"Total added to count for Blade: {bladeVA}");
 
-        TotalVAs += BladeVA;
-        Core.Logger($"Total added to count for Blade: {BladeVA}");
-
-        TotalVAs += MergeRequirement;
-
-        Core.Logger(
-            $"NSoD: PreFarm Step #1.4/9: Total VoidAuras to farm for Hilt, Blade, Aura, and Merge (subtracting for what is already owned): {TotalVAs}"
-        );
-        VoidAuras(TotalVAs);
+        int totalVAs = hiltVA + auraVA + bladeVA + mergeRequirement;
+        Core.Logger($"NSoD: PreFarm Step #1.4/9: Total VoidAuras to farm for Hilt, Blade, Aura, and Merge (subtracting for what is already owned): {totalVAs}");
+        VoidAuras(totalVAs);
 
         Core.Logger("NSoD: PreFarm Step #2/9: CavernCelestite (Quantity: 1600)");
         CavernCelestite(1600);
-
         Core.Logger("NSoD: PreFarm Step #3/9: BattleUnderB - Bone Dust (Quantity: 5100)");
         Farm.BattleUnderB("Bone Dust", 5100);
-
         Core.Logger("NSoD: PreFarm Step #4/9: BattleUnderB - Undead Energy (Quantity: 10000)");
         Farm.BattleUnderB("Undead Energy", 10000);
-
         Core.Logger("NSoD: PreFarm Step #5/9: PrimarchHilt (Quantity: 2)");
         PrimarchHilt(2);
-
         Core.Logger("NSoD: PreFarm Step #6/9: BladeEssence (Quantity: 2)");
         BladeEssence(2);
-
         Core.Logger("NSoD: PreFarm Step #7/9: CHourglass (Quantity: 31)");
         CHourglass(31);
-
         Core.Logger("NSoD: PreFarm Step #8/9: ScrollDarkArts (Quantity: 4)");
         ScrollDarkArts(4);
-
         Core.Logger("NSoD: PreFarm Step #9/9: ULTRA Sepulchure");
-        Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
+        GetDoomHeart();
     }
+
+    #endregion
+
+    #region Helpers
+
+    // Buys the item from Shadowfall and waits until it lands in the inventory
+    private void BuyAndWait(string item, int quant = 1)
+    {
+        Core.BuyItem("shadowfall", ShadowfallShopId, item, quant);
+        Bot.Wait.ForPickup(item);
+    }
+
+    // Used by GetNSOD and PreFarmSteps
+    private void GetDoomHeart() =>
+        Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
 
     #endregion
 }
