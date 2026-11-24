@@ -13736,6 +13736,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/MeateorShardMerge.cs"
   },
   {
+    "name": "April Fools 2019 War Merge",
+    "description": "Farms the April Fools 2019 War Merge [1709] in /pal9001.",
+    "tags": [
+      "pal9001",
+      "merge",
+      "april",
+      "fools",
+      "2019",
+      "war",
+      "merge"
+    ],
+    "path": "Seasonal/AprilFools/AprilFools2019WarMergeShop.cs",
+    "size": 4126,
+    "sha256": "f5966e507f9033f66abd7e533e0ee19246e63a46cf24dc1b88a09a9ca9525e46",
+    "fileName": "AprilFools2019WarMergeShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/AprilFools2019WarMergeShop.cs"
+  },
+  {
     "name": "Unoriginal Recipe Farm",
     "description": "Farms the max Unoriginal Recipe quantity.",
     "tags": [
@@ -14815,23 +14833,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/ShopAcheivmentandIOGrabber.cs"
   },
   {
-    "name": "Merge Template Helper v2",
-    "description": "Generates a merge bot and teaches local ingredients from live monsterDrops packets.",
-    "tags": [
-      "developer",
-      "merge",
-      "generator",
-      "drops",
-      "packets",
-      "v2"
-    ],
-    "path": "Tools/ForDevelopers/MergeTemplateHelperV2.cs",
-    "size": 50115,
-    "sha256": "f05c4c52bb8db774f1cd38b5663c13936346db0951735c0134eb9dc397949285",
-    "fileName": "MergeTemplateHelperV2.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelperV2.cs"
-  },
-  {
     "name": null,
     "description": "Generates a merge bot and teaches local ingredients from live monsterDrops packets.",
     "tags": [
@@ -14843,8 +14844,8 @@
       "v2"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelperV3.cs",
-    "size": 53869,
-    "sha256": "fb52a7025c8708945eda45bdeb7dcdf79799aa89afbf429207b5fc89706d7593",
+    "size": 54316,
+    "sha256": "9088f748abeca533326c41582c60370a048ca50ea360a46d2015937d4d7f50b9",
     "fileName": "MergeTemplateHelperV3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelperV3.cs"
   },
