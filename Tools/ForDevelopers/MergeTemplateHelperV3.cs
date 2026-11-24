@@ -258,10 +258,21 @@ public class MergeTemplateHelperV3
     private List<Quest> LoadMapQuests(IReadOnlyList<int> questIDs)
     {
         List<Quest> result = [];
+        QuestPacketCollector collector = new();
         foreach (int questID in questIDs.Where(id => id > 0).Distinct())
         {
             Core.Logger($"Capturing quest {questID} from its getQuests packet.");
-            result.Add(new QuestPacketCollector().Load(questID));
+            try
+            {
+                result.Add(collector.Load(questID));
+            }
+            catch (TimeoutException)
+            {
+                // Some location SWFs retain obsolete quest IDs that no longer have QData.
+                // Skip those entries instead of aborting the entire merge generation.
+                Core.Logger($"Skipping quest {questID}: no getQuests packet/QData was returned.");
+                continue;
+            }
             Core.Sleep();
         }
         return result;
