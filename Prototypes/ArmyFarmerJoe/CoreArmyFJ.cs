@@ -1029,7 +1029,30 @@ public class CoreArmyFJ
         if (string.IsNullOrEmpty(key) || Bot.ShouldExit)
             return false;
 
-        bool OnMap() => string.Equals(NormalizeMapKey(Bot.Map?.Name), key, StringComparison.OrdinalIgnoreCase);
+        string requested = map!.Replace(" ", "").ToLowerInvariant();
+        string joinTarget = requested.Contains('-') || !Core.PrivateRooms
+            ? requested
+            : $"{requested}-{Core.PrivateRoomNumber}";
+
+        // Same map name is not enough: a teammate in another private room of the same map
+        // (e.g. an overflow room) is only reached by joining that exact room.
+        int dashIndex = joinTarget.IndexOf('-');
+        int expectedRoom = dashIndex >= 0
+            && int.TryParse(joinTarget.Substring(dashIndex + 1), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int parsedRoom)
+            ? parsedRoom
+            : 0;
+
+        bool OnMap()
+        {
+            if (!string.Equals(NormalizeMapKey(Bot.Map?.Name), key, StringComparison.OrdinalIgnoreCase))
+                return false;
+            if (expectedRoom <= 0)
+                return true;
+            int currentRoom = GetCurrentRoomNumber();
+            // Unknown room (area name unreadable): keep the old name-only behaviour.
+            return currentRoom <= 0 || currentRoom == expectedRoom;
+        }
+
         if (OnMap())
             return true;
         if (HelpTargetFinished())
@@ -1038,11 +1061,6 @@ public class CoreArmyFJ
         EnsureMapAccessBypass(key);
         Bot.Options.AggroMonsters = false;
         Bot.Options.AggroAllMonsters = false;
-
-        string requested = map!.Replace(" ", "").ToLowerInvariant();
-        string joinTarget = requested.Contains('-') || !Core.PrivateRooms
-            ? requested
-            : $"{requested}-{Core.PrivateRoomNumber}";
 
         Bot.Map.Join(joinTarget, "Enter", "Spawn", autoCorrect: !Core.PrivateRooms);
         Bot.Wait.ForTrue(() => OnMap() || HelpTargetFinished() || Bot.ShouldExit, Math.Max(5, HelperJoinTimeoutSeconds));
@@ -1057,6 +1075,27 @@ public class CoreArmyFJ
             );
         }
         return false;
+    }
+
+    /// <summary>Room number of the loaded instance ("map-1234" -> 1234), 0 when unknown.</summary>
+    public int GetCurrentRoomNumber()
+    {
+        try
+        {
+            string? areaName = Bot.Flash.GetGameObject<string>("world.strAreaName");
+            if (string.IsNullOrWhiteSpace(areaName))
+                return 0;
+
+            int dash = areaName.LastIndexOf('-');
+            return dash >= 0
+                && int.TryParse(areaName.Substring(dash + 1).Trim().Trim('"'), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int room)
+                ? room
+                : 0;
+        }
+        catch
+        {
+            return 0;
+        }
     }
 
     private string lastSkillRotationClass = string.Empty;
@@ -1679,15 +1718,38 @@ public class CoreArmyFJ
         else
         {
             EnsureMapAccessBypass(targetMap);
-            Bot.Player.Goto(normalizedTarget);
-            Bot.Wait.ForTrue(
-                () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
-                20
-            );
+
+            // Teammate bumped into an overflow room: join that exact room. /goto across private
+            // rooms kept failing (12x -> sleep mode) and the map-name fallback below never moved
+            // a helper that was already on the same map, just in the planned room.
+            int targetOverflowRoom = !string.IsNullOrEmpty(targetMap) && Core.PrivateRooms
+                ? ReadOverflowRoom(FindArmyPlayerNumber(normalizedTarget))
+                : 0;
+            if (targetOverflowRoom > 0)
+            {
+                string overflowTarget = $"{NormalizeMapKey(targetMap!.Replace(" ", ""))}-{targetOverflowRoom}";
+                if (!Bot.Map.PlayerExists(normalizedTarget))
+                {
+                    JoinMapForHelp(overflowTarget);
+                    Bot.Wait.ForTrue(
+                        () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
+                        20
+                    );
+                }
+            }
+            else
+            {
+                Bot.Player.Goto(normalizedTarget);
+                Bot.Wait.ForTrue(
+                    () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
+                    20
+                );
+            }
             if (HelpTargetFinished())
                 return;
             if (
-                (!Bot.Map.PlayerExists(normalizedTarget) || string.Equals(Bot.Map?.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
+                targetOverflowRoom <= 0
+                && (!Bot.Map.PlayerExists(normalizedTarget) || string.Equals(Bot.Map?.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
                 && !string.IsNullOrEmpty(targetMap)
                 && !IsSoloOnlyMap(targetMap)
             )
@@ -3602,6 +3664,66 @@ public class CoreArmyFJ
             File.WriteAllText(path, "1");
         }
         catch { }
+    }
+
+    // Overflow room of each account. A pending account bumped out of a full room by the server
+    // lands in an overflow room only it knows; /goto across private rooms is unreliable, so helpers
+    // read this side file and join "{map}-{room}" directly. 0 / missing = planned room.
+    private string? OverflowRoomPath(int playerNumber) =>
+        !armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath) || playerNumber < 1
+            ? null
+            : $"{armySyncPath}.OVERFLOW.P{playerNumber}.{armySessionId}";
+
+    public void PublishOverflowRoom(int room)
+    {
+        string? path = OverflowRoomPath(armyPlayerIndex + 1);
+        if (path == null)
+            return;
+
+        try
+        {
+            if (room > 0)
+                File.WriteAllText(path, room.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            else if (File.Exists(path))
+                File.Delete(path);
+        }
+        catch { }
+    }
+
+    public int ReadOverflowRoom(int playerNumber)
+    {
+        string? path = OverflowRoomPath(playerNumber);
+        if (path == null)
+            return 0;
+
+        try
+        {
+            if (!File.Exists(path))
+                return 0;
+
+            string raw = File.ReadAllText(path).Trim();
+            return int.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int room) && room > 0
+                ? room
+                : 0;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
+    public int FindArmyPlayerNumber(string? username)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+            return 0;
+
+        string normalized = NormalizeArmyUsername(username);
+        for (int i = 0; i < armyPlayers.Length; i++)
+        {
+            if (string.Equals(NormalizeArmyUsername(armyPlayers[i]), normalized, StringComparison.OrdinalIgnoreCase))
+                return i + 1;
+        }
+        return 0;
     }
 
     public bool IsMapUnsafeSpawn(string mapName)

@@ -517,6 +517,12 @@ public class ArmyFarmerJoeDoAll
     private const int RoomOverflowBaseOffset = 10;
     private int _roomOverflowStep;
     private int _roomBeforeOverflow;
+    private int _lastRejectedRoom;
+    private int _lastOverflowTick;
+
+    // One join can produce more than one "is full" warning (CoreBots.Join retries while the first
+    // answer is still in flight). Counting every warning skipped a room (95962 -> 95972 -> 95973).
+    private const int RoomFullEchoWindowMs = 6000;
 
     // Overflow is decided per join: every new objective starts again from the planned room,
     // otherwise one full map strands the account in an empty overflow room for the rest of the run.
@@ -528,8 +534,18 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         if (_roomBeforeOverflow > 0)
             core.PrivateRoomNumber = _roomBeforeOverflow;
+        ResetOverflowState();
+    }
+
+    private void ResetOverflowState()
+    {
+        bool hadOverflow = _roomOverflowStep > 0;
         _roomOverflowStep = 0;
         _roomBeforeOverflow = 0;
+        _lastRejectedRoom = 0;
+        _lastOverflowTick = 0;
+        if (hadOverflow)
+            Army.PublishOverflowRoom(0);
     }
 
     private int? ComputeArmyRoomNumber(int roomOffset)
@@ -552,8 +568,7 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         CoreBots core = CoreBots.Instance;
-        _roomOverflowStep = 0;
-        _roomBeforeOverflow = 0;
+        ResetOverflowState();
         core.PrivateRooms = true;
         core.PrivateRoomNumber = effectiveRoom.Value;
         core.PublicDifficult = false;
@@ -621,15 +636,33 @@ public class ArmyFarmerJoeDoAll
             if (Army.IsHelpingTeammate)
                 return;
 
+            int previousRoom = core.PrivateRoomNumber;
+
+            // Echo of a room we already moved away from: the warning names it -> ignore.
+            if (_lastRejectedRoom > 0 && text.Contains(_lastRejectedRoom.ToString(), StringComparison.Ordinal))
+                return;
+
+            // Warning without the current room's number arriving right after a move is most likely
+            // the late answer to the previous join; a really full overflow room warns again later.
+            if (
+                _roomOverflowStep > 0
+                && !text.Contains(previousRoom.ToString(), StringComparison.Ordinal)
+                && unchecked(Environment.TickCount - _lastOverflowTick) < RoomFullEchoWindowMs
+            )
+                return;
+
             int? overflowRoom = ComputeArmyRoomNumber(RoomOverflowBaseOffset + _roomOverflowStep);
             if (overflowRoom == null)
                 return;
 
-            int previousRoom = core.PrivateRoomNumber;
             if (_roomOverflowStep == 0)
                 _roomBeforeOverflow = previousRoom;
             _roomOverflowStep++;
+            _lastRejectedRoom = previousRoom;
+            _lastOverflowTick = Environment.TickCount;
             core.PrivateRoomNumber = overflowRoom.Value;
+            // Helpers cannot /goto into this room: publish it so they join "{map}-{room}" directly.
+            Army.PublishOverflowRoom(overflowRoom.Value);
             core.Logger($"Room {previousRoom} is full; retrying in overflow room {overflowRoom.Value}.");
         }
         catch { }
