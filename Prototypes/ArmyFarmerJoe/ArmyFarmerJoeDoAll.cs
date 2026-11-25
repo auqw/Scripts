@@ -602,29 +602,8 @@ public class ArmyFarmerJoeDoAll
     {
         try
         {
-            if (packet == null)
-                return;
-
-            dynamic? paramsObj = packet["params"];
-            if (paramsObj == null || paramsObj.type != "str")
-                return;
-
-            dynamic? dataObj = paramsObj.dataObj;
-            if (dataObj == null)
-                return;
-
-            string? cmd = dataObj[0];
-            if (cmd != "warning")
-                return;
-
-            string text = Convert.ToString(packet) ?? string.Empty;
-            if (
-                !text.Contains("is full", StringComparison.OrdinalIgnoreCase)
-                || text.Contains("inventory", StringComparison.OrdinalIgnoreCase)
-                || text.Contains("bank", StringComparison.OrdinalIgnoreCase)
-                || text.Contains("house", StringComparison.OrdinalIgnoreCase)
-                || text.Contains("bag", StringComparison.OrdinalIgnoreCase)
-            )
+            string? text = CoreArmyFJ.GetRoomFullWarningText((object?)packet);
+            if (text == null)
                 return;
 
             CoreBots core = CoreBots.Instance;
@@ -632,7 +611,8 @@ public class ArmyFarmerJoeDoAll
                 return;
 
             // A helper's /goto into a teammate's full room also answers "is full". Moving the helper
-            // to an empty overflow room only separates it from the group (Goto then fails 12x -> sleep mode).
+            // to an empty overflow room only separates it from the group; CoordinateFollowAndCombat
+            // sees the same warning and parks that teammate (MarkTeammateRoomFull) instead.
             if (Army.IsHelpingTeammate)
                 return;
 
@@ -14361,23 +14341,21 @@ public class ArmyFarmerJoeDoAll
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        // 1. Prefer jumping to the safe "Enter" cell on the current map instead of forcing /whitemap.
+        // 1. Leave combat on the current map first: JumpWait, then the map's known safe cell
+        //    (xantown r12 - its Enter cell has monsters and JumpWait rejects every r* cell).
         if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
-        {
-            CoreBots.Instance.JumpWait();
-            Bot.Wait.ForCombatExit(20);
-        }
+            Army.TryLeaveCombatInPlace(20);
 
         // 2. Only fall back to /whitemap if the current cell still has monsters or combat did not exit.
+        //    Bounded join: Core.Join's 20 retries cost ~5 min per call when the server refuses it.
         string currentMap = Bot.Map?.Name ?? string.Empty;
         if (
             !string.Equals(currentMap, "whitemap", StringComparison.OrdinalIgnoreCase)
             && !string.Equals(currentMap, "battleon", StringComparison.OrdinalIgnoreCase)
             && (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
+            && Army.TryJoinWhitemapQuick()
         )
         {
-            CoreBots.Instance.Join("whitemap");
-            Bot.Wait.ForMapLoad("whitemap");
             CoreBots.Instance.JumpWait();
             Bot.Wait.ForCombatExit(20);
         }

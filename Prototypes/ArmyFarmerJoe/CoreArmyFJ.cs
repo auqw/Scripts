@@ -670,7 +670,7 @@ public class CoreArmyFJ
                         if (!loggedHelperSleepMode)
                         {
                             Core.Logger(
-                                $"Army objective {name}: remaining teammate(s) are in higher-level or inaccessible rooms; waiting in sleep mode.",
+                                $"Army objective {name}: remaining teammate(s) are in higher-level, inaccessible or full rooms; waiting in sleep mode.",
                                 "CoreArmyFJ"
                             );
                             loggedHelperSleepMode = true;
@@ -895,6 +895,7 @@ public class CoreArmyFJ
     // through /whitemap first so a half-loaded map or a stuck transition is fully reset.
     private void RejoinObjectiveMap(string map, bool fullReentry)
     {
+        LeaveCombatBeforeMapChange();
         if (fullReentry)
         {
             Core.Join("whitemap", ignoreCheck: true);
@@ -1062,20 +1063,37 @@ public class CoreArmyFJ
         Bot.Options.AggroMonsters = false;
         Bot.Options.AggroAllMonsters = false;
 
-        Bot.Map.Join(joinTarget, "Enter", "Spawn", autoCorrect: !Core.PrivateRooms);
-        Bot.Wait.ForTrue(() => OnMap() || HelpTargetFinished() || Bot.ShouldExit, Math.Max(5, HelperJoinTimeoutSeconds));
+        LeaveCombatBeforeMapChange();
+        lastHelperJoinHitFullRoom = false;
+        int fullBefore = Volatile.Read(ref roomFullWarnings);
+        lastHelperJoinHitFullRoom = TravelHitFullRoom(() =>
+        {
+            Bot.Map.Join(joinTarget, "Enter", "Spawn", autoCorrect: !Core.PrivateRooms);
+            Bot.Wait.ForTrue(
+                () => OnMap() || HelpTargetFinished() || Bot.ShouldExit || RoomFullSince(fullBefore),
+                Math.Max(5, HelperJoinTimeoutSeconds)
+            );
+        });
         if (OnMap())
+        {
+            lastHelperJoinHitFullRoom = false;
             return true;
+        }
 
         if (!HelpTargetFinished() && !Bot.ShouldExit)
         {
             Core.Logger(
-                $"Helper could not join '/{joinTarget}' within {Math.Max(5, HelperJoinTimeoutSeconds)}s (now on '/{Bot.Map?.Name}'); retrying on the next pass.",
+                lastHelperJoinHitFullRoom
+                    ? $"Helper could not join '/{joinTarget}': room is full (now on '/{DescribeCurrentRoom()}')."
+                    : $"Helper could not join '/{joinTarget}' within {Math.Max(5, HelperJoinTimeoutSeconds)}s (now on '/{DescribeCurrentRoom()}'); retrying on the next pass.",
                 "CoordinateFollowAndCombat"
             );
         }
         return false;
     }
+
+    // Set by JoinMapForHelp: the last helper join was refused because the room is full.
+    private bool lastHelperJoinHitFullRoom;
 
     /// <summary>Room number of the loaded instance ("map-1234" -> 1234), 0 when unknown.</summary>
     public int GetCurrentRoomNumber()
@@ -1533,8 +1551,9 @@ public class CoreArmyFJ
                 $"Map '{currentMap}' blocked cell jump to '{targetCell}'; reloading via /whitemap with access bypass.",
                 "CoordinateFollowAndCombat"
             );
-            Core.Join("whitemap", ignoreCheck: true);
+            TryJoinWhitemapQuick();
             EnsureMapAccessBypass(currentMap);
+            LeaveCombatBeforeMapChange();
             Bot.Player.Goto(normalizedTarget);
             Bot.Wait.ForTrue(() => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(), 20);
             if (HelpTargetFinished())
@@ -1730,7 +1749,11 @@ public class CoreArmyFJ
                 string overflowTarget = $"{NormalizeMapKey(targetMap!.Replace(" ", ""))}-{targetOverflowRoom}";
                 if (!Bot.Map.PlayerExists(normalizedTarget))
                 {
-                    JoinMapForHelp(overflowTarget);
+                    if (!JoinMapForHelp(overflowTarget) && lastHelperJoinHitFullRoom)
+                    {
+                        MarkTeammateRoomFull(normalizedTarget, $"/{overflowTarget}");
+                        return;
+                    }
                     Bot.Wait.ForTrue(
                         () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
                         20
@@ -1739,11 +1762,21 @@ public class CoreArmyFJ
             }
             else
             {
-                Bot.Player.Goto(normalizedTarget);
-                Bot.Wait.ForTrue(
-                    () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
-                    20
-                );
+                LeaveCombatBeforeMapChange();
+                int fullBefore = Volatile.Read(ref roomFullWarnings);
+                bool gotoHitFullRoom = TravelHitFullRoom(() =>
+                {
+                    Bot.Player.Goto(normalizedTarget);
+                    Bot.Wait.ForTrue(
+                        () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished() || RoomFullSince(fullBefore),
+                        20
+                    );
+                });
+                if (gotoHitFullRoom && !Bot.Map.PlayerExists(normalizedTarget) && !HelpTargetFinished())
+                {
+                    MarkTeammateRoomFull(normalizedTarget, "/goto refused");
+                    return;
+                }
             }
             if (HelpTargetFinished())
                 return;
@@ -1754,7 +1787,11 @@ public class CoreArmyFJ
                 && !IsSoloOnlyMap(targetMap)
             )
             {
-                JoinMapForHelp(targetMap!);
+                if (!JoinMapForHelp(targetMap!) && lastHelperJoinHitFullRoom)
+                {
+                    MarkTeammateRoomFull(normalizedTarget, $"/{targetMap}");
+                    return;
+                }
                 Bot.Wait.ForTrue(
                     () => (Bot.Map.Loaded && Bot.Map.PlayerExists(normalizedTarget)) || HelpTargetFinished(),
                     20
@@ -2031,23 +2068,13 @@ public class CoreArmyFJ
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        // 2. Prefer jumping to the safe "Enter" cell on the current map instead of forcing /whitemap.
-        if (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
-        {
-            Core.JumpWait();
-            Bot.Wait.ForCombatExit(20);
-        }
+        // 2. Leave combat on the current map first (JumpWait, then the map's known safe cell).
+        if (InCombatCell())
+            TryLeaveCombatInPlace(20);
 
-        // Only fall back to /whitemap if the current cell still has monsters or combat did not exit.
-        string currentMap = Bot.Map?.Name ?? string.Empty;
-        if (
-            !string.Equals(currentMap, "whitemap", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(currentMap, "battleon", StringComparison.OrdinalIgnoreCase)
-            && (Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0)
-        )
+        // Only fall back to /whitemap (bounded) if the current cell still has monsters or combat did not exit.
+        if (!IsUtilityMap(Bot.Map?.Name) && InCombatCell() && TryJoinWhitemapQuick())
         {
-            Core.Join("whitemap");
-            Bot.Wait.ForMapLoad("whitemap");
             Core.JumpWait();
             Bot.Wait.ForCombatExit(20);
         }
@@ -2622,12 +2649,217 @@ public class CoreArmyFJ
             Bot.Options.AttackWithoutTarget = false;
             Bot.Options.AggroAllMonsters = false;
             Bot.Options.AggroMonsters = false;
-            Core.JumpWait();
-            Core.Join("whitemap", ignoreCheck: true);
-            Bot.Wait.ForMapLoad("whitemap");
+            TryLeaveCombatInPlace(10);
+            TryJoinWhitemapQuick();
         }
 
         Bot.Sleep(1000);
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Leaving a combat room. In /xantown the Enter cell has Fire Imps/Lava Golems, every other
+    // cell is r* (JumpWait blacklists them) and Core.Join("whitemap") kept failing while the
+    // account was being hit: 20 retries = ~5 min per call, ~36 min lost in one Xan chain
+    // (2026-11-25). Leave combat in place first (known safe cell), then try /whitemap a bounded
+    // number of times.
+    // ---------------------------------------------------------------------------------------
+    private static readonly Dictionary<string, (string Cell, string Pad)> KnownSafeCells = new(StringComparer.OrdinalIgnoreCase)
+    {
+        // Same cell the Xan chain already parks in after each step.
+        ["xantown"] = ("r12", "Left"),
+    };
+
+    private static bool IsUtilityMap(string? map) =>
+        string.Equals(map, "whitemap", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(map, "battleon", StringComparison.OrdinalIgnoreCase);
+
+    private bool InCombatCell() => Bot.Player.InCombat || Bot.Monsters.CurrentMonsters.Count > 0;
+
+    /// <summary>
+    /// The map's known safe cell, otherwise JumpWait. True when the account ends out of combat.
+    /// </summary>
+    public bool TryLeaveCombatInPlace(int waitSeconds = 10)
+    {
+        if (!InCombatCell() || IsUtilityMap(Bot.Map?.Name))
+            return true;
+
+        string? map = NormalizeMapKey(Bot.Map?.Name);
+        if (map != null && KnownSafeCells.TryGetValue(map, out var safe))
+        {
+            if (!string.Equals(Bot.Player.Cell, safe.Cell, StringComparison.OrdinalIgnoreCase))
+            {
+                Bot.Map.Jump(safe.Cell, safe.Pad, false);
+                Bot.Wait.ForCellChange(safe.Cell);
+            }
+            Bot.Wait.ForCombatExit(waitSeconds);
+            if (!InCombatCell())
+                return true;
+        }
+
+        Core.JumpWait();
+        Bot.Wait.ForCombatExit(waitSeconds);
+        return !Bot.Player.InCombat;
+    }
+
+    // AQW refuses /join and /goto while the player is in combat (confirmed 2026-11-25): every
+    // map change must first move to a safe cell. Cheap no-op when already out of combat.
+    private void LeaveCombatBeforeMapChange()
+    {
+        if (!Bot.Player.InCombat)
+            return;
+
+        try
+        {
+            Bot.Skills.Stop();
+        }
+        catch { }
+        if (Bot.Player.HasTarget)
+            Bot.Combat.CancelTarget();
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
+        TryLeaveCombatInPlace(10);
+    }
+
+    public int WhitemapJoinAttempts { get; set; } = 2;
+    public int WhitemapJoinRetryCooldownSeconds { get; set; } = 60;
+    private int lastWhitemapJoinFailTick;
+    private bool whitemapJoinFailedRecently;
+
+    /// <summary>
+    /// /whitemap in at most WhitemapJoinAttempts tries (~10s each) instead of Core.Join's 20.
+    /// After a failure, further calls return false at once for WhitemapJoinRetryCooldownSeconds
+    /// so wait loops do not spam joins. Callers carry on in the current map when it fails.
+    /// </summary>
+    public bool TryJoinWhitemapQuick()
+    {
+        if (string.Equals(Bot.Map?.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (
+            whitemapJoinFailedRecently
+            && unchecked(Environment.TickCount - lastWhitemapJoinFailTick) < Math.Max(10, WhitemapJoinRetryCooldownSeconds) * 1000
+        )
+            return false;
+
+        LeaveCombatBeforeMapChange();
+
+        string target = Core.PrivateRooms ? $"whitemap-{Core.PrivateRoomNumber}" : "whitemap";
+        for (int i = 0; i < Math.Max(1, WhitemapJoinAttempts) && !Bot.ShouldExit; i++)
+        {
+            Bot.Map.Join(target, "Enter", "Spawn", autoCorrect: !Core.PrivateRooms);
+            if (Bot.Wait.ForMapLoad("whitemap", 10))
+            {
+                whitemapJoinFailedRecently = false;
+                return true;
+            }
+            Bot.Sleep(1000);
+        }
+
+        whitemapJoinFailedRecently = true;
+        lastWhitemapJoinFailTick = Environment.TickCount;
+        Core.Logger(
+            $"Could not reach '/{target}' after {Math.Max(1, WhitemapJoinAttempts)} tries; staying on '/{DescribeCurrentRoom()}'. State: {DescribeWorkState()}",
+            "CoreArmyFJ"
+        );
+        return false;
+    }
+
+    /// <summary>"map-room" of the loaded instance (just the map when the room is unknown).</summary>
+    private string DescribeCurrentRoom()
+    {
+        string map = Bot.Map?.Name ?? "?";
+        int room = GetCurrentRoomNumber();
+        return room > 0 ? $"{map}-{room}" : map;
+    }
+
+    // ---------------------------------------------------------------------------------------
+    // Full private rooms. The server answers a join/goto into a full room with a "warning"
+    // packet containing "is full". Helpers used to ignore it and retried the same full room
+    // every ~8s for 15+ min (thirdspell, castleundead, doomwood... 2026-11-25).
+    // ---------------------------------------------------------------------------------------
+
+    /// <summary>Text of a "room is full" warning packet, or null for any other packet.</summary>
+    public static string? GetRoomFullWarningText(object? packetObj)
+    {
+        try
+        {
+            dynamic? packet = packetObj;
+            if (packet == null)
+                return null;
+
+            dynamic? paramsObj = packet["params"];
+            if (paramsObj == null || paramsObj.type != "str")
+                return null;
+
+            dynamic? dataObj = paramsObj.dataObj;
+            if (dataObj == null)
+                return null;
+
+            string? cmd = dataObj[0];
+            if (cmd != "warning")
+                return null;
+
+            string text = Convert.ToString(packet) ?? string.Empty;
+            if (
+                !text.Contains("is full", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("inventory", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("bank", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("house", StringComparison.OrdinalIgnoreCase)
+                || text.Contains("bag", StringComparison.OrdinalIgnoreCase)
+            )
+                return null;
+
+            return text;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private int roomFullWarnings;
+
+    private void CountRoomFullWarning(dynamic packet)
+    {
+        if (GetRoomFullWarningText((object?)packet) != null)
+            Interlocked.Increment(ref roomFullWarnings);
+    }
+
+    /// <summary>Runs a join/goto and reports whether the server answered "room is full" meanwhile.</summary>
+    private bool TravelHitFullRoom(Action travel)
+    {
+        int before = Volatile.Read(ref roomFullWarnings);
+        Bot.Events.ExtensionPacketReceived += CountRoomFullWarning;
+        try
+        {
+            travel();
+        }
+        finally
+        {
+            try
+            {
+                Bot.Events.ExtensionPacketReceived -= CountRoomFullWarning;
+            }
+            catch { }
+        }
+        return Volatile.Read(ref roomFullWarnings) != before;
+    }
+
+    private bool RoomFullSince(int before) => Volatile.Read(ref roomFullWarnings) != before;
+
+    // The teammate's room is at its player cap: it already has as much help as the map allows.
+    // Park this teammate like an unreachable one (re-tried after UnreachableHelperRetrySeconds).
+    private void MarkTeammateRoomFull(string normalizedTarget, string where)
+    {
+        failedGotoCounts.Remove(normalizedTarget);
+        if (unreachableHelperTargets.Add(normalizedTarget))
+        {
+            Core.Logger(
+                $"Teammate '{normalizedTarget}' is in a full room ({where}); not retrying for {Math.Max(30, UnreachableHelperRetrySeconds)}s.",
+                "CoordinateFollowAndCombat"
+            );
+        }
     }
 
     // ---------------------------------------------------------------------------------------
