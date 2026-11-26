@@ -423,6 +423,9 @@ public class CoreArmyFJ
     )
     {
         int[]? outerRoomLayout = activeRoomLayout;
+        string? outerObjectiveMap = currentObjectiveMap;
+        if (!string.IsNullOrWhiteSpace(targetMap) && targetMap != "*")
+            currentObjectiveMap = NormalizeMapKey(targetMap);
         try
         {
             return RunCooperativeObjectiveInner(
@@ -441,6 +444,7 @@ public class CoreArmyFJ
         {
             // Nested objectives restore the layout of the objective that called them.
             activeRoomLayout = outerRoomLayout;
+            currentObjectiveMap = outerObjectiveMap;
             loggedRoomWaitMode = false;
         }
     }
@@ -591,6 +595,7 @@ public class CoreArmyFJ
                 return false;
 
             RecordCurrentMapCap();
+            LearnMapCapFromRoomFullReports();
 
             // Abort the whole Army if any account gave up on this objective.
             for (int playerNumber = 1; playerNumber <= armyPlayers.Length; playerNumber++)
@@ -852,6 +857,9 @@ public class CoreArmyFJ
             }
 
             string? currentMap = ReadCurrentMapKey();
+
+            // Working accounts never reach the objective loop, so they learn caps here.
+            LearnMapCapFromRoomFullReports();
 
             // Fast path: stranded in a /house without progress (needs a known objective map;
             // otherwise the regular nudges below handle it).
@@ -1835,6 +1843,7 @@ public class CoreArmyFJ
                 {
                     if (!JoinMapForHelp(overflowTarget) && lastHelperJoinHitFullRoom)
                     {
+                        ReportRoomFull(targetOverflowRoom);
                         MarkTeammateRoomFull(normalizedTarget, $"/{overflowTarget}");
                         return;
                     }
@@ -1873,6 +1882,7 @@ public class CoreArmyFJ
             {
                 if (!JoinMapForHelp(targetMap!) && lastHelperJoinHitFullRoom)
                 {
+                    ReportRoomFull(Core.PrivateRoomNumber);
                     MarkTeammateRoomFull(normalizedTarget, $"/{targetMap}");
                     return;
                 }
@@ -2884,7 +2894,9 @@ public class CoreArmyFJ
             if (cmd != "warning")
                 return null;
 
-            string text = Convert.ToString(packet) ?? string.Empty;
+            // Only the warning's own fields ("warning", "-1", message). The full packet also carries
+            // the socket data (ip, ports 5592/8080...), which looked like room numbers.
+            string text = Convert.ToString(dataObj) ?? string.Empty;
             if (
                 !text.Contains("is full", StringComparison.OrdinalIgnoreCase)
                 || text.Contains("inventory", StringComparison.OrdinalIgnoreCase)
@@ -3989,6 +4001,85 @@ public class CoreArmyFJ
         !armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath) || playerNumber < 1
             ? null
             : $"{armySyncPath}.OVERFLOW.P{playerNumber}.{armySessionId}";
+
+    // ---------------------------------------------------------------------------------------
+    // Learned room caps. world.areaData.intMaxPlayers reads 0 on every map, so the cap is
+    // learned from the server instead: an account whose join is answered "destination room is
+    // full" reports objective map + room; an account inside that room records its player count
+    // (teammates + outsiders) as the map cap in ArmyMapCaps.txt. Later objectives on that map
+    // (and later runs) then split the Army into rooms up front.
+    // ---------------------------------------------------------------------------------------
+    private string? currentObjectiveMap;
+    private readonly HashSet<string> processedRoomFullReports = new(StringComparer.OrdinalIgnoreCase);
+    private const int RoomFullReportFreshSeconds = 30;
+
+    private string? RoomFullReportPath(string map, int room) =>
+        !armySessionStarted || string.IsNullOrWhiteSpace(armySyncPath) || room <= 0
+            ? null
+            : $"{armySyncPath}.ROOMFULL.{map}.{room}.{armySessionId}";
+
+    /// <summary>This account's join into <paramref name="room"/> of the current objective map was rejected as full.</summary>
+    public void ReportRoomFull(int room)
+    {
+        string? map = currentObjectiveMap;
+        if (string.IsNullOrEmpty(map))
+            return;
+
+        string? path = RoomFullReportPath(map, room);
+        if (path == null)
+            return;
+
+        try
+        {
+            File.WriteAllText(path, DateTime.UtcNow.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+        catch { }
+    }
+
+    /// <summary>Inside a room a teammate was just rejected from: record its player count as the map cap.</summary>
+    public void LearnMapCapFromRoomFullReports()
+    {
+        try
+        {
+            string? map = ReadCurrentMapKey();
+            int room = GetCurrentRoomNumber();
+            if (string.IsNullOrEmpty(map) || room <= 0 || !Bot.Map.Loaded)
+                return;
+
+            string? path = RoomFullReportPath(map, room);
+            if (path == null || !File.Exists(path))
+                return;
+
+            string raw = File.ReadAllText(path).Trim();
+            if (!long.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out long ticks))
+                return;
+
+            // Called from the objective loop and the StallGuard thread.
+            lock (processedRoomFullReports)
+            {
+                if (!processedRoomFullReports.Add($"{path}|{ticks}"))
+                    return;
+            }
+
+            if (DateTime.UtcNow - new DateTime(ticks, DateTimeKind.Utc) > TimeSpan.FromSeconds(RoomFullReportFreshSeconds))
+                return;
+
+            int playersHere = Bot.Map.PlayerNames?.Count() ?? 0;
+            if (playersHere < 2)
+                return;
+
+            int known = GetKnownMapMaxPlayers(map);
+            if (known > 0 && known <= playersHere)
+                return;
+
+            RecordMapMaxPlayers(map, playersHere);
+            Core.Logger(
+                $"Learned room cap for '/{map}': {playersHere} players/room (a teammate was rejected from room {room}; previous cap {(known > 0 ? known.ToString() : "unknown")}).",
+                "CoreArmyFJ"
+            );
+        }
+        catch { }
+    }
 
     public void PublishOverflowRoom(int room)
     {

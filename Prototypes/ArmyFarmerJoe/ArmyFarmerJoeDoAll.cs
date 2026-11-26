@@ -653,6 +653,9 @@ public class ArmyFarmerJoeDoAll
             if (overflowRoom == null)
                 return;
 
+            // Teammates inside the full room learn the map cap from this report.
+            Army.ReportRoomFull(previousRoom);
+
             if (_roomOverflowStep == 0)
                 _roomBeforeOverflow = previousRoom;
             _roomOverflowStep++;
@@ -15626,10 +15629,16 @@ public class ArmyFarmerJoeDoAll
             return 0;
 
         string normalized = targetMap.Trim().ToLowerInvariant();
-        if (_detectedMapCaps.TryGetValue(normalized, out int cachedCap))
+        // A cached 0 ("unknown") is not final: a teammate may have learned the cap from a
+        // "room is full" answer since (ArmyMapCaps.txt), so the file is checked again.
+        bool cachedUnknown = _detectedMapCaps.TryGetValue(normalized, out int cachedCap) && cachedCap <= 0;
+        if (cachedCap > 0)
             return cachedCap;
 
         int maxPlayers = Army.GetKnownMapMaxPlayers(normalized);
+        if (maxPlayers <= 0 && cachedUnknown)
+            return 0;
+
         if (maxPlayers <= 0)
         {
             if (!allowJoin)
