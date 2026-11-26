@@ -169,6 +169,9 @@ public class ArmyFarmerJoeDoAll
         CoreBots core = CoreBots.Instance;
         core.SetOptions();
         AttachRoomFullListener();
+        // StallGuard sends an account that sits alone in an overflow room back to its planned room.
+        Army.PlannedRoomBeforeOverflow = () => _roomOverflowStep > 0 ? _roomBeforeOverflow : 0;
+        Army.RestorePlannedRoom = RestorePlannedRoomAfterOverflow;
         try
         {
             // A teammate that restarts its bot (relogin / manual restart) makes playerOne re-create
@@ -319,7 +322,11 @@ public class ArmyFarmerJoeDoAll
     {
         CoreBots.Instance.Logger("Startup: Running BankAllItems (AC inventory & house items)...");
         LeaveCombatRoomForEquipmentChange();
-        BankAllCore.BankAll(inventory: true, house: true, bankNonAc: false, blackList: string.Empty);
+        // Dragonoid of Hours is needed again by Iadoa (2519) and LoO 7160: keep it in the bag until
+        // both are done, otherwise every run banks it here and unbanks it right before the fight.
+        CoreBots bankCore = CoreBots.Instance;
+        bool dragonoidStillNeeded = !bankCore.isCompletedBefore(2519, log: false) || !bankCore.isCompletedBefore(7165, log: false);
+        BankAllCore.BankAll(inventory: true, house: true, bankNonAc: false, blackList: dragonoidStillNeeded ? "Dragonoid of Hours" : string.Empty);
         CoreBots.Instance.Logger("Startup: Equipping best static boost gear...");
         EnsureBestStaticBoostGearEquipped();
         CoreBots.Instance.Logger("Startup: Setting initial class...");
@@ -622,6 +629,17 @@ public class ArmyFarmerJoeDoAll
             if (_lastRejectedRoom > 0 && text.Contains(_lastRejectedRoom.ToString(), StringComparison.Ordinal))
                 return;
 
+            // The warning names another room (not the one this account is joining): it is not
+            // about our join, so it must not move us away from the group.
+            HashSet<int> roomsInText = ExtractRoomNumbers(text);
+            if (roomsInText.Count > 0 && !roomsInText.Contains(previousRoom))
+            {
+                core.Logger(
+                    $"Ignoring 'is full' warning for room(s) {string.Join(", ", roomsInText)} (current room {previousRoom}). Raw: {ShortenWarning(text)}"
+                );
+                return;
+            }
+
             // Warning without the current room's number arriving right after a move is most likely
             // the late answer to the previous join; a really full overflow room warns again later.
             if (
@@ -643,9 +661,42 @@ public class ArmyFarmerJoeDoAll
             core.PrivateRoomNumber = overflowRoom.Value;
             // Helpers cannot /goto into this room: publish it so they join "{map}-{room}" directly.
             Army.PublishOverflowRoom(overflowRoom.Value);
-            core.Logger($"Room {previousRoom} is full; retrying in overflow room {overflowRoom.Value}.");
+            core.Logger(
+                $"Room {previousRoom} is full; retrying in overflow room {overflowRoom.Value}. "
+                    + $"Map='{Bot.Map?.Name ?? "?"}', raw: {ShortenWarning(text)}"
+            );
         }
         catch { }
+    }
+
+    // 4-6 digit numbers in the warning (private room numbers); "-1" and short ids are ignored.
+    private static HashSet<int> ExtractRoomNumbers(string text)
+    {
+        HashSet<int> rooms = new();
+        int i = 0;
+        while (i < text.Length)
+        {
+            if (!char.IsDigit(text[i]))
+            {
+                i++;
+                continue;
+            }
+
+            int start = i;
+            while (i < text.Length && char.IsDigit(text[i]))
+                i++;
+
+            int length = i - start;
+            if (length >= 4 && length <= 6 && int.TryParse(text.AsSpan(start, length), NumberStyles.Integer, CultureInfo.InvariantCulture, out int room))
+                rooms.Add(room);
+        }
+        return rooms;
+    }
+
+    private static string ShortenWarning(string text)
+    {
+        string flat = string.Join(" ", text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+        return flat.Length <= 240 ? flat : flat[..240] + "...";
     }
 
     private bool ApplyArmyRoomSettings()
@@ -15582,12 +15633,18 @@ public class ArmyFarmerJoeDoAll
         if (maxPlayers <= 0)
         {
             if (!allowJoin)
+            {
+                CoreBots.Instance.Logger($"Room cap for '/{normalized}': unknown and map is not probed by join -> no split, one shared room.");
                 return 0;
+            }
 
             bool aggressive = ShouldSkipMapVerification(normalized);
             ApplyArmyRoomSettings();
             if (!JoinMapVerified(normalized))
+            {
+                CoreBots.Instance.Logger($"Room cap for '/{normalized}': probe join failed (current map '{Bot.Map?.Name ?? "?"}') -> no split, one shared room.");
                 return 0;
+            }
 
             maxPlayers = Army.DetectCurrentMapMaxPlayers(normalized);
             Army.RecordMapMaxPlayers(normalized, maxPlayers);
@@ -15607,11 +15664,24 @@ public class ArmyFarmerJoeDoAll
         // which must win over a caller's fallback split, so it is not collapsed to 0 any more.
         int cap = maxPlayers > 0 ? maxPlayers : 0;
         _detectedMapCaps[normalized] = cap;
-        if (cap > 0 && cap < Army.ArmyPlayerCount)
+        // Always log the result (once per map and run): a silent 0 / ">= Army" hid why rooms filled up.
+        if (cap <= 0)
+        {
+            CoreBots.Instance.Logger(
+                $"Room cap for '/{normalized}': unknown (current map '{Bot.Map?.Name ?? "?"}') -> no split, one shared room."
+            );
+        }
+        else if (cap < Army.ArmyPlayerCount)
         {
             int groups = (Army.ArmyPlayerCount + cap - 1) / cap;
             CoreBots.Instance.Logger(
                 $"Room cap for '/{normalized}': {cap} players/room (Army={Army.ArmyPlayerCount}) -> splitting into {groups} rooms."
+            );
+        }
+        else
+        {
+            CoreBots.Instance.Logger(
+                $"Room cap for '/{normalized}': {cap} players/room (Army={Army.ArmyPlayerCount}) -> one shared room."
             );
         }
         return cap;

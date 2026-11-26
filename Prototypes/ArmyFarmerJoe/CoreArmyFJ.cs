@@ -758,6 +758,55 @@ public class CoreArmyFJ
     public int WorkStallMinutes { get; set; } = 5;
     public int OffMapRecoverySeconds { get; set; } = 20;
 
+    // Lonely overflow: a "room is full" answer moved this account into an overflow room that no
+    // teammate shares (e.g. everyone was still working, so no helper follows it there). After
+    // LonelyOverflowSeconds the account retries its planned room once per work attempt; if that
+    // room really is full the room-full listener sends it to the overflow room again.
+    public int LonelyOverflowSeconds { get; set; } = 15;
+
+    /// <summary>Planned room before the overflow move (0 = not in overflow). Set by the script.</summary>
+    public Func<int>? PlannedRoomBeforeOverflow { get; set; }
+
+    /// <summary>Puts the planned room back into the private-room settings. Set by the script.</summary>
+    public Action? RestorePlannedRoom { get; set; }
+
+    /// <summary>Other Army accounts in the current map instance (-1 when it cannot be read).</summary>
+    public int CountArmyTeammatesInMap()
+    {
+        try
+        {
+            IEnumerable<string>? names = Bot.Map.PlayerNames;
+            if (names == null)
+                return -1;
+
+            HashSet<string> here = new(names.Select(NormalizeArmyUsername));
+            int count = 0;
+            for (int i = 0; i < armyPlayers.Length; i++)
+            {
+                if (i != armyPlayerIndex && here.Contains(NormalizeArmyUsername(armyPlayers[i])))
+                    count++;
+            }
+            return count;
+        }
+        catch
+        {
+            return -1;
+        }
+    }
+
+    private bool IsInLonelyOverflowRoom(string? currentMap, string objectiveMap)
+    {
+        int plannedRoom = PlannedRoomBeforeOverflow?.Invoke() ?? 0;
+        if (plannedRoom <= 0 || !string.Equals(currentMap, objectiveMap, StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        int room = GetCurrentRoomNumber();
+        if (room <= 0 || room == plannedRoom)
+            return false;
+
+        return CountArmyTeammatesInMap() == 0;
+    }
+
     private void RunWorkWithStallGuard(string objectiveName, Action doWork, string? targetMap = null)
     {
         using CancellationTokenSource stallGuardCts = new();
@@ -784,6 +833,8 @@ public class CoreArmyFJ
         string lastSignature = ReadWorkProgressSignature();
         DateTime lastProgress = DateTime.UtcNow;
         DateTime? strandedSince = null;
+        DateTime? lonelyOverflowSince = null;
+        bool lonelyOverflowRetried = false;
         int nudges = 0;
 
         while (!token.IsCancellationRequested && !Bot.ShouldExit)
@@ -825,6 +876,39 @@ public class CoreArmyFJ
                 continue;
             }
             strandedSince = null;
+
+            if (objectiveMap != null && !lonelyOverflowRetried && IsInLonelyOverflowRoom(currentMap, objectiveMap))
+            {
+                lonelyOverflowSince ??= DateTime.UtcNow;
+                if (DateTime.UtcNow - lonelyOverflowSince.Value >= TimeSpan.FromSeconds(Math.Max(5, LonelyOverflowSeconds)))
+                {
+                    if (token.IsCancellationRequested || Bot.ShouldExit)
+                        return;
+
+                    lonelyOverflowRetried = true;
+                    lonelyOverflowSince = null;
+                    lastProgress = DateTime.UtcNow;
+                    int plannedRoom = PlannedRoomBeforeOverflow?.Invoke() ?? 0;
+                    Core.Logger(
+                        $"Army objective {objectiveName}: alone in overflow room {GetCurrentRoomNumber()} of '/{objectiveMap}' for {LonelyOverflowSeconds}s; "
+                            + $"retrying planned room {plannedRoom}.",
+                        "StallGuard"
+                    );
+                    TryStallRecovery(
+                        objectiveName,
+                        () =>
+                        {
+                            RestorePlannedRoom?.Invoke();
+                            RejoinObjectiveMap(objectiveMap, fullReentry: false);
+                        }
+                    );
+                    continue;
+                }
+            }
+            else
+            {
+                lonelyOverflowSince = null;
+            }
 
             if (progressed)
                 continue;
