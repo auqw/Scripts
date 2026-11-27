@@ -1475,7 +1475,11 @@ public class CoreArmyFJ
 
     // Client-side fakes outside the map table: explicit Bot.Quests.UpdateQuest(questId) calls in
     // ArmyFarmerJoeDoAll (354 dwarfprison access, 567/597 Wolfwing, 847 Ledgermayne, 4614 sandport,
-    // 2814 Lionfang raindrops, 4361 treetitanbattle). Keep in sync when adding such a call.
+    // 2814 Lionfang raindrops, 4361 treetitanbattle), in MapQuestIdBypasses, and in CoreBots.Join
+    // (2621 onslaughttower, 4361, 8776). UpdateQuest SETS the slot, so these can also LOWER real
+    // progress: rejoining /onslaughttower reset slot 106 from 11 to 10 and locked 2623 on P1-P3
+    // (2026-11-26). RestoreRealQuestSlots puts the real value back before each story step.
+    // Keep in sync when adding such a call.
     private static readonly (int Slot, int Value)[] ExplicitQuestSlotFakes =
     {
         (22, 31),
@@ -1483,8 +1487,10 @@ public class CoreArmyFJ
         (26, 23),
         (32, 35),
         (97, 15),
+        (106, 10),
         (117, 17),
         (196, 14),
+        (470, 18),
     };
 
     private Dictionary<int, (int Min, int Max)> QuestSlotBypassBounds =>
@@ -1651,6 +1657,7 @@ public class CoreArmyFJ
             try
             {
                 Bot.Events.QuestTurnedIn += OnQuestTurnedInTrackRealSlot;
+                Bot.Events.MapChanged += OnMapChangedRaiseLoweredSlots;
                 questTurnInHooked = true;
             }
             catch { }
@@ -1699,9 +1706,40 @@ public class CoreArmyFJ
         try
         {
             Bot.Events.QuestTurnedIn -= OnQuestTurnedInTrackRealSlot;
+            Bot.Events.MapChanged -= OnMapChangedRaiseLoweredSlots;
         }
         catch { }
         questTurnInHooked = false;
+    }
+
+    // CoreBots.Join("onslaughttower") runs UpdateQuest(2621) before every join, which SETS slot 106
+    // to 10 even after 2622 is done. Raising back to the real value is always safe (a map bypass
+    // only needs a value at least this high), so it is done right after every map change.
+    private void OnMapChangedRaiseLoweredSlots(string map)
+    {
+        try
+        {
+            List<(int Slot, int Value)> records;
+            lock (realQuestSlots)
+            {
+                EnsureRealQuestSlotsLoaded();
+                records = realQuestSlots.Select(kv => (kv.Key, kv.Value)).ToList();
+            }
+
+            foreach (var (slot, value) in records)
+            {
+                int client = ReadClientQuestSlot(slot);
+                if (client < 0 || client >= value)
+                    continue;
+
+                Bot.Quests.UpdateQuest(value, slot);
+                Core.Logger(
+                    $"Quest slot {slot}: joining /{map} lowered the client to {client}; raised back to the real value {value}.",
+                    "CoreArmyFJ"
+                );
+            }
+        }
+        catch { }
     }
 
     private void OnQuestTurnedInTrackRealSlot(int questId)
