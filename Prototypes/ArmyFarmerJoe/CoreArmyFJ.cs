@@ -840,6 +840,8 @@ public class CoreArmyFJ
         DateTime? strandedSince = null;
         DateTime? lonelyOverflowSince = null;
         bool lonelyOverflowRetried = false;
+        DateTime? maplessSince = null;
+        int maplessRelogs = 0;
         int nudges = 0;
 
         while (!token.IsCancellationRequested && !Bot.ShouldExit)
@@ -884,6 +886,36 @@ public class CoreArmyFJ
                 continue;
             }
             strandedSince = null;
+
+            // Fast path: logged in but no map loaded (map= empty, every /join "Failed to join",
+            // even /whitemap). Only a relog clears it; Relogin parks in /house and the house
+            // fast path above then returns to the objective map.
+            if (!progressed && IsClientMapless())
+            {
+                maplessSince ??= DateTime.UtcNow;
+                if (
+                    DateTime.UtcNow - maplessSince.Value >= TimeSpan.FromSeconds(Math.Max(30, MaplessRelogSeconds))
+                    && maplessRelogs < Math.Max(1, MaxMaplessRelogs)
+                )
+                {
+                    if (token.IsCancellationRequested || Bot.ShouldExit)
+                        return;
+
+                    maplessRelogs++;
+                    maplessSince = null;
+                    lastProgress = DateTime.UtcNow;
+                    Core.Logger(
+                        $"Army objective {objectiveName}: no map loaded for {MaplessRelogSeconds}s (relog #{maplessRelogs}). State: {DescribeWorkState()}",
+                        "StallGuard"
+                    );
+                    TryStallRecovery(objectiveName, () => Core.Relogin("client stuck without a map"));
+                    continue;
+                }
+            }
+            else
+            {
+                maplessSince = null;
+            }
 
             if (objectiveMap != null && !lonelyOverflowRetried && IsInLonelyOverflowRoom(currentMap, objectiveMap))
             {
@@ -1007,6 +1039,22 @@ public class CoreArmyFJ
         catch
         {
             return null;
+        }
+    }
+
+    // P6 on /overworld (2026-11-26): map= empty for 13+ min, every join failed, the Army waited.
+    public int MaplessRelogSeconds { get; set; } = 90;
+    public int MaxMaplessRelogs { get; set; } = 3;
+
+    private bool IsClientMapless()
+    {
+        try
+        {
+            return Bot.Player.LoggedIn && (string.IsNullOrEmpty(Bot.Map?.Name) || !Bot.Map.Loaded);
+        }
+        catch
+        {
+            return false;
         }
     }
 
@@ -3181,6 +3229,11 @@ public class CoreArmyFJ
     // map change must first move to a safe cell. Cheap no-op when already out of combat.
     private void LeaveCombatBeforeMapChange()
     {
+        // A dead player cannot change map (P5 died on /overworld Enter and both /whitemap
+        // tries failed): wait for the respawn first.
+        if (Bot.Player.LoggedIn && !Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 40);
+
         if (!Bot.Player.InCombat)
             return;
 
