@@ -48,6 +48,11 @@ public class EbilcorpIBShop
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+		if (!Core.isSeasonalMapActive("ebilcorpib")){
+			Core.Logger("Map is not in season", messageBox: true);
+			return;
+		}
+		
         EbilCorp.Storyline();
         Adv.StartBuyAllMerge("ebilcorpib", 2815, findIngredients, buyOnlyThis, buyMode: buyMode);
 
