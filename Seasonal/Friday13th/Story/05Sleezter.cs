@@ -1,7 +1,7 @@
 /*
 name: Sleezter Story
 description: This will finish the Sleezter story.
-tags: sleezter-story, friday-the-13th, seasonal
+tags: sleezter-story, friday the 13th, seasonal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs

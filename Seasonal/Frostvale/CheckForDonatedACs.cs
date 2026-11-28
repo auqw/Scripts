@@ -149,9 +149,9 @@ public class CheckForDonatedACs
             if (Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
             {
                 //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
-                // Participation Quest (*previous years*: 9988, 10510)
+                // Participation Quest (*previous years*: 9988, 10510, 10970)
 
-                CQ.ChillysParticipation(10510);
+                CQ.ChillysParticipation(10970);
 
                 // Log total ACs owned
                 string username = Bot.Player.Username;
