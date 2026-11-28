@@ -1,7 +1,7 @@
 /*
 name: Neverhub Story
 description: This will finish the Neverhub story.
-tags: neverhub-story, friday-the-13th, seasonal
+tags: neverhub-story, friday the 13th, seasonal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
