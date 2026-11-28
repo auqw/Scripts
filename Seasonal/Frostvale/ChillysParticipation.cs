@@ -27,8 +27,9 @@ public class ChillysQuest
         Core.SetOptions(false);
     }
 
-    //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
-    public void ChillysParticipation(int questID = 10510)
+    //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs 
+    // Participation Quest (*previous years*: 9988, 10510, 10970)
+    public void ChillysParticipation(int questID = 10970)
     {
         if (Core.isCompletedBefore(questID, false))
             return;
