@@ -9465,12 +9465,13 @@
     "name": "Birthday Feast Rewards",
     "description": "This will obtain all of the quest rewards of your quest choice.",
     "tags": [
+      "birthday feast quest rewards",
       "seasonal",
       "harvest-day"
     ],
     "path": "Seasonal/HarvestDay/BirthdayFeastQuestRewards.cs",
-    "size": 8206,
-    "sha256": "b87bc2a608c8fbb6a12d5cfd89e20af407dd99d60fb30361959ec765526747a0",
+    "size": 8236,
+    "sha256": "779d83b7bf426b39c2348c18cb171b342052a763b3f26d5fce6d380256e8665d",
     "fileName": "BirthdayFeastQuestRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/BirthdayFeastQuestRewards.cs"
   },
@@ -12283,6 +12284,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbonyDragonBladeOfNulgath.cs"
   },
   {
+    "name": "EbilcorpIB Merge",
+    "description": "Farms the EbilcorpIB Merge [2815] in /ebilcorpib.",
+    "tags": [
+      "ebilcorpib",
+      "merge",
+      "ebilcorpib",
+      "merge"
+    ],
+    "path": "Seasonal/BlackFriday/EbilcorpIBShop.cs",
+    "size": 5272,
+    "sha256": "c65399d7a609de8c189698076ecc578f5042374c299876e303a9ee97f4e4d8c2",
+    "fileName": "EbilcorpIBShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilcorpIBShop.cs"
+  },
+  {
     "name": "Ebil Mega Mall Story",
     "description": "This will complete the Ebil Mega Mall story.",
     "tags": [
@@ -12300,6 +12316,21 @@
     "sha256": "1542173359a215cb22213df64e5c0061d625246b43ab04426a69014df846332e",
     "fileName": "EbilMegaMallStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallStory.cs"
+  },
+  {
+    "name": "EbilCorpIB",
+    "description": "Completes the quest chain in /ebilcorpib.",
+    "tags": [
+      "ebilcorpib",
+      "story",
+      "quests",
+      "ebilcorpib"
+    ],
+    "path": "Seasonal/BlackFriday/EbilCorpIB.cs",
+    "size": 1856,
+    "sha256": "147bfe7a2c9d92cd8a62882c4fee1569b152fc6eaa08fffc8e45d49c45e8a028",
+    "fileName": "EbilCorpIB.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilCorpIB.cs"
   },
   {
     "name": "Technocaster Merge",
@@ -12635,11 +12666,12 @@
     "tags": [
       "spellraiser",
       "member",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/SpellRaiser[Mem].cs",
-    "size": 1625,
-    "sha256": "5cc1a348b3e26dc3bd8082963115cb14b2c3c4f399030c0cce3889b58a9c8a50",
+    "size": 1642,
+    "sha256": "bd66ba8bdb47d96bfb68b61a523a71f33f24f4b853d09f60e26587af5ed1cade",
     "fileName": "SpellRaiser[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/SpellRaiser[Mem].cs"
   },
@@ -12664,11 +12696,12 @@
     "tags": [
       "trobbolier-pet",
       "member",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/TrobbolierPet[mem].cs",
-    "size": 2502,
-    "sha256": "e58a6bf34c50a841b6cba00fe644804ce0a48b2feb1c964484d8b05f266da5df",
+    "size": 2519,
+    "sha256": "3f92bb9bf1b13d7973b975819ac1cc2d2f67b800b4dc41434cd75265ed5bd606",
     "fileName": "TrobbolierPet[mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/TrobbolierPet[mem].cs"
   },
@@ -12679,11 +12712,12 @@
       "the-lost-knight",
       "backup-blade",
       "member",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/TheLostKnightAndBackupBlade[Mem].cs",
-    "size": 1857,
-    "sha256": "029b4e5e021b3efc33e92a2b88677b49a528149f900132706e3018b47ee8719f",
+    "size": 1874,
+    "sha256": "2c26519a8ef6627d85034089afa519dbee97f193c8769c1b5b394903f70a9611",
     "fileName": "TheLostKnightAndBackupBlade[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/TheLostKnightAndBackupBlade[Mem].cs"
   },
@@ -27847,8 +27881,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 15585,
-    "sha256": "a0059f639d544afda319d92e626b999891320345eacf1005aafb8f8223a20f90",
+    "size": 15584,
+    "sha256": "e58b598ddb12a8f3fd0496437999cd4b3311c4b6a036ad5aacd7aadfb93a299a",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -33359,11 +33393,12 @@
     "description": "This will finish the Crownsreach FXIII Storyline.",
     "tags": [
       "crownsreach-fxiii-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/09CrownsreachFXIII.cs",
-    "size": 820,
-    "sha256": "da4cc7d28173aae30167d3a76fcef4f76a056589b99029c67c4fda4d2b87fb1b",
+    "size": 837,
+    "sha256": "3706b616f415881470cfad7e543cabb9b66f5675a11d22288389b68478fbf5f2",
     "fileName": "09CrownsreachFXIII.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/09CrownsreachFXIII.cs"
   },
@@ -33372,11 +33407,12 @@
     "description": "This will finish the Fire House story.",
     "tags": [
       "fire-house-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/04Firehouse.cs",
-    "size": 781,
-    "sha256": "4d8881fce019b97b1df2632511a6bb18cd8b356c40db818d4bdcbf2e04b7057e",
+    "size": 798,
+    "sha256": "02e4c528d8eeb629a0f515ef26ae9a5af519b5fb435130b26564d41402535a9e",
     "fileName": "04Firehouse.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/04Firehouse.cs"
   },
@@ -33385,11 +33421,12 @@
     "description": "This will finish the Neverhub story.",
     "tags": [
       "neverhub-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/06Neverhub.cs",
-    "size": 773,
-    "sha256": "5c740a8b5427ec5cc4850e39c81cd6b6f749a51112afa8b961f3aaf4c4d0dc17",
+    "size": 790,
+    "sha256": "a76916468c18ee6fdcb43231f544d89e4a455745feb15d777d69cf968077c4fd",
     "fileName": "06Neverhub.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/06Neverhub.cs"
   },
@@ -33397,12 +33434,13 @@
     "name": "Complete Friday the 13th Stories",
     "description": "This will finish all of the Friday the 13th Stories.",
     "tags": [
+      "friday the 13th",
       "all-stories",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/00CompleteFriday13th.cs",
-    "size": 824,
-    "sha256": "a9b9c528e54894705b07edbd188b1d5241313f4fd7c993bf44563f7eaa5da545",
+    "size": 841,
+    "sha256": "c69f61336c6d4bd29705f7762cf188e969c8ec5a23d88856c38c3083fafd032f",
     "fileName": "00CompleteFriday13th.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/00CompleteFriday13th.cs"
   },
@@ -33411,11 +33449,12 @@
     "description": "This will finish the Skull Punch story.",
     "tags": [
       "skull-punch-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/01Skullpunch.cs",
-    "size": 786,
-    "sha256": "9ca3e7f4eb482975673e8f62a9317b54cf639d159a5df63facb05eafeb52e85f",
+    "size": 803,
+    "sha256": "8a594aca594a43efb81f08daa17d7363415ab92b075aee47b087b00218b9143f",
     "fileName": "01Skullpunch.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/01Skullpunch.cs"
   },
@@ -33424,11 +33463,12 @@
     "description": "This will finish the Saloon Front story.",
     "tags": [
       "saloon-front-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/03Saloonfront.cs",
-    "size": 791,
-    "sha256": "1a990c5dd20f50e799d46549b7e133d041025c11602fc48448cd587c4b0c11c7",
+    "size": 808,
+    "sha256": "66c62ab74203338e18ab70b6d8f75880888c20f6f4b56701e30faaf0f29663c1",
     "fileName": "03Saloonfront.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/03Saloonfront.cs"
   },
@@ -33437,11 +33477,12 @@
     "description": "This will finish the Battledoom story.",
     "tags": [
       "battledoom-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/07Battledoom.cs",
-    "size": 783,
-    "sha256": "626839d7af6de80e76aa96ab5f181c92a4a88d883792092a0584fd685c563009",
+    "size": 800,
+    "sha256": "1ae1fca82d0cdcb294ebd3b008016fad22eaf2335595c6afd7c5f4ddbd271703",
     "fileName": "07Battledoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/07Battledoom.cs"
   },
@@ -33450,11 +33491,12 @@
     "description": "This will finish the Gonna Getcha Storyline.",
     "tags": [
       "gonna-getcha-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/10Gonnagetcha.cs",
-    "size": 795,
-    "sha256": "dcde4bdd7e24bbb29d9747ef4ad1bcf2e27ba42213bed5a250e2ede2d1e53936",
+    "size": 812,
+    "sha256": "197e46fbccb0c7bee654aa18af8165deba4e057ca015db975c985850d040de7b",
     "fileName": "10Gonnagetcha.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/10Gonnagetcha.cs"
   },
@@ -33463,11 +33505,12 @@
     "description": "This will finish the Greymoor Storyline.",
     "tags": [
       "greymoor-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/11Greymoor.cs",
-    "size": 777,
-    "sha256": "a090dcfd7b66a78903ed9456f575c36715be83ca161f7d635d69958951fecb56",
+    "size": 794,
+    "sha256": "002f5564cf6772116ba22b1282b4bdb9af3179e3764ee4900d2d1ba7507d4634",
     "fileName": "11Greymoor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/11Greymoor.cs"
   },
@@ -33488,11 +33531,12 @@
     "description": "This will finish the Sleezter story.",
     "tags": [
       "sleezter-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/05Sleezter.cs",
-    "size": 773,
-    "sha256": "2aa3716c629170588cb51ec9313012ea4e9b10bbec083981c3edd0925d8f2435",
+    "size": 790,
+    "sha256": "a843d55ebe24ed6343ae6fb793a072dc27151fadf6d6e8959a7f24702957fae9",
     "fileName": "05Sleezter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/05Sleezter.cs"
   },
@@ -33501,11 +33545,12 @@
     "description": "This will finish the Oddities Storyline.",
     "tags": [
       "oddities-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/15Oddities.cs",
-    "size": 777,
-    "sha256": "559dbef2c647e394e6c60cb5857ee95996c16789013b2f41ba8099ffd01bc236",
+    "size": 794,
+    "sha256": "3caeb5e17b88bda7026555941e4ce55a3b267c8b9ee56cd056c8adbc6fa9b443",
     "fileName": "15Oddities.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/15Oddities.cs"
   },
@@ -33514,11 +33559,12 @@
     "description": "This will finish the Splatterwar Storyline.",
     "tags": [
       "splatterwar-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/13Splatterwar.cs",
-    "size": 792,
-    "sha256": "9014c1ff216cb34a2908ac4e14a3058667cdb399621a06ea80998489b5c6324f",
+    "size": 809,
+    "sha256": "bdbd81cc74e0c71b3d22e6d188f1db1ed547ca38150e54fa190f8b029457abb6",
     "fileName": "13Splatterwar.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/13Splatterwar.cs"
   },
@@ -33527,11 +33573,12 @@
     "description": "This will finish the Lowe story.",
     "tags": [
       "lowe-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/02Lowe.cs",
-    "size": 753,
-    "sha256": "0bd6324339f1ca7a3754c33fd117c03e3e49c70327d10fbda8b9e2d36179feba",
+    "size": 770,
+    "sha256": "7a38167af9d621ae32d1efc8f4f909f920486810d99788a8323292f0183f968e",
     "fileName": "02Lowe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/02Lowe.cs"
   },
@@ -33540,11 +33587,12 @@
     "description": "This will finish the Deadfly Storyline.",
     "tags": [
       "deadfly-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/14Deadfly.cs",
-    "size": 772,
-    "sha256": "d90f3165fd0c4641a2c9938debfb02d44454a132c4f633fa9924e0e991734384",
+    "size": 789,
+    "sha256": "7997a305e283f2aa36a463f584c5eb83114007c52e554fb2e212c2f6c2c6a888",
     "fileName": "14Deadfly.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/14Deadfly.cs"
   },
@@ -33553,11 +33601,12 @@
     "description": "This will finish the Black Maze Storyline.",
     "tags": [
       "black-maze-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/16BlackMaze.cs",
-    "size": 785,
-    "sha256": "5c96166ffaca7e8ae8dec6d5ce5e45651d6a09c1d3297b8370cde885b653775d",
+    "size": 802,
+    "sha256": "90252707602a79f493a94a41aec17dee253903a13814a8a25132a1cac6d4b202",
     "fileName": "16BlackMaze.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/16BlackMaze.cs"
   },
@@ -33566,11 +33615,12 @@
     "description": "This will finish the Wormhole Storyline.",
     "tags": [
       "wormhole-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/08Wormhole.cs",
-    "size": 777,
-    "sha256": "ad0a9580238669a454fa47f7850badd9609ab4e0e8bbdb01da12030a569e7548",
+    "size": 794,
+    "sha256": "cbcc7fa4051b6aad056002405a88b767383a22dd97ddce45312cbace7fe13ce2",
     "fileName": "08Wormhole.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/08Wormhole.cs"
   },
@@ -33579,11 +33629,12 @@
     "description": "This will finish the Puzzlebox Storyline.",
     "tags": [
       "puzzlebox-story",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/Story/12Puzzlebox.cs",
-    "size": 782,
-    "sha256": "0ffbcdae096fdff110efdcf9b2f4cc3f0e6528b58569b4a590c8e8ff52e73851",
+    "size": 799,
+    "sha256": "4e913b4949f46eedbe0d09b5990f58902084a57cfdf145933abe10d756582fa9",
     "fileName": "12Puzzlebox.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/12Puzzlebox.cs"
   },
@@ -33619,11 +33670,12 @@
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
       "gonna-getcha-merge",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/GonnaGetchaMerge.cs",
-    "size": 5988,
-    "sha256": "9d69ae1fcda3d6d42ed8ae66c37c1f9400c2c1ff5c949787a6f49bb80f715198",
+    "size": 6005,
+    "sha256": "8f6ad37b2ca9e190d2f28e800d14306447f2b37eaa1a6436a449eba271be1a91",
     "fileName": "GonnaGetchaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/GonnaGetchaMerge.cs"
   },
@@ -33632,11 +33684,12 @@
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
       "deadfly-merge",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/DeadflyMerge.cs",
-    "size": 6586,
-    "sha256": "457f3b7b9ab294caac7a4ab4164ef6c374fb1c6c1bb000359cd50a511d726b87",
+    "size": 6603,
+    "sha256": "155d984fe53c43742a53a746c6b61209069b9441ef6e2c72b2ac0ffbaf7eb765",
     "fileName": "DeadflyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/DeadflyMerge.cs"
   },
@@ -33667,11 +33720,12 @@
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
       "lore-trek-merge",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/LoreTrekMerge.cs",
-    "size": 7578,
-    "sha256": "2d53f503eae52cb1d214b0a0ddea9bb74fbff3b3bd235d3d3bd18a60f74516cd",
+    "size": 7595,
+    "sha256": "bd37728819351abd549737ed64616762e427e496c292494e47b978370ad261ae",
     "fileName": "LoreTrekMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/LoreTrekMerge.cs"
   },
@@ -33739,11 +33793,12 @@
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
       "valarians-merge",
+      "friday the 13th",
       "seasonal"
     ],
     "path": "Seasonal/Friday13th/MergeShops/ValariansMerge.cs",
-    "size": 7335,
-    "sha256": "4c796522d569e3973343f8388ca94f1450858917f957d03a4440847262f97c52",
+    "size": 7352,
+    "sha256": "18daea14ce06dd9514416942b3dc34ef10aca8aac3ba25e4a7fb23a6da52d650",
     "fileName": "ValariansMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/ValariansMerge.cs"
   },
