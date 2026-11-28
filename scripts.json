@@ -12646,6 +12646,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/SpellRaiser[Mem].cs"
   },
   {
+    "name": "Purgatorio Charade",
+    "description": "Completes Zazul's Purgatorio Charade quest and optionally farms all of its rewards.",
+    "tags": [
+      "zazul",
+      "darkcarnival",
+      "friday the 13th",
+      "quest rewards"
+    ],
+    "path": "Seasonal/Friday13th/PurgatorioCharade.cs",
+    "size": 2418,
+    "sha256": "fbeff45b263ee30d06e5ca50851619d6a523d7f863615c70c048ee3f625a70b2",
+    "fileName": "PurgatorioCharade.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/PurgatorioCharade.cs"
+  },
+  {
     "name": "Trobbolier Pet (Member Only)",
     "description": "This will finish the required quest to obtain all of the Trobbolier Pets.",
     "tags": [
@@ -12675,6 +12690,21 @@
     "sha256": "d3c553780fb753e1b0e7529053c1d8b169c31d983b9f9b41eda15feac16a314c",
     "fileName": "TheLostKnightAndBackupBlade[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/TheLostKnightAndBackupBlade[Mem].cs"
+  },
+  {
+    "name": "Dead Ringer... Master",
+    "description": "Completes Zazul's Dead Ringer... Master quest and optionally farms all of its rewards.",
+    "tags": [
+      "zazul",
+      "darkcarnival",
+      "friday the 13th",
+      "quest rewards"
+    ],
+    "path": "Seasonal/Friday13th/DeadRingerMaster.cs",
+    "size": 1687,
+    "sha256": "f21db1d844a5195ed1bd8bad36f7cfa40b8bfb63eb461f6255ed872c1c461643",
+    "fileName": "DeadRingerMaster.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/DeadRingerMaster.cs"
   },
   {
     "name": "null",
