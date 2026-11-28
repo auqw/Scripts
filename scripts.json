@@ -3879,11 +3879,11 @@
     "description": "Does the Vampireof Vokun Daily (not 100% drop)",
     "tags": [
       "vampireof vokun",
-      "daily"
+      "dailyg"
     ],
     "path": "Other/VampireofVokun.cs",
-    "size": 1796,
-    "sha256": "b633c3e492ea735d0b598ff40b89f0e266e9c946ba1bd7d5652b665a8661a48d",
+    "size": 1797,
+    "sha256": "f833df59389c6094bec2a9707e5d85b86b3634337beac7d776b9be551f0e8725",
     "fileName": "VampireofVokun.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/VampireofVokun.cs"
   },
