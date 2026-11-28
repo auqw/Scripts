@@ -2678,6 +2678,12 @@ public class CoreArmyFJ
             return;
         }
 
+        // /icestormunder is only a Lv 75+ XP/CP grind in AFJ (Farm.IcestormArena rank-ups at Lv 75+).
+        // Finished accounts stay in the teammate's cell on their Farm class (AoE / farm support)
+        // instead of Solo/Support, so the account still ranking to 10 gets its kills much faster.
+        if (string.Equals(NormalizeMapKey(Bot.Map?.Name), "icestormunder", StringComparison.OrdinalIgnoreCase))
+            compositionType = ClassType.Farm;
+
         // Only equip/swap helper role class when there are actually live monsters in the target's cell.
         if (Bot.Monsters.CurrentMonsters.Any(m => m.Alive))
         {
