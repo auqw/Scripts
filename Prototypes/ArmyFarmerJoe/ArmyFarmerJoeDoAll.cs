@@ -12657,11 +12657,12 @@ public class ArmyFarmerJoeDoAll
                         (targetPlayerNumber, targetPlayerName) =>
                         {
                             ApplyCurrentArmyRoomSettings();
+                            // No copyHelpedActions: walking to the farmer's X/Y every tick made the helper
+                            // ping-pong between the teammate and its own mob while Icy Tokens were farmed.
                             Army.CoordinateFollowAndCombat(
                                 targetPlayerName,
                                 "*",
-                                compositionType: ClassType.Boss,
-                                copyHelpedActions: true
+                                compositionType: ClassType.Boss
                             );
                         },
                         prepareForCombat: () =>
