@@ -1020,7 +1020,9 @@ public class CoreArmyFJ
     // Fast path: the usual manual unstick is "/join house". The farm loops join their map only
     // once, so the account then idled in the house forever; now, after OffMapRecoverySeconds
     // in a /house without progress, it is sent back to the objective map.
-    public int WorkStallMinutes { get; set; } = 5;
+    // 3 min, not 5: a frozen client sat ~3 min farming in /shadowrise while the rest of the
+    // Army had finished and waited on it (quest 3620, 2026-11-27).
+    public int WorkStallMinutes { get; set; } = 3;
     public int OffMapRecoverySeconds { get; set; } = 20;
 
     // Lonely overflow: a "room is full" answer moved this account into an overflow room that no
@@ -1465,12 +1467,17 @@ public class CoreArmyFJ
         Bot.Options.AggroMonsters = false;
         Bot.Options.AggroAllMonsters = false;
 
+        // Already on this map, only in another room: a checked join is dropped because the map
+        // name matches, so the helper never moved (all 4 helpers in /shadowrise-95962 failed 16x
+        // to reach a teammate in overflow room 95972, quest 3620, 2026-11-27). Force the transfer.
+        bool sameMapOtherRoom = string.Equals(NormalizeMapKey(Bot.Map?.Name), key, StringComparison.OrdinalIgnoreCase);
+
         LeaveCombatBeforeMapChange();
         lastHelperJoinHitFullRoom = false;
         int fullBefore = Volatile.Read(ref roomFullWarnings);
         lastHelperJoinHitFullRoom = TravelHitFullRoom(() =>
         {
-            Bot.Map.Join(joinTarget, "Enter", "Spawn", autoCorrect: !Core.PrivateRooms);
+            Bot.Map.Join(joinTarget, "Enter", "Spawn", ignoreCheck: sameMapOtherRoom, autoCorrect: !Core.PrivateRooms);
             Bot.Wait.ForTrue(
                 () => OnMap() || HelpTargetFinished() || Bot.ShouldExit || RoomFullSince(fullBefore),
                 Math.Max(5, HelperJoinTimeoutSeconds)
