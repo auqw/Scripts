@@ -1151,28 +1151,7 @@ public class ArmyFarmerJoeDoAll
         return true;
     }
 
-    private bool RunBeginnerFinalSetClass()
-    {
-        bool finalClassSetComplete = false;
-        if (
-            !RunCooperativeObjective(
-                "BEGINNER_FINAL_SET_CLASS",
-                () => finalClassSetComplete,
-                () =>
-                {
-                    SetClass(rankUpIfNeeded: true);
-                    finalClassSetComplete = !Bot.ShouldExit;
-                },
-                (targetPlayerNumber, targetPlayerName) =>
-                {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
-                }
-            )
-        )
-            return false;
-
-        return true;
-    }
+    private bool RunBeginnerFinalSetClass() => RankCompositionForArmy("BEGINNER_FINAL_SET_CLASS");
 
     private bool RunCoordinatedMazumiQuests(Func<bool> skipCondition)
     {
@@ -3639,7 +3618,8 @@ public class ArmyFarmerJoeDoAll
             return Army.SyncArmy("STEP2C_55_COMPLETE") && !Bot.ShouldExit;
         }
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2C_55_COMPOSITION_START"))
+            return false;
         EnsureBestStaticBoostGearEquipped();
 
         // 1. Level 55 + post-level-up SmartEnhance
@@ -3666,7 +3646,8 @@ public class ArmyFarmerJoeDoAll
         if (!_startupBracket55DailiesDone && !RunBracket55ApprovedDailies())
             return false;
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2C_55_COMPOSITION_END"))
+            return false;
         return Army.SyncArmy("STEP2C_55_COMPLETE") && !Bot.ShouldExit;
     }
 
@@ -5044,7 +5025,8 @@ public class ArmyFarmerJoeDoAll
             return Army.SyncArmy("STEP2C_60_COMPLETE") && !Bot.ShouldExit;
         }
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2C_60_COMPOSITION_START"))
+            return false;
         EnsureBestStaticBoostGearEquipped();
 
         // 1. Level 60 + post-level-up SmartEnhance
@@ -5063,7 +5045,8 @@ public class ArmyFarmerJoeDoAll
         if (!RunCoordinatedSmiteForge("BRACKET60_SMITE"))
             return false;
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2C_60_COMPOSITION_END"))
+            return false;
         return Army.SyncArmy("STEP2C_60_COMPLETE") && !Bot.ShouldExit;
     }
 
@@ -6724,7 +6707,8 @@ public class ArmyFarmerJoeDoAll
             return Army.SyncArmy("STEP2C_65_COMPLETE") && !Bot.ShouldExit;
         }
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2C_65_COMPOSITION_START"))
+            return false;
         EnsureBestStaticBoostGearEquipped();
 
         // 1. Level 65 + post-level-up SmartEnhance
@@ -6836,7 +6820,8 @@ public class ArmyFarmerJoeDoAll
         if (!RunBracket65ApprovedDailies())
             return false;
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2C_65_COMPOSITION_END"))
+            return false;
         return Army.SyncArmy("STEP2C_COMPLETE") && !Bot.ShouldExit;
     }
 
@@ -7414,7 +7399,8 @@ public class ArmyFarmerJoeDoAll
             return Army.SyncArmy("STEP2D_COMPLETE") && !Bot.ShouldExit;
         }
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2D_COMPOSITION_START"))
+            return false;
         EnsureBestStaticBoostGearEquipped();
 
         // 1. Level 70 + post-level-up SmartEnhance
@@ -7433,7 +7419,8 @@ public class ArmyFarmerJoeDoAll
         if (!RunBracket70ArchPaladin())
             return false;
 
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("STEP2D_COMPOSITION_END"))
+            return false;
         return Army.SyncArmy("STEP2D_COMPLETE") && !Bot.ShouldExit;
     }
 
@@ -7584,7 +7571,8 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         _syncedClassType = ClassType.None;
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("BRACKET70_SC_COMPOSITION"))
+            return false;
         return !Bot.ShouldExit;
     }
 
@@ -9532,7 +9520,8 @@ public class ArmyFarmerJoeDoAll
             return false;
 
         _syncedClassType = ClassType.None;
-        SetClass(rankUpIfNeeded: true);
+        if (!RankCompositionForArmy("BRACKET70_AP_COMPOSITION"))
+            return false;
 
         return true;
     }
@@ -15829,6 +15818,47 @@ public class ArmyFarmerJoeDoAll
 
         core.Logger($"{label} resolved -> {className}");
         RankUpClassForArmy(className);
+    }
+
+    // SetClass(rankUpIfNeeded: true) ranks this account's Boss/Farm composition classes. Run as a
+    // cooperative objective so finished accounts follow and help (Farm class) the ones still ranking;
+    // called bare, they went straight to the next barrier and idled while the rest ranked alone.
+    private bool RankCompositionForArmy(string objectiveName)
+    {
+        bool attempted = false;
+        bool Settled(string className) =>
+            CoreBots.IsGenericClass(className) || !HasClassInInventory(className) || HasRank10Class(className);
+        bool CompositionRanked() =>
+            Settled(ResolveClass(GetRoleBossPool())) && Settled(ResolveClass(GetRoleFarmPool()));
+
+        if (
+            !RunCooperativeObjective(
+                objectiveName,
+                // attempted: a class that cannot reach Rank 10 (e.g. member-only) must not loop forever.
+                () => attempted || CompositionRanked(),
+                () =>
+                {
+                    SetClass(rankUpIfNeeded: true);
+                    attempted = !Bot.ShouldExit;
+                },
+                (targetPlayerNumber, targetPlayerName) =>
+                {
+                    // Adv.RankUpClass grinds /icestormarena, or /icestormunder at Lv 75+.
+                    Army.CoordinateFollowAndCombat(
+                        targetPlayerName,
+                        "*",
+                        compositionType: ClassType.Farm,
+                        targetMap: Bot.Player.Level >= 75 ? "icestormunder" : "icestormarena"
+                    );
+                }
+            )
+        )
+            return false;
+
+        // Helpers end on their Farm class: put the Solo composition class back on.
+        _syncedClassType = ClassType.None;
+        SetClass();
+        return !Bot.ShouldExit;
     }
 
     private bool HasClassInInventory(string? className) =>
