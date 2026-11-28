@@ -12284,6 +12284,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbonyDragonBladeOfNulgath.cs"
   },
   {
+    "name": "EbilcorpIB Merge",
+    "description": "Farms the EbilcorpIB Merge [2815] in /ebilcorpib.",
+    "tags": [
+      "ebilcorpib",
+      "merge",
+      "ebilcorpib",
+      "merge"
+    ],
+    "path": "Seasonal/BlackFriday/EbilcorpIBShop.cs",
+    "size": 5272,
+    "sha256": "c65399d7a609de8c189698076ecc578f5042374c299876e303a9ee97f4e4d8c2",
+    "fileName": "EbilcorpIBShop.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilcorpIBShop.cs"
+  },
+  {
     "name": "Ebil Mega Mall Story",
     "description": "This will complete the Ebil Mega Mall story.",
     "tags": [
@@ -12301,6 +12316,21 @@
     "sha256": "1542173359a215cb22213df64e5c0061d625246b43ab04426a69014df846332e",
     "fileName": "EbilMegaMallStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallStory.cs"
+  },
+  {
+    "name": "EbilCorpIB",
+    "description": "Completes the quest chain in /ebilcorpib.",
+    "tags": [
+      "ebilcorpib",
+      "story",
+      "quests",
+      "ebilcorpib"
+    ],
+    "path": "Seasonal/BlackFriday/EbilCorpIB.cs",
+    "size": 1856,
+    "sha256": "147bfe7a2c9d92cd8a62882c4fee1569b152fc6eaa08fffc8e45d49c45e8a028",
+    "fileName": "EbilCorpIB.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilCorpIB.cs"
   },
   {
     "name": "Technocaster Merge",
