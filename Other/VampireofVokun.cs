@@ -1,7 +1,7 @@
 /*
 name: Vampireof Vokun Daily
 description: Does the Vampireof Vokun Daily (not 100% drop)
-tags: vampireof vokun, dailyg
+tags: vampireof vokun, dailygh
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
