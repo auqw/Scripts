@@ -933,7 +933,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1002,7 +1002,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1084,7 +1084,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1142,7 +1142,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1550,7 +1550,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1642,7 +1642,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1762,7 +1762,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1844,7 +1844,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1887,7 +1887,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -1964,7 +1964,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -2422,7 +2422,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -2484,7 +2484,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 },
                 maxWorkAttempts: 4
             )
@@ -2509,7 +2509,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -2675,7 +2675,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName);
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -3910,7 +3910,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -4010,7 +4010,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -4087,7 +4087,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -5131,7 +5131,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -6810,7 +6810,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -7564,7 +7564,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -8695,7 +8695,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -9513,7 +9513,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(targetPlayerName, "*", targetMap: "icestormarena");
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -10225,11 +10225,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(
-                        targetPlayerName,
-                        "*",
-                        targetMap: "icestormarena"
-                    );
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -12526,11 +12522,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    Army.CoordinateFollowAndCombat(
-                        targetPlayerName,
-                        "*",
-                        targetMap: "icestormarena"
-                    );
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -12578,11 +12570,7 @@ public class ArmyFarmerJoeDoAll
                     },
                     (targetPlayerNumber, targetPlayerName) =>
                     {
-                        Army.CoordinateFollowAndCombat(
-                            targetPlayerName,
-                            "*",
-                            targetMap: "icestormarena"
-                        );
+                        HelpRankUpClass(targetPlayerName);
                     }
                 )
             )
@@ -12684,11 +12672,7 @@ public class ArmyFarmerJoeDoAll
                     },
                     (targetPlayerNumber, targetPlayerName) =>
                     {
-                        Army.CoordinateFollowAndCombat(
-                            targetPlayerName,
-                            "*",
-                            targetMap: "icestormarena"
-                        );
+                        HelpRankUpClass(targetPlayerName);
                     }
                 )
             )
@@ -14868,6 +14852,19 @@ public class ArmyFarmerJoeDoAll
         );
     }
 
+    // Helper side of every class rank-up objective. Adv.RankUpClass grinds CP in /icestormarena
+    // (/icestormunder at Lv 75+), always in the Army private room. Without targetMap the helper only
+    // tried /goto, which failed 12x and left it idle in sleep mode (BRACKET55_CRYO_RANK_10, 2026-11-28);
+    // with it the helper joins the same map/room (falling back between the two maps by level) and
+    // fights there with its Farm composition class.
+    private void HelpRankUpClass(string targetPlayerName) =>
+        Army.CoordinateFollowAndCombat(
+            targetPlayerName,
+            "*",
+            compositionType: ClassType.Farm,
+            targetMap: Bot.Player.Level >= 75 ? "icestormunder" : "icestormarena"
+        );
+
     private void RankUpClassForArmy(string className)
     {
         if (string.IsNullOrWhiteSpace(className) || Bot.ShouldExit)
@@ -15843,13 +15840,7 @@ public class ArmyFarmerJoeDoAll
                 },
                 (targetPlayerNumber, targetPlayerName) =>
                 {
-                    // Adv.RankUpClass grinds /icestormarena, or /icestormunder at Lv 75+.
-                    Army.CoordinateFollowAndCombat(
-                        targetPlayerName,
-                        "*",
-                        compositionType: ClassType.Farm,
-                        targetMap: Bot.Player.Level >= 75 ? "icestormunder" : "icestormarena"
-                    );
+                    HelpRankUpClass(targetPlayerName);
                 }
             )
         )
@@ -17796,7 +17787,7 @@ public class ArmyFarmerJoeDoAll
                 SetClass();
             },
             (targetPlayerNumber, targetPlayerName) =>
-                Army.CoordinateFollowAndCombat(targetPlayerName, "*")
+                HelpRankUpClass(targetPlayerName)
         );
     }
 
