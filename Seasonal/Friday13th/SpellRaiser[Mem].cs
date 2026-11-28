@@ -1,7 +1,7 @@
 /*
 name: SpellRaiser Set (Member Only)
 description: This will do the required quest for the SpellRaiser Set.
-tags: spellraiser, member, seasonal
+tags: spellraiser, member, friday the 13th, seasonal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs

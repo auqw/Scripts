@@ -1,7 +1,7 @@
 /*
 name: Trobbolier Pet (Member Only)
 description: This will finish the required quest to obtain all of the Trobbolier Pets.
-tags: trobbolier-pet, member, seasonal
+tags: trobbolier-pet, member, friday the 13th, seasonal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs

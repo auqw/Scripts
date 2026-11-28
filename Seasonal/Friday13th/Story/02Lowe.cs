@@ -1,7 +1,7 @@
 /*
 name: Lowe Story
 description: This will finish the Lowe story.
-tags: lowe-story, seasonal
+tags: lowe-story, friday the 13th, seasonal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs

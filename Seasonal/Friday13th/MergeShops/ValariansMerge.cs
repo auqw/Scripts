@@ -1,7 +1,7 @@
 /*
 name: Valarian's Merge
 description: This will get all or selected items on this merge shop.
-tags: valarians-merge, seasonal
+tags: valarians-merge, friday the 13th, seasonal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
