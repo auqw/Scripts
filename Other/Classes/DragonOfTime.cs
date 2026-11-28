@@ -129,7 +129,7 @@ public class DragonOfTime
 
             Farm.LoremasterREP(4);
 
-            Core.BuyItem("librarium", 651, "Myths of Lore");
+            Adv.BuyItem("librarium", 651, "Myths of Lore");
 
             Core.KillMonster("timelibrary", "FrameAQ", "Left", "*", "Historia Page", 100, false);
 
